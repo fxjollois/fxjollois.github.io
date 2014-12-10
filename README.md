@@ -1,4 +1,4 @@
 fxjollois.github.io
 ===================
 
-my website
+my github website. Go to [fxjollois.github.io](fxjollois.github.io) to access
