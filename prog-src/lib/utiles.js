@@ -8,7 +8,7 @@ var createCodeBlock = function (div, liste) {
             url: number + "/index.md",
             dataType: "text",
             success: function (file) {
-                divCode.text(file.split("\n")[0]);
+                divCode.text(file.split("\n")[0].split('#')[1]);
                 refCode.attr("href", number + "/");
                 refCode.append(divCode);
                 nav.append(refCode);
