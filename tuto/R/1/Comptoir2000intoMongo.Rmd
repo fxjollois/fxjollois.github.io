@@ -1,0 +1,205 @@
+---
+title: "Comptoir2000 into MongoDB"
+author: "FX Jollois"
+output: html_document
+---
+
+# Importation de la BD
+
+Considérons la base de données **Comptoir2000**, souvent utilisé en BD classique. Celle-ci est intialement au format *Access*, mais je l'ai porté au format *SQLite*. Vous pouvez la récupérer [ici](https://drive.google.com/folderview?id=0BzA8L2nqa1n5QkNMYlB1bDUtWXc&usp=drive_web). Nous allons utiliser le package `RSQLite` pour y accéder. 
+
+```{r}
+library(RSQLite)
+con <- dbConnect(RSQLite::SQLite(), "Comptoir2000.sqlite")
+(function() { # fonction anonyme pour ne pas laisser de variables inutiles
+  tables <- dbListTables(con)
+  for (tab in tables) {
+    cat("Table :", tab, "\n")
+    res <- dbSendQuery(con, paste("SELECT * FROM", tab, ";"))
+    dbFetch(res)
+    print(dbColumnInfo(res)[,1:2])
+    dbClearResult(res)
+    cat("\n")
+    }  
+})()
+```
+
+# Transformation de la BD au format JSON
+
+Nous allons considérer que nous voulons faire un focus sur les commandes. Nous allons donc créer un document **JSON** pour chaque commande, dans lequel il y aura toutes les informations possibles (Client, Messager). Nous allons aussi créer un document **JSON** pour chaque produit, où nous intégrerons les informations des fournisseurs.
+
+## Commandes
+
+Nous devons créer une liste par commande, dans laquelle il y aura toutes les informations. 
+
+```{r}
+commandes <- (function() {
+  # récupération des commandes
+  cmd <- dbGetQuery(con, "SELECT * FROM Commande;")
+  commandes = list()
+  for (i in 1:nrow(cmd)) {
+    # transformation en liste
+    liste = as.list(cmd[i,])
+    # récupération des informations client
+    client = dbGetQuery(con, paste("SELECT * FROM Client WHERE CodeCli = '", liste$CodeCli, "';", sep = ""))
+    liste$Client = as.list(client)
+    liste$CodeCli = NULL
+    # récupération des informations produits
+    produits = dbGetQuery(con, paste("SELECT * FROM DetailCommande WHERE NoCom =", liste$NoCom, ";"))
+    liste$Produits = produits[,-1]
+    # récupération des informations messager
+    messager = dbGetQuery(con, paste("SELECT * FROM Messager WHERE NoMess =", liste$NoMess, ";"))
+    liste$Messager = messager
+    liste$NoMess = NULL
+    employe = dbGetQuery(con, paste("SELECT * FROM Employe WHERE NoEmp =", liste$NoEmp, ";", sep = ""))
+    liste$Employe = employe
+    liste$NoEmp = NULL
+    commandes[[i]] = liste
+  }
+  return (commandes)
+})()
+```
+
+## Produits
+
+```{r}
+produits <- (function() {
+  prds = dbGetQuery(con, "SELECT * FROM Produit;")
+  produits = list()
+  for (i in 1:nrow(prds)) {
+    liste = as.list(prds[i,])
+    frs = dbGetQuery(con, paste("SELECT * FROM Fournisseur WHERE NoFour =", liste$NoFour, ";", sep = ""))
+    liste$Fournisseur = frs
+    liste$NoFour = NULL
+    ctg = dbGetQuery(con, paste("SELECT * FROM Categorie WHERE CodeCateg =", liste$CodeCateg, ";", sep = ""))
+    liste$Categorie = ctg
+    liste$CodeCateg = NULL
+    produits[[i]] = liste
+  }
+  return (produits)
+})()
+```
+
+```{r, echo=FALSE}
+# déconnexion de la BD
+con <- dbDisconnect(con)
+```
+
+## Passage d'une liste au format JSON
+
+Cette liste est ensuite transformée en **JSON** "à la main", les packages proposés ne répondant pas aux besoins (scalaire dans une liste transformé en tableau à un élément par exemple).
+
+### Création d'une fonction personnelle R vers JSON
+
+Nous créons ici une fonction récursive `to_JSON()` prenant un objet en paramètre, et en renvoyant une chaîne de caractère au format JSON. Elle est adaptée à notre besoin ici, mais ne correspond peut-être pas à un standard à utiliser dans tous les cas.
+
+
+```{r}
+to_JSON <- function (objet) {
+  chaine = ""
+  #cat("\n**********************\n")
+  #print(objet)
+  #cat("Class =", class(objet), "\n")
+  if (class(objet) == "list") {
+    #cat("-> list\n")
+    chaine = "{"
+    for (i in 1:length(objet)) {
+      #cat("\nObjet test ------------> :\n")
+      #print(class(objet))
+      #print(objet[[i]])
+      #print(is.na(objet[[i]]))
+      if ((length(objet[[i]]) > 1) || (!is.na(objet[[i]]))) {
+        #print(names(objet)[i])
+        if (i > 1) 
+          chaine = paste(chaine, ", ", sep = "")
+        chaine = paste(chaine, "\"", names(objet)[i], "\": ", to_JSON(objet[[i]]), sep = "")
+      }
+    }
+    chaine = paste(chaine, "}\n", sep = "")
+  } else {
+    if (class(objet) == "data.frame") {
+      #cat("-> data.frame\n")
+      if (nrow(objet) == 1 ){
+        chaine = "{"
+        for (j in 1:ncol(objet)) {
+          if (!is.na(objet[1,j])) {
+            if (j > 1) 
+              chaine = paste(chaine, ", ", sep = "")
+            chaine = paste(chaine, "\"", names(objet)[j], "\": ", to_JSON(objet[1,j]), sep = "")
+          } 
+        }
+        chaine = paste(chaine, "}")
+      } else {
+        chaine = "["
+        for (i in 1:nrow(objet)) {
+          if (i > 1) chaine = paste(chaine, ", ", sep = "")
+          chaine = paste(chaine, to_JSON(objet[i,]), sep = "")
+        }
+        chaine = paste(chaine, "]")
+      }
+    } else {
+      #cat("-> atomic\n")
+      if (class(objet) == "character") {
+        chaine = paste("\"", objet, "\"", sep = "")        
+      } else {
+        chaine = objet
+      }
+    }
+  }
+  #cat("\n_________________________\n\n")
+  return (chaine)
+}
+#to_JSON(commandes[[830]]$Client)
+#to_JSON(commandes[[830]]$Produits)
+#to_JSON(commandes[[830]]$NoCom)
+```
+
+### Utilisation de la fonction pour notre besoin
+
+Une base de données au format **MongoDB** est une suite d'objets au format JSON, chaque objet étant sur une ligne. Et il ne doit pas y avoir de `,` entre les objets. La commande `minify` du package `jsonlite` permet d'avoir un objet JSON sur une ligne. Nous allons donc nous en servir.
+
+```{r}
+library(jsonlite)
+fic = "Comptoir2000-commandes.mongodb"
+if (file.exists(fic)) file.remove(fic)
+c2000 = file(fic, "a")
+for (c in commandes) {
+  writeLines(minify(to_JSON(c)), c2000)
+}
+close(c2000)
+fic = "Comptoir2000-produits.mongodb"
+if (file.exists(fic)) file.remove(fic)
+c2000 = file(fic, "a")
+for (p in produits) {
+  writeLines(minify(to_JSON(p)), c2000)
+}
+close(c2000)
+```
+
+# Integration de la BD dans MongoDB
+
+Deux possibilités ici : soit via une commande système de **MongoDB** permettant l'importation d'un fichier du type de celui qu'on a créé, soit via le package `rmongodb`.
+
+## Via commande système
+
+```
+mongoimport --db cpt2000 --collection CommandesBis --file Comptoir2000-commandes.mongodb
+mongoimport --db cpt2000 --collection ProduitsBis --file Comptoir2000-produits.mongodb
+```
+
+## Via package `rmongodb`
+
+```{r}
+library(rmongodb)
+mongo = mongo.create()
+mongo.drop(mongo, "cpt2000.Commandes")
+mongo.drop(mongo, "cpt2000.Produits")
+for (cmd in commandes)
+  mongo.insert(mongo, "cpt2000.Commandes", cmd)
+mongo.count(mongo, "cpt2000.Commandes")
+for (prd in produits)
+  mongo.insert(mongo, "cpt2000.Produits", prd)
+mongo.count(mongo, "cpt2000.Produits")
+```
+
+

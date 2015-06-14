@@ -1,19 +1,28 @@
+@import url(global.css); 
 body {
     width: 1000px;
     margin: 0 auto;
+    padding: 0;
+/*
     font:14px/1.5 "Helvetica Neue", Helvetica, Arial, sans-serif;
     color:#444;
+*/
 }
-footer {
-    position: fixed;
-    bottom: 0;
-    margin-top: 30px;
+
+header {
+    float: none;
+    position: relative;
+    margin-bottom: 50px;
+    z-index: 999;
 }
+
+/*
 a {
     color:#691;
     text-decoration:none;
     font-weight: 500;
 }
+*/
 
 /* pour les blocs de codes */
 .myCodeA {
