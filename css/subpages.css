@@ -5,27 +5,22 @@ body {
     padding: 0;
 }
 
-@media screen and (max-width: 1000px) {
+@media screen and (max-width: 1100px) {
     body {
         width: 100%;
-        margin: 0;
+    }
+    #content, header {
+        padding: 0 50px;
     }
 }
 
 header {
     float: none;
     position: relative;
-    margin-bottom: 50px;
+    margin-bottom: 30px;
     z-index: 999;
 }
 
-/*
-a {
-    color:#691;
-    text-decoration:none;
-    font-weight: 500;
-}
-*/
 
 /* pour les blocs de codes */
 .myCodeA {

@@ -184,17 +184,17 @@ footer {
   bottom:50px;
 }
 
-/*
 @media screen and (max-width: 870px) {
+    body {
+        padding: 0 50px;
+    }
     .wrapper {
         width: 100%;
         margin: 0;
     }
-    header, footer {
-        width: 200px;
-    }
-    section {
+    header, footer, section {
         width: 100%;
+        float: none;
+        position: relative;
     }
 }
-*/
