@@ -50,6 +50,7 @@ a small {
   margin:0 auto;
 }
 
+
 blockquote {
   border-left:1px solid #e5e5e5;
   margin:0;
@@ -182,3 +183,18 @@ footer {
   position:fixed;
   bottom:50px;
 }
+
+/*
+@media screen and (max-width: 870px) {
+    .wrapper {
+        width: 100%;
+        margin: 0;
+    }
+    header, footer {
+        width: 200px;
+    }
+    section {
+        width: 100%;
+    }
+}
+*/

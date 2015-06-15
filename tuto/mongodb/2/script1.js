@@ -1,5 +1,5 @@
 // à exécuter avec load("script1.js") sous Mongo (lancé depuis le répertoire contenant ce fichier)
-/*
+
 // Commandes de base 
 print("Liste des dbs :");
 dbs = db.adminCommand('listDatabases').databases;
@@ -111,8 +111,6 @@ cursorTri = cursor.sort(function (a, b) {
     return 0;
 });
 printjson(cursorTri);
-
-*/
 
 
 // Map-Reduce
