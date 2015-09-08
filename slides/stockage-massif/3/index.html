@@ -1,0 +1,180 @@
+<!doctype html>
+<html>
+    <head>
+        <title>HBase</title>
+        <meta charset="utf-8">
+        <link rel="stylesheet" href="../../../css/global.css">
+        <meta name="keywords" content="programmation, sql, r, sas, python, mongo, nosql, html, css, javascript, d3, google charts, chart.js">
+        <meta name="description" content="Page professionnelle de FX Jollois, contenant des notes de programmation, des tutoriels et des slides de cours, ainsi que des liens vers les projets GitHub personnels">
+        <meta name="author" content="Francois-Xavier Jollois">
+        <meta name="copyright" content="&#xA9;">
+    </head>
+    <body>
+        <header></header>
+        <section><textarea id="source"># HBase
+
+## Pr&#xE9;sentation
+
+BD NoSQL distribu&#xE9; de type *Column Store*
+
+Objectifs :
+- Avoir un grande disponibilit&#xE9;
+- G&#xE9;rer les acc&#xE8;s al&#xE9;atoires en lecture et en &#xE9;criture, tout en &#xE9;tant **consistent** 
+- Servir de couche au-dessus de Hadoop et HDFS pour le stockage des donn&#xE9;es
+
+---
+
+## Histoire
+
+- Bas&#xE9; sur BigTable de Google (2006)
+- Prototype sorti en 2007, participation &#xE0; Hadoop
+- Hadoop : Top-level project par Apache en 2008
+	- HBase devient un sous-projet
+- En 2010, HBase repasse top-level project
+- BD directement disponible et int&#xE9;gr&#xE9; &#xE0; **Hadoop**
+
+## Quelques liens 
+
+- [Document sur Apache](http://hbase.apache.org/book.html)
+- [post de Jim Wilson](http://jimbojw.com/wiki/index.php?title=Understanding_Hbase_and_BigTable)
+- [Pr&#xE9;sentation &#xE0; HUG France 2013](http://fr.slideshare.net/hugfrance/hugfr-sl2013-hbase)
+
+---
+
+## Quelques utilisateurs connus
+
+- [Hadoop](hadoop.apache.org) bien s&#xFB;r
+- [Facebook](https://www.facebook.com/notes/facebook-engineering/the-underlying-technology-of-messages/454991608919) pour les messages
+- [Yahoo!](https://developer.yahoo.com/blogs/ydn/apache-hbase-yahoo-multi-tenancy-helm-again-203911418.html)
+- [Adobe](http://highscalability.com/blog/2010/3/16/1-billion-reasons-why-adobe-chose-hbase.html)
+- [D&apos;autres ici](http://wiki.apache.org/hadoop/Hbase/PoweredBy)
+	- BigSecret
+	- Caree.rs
+	- Flurry
+	- Infolinks
+	- ...
+
+---
+
+## Mod&#xE8;le des donn&#xE9;es
+
+- Donn&#xE9;es stock&#xE9;es dans des `tables`, contenant des `rows` et des `columns`
+	- terminologie tr&#xE8;s (trop) proche des BD relationnelles
+- `Table` : ensemble de `rows`
+- `Row` : une `row key` associ&#xE9;e &#xE0; un certain nombre de `columns`
+	- tri&#xE9;es (alpha) sur la `row key` dans la table
+- `Column` : donn&#xE9;e de base d&#xE9;crite par une `column family` et un `column qualifier`
+- `Column family` : regroupement physique de `columns` (a priori correspondant au m&#xEA;me th&#xE8;me)
+	- chaque `row` d&apos;une table a les m&#xEA;mes `column families`
+	- &#xE0; d&#xE9;finir lors de la cr&#xE9;ation de la table
+- `Column qualifier` : variable appartenant &#xE0; une `column family`
+	- sans contraintes (ajout possible d&apos;un `qualifier` n&apos;existant pas au pr&#xE9;alable)
+- `Cell`: donn&#xE9;e atomique comprenant la `row key`, la `column family`, le `column qualifier`, la valeur et un `timestamp` 
+	- `timestamp` utile pour conna&#xEE;tre la version de la donn&#xE9;e
+	- nombre de versions &#xE0; stocker param&#xE8;trable
+
+---
+
+## Quelques pr&#xE9;cisions
+
+- `Rows` stock&#xE9;s selon l&apos;ordre alphab&#xE9;tique des `row keys`
+	- Pour optimiser certaines demandes, on peut avoir envie que des `rows` soient proches
+	- Exemple classique : `row key` est un nom de domaine
+		- `mail.chezmoi.fr`, `www.chezmoi.fr`, `www.parlabas.fr`
+		- si pas de changement, `www.chezmoi.fr` plus proche de `www.parlabas.fr` que de `mail.chezmoi.fr`
+		- inversion du nom de domaine : `fr.chezmoi.www` et `fr.chezmoi.mail` tr&#xE8;s proches
+- Op&#xE9;rations possibles dans HBase (CRUD + scan)
+	- `Get` : r&#xE9;cup&#xE9;ration des informations d&apos;une `row`
+	- `Put` : ajout d&apos;une `row` ou mise &#xE0; jour si d&#xE9;j&#xE0; existante (**upsert**)
+	- `Scan` : permet la r&#xE9;alisation d&apos;op&#xE9;rations sur tout ou partie des `rows`
+	- `Delete` : suppression d&apos;une `row`
+    
+---
+
+## Quelques pr&#xE9;cisions encore
+
+- Types de donn&#xE9;es support&#xE9;es
+	- Tout ce qui est convertissable en tableau de `bytes` est stockable (cha&#xEE;ne, nombre,
+objets complexes, images)
+	- `Counters`
+- Utilisation possible de `TTL` : dur&#xE9;e de vie d&apos;une donn&#xE9;e
+- Cr&#xE9;ation de la `row key`: on peut faire en sorte qu&apos;il y ait de l&apos;information directement
+dans la cl&#xE9; (ce qui permettra des traitements plus rapides)
+- Sch&#xE9;ma &#xE0; d&#xE9;finir
+	- les tables
+	- les familles de colonnes
+
+---
+## Distribution et r&#xE9;plication des donn&#xE9;es
+
+- Utilisation de HDFS pour stocker les donn&#xE9;es dans les fichiers
+	- une `column family` par table dans un fichier (appel&#xE9; `HTable`)
+- Une `HTable` est compos&#xE9;e de plusieurs `regions`
+	- partitionnement horizontal
+- Fonctionnement bas&#xE9; sur deux types de serveur : **Master** et **RegionServer**
+	- Noeud **Master** (un seul) g&#xE9;rant les op&#xE9;rations du cluster
+		- affectation, r&#xE9;partition, partitionnement
+		- utilisation de **ZooKeeper** (gestion de configuration pour syst&#xE8;mes distribu&#xE9;s)
+	- Noeuds **RegionServer** (plusieurs esclaves)
+		- stockage des donn&#xE9;es (par `regions`), ex&#xE9;cution des lectures et &#xE9;critures
+		- dialogue direct avec les clients 
+
+---
+## Compl&#xE9;ments
+
+- R&#xE9;partition automatique des donn&#xE9;es sur les `RegionServer`
+- Partitionnement tout autant automatique
+- Consistence forte 
+- `table` tri&#xE9;s par `rows`, et `rows` tri&#xE9;s par `columns` 
+	- acc&#xE8;s rapide
+- Cl&#xE9;s compos&#xE9;es &#xE0; utiliser pour simplifier les op&#xE9;rations de tri et de regroupement
+- Insertion et suppression d&apos;un noeud dans le r&#xE9;seau
+
+---
+## Langage d&apos;interrogation 
+
+- g&#xE9;n&#xE9;ral
+	- `describe` : description d&apos;une table
+- en lecture
+	- `get` : r&#xE9;cup&#xE9;ration d&apos;une `row`
+		- s&#xE9;lection de colonnes possible
+	- `scan` : lecture des lignes d&apos;une table
+- en &#xE9;criture
+	- `create` : cr&#xE9;ation d&apos;une table
+		- avec les `column family` en plus
+		- param&#xE8;tres possibles pour les `cf
+	- `alter` : modification du sch&#xE9;ma d&apos;une table
+	- `drop`: suppression d&apos;une table
+	- `put`: ajout d&apos;une cellule dans une table
+	- `delete`: suppression d&apos;une ou plusieurs cellules
+
+---
+## Performances de Cassandra
+
+- Environnement complexe mais tr&#xE8;s complet
+- Eco-syst&#xE8;me tr&#xE8;s d&#xE9;velopp&#xE9;
+- Communaut&#xE9; active
+- Quelques comparatifs entre HBase et Cassandra
+	- [sur BigDataNoob](http://bigdatanoob.blogspot.fr/2012/11/hbase-vs-cassandra.html) 
+	- [sur infoworld](http://www.infoworld.com/article/2610656/database/big-data-showdown--cassandra-vs--hbase.html)
+	- [post assez complet ](https://ria101.wordpress.com/2010/02/24/hbase-vs-cassandra-why-we-moved/)
+
+	
+---
+## Interface avec les langages
+
+- Client natif en JAVA ([lien vers la documentation](http://hbase.apache.org/apidocs/overview-summary.html))
+- Plusieurs interfaces existent avec les langages courants ([voir ici](http://hbase.apache.org/book.html#external_apis))
+	- Thrift
+	- C/C++
+	- Python, Scala
+- Collection de librairies [RHadoop](https://github.com/RevolutionAnalytics/RHadoop/wiki) permettant de se connecter &#xE0; HBase &#xE0; partir de **R** (mais hors *CRAN*)
+	- [rhbase](https://github.com/RevolutionAnalytics/RHadoop/wiki/user%3Erhbase%3EHome)
+- Librairies permettant de se connecter &#xE0; HBase &#xE0; partir de **Python**
+	- [HappyBase](http://happybase.readthedocs.org/en/latest/) 
+	- [starbase](https://github.com/barseghyanartur/starbase)
+</textarea><script src="https://gnab.github.io/remark/downloads/remark-latest.min.js"></script><script>var slideshow = remark.create();
+</script></section>
+        <footer></footer>
+    </body>
+</html>

@@ -4,8 +4,9 @@ En SQL, pour réaliser une opération de projection, on précise dans le `SELECT
 
 ## Syntaxe
 
-    :::sql
-    SELECT attribut1[, ...]
-        FROM table;
+```sql
+SELECT attribut1[, ...]
+    FROM table;
+```
 
 ## Exemple sur les données

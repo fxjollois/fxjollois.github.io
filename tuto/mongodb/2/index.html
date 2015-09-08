@@ -1,0 +1,324 @@
+<!doctype html>
+<html>
+    <head>
+        <title>Comptoir2000 sous MongoDB</title>
+        <meta charset="utf-8">
+        <link rel="stylesheet" href="../../../css/global.css">
+        <meta name="keywords" content="programmation, sql, r, sas, python, mongo, nosql, html, css, javascript, d3, google charts, chart.js">
+        <meta name="description" content="Page professionnelle de FX Jollois, contenant des notes de programmation, des tutoriels et des slides de cours, ainsi que des liens vers les projets GitHub personnels">
+        <meta name="author" content="Francois-Xavier Jollois">
+        <meta name="copyright" content="&#xA9;">
+    <link rel="stylesheet" href="../../../lib/styles/default.css">
+</head>
+    <body>
+        <header><span>&#xE0; propos de <a href="../../../">moi</a></span><span class="sep">|</span><span>retour &#xE0; <a href="../../">tuto</a></span><span class="sep">|</span><span>retour &#xE0; <a href="../../">mongodb</a></span></header>
+        <section><h1 id="comptoir2000sousmongodb">Comptoir2000 sous MongoDB</h1>
+
+<p>Ce tutoriel a pour but de pr&#xE9;senter le syst&#xE8;me d&apos;interrogation de <strong>MongoDB</strong> sur une base de donn&#xE9;es basique.</p>
+
+<h2 id="descriptiondesdonnes">Description des donn&#xE9;es</h2>
+
+<p>La base de donn&#xE9;es <em>Comptoir2000</em> est une base classique relationnelle. Elle provient de la base de donn&#xE9;es <a href="https://www.microsoft.com/en-us/download/details.aspx?id=23654">Northwind</a> propos&#xE9;e comme exemple pour <strong>Access</strong> et <strong>SQL Server</strong>. Pour les besoins d&apos;un cours, je l&apos;ai port&#xE9;e au format MongoDB. Vous pouvez r&#xE9;cup&#xE9;rer les deux fichiers au format <strong>JSON</strong> :</p>
+
+<ul>
+<li><a href="Comptoir2000-commandes.mongodb">Commandes</a></li>
+<li><a href="Comptoir2000-produits.mongodb">Produits</a></li>
+</ul>
+
+<p>Pour l&apos;importer sous MongoDB, vous devez ex&#xE9;cuter les deux commandes suivantes dans un terminal. Il faut bien s&#xFB;r que le serveur MongoDB soit lanc&#xE9; (avec la commande <code>mongod</code> dans un terminal par exemple).</p>
+
+<pre><code class="html">mongoimport --db cpt2000 --collection Commandes --file Comptoir2000-commandes.mongodb
+mongoimport --db cpt2000 --collection Produits --file Comptoir2000-produits.mongodb
+</code></pre>
+
+<p>Comme vous pouvez le voir, la BD est compos&#xE9;e de deux collections :</p>
+
+<ul>
+<li>une sur les <strong>commandes</strong>, o&#xF9; appraissent ainsi les informations des commandes, du client, de l&apos;employ&#xE9;, du message et des produits achet&#xE9;s ;</li>
+<li>une sur les <strong>produits</strong>, contenant donc les informations sur les produits, ainsi que sur les fournisseurs et les cat&#xE9;gories.</li>
+</ul>
+
+<h3 id="collectioncommandes">Collection Commandes</h3>
+
+<pre><code class="json">{
+    &quot;_id&quot; : ObjectId(&quot;557a94a685076b10ddd2831a&quot;),
+    &quot;NoCom&quot; : 10248,
+    &quot;DateCom&quot; : &quot;04AUG1994:00:00:00&quot;,
+    &quot;ALivAvant&quot; : &quot;01SEP1994:00:00:00&quot;,
+    &quot;DateEnv&quot; : &quot;16AUG1994:00:00:00&quot;,
+    &quot;Port&quot; : &quot;162&quot;,
+    &quot;Destinataire&quot; : &quot;Vins et alcools Chevalier&quot;,
+    &quot;AdrLiv&quot; : &quot;59 rue de lAbbaye&quot;,
+    &quot;VilleLiv&quot; : &quot;Reims&quot;,
+    &quot;CodepostalLiv&quot; : &quot;51100&quot;,
+    &quot;PaysLiv&quot; : &quot;France&quot;,
+    &quot;Client&quot; : {
+        &quot;CodeCli&quot; : &quot;VINET&quot;,
+        &quot;Societe&quot; : &quot;Vins et alcools Chevalier&quot;,
+        &quot;Contact&quot; : &quot;Paul Henriot&quot;,
+        &quot;Fonction&quot; : &quot;Chef comptable&quot;,
+        &quot;Adresse&quot; : &quot;59 rue de lAbbaye&quot;,
+        &quot;Ville&quot; : &quot;Reims&quot;,
+        &quot;CodePostal&quot; : &quot;51100&quot;,
+        &quot;Pays&quot; : &quot;France&quot;,
+        &quot;Tel&quot; : &quot;26.47.15.10&quot;,
+        &quot;Fax&quot; : &quot;26.47.15.11&quot;
+    },
+    &quot;Produits&quot; : [
+        {
+            &quot;Refprod&quot; : 11,
+            &quot;PrixUnit&quot; : 70,
+            &quot;Qte&quot; : 12,
+            &quot;Remise&quot; : 0
+        },
+        {
+            &quot;Refprod&quot; : 42,
+            &quot;PrixUnit&quot; : 49,
+            &quot;Qte&quot; : 10,
+            &quot;Remise&quot; : 0
+        },
+        {
+            &quot;Refprod&quot; : 72,
+            &quot;PrixUnit&quot; : 174,
+            &quot;Qte&quot; : 5,
+            &quot;Remise&quot; : 0
+        }
+    ],
+    &quot;Messager&quot; : {
+        &quot;NoMess&quot; : 3,
+        &quot;NomMess&quot; : &quot;Federal Shipping&quot;,
+        &quot;Tel&quot; : &quot;(503) 555-9931&quot;
+    },
+    &quot;Employe&quot; : {
+        &quot;NoEmp&quot; : 5,
+        &quot;Nom&quot; : &quot;Buchanan&quot;,
+        &quot;Prenom&quot; : &quot;Steven&quot;,
+        &quot;Fonction&quot; : &quot;Chef des ventes&quot;,
+        &quot;TitreCourtoisie&quot; : &quot;M.&quot;,
+        &quot;DateNaissance&quot; : &quot;04MAR1955:00:00:00&quot;,
+        &quot;DateEmbauche&quot; : &quot;17OCT1993:00:00:00&quot;,
+        &quot;Adresse&quot; : &quot;14 Garrett Hill&quot;,
+        &quot;Ville&quot; : &quot;London&quot;,
+        &quot;Codepostal&quot; : &quot;SW1 8JR&quot;,
+        &quot;Pays&quot; : &quot;Royaume-Uni&quot;,
+        &quot;TelDom&quot; : &quot;(71) 555-4848&quot;,
+        &quot;Extension&quot; : &quot;3453&quot;,
+        &quot;RendCompteA&quot; : 2
+    }
+}
+</code></pre>
+
+<h3 id="collectionproduits">Collection Produits</h3>
+
+<pre><code class="json">{
+    &quot;_id&quot; : ObjectId(&quot;557a94ae85076b10ddd28658&quot;),
+    &quot;Refprod&quot; : 1,
+    &quot;Nomprod&quot; : &quot;Chai&quot;,
+    &quot;QteParUnit&quot; : &quot;10 bo&#xEE;tes x 20 sacs&quot;,
+    &quot;PrixUnit&quot; : 90,
+    &quot;UnitesStock&quot; : 39,
+    &quot;UnitesCom&quot; : 0,
+    &quot;NiveauReap&quot; : 10,
+    &quot;Indisponible&quot; : 0,
+    &quot;Fournisseur&quot; : {
+        &quot;NoFour&quot; : 1,
+        &quot;Societe&quot; : &quot;Exotic Liquids&quot;,
+        &quot;Contact&quot; : &quot;Charlotte Cooper&quot;,
+        &quot;Fonction&quot; : &quot;Assistant export&quot;,
+        &quot;Adresse&quot; : &quot;49 Gilbert St.&quot;,
+        &quot;Ville&quot; : &quot;London&quot;,
+        &quot;CodePostal&quot; : &quot;EC1 4SD&quot;,
+        &quot;Pays&quot; : &quot;Royaume-Uni&quot;,
+        &quot;Tel&quot; : &quot;(171) 555-2222&quot;
+    },
+    &quot;Categorie&quot; : {
+        &quot;CodeCateg&quot; : 1,
+        &quot;NomCateg&quot; : &quot;Boissons&quot;,
+        &quot;Description&quot; : &quot;Boissons, caf&#xE9;s, th&#xE9;s, bi&#xE8;res&quot;
+    }
+}
+</code></pre>
+
+<h2 id="requtage">Requ&#xEA;tage</h2>
+
+<p>Bien &#xE9;videmment, puisque les donn&#xE9;es ne sont plus au format relationnel, un langage comme <strong>SQL</strong> n&apos;est plus d&apos;actualit&#xE9;. Il faut donc manipuler diff&#xE9;rement les donn&#xE9;es, avec le langage de script propos&#xE9; par MongoDB, tr&#xE8;s proche de <strong>JavaScript</strong>. Il y a deux possibilit&#xE9;s pour acc&#xE9;der aux donn&#xE9;es sous MongoDB. a premi&#xE8;re consiste &#xE0; taper du code dans la console (ou <em>shell</em>). La seconde est de cr&#xE9;er un script (fichier texte) qu&apos;on va ex&#xE9;cuter avec la commande <code>load(&apos;script1.js&apos;)</code>. Le fichier <code>script1.js</code> est disponible <a href="script1.js">ici</a>.</p>
+
+<h3 id="quelquescommandessimples">Quelques commandes simples</h3>
+
+<p>Je pr&#xE9;sente ici quelques commandes basiques permettant d&apos;acc&#xE8;der aux donn&#xE9;es et de commencer &#xE0; les manipuler. </p>
+
+<h4 id="slectiondelabdcpt2000">S&#xE9;lection de la BD <code>cpt2000</code></h4>
+
+<pre><code class="mongo">use cpt2000 // uniquement dans le shell
+db = db.getSiblingDB(&apos;cpt2000&apos;);
+</code></pre>
+
+<h4 id="listedescollectionsdeladb">Liste des collections de la db</h4>
+
+<pre><code class="mongo">db.getCollectionNames();
+</code></pre>
+
+<h4 id="nombredlmentsdanslacollectioncommandes">Nombre d&apos;&#xE9;l&#xE9;ments dans la collection <code>Commandes</code></h4>
+
+<pre><code class="mongo">db.Commandes.count();
+</code></pre>
+
+<h4 id="nombredlmentsdanslacollectionproduits">Nombre d&apos;&#xE9;l&#xE9;ments dans la collection <code>Produits</code></h4>
+
+<pre><code class="mongo">db.Produits.count();
+</code></pre>
+
+<h4 id="listedesproduits">Liste des produits</h4>
+
+<pre><code class="mongo">cursor = db.Produits.find();
+while ( cursor.hasNext() ) {
+   printjson( cursor.next() );
+}
+</code></pre>
+
+<p>Notez que j&apos;ai obtenu les premiers documents de chaque collection avec les commandes suivantes :</p>
+
+<pre><code class="mongo">db.Commandes.find()[0];
+db.Produits.find()[0];
+</code></pre>
+
+<h3 id="requtagesclassiques">Requ&#xEA;tages classiques</h3>
+
+<p>Restriction, projection, projection avec suppression des doublons</p>
+
+<h4 id="listedesproduitsnomprodprixunit">Liste des produits (Nomprod, Prixunit)</h4>
+
+<pre><code class="mongo">cursor = db.Produits.find({}, { Nomprod: 1, PrixUnit: 1, _id: 0 });
+while ( cursor.hasNext() ) {
+    c = cursor.next();
+    print(c.Nomprod + &quot;:\t&quot; + c.PrixUnit + &quot;&#x20AC;&quot;);
+}
+</code></pre>
+
+<h4 id="listedesproduitsnomprodprixunitdontleprixestinfrieur50">Liste des produits (Nomprod, Prixunit), dont le prix est inf&#xE9;rieur &#xE0; 50&#x20AC;</h4>
+
+<pre><code class="mongo">cursor = db.Produits.find({ PrixUnit: { $lt: 50 } }, { Nomprod: 1, PrixUnit: 1, _id: 0 });
+while ( cursor.hasNext() ) {
+    c = cursor.next();
+    print(c.Nomprod + &quot;:\t&quot; + c.PrixUnit + &quot;&#x20AC;&quot;);
+}
+</code></pre>
+
+<h4 id="listedesproduitsnomprodprixunitdontleprixestinfrieur100etdufournisseurnumro17">Liste des produits (Nomprod, Prixunit), dont le prix est inf&#xE9;rieur &#xE0; 100&#x20AC; et du fournisseur num&#xE9;ro 17</h4>
+
+<pre><code class="mongo">cursor = db.Produits.find({ PrixUnit: { $lt: 100 }, &quot;Fournisseur.NoFour&quot;: 17 }, { Nomprod: 1, PrixUnit: 1, &quot;Fournisseur.NoFour&quot;: 1, _id: 0 });
+while ( cursor.hasNext() ) {
+    c = cursor.next();
+    print(c.Nomprod + &quot;:\t&quot; + c.PrixUnit + &quot;&#x20AC; (NoFour = &quot; + c.Fournisseur.NoFour + &quot;)&quot;);
+}
+</code></pre>
+
+<h4 id="listedesproduitsnomprodprixunitdontleprixestinfrieur100etdesfournisseurs1718et20">Liste des produits (Nomprod, Prixunit), dont le prix est inf&#xE9;rieur &#xE0; 100&#x20AC; et des fournisseurs 17, 18 et 20</h4>
+
+<pre><code class="mongo">cursor = db.Produits.find({ PrixUnit: { $lt: 100 }, &quot;Fournisseur.NoFour&quot;: { $in: [ 17, 18, 20] } }, { Nomprod: 1, PrixUnit: 1, &quot;Fournisseur.NoFour&quot;: 1, _id: 0 });
+while ( cursor.hasNext() ) {
+    c = cursor.next();
+    print(c.Nomprod + &quot;:\t&quot; + c.PrixUnit + &quot;&#x20AC; (NoFour = &quot; + c.Fournisseur.NoFour + &quot;)&quot;);
+}
+</code></pre>
+
+<h4 id="listedescatgories">Liste des cat&#xE9;gories</h4>
+
+<pre><code class="mongo">printjson(db.Produits.distinct( &quot;Categorie.NomCateg&quot; ));
+</code></pre>
+
+<h3 id="calculdagrgat">Calcul d&apos;agr&#xE9;gat</h3>
+
+<h4 id="nombredeproduitsachetspourchaquecommande">Nombre de produits achet&#xE9;s pour chaque commande</h4>
+
+<pre><code class="mongo">cursor = db.Commandes.group({ 
+    key: { NoCom: 1 }, 
+    reduce:  function (c, r) { 
+        r.total = (c.Produits.length ? c.Produits.length : 1);
+    }, 
+    initial: { total: 0}
+});
+printjson(cursor);
+</code></pre>
+
+<h4 id="montantdescommandesetnombredeproduitsachets">Montant des commandes et nombre de produits achet&#xE9;s</h4>
+
+<pre><code class="mongo">cursor = db.Commandes.group({ 
+    key: { NoCom: 1 }, 
+    reduce:  function (c, r) { 
+        var total = 0;
+        if (c.Produits.length) {
+            total = c.Produits.map(function(p) { return p.PrixUnit * p.Qte * (1 - p.Remise); }).reduce(function(o, n) { return o + n; });
+        } else {
+            total = c.Produits.PrixUnit * c.Produits.Qte * (1 - c.Produits.Remise);
+        }
+        r.total = total;
+        r.nb = (c.Produits.length ? c.Produits.length : 1);
+    }, 
+    initial: { total: 0, nb: 0 }
+});
+printjson(cursor);
+</code></pre>
+
+<h4 id="montantdesachatsetnombredeproduitsachetspourchaqueclient">Montant des achats et nombre de produits achet&#xE9;s, pour chaque client</h4>
+
+<pre><code class="mongo">cursor = db.Commandes.group({ 
+    key: { &quot;Client.CodeCli&quot;: 1 }, 
+    reduce:  function (c, r) { 
+        var total = 0;
+        if (c.Produits.length) {
+            total = c.Produits.map(function(p) { return p.PrixUnit * p.Qte * (1 - p.Remise); }).reduce(function(o, n) { return o + n; });
+        } else {
+            total = c.Produits.PrixUnit * c.Produits.Qte * (1 - c.Produits.Remise);
+        }
+        r.total += total;
+        r.nb += (c.Produits.length ? c.Produits.length : 1);
+    }, 
+    initial: { total: 0, nb: 0 }
+});
+cursorTri = cursor.sort(function (a, b) {
+    if (a[&quot;Client.CodeCli&quot;] &gt; b[&quot;Client.CodeCli&quot;])
+      return 1;
+    if (a[&quot;Client.CodeCli&quot;] &lt; b[&quot;Client.CodeCli&quot;])
+      return -1;
+    // a doit &#xEA;tre &#xE9;gale &#xE0; b
+    return 0;
+});
+printjson(cursorTri);
+</code></pre>
+
+<h3 id="mapreduce">Map-Reduce</h3>
+
+<h4 id="chiffredaffairedechaqueemploy">Chiffre d&apos;affaire de chaque employ&#xE9;</h4>
+
+<pre><code class="mongo">cursor = db.Commandes.mapReduce(
+    function() {
+        var a = this.Produits,
+            e = this.Employe;
+        if (a.length) {
+            a.forEach(function(p) {
+                emit(e.NoEmp, p.PrixUnit * p.Qte * (1 - p.Remise));
+            });
+        } else {
+            emit(e.NoEmp, a.PrixUnit * a.Qte * (1 - a.Remise));
+        }
+    },
+    function(cle, values) {
+        if (cle === 77)
+            printjson({cle: cle, values: values });
+        return Array.sum(values);
+    },
+    {
+        out: &quot;map_reduce_example&quot;
+    }
+);
+printjson(cursor);
+cursor = db.map_reduce_example.find();
+while ( cursor.hasNext() ) {
+    printjson(cursor.next());
+}
+</code></pre></section>
+        <footer></footer>
+    <script src="../../../lib/highlight.pack.js"></script>
+<script>hljs.initHighlightingOnLoad();</script></body>
+</html>

@@ -1,0 +1,176 @@
+<!doctype html>
+<html>
+    <head>
+        <title>MapReduce</title>
+        <meta charset="utf-8">
+        <link rel="stylesheet" href="../../../css/global.css">
+        <meta name="keywords" content="programmation, sql, r, sas, python, mongo, nosql, html, css, javascript, d3, google charts, chart.js">
+        <meta name="description" content="Page professionnelle de FX Jollois, contenant des notes de programmation, des tutoriels et des slides de cours, ainsi que des liens vers les projets GitHub personnels">
+        <meta name="author" content="Francois-Xavier Jollois">
+        <meta name="copyright" content="&#xA9;">
+    <script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML&amp;delayStartupUntil=configured"></script><link rel="stylesheet" href="../../../lib/styles/default.css">
+</head>
+    <body>
+        <header></header>
+        <section><textarea id="source"># MapReduce
+
+## Pr&#xE9;sentation
+
+Paradigme de programmation permettant l&apos;ex&#xE9;cution parall&#xE8;le de traitement 
+
+
+
+---
+## Pr&#xE9;sentation de MapReduce
+
+- Framework d&#xE9;velopp&#xE9; par Google
+- Permet l&apos;&#xE9;criture simple de programmes sur des clusters informatiques (possiblement tr&#xE8;s gros)
+- Id&#xE9;e de base de la parall&#xE9;lisation des t&#xE2;ches : diviser pour r&#xE9;gner
+- 2 &#xE9;tapes donc :
+	- Etape 1 :
+		1. Diviser le travail &#xE0; faire en plusieurs t&#xE2;ches 
+		2. R&#xE9;aliser les t&#xE2;ches en parall&#xE8;le 
+	- Etape 2 :
+		3. R&#xE9;cup&#xE9;rer les diff&#xE9;rents r&#xE9;sultats
+		4. Regrouper ceux-ci pour obtenir le r&#xE9;sultat final
+
+---
+## Paradigme de MapReduce
+
+Le framework MapReduce est constitu&#xE9; de :
+- un seul *JobTracker*, qui sera le chef d&apos;orchestre :
+	- programmation (*scheduling*) des jobs aux musiciens
+	- gestion des d&#xE9;faillances de ceux-ci
+- un *TaskTracker* par noeud du cluster, qui sera un musicien :
+	- ex&#xE9;cution des t&#xE2;ches demand&#xE9;s par le chef
+
+Le travail se fait exclusivement sur des paires $&lt; key, value&gt;$
+- Entr&#xE9;es : ensemble de paires $&lt; key, value&gt;$
+- Sorties d&apos;un job : paires $&lt; key, value&gt;$
+
+---
+## Sch&#xE9;ma de MapReduce 
+
+<img src="Mapreduce.png" style="margin: 0 auto;" width="673">
+
+<div class="footnote">Source : <a href="http://commons.wikimedia.org/wiki/File:Mapreduce.png" target="_blank">http://commons.wikimedia.org/wiki/File:Mapreduce.png</a></div>
+
+---
+## Etapes Map et Reduce
+
+Comme indiqu&#xE9;, cela s&apos;articule autour de deux grandes &#xE9;tapes (**Map** et **Reduce**)  :
+- Etape **Map** :
+	- r&#xE9;alis&#xE9; dans chaque noeud du cluster
+	- souvent un seul des deux param&#xE8;tres int&#xE9;ressant 
+	- calcule une liste de couples $&lt; key, value &gt;$
+- Etape **Reduce** :
+	- traitement sur les valeurs ($value$) pour chaque $key$
+	- travail possible en parall&#xE8;le
+	- tous les couples avec le m&#xEA;me $key$ arrivent au m&#xEA;me *worker*
+	
+---
+## Exemple basique : comptage de mots
+
+Deux fonctions &#xE0; &#xE9;crire : `map(key, value)` et `reduce(key, value)`
+
+```php
+map(string key, string value) {
+	// key: document name
+	// value: document contents
+	for each word w in value 
+		emit <w, 1="">
+}
+
+reduce(string key, list value) {
+	// key: word
+	// value: list of each word appareance
+	sum = 0
+	for each v in value
+		sum = sum + v
+	emit <key, sum="">
+}
+```
+
+<div class="footnote">Ceci n&apos;est pas un exemple litt&#xE9;ral, mais une adaptation pour illustration</div>
+
+---
+## Exemple basique : comptage de mots
+
+<img src="example-mapreduce-wordcount.png" width="100%">
+
+<div class="footnote">Source : <a href="http://blog.trifork.com/wp-content/uploads/2009/08/" target="_blank">http://blog.trifork.com/wp-content/uploads/2009/08/</a></div>
+
+---
+## Algorithme plus d&#xE9;taill&#xE9; de MapReduce
+
+- Lecture des entr&#xE9;es dans le syst&#xE8;me de fichier distribu&#xE9;, d&#xE9;coupages en blocs de taille identique, et assignation de chaque bloc &#xE0; un *worker*
+- Application de la fonction `map()` dans chaque *worker*
+- Distribution des r&#xE9;sultats de `map()` (&#xE9;tape **Shuffle**) en fonction des cl&#xE9;s
+- Application de la fonction `reduce()` (en parall&#xE8;le ou non, selon les besoins)
+- Ecriture de la sortie dans le syst&#xE8;me de fichier distribu&#xE9; (g&#xE9;n&#xE9;ralement)
+
+---
+## Caract&#xE9;ristiques 
+
+- Mod&#xE8;le de programmation simple : 
+	- deux fonctions &#xE0; &#xE9;crire (`map()` et `reduce()`)
+	- ind&#xE9;pendant du syst&#xE8;me de stockage
+	- adaptatif &#xE0; tout type de donn&#xE9;es
+- Ajout possible d&apos;une fonction `combine()` des r&#xE9;sultats de `map()` pour les couples avec m&#xEA;me cl&#xE9;
+- Syst&#xE8;me g&#xE9;rant seul le d&#xE9;coupage, l&apos;allocation et l&apos;ex&#xE9;cution
+- Tol&#xE9;rance aux d&#xE9;faillances (red&#xE9;marrage de t&#xE2;ches, r&#xE9;affectation)
+- Parall&#xE9;lisation invisible &#xE0; l&apos;utilisateur
+
+---
+## Quelques critiques
+
+- Pas de garantie d&apos;&#xEA;tre rapide : attention &#xE0; l&apos;&#xE9;tape *shuffle* qui peut prendre du temps, et qui n&apos;est pas adaptable par l&apos;utilisateur
+- Co&#xFB;t de communication pouvant &#xEA;tre important
+- Pas adapt&#xE9; &#xE0; des probl&#xE8;mes o&#xF9; les donn&#xE9;es peuvent tenir en m&#xE9;moire ou &#xE0; un petit cluster
+- Pas de support de langage haut niveau, tel que SQL
+- Est une r&#xE9;elle nouveaut&#xE9; ?
+	- Proche d&apos;autres impl&#xE9;mentations, tel que *Clusterpoint* ou *MongoDB* 
+	- Facilement applicable avec PL/SQL sous *Oracle*
+- Pas optimis&#xE9; au niveau des entres/sorties, et donc pas forc&#xE9;ment adapt&#xE9; &#xE0; un probl&#xE8;me de *Machine Learning* dans lequel on doit r&#xE9;guli&#xE8;rement lire le m&#xEA;me jeu de donn&#xE9;es plusieurs fois
+
+---
+## Impl&#xE9;mentations
+
+Toutes *open source* et *forkable* sur GitHub
+
+- **Hadoop** [site web](http://hadoop.apache.org/)
+	- Framework bas&#xE9; sur le syst&#xE8;me de fichiers distribu&#xE9;s *HDFS*
+- **CouchDB** [site web](http://couchdb.apache.org/)
+	- BD *NoSQL*, bas&#xE9;e sur JSON et JavaScript
+- **InfiniSpan** [site web](http://infinispan.org/)
+	- BD *NoSQL* 
+- **MongoDB** [site web](http://www.mongodb.org/)
+	- BD *NoSQL*, bas&#xE9;e sur JSON et JavaScript
+- **Riak** [site web](http://basho.com/riak/)
+	- BD *NoSQL* 
+	
+---
+## D&apos;autres voies encore 
+
+- **Spark** [lien](http://spark.apache.org)
+	- projet Apache
+	- Framework pour le calcul sur cluster informatique
+- **Distributed R** [lien](https://github.com/vertica/DistributedR)
+	- projet GitHub, mais d&#xE9;velopp&#xE9; par HP Vertica
+	- extension permettant la parall&#xE9;lisation
+- **BID Data Project** [lien](http://bid2.berkeley.edu/bid-data-project/)
+	- projet issu de Berkely, et sur GitHub
+	- d&#xE9;di&#xE9; Machine Learning
+- sous **Python** [lien](https://wiki.python.org/moin/ParallelProcessing)
+	- existence de plusieurs librairies permettant le travail sur plusieurs processeurs
+- **Flink** [lien](http://flink.incubator.apache.org/)
+	- projet Apache en incubation
+- **H2O** [lien](http://0xdata.com/h2o/)
+	- disponible sous GitHub, d&#xE9;velopp&#xE9; par 0xdata
+	- d&#xE9;di&#xE9; Machine Learning, et interfa&#xE7;able avec R
+</key,></w,></textarea><script src="https://gnab.github.io/remark/downloads/remark-latest.min.js"></script><script>var slideshow = remark.create();
+MathJax.Hub.Config({ tex2jax: { inlineMath: [ ['$','$'], ['\(','\)'] ], processEscapes: true } });MathJax.Hub.Configured();</script></section>
+        <footer></footer>
+    <script src="../../../lib/highlight.pack.js"></script>
+<script>hljs.initHighlightingOnLoad();</script></body>
+</html>

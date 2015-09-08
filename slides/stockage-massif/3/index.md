@@ -1,5 +1,5 @@
-# HBase
 type: slides
+# HBase
 
 ## Présentation
 

@@ -1,5 +1,6 @@
-# MapReduce
 type: slides
+scripts: mathjax
+# MapReduce
 
 ## Présentation
 
@@ -38,7 +39,7 @@ Le travail se fait exclusivement sur des paires $< key, value>$
 ---
 ## Schéma de MapReduce 
 
-<img src="stockage-massif/6/Mapreduce.png" style="margin: 0 auto;" width="673">
+<img src="Mapreduce.png" style="margin: 0 auto;" width="673">
 
 <div class="footnote">Source : <a href="http://commons.wikimedia.org/wiki/File:Mapreduce.png" target="_blank">http://commons.wikimedia.org/wiki/File:Mapreduce.png</a></div>
 
@@ -83,7 +84,7 @@ reduce(string key, list value) {
 ---
 ## Exemple basique : comptage de mots
 
-<img src="stockage-massif/6/example-mapreduce-wordcount.png" width=100%>
+<img src="example-mapreduce-wordcount.png" width=100%>
 
 <div class="footnote">Source : <a href="http://blog.trifork.com/wp-content/uploads/2009/08/" target="_blank">http://blog.trifork.com/wp-content/uploads/2009/08/</a></div>
 

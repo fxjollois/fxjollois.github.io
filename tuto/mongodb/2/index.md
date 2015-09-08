@@ -6,8 +6,8 @@ Ce tutoriel a pour but de présenter le système d'interrogation de **MongoDB** 
 
 La base de données *Comptoir2000* est une base classique relationnelle. Elle provient de la base de données [Northwind](https://www.microsoft.com/en-us/download/details.aspx?id=23654) proposée comme exemple pour **Access** et **SQL Server**. Pour les besoins d'un cours, je l'ai portée au format MongoDB. Vous pouvez récupérer les deux fichiers au format **JSON** :
 
-- [Commandes](mongodb/2/Comptoir2000-commandes.mongodb)
-- [Produits](mongodb/2/Comptoir2000-produits.mongodb)
+- [Commandes](Comptoir2000-commandes.mongodb)
+- [Produits](Comptoir2000-produits.mongodb)
 
 Pour l'importer sous MongoDB, vous devez exécuter les deux commandes suivantes dans un terminal. Il faut bien sûr que le serveur MongoDB soit lancé (avec la commande `mongod` dans un terminal par exemple).
 
@@ -127,7 +127,7 @@ Comme vous pouvez le voir, la BD est composée de deux collections :
 
 ## Requêtage
 
-Bien évidemment, puisque les données ne sont plus au format relationnel, un langage comme **SQL** n'est plus d'actualité. Il faut donc manipuler différement les données, avec le langage de script proposé par MongoDB, très proche de **JavaScript**. Il y a deux possibilités pour accéder aux données sous MongoDB. a première consiste à taper du code dans la console (ou *shell*). La seconde est de créer un script (fichier texte) qu'on va exécuter avec la commande `load('script1.js')`.
+Bien évidemment, puisque les données ne sont plus au format relationnel, un langage comme **SQL** n'est plus d'actualité. Il faut donc manipuler différement les données, avec le langage de script proposé par MongoDB, très proche de **JavaScript**. Il y a deux possibilités pour accéder aux données sous MongoDB. a première consiste à taper du code dans la console (ou *shell*). La seconde est de créer un script (fichier texte) qu'on va exécuter avec la commande `load('script1.js')`. Le fichier `script1.js` est disponible [ici](script1.js).
 
 ### Quelques commandes simples
 

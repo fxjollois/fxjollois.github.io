@@ -129,8 +129,6 @@ cursor = db.Commandes.mapReduce(
         }
     },
     function(cle, values) {
-        if (cle === 77)
-            printjson({cle: cle, values: values });
         return Array.sum(values);
     },
     {

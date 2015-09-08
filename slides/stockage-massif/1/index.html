@@ -1,0 +1,374 @@
+<!doctype html>
+<html>
+    <head>
+        <title>Stockage massif de donn&#xE9;es</title>
+        <meta charset="utf-8">
+        <link rel="stylesheet" href="../../../css/global.css">
+        <meta name="keywords" content="programmation, sql, r, sas, python, mongo, nosql, html, css, javascript, d3, google charts, chart.js">
+        <meta name="description" content="Page professionnelle de FX Jollois, contenant des notes de programmation, des tutoriels et des slides de cours, ainsi que des liens vers les projets GitHub personnels">
+        <meta name="author" content="Francois-Xavier Jollois">
+        <meta name="copyright" content="&#xA9;">
+    </head>
+    <body>
+        <header></header>
+        <section><textarea id="source"># Stockage massif de donn&#xE9;es
+
+## FX Jollois
+## DU Analyste Big Data
+## Session 2015
+
+Ce cours est une introduction aux nouveaux outils de gestion de bases de donn&#xE9;es massives,
+utilis&#xE9;s dans des environnements *Big Data*.
+
+---
+## Plan
+
+- Retour sur les BD relationnelles
+- Contexte
+- Typologie
+- Compl&#xE9;ments
+
+---
+## Quelques sources
+
+http://webdam.inria.fr/Jorge/?action=chapters
+http://www.lsis.org/espinasseb/Supports/BD/BD_NOSQL-4p.pdf
+http://www.fil.univ-lille1.fr/~caronc/BDA/NoSQLPar4.pdf
+http://cedric.cnam.fr/~rigaux/docs/nfe204.pdf
+http://perso.univ-rennes1.fr/virginie.sans/BDO/cours/BDO_CM4.pdf
+http://jlguillaume.free.fr/www/documents/teaching/ntw1314/LI385_C2_NOSQL.pdf
+http://blogdesexperts.infotel.com/2014/02/19/relationnel-vs-nosql-l%E2%80%99ecosysteme-de-la-base-de-donnees-a-l%E2%80%99heure-du-%C2%AB-bigdata-%C2%BB/
+http://www.dataversity.net/acid-vs-base-the-shifting-ph-of-database-transaction-processing/
+http://nosql-database.org/
+http://www.nosqlfordummies.com/
+
+---
+## Retour sur les BD relationnelles
+
+A l&apos;heure actuelle, les BD classiquement utilis&#xE9;es sont les BD relationnelles :
+- ensemble structur&#xE9; d&apos;informations (*structure explicite*):
+	- tables d&#xE9;crites par des attributs
+	- reli&#xE9;es entre elles par des relations 
+- stockage persistant
+
+Celles-ci sont g&#xE9;r&#xE9;es dans un SGBD permettant :
+- l&apos;acc&#xE8;s aux fichiers sur le disque
+- la cr&#xE9;ation, la suppression, l&apos;insertion, la modification et la recherche de valeurs (via **SQL**)
+- la s&#xE9;curisation et la gestion des acc&#xE8;s concurrents
+
+Utilis&#xE9;es dans quasiment toutes les applications, elles ont pour avantages :
+- maturit&#xE9; importante des logiciels
+- documentation souvent tr&#xE8;s compl&#xE8;te
+- performances globalement satisfaisantes
+
+---
+## Nouveau contexte
+
+Mais un **nouveau contexte** est apparu : 
+- Applications bas&#xE9;es sur le Web (Google, Yahoo, Amazon, LinkedIn, ...)
+	- Utilisation de ressources non ou faiblement structur&#xE9;es (page web, textes, images, ...)
+	- Explosion de la taille m&#xE9;moire des donn&#xE9;es
+- BD relationnelles classiques montrant leurs limites
+	- Recherche dans des documents pas optimale
+	- Capacit&#xE9;s de stockage limit&#xE9;s
+
+Il a donc fallu d&#xE9;velopper de nouveaux outils avec les caract&#xE9;ristiques suivantes :
+- Distribution des donn&#xE9;es pour r&#xE9;sister &#xE0; la mont&#xE9;e en charge
+- Gestion des donn&#xE9;es non structur&#xE9;es, complexes et h&#xE9;t&#xE9;rog&#xE8;nes (sans d&#xE9;claration pr&#xE9;alable 
+du format des donn&#xE9;es - *structure implicite*)
+
+---
+## Premiers &#xE9;l&#xE9;ments pour la passage &#xE0; l&apos;&#xE9;chelle
+
+On distingue deux grands types de passage &#xE0; l&apos;&#xE9;chelle
+- *Vertical scaling* (ou *scaling up*) : on augmente la capacit&#xE9; de l&apos;unique serveur
+- *Horizontal scaling* (ou *scaling out*) : on ajoute des petits serveurs
+
+La premi&#xE8;re co&#xFB;tant rapidement tr&#xE8;s ch&#xE8;re, la deuxi&#xE8;me solution est celle privil&#xE9;gi&#xE9;e, 
+selon deux possibilit&#xE9;s :
+- Paradigme *Ma&#xEE;tre/Esclave*
+	- Ecritures par le ma&#xEE;tre, lecture par les esclaves
+	- R&#xE9;plication directe des &#xE9;critures aux esclaves (donc lecture &#xE9;ventuellement fausse car
+	avant fin de la r&#xE9;plication)
+	- temps de r&#xE9;plication pouvant &#xEA;tre tr&#xE8;s long
+- *Partitionnement* 
+	- R&#xE9;partition des donn&#xE9;es dans les diff&#xE9;rents noeuds
+	- Pas transparent : la r&#xE9;partition doit &#xEA;tre connue des applications
+	- Probl&#xE8;me sur les contraintes d&apos;int&#xE9;grit&#xE9; &#xE0; pr&#xE9;voir
+
+---
+## Quelques autres possibilit&#xE9;s
+
+D&apos;autres solutions sont envisageables :
+- Plusieurs *Ma&#xEE;tres*, avec r&#xE9;plication
+	- gestion d&apos;acc&#xE8;s concurrents
+- Ne permettent que des `INSERT`, sans `UPDATE` ou `DELETE`
+	- les donn&#xE9;es sont seulement inactiv&#xE9;es, et non supprim&#xE9;es
+- Limiter au maximum (voire les supprimer) les `JOIN`
+	- d&#xE9;normalisation des donn&#xE9;es
+	- tables de taille (tr&#xE8;s) importantes
+- Bases de donn&#xE9;es *In-Memory*
+	- donn&#xE9;es stock&#xE9;es sur la **RAM**
+	- suppression des temps d&apos;acc&#xE8;s aux disques
+
+---
+## Bases de donn&#xE9;es NoSQL 
+
+On parle maintenant de syst&#xE8;mes **NoSQL** (pour *Not Only SQL*)
+- Classe de BD non relationnelles
+	- Rien de nouveau r&#xE9;ellement, existent depuis plus longtemps que les SBGDR
+- Pas forc&#xE9;ment de sch&#xE9;ma fixe des donn&#xE9;es
+- Pas forc&#xE9;ment d&apos;utilisation du concept de **jointure**
+- Relaxation d&apos;au moins une des propri&#xE9;t&#xE9;s **ACID** :
+	- **A**tomicity 
+	- **C**onsistancy
+	- **I**solation
+	- **D**urability
+
+Pourquoi on en (re)parle
+- Explosion des r&#xE9;seaux sociaux
+- Croissance de l&apos;utilisation du stockage en ligne, distribu&#xE9;
+- Grande dynamique de la communaut&#xE9; open-source
+
+---
+## Th&#xE9;or&#xE8;me CAP
+
+Propos&#xE9; par Brewer (2000), puis am&#xE9;lior&#xE9; par la suite par Gilbert et Lynch.
+
+Il existe trois propri&#xE9;t&#xE9;s essentielles d&apos;un syst&#xE8;me :
+- **Consistency** (coh&#xE9;rence) : les donn&#xE9;es sont coh&#xE9;rentes entre tous les noeuds
+- **Availability** (disponibilit&#xE9;) : les donn&#xE9;es sont disponibles &#xE0; n&apos;importe quel moment
+- **Partition Tolerance** (resistance au partitionnement) : le syst&#xE8;me continue de fonctionner
+m&#xEA;me si un des noeuds est inop&#xE9;rant
+
+**Probl&#xE8;me** : Aucun syst&#xE8;me distribu&#xE9; ne peut respecter ces trois propri&#xE9;t&#xE9;s.
+
+On a donc le choix entre :
+- un syst&#xE8;me C + A : un probl&#xE8;me sur un des noeuds fait stopper le syst&#xE8;me (les SGBDR classiques sont plut&#xF4;t dans cette cat&#xE9;gorie)
+- un syst&#xE8;me C + P : les donn&#xE9;es ne sont pas forc&#xE9;ment disponibles au moment de la requ&#xEA;te
+- un syst&#xE8;me A + P : les donn&#xE9;es renvoy&#xE9;es ne sont pas toujours coh&#xE9;rentes
+
+---
+## Cons&#xE9;quence du passage &#xE0; l&apos;&#xE9;chelle
+
+- Le passage &#xE0; l&apos;&#xE9;chelle implique (presque obligatoirement) le *partitionnement* des donn&#xE9;es
+- Il faut donc faire le choix entre *coh&#xE9;rence* et *disponibilit&#xE9;*
+- Dans pratiquement tous les syst&#xE8;mes, la disponibilit&#xE9; est pr&#xE9;f&#xE9;r&#xE9;e, et donc la coh&#xE9;rence 
+stricte est abandonn&#xE9;e (d&apos;o&#xF9; le non-respect de *ACID*)
+- Heureusement, une r&#xE9;ponse existe : **BASE** :
+	- **Basically Available** : il y aura une r&#xE9;ponse &#xE0; toute requ&#xEA;te, m&#xEA;me si c&apos;est
+	du genre *failure* ou *inconsistent data*
+	- **Soft State** : le syst&#xE8;me n&apos;est pas consistent &#xE0; tout instant 
+	- **Eventually consistent** : le syst&#xE8;me deviendra finalement consistent, lorsqu&apos;il ne 
+	recevra plus d&apos;entr&#xE9;es
+
+Tous les syst&#xE8;mes actuels des g&#xE9;ants du web sont dans cette configuration **BASE** 
+
+---
+## Typologie NoSQL
+
+Il existe quatre principaux types de bases de donn&#xE9;es dites NoSQL 
+(voir [ce site web](http://nosql-database.org/), d&apos;autres existent mais nous n&apos;en parlerons pas ici).
+
+Scofield a propos&#xE9; un comparatif de ceux-ci sur quelques crit&#xE8;res (avec les SGBDR classiques
+en plus).
+
+<small>
+
+Data Model | Performance | Scalability | Flexibility | Complexity | Functionality
+-|-|-|-|-|-
+**Key&#x2013;Value Store**	        | high | high | high | none | variable (none)
+**Document-Oriented Store** | high | variable (high) | high | low | variable (low)
+**Column-Oriented Store**   | high | high | moderate | low | minimal
+**Graph Database**          | variable | variable | high | high | graph theory
+**Relational Database**     | variable | variable | low | moderate | relational algebra
+
+</small>
+
+---
+## Key-Value Store
+
+Principe : 
+- Syst&#xE8;me &#xE0; base de couples *cl&#xE9; / valeur*
+- Tableau associant des cl&#xE9;s &#xE0; un espace m&#xE9;moire o&#xF9; sont stock&#xE9;es les valeurs
+- Une valeur peut &#xEA;tre n&apos;importe quel objet (cha&#xEE;ne, num&#xE9;rique, objet, ...)
+- On ne peut requ&#xEA;ter le syst&#xE8;me que sur la cl&#xE9;, et pas sur le contenu de la valeur
+- Structure de la valeur inconnue par le syst&#xE8;me (c&apos;est l&apos;applicatif qui g&#xE8;re)
+- Mod&#xE8;le assimil&#xE9; &#xE0; une table de hashage
+
+Exemples : 
+- [DynamoDB](http://aws.amazon.com/dynamodb/)
+- [Redis](http://redis.io/)
+- [Voldemort](http://project-voldemort.com/)
+
+---
+## Key-Value Store (suite)
+
+4 op&#xE9;rations possibles (**CRUD**) :
+- `create(key, value)` : on associe une valeur &#xE0; la cl&#xE9;
+- `read(key)` : on renvoie la valeur qui correspond &#xE0; la cl&#xE9;
+- `update(key, value)` : on met &#xE0; jour la valeur correspondant &#xE0; la cl&#xE9;
+- `delete(key)` : on supprime la valeur correspondant &#xE0; la cl&#xE9;
+
+**Pour** :
+- Interface de requ&#xEA;tage tr&#xE8;s simple et souvent accessible facilement, par n&apos;importe quel langage
+- Performances tr&#xE8;s &#xE9;lev&#xE9;es en lecture et en &#xE9;criture
+
+**Contre** :
+- Mod&#xE8;le tr&#xE8;s (trop ?) simple
+- Traitements complexes &#xE0; faire du c&#xF4;t&#xE9; de l&apos;application
+
+---
+## Document-Oriented Store
+
+Principe :
+- Documents stock&#xE9;s dans un format cl&#xE9;/valeur, o&#xF9; la valeur est structur&#xE9;
+- Structure d&apos;un document sous forme arborescente
+- Pas de sch&#xE9;ma pr&#xE9;-d&#xE9;finis des documents, d&apos;o&#xF9; une grande adaptabilit&#xE9;
+- Interface de requ&#xEA;tage simple
+- Contrairement au mod&#xE8;le *key-value*, on peut requ&#xEA;ter sur les valeurs
+
+Exemples :
+- [MongoDB](http://www.mongodb.org/)
+- [CouchDB](http://couchdb.apache.org/)
+- [Elasticsearch](http://www.elasticsearch.org/)
+
+---
+## Document-Oriented Store (suite)
+
+Un document est compos&#xE9; de champs associ&#xE9;s &#xE0; des valeurs (entier, num&#xE9;rique, cha&#xEE;ne, liste,
+tableau), dans un format type JSON ou XML
+
+Grande h&#xE9;t&#xE9;rog&#xE9;n&#xE9;it&#xE9; permise entre les documents, puisque la structure de ceux-ci n&apos;est 
+jamais pr&#xE9;-suppos&#xE9;e.
+
+**Pour**
+- Mod&#xE8;le de donn&#xE9;es simple et puissant
+- Mise &#xE0; l&apos;&#xE9;chelle ais&#xE9;e
+- Requ&#xEA;tage sur le contenu des documents possible
+
+**Contre**
+- pas fait pour des donn&#xE9;es li&#xE9;es
+- lenteur &#xE9;ventuelle sur des requ&#xEA;tes complexes
+
+---
+## Column-Oriented Store
+
+Principe :
+- Donn&#xE9;es stock&#xE9;es par colonnes, et non par lignes
+- A chaque valeur possible d&apos;un attribut, on indique l&apos;objet ayant cette valeur
+(compression possible de la colonne si regroupement des valeurs identiques)
+- Ajout d&apos;une colonne simple, mais ajout d&apos;une ligne complexe
+- Mod&#xE8;le tr&#xE8;s efficace pour l&apos;analyse de donn&#xE9;es
+
+Exemples :
+- [HBase](http://hbase.apache.org/)
+- [Cassandra](https://cassandra.apache.org/)
+- [Hypertable](http://hypertable.org/)
+
+---
+## Column-Oriented Store (suite)
+
+Il existe deux sous-types de ce genre de syst&#xE8;me :
+A. stockage des colonnes sans compression et de mani&#xE8;re s&#xE9;par&#xE9;e
+B. regroupement de plusieurs colonnes dans des familles de colonnes
+
+Bien qu&apos;ils soient &#xE9;tiquet&#xE9; dans le m&#xEA;me groupe pour les BD NoSQL, ces deux types ne
+r&#xE9;pondent pas aux m&#xEA;mes besoins et il est important de savoir ce qu&apos;on veut faire pour
+choisir entre les deux
+
+**Pour**
+- Prise en compte tr&#xE8;s facile de donn&#xE9;es *sparse* (type **B**) (pas de valeur `NULL` pr&#xE9;sente dans les donn&#xE9;es)
+- Parfait pour les datawarehouses (type **A**) et pour les op&#xE9;rations de type agr&#xE9;gation
+- Tr&#xE8;s grande flexibilit&#xE9; (type **B**)
+
+**Contre**
+- Pas adapt&#xE9; aux donn&#xE9;es reli&#xE9;es ou complexes
+- Maintenance lourde 
+
+---
+## Graph Database
+
+Principe :
+- Mod&#xE8;le bas&#xE9; sur la th&#xE9;orie des graphes
+- Adapt&#xE9; &#xE0; la manipulation d&apos;objets structur&#xE9; en r&#xE9;seau : cartographie, r&#xE9;seaux sociaux, ...
+- 2 composants principaux :
+	- Base de stockage des objets (chaque objet est un noeud du graphe)
+	- Description des relations entre objets (avec possiblement des propri&#xE9;t&#xE9;s)
+- Capacit&#xE9; &#xE0; manipuler des objets complexes, ayant des relations non-triviales et/ou variables
+
+Exemples :
+- [OrientDB](http://www.orientechnologies.com/) 
+- [Neo4J](http://www.neo4j.org/)
+- [Infinite Graph](http://www.infinitegraph.com/)
+
+---
+## Graph Database (suite)
+
+Typiquement adapt&#xE9; aux traitements des probl&#xE9;matiques de type r&#xE9;seaux sociaux ou de cartographie, 
+et donc beaucoup plus rapide qu&apos;un SGBDR dans un tel cadre
+
+Particuli&#xE8;rement adapt&#xE9; &#xE0; ce qu&apos;on appelle le *Web s&#xE9;mantique* et les moteurs de recommandation
+
+**Pour**
+- Tr&#xE8;s efficace pour les donn&#xE9;es li&#xE9;es
+- Mod&#xE8;les d&apos;interrogation &#xE9;tablis et performant
+- Capacit&#xE9; de g&#xE9;rer des (tr&#xE8;s) grosses quantit&#xE9;s de donn&#xE9;es
+
+**Contre**
+- Partitionnement (de type *sharding*)
+
+---
+## Lequel prendre ?
+
+- Faire un tour sur [db-engines.com](http://db-engines.com/en/) pour voir les BD existantes 
+et les tendances du moment
+- Benchmarking possible avec [YCSB](http://labs.yahoo.com/news/yahoo-cloud-serving-benchmark/)
+	- *Yahoo! Cloud Serving Benchmark*
+	- Code disponible sur [GitHub](https://github.com/brianfrankcooper/YCSB/)
+- Il y a un tr&#xE8;s bon [comparatif](http://www.altoros.com/vendor_independent_comparison_of_nosql_databases.html) 
+fait par un cabinet ind&#xE9;pendant 
+	- rapport disponible sur demande
+	- bas&#xE9; sur *YCSB*
+- Test possible &#xE0; faible co&#xFB;t avec [Amazon Web Service](http://aws.amazon.com/) 
+- R&#xE9;fl&#xE9;chir &#xE0; l&apos;utilisation &#xE0; venir et surtout
+	- Quelles requ&#xEA;tes je vais avoir besoin de faire ?
+	- Quelles performances je veux avoir en lecture ?
+	- Quelles performances je veux avoir en &#xE9;criture ?
+- Ne pas forc&#xE9;ment rejeter les BD relationnelles sans avoir peser le pour et le contre
+
+---
+## Utilisations principales par type de BD
+
+- *Key-Value Store*
+	- d&#xE9;p&#xF4;t de donn&#xE9;es avec besoins de requ&#xEA;tage tr&#xE8;s simples
+	- syst&#xE8;me de stockage de cache ou d&#x2BC;information de sessions distribu&#xE9;es
+	- profils, pr&#xE9;f&#xE9;rences d&#x2BC;utilisateur, paniers d&apos;achat, capteurs, logs
+- *Column Store*
+	- logging et analyse de client&#xE8;le (NetFlix)
+	- optimisation de recherche (eBay)
+	- BI (Adobe)
+	- Analyse d&apos;audience
+
+---
+
+## (suite)
+
+- *Document Store*
+	- Enregistrement d&#x2BC;&#xE9;v&#xE9;nements
+	- Syst&#xE8;mes de gestion de contenu (CMS)
+	- Web analytique ou analytique temps-r&#xE9;el
+	- Catalogue de produits
+	- Syst&#xE8;mes d&apos;exploitation
+- *Graph database*
+	- Moteurs de recommandation
+	- BI, Semantic Web
+	- Social Computing
+	- Donn&#xE9;es g&#xE9;ospatiales
+
+
+</textarea><script src="https://gnab.github.io/remark/downloads/remark-latest.min.js"></script><script>var slideshow = remark.create();
+</script></section>
+        <footer></footer>
+    </body>
+</html>

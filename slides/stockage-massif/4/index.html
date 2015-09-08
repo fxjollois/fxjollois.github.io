@@ -1,0 +1,349 @@
+<!doctype html>
+<html>
+    <head>
+        <title>Cassandra</title>
+        <meta charset="utf-8">
+        <link rel="stylesheet" href="../../../css/global.css">
+        <meta name="keywords" content="programmation, sql, r, sas, python, mongo, nosql, html, css, javascript, d3, google charts, chart.js">
+        <meta name="description" content="Page professionnelle de FX Jollois, contenant des notes de programmation, des tutoriels et des slides de cours, ainsi que des liens vers les projets GitHub personnels">
+        <meta name="author" content="Francois-Xavier Jollois">
+        <meta name="copyright" content="&#xA9;">
+    </head>
+    <body>
+        <header></header>
+        <section><textarea id="source"># Cassandra
+
+## Pr&#xE9;sentation 
+
+BD NoSQL distribu&#xE9; de type *Column Store* ([site web](http://cassandra.apache.org))
+
+Objectifs :
+- G&#xE9;rer de grands volumes de donn&#xE9;es
+- R&#xE9;sister aux pannes
+- R&#xE9;aliser le tout de mani&#xE8;re performante
+
+---
+## Histoire
+
+- Cr&#xE9;&#xE9; par Facebook, puis pass&#xE9; en Open Source
+- Projet Apache maintenant 
+
+## Quelques liens 
+
+- [Documentation DataStax](http://www.datastax.com/docs) sur Cassandra
+- [Introduction &#xE0; Cassandra](http://www.jaxio.com/2012/01/06/introduction-a-cassandra-nosql-video.html), Nicolas Romanetti
+
+
+---
+## Quelques utilisateurs connus
+
+- Apple (pas de source disponible)
+- [Instagram](http://planetcassandra.org/blog/interview/facebooks-instagram-making-the-switch-to-cassandra-from-redis-a-75-insta-savings/)
+- [Netflix](http://fr.slideshare.net/adrianco/migrating-netflix-from-oracle-to-global-cassandra)
+- [eBay](http://fr.slideshare.net/jaykumarpatel/cassandra-at-ebay-13920376)
+- [Reddit](http://planetcassandra.org/blog/interview/reddit-upvotes-apache-cassandra-for-horizontal-scaling-managing-17000000-votes-daily/)
+- [D&apos;autres encore](http://planetcassandra.org/companies/) :
+	- Avast, Symantec
+	- BlackBerry, Orange
+	- Call of Duty, Ubisoft
+	- Chronopost, FedEx, La Poste
+	- Dell, HP, IBM, Microsoft
+	- Disney
+	- ING Group, PayPal
+	- NASA
+	- Shazam, SoundCloud, Spotify
+	- The New York Times, The Weather Channel
+	- Twitter
+	- ...
+	
+---
+## Mod&#xE8;le des donn&#xE9;es
+
+<style>
+	.colfam { background-color: #ded; border: solid 1px black; }
+	.row { display: inline-flex; background-color: #333; padding: 5px; margin: 5px; }
+	.rowkey { float: left; width:150px; background-color: #ddd; border: solid 1px black; text-align: center; }
+	.column { float:left; background-color: #ddd; border: solid 1px black; }
+	.cell { width: 150px; background-color: white; border: solid 1px black; text-align: center; }
+	.name { background-color: #999; color: white;}
+</style>
+
+- `Column` : plus petite entit&#xE9; de la base
+	- ensemble (`name`, `value`, `timestamp`)
+
+<div class="column">
+	<div class="cell name">name</div>
+	<div class="cell">value</div>
+	<div class="cell">timestamp</div>
+</div>
+<div style="clear: both;"></div>
+
+- `Row` : ensemble de `columns` identifi&#xE9; par une cl&#xE9; (`row key`)
+	- Pas de contraintes sur les `columns`: deux `rows` peuvent avoir un ensemble de `columns` compl&#xE8;tement distincts
+	- Equivalent d&apos;un tuple (ligne) d&apos;une table relationnelle
+
+<div class="row">
+<div class="rowkey">row key</div>
+<div class="column">
+	<div class="cell name">col.name</div>
+	<div class="cell">col.value</div>
+	<div class="cell">timestamp</div>
+</div>
+<div class="column">
+	<div class="cell name">col.name</div>
+	<div class="cell">col.value</div>
+	<div class="cell">timestamp</div>
+</div>
+<div class="column">
+	<div class="cell name">col.name</div>
+	<div class="cell">col.value</div>
+	<div class="cell">timestamp</div>
+</div>
+<span style="font-size:80%;color:white;text-align:center;margin-left:1em;">...<br>(2 milliards de<br>colonnes possible)</span>
+</div>
+
+---
+
+- `table` : ensemble de `rows` identifi&#xE9; par un nom
+	- Equivalent &#xE0; une table relationnelle
+	- ici, `Personnes` en est une
+	- Pour acc&#xE9;der &#xE0; une valeur atomique : `Personnes|1|nom = Jollois`
+
+<div class="colfam">
+<div style="text-align:center;"><strong>Personnes</strong></div>
+<div class="row">
+<div class="rowkey">1</div>
+<div class="column">
+	<div class="cell name">nom</div>
+	<div class="cell">Jollois</div>
+	<div class="cell">timestamp</div>
+</div>
+<div class="column">
+	<div class="cell name">prenom</div>
+	<div class="cell">FX</div>
+	<div class="cell">timestamp</div>
+</div>
+<div class="column">
+	<div class="cell name">adresse</div>
+	<div class="cell">chez lui</div>
+	<div class="cell">timestamp</div>
+</div>
+</div>
+
+<div class="row">
+<div class="rowkey">2</div>
+<div class="column">
+	<div class="cell name">nom</div>
+	<div class="cell">Autre</div>
+	<div class="cell">timestamp</div>
+</div>
+<div class="column">
+	<div class="cell name">adresse</div>
+	<div class="cell">chez lui aussi</div>
+	<div class="cell">timestamp</div>
+</div>
+</div>
+
+<div class="row">
+<div class="rowkey">4</div>
+<div class="column">
+	<div class="cell name">nom</div>
+	<div class="cell">Connu</div>
+	<div class="cell">timestamp</div>
+</div>
+<div class="column">
+	<div class="cell name">prenom</div>
+	<div class="cell">Alain</div>
+	<div class="cell">timestamp</div>
+</div>
+<div class="column">
+	<div class="cell name">adresse</div>
+	<div class="cell">ailleurs</div>
+	<div class="cell">timestamp</div>
+</div>
+<div class="column">
+	<div class="cell name">page web</div>
+	<div class="cell">http://sapage.ext</div>
+	<div class="cell">timestamp</div>
+</div>
+</div>
+</div>
+
+---
+## Quelques pr&#xE9;cisions
+
+- le nom d&apos;une colonne peut aussi &#xEA;tre une valeur 
+	- `valueless column` : il n&apos;y a rien d&apos;autre que le nom, qui est la donn&#xE9;e
+- les colonnes sont tri&#xE9;s par leur nom
+- `counter column` : permet de compter (en incr&#xE9;mentant/d&#xE9;cr&#xE9;mentant), pas de `timestamp`
+- `expiring column` : comme son nom l&apos;indique, `column` avec une certaine dur&#xE9;e de vie (`TTL`: *time to live*)
+- `composite column` : cl&#xE9; primaire &#xE0; plusieurs valeurs, fait pour g&#xE9;rer des `rows` tr&#xE8;s larges
+- `collection column` : ensemble de valeur de m&#xEA;me type associ&#xE9; &#xE0; un nom de `column` 
+	- `set`, 
+	- `list`, 
+	- `map`
+
+---
+## Quelques pr&#xE9;cisions encore
+
+- Deux types de `table`:
+	- **statique** : ensemble de `columns` similaires entre les `rows` (tr&#xE8;s proche d&apos;une table classique donc, utilisation de m&#xE9;ta-donn&#xE9;es possible)
+	- **dynamique** : les `column` ne se ressemblent que tr&#xE8;s peu (acc&#xE8;s &#xE0; g&#xE9;rer par les applications)
+- r&#xE9;cup&#xE9;ration de `slice` de `columns` (en indiquant les `columns` de d&#xE9;part et de fin)
+- pas de jointures : duplication des donn&#xE9;es dans des `tables` diff&#xE9;rentes, &#xE0; penser lors de la conception du mod&#xE8;le
+- recherche possible que sur les `row keys` : index secondaire &#xE0; cr&#xE9;er si on veut faire des recherches avec d&apos;autres crit&#xE8;res
+- `keyspace` : espace int&#xE9;grant des `tables` (&#xE9;quivalent &#xE0; un sch&#xE9;ma de BDR) servant principalement &#xE0; contr&#xF4;ler les r&#xE9;plications
+
+Il faut r&#xE9;fl&#xE9;chir aux requ&#xEA;tes qu&apos;on voudra ex&#xE9;cuter pour r&#xE9;fl&#xE9;chir au mod&#xE8;le.
+
+Plusieurs solutions possibles &#xE0; chaque probl&#xE8;me.
+
+---
+## Passage &#xE0; l&apos;&#xE9;chelle
+
+L&apos;int&#xE9;r&#xEA;t de **Cassandra** est la gestion des gros volumes :
+- BD distribu&#xE9;e avec une architecture `masterless`
+- plusieurs **noeuds**, tous identiques en fonctionnement
+- passage &#xE0; l&apos;&#xE9;chelle *lin&#xE9;aire* (en fonction du nombre de noeuds)
+- donn&#xE9;es partitionn&#xE9;es selon les `row keys` : une `row` est ins&#xE9;cable, mais deux `rows` d&apos;une m&#xEA;me `table` peuvent ne pas &#xEA;tre au m&#xEA;me endroit
+	- on parle de `partition key` (potentiellement une partie de la `primary key`)
+
+Quelques notions sont tr&#xE8;s importantes &#xE0; comprendre :
+- **Ring** 
+- **Partition**
+- **Replication**
+
+---
+## Architecture du r&#xE9;seau
+
+- Termes utilis&#xE9;s :
+	- *Node* : noeud, composant de base
+	- *Data center* : collection de noeuds reli&#xE9;s (correspondant &#xE0; un regroupement physique ou virtuel)
+	- *Cluster* : ensemble de *data centers*
+	- *Coordinator* : le noeud contact&#xE9; par le client sert de coordinateur pour savoir quel noeud questionner pour r&#xE9;pondre &#xE0; la demande du client
+	- *Commit log* : informations &#xE0; &#xE9;crire d&apos;abord int&#xE9;gr&#xE9;es &#xE0; ce *log*, puis r&#xE9;parties sur les noeuds, puis supprim&#xE9;es ou archiv&#xE9;es
+	- *Gossip* : communication entre noeuds pour s&apos;&#xE9;changer des informations (lieu et &#xE9;tat)
+- Les noeuds sont (virtuellement) plac&#xE9;s sur un anneau (**ring**)
+- Chaque noeud a un identifiant (d&#xE9;termin&#xE9; par un nombre entre 1 et le nombre de noeuds)
+
+---
+## Distribution et r&#xE9;plication des donn&#xE9;es
+
+Cheminement pour int&#xE9;grer une donn&#xE9;e dans le syst&#xE8;me :
+1. Le client indique &#xE0; un noeud la donn&#xE9;e qu&apos;il veut &#xE9;crire
+2. Le noeud devient alors le coordinateur pour cette donn&#xE9;e
+3. Assignation de la donn&#xE9;e au noeud correspondant (via un `partitionner`) 
+	- plusieurs choix de r&#xE9;partition :
+		- `hash value` sur `partition key`, chaque noeud a une plage de `hash value`, 
+		- on fait de l&apos;al&#xE9;atoire
+		- on garde un ordre sur la cl&#xE9;
+	- &#xE0; terme, les noeuds seront *balanc&#xE9;s* (i.e. m&#xEA;me charge de donn&#xE9;es)
+4. Pour &#xE9;viter les d&#xE9;faillances lors d&apos;une panne, on utilise une r&#xE9;plication :
+	- d&#xE9;finition d&apos;un `replication factor` ou `RF` qui indique le nombre de copie
+	- deux strat&#xE9;gies possible :
+		- `SimpleStrategy` : sur le noeud indiqu&#xE9; par le `partitionner` et les suivants dans l&apos;anneau (un seul data center)
+		- `NetworkTopologyStrategy` : permet de distribuer sur plusieurs data centers (pour &#xE9;viter les probl&#xE8;mes lors de la faille d&apos;un data center)
+		
+---
+## Coh&#xE9;rence de la base
+
+Doit-on s&apos;assurer que toutes les donn&#xE9;es sont r&#xE9;pliqu&#xE9;es correctement lors de l&apos;&#xE9;criture ?
+- D&#xE9;pendant du contexte
+- D&#xE9;finition du niveau de `consistency` en &#xE9;criture :
+	- `ALL` : tous les replicas sont &#xE9;crits
+	- `QUORUM` : une majorit&#xE9; des replicas sont &#xE9;crits 
+	- `ONE`, `TWO`, `THREE`: un, deux ou trois replicas sont &#xE9;crits
+	- ...
+
+Doit-on s&apos;assurer que toutes les donn&#xE9;es lues sont les derni&#xE8;res &#xE9;crites ?
+- D&#xE9;pendant du contexte
+- D&#xE9;finition du niveau de `consistency` en lecture :
+	- `ALL` : tous les replicas sont lus
+	- `QUORUM` : une majorit&#xE9; des replicas sont lus 
+	- `ONE`, `TWO`, `THREE`: un, deux ou trois replicas sont lus
+	- ...
+
+---
+## Coh&#xE9;rence de la base (suite)
+
+Cassandra est une BD avec une coh&#xE9;rence **BASE**
+
+Le choix des niveaux de coh&#xE9;rence en &#xE9;criture et en lecture va d&#xE9;terminer la balance entre **CP** et **AP** (sur le th&#xE9;or&#xE8;me **CAP**)
+
+Si consistence forte demand&#xE9;e : 
+- on se fixe comme r&#xE8;gle `W` + `R` &gt; `RF` 
+	- `W` : nombre de noeuds contact&#xE9;s en lecture
+	- `R`: nombre de noeuds contact&#xE9;s en &#xE9;criture
+	- `RF`: nombre de replicas
+- exemple : `ALL` en &#xE9;criture et `ONE` en lecture
+
+---
+## En cas de d&#xE9;faillance
+
+- Si un noeud est *down*, une fois r&#xE9;par&#xE9;, il faut le recharger avec les donn&#xE9;es des autres noeuds
+	- Plusieurs possibilit&#xE9; de r&#xE9;paration (s&#xE9;quentiel/parall&#xE8;lement, incr&#xE9;mentalement, ...)
+- Si c&apos;est juste une op&#xE9;ration qui n&apos;a pas pu &#xEA;tre r&#xE9;par&#xE9; 
+	- probl&#xE8;me r&#xE9;seau ou autre
+	- notion de `hinted handoff` : 
+		- on &#xE9;crit la donn&#xE9;e sur une autre noeud disponible
+		- ce noeud &#xE9;crit sur le noeud initialement pr&#xE9;vu lorsque celui-ci revient dans le *ring*
+		- processus utilisant le *gossip* (protocole peer to peer : chaque noeud contacte jusqu&apos;&#xE0; trois autres noeuds chaque seconde)
+- Gestion des suppressions avec la notion de `tombstone`
+	- garde en m&#xE9;moire la suppression pendant un certain temps
+	- renvoie la suppression sur les replicas qui &#xE9;taient *down* 
+
+Plus il y a de noeuds, et plus le replication factor est grand, plus le syst&#xE8;me est r&#xE9;sistant aux d&#xE9;faillances
+
+---
+## Langage d&apos;interrogation 
+
+Cassandra dispose d&apos;un langage d&apos;interrogation : `CQL` (pour *Cassandra Query Language*)
+- Documentation assez propre ([lien](http://www.datastax.com/documentation/cql/3.1/index.html))
+- Tr&#xE8;s proche de `SQL` :
+	- `CREATE TABLE tab ();`
+	- `ALTER TABLE tab ADD att type;`	
+	- `INSERT INTO tab (att, ...) VALUES (exp, ...);`
+	- `UPDATE tab SET att = exp WHERE cond;`
+	- `SELECT * FROM tab WHERE cond ORDER BY col;`
+	- `DROP TABLE tab;`
+	- `DELETE FROM tab WHERE cond;`
+	- ...
+- Pour chaque `column`, il existe la fonction `WRITETIME` permettant de savoir quand a &#xE9;t&#xE9; &#xE9;crit la donn&#xE9;e
+
+---
+## Performances de Cassandra
+
+- Tr&#xE8;s rapide en &#xE9;criture
+	- pas d&apos;update
+	- toutes les &#xE9;volutions sont &#xE9;crites
+	- suppressions des infos obsol&#xE8;tes lors d&apos;une `compaction`
+- Tr&#xE8;s rapide en lecture
+	- utilisation de `bloom filter` (outil permettant de v&#xE9;rifier que la donn&#xE9;e n&apos;est pas d&#xE9;j&#xE0; pr&#xE9;sente dans la m&#xE9;moire avant d&apos;aller faire des op&#xE9;rations sur disques)
+	- regarde ensuite dans le `cache`
+
+Quelques comparatifs :
+- Sur [PlanetCassandra](http://planetcassandra.org/nosql-performance-benchmarks/)
+- Par [DataStax](http://www.datastax.com/dev/blog/cassandra-architecture-and-performance-mid-2014) (promoteur de Cassandra)
+- Sur [Cubrid.org](http://www.cubrid.org/blog/dev-platform/nosql-benchmarking/) (ind&#xE9;pendant)
+	
+---
+## Interface avec les langages
+
+Plusieurs interfaces existent avec les langages courants ([voir ici](http://planetcassandra.org/client-drivers-tools/))
+- ODBC
+- PHP, Node.js
+- C++, Java, .NET
+- Python, R, Scala
+- Spark
+
+Librairie [RCassandra](http://www.rforge.net/RCassandra/index.html) permettant de se connecter &#xE0; Cassandra &#xE0; partir de **R**
+- `RC.connect` et `RC.close` pour g&#xE9;rer la connection
+- `RC.get` (et d&apos;autres) pour r&#xE9;cup&#xE9;rer des informations
+- `RC.insert` et `RC.mutation` pour insertion et mise &#xE0; jour
+
+[Python-driver](http://datastax.github.io/python-driver/getting_started.html) permettant de se connecter &#xE0; Cassandra &#xE0; partir de **Python**
+</textarea><script src="https://gnab.github.io/remark/downloads/remark-latest.min.js"></script><script>var slideshow = remark.create();
+</script></section>
+        <footer></footer>
+    </body>
+</html>

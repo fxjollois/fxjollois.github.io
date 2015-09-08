@@ -1,0 +1,271 @@
+<!doctype html>
+<html>
+    <head>
+        <title>MongoDB</title>
+        <meta charset="utf-8">
+        <link rel="stylesheet" href="../../../css/global.css">
+        <meta name="keywords" content="programmation, sql, r, sas, python, mongo, nosql, html, css, javascript, d3, google charts, chart.js">
+        <meta name="description" content="Page professionnelle de FX Jollois, contenant des notes de programmation, des tutoriels et des slides de cours, ainsi que des liens vers les projets GitHub personnels">
+        <meta name="author" content="Francois-Xavier Jollois">
+        <meta name="copyright" content="&#xA9;">
+    <link rel="stylesheet" href="../../../lib/styles/default.css">
+</head>
+    <body>
+        <header></header>
+        <section><textarea id="source"># MongoDB
+
+## Pr&#xE9;sentation
+
+BD  NoSQL distribu&#xE9; de type *Document Store* ([site web](http://www.mongodb.com/)) 
+
+Objectifs :
+- G&#xE9;rer de gros volumes
+- Facilit&#xE9; de d&#xE9;ploiement et d&apos;utilisation
+- Possibilit&#xE9; de faire des choses complexes tout de m&#xEA;me
+
+---
+## Histoire
+
+- D&#xE9;velopp&#xE9; par la compagnie *10gen* (devenu *mongodb* maintenant) depuis 2007
+- Devenu open source en 2009
+- BD NoSQL la plus connue
+
+## Quelques liens
+
+- [Documentation MongoDB](http://docs.mongodb.org/manual/) plut&#xF4;t tr&#xE8;s bien faite
+- [The Little MongoDB book](http://openmymind.net/mongodb.pdf)
+
+---
+## Quelques utilisateurs connus
+
+- [The Weather Channel](http://www.mongodb.com/customers/weather-channel)
+- [MetLife](http://www.mongodb.com/customers/metlife)
+- [Bosch](http://www.mongodb.com/customers/bosch)
+- [Expedia](http://www.mongodb.com/customers/expedia)
+- [Forbes](http://www.mongodb.com/customers/forbes)
+- [D&apos;autres encore](http://www.mongodb.com/who-uses-mongodb)
+	- Gov.uk, NCI, City of Chicago
+	- BuzzFeed, eBay, FourthSquare, McAfee, LinkedIn
+	- GAP, Under Armour,
+	- The New York Times, MTV
+	- Bouygues Telecom, Orange
+	- ...
+
+---
+
+## Mod&#xE8;le des donn&#xE9;es
+
+Principe de base : les donn&#xE9;es sont des `documents`
+- stock&#xE9; en *Binary JSON* (`BSON`)
+- documents similaires rassembl&#xE9;s dans des `collections`
+- pas de sch&#xE9;ma des documents d&#xE9;finis en amont
+	- contrairement &#xE0; un BD relationnel ou NoSQL de type *Column Store*
+- les documents peuvent d&apos;avoir aucun point commun entre eux
+- un document contient (g&#xE9;n&#xE9;ralement) l&apos;ensemble des informations
+	- pas (ou tr&#xE8;s peu) de jointure &#xE0; faire
+- BD respectant **CP** (dans le th&#xE9;or&#xE8;me *CAP*)
+	- propri&#xE9;t&#xE9;s ACID au niveau d&apos;un document
+    
+---
+
+## Point sur JSON
+
+- **JavaScript Object Notation**
+- Cr&#xE9;&#xE9; en 2005
+- Format d&apos;&#xE9;change de donn&#xE9;es structur&#xE9;es l&#xE9;ger
+- Sch&#xE9;ma des donn&#xE9;es non connu et contenu dans les donn&#xE9;es
+- Bas&#xE9; sur deux notions :
+	- collection de couples cl&#xE9;/valeur
+	- liste de valeurs ordonn&#xE9;es
+- Structures (au sens algorithme) pr&#xE9;sentes :
+	- objet (couples cl&#xE9;/valeur) : `{}`, `{ &quot;nom&quot;: &quot;jollois&quot;, &quot;prenom&quot;: &quot;fx&quot; }`
+	- tableau (collection de valeurs) : `[]`, `[ 1, 5, 10]`
+	- une valeur dans un objet ou dans un tableau peut &#xEA;tre elle-m&#xEA;me un objet ou un tableau
+
+
+Validation possible du JSON sur [jsonlint.com/](http://jsonlint.com/)
+
+---
+## Exemple d&apos;un JSON
+
+```json
+{
+	&quot;tubd&quot;: {
+		&quot;formation&quot;: &quot;DU Analyste Big Data&quot;,
+		&quot;responsable&quot;: { &quot;nom&quot;: &quot;Poggi&quot;, &quot;courriel&quot;: &quot;jean-michel.poggi@parisdescartes.fr&quot; },
+		&quot;etudiants&quot; : [
+			{ &quot;id&quot;: 1, &quot;nom&quot;: &quot;jollois&quot;, &quot;prenom&quot;: &quot;fx&quot; },
+			{ &quot;id&quot;: 2, &quot;nom&quot;: &quot;aristote&quot;, &quot;details&quot;: &quot;d&#xE9;l&#xE9;gu&#xE9;&quot; },
+			{ &quot;id&quot;: 5, &quot;nom&quot;: &quot;platon&quot; }
+		],
+		&quot;ouverte&quot;: true
+	},
+	&quot;tudv&quot;: {
+		&quot;formation&quot;: &quot;DU Data Visualisation&quot;,
+		&quot;ouverte&quot;: false,
+		&quot;todo&quot;: [
+			&quot;Creation de la maquette&quot;,
+			&quot;Validation par le conseil&quot;
+			],
+		&quot;responsable&quot;: { &quot;nom&quot;: &quot;Jollois&quot; }
+	}
+}
+```
+
+---
+## Compl&#xE9;ments
+
+`BSON` : extension de `JSON`
+- Quelques types suppl&#xE9;mentaires (identifiant sp&#xE9;cifique, binaire, date, ...)
+- Distinction entier et r&#xE9;el
+
+Sch&#xE9;ma dynamique
+- Documents variant tr&#xE8;s fortement entre eux, m&#xEA;me dans une m&#xEA;me collection
+- On parle de **self-describing documents**
+- Ajout tr&#xE8;s facile d&apos;un nouvel &#xE9;l&#xE9;ment pour un document, m&#xEA;me si cet &#xE9;l&#xE9;ment est inexistant pour les autres
+- Pas de `ALTER TABLE` ou de redesign de la base
+
+Pas de jointures entre les collections
+- Utilisation de `find()` et des curseurs
+
+On peut commencer &#xE0; travailler sans phase longue de mod&#xE9;lisation 
+
+---
+## Distribution et r&#xE9;plication des donn&#xE9;es
+
+- R&#xE9;plication 
+	- D&#xE9;finition d&apos;un *replication set* (ensemble de noeuds pour r&#xE9;plication)
+	- un noeud primaire par *set*
+	- demandes envoy&#xE9;es au noeud primaire et r&#xE9;plication par la suite
+	- si noeud primaire *down*, vote entre les noeuds secondaires pour trouver un nouveau noeud primaire
+- Partitionnement horizontal (ou *sharding*) support&#xE9; 
+	- Donn&#xE9;es
+		- D&#xE9;coupage des donn&#xE9;es sur la base de cl&#xE9;s
+		- Allocation d&apos;une plage de cl&#xE9; (ou plage de *hash* de cl&#xE9;) &#xE0; chaque *shards*
+		- Chaque *shard* est un *replication set*
+	- Routeur (*query routers*) pour l&apos;interface avec les clients
+		- un ou plusieurs routeurs par *shard*
+	- Trois serveurs de configuration pour stocker les m&#xE9;tadonn&#xE9;es
+	- Ajout de nouveaux *shards* assez simple
+
+
+---
+## Comparatif (fait par MongoDB)
+
+Voici un comparatif sur quelques propri&#xE9;t&#xE9;s entre MongoDB, les BD relationnelles classiques 
+et les BD NoSQL de type *key-value*
+
+Property             | MONGODB | RELATIONAL | KEY-VALUE
+---------------------|---------|------------|-----------
+Rich Data Model      | Yes | No  | No
+Dynamic Schema       | Yes | No  | Yes
+Typed Data           | Yes | Yes | No
+Data Locality        | Yes | No  | Yes
+Field Updates        | Yes | Yes | No
+Easy for Programmers | Yes | No  | Yes/No
+
+BD de type *key-value* par forc&#xE9;ment facile &#xE0; manipuler si les structures de donn&#xE9;es sont complexes
+
+	
+---
+## Langage d&apos;interrogation
+
+- Pas de SQL (forc&#xE9;ment), ni de langage proche
+- D&#xE9;finition d&apos;un langage propre
+- Langage permettant plus que les acc&#xE8;s aux donn&#xE9;es
+	- d&#xE9;finition de variables
+	- boucles
+	- ...
+
+Commandes suivantes r&#xE9;alisables &#xE0; partir du `shell`
+
+---
+## Requ&#xEA;tage
+
+- En &#xE9;criture
+	- `db.collection.insert(document)` : pour ins&#xE9;rer de nouveaux documents
+		- si la collection n&apos;existe pas, elle est cr&#xE9;&#xE9;e automatiquement
+		- si l&apos;identifiant `_id` n&apos;est pas sp&#xE9;cifi&#xE9;, il est automatiquement g&#xE9;n&#xE9;r&#xE9;
+		- possibilit&#xE9; d&apos;utiliser la m&#xE9;thode `upsert` (en indiquant l&apos;option)
+			- mise &#xE0; jour du document si pr&#xE9;sente
+			- insertion sinon
+	- `db.collection.update(cond, para)` : pour mettre &#xE0; jour un ou plusieurs documents respectant une condition 
+		- si `para` est un document classique, on remplace tout le document
+		- si `para` est un document sp&#xE9;cifique (avec `$set`, `$inc` ou `$push`), on met &#xE0; jour le document
+	- `db.collection.remove()` : pour supprimer des documents
+		- en ajoutant un crit&#xE8;re pour n&apos;en supprimer que quelques uns.
+
+---
+## Requ&#xEA;tage
+
+- En lecture
+	- `db.collection.find()` : retourne les documents de la collection
+	- `db.collection.find( { criteria } )` : retourne ceux qui sp&#xE9;cifie le ou les crit&#xE8;res
+	- `db.collection.find( { criteria }, { element: val } )` : retourne que certains &#xE9;l&#xE9;ments des documents 
+		- pour chaque &#xE9;l&#xE9;ment
+			- si `val=1`, il sera pr&#xE9;sent (inclusion)
+			- si `val=0`, il sera absent (exclusion)
+		- `_id` toujours pr&#xE9;sent, sauf si explicitement exclu (avec `_id: 0`)
+		- ici `criteria` peut ne pas &#xEA;tre pr&#xE9;sent
+	- `db.collection.find().limit( nb )` : pour se limiter &#xE0; un certain nombre de document
+	- `db.collection.find().sort()` : pour trier les documents
+	- si le r&#xE9;sultat d&apos;un `find()` est stock&#xE9; dans une variable, on cr&#xE9;&#xE9; un `cursor`
+		- `cursor.hasNext()` pour savoir s&apos;il reste des documents dedans
+		- `cursor.next()` : document suivant dans le curseur
+		- `cursor.objsLeftInBatch()` : pour savoir combien de document il reste dans le curseur
+
+---
+## Agr&#xE9;gat
+
+- `db.collection.agregate( tableau )` : calcul d&apos;agr&#xE9;gat
+	- mots-cl&#xE9;s : `$group`, `$project`, `$match`, `$sort`, `$limit`, `$sum`
+	- tableau pass&#xE9; en param&#xE8;tre :
+		- cellule  pr&#xE9;sente avec `$group` : d&#xE9;termine les regroupements et les calculs 
+		- cellule apr&#xE8;s le `$group` : d&#xE9;termine le tri ou les conditions sur les agr&#xE9;gats
+		- cellule avant le `$group` : d&#xE9;termine les conditions sur les documents 
+	- `$unwind` permettant de naviguer dans des tableaux pr&#xE9;sents dans le document
+- `db.collection.group( objet )` : agr&#xE9;gat avec une fonction particuli&#xE8;re
+	- fonction d&#xE9;finie en JavaScript
+	- objet pass&#xE9; en param&#xE8;tre :
+		- `key` : champs de regroupement (simple ou multiple)
+		- `reduce` : fonction
+		- `initial` : initialisation du r&#xE9;sultat, si besoin
+- `db.collection.mapReduce( map, reduce, options)` : algo Map-Reduce sur les documents 
+	- `map` : fonction JavaScript
+	- `reduce` : fonction JavaScript
+	- `options` : options de l&apos;algorithme
+
+---
+## Performance de MongoDB
+
+- D&#xE9;veloppement rapide et it&#xE9;ratif
+- Mod&#xE8;le des donn&#xE9;es tr&#xE8;s flexible
+- Passage &#xE0; l&apos;&#xE9;chelle tr&#xE8;s simple ([voir ici](https://www.mongodb.com/mongodb-scale) par exemple)
+- Service de gestion du d&#xE9;ploiement de MongoDB
+- Declar&#xE9; *DBMS of the Year 2014* ([voir ici](http://db-engines.com/en/blog_post/41))
+
+Quelques comparatifs
+- [Sur eventuallycoding](http://www.eventuallycoding.com/index.php/comparaison-de-moteurs-de-base-de-donnees-pour-du-stockage-de-logs/) avec elasticsearch, MySQL et Cassandra
+- [Un comparatif ind&#xE9;pendant](http://www.altoros.com/vendor_independent_comparison_of_nosql_databases.html) sur demande
+- [par Open Software Integrators](http://osintegrators.com/sites/default/files/Mongo.Whitepaper.pdf) avec Hadoop
+
+---
+## Interface avec les langages
+
+Plusieurs interfaces existent avec les langages courants ([voir ici](http://docs.mongodb.org/ecosystem/drivers/))
+- PHP, Node.js
+- C, C++, Java, .NET
+- Perl, Ruby
+- Python, R, Scala, Matlab
+
+2 librairies permettant de se connecter &#xE0; MongoDB &#xE0; partir de **R** (mais hors *CRAN*)
+- [rmongodb](https://github.com/gerald-lindsly/rmongodb) 
+- [RMongo](https://github.com/tc/RMongo)
+
+[PyMongo](http://api.mongodb.org/python/current/) permettant de se connecter &#xE0; MongoDB &#xE0; partir de **Python**
+</textarea><script src="https://gnab.github.io/remark/downloads/remark-latest.min.js"></script><script>var slideshow = remark.create();
+</script></section>
+        <footer></footer>
+    <script src="../../../lib/highlight.pack.js"></script>
+<script>hljs.initHighlightingOnLoad();</script></body>
+</html>
