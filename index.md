@@ -6,11 +6,8 @@ Page professionnelle hébergée sur GitHub
 
 [Voir mon autre page pro](http://www.mi.parisdescartes.fr/%7Ejollois)
 
-## [**#**](slides)Slides de présentation 
-Des diaporamas que j'utilise dans mes différents cours.
-
-## [**#**](prog)Notes de programmations
-Voici quelques notes de programmations (sur différents langages tels que R, SAS, SQL, ...) que je garde comme aide-mémoire.
+## [**#**](webreporting)Web Reporting
+Cours du Web Reporting, et plus spécifiquement dans l'utilisation de la librairie [D3.js](http://d3js.org/)
                 
 ## [**#**](tuto)Tutoriels divers
 Je propose ici des tutoriels sur plusieurs outils (R, MongoDB, ...)

@@ -1,3 +1,0 @@
-# Jointures
-
-à faire

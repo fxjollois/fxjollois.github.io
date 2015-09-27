@@ -1,0 +1,438 @@
+<!doctype html>
+<html>
+    <head>
+        <title>Prog Web : HTML, CSS, SVG</title>
+        <meta charset="utf-8">
+        <link rel="stylesheet" href="../../css/global.css">
+        <meta name="keywords" content="programmation, sql, r, sas, python, mongo, nosql, html, css, javascript, d3, google charts, chart.js">
+        <meta name="description" content="Page professionnelle de FX Jollois, contenant des notes de programmation, des tutoriels et des slides de cours, ainsi que des liens vers les projets GitHub personnels">
+        <meta name="author" content="Francois-Xavier Jollois">
+        <meta name="copyright" content="&#xA9;">
+    <link rel="stylesheet" href="../../lib/highlight/styles/default.css">
+</head>
+    <body>
+        <header></header>
+        <section><textarea id="source"># Prog Web : HTML, CSS, SVG
+
+## Introduction &#xE0; la programmation web statique
+
+1. **HTML**
+2. **CSS**
+3. **SVG**
+
+---
+## Programmation web statique
+
+- *Programmation* car langages sp&#xE9;cifiques permettant de sp&#xE9;cifier des &#xE9;l&#xE9;ments particuliers et le traitement &#xE0; faire sur eux
+- *Web* car d&#xE9;velopp&#xE9; pour un usage sur un navigateur
+- *Statique* car (quasiment) pas de notions de variables dans les langages vus ici
+
+### Quel langage pour quoi ?
+
+- **HTML** : langage de description de textes
+- **CSS** : langage de formatage d&apos;&#xE9;l&#xE9;ments (texte, image, graphique)
+- **SVG** : langage de description de graphiques
+- **JavaScript** (non vu dans cette pr&#xE9;sentaiton) : langage de programmation 
+
+---
+## HTML
+
+Langage de description de textes
+
+- `HTML` : **HyperText Markup Language**
+- Ici = HTML5 (cf [W3C](http://www.w3.org/TR/html5/))
+- Utilisation de **balises**
+    - double : `<balise>...</balise>`
+    - simple : `<balise paramètre(s)="">`
+- D&#xE9;finition de la s&#xE9;mantique du texte
+- Structuration des &#xE9;l&#xE9;ments du texte : **DOM** (*Document Object Model*)
+
+Le navigateur **traduit** selon sa propre interpr&#xE9;tation des recommandations le contenu de la page
+
+- R&#xE9;sultat pouvant &#xEA;tre diff&#xE9;rent d&apos;un navigateur &#xE0; l&apos;autre
+- Syntaxe eronn&#xE9;e compl&#xE9;t&#xE9;e &#xE0; la vol&#xE9;e, par le navigateur = gros risque d&apos;erreur
+
+---
+### Sch&#xE9;ma de base
+
+```html
+<!doctype html>
+<html>
+    <head>
+        <!-- 
+            méta-données sur la page :
+                - titre (i.e. nom de l'onglet)
+                - encodage, auteur, mots-clés, description
+                - ...
+        -->
+    </head>
+    <body>
+        <!-- 
+            corps de la page (ce qui sera donc affiché)
+                - en-tête et pied de page, menu
+                - contenu
+                - ...
+        -->
+    </body>
+</html>
+```
+
+---
+### M&#xE9;ta-donn&#xE9;es
+
+#### Importance de ces m&#xE9;ta-donn&#xE9;es
+
+- Pour le navigateur, encodage et lien avec les scripts et les feuilles de styles absolument n&#xE9;cessaire pour bien afficher la page
+- Pour les moteurs de recherche, titre, auteur, mots-cl&#xE9;s, description sont utilis&#xE9;s pour l&apos;indexation de la page
+
+#### Titre
+
+`<title>Page d&apos;exemple HTML</title>`
+- Titre de la page &#xE0; afficher dans le titre de l&apos;onglet du navigateur
+
+---
+#### N&#xE9;cessaire &#xE0; la traduction
+
+`<!doctype html>`
+- Indique que c&apos;est une page HTML**5**
+
+`<meta charset="utf-8">`
+- Encodage de la page (ici `UTF-8`)
+
+#### Pour l&apos;indexation
+
+`<meta name="author" content="FX Jollois">`
+
+`<meta name="keywords" content="html, css, truc super bien">`
+
+`<meta name="description" content="Super cours !!">`
+- Auteur, mots-cl&#xE9;s et description de la page
+
+---
+#### Scripts et styles
+
+`<script></script>`
+- &#xC9;criture de script `JS` (ou importation du fichier source avec `src=&quot;script.js&quot;` en param&#xE8;tre)
+
+`<style></style>`
+- D&#xE9;finition du style `CSS` de la page
+
+`<link rel="stylesheet" href="style.css">`
+- Importation d&apos;une feuille de style `CSS`
+
+&#xA0;
+
+Les balises `script` et `style` peuvent aussi &#xEA;tre int&#xE9;gr&#xE9; dans le corps (dans la balise `body` donc), selon les besoins.
+
+---
+### Description du contenu
+
+#### 2 types de balises
+
+1. Balise de type **`div`** :
+    - *bloc* de la largeur de la page (ou de l&apos;&#xE9;l&#xE9;ment parent)
+2. Balise de type **`span`** :
+    - &#xE9;l&#xE9;ment dit *en ligne*, tel un mot dans une phrase
+
+<div style="width: 80%; margin: 0 auto;">
+    <div style="border: solid 1px black; margin: 5px; padding: 5px;">
+        Ceci est un <code>div</code>
+        <div style="border: solid 1px black; margin: 5px; padding: 5px;">
+            Toujours un <code>div</code>, dans le premier <code>div</code>
+        </div>
+        Ici, un <span style="background-color: #ddd;"><code>span</code></span>
+        <div style="border: solid 1px black; margin: 5px; padding: 5px;">
+            Idem (un <code>div</code>), mais ici avec <span style="background-color: #ddd;">un <code>span</code></span> et <span style="background-color: #ddd;">un autre <code>span</code></span>
+        </div>
+        Et enfin <span style="background-color: #ddd;">un <code>span</code> avec un <div style="border: solid 1px black; margin: 5px; padding: 5px;"><code>div</code> dedans</div></span> 
+    </div>
+</div>
+
+---
+#### Balises s&#xE9;mantiques principales
+
+S&#xE9;mantique importante pour :
+- Indexation des pages par les moteurs de recherche
+- Analyse des pages par des outils d&apos;aide d&#xE9;di&#xE9;s aux personnes mal-voyantes
+
+|balise double |sens|
+|-|-|
+| `header` et `footer` | en-t&#xEA;te et pied de page |
+| `nav` | menu de la page |
+| `aside` | partie annexe de la apge (type pub) |
+| `section` et `article` | parties nous permettant d&apos;ins&#xE9;rer le contenu de la page |
+| `h1, h2, ..., h6` | titres et sous-titres |
+| `strong` | mot(s) important(s) |
+| `em` | mot(s) un peu moins important(s) |
+
+
+---
+#### Balises autres
+
+| balise | d&#xE9;finition |
+|-|-|
+| `p` | paragraphe |
+| `ol` et `ul` | liste ordonn&#xE9;e et non-ordonn&#xE9;e |
+| `li` | &#xE9;l&#xE9;ment d&apos;une liste |
+| `dl`, `dt` et `dd` | liste de d&#xE9;finition, terme &#xE0; d&#xE9;finir et d&#xE9;finition donc |
+| `img` | insertion d&apos;une image |
+| `b` et `i` | mise en gras ou en italique |
+| `pre` | texte pr&#xE9;format&#xE9; sans compactage d&apos;espaces |
+| `code` | code en ligne |
+| `br` | saut &#xE0; la ligne |
+| `hr` | ligne horizontale |
+| `table` | tableau |
+| `tr`, `td`, `th` | ligne, cellule et en-t&#xEA;te de colonnes d&apos;un tableau |
+
+Liste non-exhaustive !
+
+---
+### DOM
+
+Comme indiqu&#xE9; plus t&#xF4;t, la structure de la page est connue sous le nom de **DOM** ou **Document Object Model**
+
+Pour avoir une id&#xE9;e de ce qu&apos;est le DOM :
+- Ouvrir [cette page](page.html) dans un autre onglet
+- Afficher les outils de d&#xE9;veloppements de votre navigateur
+
+Vous devriez voir la structure (qui correspond &#xE0; l&apos;indentation car le code de la page est proprement &#xE9;crit) 
+
+### Validation du code
+
+- **HTML5** n&apos;est pas une norme : traduction d&#xE9;pendante du navigateur
+- Validation du code via le [validateur](https://validator.w3.org/) du W3C
+
+---
+### Param&#xE8;tres des balises
+
+Quelques param&#xE8;tres sont communs &#xE0; toutes les balises :
+
+`<balise style="code CSS">`
+- applique un style `CSS` sp&#xE9;cifique (cf plus bas) &#xE0; l&apos;&#xE9;l&#xE9;ment
+
+`<balise width="valeur" height="valeur">`
+- d&#xE9;termine la largeur et la hauteur de l&apos;&#xE9;l&#xE9;ment (`valeur` relative ou absolue)
+
+`<balise class="classe(s)">`
+- d&#xE9;finit la ou les classes de l&apos;&#xE9;l&#xE9;ment (utile en `CSS` ou en `JS`)
+
+`<balise id="identifiant">`
+- donne un identifiant (qui doit &#xEA;tre unique dans la page - sinon risque de confusion) &#xE0; l&apos;&#xE9;l&#xE9;ment (idem, utile en `CSS` et en `JS`)
+
+
+---
+## CSS
+
+Langage de formattage d&apos;&#xE9;l&#xE9;ments d&apos;une page web, de tous types (texte, image, vid&#xE9;o, dessin)
+
+- `CSS` : **Cascading Style Sheets**
+- Ici = CSS3 (cf [W3C](http://www.w3.org/TR/css3/))
+- Langage script ex&#xE9;cut&#xE9; via un navigateur
+- Utilisation de param&#xE8;tres pr&#xE9;d&#xE9;finis, &#xE0; appliquer sur les balises 
+- D&#xE9;finition de la forme des &#xE9;l&#xE9;ments (couleur, police, taille, position, ...)
+
+Trois possibilit&#xE9;s de d&#xE9;finition du style :
+- dans la balise `HTML` avec le param&#xE8;tre `style` 
+- dans la partie `head` de la page (dans la balise `<style>...</style>`
+- dans un fichier `CSS` &#xE0; part (ou plusieurs), &#xE0; appeler avec `<link ...="">` 
+
+---
+### Syntaxe
+
+D&#xE9;finition des valeurs de param&#xE8;tres &#xE0; appliquer sur les &#xE9;l&#xE9;ments correspondants au s&#xE9;lecteur (soit une `balise`, soit une `classe`, soit un `identifiant`) 
+
+```css
+balise {
+    param&#xE8;tre: valeur;
+    ...
+}
+.classe {
+    param&#xE8;tre: valeur;
+    ...
+}
+#identifiant {
+    param&#xE8;tre: valeur;
+    ...
+}
+```
+
+---
+### Quelques param&#xE8;tres
+
+| Param&#xE8;tre | Informations |
+|-|-|
+| `width`, `height` | largeur et hauteur |
+| `color`| couleur de la police |
+| `background-color` | couleur de fond |
+| `font-size` | taille de la police |
+| `text-align` | alignement du texte (justifi&#xE9;, centr&#xE9;, ...) |
+| `display` | type d&apos;affichage (permet de passer du bloc &#xE0; en ligne et inversement par exemple) |
+| `z-index` | niveau d&apos;affichage (grand = devant) |
+
+Les valeurs peuvent &#xEA;tre d&#xE9;termin&#xE9;es :
+- soit en valeur absolue en pixels (`px`), via le syst&#xE8;me m&#xE9;trique (`cm` u `mm` - &#xE0; &#xE9;viter) ou anglais (pouces - `in`)
+- soit en valeur relative en pourcentage (`%`), soit par rapport &#xE0; la taille de la police (`em`)
+
+---
+### Exemple (dans le code HTML)
+
+<div style="background-color: #ddd;">
+ Une balise &#xE0; fond gris, sauf pour <span style="background-color: #fdb;">cette partie de phrase</span>, avec un <div style="display: inline;">div qui n&apos;en est pas un finalement</div> et ce <span style="display: block; position: relative; bottom: -50px">span qui s&apos;&#xE9;chappe</span>
+</div>
+
+<div style="visibility: hidden; ">blablabl<br>blabla</div>
+
+```html
+<div style="background-color: #ddd;">
+ Une balise &#xE0; fond gris, sauf pour 
+ <span style="background-color: #fdb;">cette partie de phrase</span>, 
+ avec un <div style="display: inline;">div qui n&apos;en est pas un 
+ finalement</div> et ce <span style="display: block; 
+ position: relative; bottom: -50px">span qui s&apos;&#xE9;chappe</span>
+</div>
+```
+
+---
+### S&#xE9;lecteur `balise`
+
+`balise`
+- s&#xE9;lectionne donc tous les &#xE9;l&#xE9;ments correspondants &#xE0; la balise (par exemple, tous les `h1`, tous les `p`, ...)
+
+`baliseA baliseB`
+- s&#xE9;lectionne tous les &#xE9;l&#xE9;ments correspondants &#xE0; la balise B qui sont des *fils* de la balise A (`p strong` s&#xE9;lectionne tous les `strong` qui sont dans un `p`), avec possibilit&#xE9; de compl&#xE9;ter sur plusieurs niveaux
+
+`baliseA, baliseB`
+- s&#xE9;lectionne &#xE0; la fois les &#xE9;l&#xE9;ments de la balise A, et les &#xE9;l&#xE9;ments de la balise B (`h1, h2` s&#xE9;lectionne les titres de niveau 1 et les titres de niveau 2)
+
+---
+### S&#xE9;lecteur `classe`
+
+`.classe`
+- s&#xE9;lectionne tous les &#xE9;l&#xE9;ments correspondants &#xE0; la classe
+
+`.classe balise`
+- s&#xE9;lectionne tous les &#xE9;l&#xE9;ments de la balise qui sont des fils de la classe indiqu&#xE9;e (`.maClasse strong` s&#xE9;lectionne tous les `strong` pr&#xE9;sents dans un &#xE9;l&#xE9;ment de classe `maClasse`)
+
+`.classeA.classeB`
+- s&#xE9;lectionne tous les &#xE9;l&#xE9;ments qui sont de classe A ET de classe B 
+
+`balise.classe`
+- s&#xE9;lectionne les &#xE9;l&#xE9;ments de la balise qui sont aussi de la classe donn&#xE9;e (`div.maClasse` s&#xE9;lectionne tous les `div` qui ont la classe `maClasse`)
+
+---
+### S&#xE9;lecteur `identifiant`
+
+`#identifiant`
+- s&#xE9;lectionne l&apos;&#xE9;l&#xE9;ment (le premier trouv&#xE9;) nomm&#xE9; `identifiant` (via `id = &quot;identifiant`)
+
+`#identifiant balise`
+- s&#xE9;lectionne les &#xE9;l&#xE9;ments de la balise qui sont dans l&apos;&#xE9;l&#xE9;ment nomm&#xE9; `identifiant`
+
+`#identifiant.classe`
+- s&#xE9;lectionne l&apos;&#xE9;l&#xE9;ment nomm&#xE9; `identifiant` uniquement lorsque la classe indiqu&#xE9;e lui est affect&#xE9;e (int&#xE9;ressant lors d&apos;une modification du *DOM* en `JS` par exemple)
+
+---
+### Quelques compl&#xE9;ments
+
+Les couleurs peuvent &#xEA;tre d&#xE9;clar&#xE9;es :
+- soit par leur nom (140 couleurs d&#xE9;finies : cf [ici](http://www.w3schools.com/cssref/css_colornames.asp))
+- soit par leur code hexad&#xE9;cimal (`#rrggbb` ou `#rgb` : `r` pour rouge, `g` pour vert et `b` pour bleu)
+- soit par la fonction `rgb(r, g, b)` (les valeurs devant &#xEA;tre entre 0 et 255)
+- soit par la fonction `rgba(r, g, b, t)` identique &#xE0; la pr&#xE9;c&#xE9;dente avec la d&#xE9;finition de la transparence (avec `t` entre 0 et 1)
+
+```css
+/*
+    Les commentaires se font avec
+    cette syntaxe (comme dans
+    beaucoup d&apos;autres langages)
+*/
+```
+
+Voici la [liste exhaustive](https://developer.mozilla.org/en/CSS/CSS_Reference) des &#xE9;l&#xE9;ments `CSS`
+
+---
+## SVG
+
+Langage de description de dessin
+
+- **SVG** : *Scalable Vector Graphics*
+- Bas&#xE9; sur du `XML`
+- Permet de cr&#xE9;er des dessins vectoriels
+- `D3.js` et beaucoup d&apos;autres librairies de dessin sont bas&#xE9;es sur cette technologie
+- Pas support&#xE9; par tous les navigateurs (en particulier les plus anciens)
+
+Exemple
+
+<div style="text-align: center;">
+<svg width="250" height="50" style="border: solid 1px black;">
+    <rect x="50" y="0" width="200" height="45" fill="orange"/>
+</svg>
+</div>
+
+```svg
+<svg width="250" height="50" style="border: solid 1px black;">
+    <rect x="50" y="0" width="200" height="45" fill="orange"/>
+</svg>
+```
+
+---
+### Compl&#xE9;ments
+
+- 2 types de balises comme en `HTML` 
+    - double : `<balise> ... </balise>`
+    - simple : `<balise>`
+- Le point d&apos;origine `(0,0)` est situ&#xE9; en haut &#xE0; gauche (comme pour un &#xE9;cran d&apos;ordinateur)
+- Quelques balises de forme de base :
+    - `<rect x="" y="" width="" height=""></rect>` pour un rectangle
+    - `<circle cx="" cy="" r=""></circle>` pour un cercle
+    - `<ellispe cx="" cy="" rx="" ry="">` pour une ellipse
+    - `<line x1="" y1="" x2="" y2=""></line>` pour une ligne
+    - `<text x="" y="">texte &#xE0; ins&#xE9;rer</text>` pour du texte
+- Possibilit&#xE9; d&apos;affecter des classes ou un identifiant &#xE0; chaque &#xE9;l&#xE9;ment
+
+---
+### Ordre de dessin
+
+- Pas de notion de couches, contrairement &#xE0; `CSS` 
+- Dernier dessin&#xE9; = forme *au-dessus* du reste
+
+```css
+<rect x="0" y="0" width="70" height="70" fill="purple"></rect>
+<rect x="50" y="25" width="70" height="70" fill="blue"></rect>
+<rect x="100" y="50" width="70" height="70" fill="green"></rect>
+<rect x="150" y="75" width="70" height="70" fill="yellow"></rect>
+<rect x="200" y="100" width="70" height="70" fill="red"></rect>
+```
+
+<div style="text-align: center;">
+    <svg width="300" height="200">
+        <rect x="0" y="0" width="70" height="70" fill="purple"/>
+        <rect x="50" y="25" width="70" height="70" fill="blue"/>
+        <rect x="100" y="50" width="70" height="70" fill="green"/>
+        <rect x="150" y="75" width="70" height="70" fill="yellow"/>
+        <rect x="200" y="100" width="70" height="70" fill="red"/>
+    </svg>
+</div>
+
+---
+## Outils pour d&#xE9;velopper
+
+Sites permettant d&apos;&#xE9;crire du code web directement dans le navigateur, et de le partager :
+- [CodePen.io](http://codepen.io)
+- [JSFiddle](http://jsfiddle.net)
+- [JSBin](http://jsbin.com)
+- [Plunker](http://plnkr.co/)
+
+Site permettant de faire plein choses tr&#xE8;s bien :
+- [GitHub](http://github.com)
+
+Sites d&apos;apprentissage et forums
+- [w3schools](http://www.w3schools.com)
+- [CodeAcademy](https://www.codecademy.com/fr/tracks/web)
+- [StackOverFlow](http://stackoverflow.com)
+- [Developpez.net](http://developpez.net)</ellispe></balise></balise></balise></balise></balise></balise></textarea><script src="https://gnab.github.io/remark/downloads/remark-latest.min.js"></script><script>var slideshow = remark.create();
+</script></section>
+        <footer></footer>
+    <script src="../../lib/highlight/highlight.pack.js"></script>
+<script>hljs.initHighlightingOnLoad();</script></body>
+</html>

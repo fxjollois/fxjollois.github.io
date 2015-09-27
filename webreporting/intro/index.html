@@ -1,0 +1,106 @@
+<!doctype html>
+<html>
+    <head>
+        <title>Web-Reporting</title>
+        <meta charset="utf-8">
+        <link rel="stylesheet" href="../../css/global.css">
+        <meta name="keywords" content="programmation, sql, r, sas, python, mongo, nosql, html, css, javascript, d3, google charts, chart.js">
+        <meta name="description" content="Page professionnelle de FX Jollois, contenant des notes de programmation, des tutoriels et des slides de cours, ainsi que des liens vers les projets GitHub personnels">
+        <meta name="author" content="Francois-Xavier Jollois">
+        <meta name="copyright" content="&#xA9;">
+    </head>
+    <body>
+        <header></header>
+        <section><textarea id="source"># Web-Reporting
+
+## Introduction &#xE0; la data visualisation interactive
+
+1. Qu&apos;est-ce que le web-reporting ?
+2. Pourquoi la visualisation ?
+3. Pourquoi le web ?
+4. Comment ?
+
+---
+# Le web-reporting ?
+
+## Reporting
+
+Rapport (plus ou moins court) sens&#xE9; rendre compte de l&apos;activit&#xE9; d&apos;un service, d&apos;une direction voire d&apos;une entreprise. Il int&#xE8;gre &#xE0; la fois des &#xE9;l&#xE9;ments num&#xE9;riques et des &#xE9;l&#xE9;ments graphiques. On a recourt aux techniques suivantes :
+- **Statistiques**
+- Calcul de **KPI** et cr&#xE9;ation d&apos;indicateurs
+- **Visualisation de donn&#xE9;es**
+
+## Web-Reporting
+
+Idem mais accessible via une page web, avec id&#xE9;alement de l&apos;interactivit&#xE9; et une mise &#xE0; jour automatis&#xE9; (sinon, un PDF suffit amplement)
+
+---
+## Pour qui ?
+
+Tr&#xE8;s g&#xE9;n&#xE9;ralement adress&#xE9; &#xE0; des d&#xE9;cideurs (directeur de service, d&apos;agence, DG, ...) qui vont s&apos;appuyer dessus pour orienter &#xE0; plus ou moins long terme l&apos;avenir de leur service/agence/direction/entreprise/...
+
+## Importance du reporting
+
+A l&apos;heure actuelle (masse de donn&#xE9;es, besoin de r&#xE9;activit&#xE9;, ...), il est primordial que les d&#xE9;cideurs puissent avoir les informations les plus lisibles, les plus &#xE0; jour et les plus fiables.
+
+---
+## Place dans le sch&#xE9;ma info 
+
+- Place l&#xE9;gitime : en sortie d&apos;un entrep&#xF4;t de donn&#xE9;es (ou magasin de donn&#xE9;es), pour la restitution d&apos;information
+- Sinon : possiblement sur des donn&#xE9;es op&#xE9;rationnelles pour des reporting d&apos;activit&#xE9;s tr&#xE8;s focalis&#xE9;es
+
+## Contraintes
+
+- Donn&#xE9;es souvent agr&#xE9;g&#xE9;es, venant de plusieurs tables (si donn&#xE9;es sources) et donc pouvant prendre du temps &#xE0; &#xEA;tre consolid&#xE9;es si pas d&apos;entrep&#xF4;ts
+- R&#xE9;activit&#xE9;
+- Interactivit&#xE9; : le destinataire doit pouvoir *jouer* avec la repr&#xE9;sentation pour faire sa propre analyse
+
+---
+Source : https://developers.google.com/chart/interactive/docs/gallery/controls
+
+<iframe src="exemple-reporting.html" style="width:100%; height: 100%; border: 0;"></iframe>
+
+---
+# Pourquoi la visualisation ?
+
+## Visualisation de donn&#xE9;es
+
+Repr&#xE9;sentation graphique de donn&#xE9;es plus ou moins complexe, permettant la mise en valeur de tendances ou points importants. &#xC9;l&#xE9;ment de plus en plus utilis&#xE9; en data-journalisme d&apos;abord, puis dans les entreprise
+
+## Historique
+
+Usage connu depuis plusieurs si&#xE8;cles (cf exemple dans la [page wikipedia](https://fr.wikipedia.org/wiki/Repr%C3%A9sentation_graphique_de_donn%C3%A9es_statistiques) sur le sujet).
+
+On parle maintenant de **dataviz**
+
+---
+# Pourquoi le web ?
+
+Tendance tr&#xE8;s forte dans le domaine de la dataviz, le passage au web est d&#xFB; &#xE0; plusieurs facteurs
+
+## Aucune r&#xE9;elle contrainte logicielle
+
+Tout ordinateur &#xE0; l&apos;heure actuelle est &#xE9;quip&#xE9; gratuitement d&apos;un navigateur. Toutefois, les outils utilis&#xE9;s fonctionnent tr&#xE8;s souvent sur les derniers g&#xE9;n&#xE9;rations de navigateurs.
+
+## Interactivit&#xE9;
+
+Au contraire de documents PDF classiques, une page web permet d&apos;int&#xE9;grer des &#xE9;l&#xE9;ments d&apos;interactivit&#xE9; pour permettre &#xE0; l&apos;utilisateur d&apos;analyser finement les donn&#xE9;es &#xE0; disposition, plut&#xF4;t que d&apos;avoir un reporting qui contient tous les croisements possibles et inimaginables.
+
+---
+# Comment ?
+
+## Utilisation des technologies web 
+
+**HTML** et **CSS** bien &#xE9;videmment, mais surtout **SVG** ou **Canvas** pour les aspects graphiques, et **JavaScript** pour l&apos;importation des donn&#xE9;es, la cr&#xE9;ation des graphiques, la manipulation de la page et la gestion des &#xE9;v&#xE9;nements.
+
+## Tout &#xE0; la main ?
+
+Non bien &#xE9;videmment, car beaucoup trop lourd. Nous utilisons des **librairies JS**, dont les plus connus sont les suivantes :
+- [Google Charts](https://developers.google.com/chart/)
+- [D3.js](http://d3js.org/)
+- [Raphaeljs](http://raphaeljs.com/)
+- [Highcharts](http://www.highcharts.com/)</textarea><script src="https://gnab.github.io/remark/downloads/remark-latest.min.js"></script><script>var slideshow = remark.create();
+</script></section>
+        <footer></footer>
+    </body>
+</html>
