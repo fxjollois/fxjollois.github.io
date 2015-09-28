@@ -1,0 +1,8 @@
+/* pour les slides faits avec remark.js */
+.remark-slide-content li {
+	margin-bottom: 0.75em;
+}
+
+.remark-slide-content li li {
+	margin-bottom: 0em;
+}

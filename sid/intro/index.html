@@ -1,0 +1,398 @@
+<!doctype html>
+<html>
+    <head>
+        <title>Informatique d&#xE9;cisionnelle</title>
+        <meta charset="utf-8">
+        <link rel="stylesheet" href="../../css/global.css">
+        <meta name="keywords" content="programmation, sql, r, sas, python, mongo, nosql, html, css, javascript, d3, google charts, chart.js">
+        <meta name="description" content="Page professionnelle de FX Jollois, contenant des notes de programmation, des tutoriels et des slides de cours, ainsi que des liens vers les projets GitHub personnels">
+        <meta name="author" content="Francois-Xavier Jollois">
+        <meta name="copyright" content="&#xA9;">
+    <link rel="stylesheet" href="../../lib/highlight/styles/default.css">
+<link rel="stylesheet" href="../../css/remark-slides.css"></head>
+    <body>
+        <header></header>
+        <section><textarea id="source"># Informatique d&#xE9;cisionnelle
+
+## DUT STID 2&#xE8;me ann&#xE9;e
+
+### F.-X. Jollois 
+
+---
+### Sources int&#xE9;ressantes :
+
+- http://wikissimo.aim.asso.fr/
+- http://fr.wikipedia.org/wiki/Syst%C3%A8me_d%27information
+- http://fr.wikipedia.org/wiki/Informatique_d%C3%A9cisionnelle
+
+### Livres int&#xE9;ressants :
+
+- *Entrep&#xF4;ts de donn&#xE9;es. Guide pratique de mod&#xE9;lisation dimensionnelle, 2&#xE8;me &#xE9;dition*, 
+  R. Kimball et M. Ross, Vuibert
+- *Concevoir et d&#xE9;ployer un data warehouse*, R. Kimball, L. Reeves, M. Ross et W. 
+  Thornthwaite, Eyrolles
+
+---
+## D&#xE9;finition d&apos;un SI
+
+- Ensemble organis&#xE9; de ressources qui permet de collecter, stocker, traiter et diffuser de 
+l&apos;information ;
+
+- Compos&#xE9; de deux parties :
+	- Technologique : **logiciels**, de **mat&#xE9;riels** et des **r&#xE9;seaux de t&#xE9;l&#xE9;communication**,
+	- Sociale : personnels, structure, ... (dont nous parlerons pas) ;
+
+- Ne se r&#xE9;sume donc pas &#xE0; un unique SGBD
+
+*Un SI est un r&#xE9;seau complexe de relations structur&#xE9;es o&#xF9; interviennent hommes, machines et 
+proc&#xE9;dures qui a pour but d&#x2019;engendrer des flux ordonn&#xE9;s d&#x2019;informations pertinentes provenant de 
+diff&#xE9;rentes sources et destin&#xE9;es &#xE0; servir de base aux d&#xE9;cisions (Hugues Angot).*
+
+---
+## Composition
+
+Dans un syst&#xE8;me d&apos;information d&apos;une grande entreprise, on trouve :
+- **ERP** (pour *Enterprise Resource Planning*, **PGI** pour *Progiciel de Gestion Int&#xE9;gr&#xE9;*), 
+  int&#xE9;grant les syst&#xE8;mes informatis&#xE9;s transactionnels ;
+
+- des **progiciels m&#xE9;tiers**, couvrant aussi le front-office, le middle, et/ou le back-office, et 
+  qui ne sont pas de conception maison, mais ont &#xE9;t&#xE9; bati par un &#xE9;diteur sp&#xE9;cialis&#xE9; sur un m&#xE9;tier 
+  et dont les modes de fonctionnement logiciels correspondent aux meilleurs pratiques constat&#xE9;es 
+  &#xE0; un moment donn&#xE9; ;
+  
+- des syst&#xE8;mes **sp&#xE9;cifiques** (non standards, de conception *maison*, d&#xE9;velopp&#xE9;s sur mesure, que 
+  l&apos;on ne trouve pas sur le march&#xE9;, ...), o&#xF9; l&apos;on rencontrera davantage d&apos;applications dans les 
+  domaines du calcul de co&#xFB;ts, de la facturation, de l&apos;aide &#xE0; la production, ou de fonctions annexes.
+
+---
+## Pourquoi un SI ?
+
+- Besoin de faciliter la gestion de l&apos;entreprise au quotidien (rapidit&#xE9; de traitement, erreurs
+ minimis&#xE9;es, simplicit&#xE9; &#xE0; pr&#xE9;voir des programmes, ...);
+
+- Besoin d&apos;int&#xE9;grer tous les &#xE9;l&#xE9;ments dans un syst&#xE8;me permettant l&apos;unicit&#xE9; de chaque information 
+  (pas de redondance, donn&#xE9;es mises &#xE0; jour en temps r&#xE9;el - par exemple, dans la gestion de stock);
+
+- Limitation des supports non connect&#xE9;s (papiers, fichiers personnels, ...) pour l&apos;int&#xE9;gration de
+  toutes les donn&#xE9;es dans un m&#xEA;me syst&#xE8;me ;
+  
+- Rendre possible l&apos;interaction directe des clients (particuliers ou entreprises) avec les donn&#xE9;es
+  de l&apos;entreprise (catalogue en ligne, commande en ligne, &#xE9;change d&apos;informations entre 
+  entreprises, ...).
+
+Un SI est fait pour que l&apos;entreprise fonctionne au mieux, mais elle a besoin de faire des analyses
+pour s&apos;am&#xE9;liorer, d&apos;o&#xF9; la n&#xE9;cessit&#xE9; d&apos;un **SI D&#xE9;cisionnel**.
+
+---
+## Trois concepts importants
+
+- **Donn&#xE9;es** : mesure simple collect&#xE9;e par un capteur ou renseign&#xE9;e par une personne.
+
+  *Par exemple, le client 123456 a retir&#xE9; 200&#x20AC; au DAB n&#xB0;321 le 01/09/2015*
+
+- **Information** : calcul ou agr&#xE9;gation de donn&#xE9;es.
+
+  *La moyenne journali&#xE8;re des retraits au DAB n&#xB0;321 est de 500&#x20AC;*
+
+- **Connaissance** : r&#xE9;sultat d&apos;une r&#xE9;flexion sur la base des informations disponibles, et
+  permettant &#xE0; l&apos;entreprise de mieux comprendre son fonctionnement et &#xE9;ventuellement de 
+  l&apos;am&#xE9;liorer.
+  
+  *Le DAB n&#xB0;321 est tr&#xE8;s peu utilis&#xE9;, et d&apos;autres sont pr&#xE9;sents &#xE0; proximit&#xE9;, il serait donc
+  &#xE9;conomique de le supprimer*
+
+---
+## D&#xE9;finition 
+
+L&apos;**informatique d&#xE9;cisionnelle** (ou **Business Intelligence - BI**) d&#xE9;signe les moyens, les 
+outils et les m&#xE9;thodes qui permettent de collecter, consolider, mod&#xE9;liser et restituer les 
+donn&#xE9;es d&apos;une entreprise en vue d&apos;offrir une aide &#xE0; la d&#xE9;cision. 
+
+Elle cherche &#xE0; :
+- Mesurer des indicateurs (ou mesures, **faits**, m&#xE9;triques)
+- Restituer ceux-ci selon des axes d&#x2019;analyse (ou **dimensions**)
+
+La r&#xE9;alisation technique est appel&#xE9;e **Entrep&#xF4;t de donn&#xE9;es** (ou **Data Warehouse - DW**),
+global pour l&apos;entreprise, et compos&#xE9; de plusieurs **Magasin de donn&#xE9;es** (ou **Data Mart - 
+DM**) plus sp&#xE9;cifiques.
+
+---
+## Objectifs du data warehouse
+
+- Rendre accessible les informations de l&apos;entreprise (en terme de compr&#xE9;hension et de 
+  navigation simple et rapide) ;
+
+- Rendre coh&#xE9;rente l&apos;information d&apos;une entreprise (qualit&#xE9; de l&apos;information) ;
+
+- Constituer une source d&apos;information souple et adaptable (en pr&#xE9;voyant les modifications
+  &#xE0; venir : nouveaux produits, nouveaux processuss, ...) ;
+
+- Repr&#xE9;senter un bastion s&#xE9;curis&#xE9; qui prot&#xE8;ge le capital information (s&#xE9;curit&#xE9;, visibilit&#xE9;) ;
+
+- Constituer la base d&#xE9;cisionnelle de l&apos;entreprise (dans le cadre de l&apos;aide &#xE0; la d&#xE9;cision,
+  ce pour quoi le syst&#xE8;me est fait &#xE0; la base).
+  
+Ce n&apos;est pas une *alternative* au SI, mais bien un *compl&#xE9;ment*.
+
+---
+## SI vs SID
+
+2 concepts diff&#xE9;rents :
+- **OLTP** : On-Line Transaction Process
+- **OLAP** : On-Line Analytical Process
+
+| OLTP                        | OLAP                        |
+|-----------------------------|-----------------------------| 
+| Informatique op&#xE9;rationnelle | Informatique d&#xE9;cisionnelle  | 
+| Op&#xE9;rations journali&#xE8;res     | Support d&#xE9;cisionnel         | 
+| Orient&#xE9; applications        | Orient&#xE9; sujet               | 
+| Usage r&#xE9;p&#xE9;titif             | Usage occasionnel           | 
+| Requ&#xEA;te simple, courte      | Requ&#xEA;te complexe            | 
+| Sur peu de donn&#xE9;es          | Sur des millions de donn&#xE9;es | 
+| Beaucoup d&#x2019;utilisateurs     | Tr&#xE8;s peu d&#x2019;utilisateurs     | 
+
+---
+## El&#xE9;ments importants d&apos;un SID
+
+- Pr&#xE9;paration des donn&#xE9;es : **Extract/Tranform/Load** (**ETL**)
+	- *Extraction* : r&#xE9;cup&#xE9;ration des diff&#xE9;rentes donn&#xE9;es sources
+	- *Transformation* : calcul d&apos;agr&#xE9;gats, nettoyage, consolidation, ...
+	- *Chargement* : int&#xE9;gration des donn&#xE9;es dans les diff&#xE9;rents data marts
+	- Zone r&#xE9;serv&#xE9;e et inaccessible par les utilisateurs
+	- Automatisation totale et lancement r&#xE9;gulier 
+- Stockages des donn&#xE9;es :
+	- Coeur du DW
+	- Data mart : sp&#xE9;cifique &#xE0; un processus de l&apos;entreprise
+	- Bus permettant la liaison entre data marts 
+- Restitutions des donn&#xE9;es :
+	- G&#xE9;n&#xE9;ration automatique d&apos;&#xE9;tats
+	- Cr&#xE9;ation de reporting ad-hoc
+	- Outil d&apos;acc&#xE8;s aux donn&#xE9;es (**OLAP**)
+	- Requ&#xEA;tage pour analyse statistique ou autre
+
+---
+![Sch&#xE9;ma g&#xE9;n&#xE9;ral d&apos;un data-warehouse](sid--cours-intro-schema-general.svg)
+
+---
+## Pr&#xE9;paration des donn&#xE9;es (ETL)
+
+### Extract
+
+- Probl&#xE8;mes r&#xE9;guliers :
+	- H&#xE9;t&#xE9;rog&#xE9;n&#xE9;it&#xE9; des sources
+	- Acc&#xE8;s aux diff&#xE9;rentes applications
+	- Bases de donn&#xE9;es r&#xE9;parties sur diff&#xE9;rents sites
+	- Diff&#xE9;rents SGBD, fichiers &#xE0; plat, services web, ...
+	- N&apos;extraire que les donn&#xE9;es nouvelles dans les bases de donn&#xE9;es sources
+- A pr&#xE9;voir :
+	- Rafraichissement r&#xE9;gulier des donn&#xE9;es
+	- Marquage des donn&#xE9;es par la date de derni&#xE8;re modification
+	- Utilisation d&apos;un journal des transactions
+	- Extensibilit&#xE9; de l&apos;outil d&apos;extraction
+	- Int&#xE9;grit&#xE9; du syst&#xE8;me &#xE0; garantir (en cas de probl&#xE8;me, panne, ...)
+
+---
+## Pr&#xE9;paration des donn&#xE9;es (ETL)
+
+### Transform 
+
+- Comment faire :
+	- Filtrage parfois n&#xE9;cessaire
+	- Nettoyage, correction orthographique, r&#xE9;solution de conflits de domaine, &#xE9;l&#xE8;ments 
+	  manquants, conversion &#xE0; des formats standard
+	- Tris, traitements s&#xE9;quentiels, synchronisation des cl&#xE9;s, . . .
+	- Mod&#xE9;lisation en 3NF (trop co&#xFB;teuse) ou **dimensionnelle**
+- Probl&#xE8;mes usuels :
+	- Connaissance pr&#xE9;cise des sch&#xE9;mas de toutes les bases
+	- Combinaison &#xE0; partir de multiples sources
+	- Recherche de donn&#xE9;es incoh&#xE9;rentes
+	- Conformit&#xE9; aux r&#xE8;gles de r&#xE9;f&#xE9;rences classiques &#xE0; garantir
+- Mod&#xE9;lisation dimensionnelle &#xE0; privil&#xE9;gier (simplification, rapidit&#xE9;,
+&#xE9;conomie de temps)
+
+---
+## Pr&#xE9;paration des donn&#xE9;es (ETL)
+
+### Chargement
+
+- R&#xE9;servation d&apos;un espace m&#xE9;moire temporel d&#xE9;di&#xE9;
+	- Estimation de la taille &#xE0; pr&#xE9;voir
+- Transfert des donn&#xE9;es vers les magasins de donn&#xE9;es
+	- Cr&#xE9;ation si besoin des tables dimensionnelles et de faits
+	- Insertion sinon
+	- Historisation si mise &#xE0; jour
+- Indexation des donn&#xE9;es pour optimiser les requ&#xEA;tes futures
+- Avertissement des utilisateurs de la mise &#xE0; jour du magasin de donn&#xE9;es
+- Pr&#xE9;cision sur les changements &#xE9;ventuels dans les dimensions et dans les faits
+
+---
+## Stockage des donn&#xE9;es
+
+- Stockage dans une base de donn&#xE9;es le plus souvent relationnelle
+- Mod&#xE9;lisation dite **dimensionnelle** (ou *multi-dimensionnelle*)
+	- Diff&#xE9;rente de la mod&#xE9;lisation entit&#xE9;/relation
+	- Bas&#xE9;e sur la notion de **fait** et de **dimension**
+	- Lisible par un non-informaticien
+- Nombre restreint de tables par rapport &#xE0; la BD original
+- Utilisation massive de m&#xE9;ta-donn&#xE9;es
+	- Donn&#xE9;es sur les donn&#xE9;es
+	- Structure des tables
+	- D&#xE9;finition des faits, des agr&#xE9;gats
+	- Hi&#xE9;rarchies d&apos;attributs
+	- Planning des op&#xE9;rations
+- Requ&#xEA;tage SQL simplifi&#xE9;
+
+---
+## Restitution des donn&#xE9;es
+
+- **Reporting** : 
+	- on parle aussi d&apos;*&#xE9;tat*
+	- Tableaux complets d&apos;informations, souvent agr&#xE9;g&#xE9;es, et d&#xE9;taillant une activit&#xE9; selon
+	  des axes d&#xE9;finis
+- **Dashboard** :
+	- on parle aussi de *tableaux de bord*
+	- Ensemble de graphiques et de tableaux sur des agr&#xE9;gations d&apos;informations 
+- **Scorecard** :
+	- ou bien *carte de performance*
+	- Version plus agr&#xE9;g&#xE9;e du dashboard, sur des indicateurs dits de performance
+
+Dans la pratique, on parle globalement de **Reporting** ou de **Tableaux de bord** pour d&#xE9;signer le tout.
+
+---
+## Logiciels
+
+Liste non exhaustive, quelques logiciels parmi l&apos;offre nombreuse. 
+
+|            | Payant                      | Open source              |
+|------------|-----------------------------|--------------------------|
+|*ETL*       | Microsoft SSIS              | Talend                   | 
+|            | Oracle Data Integrator      | Pentaho Data Integration |
+|*DW*        | Microsoft SQL DataWarehouse | Pentaho                  |
+|            | Microsoft SQL Server        | SpagoBI                  |
+|            | Oracle                      | JasperSoft               |
+|*Reporting* | Tableau Software            | BIRT                     |
+|            | QlikView                    | JasperReports            |
+|            | Microsoft SSAS              |                          |
+|            | Business Object             |                          |
+
+---
+## Exemple : Adventures Works
+
+![Sch&#xE9;ma de la BD Adventure Works](advworks-schema-BD.png)
+
+---
+## Exemple : Adventures Works
+
+![Sch&#xE9;ma du Data Mart fait sur Adventure Works, autour des achats de produits](advworks-schema-DW1.png) 
+
+Processus mod&#xE9;lis&#xE9; ici : vente d&apos;un produit &#xE0; un client par un employ&#xE9; &#xE0; une date
+
+---
+## Demande
+
+CA journalier moyen des clients fran&#xE7;ais, pour les ventes par des repr&#xE9;sentants, avec 
+paiements par ch&#xE8;que et envoi via Colissimo.
+
+A noter :
+- Utilisation des presque toutes les tables
+- Donc beaucoup de jointures
+- Calcul du CA &#xE0; partir de `Order_Details`
+- Calcul du jour de la semaine &#xE0; partir de la date `OrderDate`
+
+---
+## A partir de la BD source 
+
+```sql
+SELECT CompanyName, JourSemaine, AVG(CA) AS CAmoyen
+  FROM Customers C, Employes E, Payment_Methods PM, 
+       Shipping_Methods SM, Orders O, Payments P,
+       (SELECT OrderID, 
+               SUM(UnitPrice * Quantity * (1 - Discount)) AS CA
+          FROM Order_Details 
+          GROUP BY OrderID) CA,
+       (SELECT OrderID, DAY(OrderDate) AS JourSemaine
+          FROM Orders) J
+	WHERE C.CustomerID = O.CustomerID
+	AND   O.EmployeeID = E.EmployeeID
+	AND   O.ShippineMethodID = SM.ShippingMethodID
+	AND   O.PaymentID = P.PaymentID
+	AND   P.PaymentMethodID = PM.MethodPaymentID
+	AND   O.OrderID = CA.OrderID
+	AND   O.OrderID = J.OrderID
+	AND   C.Country = &quot;France&quot; AND E.Title = &quot;Repr&#xE9;sentant&quot;
+	AND   SM.ShippingMethod = &quot;Colissimo&quot;
+	AND   PM.PaymentMethod = &quot;Ch&#xE8;que&quot;
+	GROUP BY CompanyName, JourSemaine;
+```
+
+---
+## A partir du data mart
+
+```sql
+SELECT CompanyName, WeekDay, AVG(CA) AS CAmoyen
+	FROM FaitVente V, DimClient C, DimEmploye E, DimDate D,
+	     (SELECT OrderID, 
+	             SUM(UnitPrice * Quantity * (1 - Discount)) AS CA
+	        FROM FraisVente
+	        GROUP BY OrderID) CA
+	WHERE V.CustomerID = C.CustomerID
+	AND V.EmployeeID = E.EmployeeID
+	AND V.DateId = D.DateID
+	AND V.OrderID = CA.OrderID
+	AND C.Country = &quot;France&quot;
+	AND E.Title = &quot;Repr&#xE9;sentant&quot;
+	AND V.ShippingMethod = &quot;Colissimo&quot;
+	AND V.PaymentMethod = &quot;Ch&#xE8;que&quot;
+	GROUP BY CompanyName, WeekDay;
+```
+
+Requ&#xEA;te seulement simplifi&#xE9;e et plus rapide &#xE0; ex&#xE9;cuter. Mais certaines demandes ne
+peuvent quasiment pas avoir de r&#xE9;ponses sur la base de la BD source.
+
+---
+## Points importants
+
+- Se concentrer sur les exigences et les objectifs
+- Obtenir le soutien des responsables du c&#xF4;t&#xE9; utilisateur
+- Choisir un mode de d&#xB4;eveloppement it&#xE9;ratif plut&#xF4;t que global
+- Pr&#xE9;voir au mieux les co&#xFB;ts de chaque &#xE9;tape (en temps, en homme/jour, en d&#xE9;penses)
+- Pr&#xE9;f&#xE9;rer la commodit&#xE9; d&#x2019;utilisation et la performance des requ&#xEA;tes plut&#xF4;t que la 
+  facilit&#xE9; de d&#xE9;veloppement
+- Rechercher au maximum des solutions simples
+- Respecter une architecture commune et coh&#xE9;rente
+- Ne pas se limiter &#xE0; une granularit&#xE9; trop importante
+- Pr&#xE9;parer et prendre en compte l&apos;&#xE9;volution future du syst&#xE8;me
+	op&#xE9;rationnel et de l&#x2019;environnement en g&#xE9;n&#xE9;ral
+- S&apos;assurer de l&#x2019;acceptation du syst&#xE8;me par les utilisateurs
+
+---
+## Conclusion
+
+Les SID sont absolument n&#xE9;cessaires dans le cadre d&apos;une entreprise pour :
+- Avoir une **historisation** compl&#xE8;te de ses donn&#xE9;es ;
+- Avoir une **vision globale** de son fonctionnement ;
+- Permettre de r&#xE9;pondre &#xE0; tout demande d&apos;**analyse** pour am&#xE9;liorer ses processus, via 
+  des m&#xE9;thodes statistiques et/ou de data-mining ;
+- Prendre les bonnes **d&#xE9;cisions** sur la base de donn&#xE9;es qualifi&#xE9;es, consolid&#xE9;es et 
+  agr&#xE9;g&#xE9;es.
+
+---
+## Conclusion
+
+### Imp&#xE9;ratifs et perspectives
+- Avanc&#xE9;es constantes de la technologie
+- S&#xE9;curit&#xE9; et confidentialit&#xE9;
+- Sauvegarde et suret&#xE9; du syst&#xE8;me (destructions physiques, piratage, ...)
+- Tendances culturelles et politiques
+	- Management par les chiffres
+	- Utilisation croissante d&apos;indicateurs sophistiqu&#xE9;
+	- Sous-traitance risqu&#xE9;e
+
+---
+# Bien pr&#xE9;senter les bonnes donn&#xE9;es
+</textarea><script src="https://gnab.github.io/remark/downloads/remark-latest.min.js"></script><script>var slideshow = remark.create();
+</script></section>
+        <footer></footer>
+    <script src="../../lib/highlight/highlight.pack.js"></script>
+<script>hljs.initHighlightingOnLoad();</script></body>
+</html>

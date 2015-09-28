@@ -85,9 +85,9 @@ Au contraire de documents PDF classiques, une page web permet d'intégrer des é
 
 Non bien évidemment, car beaucoup trop lourd. Nous utilisons des **librairies JS**, dont les plus connus sont les suivantes :
 - [Google Charts](https://developers.google.com/chart/)
-- [D3.js](http://d3js.org/)
-- [Raphaeljs](http://raphaeljs.com/)
 - [Highcharts](http://www.highcharts.com/)
+- [Raphaeljs](http://raphaeljs.com/)
+- [D3.js](http://d3js.org/)
 
 ---
 ## Objectifs du cours

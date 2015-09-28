@@ -19,7 +19,7 @@ parameters: slides
 - **HTML** : langage de description de textes
 - **CSS** : langage de formatage d'éléments (texte, image, graphique)
 - **SVG** : langage de description de graphiques
-- **JavaScript** (non vu dans cette présentaiton) : langage de programmation 
+- **JavaScript** (non vu dans cette présentation) : langage de programmation 
 
 ---
 ## HTML
@@ -146,7 +146,7 @@ Sémantique importante pour :
 |-|-|
 | `header` et `footer` | en-tête et pied de page |
 | `nav` | menu de la page |
-| `aside` | partie annexe de la apge (type pub) |
+| `aside` | partie annexe de la page (type pub) |
 | `section` et `article` | parties nous permettant d'insérer le contenu de la page |
 | `h1, h2, ..., h6` | titres et sous-titres |
 | `strong` | mot(s) important(s) |
@@ -417,4 +417,4 @@ Sites d'apprentissage et forums
 - [w3schools](http://www.w3schools.com)
 - [CodeAcademy](https://www.codecademy.com/fr/tracks/web)
 - [StackOverFlow](http://stackoverflow.com)
-- [Developpez.net](http://developpez.net)
+- [Developpez.net](http://developpez.com)

@@ -4,3 +4,4 @@ var deploiement = require("./dvt");
 deploiement.transformFile("");
 deploiement.manageDirectory("tuto/");
 deploiement.manageDirectory("webreporting/");
+deploiement.manageDirectory("sid/");

@@ -8,6 +8,9 @@ Page professionnelle hébergée sur GitHub
 
 ## [**#**](webreporting)Web Reporting
 Cours du Web Reporting, et plus spécifiquement dans l'utilisation de la librairie [D3.js](http://d3js.org/)
+
+## [**#**](sid)Informatique Décisionnelle
+Cours sur les Systèmes d'Information Décisionnels
                 
 ## [**#**](tuto)Tutoriels divers
 Je propose ici des tutoriels sur plusieurs outils (R, MongoDB, ...)
