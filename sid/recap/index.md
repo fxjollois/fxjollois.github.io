@@ -100,9 +100,7 @@ parameters: slides
 - Etapes 1 et 2 : non abordées
 - Modélisation : cf TD
 - Création du datamart : à faire
-	- script de création des tables
-- Schéma d'intégration : à faire
-	- insertion des données en une fois
+- Schéma d'intégration : à faire (insertion en une fois)
 - Méta-données : non abordées ici
 - Outils de restitution : cf prochains TP
 
