@@ -12,3 +12,6 @@
     - Vous verrez un aperçu du rendu (*Preview*)
     - Avec l'onglet *Code* (en haut à droite), vous pouvez voir le contenu de chaque fichier
     - En cliquant sur *Edit*, vous pourrez éditer ces fichiers et faire le travail demandé
+    - Correction :
+        - [de base](http://embed.plnkr.co/VN9VQvPiZY9q45nn7GLq/preview)
+        - [avec chargement des données et pop-up](http://embed.plnkr.co/hJlUjxpirvPhzXihNOfv/preview)
