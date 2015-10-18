@@ -12,6 +12,16 @@ parameters: slides
 
 [Exemple](exemple.html)
 
+---
+## Etapes pour son utilisation
+
+Les cinq étapes à suivre pour créer un graphique avec Google Charts
+
+1. **Chargement** de la librairie
+2. Formatage des **données**
+3. **Personnalisation** du graphique
+4. **Création** du graphique
+5. Ajout d'**interactivité**
 
 ---
 ## Chargement de la librairie
@@ -45,7 +55,7 @@ Ajout d'une fonction (`google.setOnLoadCallback (f)`) permettant le lancement d'
 ```
 
 ---
-## Format des données
+## Formatage des données
 
 Utilisation de la classe `google.visualization.DataTable` :
 - objet à deux dimensions
@@ -60,8 +70,8 @@ Possibilité de créer un objet de différentes manières :
 ---
 ## sur l'exemple
 
-```js
-// Création d'une variable, instance de DataTable
+```
+// Création d une variable, instance de DataTable
 var data = new google.visualization.DataTable();
 
 // Définition des colonnes de la table
@@ -93,8 +103,8 @@ Quelques paramètres communs :
 ---
 ## sur l'exemple
 
-```js
-// Création d'un objet JSON
+```
+// Création d un objet JSON
 var options = {
     // on définit ici le titre et la taille du graphique
     'title':'How Much Pizza I Ate Last Night',
@@ -127,13 +137,13 @@ En 2 étapes :
 ---
 ## sur l'exemple
 
-```js
-// Création d'une instance de PieChart, et indication du conteneur 
+```
+// Création d une instance de PieChart, et indication du conteneur 
 // du graphique
 var cont = document.getElementById('chart_div');
 var chart = new google.visualization.PieChart(cont);
 
-// Dessin du graphique selon les données et les options passées 
+// Dessin du graphique selon les données et les options 
 // en paramètres
 chart.draw(data, options);
 ```
@@ -164,8 +174,8 @@ Fonctions des instances intéressantes dans ce cas :
 ---
 ## sur l'exemple
 
-```no
-// Définition de la fonction a exécuter lors de l'événement
+```
+// Définition de la fonction a exécuter lors de l événement
 function selectHandler() {
     // Récupération de la sélection
     var selectedItem = chart.getSelection()[0];
@@ -177,7 +187,7 @@ function selectHandler() {
         alert('The user selected ' + topping);
     }
 }
-// Ajout du listener sur le graphique, pour l'événement "select"
+// Ajout du listener sur le graphique, pour l événement "select"
 google.visualization.events.addListener(
     chart, 'select', selectHandler);    
 ```

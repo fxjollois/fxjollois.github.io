@@ -25,6 +25,16 @@
 
 [Exemple](exemple.html)
 
+---
+## Etapes pour son utilisation
+
+Les cinq &#xE9;tapes &#xE0; suivre pour cr&#xE9;er un graphique avec Google Charts
+
+1. **Chargement** de la librairie
+2. Formatage des **donn&#xE9;es**
+3. **Personnalisation** du graphique
+4. **Cr&#xE9;ation** du graphique
+5. Ajout d&apos;**interactivit&#xE9;**
 
 ---
 ## Chargement de la librairie
@@ -58,7 +68,7 @@ Ajout d&apos;une fonction (`google.setOnLoadCallback (f)`) permettant le lanceme
 ```
 
 ---
-## Format des donn&#xE9;es
+## Formatage des donn&#xE9;es
 
 Utilisation de la classe `google.visualization.DataTable` :
 - objet &#xE0; deux dimensions
@@ -73,8 +83,8 @@ Possibilit&#xE9; de cr&#xE9;er un objet de diff&#xE9;rentes mani&#xE8;res :
 ---
 ## sur l&apos;exemple
 
-```js
-// Cr&#xE9;ation d&apos;une variable, instance de DataTable
+```
+// Cr&#xE9;ation d une variable, instance de DataTable
 var data = new google.visualization.DataTable();
 
 // D&#xE9;finition des colonnes de la table
@@ -106,8 +116,8 @@ Quelques param&#xE8;tres communs :
 ---
 ## sur l&apos;exemple
 
-```js
-// Cr&#xE9;ation d&apos;un objet JSON
+```
+// Cr&#xE9;ation d un objet JSON
 var options = {
     // on d&#xE9;finit ici le titre et la taille du graphique
     &apos;title&apos;:&apos;How Much Pizza I Ate Last Night&apos;,
@@ -140,13 +150,13 @@ En 2 &#xE9;tapes :
 ---
 ## sur l&apos;exemple
 
-```js
-// Cr&#xE9;ation d&apos;une instance de PieChart, et indication du conteneur 
+```
+// Cr&#xE9;ation d une instance de PieChart, et indication du conteneur 
 // du graphique
 var cont = document.getElementById(&apos;chart_div&apos;);
 var chart = new google.visualization.PieChart(cont);
 
-// Dessin du graphique selon les donn&#xE9;es et les options pass&#xE9;es 
+// Dessin du graphique selon les donn&#xE9;es et les options 
 // en param&#xE8;tres
 chart.draw(data, options);
 ```
@@ -177,8 +187,8 @@ Fonctions des instances int&#xE9;ressantes dans ce cas :
 ---
 ## sur l&apos;exemple
 
-```no
-// D&#xE9;finition de la fonction a ex&#xE9;cuter lors de l&apos;&#xE9;v&#xE9;nement
+```
+// D&#xE9;finition de la fonction a ex&#xE9;cuter lors de l &#xE9;v&#xE9;nement
 function selectHandler() {
     // R&#xE9;cup&#xE9;ration de la s&#xE9;lection
     var selectedItem = chart.getSelection()[0];
@@ -190,7 +200,7 @@ function selectHandler() {
         alert(&apos;The user selected &apos; + topping);
     }
 }
-// Ajout du listener sur le graphique, pour l&apos;&#xE9;v&#xE9;nement &quot;select&quot;
+// Ajout du listener sur le graphique, pour l &#xE9;v&#xE9;nement &quot;select&quot;
 google.visualization.events.addListener(
     chart, &apos;select&apos;, selectHandler);    
 ```
