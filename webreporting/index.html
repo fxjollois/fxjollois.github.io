@@ -23,15 +23,18 @@
 <li><p><a href="googlecharts">Introduction &#xE0; Google Charts</a></p></li>
 </ul>
 
-<h2 id="lienspoursujettp">Liens pour sujet TP</h2>
+<h2 id="sujetstp">Sujets TP</h2>
 
-<ol>
-<li><a href="http://embed.plnkr.co/7pv3ri/preview">Premi&#xE8;re utilisation HTML, CSS et JS</a>
-<ul><li>Vous verrez un aper&#xE7;u du rendu (<em>Preview</em>)</li>
-<li>Avec l&apos;onglet <em>Code</em> (en haut &#xE0; droite), vous pouvez voir le contenu de chaque fichier</li>
-<li>En cliquant sur <em>Edit</em>, vous pourrez &#xE9;diter ces fichiers et faire le travail demand&#xE9;</li></ul></li>
-<li>Sujet du TP sur Google Charts : A partir des donn&#xE9;es suivantes, que vous copierez dans un fichier JSON</li>
-</ol>
+<h3 id="tp1htmlcssetjs">TP1. HTML, CSS et JS</h3>
+
+<p><a href="http://embed.plnkr.co/7pv3ri/preview">Premi&#xE8;re utilisation HTML, CSS et JS</a>
+- Vous verrez un aper&#xE7;u du rendu (<em>Preview</em>)
+- Avec l&apos;onglet <em>Code</em> (en haut &#xE0; droite), vous pouvez voir le contenu de chaque fichier
+- En cliquant sur <em>Edit</em>, vous pourrez &#xE9;diter ces fichiers et faire le travail demand&#xE9;</p>
+
+<h2 id="tp2librairiegooglecharts">TP2. Librairie Google Charts</h2>
+
+<p>A partir des donn&#xE9;es suivantes, que vous copierez dans un fichier JSON</p>
 
 <pre><code class="json">{
   &quot;valeurs&quot;: [12, 5, 21, 18, 14, 15, 23, 31],
@@ -39,29 +42,30 @@
 }
 </code></pre>
 
-<pre><code>- Cr&#xE9;er trois graphiques via la librairie Google Charts
-    - une table des donn&#xE9;es, avec deux colonnes et 8 lignes (plus les en-t&#xEA;tes de colonnes)
-    - un diagramme en barre verticales des modalit&#xE9;s
-    - un diagramme en barre horizontables des modalit&#xE9;s
-- Modifier les options pour respecter les consignes suivantes 
-    - table : affichage du num&#xE9;ro de ligne, pas de tri possible
-    - pas de l&#xE9;gende sur les diagrammes en barres
-    - un titre sur le diagramme en barres verticales
-    - changement de la couleur des barres
-- Ajouter la gestion de la s&#xE9;lection d&apos;une modalit&#xE9; dans un graphique avec :
-    - la modalit&#xE9; choisie devient s&#xE9;lectionn&#xE9;e dans les deux autres graphiques
-    - si plus de s&#xE9;lection, idem sur les autres graphiques
-- On a en plus la variable `&quot;groupe&quot;: [&quot;A&quot;, &quot;A&quot;, &quot;B&quot;, &quot;B&quot;, &quot;A&quot;, &quot;B&quot;, &quot;B&quot;, &quot;B&quot;]` dans notre JSON
-    - modifier le fichier de donn&#xE9;es et le formatage de celles-ci au format `DataTable` pour prendre en compte les groupes des modalit&#xE9;s
-    - faire un diagramme circulaire sur la r&#xE9;partition des groupes 
-        - voir la fonction de [regroupement](https://developers.google.com/chart/interactive/docs/reference#google_visualization_data_group)
-        - r&#xE9;partition en nombre en premier
-        - r&#xE9;partition en somme des valeurs
-- BONUS
-    - faire une mise en page adapt&#xE9;e de tous les graphiques
-    - r&#xE9;fl&#xE9;chir &#xE0; l&apos;ajout de boutons permettant de passer de l&apos;une &#xE0; l&apos;autre des repr&#xE9;sentations du diagramme circulaire
-    - r&#xE9;fl&#xE9;chir &#xE0; la restriction sur les deux autres graphiques et &#xE0; la s&#xE9;lection (ou mise en avant) sur la table des modalit&#xE9;s correspondantes au groupe s&#xE9;lectionn&#xE9; dans le diagramme circulaire
-</code></pre></section>
+<ul>
+<li>Cr&#xE9;er trois graphiques via la librairie Google Charts
+<ul><li>une table des donn&#xE9;es, avec deux colonnes et 8 lignes (plus les en-t&#xEA;tes de colonnes)</li>
+<li>un diagramme en barre verticales des modalit&#xE9;s</li>
+<li>un diagramme en barre horizontables des modalit&#xE9;s</li></ul></li>
+<li>Modifier les options pour respecter les consignes suivantes 
+<ul><li>table : affichage du num&#xE9;ro de ligne, pas de tri possible</li>
+<li>pas de l&#xE9;gende sur les diagrammes en barres</li>
+<li>un titre sur le diagramme en barres verticales</li>
+<li>changement de la couleur des barres</li></ul></li>
+<li>Ajouter la gestion de la s&#xE9;lection d&apos;une modalit&#xE9; dans un graphique avec :
+<ul><li>la modalit&#xE9; choisie devient s&#xE9;lectionn&#xE9;e dans les deux autres graphiques</li>
+<li>si plus de s&#xE9;lection, idem sur les autres graphiques</li></ul></li>
+<li>On a en plus la variable <code>&quot;groupe&quot;: [&quot;A&quot;, &quot;A&quot;, &quot;B&quot;, &quot;B&quot;, &quot;A&quot;, &quot;B&quot;, &quot;B&quot;, &quot;B&quot;]</code> dans notre JSON
+<ul><li>modifier le fichier de donn&#xE9;es et le formatage de celles-ci au format <code>DataTable</code> pour prendre en compte les groupes des modalit&#xE9;s</li>
+<li>faire un diagramme circulaire sur la r&#xE9;partition des groupes 
+<ul><li>voir la fonction de <a href="https://developers.google.com/chart/interactive/docs/reference#google_visualization_data_group">regroupement</a></li>
+<li>r&#xE9;partition en nombre en premier</li>
+<li>r&#xE9;partition en somme des valeurs</li></ul></li></ul></li>
+<li>BONUS
+<ul><li>faire une mise en page adapt&#xE9;e de tous les graphiques</li>
+<li>r&#xE9;fl&#xE9;chir &#xE0; l&apos;ajout de boutons permettant de passer de l&apos;une &#xE0; l&apos;autre des repr&#xE9;sentations du diagramme circulaire</li>
+<li>r&#xE9;fl&#xE9;chir &#xE0; la restriction sur les deux autres graphiques et &#xE0; la s&#xE9;lection (ou mise en avant) sur la table des modalit&#xE9;s correspondantes au groupe s&#xE9;lectionn&#xE9; dans le diagramme circulaire</li></ul></li>
+</ul></section>
         <footer></footer>
     <script src="../lib/highlight/highlight.pack.js"></script>
 <script>hljs.initHighlightingOnLoad();</script></body>
