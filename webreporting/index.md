@@ -9,5 +9,5 @@
 
 ## Sujets TP
 
-1. [TP1](tp1) : Première utilisation HTML, CSS et JS
-2. [TP2](tp2) :  Librairie Google Charts
+1. [TP1](TP1) : Première utilisation HTML, CSS et JS
+2. [TP2](TP2) :  Librairie Google Charts
