@@ -1,6 +1,6 @@
 # TP3. Librairie D3.js
 
-Reprendre les données du TP1, au format `JSON` :
+Reprendre les données du [TP1](../TP1), au format `JSON` :
 ```json
 {
   "valeurs": [12, 5, 21, 18, 14],
@@ -11,6 +11,12 @@ On reprend aussi le fichier `html` de départ du TP1 (cf sujet). L'objectif est 
 
 ## A faire
 
-Créer un script permettant de réaliser les points suivants :
+Créer trois scripts permettant de réaliser les éléments suivants :
 
 - Remplissage d'un tableau de deux colonnes et d'autant de lignes que de valeurs présentes dans le fichier 
+- Création d'un graphique en barres horizontales, à partir de balises `div`
+- Création d'un graphique en barres verticales, reprenant les mêmes contraintes que dans le TP1
+
+## Rendu
+
+Vous pouvez voir [ici](rendu) le rendu attendu.
