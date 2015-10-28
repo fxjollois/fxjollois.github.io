@@ -27,7 +27,7 @@ Plusieurs concepts à comprendre :
 - Base : sélection, modification, ajout et insertion d'éléments
 - Ajout de données au DOM
 - Propriété dynamique, et Transformation
-- Chaînage des commandes
+- Chaînage des fonctions
 
 ---
 ## Base : sélection et modification
@@ -62,7 +62,8 @@ selection.insert("balise");
 ---
 ## Exemple : sur la base de d3.js
 
-<iframe width="100%" height="300" src="//jsfiddle.net/fxjollois/fmpdt2qc/embedded/html,js,result" allowfullscreen="allowfullscreen" frameborder="0"></iframe>
+<iframe height='268' scrolling='no' src='//codepen.io/fxjUPD/embed/bVMMjZ/?height=268&theme-id=0&default-tab=result' frameborder='no' allowtransparency='true' allowfullscreen='true' style='width: 100%;'>See the Pen <a href='http://codepen.io/fxjUPD/pen/bVMMjZ/'>d3.js : base de la librairie</a> by FX Jollois (<a href='http://codepen.io/fxjollois'>@fxjollois</a>) on <a href='http://codepen.io'>CodePen</a>.
+</iframe>
 
 ---
 ## Ajout de données au DOM
@@ -98,14 +99,28 @@ selection.html(function(d, i) {
 ---
 ## Exemple : ajout de données + propriété dynamique
 
-<iframe width="100%" height="300" src="//jsfiddle.net/fxjollois/xpmcfwbs/embedded/html,js,result" allowfullscreen="allowfullscreen" frameborder="0"></iframe>
+<iframe height='268' scrolling='no' src='//codepen.io/fxjUPD/embed/eprrjJ/?height=268&theme-id=0&default-tab=result' frameborder='no' allowtransparency='true' allowfullscreen='true' style='width: 100%;'>See the Pen <a href='http://codepen.io/fxjUPD/pen/eprrjJ/'>d3.js : data + style dynamique</a> by FX Jollois (<a href='http://codepen.io/fxjollois'>@fxjollois</a>) on <a href='http://codepen.io'>CodePen</a>.
+</iframe>
 
 ---
 ## Exemple : fonction `enter()`
 
-<iframe width="100%" height="300" src="//jsfiddle.net/fxjollois/a93fzd70/embedded/html,js,result" allowfullscreen="allowfullscreen" frameborder="0"></iframe>
+<iframe height='268' scrolling='no' src='//codepen.io/fxjUPD/embed/wKjjXN/?height=268&theme-id=0&default-tab=result' frameborder='no' allowtransparency='true' allowfullscreen='true' style='width: 100%;'>See the Pen <a href='http://codepen.io/fxjUPD/pen/wKjjXN/'>d3.js : data + enter()</a> by FX Jollois (<a href='http://codepen.io/fxjollois'>@fxjollois</a>) on <a href='http://codepen.io'>CodePen</a>.
+</iframe>
 
 ---
 ## Exemple : fonction `exit()`
 
-<iframe width="100%" height="300" src="//jsfiddle.net/fxjollois/Lpay57dh/embedded/html,js,result" allowfullscreen="allowfullscreen" frameborder="0"></iframe>
+<iframe height='268' scrolling='no' src='//codepen.io/fxjUPD/embed/LpmmmL/?height=268&theme-id=0&default-tab=result' frameborder='no' allowtransparency='true' allowfullscreen='true' style='width: 100%;'>See the Pen <a href='http://codepen.io/fxjUPD/pen/LpmmmL/'>d3.js : data + exit()</a> by FX Jollois (<a href='http://codepen.io/fxjollois'>@fxjollois</a>) on <a href='http://codepen.io'>CodePen</a>.
+</iframe>
+
+---
+## Chaînage des fonctions
+
+- Principe généralement appliqué en JS orienté objet : **toute fonction d'un objet renvoie cet objet** 
+    - sauf si la fonction a pour but de renvoyer un résultat spécifique
+    - donc concerne plutôt les procédures (qui sont des fonctions en JS)
+- Corollaire : il est possible d'enchaîner un grand nombre de fonctions directement 
+
+<iframe height='268' scrolling='no' src='//codepen.io/fxjollois/embed/MaGGxK/?height=268&theme-id=0&default-tab=result' frameborder='no' allowtransparency='true' allowfullscreen='true' style='width: 100%;'>See the Pen <a href='http://codepen.io/fxjollois/pen/MaGGxK/'>d3.js : chaînage des fonctions</a> by FX Jollois (<a href='http://codepen.io/fxjollois'>@fxjollois</a>) on <a href='http://codepen.io'>CodePen</a>.
+</iframe>

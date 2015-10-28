@@ -40,7 +40,7 @@ Plusieurs concepts &#xE0; comprendre :
 - Base : s&#xE9;lection, modification, ajout et insertion d&apos;&#xE9;l&#xE9;ments
 - Ajout de donn&#xE9;es au DOM
 - Propri&#xE9;t&#xE9; dynamique, et Transformation
-- Cha&#xEE;nage des commandes
+- Cha&#xEE;nage des fonctions
 
 ---
 ## Base : s&#xE9;lection et modification
@@ -75,7 +75,8 @@ selection.insert(&quot;balise&quot;);
 ---
 ## Exemple : sur la base de d3.js
 
-<iframe width="100%" height="300" src="//jsfiddle.net/fxjollois/fmpdt2qc/embedded/html,js,result" allowfullscreen="allowfullscreen" frameborder="0"></iframe>
+<iframe height="268" scrolling="no" src="//codepen.io/fxjUPD/embed/bVMMjZ/?height=268&amp;theme-id=0&amp;default-tab=result" frameborder="no" allowtransparency="true" allowfullscreen="true" style="width: 100%;">See the Pen <a href="http://codepen.io/fxjUPD/pen/bVMMjZ/">d3.js : base de la librairie</a> by FX Jollois (<a href="http://codepen.io/fxjollois">@fxjollois</a>) on <a href="http://codepen.io">CodePen</a>.
+</iframe>
 
 ---
 ## Ajout de donn&#xE9;es au DOM
@@ -111,17 +112,31 @@ selection.html(function(d, i) {
 ---
 ## Exemple : ajout de donn&#xE9;es + propri&#xE9;t&#xE9; dynamique
 
-<iframe width="100%" height="300" src="//jsfiddle.net/fxjollois/xpmcfwbs/embedded/html,js,result" allowfullscreen="allowfullscreen" frameborder="0"></iframe>
+<iframe height="268" scrolling="no" src="//codepen.io/fxjUPD/embed/eprrjJ/?height=268&amp;theme-id=0&amp;default-tab=result" frameborder="no" allowtransparency="true" allowfullscreen="true" style="width: 100%;">See the Pen <a href="http://codepen.io/fxjUPD/pen/eprrjJ/">d3.js : data + style dynamique</a> by FX Jollois (<a href="http://codepen.io/fxjollois">@fxjollois</a>) on <a href="http://codepen.io">CodePen</a>.
+</iframe>
 
 ---
 ## Exemple : fonction `enter()`
 
-<iframe width="100%" height="300" src="//jsfiddle.net/fxjollois/a93fzd70/embedded/html,js,result" allowfullscreen="allowfullscreen" frameborder="0"></iframe>
+<iframe height="268" scrolling="no" src="//codepen.io/fxjUPD/embed/wKjjXN/?height=268&amp;theme-id=0&amp;default-tab=result" frameborder="no" allowtransparency="true" allowfullscreen="true" style="width: 100%;">See the Pen <a href="http://codepen.io/fxjUPD/pen/wKjjXN/">d3.js : data + enter()</a> by FX Jollois (<a href="http://codepen.io/fxjollois">@fxjollois</a>) on <a href="http://codepen.io">CodePen</a>.
+</iframe>
 
 ---
 ## Exemple : fonction `exit()`
 
-<iframe width="100%" height="300" src="//jsfiddle.net/fxjollois/Lpay57dh/embedded/html,js,result" allowfullscreen="allowfullscreen" frameborder="0"></iframe></textarea><script src="https://gnab.github.io/remark/downloads/remark-latest.min.js"></script><script>var slideshow = remark.create();
+<iframe height="268" scrolling="no" src="//codepen.io/fxjUPD/embed/LpmmmL/?height=268&amp;theme-id=0&amp;default-tab=result" frameborder="no" allowtransparency="true" allowfullscreen="true" style="width: 100%;">See the Pen <a href="http://codepen.io/fxjUPD/pen/LpmmmL/">d3.js : data + exit()</a> by FX Jollois (<a href="http://codepen.io/fxjollois">@fxjollois</a>) on <a href="http://codepen.io">CodePen</a>.
+</iframe>
+
+---
+## Cha&#xEE;nage des fonctions
+
+- Principe g&#xE9;n&#xE9;ralement appliqu&#xE9; en JS orient&#xE9; objet : **toute fonction d&apos;un objet renvoie cet objet** 
+    - sauf si la fonction a pour but de renvoyer un r&#xE9;sultat sp&#xE9;cifique
+    - donc concerne plut&#xF4;t les proc&#xE9;dures (qui sont des fonctions en JS)
+- Corollaire : il est possible d&apos;encha&#xEE;ner un grand nombre de fonctions directement 
+
+<iframe height="268" scrolling="no" src="//codepen.io/fxjollois/embed/MaGGxK/?height=268&amp;theme-id=0&amp;default-tab=result" frameborder="no" allowtransparency="true" allowfullscreen="true" style="width: 100%;">See the Pen <a href="http://codepen.io/fxjollois/pen/MaGGxK/">d3.js : cha&#xEE;nage des fonctions</a> by FX Jollois (<a href="http://codepen.io/fxjollois">@fxjollois</a>) on <a href="http://codepen.io">CodePen</a>.
+</iframe></textarea><script src="https://gnab.github.io/remark/downloads/remark-latest.min.js"></script><script>var slideshow = remark.create();
 </script></section>
         <footer></footer>
     <script src="../../lib/highlight/highlight.pack.js"></script>
