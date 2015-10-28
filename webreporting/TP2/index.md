@@ -34,3 +34,7 @@ On va travailler sur les données suivantes, que vous copierez dans un fichier J
     - faire une mise en page adaptée de tous les graphiques
     - réfléchir à l'ajout de boutons permettant de passer de l'une à l'autre des représentations du diagramme circulaire
     - réfléchir à la restriction sur les deux autres graphiques et à la sélection (ou mise en avant) sur la table des modalités correspondantes au groupe sélectionné dans le diagramme circulaire
+
+## Rendu
+
+Vous pouvez voir [ici](rendu) le rendu attendu.

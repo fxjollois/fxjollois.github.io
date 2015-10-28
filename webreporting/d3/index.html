@@ -1,0 +1,129 @@
+<!doctype html>
+<html>
+    <head>
+        <title>Librairie D3.js</title>
+        <meta charset="utf-8">
+        <link rel="stylesheet" href="../../css/global.css">
+        <meta name="keywords" content="programmation, sql, r, sas, python, mongo, nosql, html, css, javascript, d3, google charts, chart.js">
+        <meta name="description" content="Page professionnelle de FX Jollois, contenant des notes de programmation, des tutoriels et des slides de cours, ainsi que des liens vers les projets GitHub personnels">
+        <meta name="author" content="Francois-Xavier Jollois">
+        <meta name="copyright" content="&#xA9;">
+    <link rel="stylesheet" href="../../lib/highlight/styles/default.css">
+<link rel="stylesheet" href="../../css/remark-slides.css"></head>
+    <body>
+        <header></header>
+        <section><textarea id="source"># Librairie D3.js
+
+Data-Driven Documents
+
+## Introduction &#xE0; son utilisation
+
+[Lien](http://www.d3js.org) vers la librairie
+
+- Librairie tr&#xE8;s compl&#xE8;te avec beaucoup d&apos;exemples &#xE0; disposition
+- Personnalisation totale possible
+- Acc&#xE8;s &#xE0; des primitives `SVG` permettant toute innovation
+- Peu accessible directement et assez technique
+
+[Exemple](exemple.html)
+
+---
+## Fonctionnement typique
+
+Id&#xE9;e principale : 
+
+- Lier les donn&#xE9;es au DOM
+- Appliquer des transformations, ba&#xE9;es sur les donn&#xE9;es, au document
+
+Plusieurs concepts &#xE0; comprendre :
+
+- Base : s&#xE9;lection, modification, ajout et insertion d&apos;&#xE9;l&#xE9;ments
+- Ajout de donn&#xE9;es au DOM
+- Propri&#xE9;t&#xE9; dynamique, et Transformation
+- Cha&#xEE;nage des commandes
+
+---
+## Base : s&#xE9;lection et modification
+
+- Deux fonctions de s&#xE9;lection respectivement d&apos;un &#xE9;l&#xE9;ment (`select()`) et de l&apos;ensemble des &#xE9;l&#xE9;ments (`selectAll()`) correspondant &#xE0; la d&#xE9;finition pass&#xE9;e en param&#xE8;tre (s&#xE9;lecteur idem que pour le CSS) :
+
+```
+d3.select(&quot;selecteur&quot;);
+d3.selectAll(&quot;selecteur&quot;);
+```
+
+- Une fonction (`size()`) permettant de conna&#xEE;tre la taille de la s&#xE9;lection
+- Une fonction (`empty()`) permettant de savoir si la s&#xE9;lection est vide
+
+---
+## Base : modification, ajout et insertion d&apos;&#xE9;l&#xE9;ments
+
+- Plusieurs fonctions pour modifier les &#xE9;l&#xE9;ments s&#xE9;lectionn&#xE9;s (par exemple `style()` ou `html()`). Le code suivant permet de mettre le texte en rouge pour tout le corps de la page
+
+```
+var corps = d3.select(&quot;body&quot;);
+corps.style(&quot;color&quot;, &quot;red&quot;);
+```
+
+- Deux fonctions pour respectivement ins&#xE9;rer un &#xE9;l&#xE9;ment HTML fils &#xE0; la fin (`append()`) ou au d&#xE9;but (`insert()`) d&apos;un &#xE9;l&#xE9;ment p&#xE8;re, qui s&apos;utilisent comme suit :
+
+```
+selection.append(&quot;balise&quot;);
+selection.insert(&quot;balise&quot;);
+```
+
+---
+## Exemple : sur la base de d3.js
+
+<iframe width="100%" height="300" src="//jsfiddle.net/fxjollois/fmpdt2qc/embedded/html,js,result" allowfullscreen="allowfullscreen" frameborder="0"></iframe>
+
+---
+## Ajout de donn&#xE9;es au DOM
+
+- Avec la fonction `data()` sur une s&#xE9;lection, il est possible de lier les donn&#xE9;es pass&#xE9;es en param&#xE8;tres (ce doit &#xEA;tre un tableau) au DOM &#xE0; la s&#xE9;lection en question. Le code suivant affecte chaque &#xE9;l&#xE9;ment du tableau &#xE0; chaque &#xE9;l&#xE9;ment renvoy&#xE9; par le s&#xE9;lecteur pr&#xE9;c&#xE9;dent
+
+```
+var selection = d3.selectAll(&quot;selecteur&quot;);
+selection.data(tableau);
+```
+
+- S&apos;il y a diff&#xE9;rence entre la taille de la s&#xE9;lection et la taille du tableau pass&#xE9; en param&#xE8;tre de `data()`, il existe deux fonctions utiles
+    - `enter()` : pour g&#xE9;rer les &#xE9;l&#xE9;ments du tableau en plus
+    - `exit()` : pour g&#xE9;rer les &#xE9;l&#xE9;ments de la s&#xE9;lection en plus
+
+---
+## Propri&#xE9;t&#xE9; dynamique
+
+- Sur chaque s&#xE9;lection, on peut appliquer des modifications de style ou de contenu (voire autre), en fonction des donn&#xE9;es sont li&#xE9;es au DOM
+- Utilisation d&apos;une fonction anonyme, dont les param&#xE8;tres peuvent &#xEA;tre, dans cet ordre :
+    - la valeur de l&apos;&#xE9;l&#xE9;ment du tableau affect&#xE9;e &#xE0; l&apos;&#xE9;l&#xE9;ment
+    - la position de la valeur dans le tableau
+    - il est possible de n&apos;utiliser que la valeur, voire aucun param&#xE8;tre si besoin
+
+```
+var selection = d3.selectAll(&quot;selecteur&quot;);
+selection.data(tableau);
+selection.html(function(d, i) {
+    return &quot;position = &quot; + i + &quot;, valeur = &quot; + d;
+})
+```
+
+---
+## Exemple : ajout de donn&#xE9;es + propri&#xE9;t&#xE9; dynamique
+
+<iframe width="100%" height="300" src="//jsfiddle.net/fxjollois/xpmcfwbs/embedded/html,js,result" allowfullscreen="allowfullscreen" frameborder="0"></iframe>
+
+---
+## Exemple : fonction `enter()`
+
+<iframe width="100%" height="300" src="//jsfiddle.net/fxjollois/a93fzd70/embedded/html,js,result" allowfullscreen="allowfullscreen" frameborder="0"></iframe>
+
+---
+## Exemple : fonction `exit()`
+
+<iframe width="100%" height="300" src="//jsfiddle.net/fxjollois/Lpay57dh/embedded/html,js,result" allowfullscreen="allowfullscreen" frameborder="0"></iframe></textarea><script src="https://gnab.github.io/remark/downloads/remark-latest.min.js"></script><script>var slideshow = remark.create();
+</script></section>
+        <footer></footer>
+    <script src="../../lib/highlight/highlight.pack.js"></script>
+<script>hljs.initHighlightingOnLoad();</script></body>
+</html>

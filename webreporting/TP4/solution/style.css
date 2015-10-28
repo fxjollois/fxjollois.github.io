@@ -1,0 +1,44 @@
+body {
+  font-family: "Helvetica";
+}
+
+h1 {
+  text-align: center;
+  color: #555;
+}
+
+/* Centrage des div conteneurs */
+#tab, #columnChart, #barChart {
+  text-align: center;
+}
+
+/* Style du tableau Google Charts */
+#tab {
+  color: black;
+}
+
+/* CSS pour placement des div */
+#groupe, #valeur {
+  display: inline-block;
+}
+
+#valeur {
+  vertical-align: top;
+}
+
+/* Placement global */
+#dashboard {
+  width: 800px;
+  margin: 0 auto;
+}
+
+#top {
+  text-align: center;
+}
+
+/* pour affichage < 800px de large */
+@media screen and (max-width: 800px) {
+  #dashboard {
+    width: 100%;
+  }
+}
