@@ -10,7 +10,7 @@
 
 
 
-<title>FX Jollois</title>
+<title>Reporting - TP1</title>
 
 <script src="__libs/jquery-1.11.0/jquery.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -155,30 +155,56 @@ img {
 <div class="contenu">
 
 <div id="header">
-<h1 class="title">FX Jollois</h1>
+<h1 class="title">Reporting - TP1</h1>
 </div>
 
 
-<div id="presentation" class="section level2">
-<h2>Présentation</h2>
-<p>Enseignant-chercheur en informatique, mon domaine de compétence se situe à la frontière entre l’informatique et la statistique. J’enseigne dans le département <a href="http://www.stid-paris.fr/">STID</a> de l’<a href="http://www.iut.parisdescartes.fr">IUT Paris Descartes</a>. J’effectue ma recherche dans l’équipe Fouille de données du <a href="http://www.lipade.fr">LIPADE</a>.</p>
-<p>Pour votre information, ce site étant encore en construction, certains liens ne sont pas accessibles, et certaines pages sont encore en cours de réalisation.</p>
+<p>Vous trouverez le logiciel <strong>Tableau Public</strong> dans la liste des programmes, dans la partie <em>Outils Math et Stat</em>. Vous devriez avoir l’écran suivant.</p>
+<p><img src="reporting-tp1/00-ouverture-tableau.png" alt="Ecran d’ouverture de Tableau Public" /></p>
+<div id="importation-des-donnees" class="section level2">
+<h2>Importation des données</h2>
+<p>Une fois le logiciel <strong>Tableau Public</strong> ouvert, vous devez vous connecter à des données pour commencer à travailler (ou ouvrir un projet précédemment créé). Nous allons utiliser ici les résultats de l’enquête national effectuée 2,5 ans après l’obtention du DUT auprès des étudiants diplômés en 2011 (cette enquête est faite tous les ans pour information). Nous n’avons à disposition que les étudiants de l’IUT Paris Descartes . Vous trouverez le fichier Excel <a href="reporting-tp1/Enquete_DUT-2011-Paris.xlsx">ici</a>.</p>
+<p>Lorsque vous avez choisi votre fichier Excel, vous devriez voir apparaître l’écran suivant.</p>
+<p><img src="reporting-tp1/01-importation-donnees.png" alt="Ecran visualisation des données" /></p>
 </div>
-<div id="informations-sur-le-contenu-du-site" class="section level2">
-<h2>Informations sur le contenu du site</h2>
-<ul>
-<li>Dans la partie <a href="enseignement.html">Enseignement</a>, vous trouverez un ensemble de documents de cours :</li>
-<li>Dans la partie <a href="tutoriels.html">Tutoriels</a>, vous trouverez un certain de tutoriels ou des études de cas plus ou moins liées à mes cours.</li>
-<li>Dans la partie <a href="recherche.html">Recherche</a>, vous trouverez mes thématiques de recherche, ainsi que mes <a href="publications.html">publications</a>.</li>
-</ul>
+<div id="verification-des-donnees" class="section level2">
+<h2>Vérification des données</h2>
+<p>Une fois les données importées, on peut vérifier si les types associés sont les bons. Ici, il n’y a aucun problème (a priori). Par contre, nous avons deux champs (<code>Code postal résidence</code> et <code>Département résidence</code>) qui peuvent avoir un rôle spécifique dans le logiciel. En effet, ce sont des indications géographiques et il est possible de leur définir un rôle géographique correspondant à leur définition (cf écrans suivants).</p>
+<div id="code-postal" class="section level3">
+<h3>Code Postal</h3>
+<p><img src="reporting-tp1/02-verification-donnees--code-postal.png" alt="Modification du rôle pour le code postal" /></p>
 </div>
-<div id="quelques-liens-interessants" class="section level2">
-<h2>Quelques liens intéressants</h2>
-<ul>
-<li><a href="https://sites.google.com/site/groupeecais/">ECAIS</a> : groupe de travail de l’IUT Paris Descartes, regroupant des informaticiens et des statisticiens ;</li>
-<li><a href="http://www.stid-france.fr/">STID-France</a> : ensemble des départements STID de France ;</li>
-<li><a href="http://www.sfds.asso.fr/323-Rendez_vous_SFdS_Methodes_et_Logiciels">Groupe Méthodes &amp; Logiciels</a> : séminaires d’échanges sur différentes thématiques autour de la statistique, intégrant des aspects méthodologiques et pratiques.</li>
-</ul>
+<div id="departement" class="section level3">
+<h3>Département</h3>
+<p><img src="reporting-tp1/02-verification-donnees--departement.png" alt="Modification du rôle pour le département" /></p>
+</div>
+</div>
+<div id="premiere-feuille-ou-sheet" class="section level2">
+<h2>Première feuille (ou <em>Sheet</em>)</h2>
+<p>Voici les étapes à suivre pour créer une nouvelle feuille</p>
+<p>03-premiere-feuille–choix-marks.png 03-premiere-feuille–glisser-DUT-lignes.png 03-premiere-feuille–glisser-number-color.png 03-premiere-feuille–glisser-number-combinaison.png 03-premiere-feuille–glisser-number-size.png 03-premiere-feuille–glisser-number-tooltip.png 03-premiere-feuille–marks-bar.png 03-premiere-feuille–number-of-records–bis.png 03-premiere-feuille–number-of-records.png 03-premiere-feuille–vide.png</p>
+</div>
+<div id="deuxieme-feuille" class="section level2">
+<h2>Deuxième feuille</h2>
+<p>04-deuxieme-feuille–diagramme-circulaire.png 04-deuxieme-feuille–edition-couleur-sexe.png</p>
+</div>
+<div id="troisieme-feuille" class="section level2">
+<h2>Troisième feuille</h2>
+<p>05-troisieme-feuille–changement-agregat.png</p>
+</div>
+<div id="quatrieme-feuille" class="section level2">
+<h2>Quatrième feuille</h2>
+<p>06-quatrieme-feuille–changement-carte.png</p>
+</div>
+<div id="premier-tableau-de-bord-ou-dashboard" class="section level2">
+<h2>Premier tableau de bord (ou <em>Dashboard</em>)</h2>
+<p>07-tableau1-resultat.png</p>
+</div>
+<div id="sauvegarde-de-votre-travail" class="section level2">
+<h2>Sauvegarde de votre travail</h2>
+</div>
+<div id="a-faire" class="section level2">
+<h2>A FAIRE</h2>
 </div>
 
 </div>

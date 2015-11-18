@@ -1,6 +1,4 @@
----
-title: FX Jollois 
----
+# Bienvenue sur ma page
 
 ## Présentation
 
@@ -14,12 +12,12 @@ accessibles, et certaines pages sont encore en cours de réalisation.
 
 ## Informations sur le contenu du site
 
-- Dans la partie [Enseignement](enseignement.html), vous trouverez un ensemble de documents 
+- Dans la partie [Enseignement](enseignement/), vous trouverez un ensemble de documents 
 de cours :
-- Dans la partie [Tutoriels](tutoriels.html), vous trouverez un certain de tutoriels ou
+- Dans la partie [Tutoriels](tutoriels/), vous trouverez un certain de tutoriels ou
 des études de cas plus ou moins liées à mes cours.
-- Dans la partie [Recherche](recherche.html), vous trouverez mes thématiques de recherche, 
-ainsi que mes [publications](publications.html).
+- Dans la partie [Recherche](recherche/), vous trouverez mes thématiques de recherche, 
+ainsi que mes [publications](recherche/publications).
 
 ## Quelques liens intéressants 
 

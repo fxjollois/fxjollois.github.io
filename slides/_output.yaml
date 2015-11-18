@@ -1,0 +1,5 @@
+ioslides_presentation:
+  self_contained: false
+  lib_dir: __libs
+  include:
+    in_header: __include/in_header.html

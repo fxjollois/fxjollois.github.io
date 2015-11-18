@@ -10,7 +10,7 @@
 
 
 
-<title>FX Jollois</title>
+<title>TP1. HTML, CSS et JS</title>
 
 <script src="__libs/jquery-1.11.0/jquery.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -155,30 +155,38 @@ img {
 <div class="contenu">
 
 <div id="header">
-<h1 class="title">FX Jollois</h1>
+<h1 class="title">TP1. HTML, CSS et JS</h1>
 </div>
 
 
-<div id="presentation" class="section level2">
-<h2>Présentation</h2>
-<p>Enseignant-chercheur en informatique, mon domaine de compétence se situe à la frontière entre l’informatique et la statistique. J’enseigne dans le département <a href="http://www.stid-paris.fr/">STID</a> de l’<a href="http://www.iut.parisdescartes.fr">IUT Paris Descartes</a>. J’effectue ma recherche dans l’équipe Fouille de données du <a href="http://www.lipade.fr">LIPADE</a>.</p>
-<p>Pour votre information, ce site étant encore en construction, certains liens ne sont pas accessibles, et certaines pages sont encore en cours de réalisation.</p>
-</div>
-<div id="informations-sur-le-contenu-du-site" class="section level2">
-<h2>Informations sur le contenu du site</h2>
+<p>Première utilisation HTML, CSS et JS (<a href="http://embed.plnkr.co/7pv3ri/preview">lien vers Plnker</a>) :</p>
 <ul>
-<li>Dans la partie <a href="enseignement.html">Enseignement</a>, vous trouverez un ensemble de documents de cours :</li>
-<li>Dans la partie <a href="tutoriels.html">Tutoriels</a>, vous trouverez un certain de tutoriels ou des études de cas plus ou moins liées à mes cours.</li>
-<li>Dans la partie <a href="recherche.html">Recherche</a>, vous trouverez mes thématiques de recherche, ainsi que mes <a href="publications.html">publications</a>.</li>
+<li>Vous verrez un aperçu du rendu (<em>Preview</em>)</li>
+<li>Avec l’onglet <em>Code</em> (en haut à droite), vous pouvez voir le contenu de chaque fichier</li>
+<li>En cliquant sur <em>Edit</em>, vous pourrez éditer ces fichiers et faire le travail demandé</li>
 </ul>
-</div>
-<div id="quelques-liens-interessants" class="section level2">
-<h2>Quelques liens intéressants</h2>
+<div id="a-faire" class="section level2">
+<h2>A faire</h2>
+<p>Créer un script permettant de faire un diagramme avec les contraintes suivantes :</p>
 <ul>
-<li><a href="https://sites.google.com/site/groupeecais/">ECAIS</a> : groupe de travail de l’IUT Paris Descartes, regroupant des informaticiens et des statisticiens ;</li>
-<li><a href="http://www.stid-france.fr/">STID-France</a> : ensemble des départements STID de France ;</li>
-<li><a href="http://www.sfds.asso.fr/323-Rendez_vous_SFdS_Methodes_et_Logiciels">Groupe Méthodes &amp; Logiciels</a> : séminaires d’échanges sur différentes thématiques autour de la statistique, intégrant des aspects méthodologiques et pratiques.</li>
+<li>barres verticales,</li>
+<li>largeur du graphique égale à celle de la fenêtre,</li>
+<li>largeur des barres en fonction du nombre de celles-ci (et donc du nombre de modalités),</li>
+<li>modalités affichées en dessous de chaque barre,</li>
+<li>valeurs affichées au dessus de chaque barre,</li>
+<li>résultat fonctionnel quelque soit le nombre de modalités données (tester avec différentes valeurs)</li>
+<li>changement de couleur de la barre sur laquelle passe la souris</li>
+<li>gestion des plusieurs clics sur les boutons :</li>
+<li>le premier clique créé et affiche le diagramme</li>
+<li>le deuxième le cache, sans le supprimer</li>
+<li>le troisième l’affiche de nouveau, sans le recréer donc</li>
 </ul>
+<p>Pour améliorer le graphique, on choisit de ne plus afficher directement la valeur sur le graphique. On veut une fenêtre <em>pop-up</em> qui s’affiche lorsque la souris passe sur une barre. Dans cette fenêtre, on veut la modalité et la valeur associée. On souhaite que cette fenêtre suive le curseur de la souris. On doit faire attention à l’affichage si la souris est proche d’un bord de la fenêtre.</p>
+<p>Pour encode améliorer, on souhaite récupérer les données à partir d’un fichier texte au format <strong>JSON</strong>, de ce type :</p>
+<pre class="json"><code>{
+  &quot;valeurs&quot;: [12, 5, 21, 18, 14],
+  &quot;modalites&quot;: [&quot;A&quot;, &quot;B&quot;, &quot;C&quot;, &quot;E&quot;, &quot;Z&quot;]
+}</code></pre>
 </div>
 
 </div>
