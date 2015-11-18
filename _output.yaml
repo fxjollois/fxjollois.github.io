@@ -1,10 +1,10 @@
 html_document:
   self_contained: false
   theme: journal
-  css: __libs/bootstrap-journal.min.css
-  lib_dir: __libs
+  css: libs/bootstrap-journal.min.css
+  lib_dir: libs
   includes:
-    in_header: __include/in_header.html
-    before_body: __include/before_body.html
-    after_body: __include/after_body.html
+    in_header: include/in_header.html
+    before_body: include/before_body.html
+    after_body: include/after_body.html
 
