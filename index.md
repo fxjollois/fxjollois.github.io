@@ -16,7 +16,6 @@ accessibles, et certaines pages sont encore en cours de réalisation.
 
 - Dans la partie [Enseignement](enseignement.html), vous trouverez un ensemble de documents 
 de cours :
-- Dans la partie [Tutoriels](tutoriels.html), vous trouverez un certain de tutoriels ou
 des études de cas plus ou moins liées à mes cours.
 - Dans la partie [Recherche](recherche.html), vous trouverez mes thématiques de recherche, 
 ainsi que mes [publications](publications.html).
