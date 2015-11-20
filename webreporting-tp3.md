@@ -2,7 +2,7 @@
 title: TP3. Librairie D3.js
 ---
 
-Reprendre les données du [TP1](../TP1), au format `JSON` :
+Reprendre les données du [TP1](webreporting-tp1.html), au format `JSON` :
 
 ```json
 {

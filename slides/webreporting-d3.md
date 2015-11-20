@@ -59,8 +59,8 @@ selection.insert("balise");
 
 ## Exemple : sur la base de d3.js
 
-<iframe height='268' scrolling='no' src='//codepen.io/fxjUPD/embed/bVMMjZ/?height=268&theme-id=0&default-tab=result' frameborder='no' allowtransparency='true' allowfullscreen='true' style='width: 100%;'>See the Pen <a href='http://codepen.io/fxjUPD/pen/bVMMjZ/'>d3.js : base de la librairie</a> by FX Jollois (<a href='http://codepen.io/fxjollois'>@fxjollois</a>) on <a href='http://codepen.io'>CodePen</a>.
-</iframe>
+<p data-height="268" data-theme-id="0" data-slug-hash="bVMMjZ" data-default-tab="result" data-user="fxjollois" class='codepen'>See the Pen <a href='http://codepen.io/fxjollois/pen/bVMMjZ/'>d3.js : base de la librairie</a> by FX Jollois (<a href='http://codepen.io/fxjollois'>@fxjollois</a>) on <a href='http://codepen.io'>CodePen</a>.</p>
+<script async src="//assets.codepen.io/assets/embed/ei.js"></script>
 
 ## Ajout de données au DOM
 
@@ -93,18 +93,18 @@ selection.html(function(d, i) {
 
 ## Exemple : ajout de données + propriété dynamique
 
-<iframe height='268' scrolling='no' src='//codepen.io/fxjUPD/embed/eprrjJ/?height=268&theme-id=0&default-tab=result' frameborder='no' allowtransparency='true' allowfullscreen='true' style='width: 100%;'>See the Pen <a href='http://codepen.io/fxjUPD/pen/eprrjJ/'>d3.js : data + style dynamique</a> by FX Jollois (<a href='http://codepen.io/fxjollois'>@fxjollois</a>) on <a href='http://codepen.io'>CodePen</a>.
-</iframe>
+<p data-height="268" data-theme-id="0" data-slug-hash="eprrjJ" data-default-tab="result" data-user="fxjollois" class='codepen'>See the Pen <a href='http://codepen.io/fxjollois/pen/eprrjJ/'>d3.js</a> by FX Jollois (<a href='http://codepen.io/fxjollois'>@fxjollois</a>) on <a href='http://codepen.io'>CodePen</a>.</p>
+<script async src="//assets.codepen.io/assets/embed/ei.js"></script>
 
 ## Exemple : fonction `enter()`
 
-<iframe height='268' scrolling='no' src='//codepen.io/fxjUPD/embed/wKjjXN/?height=268&theme-id=0&default-tab=result' frameborder='no' allowtransparency='true' allowfullscreen='true' style='width: 100%;'>See the Pen <a href='http://codepen.io/fxjUPD/pen/wKjjXN/'>d3.js : data + enter()</a> by FX Jollois (<a href='http://codepen.io/fxjollois'>@fxjollois</a>) on <a href='http://codepen.io'>CodePen</a>.
-</iframe>
+<p data-height="268" data-theme-id="0" data-slug-hash="wKjjXN" data-default-tab="result" data-user="fxjollois" class='codepen'>See the Pen <a href='http://codepen.io/fxjollois/pen/wKjjXN/'>d3.js</a> by FX Jollois (<a href='http://codepen.io/fxjollois'>@fxjollois</a>) on <a href='http://codepen.io'>CodePen</a>.</p>
+<script async src="//assets.codepen.io/assets/embed/ei.js"></script>
 
 ## Exemple : fonction `exit()`
 
-<iframe height='268' scrolling='no' src='//codepen.io/fxjUPD/embed/LpmmmL/?height=268&theme-id=0&default-tab=result' frameborder='no' allowtransparency='true' allowfullscreen='true' style='width: 100%;'>See the Pen <a href='http://codepen.io/fxjUPD/pen/LpmmmL/'>d3.js : data + exit()</a> by FX Jollois (<a href='http://codepen.io/fxjollois'>@fxjollois</a>) on <a href='http://codepen.io'>CodePen</a>.
-</iframe>
+<p data-height="268" data-theme-id="0" data-slug-hash="LpmmmL" data-default-tab="result" data-user="fxjollois" class='codepen'>See the Pen <a href='http://codepen.io/fxjollois/pen/LpmmmL/'>d3.js</a> by FX Jollois (<a href='http://codepen.io/fxjollois'>@fxjollois</a>) on <a href='http://codepen.io'>CodePen</a>.</p>
+<script async src="//assets.codepen.io/assets/embed/ei.js"></script>
 
 ## Chaînage des fonctions
 
@@ -113,5 +113,5 @@ selection.html(function(d, i) {
     - donc concerne plutôt les procédures (qui sont des fonctions en JS)
 - Corollaire : il est possible d'enchaîner un grand nombre de fonctions directement 
 
-<iframe height='268' scrolling='no' src='//codepen.io/fxjollois/embed/MaGGxK/?height=268&theme-id=0&default-tab=result' frameborder='no' allowtransparency='true' allowfullscreen='true' style='width: 100%;'>See the Pen <a href='http://codepen.io/fxjollois/pen/MaGGxK/'>d3.js : chaînage des fonctions</a> by FX Jollois (<a href='http://codepen.io/fxjollois'>@fxjollois</a>) on <a href='http://codepen.io'>CodePen</a>.
-</iframe>
+<p data-height="268" data-theme-id="0" data-slug-hash="MaGGxK" data-default-tab="result" data-user="fxjollois" class='codepen'>See the Pen <a href='http://codepen.io/fxjollois/pen/MaGGxK/'>d3.js</a> by FX Jollois (<a href='http://codepen.io/fxjollois'>@fxjollois</a>) on <a href='http://codepen.io'>CodePen</a>.</p>
+<script async src="//assets.codepen.io/assets/embed/ei.js"></script>
