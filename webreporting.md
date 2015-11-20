@@ -10,12 +10,16 @@ title: Web Reporting
 - [Introduction à Google Charts](slides/webreporting-google-charts.html)
 - [Introduction à D3.js](slides/webreporting-d3.html)
 
+- [Introduction à Leaflet](slides/webreporting-leaflet.html)
+
 ## Sujets TP
 
 1. [TP1](webreporting-tp1.html) : Première utilisation HTML, CSS et JS
 2. [TP2](webreporting-tp2.html) : Librairie Google Charts
 3. [TP3](webreporting-tp3.html) : Librairie D3.js
 4. [TP4](webreporting-tp4.html) : Complément sur la librairie D3.js
+
+5. [TP5](webreporting-tp5.html) : Cartographie avec Leaflet
 
 ## Autres
 
