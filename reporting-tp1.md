@@ -70,7 +70,7 @@ On va d'abord créer une représentation de la distribution du diplôme de DUT d
 ![Choix de couleurs](reporting-tp1/03-premiere-feuille--glisser-number-color.png)
 6. Idem, on le place maintenant sur *Size* pour voir apparaître des carrés de tailles proportionnelles aux valeurs (idem, une légende a été créée) :<br>
 ![Choix de size (taille)](reporting-tp1/03-premiere-feuille--glisser-number-size.png)
-7. En le plaçant sur *Tooltip*, rien ne s'affiche dans le tableau, sauf quand on place le curseur de la souris sur une des cases. On voit appraître la valeur (i.e. le nombre d'enregistrements ayant cette modalité) :<br>
+7. En le plaçant sur *Tooltip*, rien ne s'affiche dans le tableau, sauf quand on place le curseur de la souris sur une des cases. On voit apparaître la valeur (i.e. le nombre d'enregistrements ayant cette modalité) :<br>
 ![Choix de tooltip (info-bulle)](reporting-tp1/03-premiere-feuille--glisser-number-tooltip.png)
 8. En prenant plusieurs fois la mesure *# Number of Records* de la partie *Measures* à gauche, il est possible de combiner les représentations, et on obtient ceci :<br>
 ![Combinaison de spécifications d'informations](reporting-tp1/03-premiere-feuille--glisser-number-combinaison.png)
@@ -120,7 +120,7 @@ On désire maintenant connaître l'origine géographique des répondants, et par
 
 ## Premier tableau de bord (ou *Dashboard*)
 
-L'idée d'un tableau de bord (ou **dashboard** en anglais) est de regrouper plusieurs représentations concernant un sujet sur une même page, afin de synthétiser les résultats. Nous allons ici faire un tableau de bord sur l'origine des étudiants :
+L'idée d'un tableau de bord (ou **dashboard** en anglais) est de regrouper plusieurs représentations concernant un sujet sur une même page, afin de synthétiser les résultats. Nous allons ici faire un tableau de bord sur l'**origine des étudiants** :
 
 1. Aller dans le menu *Dashboard* puis *New Dashboard*.
 2. Renommer le en *Reporting 1*
@@ -135,13 +135,19 @@ Pour sauvegarder votre travail, vous devez avoir un compte (cf présentation).
 
 Une fois connecté, vous devez donner un nom à votre travail (par exemple *Reporting - TP1*). Il sera sauvegardé sur votre compte hébergé par **Tableau Public**. 
 
-Ceci a pour effet que vous pourrez ouvrir votre travail sur n'importe quel autre ordinateur en pouvant le reprendre la où vous en êtes. Vous pourrez aussi partager votre tableau de bord via un lien disponible en bas de la fenêtre de votre navigateur qui vient de s'ouvrir (tous les *dashboards* seront visibles par défaut, et éventuellement les *worksheets* selon le paramètrage sur le site web).
+Ceci a pour effet que vous pourrez ouvrir votre travail sur n'importe quel autre ordinateur en pouvant le reprendre la où vous en êtes. Vous pourrez aussi partager votre tableau de bord via un lien disponible en bas de la fenêtre de votre navigateur qui vient de s'ouvrir. On peut le partager via [un lien](https://public.tableau.com/views/Reporting-TP1/Reporting1?:embed=y&:display_count=yes&:showTabs=y) ou en l'intégrant dans une page web :
+
+<script type='text/javascript' src='https://public.tableau.com/javascripts/api/viz_v1.js'></script><div class='tableauPlaceholder' style='width: 654px; height: 742px;'><noscript><a href='#'><img alt='Reporting 1 ' src='https:&#47;&#47;public.tableau.com&#47;static&#47;images&#47;Re&#47;Reporting-TP1&#47;Reporting1&#47;1_rss.png' style='border: none' /></a></noscript><object class='tableauViz' width='654' height='742' style='display:none;'><param name='host_url' value='https%3A%2F%2Fpublic.tableau.com%2F' /> <param name='site_root' value='' /><param name='name' value='Reporting-TP1&#47;Reporting1' /><param name='tabs' value='no' /><param name='toolbar' value='yes' /><param name='static_image' value='https:&#47;&#47;public.tableau.com&#47;static&#47;images&#47;Re&#47;Reporting-TP1&#47;Reporting1&#47;1.png' /> <param name='animate_transition' value='yes' /><param name='display_static_image' value='yes' /><param name='display_spinner' value='yes' /><param name='display_overlay' value='yes' /><param name='display_count' value='yes' /><param name='showVizHome' value='no' /><param name='showTabs' value='y' /><param name='bootstrapWhenNotified' value='true' /></object></div>
 
 ## A FAIRE
 
-Vous devez réaliser un tableau de bord sur le devenir des répondants intégrant les éléments suivants (soit dans du texte, soit via des représentations) en général et en fonction du DUT obtenu :
+Vous devez réaliser un tableau de bord sur le **devenir des étudiants** intégrant les éléments suivants en général et en fonction du DUT obtenu :
 
 - *Salaire Net Mensuel* médian 
-- *Type d'emploi* 
+- *Type d'emploi* (`null` indique nue valeur manquante - en faisant un clic-droit sur cette modalité, il est possible de l'exclure)
 - *Travail* 
-- *Parcours Libellé*
+- *Parcours Libellé* (on peut faire un tri manuel des modalités dans la partie des propriétés)
+
+Voici une proposition de résultat :
+
+<script type='text/javascript' src='https://public.tableau.com/javascripts/api/viz_v1.js'></script><div class='tableauPlaceholder' style='width: 1004px; height: 1136px;'><noscript><a href='#'><img alt='Reporting 2 ' src='https:&#47;&#47;public.tableau.com&#47;static&#47;images&#47;Re&#47;Reporting-TP1&#47;Reporting2&#47;1_rss.png' style='border: none' /></a></noscript><object class='tableauViz' width='1004' height='1136' style='display:none;'><param name='host_url' value='https%3A%2F%2Fpublic.tableau.com%2F' /> <param name='site_root' value='' /><param name='name' value='Reporting-TP1&#47;Reporting2' /><param name='tabs' value='no' /><param name='toolbar' value='yes' /><param name='static_image' value='https:&#47;&#47;public.tableau.com&#47;static&#47;images&#47;Re&#47;Reporting-TP1&#47;Reporting2&#47;1.png' /> <param name='animate_transition' value='yes' /><param name='display_static_image' value='yes' /><param name='display_spinner' value='yes' /><param name='display_overlay' value='yes' /><param name='display_count' value='yes' /><param name='showVizHome' value='no' /><param name='showTabs' value='y' /><param name='bootstrapWhenNotified' value='true' /></object></div>
