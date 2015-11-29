@@ -12,9 +12,8 @@ h1 {
   text-align: center;
 }
 
-/* Style du tableau Google Charts */
-#tab {
-  color: black;
+#tab tr:hover {
+    background-color: lightgrey;
 }
 
 /* CSS pour placement des div */

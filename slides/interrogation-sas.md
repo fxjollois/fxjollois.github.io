@@ -1,7 +1,7 @@
 ---
 title: "Interrogation de données avec SAS"
 author: "FX Jollois"
-date: "... ou comment faire du SQL sans SQL"
+date: "... ou comment faire du SQL sans SQL dans SAS"
 output: ioslides_presentation
 ---
 
@@ -9,7 +9,7 @@ output: ioslides_presentation
 
 But de cette présentation :
 
-> Présenter une comparaison (**non exhaustive**) entre le langage **SQL** et le langage **SAS** pour l'**interrogation** d'une base de données relationnelles
+> Présenter une comparaison (**non exhaustive**) entre le langage **SQL** et le langage [**SAS**](http://www.sas.com) pour l'**interrogation** d'une base de données relationnelles
 
 Plan :
 
@@ -20,6 +20,7 @@ Plan :
 Pré-requis :
 
 - Connaissance du SQL
+- Connaissance du langage SAS
 
 ## Interrogation de données
 
@@ -32,7 +33,7 @@ Ensemble des opérations de l'algèbre relationnelle utilisée pour obtenir des 
 - Opérations ensemblistes
 - Jointures
 
-Les données sont disponibles [ici](http://www.math-info.univ-paris5.fr/~jollois/enseignement/donnees)
+Les données sont disponibles [ici](http://fxjollois.github.io/accesdonnees.html)
 
 ## SQL sous SAS
 
