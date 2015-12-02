@@ -10,7 +10,7 @@
 
 
 
-<title>FX Jollois</title>
+<title>Reporting - TP2</title>
 
 <script src="libs/jquery-1.11.0/jquery.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -152,29 +152,80 @@ img {
 <div class="contenu">
 
 <div id="header">
-<h1 class="title">FX Jollois</h1>
+<h1 class="title">Reporting - TP2</h1>
 </div>
 
 
-<div id="presentation" class="section level2">
-<h2>Présentation</h2>
-<p>Enseignant-chercheur en informatique, mon domaine de compétence se situe à la frontière entre l’informatique et la statistique. J’enseigne dans le département <a href="http://www.stid-paris.fr/">STID</a> de l’<a href="http://www.iut.parisdescartes.fr">IUT Paris Descartes</a>. J’effectue ma recherche dans l’équipe Fouille de données du <a href="http://www.lipade.fr">LIPADE</a>, dans l’équipe <a href="http://www.math-info.univ-paris5.fr/~nadifmoh/Accueil.html#">MLDS</a>.</p>
-<p>Pour votre information, ce site étant encore en construction, certains liens ne sont pas accessibles, et certaines pages sont encore en cours de réalisation.</p>
-</div>
-<div id="informations-sur-le-contenu-du-site" class="section level2">
-<h2>Informations sur le contenu du site</h2>
+<style>
+img {
+    margin: 10px auto;
+}
+em {
+    background-color: #f4f4f4;
+    padding: 0 5px;
+    font-style: normal;
+}
+</style>
+<p>Dans <strong>Tableau Public</strong>, ouvrez le résultat obtenu suite au TP1 (<a href="reporting-tp2/Reporting%20-%20TP1.twbx">workbook téléchargeable</a>). Vous noterez que tous les graphiques sont présents avec une couleur dans l’onglet en bas, permettant de repérer quels graphiques sont pour quels tableaux. Les données sont intégrées dans le fichier.</p>
+<div id="utilisation-dun-graphique-comme-filtre" class="section level2">
+<h2>Utilisation d’un graphique comme filtre</h2>
 <ul>
-<li>Dans la partie <a href="enseignement.html">Enseignement</a>, vous trouverez un ensemble de documents de cours : des études de cas plus ou moins liées à mes cours.</li>
-<li>Dans la partie <a href="recherche.html">Recherche</a>, vous trouverez mes thématiques de recherche, ainsi que mes <a href="publications.html">publications</a>.</li>
+<li>Reprenez le <em>dashboard</em> nommé <em>Reporting 1</em>.</li>
+<li>Faites un clic-droit dans le graphique <em>Répartition DUT</em>, puis cliquer sur <em>Use as filter</em>.</li>
+<li>Une fois cela fait, lorsque vous cliquez sur un département, les autres graphiques (<em>Répartition Sexe</em> et carte <em>Origine Etudiants</em>) sont mis à jour. Elles ne concernent que les étudiants du département sélectionné.</li>
+<li>La carte est fixe, car elle est dite <em>épinglée</em> (cf le dessin d’épingle quand on passe la souris dessus). Ceci permet que son affichage ne change pas à chaque clic de souris. Ce n’est pas le comportement par défaut. Pour l’obtenir (ou revenir à l’état initial), il suffit de cliquer sur l’épingle. Si vous faites cela, en cliquant sur <code>INFO</code>, on remarque que la carte est zoomée par rapport aux autres départements.</li>
+</ul>
+<p>Il est aussi possible de créer des filtres permettant le choix de plusieurs modalités (clic-droit puis <em>Quick filters</em>).</p>
+</div>
+<div id="utilisation-du-mode-story" class="section level2">
+<h2>Utilisation du mode <em>Story</em></h2>
+<p>Ce mode permet d’intégrer plusieurs <em>dashboards</em> (ou <em>sheets</em> mais c’est peut-être moins intéressant) et d’avoir un menu permettant de naviguer parmi ceux-ci.</p>
+<ul>
+<li>Aller dans le menu, cliquer sur <em>Story</em> puis <em>New story</em>.</li>
+<li>Double-cliquer sur <code>Titre de l'histoire</code> puis écrire <em>Enquête DUT + 2,5 ans</em>.</li>
+<li>Glisser le tableau <em>Reporting 1</em> dans le grand cadre.</li>
+<li>Double-cliquer sur <em>Add legend</em> pour écrire <em>Origine</em>.</li>
+<li>Ensuite, cliquer sur <em>New ??</em>.</li>
+<li>Glisser le tableau <em>Reporting 2</em> et donner comme légende <em>Devenir</em>.</li>
+<li>Comme vous pouvez le voir, ainsi, il est possible de naviguer entre les deux tableaux :
+<ul>
+<li>soit en cliquant directement sur la légende associée,</li>
+<li>soit avec les flèches gauche et droite pour naviguer.</li>
+</ul></li>
 </ul>
 </div>
-<div id="quelques-liens-interessants" class="section level2">
-<h2>Quelques liens intéressants</h2>
+<div id="a-faire" class="section level2">
+<h2>A FAIRE</h2>
+<p>Reprendre les données de base (cf <a href="reporting-tp1.html">TP1</a>), et programmer une <em>story</em> intégrant les éléments suivants (avec pour chaque item la possibilité de faire un focus sur un des départements) :</p>
+<ol style="list-style-type: decimal">
+<li><strong>Origine des étudiants</strong>
 <ul>
-<li><a href="https://sites.google.com/site/groupeecais/">ECAIS</a> : groupe de travail de l’IUT Paris Descartes, regroupant des informaticiens et des statisticiens ;</li>
-<li><a href="http://www.stid-france.fr/">STID-France</a> : ensemble des départements STID de France ;</li>
-<li><a href="http://www.sfds.asso.fr/323-Rendez_vous_SFdS_Methodes_et_Logiciels">Groupe Méthodes &amp; Logiciels</a> : séminaires d’échanges sur différentes thématiques autour de la statistique, intégrant des aspects méthodologiques et pratiques.</li>
-</ul>
+<li>Typologie des répondants (âge, sexe, classement du bac, situation initiale)</li>
+<li>Origine géographique</li>
+</ul></li>
+<li><strong>Quelques détails</strong>
+<ul>
+<li>Boursier</li>
+<li>Nationalité</li>
+<li>Série et mention du bac, oral ou non, année du bac</li>
+</ul></li>
+<li><strong>Poursuite ou emploi ?</strong>
+<ul>
+<li>Parcours après le DUT</li>
+<li>A regarder en fonction du sexe, de l’âge, du classement du bac et de la situation initiale</li>
+</ul></li>
+<li><strong>Quelle intégration professionnelle avec un DUT ?</strong>
+<ul>
+<li>Travail</li>
+<li>Type d’emploi</li>
+<li>Nombre d’emploi</li>
+<li>Chômage ou non, durée si oui</li>
+<li>Salaires et primes</li>
+<li>Adéquation salaire et emploi avec le DUT</li>
+<li>A regarder éventuellement en fonction du sexe, de l’âge, du classement du bac et de la situation initiale</li>
+</ul></li>
+</ol>
+<p>Vous êtes libres des représentations à mettre en oeuvre, de la mise en page des tableaux et du nombre de tableaux à obtenir au final dans votre <em>story</em>.</p>
 </div>
 
 </div>

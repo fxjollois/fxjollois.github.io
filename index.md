@@ -7,7 +7,7 @@ title: FX Jollois
 Enseignant-chercheur en informatique, mon domaine de compétence se situe à la frontière 
 entre l'informatique et la statistique. J'enseigne dans le département 
 [STID](http://www.stid-paris.fr/) de l'[IUT Paris Descartes](http://www.iut.parisdescartes.fr). 
-J'effectue ma recherche dans l'équipe Fouille de données du [LIPADE](http://www.lipade.fr).
+J'effectue ma recherche dans l'équipe Fouille de données du [LIPADE](http://www.lipade.fr), dans l'équipe [MLDS](http://www.math-info.univ-paris5.fr/~nadifmoh/Accueil.html#).
 
 Pour votre information, ce site étant encore en construction, certains liens ne sont pas 
 accessibles, et certaines pages sont encore en cours de réalisation.

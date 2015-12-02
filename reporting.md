@@ -14,3 +14,4 @@ vous pouvez aller sur cette [page](https://public.tableau.com/auth/signup).
 ## TP
 
 - [TP1](reporting-tp1.html)
+- [TP2](reporting-tp2.html)
