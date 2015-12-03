@@ -15,3 +15,14 @@ vous pouvez aller sur cette [page](https://public.tableau.com/auth/signup).
 
 - [TP1](reporting-tp1.html)
 - [TP2](reporting-tp2.html)
+
+## Pour résoudre les problèmes de connection dans **Tableau**
+
+- Ouvrir **Internet Explorer**.
+- Cliquer sur l'engrenage en haut à droite puis sur *Options Internet*.
+- Aller dans l'onglet *Connexions*.
+- Cliquer sur *Paramètres réseau*.
+- Décocher toutes les cases.
+- Cliquer sur *OK*, puis encore sur *OK*.
+- Fermer **IE** et **Tableau** s'il est encore ouvert.
+- Ouvrir de nouveau **Tableau**. Celui-ci devrait pouvoir se connecter sans souci à internet maintenant. Vous pourrez donc sauvegarder votre travail en ligne.
