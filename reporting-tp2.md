@@ -107,8 +107,8 @@ Ce mode permet d'intégrer plusieurs *dashboards* (ou *sheets* mais c'est peut-�
 - Aller dans le menu, cliquer sur *Story* puis *New story*.
 - Double-cliquer sur `Titre de l'histoire` puis écrire *Enquête DUT + 2,5 ans*.
 - Glisser le tableau *Reporting 1* dans le grand cadre.
-- Double-cliquer sur *Add legend* pour écrire *Origine*.
-- Ensuite, cliquer sur *New ??*.
+- Double-cliquer sur *Add a caption* pour écrire *Origine*.
+- Ensuite, cliquer sur *New Blank ...*.
 - Glisser le tableau *Reporting 2* et donner comme légende *Devenir*.
 - Comme vous pouvez le voir, ainsi, il est possible de naviguer entre les deux tableaux :
     - soit en cliquant directement sur la légende associée,

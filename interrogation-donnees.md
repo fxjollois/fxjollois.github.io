@@ -18,6 +18,8 @@ décisionnel ;
 
 Ce n'est pas ici une présentation des langages.
 
+Vous trouverez sur [cette page](interrogation-sql-exemple.html) des exemples de requêtes *SQL*.
+
 ## Liens intéressants :
 
 - Page Wikipedia sur [SQL](https://fr.wikipedia.org/wiki/Structured_Query_Language)

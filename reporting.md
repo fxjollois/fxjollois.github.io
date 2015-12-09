@@ -15,6 +15,7 @@ vous pouvez aller sur cette [page](https://public.tableau.com/auth/signup).
 
 - [TP1](reporting-tp1.html)
 - [TP2](reporting-tp2.html)
+- [TP3](reporting-tp3.html)
 
 ## Pour résoudre les problèmes de connection dans **Tableau**
 

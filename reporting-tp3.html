@@ -10,7 +10,7 @@
 
 
 
-<title>Interrogation de données</title>
+<title>Reporting - TP3</title>
 
 <script src="libs/jquery-1.11.0/jquery.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -152,40 +152,40 @@ img {
 <div class="contenu">
 
 <div id="header">
-<h1 class="title">Interrogation de données</h1>
+<h1 class="title">Reporting - TP3</h1>
 </div>
 
 
-<div id="presentation" class="section level2">
-<h2>Présentation</h2>
-<p>Je présente ici les <a href="slides/interrogation-concepts.html">concepts relationnels</a> de manipulations de données de type relationnel (les plus répandus) d’une part, et leurs traductions selon plusieurs langages :</p>
+<p>Reprendre les données de base (cf <a href="reporting-tp1.html">TP1</a>) dans un nouveau <em>workbook</em> dans <strong>Tableau</strong>, et programmer une <em>story</em> intégrant les éléments suivants (avec pour chaque item la possibilité de faire un focus sur un des départements) :</p>
+<ol style="list-style-type: decimal">
+<li><strong>Origine des étudiants</strong>
 <ul>
-<li><a href="slides/interrogation-sql.html">SQL</a> : norme d’interrogation des bases de données relationnelles, c’est l’outil de bases de manipulation de données, implémenté dans de nombreux logiciels ;</li>
-<li><a href="slides/interrogation-sas.html">SAS</a> : logiciel phare dans le domaine du décisionnel ;</li>
-<li><a href="slides/interrogation-r.html">R</a> : logiciel libre de statistique ;</li>
-<li>Autre à venir ultérieurement.</li>
-</ul>
-<p>Ce n’est pas ici une présentation des langages.</p>
-<p>Vous trouverez sur <a href="interrogation-sql-exemple.html">cette page</a> des exemples de requêtes <em>SQL</em>.</p>
-</div>
-<div id="liens-interessants" class="section level2">
-<h2>Liens intéressants :</h2>
-<ul>
-<li>Page Wikipedia sur <a href="https://fr.wikipedia.org/wiki/Structured_Query_Language">SQL</a></li>
-<li>Cours sur SQL :
-<ul>
-<li><a href="http://sql.sh/">sql.sh</a> : Cours et tutoriels sur le langage SQL</li>
-<li>Partie SQL sur <a href="http://sql.developpez.com/">developpez.com</a></li>
-<li><a href="http://www.w3schools.com/sql/">W3schools</a> : en anglais avec possibilité de traduction</li>
+<li>Typologie des répondants (âge, sexe, classement du bac, situation initiale)</li>
+<li>Origine géographique</li>
 </ul></li>
-<li>Logiciels :
+<li><strong>Quelques détails</strong>
 <ul>
-<li><a href="https://www.sqlite.org/">SQLite</a> et <a href="http://sqlitebrowser.org/">SQLite Browser</a></li>
-<li><a href="http://www.sas.com/fr_fr/home.html">SAS</a></li>
-<li><a href="https://www.r-project.org/">R</a></li>
+<li>Boursier</li>
+<li>Nationalité</li>
+<li>Série et mention du bac, oral ou non, année du bac</li>
 </ul></li>
-</ul>
-</div>
+<li><strong>Poursuite ou emploi ?</strong>
+<ul>
+<li>Parcours après le DUT</li>
+<li>A regarder en fonction du sexe, de l’âge, du classement du bac et de la situation initiale</li>
+</ul></li>
+<li><strong>Quelle intégration professionnelle avec un DUT ?</strong>
+<ul>
+<li>Travail</li>
+<li>Type d’emploi</li>
+<li>Nombre d’emploi</li>
+<li>Chômage ou non, durée si oui</li>
+<li>Salaires et primes</li>
+<li>Adéquation salaire et emploi avec le DUT</li>
+<li>A regarder éventuellement en fonction du sexe, de l’âge, du classement du bac et de la situation initiale</li>
+</ul></li>
+</ol>
+<p>Vous êtes libres des représentations à mettre en oeuvre, de la mise en page des tableaux et du nombre de tableaux à obtenir au final dans votre <em>story</em>.</p>
 
 </div>
 <div class="footer">
