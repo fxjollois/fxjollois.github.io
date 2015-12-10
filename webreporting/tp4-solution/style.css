@@ -12,6 +12,7 @@ h1 {
   text-align: center;
 }
 
+/* pour tab */
 #tab tr:hover {
     background-color: lightgrey;
 }
@@ -40,4 +41,36 @@ h1 {
   #dashboard {
     width: 100%;
   }
+}
+
+/* pour pieChart */
+.legend {
+    font-size: 12px;
+}
+
+.arc path {
+    opacity: 0.8;
+}
+.arc path:hover {
+    stroke-width: 2px;
+    stroke: gray;
+    opacity: 1;
+}
+
+
+/* barChart */
+.domain {
+    stroke-width: 2px;
+    fill: none;
+    stroke: black;
+    z-index: 9999;
+}
+
+rect {
+    opacity: 0.8;
+}
+rect:hover {
+    opacity: 1;
+    stroke-width: 2px;
+    stroke: gray;    
 }

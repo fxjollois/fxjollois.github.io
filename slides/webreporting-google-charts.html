@@ -115,13 +115,24 @@
 
 </article></slide><slide class=''><hgroup><h2>Chargement de la librairie</h2></hgroup><article  id="chargement-de-la-librairie">
 
-<p>En 2 étapes : 1. Chargement de la librairie <strong>Google JSAPI</strong> avec l&#39;URL <code>https://www.google.com/jsapi</code> dans une balise <code>script</code> 2. Chargement de la librairie <strong>Google Visualization</strong>, en indiquant le ou les packages à charger (i.e. <code>corechart</code>, <code>table</code>, &#8230;) avec la fonction <code>google.load</code> prenant en paramètres : - la librairie <code>visualization</code> - la version de celle-ci (<code>1</code> pour version stable, <code>1.1</code> pour la nouvelle) - la liste des packages</p>
+<p>En 2 étapes :</p>
+
+<ol>
+<li>Chargement de la librairie <strong>Google JSAPI</strong> avec l&#39;URL <code>https://www.google.com/jsapi</code> dans une balise <code>script</code></li>
+<li>Chargement de la librairie <strong>Google Visualization</strong>, en indiquant le ou les packages à charger (i.e. <code>corechart</code>, <code>table</code>, &#8230;) avec la fonction <code>google.load</code> prenant en paramètres :
+
+<ul>
+<li>la librairie <code>visualization</code></li>
+<li>la version de celle-ci (<code>1</code> pour version stable, <code>1.1</code> pour la nouvelle)</li>
+<li>la liste des packages</li>
+</ul></li>
+</ol>
 
 <p>Ajout d&#39;une fonction (<code>google.setOnLoadCallback (f)</code>) permettant le lancement d&#39;une fonction <code>f</code> lorsque la librairie est chargée, pour éviter les problèmes de synchronisation</p>
 
 </article></slide><slide class=''><hgroup><h2>sur l&#39;exemple</h2></hgroup><article  id="sur-lexemple">
 
-<pre >&lt;script type=&quot;text/javascript&quot; src=&quot;https://www.google.com/jsapi&quot;&gt;
+<pre class = 'prettyprint lang-html'>&lt;script type=&quot;text/javascript&quot; src=&quot;https://www.google.com/jsapi&quot;&gt;
 &lt;/script&gt;
 &lt;script type=&quot;text/javascript&quot;&gt;
 
@@ -137,13 +148,25 @@
 
 </article></slide><slide class=''><hgroup><h2>Formatage des données</h2></hgroup><article  id="formatage-des-donnees">
 
-<p>Utilisation de la classe <code>google.visualization.DataTable</code> : - objet à deux dimensions - colonnes définies par un type, et éventuellement un label et/ou un id</p>
+<p>Utilisation de la classe <code>google.visualization.DataTable</code> :</p>
 
-<p>Possibilité de créer un objet de différentes manières : - Création d&#39;un objet vide, définition des colonnes puis insertion des lignes - A partir d&#39;un tableau JSON, avec un format spécifique (la première ligne contenant les infos des colonnes) - A partir d&#39;un littéral JSON, avec aussi un format spécifique (deux objets : un pour la définition des colonnes, un pour les valeurs des lignes) - A l&#39;aide d&#39;une requête <code>SQL</code> sur une source <em>Spreadsheet</em> ou <em>Fusion Table</em></p>
+<ul>
+<li>objet à deux dimensions</li>
+<li>colonnes définies par un type, avec label et/ou id</li>
+</ul>
+
+<p>Possibilité de créer un objet de différentes manières :</p>
+
+<ul>
+<li>Création d&#39;un objet vide, définition des colonnes puis insertion des lignes</li>
+<li>A partir d&#39;un tableau JSON, avec un format spécifique (la première ligne contenant les infos des colonnes)</li>
+<li>A partir d&#39;un littéral JSON, avec aussi un format spécifique (deux objets : un pour la définition des colonnes, un pour les valeurs des lignes)</li>
+<li>A l&#39;aide d&#39;une requête <code>SQL</code> sur une source <em>Spreadsheet</em> ou <em>Fusion Table</em></li>
+</ul>
 
 </article></slide><slide class=''><hgroup><h2>sur l&#39;exemple</h2></hgroup><article  id="sur-lexemple-1">
 
-<pre >// Création d une variable, instance de DataTable
+<pre class = 'prettyprint lang-js'>// Création d une variable, instance de DataTable
 var data = new google.visualization.DataTable();
 
 // Définition des colonnes de la table
@@ -165,11 +188,17 @@ data.addRows([
 
 <p>Utilisation d&#39;un objet JSON contenant la définition des paramètres du graphique</p>
 
-<p>Quelques paramètres communs : - <code>width</code> et <code>height</code> : largeur et hauteur du graphique - <code>title</code> : titre - &#8230;</p>
+<p>Quelques paramètres communs :</p>
+
+<ul>
+<li><code>width</code> et <code>height</code> : largeur et hauteur du graphique</li>
+<li><code>title</code> : titre</li>
+<li>&#8230;</li>
+</ul>
 
 </article></slide><slide class=''><hgroup><h2>sur l&#39;exemple</h2></hgroup><article  id="sur-lexemple-2">
 
-<pre >// Création d un objet JSON
+<pre class = 'prettyprint lang-js'>// Création d un objet JSON
 var options = {
     // on définit ici le titre et la taille du graphique
     &#39;title&#39;:&#39;How Much Pizza I Ate Last Night&#39;,
@@ -188,11 +217,27 @@ var options = {
 
 </article></slide><slide class=''><hgroup><h2>Création du graphique</h2></hgroup><article  id="creation-du-graphique">
 
-<p>En 2 étapes : - Instanciation dans une variable du type de graphique (via une fonction spécifique à chaque type de l&#39;objet <code>google.visualization</code> prenant en paramètre l&#39;id de la div conteneur) - <code>PieChart</code> pour un diagramme circulaire - <code>BarChart</code> pour un diagramme en barre horizontale - &#8230; - Dessin du graphique via la fonction <code>draw()</code> prenant en paramètre deux objets - les données - les options</p>
+<p>En 2 étapes :</p>
+
+<ul>
+<li>Instanciation dans une variable du type de graphique (via une fonction spécifique à chaque type de l&#39;objet <code>google.visualization</code> prenant en paramètre l&#39;id de la div conteneur)
+
+<ul>
+<li><code>PieChart</code> pour un diagramme circulaire</li>
+<li><code>BarChart</code> pour un diagramme en barre horizontale</li>
+<li>&#8230;</li>
+</ul></li>
+<li>Dessin du graphique via la fonction <code>draw()</code> prenant en paramètre deux objets
+
+<ul>
+<li>les données</li>
+<li>les options</li>
+</ul></li>
+</ul>
 
 </article></slide><slide class=''><hgroup><h2>sur l&#39;exemple</h2></hgroup><article  id="sur-lexemple-3">
 
-<pre >// Création d une instance de PieChart, et indication du conteneur 
+<pre class = 'prettyprint lang-js'>// Création d une instance de PieChart, et indication du conteneur 
 // du graphique
 var cont = document.getElementById(&#39;chart_div&#39;);
 var chart = new google.visualization.PieChart(cont);
@@ -209,13 +254,28 @@ chart.draw(data, options);</pre>
 
 </article></slide><slide class=''><hgroup><h2>Ajout d&#39;interactivité</h2></hgroup><article  id="ajout-dinteractivite">
 
-<p>Possibilité d&#39;ajouter un <em>listener</em> sur un graphique (via la fonction <code>google.visualization.events.addListener()</code>) prenant en paramètre : - la variable instance du graphique - le type d&#39;événement - <code>ready</code> - <code>select</code> - <code>error</code> - <code>onmouseover</code> et <code>onmouseout</code> - la fonction à exécuter lors de l&#39;événement</p>
+<p>Possibilité d&#39;ajouter un <em>listener</em> sur un graphique (via la fonction <code>google.visualization.events.addListener()</code>) prenant en paramètre :</p>
 
-<p>Fonctions des instances intéressantes dans ce cas : - <code>getSelection</code>, <code>getValue</code> - <code>setSelection</code></p>
+<ul>
+<li>la variable instance du graphique</li>
+<li>le type d&#39;événement
+
+<ul>
+<li><code>ready</code>, <code>select</code>, <code>error</code>, <code>onmouseover</code> et <code>onmouseout</code></li>
+</ul></li>
+<li>la fonction à exécuter lors de l&#39;événement</li>
+</ul>
+
+<p>Fonctions des instances intéressantes dans ce cas :</p>
+
+<ul>
+<li><code>getSelection</code>, <code>getValue</code></li>
+<li><code>setSelection</code></li>
+</ul>
 
 </article></slide><slide class=''><hgroup><h2>sur l&#39;exemple</h2></hgroup><article  id="sur-lexemple-4">
 
-<pre >// Définition de la fonction a exécuter lors de l événement
+<pre class = 'prettyprint lang-js'>// Définition de la fonction a exécuter lors de l événement
 function selectHandler() {
     // Récupération de la sélection
     var selectedItem = chart.getSelection()[0];

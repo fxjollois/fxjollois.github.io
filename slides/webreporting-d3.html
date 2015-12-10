@@ -100,7 +100,7 @@
 <li>Peu accessible directement et assez technique</li>
 </ul>
 
-<p><a href='exemple.html' title=''>Exemple</a></p>
+<p><a href='../webreporting/exemple-d3.html' title=''>Exemple</a></p>
 
 </article></slide><slide class=''><hgroup><h2>Fonctionnement typique</h2></hgroup><article  id="fonctionnement-typique">
 
@@ -126,7 +126,7 @@
 <li>Deux fonctions de sélection respectivement d&#39;un élément (<code>select()</code>) et de l&#39;ensemble des éléments (<code>selectAll()</code>) correspondant à la définition passée en paramètre (sélecteur idem que pour le CSS) :</li>
 </ul>
 
-<pre >d3.select(&quot;selecteur&quot;);
+<pre class = 'prettyprint lang-js'>d3.select(&quot;selecteur&quot;);
 d3.selectAll(&quot;selecteur&quot;);</pre>
 
 <ul>
@@ -140,14 +140,14 @@ d3.selectAll(&quot;selecteur&quot;);</pre>
 <li>Plusieurs fonctions pour modifier les éléments sélectionnés (par exemple <code>style()</code> ou <code>html()</code>). Le code suivant permet de mettre le texte en rouge pour tout le corps de la page</li>
 </ul>
 
-<pre >var corps = d3.select(&quot;body&quot;);
+<pre class = 'prettyprint lang-js'>var corps = d3.select(&quot;body&quot;);
 corps.style(&quot;color&quot;, &quot;red&quot;);</pre>
 
 <ul>
 <li>Deux fonctions pour respectivement insérer un élément HTML fils à la fin (<code>append()</code>) ou au début (<code>insert()</code>) d&#39;un élément père, qui s&#39;utilisent comme suit :</li>
 </ul>
 
-<pre >selection.append(&quot;balise&quot;);
+<pre class = 'prettyprint lang-js'>selection.append(&quot;balise&quot;);
 selection.insert(&quot;balise&quot;);</pre>
 
 </article></slide><slide class=''><hgroup><h2>Exemple : sur la base de d3.js</h2></hgroup><article  id="exemple-sur-la-base-de-d3.js">
@@ -166,7 +166,7 @@ See the Pen <a href='http://codepen.io/fxjollois/pen/bVMMjZ/'>d3.js : base de la
 <li>Avec la fonction <code>data()</code> sur une sélection, il est possible de lier les données passées en paramètres (ce doit être un tableau) au DOM à la sélection en question. Le code suivant affecte chaque élément du tableau à chaque élément renvoyé par le sélecteur précédent</li>
 </ul>
 
-<pre >var selection = d3.selectAll(&quot;selecteur&quot;);
+<pre class = 'prettyprint lang-js'>var selection = d3.selectAll(&quot;selecteur&quot;);
 selection.data(tableau);</pre>
 
 <ul>
@@ -191,7 +191,7 @@ selection.data(tableau);</pre>
 </ul></li>
 </ul>
 
-<pre >var selection = d3.selectAll(&quot;selecteur&quot;);
+<pre class = 'prettyprint lang-js'>var selection = d3.selectAll(&quot;selecteur&quot;);
 selection.data(tableau);
 selection.html(function(d, i) {
     return &quot;position = &quot; + i + &quot;, valeur = &quot; + d;

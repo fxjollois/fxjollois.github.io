@@ -13,7 +13,7 @@ date: Data-Driven Documents
 - Accès à des primitives `SVG` permettant toute innovation
 - Peu accessible directement et assez technique
 
-[Exemple](exemple.html)
+[Exemple](../webreporting/exemple-d3.html)
 
 ## Fonctionnement typique
 
@@ -33,7 +33,7 @@ Plusieurs concepts à comprendre :
 
 - Deux fonctions de sélection respectivement d'un élément (`select()`) et de l'ensemble des éléments (`selectAll()`) correspondant à la définition passée en paramètre (sélecteur idem que pour le CSS) :
 
-```
+```js
 d3.select("selecteur");
 d3.selectAll("selecteur");
 ```
@@ -45,14 +45,14 @@ d3.selectAll("selecteur");
 
 - Plusieurs fonctions pour modifier les éléments sélectionnés (par exemple `style()` ou `html()`). Le code suivant permet de mettre le texte en rouge pour tout le corps de la page
 
-```
+```js
 var corps = d3.select("body");
 corps.style("color", "red");
 ```
 
 - Deux fonctions pour respectivement insérer un élément HTML fils à la fin (`append()`) ou au début (`insert()`) d'un élément père, qui s'utilisent comme suit :
 
-```
+```js
 selection.append("balise");
 selection.insert("balise");
 ```
@@ -66,7 +66,7 @@ selection.insert("balise");
 
 - Avec la fonction `data()` sur une sélection, il est possible de lier les données passées en paramètres (ce doit être un tableau) au DOM à la sélection en question. Le code suivant affecte chaque élément du tableau à chaque élément renvoyé par le sélecteur précédent
 
-```
+```js
 var selection = d3.selectAll("selecteur");
 selection.data(tableau);
 ```
@@ -83,7 +83,7 @@ selection.data(tableau);
     - la position de la valeur dans le tableau
     - il est possible de n'utiliser que la valeur, voire aucun paramètre si besoin
 
-```
+```js
 var selection = d3.selectAll("selecteur");
 selection.data(tableau);
 selection.html(function(d, i) {

@@ -63,16 +63,44 @@ function creationPie(donnees, type) {
     .enter().append("g")
       .attr("class", "arc")
         .on("click", function(d) { creationTable(donnees, d.data.groupe); creationBarV(donnees, d.data.groupe);});
-
-  g.append("path")
-      .attr("d", arc)
-      .style("fill", function(d) { return color(d.data.groupe); });
-
-  g.append("text")
-      .attr("transform", function(d) { return "translate(" + labelArc.centroid(d) + ")"; })
+    
+    g.append("path")
+        .attr("d", arc)
+        .style("fill", function(d) { return color(d.data.groupe); });
+    
+    g.append("text")
+        .attr("transform", function(d) { return "translate(" + labelArc.centroid(d) + ")"; })
         .style("font-size", "80%")
-      .text(function(d) { return d.data.info; });
+        .text(function(d) { return d.data.info; });
 
+    // pour la légende
+    var legendRectSize = 15,
+        legendSpacing = 4;
+    
+    var legend = svg.selectAll('.legend')
+                        .data(color.domain())
+                        .enter()
+                        .append('g')
+                        .attr('class', 'legend')
+                        .attr('transform', function(d, i) {
+                            var h = legendRectSize + legendSpacing,
+                                horz = -width/2,
+                                vert = -height/2 + i * h;
+                            return 'translate(' + horz + ',' + vert + ')';
+                        });
+    
+    legend.append('rect')
+        .attr('width', legendRectSize)
+        .attr('height', legendRectSize)
+        .style('fill', color)
+        .style('stroke', color);
+    
+    legend.append('text')
+        .attr('x', legendRectSize + legendSpacing)
+        .attr('y', legendRectSize - legendSpacing)
+        .text(function(d) { return d; });
+    
+    
 }
 
 
@@ -165,7 +193,7 @@ function creationBarV(donnees, qui) {
     var yAxis = d3.svg.axis()
     .scale(y)
     .orient("left")
-    .ticks(10, "%");
+    .ticks(10, " ");
     
     var svg = barV.append("svg").attr("width", width + margin.left + margin.right)
     .attr("height", height + margin.top + margin.bottom)
@@ -188,7 +216,7 @@ function creationBarV(donnees, qui) {
         .attr("y", 6)
         .attr("dy", ".71em")
         .style("text-anchor", "end")
-        .text("Frequency");
+        .text("Occurences");
     
     svg.selectAll(".bar")
         .data(data)

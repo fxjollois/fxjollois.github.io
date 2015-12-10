@@ -26,6 +26,7 @@ Les cinq étapes à suivre pour créer un graphique avec Google Charts
 ## Chargement de la librairie
 
 En 2 étapes :
+
 1. Chargement de la librairie **Google JSAPI** avec l'URL `https://www.google.com/jsapi` dans une balise `script`
 2. Chargement de la librairie **Google Visualization**, en indiquant le ou les packages à charger (i.e. `corechart`, `table`, ...) avec la fonction `google.load` prenant en paramètres :
     - la librairie `visualization` 
@@ -36,7 +37,7 @@ Ajout d'une fonction (`google.setOnLoadCallback (f)`) permettant le lancement d'
 
 ## sur l'exemple
 
-```
+```html
 <script type="text/javascript" src="https://www.google.com/jsapi">
 </script>
 <script type="text/javascript">
@@ -55,10 +56,12 @@ Ajout d'une fonction (`google.setOnLoadCallback (f)`) permettant le lancement d'
 ## Formatage des données
 
 Utilisation de la classe `google.visualization.DataTable` :
+
 - objet à deux dimensions
-- colonnes définies par un type, et éventuellement un label et/ou un id
+- colonnes définies par un type, avec label et/ou id
 
 Possibilité de créer un objet de différentes manières :
+
 - Création d'un objet vide, définition des colonnes puis insertion des lignes
 - A partir d'un tableau JSON, avec un format spécifique (la première ligne contenant les infos des colonnes)
 - A partir d'un littéral JSON, avec aussi un format spécifique (deux objets : un pour la définition des colonnes, un pour les valeurs des lignes)
@@ -66,7 +69,7 @@ Possibilité de créer un objet de différentes manières :
 
 ## sur l'exemple
 
-```
+```js
 // Création d une variable, instance de DataTable
 var data = new google.visualization.DataTable();
 
@@ -91,13 +94,14 @@ Chaque graphique est personnalisable à l'aide de paramètres pour certains comm
 Utilisation d'un objet JSON contenant la définition des paramètres du graphique
 
 Quelques paramètres communs :
+
 - `width` et `height` : largeur et hauteur du graphique
 - `title` : titre
 - ...
 
 ## sur l'exemple
 
-```
+```js
 // Création d un objet JSON
 var options = {
     // on définit ici le titre et la taille du graphique
@@ -119,6 +123,7 @@ var options = {
 ## Création du graphique
 
 En 2 étapes :
+
 - Instanciation dans une variable du type de graphique (via une fonction spécifique à chaque type de l'objet `google.visualization` prenant en paramètre l'id de la div conteneur)
     - `PieChart` pour un diagramme circulaire
     - `BarChart` pour un diagramme en barre horizontale
@@ -129,7 +134,7 @@ En 2 étapes :
 
 ## sur l'exemple
 
-```
+```js
 // Création d une instance de PieChart, et indication du conteneur 
 // du graphique
 var cont = document.getElementById('chart_div');
@@ -150,21 +155,20 @@ chart.draw(data, options);
 ## Ajout d'interactivité
 
 Possibilité d'ajouter un *listener* sur un graphique (via la fonction `google.visualization.events.addListener()`) prenant en paramètre :
+
 - la variable instance du graphique
 - le type d'événement
-    - `ready`
-    - `select`
-    - `error`
-    - `onmouseover` et `onmouseout`
+    - `ready`, `select`, `error`, `onmouseover` et `onmouseout`
 - la fonction à exécuter lors de l'événement
 
 Fonctions des instances intéressantes dans ce cas :
+
 - `getSelection`, `getValue`
 - `setSelection`
 
 ## sur l'exemple
 
-```
+```js
 // Définition de la fonction a exécuter lors de l événement
 function selectHandler() {
     // Récupération de la sélection
