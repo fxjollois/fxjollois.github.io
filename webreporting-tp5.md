@@ -20,6 +20,7 @@ A partir de cette [base](webreporting/tp5-base/), vous devez :
     - dans ce cas, il serait judicieux de faire une échelle commune à tous les indicateurs, du genre de celle de l'INSEE
 - s'intéresser aux autres tuiles disponibles via Open Street Map, et les autres fournisseurs
 
+Pour avoir le résultat proposé, regarder [cette page](webreporting/tp5-solution/).
 
 ## *Bonus*
 
