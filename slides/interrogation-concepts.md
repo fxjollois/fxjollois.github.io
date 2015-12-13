@@ -8,11 +8,8 @@ date: Concepts
 
 - Concepts relationnels
 - Opérations usuelles
-    - sur un exemple simple
-- Traduction en 
-    - SQL
-    - R
-    - SAS
+    - détails des opérations
+    - application sur un exemple simple
 
 
 ## Concepts relationnels
@@ -498,4 +495,5 @@ Interrogation de données avec :
 - [SQL](interrogation-sql.html)
 - [R](interrogation-r.html)
 - [SAS](interrogation-sas.html)
+- [MongoDB](interrogation-mongo.html)
 

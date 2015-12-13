@@ -14,6 +14,7 @@ implémenté dans de nombreux logiciels ;
 - [SAS](slides/interrogation-sas.html) : logiciel phare dans le domaine du 
 décisionnel ;
 - [R](slides/interrogation-r.html) : logiciel libre de statistique ;
+- [MongoDB](slides/interrogation-mongo.html) : base de données **NoSQL** *Document Store* ;
 - Autre à venir ultérieurement.
 
 Ce n'est pas ici une présentation des langages.
