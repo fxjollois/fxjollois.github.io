@@ -1,7 +1,6 @@
 ---
 title: Interrogation de données
-author: FX Jollois
-date: Concepts
+author: Concepts
 ---
 
 ## Plan 

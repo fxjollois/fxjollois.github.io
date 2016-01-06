@@ -19,6 +19,16 @@ title: Web Reporting
 4. [TP4](webreporting-tp4.html) : Complément sur la librairie D3.js
 5. [TP5](webreporting-tp5.html) : Cartographie avec Leaflet
 
+## Projet
+
+- Contraintes :
+    - Données libres (via API ou statique)
+    - Utilisation de D3.js
+    - 3 étudiants par groupe maximum
+- Rendu :
+    - Deadline : **31 janvier 2016**
+    - URL de la page (donc hébergement à prévoir)
+
 ## Autres
 
 - [#](http://embed.plnkr.co/4hGaC5oKr5rwshqqAmEF/preview) Démonstration du caractère asynchrone de **JavaScript**
