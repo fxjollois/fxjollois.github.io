@@ -167,12 +167,12 @@ em {
 }
 </style>
 <p>Vous trouverez le logiciel <strong>Tableau Public</strong> dans la liste des programmes, dans la partie <em>Outils Math et Stat</em>. Vous devriez avoir l’écran suivant.</p>
-<p><img src="reporting-tp1/00-ouverture-tableau.png" alt="Ecran d’ouverture de Tableau Public" /></p>
+<p><img src="reportingtp1/00-ouverture-tableau.png" alt="Ecran d’ouverture de Tableau Public" /></p>
 <div id="importation-des-donnees" class="section level2">
 <h2>Importation des données</h2>
 <p>Une fois le logiciel <strong>Tableau Public</strong> ouvert, vous devez vous connecter à des données pour commencer à travailler (ou ouvrir un projet précédemment créé). Nous allons utiliser ici les résultats de l’enquête national effectuée 2,5 ans après l’obtention du DUT auprès des étudiants diplômés en 2011 (cette enquête est faite tous les ans pour information). Nous n’avons à disposition que les étudiants de l’IUT Paris Descartes . Vous trouverez le fichier Excel <a href="reporting-tp1/Enquete_DUT-2011-Paris.xlsx">ici</a>.</p>
 <p>Lorsque vous avez choisi votre fichier Excel, vous devriez voir apparaître l’écran suivant.</p>
-<p><img src="reporting-tp1/01-importation-donnees.png" alt="Ecran visualisation des données" /></p>
+<p><img src="reporting/tp1/01-importation-donnees.png" alt="Ecran visualisation des données" /></p>
 </div>
 <div id="verification-des-donnees" class="section level2">
 <h2>Vérification des données</h2>
@@ -181,11 +181,11 @@ em {
 <p>Cela permettra de créer des cartes géographiques avec ajout d’informations statistiques.</p>
 <div id="code-postal" class="section level3">
 <h3>Code Postal</h3>
-<p><img src="reporting-tp1/02-verification-donnees--code-postal.png" alt="Modification du rôle pour le code postal" /></p>
+<p><img src="reporting/tp1/02-verification-donnees--code-postal.png" alt="Modification du rôle pour le code postal" /></p>
 </div>
 <div id="departement" class="section level3">
 <h3>Département</h3>
-<p><img src="reporting-tp1/02-verification-donnees--departement.png" alt="Modification du rôle pour le département" /></p>
+<p><img src="reporting/tp1/02-verification-donnees--departement.png" alt="Modification du rôle pour le département" /></p>
 </div>
 </div>
 <div id="premiere-feuille-ou-sheet" class="section level2">
@@ -193,16 +193,16 @@ em {
 <p>La logique de <em>Tableau</em> est de créer d’abord les représentations (tableaux ou graphiques) que l’on désire dans des <em>Worksheet</em> (ou <em>Feuille</em>), puis de les assembler (avec du texte aussi) dans un <em>Dashboard</em> (ou <em>Tableau de Bord</em>) ou une <em>Story</em> (pas de traduction spécifique pour le moment).</p>
 <p>On va d’abord créer une représentation de la distribution du diplôme de DUT dans les réponses. Voici les étapes à suivre pour créer une nouvelle feuille :</p>
 <ol style="list-style-type: decimal">
-<li>Tout d’abord, vous devez cliquer sur <em>Sheet 1</em> (ou aussi <em>Go To Worksheet</em>. Vous obtenez l’écran suivant :<br> <img src="reporting-tp1/03-premiere-feuille--vide.png" alt="Nouvelle feuille" /></li>
-<li>Le logiciel <em>Tableau</em> fonctionne essentiellement sur le <em>Drag&amp;Drop</em> (ou <em>Glisser/Déplacer</em>). Vous devez sélectionner <code>DUT</code> dans la liste à gauche (dans les <em>Dimensions</em>) et le placer dans la cellule à côté de <em>Rows</em> :<br> <img src="reporting-tp1/03-premiere-feuille--glisser-DUT-lignes.png" alt="Choix des DUT" /></li>
-<li>Ensuite, dans la partie <em>Measures</em> à gauche, sélectionner <em># Number of Records</em>, puis placer le dans le tableau (où il doit y avoir les valeurs <code>Abc</code>)<br> <img src="reporting-tp1/03-premiere-feuille--number-of-records.png" alt="Choix Number of Records" /></li>
-<li>Vous devez obtenir le résultat suivant : la répartition des répondants selon leur DUT d’origine<br> <img src="reporting-tp1/03-premiere-feuille--number-of-records--bis.png" alt="Résultat table de répartition" /></li>
-<li>Pour avoir un rendu plus visuel, on peut aussi placer ce nombre d’enregistrements (ou de lignes) sur l’icône <em>Color</em> (en le prenant dans le module <em>Marks</em>), et obtenir cette représentation (une légende des couleurs est apparue entre-temps) :<br> <img src="reporting-tp1/03-premiere-feuille--glisser-number-color.png" alt="Choix de couleurs" /></li>
-<li>Idem, on le place maintenant sur <em>Size</em> pour voir apparaître des carrés de tailles proportionnelles aux valeurs (idem, une légende a été créée) :<br> <img src="reporting-tp1/03-premiere-feuille--glisser-number-size.png" alt="Choix de size (taille)" /></li>
-<li>En le plaçant sur <em>Tooltip</em>, rien ne s’affiche dans le tableau, sauf quand on place le curseur de la souris sur une des cases. On voit apparaître la valeur (i.e. le nombre d’enregistrements ayant cette modalité) :<br> <img src="reporting-tp1/03-premiere-feuille--glisser-number-tooltip.png" alt="Choix de tooltip (info-bulle)" /></li>
-<li>En prenant plusieurs fois la mesure <em># Number of Records</em> de la partie <em>Measures</em> à gauche, il est possible de combiner les représentations, et on obtient ceci :<br> <img src="reporting-tp1/03-premiere-feuille--glisser-number-combinaison.png" alt="Combinaison de spécifications d’informations" /></li>
-<li>On peut aussi changer la façon de représenter les valeurs dans le tableau, en choississant par exemple <em>Bar</em> dans le module <em>Marks</em> :<br> <img src="reporting-tp1/03-premiere-feuille--choix-marks.png" alt="Passage à un diagramme en barres" /></li>
-<li>Le résultat final de toutes ces manipulations devraient aboutir à cette représentation finale :<br> <img src="reporting-tp1/03-premiere-feuille--marks-bar.png" alt="Résultat final" /></li>
+<li>Tout d’abord, vous devez cliquer sur <em>Sheet 1</em> (ou aussi <em>Go To Worksheet</em>. Vous obtenez l’écran suivant :<br> <img src="reporting/tp1/03-premiere-feuille--vide.png" alt="Nouvelle feuille" /></li>
+<li>Le logiciel <em>Tableau</em> fonctionne essentiellement sur le <em>Drag&amp;Drop</em> (ou <em>Glisser/Déplacer</em>). Vous devez sélectionner <code>DUT</code> dans la liste à gauche (dans les <em>Dimensions</em>) et le placer dans la cellule à côté de <em>Rows</em> :<br> <img src="reporting/tp1/03-premiere-feuille--glisser-DUT-lignes.png" alt="Choix des DUT" /></li>
+<li>Ensuite, dans la partie <em>Measures</em> à gauche, sélectionner <em># Number of Records</em>, puis placer le dans le tableau (où il doit y avoir les valeurs <code>Abc</code>)<br> <img src="reporting/tp1/03-premiere-feuille--number-of-records.png" alt="Choix Number of Records" /></li>
+<li>Vous devez obtenir le résultat suivant : la répartition des répondants selon leur DUT d’origine<br> <img src="reporting/tp1/03-premiere-feuille--number-of-records--bis.png" alt="Résultat table de répartition" /></li>
+<li>Pour avoir un rendu plus visuel, on peut aussi placer ce nombre d’enregistrements (ou de lignes) sur l’icône <em>Color</em> (en le prenant dans le module <em>Marks</em>), et obtenir cette représentation (une légende des couleurs est apparue entre-temps) :<br> <img src="reporting/tp1/03-premiere-feuille--glisser-number-color.png" alt="Choix de couleurs" /></li>
+<li>Idem, on le place maintenant sur <em>Size</em> pour voir apparaître des carrés de tailles proportionnelles aux valeurs (idem, une légende a été créée) :<br> <img src="reporting/tp1/03-premiere-feuille--glisser-number-size.png" alt="Choix de size (taille)" /></li>
+<li>En le plaçant sur <em>Tooltip</em>, rien ne s’affiche dans le tableau, sauf quand on place le curseur de la souris sur une des cases. On voit apparaître la valeur (i.e. le nombre d’enregistrements ayant cette modalité) :<br> <img src="reporting/tp1/03-premiere-feuille--glisser-number-tooltip.png" alt="Choix de tooltip (info-bulle)" /></li>
+<li>En prenant plusieurs fois la mesure <em># Number of Records</em> de la partie <em>Measures</em> à gauche, il est possible de combiner les représentations, et on obtient ceci :<br> <img src="reporting/tp1/03-premiere-feuille--glisser-number-combinaison.png" alt="Combinaison de spécifications d’informations" /></li>
+<li>On peut aussi changer la façon de représenter les valeurs dans le tableau, en choississant par exemple <em>Bar</em> dans le module <em>Marks</em> :<br> <img src="reporting/tp1/03-premiere-feuille--choix-marks.png" alt="Passage à un diagramme en barres" /></li>
+<li>Le résultat final de toutes ces manipulations devraient aboutir à cette représentation finale :<br> <img src="reporting/tp1/03-premiere-feuille--marks-bar.png" alt="Résultat final" /></li>
 </ol>
 <p>Il est possible de modifier le nom de la feuille (par défaut <em>Sheet1</em>) en double-cliquant sur son nom en bas du logiciel (un peu comme dans <em>Excel</em> par exemple). Appeler cette feuille <em>Répartition DUT</em>.</p>
 </div>
@@ -213,8 +213,8 @@ em {
 <li>Créer donc une nouvelle feuille. Pour créer une deuxième feuille, vous devez aller dans le menu <em>Worksheet</em> puis <em>New Worksheet</em>.</li>
 <li>Glisser la colonne <em>Sexe</em> dans <em>Rows</em> (ou sur le tableau vide).</li>
 <li>Glisser <em># Number of Records</em> dans <em>Text</em> ou dans le tableau vide aussi. Vous devriez avoir un tableau de répartition du sexe dans les répondants.</li>
-<li>Dans le module <em>Show Me</em> (à droite de votre écran normalement), il est possible de choisir la représentation et donc de changer le type de graphique. Cliquer sur le diagramme circulaire :<br> <img src="reporting-tp1/04-deuxieme-feuille--diagramme-circulaire.png" alt="Choix du diagramme circulaire" /></li>
-<li>Il est possible de spécifier les couleurs pour chaque modalité. Pour cela, cliquer sur la petite flèche à droite de <em>Sexe</em> dans la légende, puis <em>Edit Colors</em>. On peut soit directement changer la couleur (en en sélectionnant une), soit changer la palette de couleurs de base.<br> <img src="reporting-tp1/04-deuxieme-feuille--edition-couleur-sexe.png" alt="Changement des couleurs" /></li>
+<li>Dans le module <em>Show Me</em> (à droite de votre écran normalement), il est possible de choisir la représentation et donc de changer le type de graphique. Cliquer sur le diagramme circulaire :<br> <img src="reporting/tp1/04-deuxieme-feuille--diagramme-circulaire.png" alt="Choix du diagramme circulaire" /></li>
+<li>Il est possible de spécifier les couleurs pour chaque modalité. Pour cela, cliquer sur la petite flèche à droite de <em>Sexe</em> dans la légende, puis <em>Edit Colors</em>. On peut soit directement changer la couleur (en en sélectionnant une), soit changer la palette de couleurs de base.<br> <img src="reporting/tp1/04-deuxieme-feuille--edition-couleur-sexe.png" alt="Changement des couleurs" /></li>
 <li>Prenez la colonne <em>Sexe</em> dans <em>Dimensions</em> et placer la sur <em>Label</em> pour voir apparaître les modalités.</li>
 <li>Enfin, renommez la feuille en <em>Répartition Sexe</em>.</li>
 </ol>
@@ -226,7 +226,7 @@ em {
 <li>Créer une nouvelle feuille.</li>
 <li>Glisser <em>DUT</em> sur <em>Rows</em>.</li>
 <li>Glisser <em>Salaire Net Mensuel</em> (dans <em>Measures</em>) sur <em>Size</em> et changeant en diagramme en barre en changeant dans <em>Marks</em> pour mettre <em>Bar</em> (au lieu de <em>Automatic</em>).</li>
-<li>Vous remarquerez que, par défaut, l’agrégat fait est une somme (<em>SUM</em>). On peut changer ceci en cliquant sur la petite flèche sur l’agrégat, puis sur <em>Measure (Sum)</em>, puis <em>Average</em> ou <em>Median</em> (ou autre) en fonction de ce qu’on veut avoir (ici, on va prendre la médiane).<br> <img src="reporting-tp1/05-troisieme-feuille--changement-agregat.png" alt="Changement d’agrégat" /></li>
+<li>Vous remarquerez que, par défaut, l’agrégat fait est une somme (<em>SUM</em>). On peut changer ceci en cliquant sur la petite flèche sur l’agrégat, puis sur <em>Measure (Sum)</em>, puis <em>Average</em> ou <em>Median</em> (ou autre) en fonction de ce qu’on veut avoir (ici, on va prendre la médiane).<br> <img src="reporting/tp1/05-troisieme-feuille--changement-agregat.png" alt="Changement d’agrégat" /></li>
 <li>Renommer la feuille en <em>Salaire par DUT</em></li>
 </ol>
 </div>
@@ -236,7 +236,7 @@ em {
 <ol style="list-style-type: decimal">
 <li>Créer une nouvelle feuille.</li>
 <li>Double-cliquer sur <em>Département résidence</em> dans <em>Dimensions</em>. Ceci se fait automatiquement car, dans l’importation des données, nous avons bien spécifier que cette variable avait un rôle géographique (et plus spécifiquement un nom de département français). On voit apparaître une carte avec des points au centre de chaque région.</li>
-<li>Dans <em>Show Me</em>, on choisit la carte avec couleur (cf image suivante) :<br> <img src="reporting-tp1/06-quatrieme-feuille--changement-carte.png" alt="Choix du type de carte" /></li>
+<li>Dans <em>Show Me</em>, on choisit la carte avec couleur (cf image suivante) :<br> <img src="reporting/tp1/06-quatrieme-feuille--changement-carte.png" alt="Choix du type de carte" /></li>
 <li>On a maintenant une carte avec la même couleur pour chaque département dont au moins un répondant vient. Pour spécifier la couleur en fonction d’une variable, vous pouvez glisser <em># Number of Records</em> sur <em>Color</em>.</li>
 <li>On peut agrémenter la carte en ajoutant <em>Salaire Net Mensuel</em> (en indiquant la médiane) et <em># Number of Records</em> sur <em>Tooltip</em> pour voir ces informations lorsque on cliquera sur un département.</li>
 <li>Renommer cette feuille en <em>Origine Etudiants</em>.</li>
@@ -250,7 +250,7 @@ em {
 <li>Renommer le en <em>Reporting 1</em></li>
 <li>Glisser <em>Text</em> en haut (écrivez <code>&quot;Origine des étudiants&quot;</code>, et, en sélectionnant le texte, choississez la police d’écriture <em>Calibri</em>, une taille de 18, un style en gras, et un alignement centré).</li>
 <li>Ensuite, pour assembler les éléments (<em>Sheets</em> ou autre : texte, image, page web, …), il faut jouer sur les répartitions disponibles (<em>Horizontal</em> ou <em>Vertical</em>) et en bougeant les éléments.</li>
-<li>En intégrant les feuilles <em>Répartition DUT</em>, <em>Répartition Sexe</em> et <em>Origine Etudiants</em>, et en jouant sur la position et la taille des éléments et des légendes, vous pouvez obtenir un tableau de bord comme celui-ci :<br> <img src="reporting-tp1/07-tableau1-resultat.png" alt="Résultat final du tableau de bord sur l’origine des étudiants" /></li>
+<li>En intégrant les feuilles <em>Répartition DUT</em>, <em>Répartition Sexe</em> et <em>Origine Etudiants</em>, et en jouant sur la position et la taille des éléments et des légendes, vous pouvez obtenir un tableau de bord comme celui-ci :<br> <img src="reporting/tp1/07-tableau1-resultat.png" alt="Résultat final du tableau de bord sur l’origine des étudiants" /></li>
 </ol>
 </div>
 <div id="sauvegarde-de-votre-travail" class="section level2">

@@ -10,7 +10,7 @@
 
 
 
-<title>Logiciels stats</title>
+<title>TP - Initiation à HTML, CSS et JS</title>
 
 <script src="libs/jquery-1.11.0/jquery.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -152,46 +152,38 @@ img {
 <div class="contenu">
 
 <div id="header">
-<h1 class="title">Logiciels stats</h1>
+<h1 class="title">TP - Initiation à HTML, CSS et JS</h1>
 </div>
 
 
-<p>Ce cours a pour but d’introduire deux logiciels statistiques majeurs du marché :</p>
+<p>Première utilisation HTML, CSS et JS (<a href="http://embed.plnkr.co/7pv3ri/preview">lien vers Plnker</a>) :</p>
 <ul>
-<li><a href="http://www.sas.com">SAS</a>
-<ul>
-<li><a href="https://odamid.oda.sas.com/">SAS On Demand For Academics</a> : interface web permettant d’utiliser l’application web <strong>SAS Studio</strong></li>
-<li><a href="slides/langage-sas.html">Langage SAS</a></li>
-</ul></li>
-<li><a href="http://www.r-project.org">R</a>
-<ul>
-<li><a href="slides/langage-r.html">Langage R</a></li>
-</ul></li>
+<li>Vous verrez un aperçu du rendu (<em>Preview</em>)</li>
+<li>Avec l’onglet <em>Code</em> (en haut à droite), vous pouvez voir le contenu de chaque fichier</li>
+<li>En cliquant sur <em>Edit</em>, vous pourrez éditer ces fichiers et faire le travail demandé</li>
 </ul>
-<div id="tps" class="section level2">
-<h2>TPs</h2>
-<div id="sas" class="section level3">
-<h3>SAS</h3>
-<ol style="list-style-type: decimal">
-<li><a href="">#</a>Découverte du logiciel et du langage</li>
-<li><a href="">#</a>Manipulation de données</li>
-<li><a href="">#</a>Statistiques descriptives</li>
-<li><a href="">#</a>Statistiques exploratoires</li>
-<li><a href="">#</a>Visualisation de données avancées (??)</li>
-<li><a href="">#</a>Récapitulatif</li>
-</ol>
-</div>
-<div id="r" class="section level3">
-<h3>R</h3>
-<ol style="list-style-type: decimal">
-<li><a href="">#</a>Découverte du logiciel et du langage</li>
-<li><a href="">#</a>Manipulation de données</li>
-<li><a href="">#</a>Statistiques descriptives</li>
-<li><a href="">#</a>Statistiques exploratoires</li>
-<li><a href="">#</a>Visualisation de données avancées (??)</li>
-<li><a href="">#</a>Récapitulatif</li>
-</ol>
-</div>
+<div id="a-faire" class="section level2">
+<h2>A faire</h2>
+<p>Créer un script permettant de faire un diagramme avec les contraintes suivantes :</p>
+<ul>
+<li>barres verticales,</li>
+<li>largeur du graphique égale à celle de la fenêtre,</li>
+<li>largeur des barres en fonction du nombre de celles-ci (et donc du nombre de modalités),</li>
+<li>modalités affichées en dessous de chaque barre,</li>
+<li>valeurs affichées au dessus de chaque barre,</li>
+<li>résultat fonctionnel quelque soit le nombre de modalités données (tester avec différentes valeurs)</li>
+<li>changement de couleur de la barre sur laquelle passe la souris</li>
+<li>gestion des plusieurs clics sur les boutons :</li>
+<li>le premier clique créé et affiche le diagramme</li>
+<li>le deuxième le cache, sans le supprimer</li>
+<li>le troisième l’affiche de nouveau, sans le recréer donc</li>
+</ul>
+<p>Pour améliorer le graphique, on choisit de ne plus afficher directement la valeur sur le graphique. On veut une fenêtre <em>pop-up</em> qui s’affiche lorsque la souris passe sur une barre. Dans cette fenêtre, on veut la modalité et la valeur associée. On souhaite que cette fenêtre suive le curseur de la souris. On doit faire attention à l’affichage si la souris est proche d’un bord de la fenêtre.</p>
+<p>Pour encode améliorer, on souhaite récupérer les données à partir d’un fichier texte au format <strong>JSON</strong>, de ce type :</p>
+<pre class="json"><code>{
+  &quot;valeurs&quot;: [12, 5, 21, 18, 14],
+  &quot;modalites&quot;: [&quot;A&quot;, &quot;B&quot;, &quot;C&quot;, &quot;E&quot;, &quot;Z&quot;]
+}</code></pre>
 </div>
 
 </div>

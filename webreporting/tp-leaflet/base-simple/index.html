@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>TP - Leaflet.js</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" href="../../leaflet.css">
+	<script src="../../leaflet.js"></script>
+    <script src="../../papaparse.min.js"></script>
+    <script src="../../jquery-2.2.0.min.js"></script>
+    <style>
+        h1, p {
+            text-align: center;
+        }
+        #map {
+            margin: 0 auto;
+        }
+        .departement {
+            fill: #888;
+            stroke: #444;
+            stroke-width: 1px;
+        }
+    </style>
+</head>
+<body>
+    <h1>TP - Leaflet.js</h1>
+    <p>Source des données : <a href="http://www.insee.fr/fr/themes/tableau.asp?reg_id=99&ref_id=TCRD_025" target="_blank"><code>http://www.insee.fr/fr/themes/tableau.asp?reg_id=99&ref_id=TCRD_025</code></a></p>
+    <p><strong>Information</strong> : <span id="info"></span></p>
+	<div id="map" style="width: 700px; height: 700px"></div>
+
+    <script>
+        var map = L.map('map').setView([46.3, 2.3], 6);
+        
+        L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+        }).addTo(map);
+        
+        Papa.parse("../departements-chomage.tsv", {
+            download: true,
+            header: true,
+            complete: function(results) {
+                var chomage = results.data;
+                chomage.forEach(function(c) {
+                    c.an14trim2 = +c.an14trim2;
+                    c.an15trim1 = +c.an15trim1;
+                    c.an15trim2 = +c.an15trim2;
+                });
+            
+                $.getJSON("../departements.geojson", function (data) {
+
+                    // on cherche le min et le max pour le chômage (2015 trimestre 2) pour le domaine des couleurs
+                    var maxchomage = chomage.reduce(function(o, n) { if (n.an15trim2 > o.an15trim2) return n; return o; }).an15trim2;
+                    var minchomage = chomage.reduce(function(o, n) { if (n.an15trim2 < o.an15trim2) return n; return o; }).an15trim2;
+                    // on créé une fonction prenant la valeur du an15trim2 et qui renvoie une couleur (entre blanc (min) et rouge (max))
+                    function couleur (val, min, max) {
+                        var r = 255,
+                            g = Math.floor((1 - (val - min) / (max - min)) * 255),
+                            b = Math.floor((1 - (val - min) / (max - min)) * 255);
+                        return "rgb(" + r + ", " + g + ", " + b + ")";
+                    }
+                    
+                    // Ici, à chaque département, on lui associe les valeurs du chômage
+                    data.features.forEach(function (d) {
+                        var ch = chomage.filter(function(c) { if (c.code === d.properties.code) return true; return false; })[0];
+                        d.properties.an14trim2 = ch.an14trim2;
+                        d.properties.an15trim1 = ch.an15trim1;
+                        d.properties.an15trim2 = ch.an15trim2;
+                    });
+                    
+                    // Ajout des départements, avec un remplissage en fonction de la variable an15trim2
+                    L.geoJson(data, {
+                        // option de style à mettre ici
+                        style: function (feature) {
+                            return { 
+                                fillColor: couleur(feature.properties.an15trim2, minchomage, maxchomage),
+                                fillOpacity: 1,
+                                weight: 1,
+                                color: "#000",
+                                opacity: 1
+                            };
+                        },
+                        // option pour gestion des événements
+                        onEachFeature: function (feature, layer) {
+                            layer.on({
+                                mouseover: function (e) {
+                                    var prop = e.target.feature.properties;
+                                    document.getElementById("info").innerHTML = prop.nom + ' (' + prop.code + ')';
+                                },
+                                mouseout : function (e) {
+                                    document.getElementById("info").innerHTML = "";
+                                }
+                            })
+                        }
+                    }).addTo(map);
+
+                });
+            }
+        });
+        
+    </script>
+</body>
+</html>

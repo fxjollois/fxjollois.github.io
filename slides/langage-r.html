@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Langage SAS</title>
+  <title>Langage R</title>
 
   <meta charset="utf-8">
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
@@ -25,7 +25,7 @@
     var SLIDE_CONFIG = {
       // Slide settings
       settings: {
-                title: 'Langage SAS',
+                title: 'Langage R',
                         useBuilds: true,
         usePrettify: true,
         enableSlideAreas: true,
@@ -88,75 +88,15 @@
           </hgroup>
   </slide>
 
-<p>Concepts SAS :</p>
-
-<ul>
-<li>Table</li>
-<li>Etape <code>DATA</code></li>
-<li>Procédure (<code>PROC</code>)</li>
-<li>&#8230; (peut-être)</li>
-</ul>
+<p>Concepts R :</p>
 
 <slide class=''><hgroup><h2>Importation de données</h2></hgroup><article  id="importation-de-donnees">
-
-<h3>Etape <code>DATA</code></h3>
-
-<p>Avec insertion directe des données</p>
-
-<pre class = 'prettyprint lang-sas'>data tab;
-    input X Y Z$;
-    cards;
-1 12 A
-2 15 A
-1 10 B
-1  9 C
-run;</pre>
-
-<p>Avec importation de données dans un fichier texte basique</p>
-
-<pre class = 'prettyprint lang-sas'>data tab;
-    infile &#39;fichier&#39; paramètres;
-    input variables;
-run;</pre>
-
-<h3><code>PROC IMPORT</code></h3>
-
-<p>Quelques exemples aussi ici</p>
 
 </article></slide><slide class=''><hgroup><h2>Restitution de données</h2></hgroup><article  id="restitution-de-donnees">
 
 <h3>Affichage simple</h3>
 
-<p>Si on veut afficher simplement la table <code>tab</code></p>
-
-<pre class = 'prettyprint lang-sas'>proc print data = tab;
-run;</pre>
-
-<p>Si on veut spécifier certains paramètres :</p>
-
-<ul>
-<li><code>noobs</code> : n&#39;affiche pas le numéro de la ligne</li>
-<li><code>var</code> : sélectionne les variables à afficher
-
-<ul>
-<li><code>_ALL_</code> : sélecteur spécifique pour toutes les variables</li>
-<li><code>_NUMERIC_</code> : sélecteur spécifique pour les variables numériques</li>
-<li><code>_ALPHA_</code> : sélecteur spécifique pour les variables alpha-numériques</li>
-<li><code>v1-vN</code> : sélecteur spécifique pour les variables nommées <code>v1</code>, <code>v2</code>, <code>v3</code>, &#8230;, <code>vN</code></li>
-<li><code>X--Z</code> : sélecteur spécifique pour les variables de <code>X</code> à <code>Z</code> dans la liste des variables de la table</li>
-</ul></li>
-</ul>
-
-<pre class = 'prettyprint lang-sas'>proc print data = tab noobs;
-    var X Y;
-run;</pre>
-
 <h3>Sauvegarde dans une table à partir d&#39;une autre</h3>
-
-<pre class = 'prettyprint lang-sas'>data tab_out;
-    set tab_in;
-    opérations;
-run;</pre>
 
 </article></slide><slide class=''><hgroup><h2>Interrogation de données</h2></hgroup><article  id="interrogation-de-donnees">
 
@@ -164,15 +104,12 @@ run;</pre>
 
 <ul>
 <li><a href='interrogation-concepts.html' title=''>Concepts pour l&#39;interrogation de données</a></li>
-<li><a href='interrogation-sas.html' title=''>Interrogation de données sous SAS</a></li>
+<li><a href='interrogation-r.html' title=''>Interrogation de données sous R</a></li>
 </ul>
 
 </article></slide><slide class=''><hgroup><h2>Manipulations supplémentaires</h2></hgroup><article  id="manipulations-supplementaires">
 
 <h3>Transposition de matice</h3>
-
-<pre class = 'prettyprint lang-sas'>proc transpose data = tab;
-run;</pre>
 
 <h3>Autre ?</h3>
 

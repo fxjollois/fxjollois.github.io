@@ -10,7 +10,7 @@
 
 
 
-<title>Logiciels stats</title>
+<title>TP - Initiation à la librairie D3.js</title>
 
 <script src="libs/jquery-1.11.0/jquery.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -152,46 +152,28 @@ img {
 <div class="contenu">
 
 <div id="header">
-<h1 class="title">Logiciels stats</h1>
+<h1 class="title">TP - Initiation à la librairie D3.js</h1>
 </div>
 
 
-<p>Ce cours a pour but d’introduire deux logiciels statistiques majeurs du marché :</p>
+<p>Reprendre les données du <a href="webreporting-tp-init.html">TP1</a>, au format <code>JSON</code> :</p>
+<pre class="json"><code>{
+  &quot;valeurs&quot;: [12, 5, 21, 18, 14],
+  &quot;modalites&quot;: [&quot;A&quot;, &quot;B&quot;, &quot;C&quot;, &quot;E&quot;, &quot;Z&quot;]
+}</code></pre>
+<p>On reprend aussi le fichier <code>html</code> de départ du TP1 (cf sujet). L’objectif est de faire le même travail mais avec la bibliothèque <a href="http://www.d3js.org/"><strong>d3.js</strong></a>.</p>
+<div id="a-faire" class="section level2">
+<h2>A faire</h2>
+<p>Créer trois scripts permettant de réaliser les éléments suivants :</p>
 <ul>
-<li><a href="http://www.sas.com">SAS</a>
-<ul>
-<li><a href="https://odamid.oda.sas.com/">SAS On Demand For Academics</a> : interface web permettant d’utiliser l’application web <strong>SAS Studio</strong></li>
-<li><a href="slides/langage-sas.html">Langage SAS</a></li>
-</ul></li>
-<li><a href="http://www.r-project.org">R</a>
-<ul>
-<li><a href="slides/langage-r.html">Langage R</a></li>
-</ul></li>
+<li>Remplissage d’un tableau de deux colonnes et d’autant de lignes que de valeurs présentes dans le fichier</li>
+<li>Création d’un graphique en barres horizontales, à partir de balises <code>div</code></li>
+<li>Création d’un graphique en barres verticales, reprenant les mêmes contraintes que dans le TP1</li>
 </ul>
-<div id="tps" class="section level2">
-<h2>TPs</h2>
-<div id="sas" class="section level3">
-<h3>SAS</h3>
-<ol style="list-style-type: decimal">
-<li><a href="">#</a>Découverte du logiciel et du langage</li>
-<li><a href="">#</a>Manipulation de données</li>
-<li><a href="">#</a>Statistiques descriptives</li>
-<li><a href="">#</a>Statistiques exploratoires</li>
-<li><a href="">#</a>Visualisation de données avancées (??)</li>
-<li><a href="">#</a>Récapitulatif</li>
-</ol>
 </div>
-<div id="r" class="section level3">
-<h3>R</h3>
-<ol style="list-style-type: decimal">
-<li><a href="">#</a>Découverte du logiciel et du langage</li>
-<li><a href="">#</a>Manipulation de données</li>
-<li><a href="">#</a>Statistiques descriptives</li>
-<li><a href="">#</a>Statistiques exploratoires</li>
-<li><a href="">#</a>Visualisation de données avancées (??)</li>
-<li><a href="">#</a>Récapitulatif</li>
-</ol>
-</div>
+<div id="rendu" class="section level2">
+<h2>Rendu</h2>
+<p>Vous pouvez voir <a href="webreporting/tp-d3-init/rendu">ici</a> le rendu attendu.</p>
 </div>
 
 </div>

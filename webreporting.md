@@ -13,20 +13,36 @@ title: Web Reporting
 
 ## Sujets TP
 
-1. [TP1](webreporting-tp1.html) : Première utilisation HTML, CSS et JS
-2. [TP2](webreporting-tp2.html) : Librairie Google Charts
-3. [TP3](webreporting-tp3.html) : Librairie D3.js
-4. [TP4](webreporting-tp4.html) : Complément sur la librairie D3.js
-5. [TP5](webreporting-tp5.html) : Cartographie avec Leaflet
+- Première utilisation HTML, CSS et JS
+    - [Initiation](webreporting-tp-init.html)
+- Librairie [Google Charts](https://developers.google.com/chart/)
+    - [Initiation](webreporting-tp-google-charts.html) 
+- Librairie [D3.js](http://www.d3js.org)
+    - [Initiation](webreporting-tp-d3-init.html)
+    - [Compléments](webreporting-tp-d3-comp.html)
+- Librairie autre :
+    - [Cartographie avec Leaflet](webreporting-tp-leaflet.html)
 
 ## Projet
 
+### Master MIAGE M1 FA
+
 - Contraintes :
     - Données libres (via API ou statique)
-    - Utilisation de D3.js
+    - Utilisation de **D3.js**
     - 3 étudiants par groupe maximum
 - Rendu :
     - Deadline : **31 janvier 2016**
+    - URL de la page (donc hébergement à prévoir)
+
+### Master MIAGE M2 FA
+
+- Contraintes :
+    - Données libres (via API ou statique)
+    - Utilisation de **Google Charts** + **Leaflet.js** 
+    - 3 étudiants par groupe maximum
+- Rendu :
+    - Deadline : **à définir**
     - URL de la page (donc hébergement à prévoir)
 
 ## Autres

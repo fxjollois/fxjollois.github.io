@@ -18,6 +18,7 @@ vous pouvez aller sur cette [page](https://public.tableau.com/auth/signup).
 - [TP3](reporting-tp3.html)
 - TP4 noté, voir sur Moodle 
 - [TP5](reporting-tp5.html)
+- TP6 noté, voir sur Moodle 
 
 ## Pour résoudre les problèmes de connection dans **Tableau**
 

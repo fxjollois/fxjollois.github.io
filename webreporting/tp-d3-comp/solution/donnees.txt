@@ -1,0 +1,9 @@
+Modalite	Valeur	Groupe
+A	12	A
+B	5	A
+C	21	B
+E	18	B
+Z	14	A
+AZ	15	B
+qq	23	B
+J	31	B

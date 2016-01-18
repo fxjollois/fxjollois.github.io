@@ -16,7 +16,7 @@ em {
 Vous trouverez le logiciel **Tableau Public** dans la liste des programmes, dans la
 partie *Outils Math et Stat*. Vous devriez avoir l'écran suivant.
 
-![Ecran d'ouverture de Tableau Public](reporting-tp1/00-ouverture-tableau.png)
+![Ecran d'ouverture de Tableau Public](reportingtp1/00-ouverture-tableau.png)
 
 
 ## Importation des données
@@ -30,7 +30,7 @@ fichier Excel [ici](reporting-tp1/Enquete_DUT-2011-Paris.xlsx).
 
 Lorsque vous avez choisi votre fichier Excel, vous devriez voir apparaître l'écran suivant.
 
-![Ecran visualisation des données](reporting-tp1/01-importation-donnees.png)
+![Ecran visualisation des données](reporting/tp1/01-importation-donnees.png)
 
 
 ## Vérification des données
@@ -45,11 +45,11 @@ Cela permettra de créer des cartes géographiques avec ajout d'informations sta
 
 ### Code Postal
 
-![Modification du rôle pour le code postal](reporting-tp1/02-verification-donnees--code-postal.png)
+![Modification du rôle pour le code postal](reporting/tp1/02-verification-donnees--code-postal.png)
 
 ### Département
 
-![Modification du rôle pour le département](reporting-tp1/02-verification-donnees--departement.png)
+![Modification du rôle pour le département](reporting/tp1/02-verification-donnees--departement.png)
 
 
 ## Première feuille (ou *Sheet*)
@@ -59,25 +59,25 @@ La logique de *Tableau* est de créer d'abord les représentations (tableaux ou 
 On va d'abord créer une représentation de la distribution du diplôme de DUT dans les réponses. Voici les étapes à suivre pour créer une nouvelle feuille :
 
 1. Tout d'abord, vous devez cliquer sur *Sheet 1* (ou aussi *Go To Worksheet*. Vous obtenez l'écran suivant :<br>
-![Nouvelle feuille](reporting-tp1/03-premiere-feuille--vide.png)
+![Nouvelle feuille](reporting/tp1/03-premiere-feuille--vide.png)
 2. Le logiciel *Tableau* fonctionne essentiellement sur le *Drag&Drop* (ou *Glisser/Déplacer*). Vous devez sélectionner `DUT` dans la liste à gauche (dans les *Dimensions*) et le placer dans la cellule à côté de *Rows* :<br>
-![Choix des DUT](reporting-tp1/03-premiere-feuille--glisser-DUT-lignes.png)
+![Choix des DUT](reporting/tp1/03-premiere-feuille--glisser-DUT-lignes.png)
 3. Ensuite, dans la partie *Measures* à gauche, sélectionner *# Number of Records*, puis placer le dans le tableau (où il doit y avoir les valeurs `Abc`)<br>
-![Choix Number of Records](reporting-tp1/03-premiere-feuille--number-of-records.png)
+![Choix Number of Records](reporting/tp1/03-premiere-feuille--number-of-records.png)
 4. Vous devez obtenir le résultat suivant : la répartition des répondants selon leur DUT d'origine<br>
-![Résultat table de répartition](reporting-tp1/03-premiere-feuille--number-of-records--bis.png)
+![Résultat table de répartition](reporting/tp1/03-premiere-feuille--number-of-records--bis.png)
 5. Pour avoir un rendu plus visuel, on peut aussi placer ce nombre d'enregistrements (ou de lignes) sur l'icône *Color* (en le prenant dans le module *Marks*), et obtenir cette représentation (une légende des couleurs est apparue entre-temps) :<br>
-![Choix de couleurs](reporting-tp1/03-premiere-feuille--glisser-number-color.png)
+![Choix de couleurs](reporting/tp1/03-premiere-feuille--glisser-number-color.png)
 6. Idem, on le place maintenant sur *Size* pour voir apparaître des carrés de tailles proportionnelles aux valeurs (idem, une légende a été créée) :<br>
-![Choix de size (taille)](reporting-tp1/03-premiere-feuille--glisser-number-size.png)
+![Choix de size (taille)](reporting/tp1/03-premiere-feuille--glisser-number-size.png)
 7. En le plaçant sur *Tooltip*, rien ne s'affiche dans le tableau, sauf quand on place le curseur de la souris sur une des cases. On voit apparaître la valeur (i.e. le nombre d'enregistrements ayant cette modalité) :<br>
-![Choix de tooltip (info-bulle)](reporting-tp1/03-premiere-feuille--glisser-number-tooltip.png)
+![Choix de tooltip (info-bulle)](reporting/tp1/03-premiere-feuille--glisser-number-tooltip.png)
 8. En prenant plusieurs fois la mesure *# Number of Records* de la partie *Measures* à gauche, il est possible de combiner les représentations, et on obtient ceci :<br>
-![Combinaison de spécifications d'informations](reporting-tp1/03-premiere-feuille--glisser-number-combinaison.png)
+![Combinaison de spécifications d'informations](reporting/tp1/03-premiere-feuille--glisser-number-combinaison.png)
 9. On peut aussi changer la façon de représenter les valeurs dans le tableau, en choississant par exemple *Bar* dans le module *Marks* :<br>
-![Passage à un diagramme en barres](reporting-tp1/03-premiere-feuille--choix-marks.png)
+![Passage à un diagramme en barres](reporting/tp1/03-premiere-feuille--choix-marks.png)
 10. Le résultat final de toutes ces manipulations devraient aboutir à cette représentation finale :<br>
-![Résultat final](reporting-tp1/03-premiere-feuille--marks-bar.png)
+![Résultat final](reporting/tp1/03-premiere-feuille--marks-bar.png)
 
 Il est possible de modifier le nom de la feuille (par défaut *Sheet1*) en double-cliquant sur son nom en bas du logiciel (un peu comme dans *Excel* par exemple). Appeler cette feuille *Répartition DUT*.
 
@@ -89,9 +89,9 @@ Nous allons maintenant nous intéresser à la répartition du sexe dans nos rép
 2. Glisser la colonne *Sexe* dans *Rows* (ou sur le tableau vide).
 3. Glisser *# Number of Records* dans *Text* ou dans le tableau vide aussi. Vous devriez avoir un tableau de répartition du sexe dans les répondants.
 4. Dans le module *Show Me* (à droite de votre écran normalement), il est possible de choisir la représentation et donc de changer le type de graphique. Cliquer sur le diagramme circulaire :<br>
-![Choix du diagramme circulaire](reporting-tp1/04-deuxieme-feuille--diagramme-circulaire.png)
+![Choix du diagramme circulaire](reporting/tp1/04-deuxieme-feuille--diagramme-circulaire.png)
 5. Il est possible de spécifier les couleurs pour chaque modalité. Pour cela, cliquer sur la petite flèche à droite de *Sexe* dans la légende, puis *Edit Colors*. On peut soit directement changer la couleur (en en sélectionnant une), soit changer la palette de couleurs de base.<br>
-![Changement des couleurs](reporting-tp1/04-deuxieme-feuille--edition-couleur-sexe.png)
+![Changement des couleurs](reporting/tp1/04-deuxieme-feuille--edition-couleur-sexe.png)
 6. Prenez la colonne *Sexe* dans *Dimensions* et placer la sur *Label* pour voir apparaître les modalités.
 7. Enfin, renommez la feuille en *Répartition Sexe*.
 
@@ -103,7 +103,7 @@ On veut maintenant connaître le montant du salaire mensuel des répondants (col
 2. Glisser *DUT* sur *Rows*.
 3. Glisser *Salaire Net Mensuel* (dans *Measures*) sur  *Size* et changeant en diagramme en barre en changeant dans *Marks* pour mettre *Bar* (au lieu de *Automatic*).
 4. Vous remarquerez que, par défaut, l'agrégat fait est une somme (*SUM*). On peut changer ceci en cliquant sur la petite flèche sur l'agrégat, puis sur *Measure (Sum)*, puis *Average* ou *Median* (ou autre) en fonction de ce qu'on veut avoir (ici, on va prendre la médiane).<br>
-![Changement d'agrégat](reporting-tp1/05-troisieme-feuille--changement-agregat.png)
+![Changement d'agrégat](reporting/tp1/05-troisieme-feuille--changement-agregat.png)
 5. Renommer la feuille en *Salaire par DUT*
 
 ## Quatrième feuille
@@ -113,7 +113,7 @@ On désire maintenant connaître l'origine géographique des répondants, et par
 1. Créer une nouvelle feuille.
 2. Double-cliquer sur *Département résidence* dans *Dimensions*. Ceci se fait automatiquement car, dans l'importation des données, nous avons bien spécifier que cette variable avait un rôle géographique (et plus spécifiquement un nom de département français). On voit apparaître une carte avec des points au centre de chaque région.
 3. Dans *Show Me*, on choisit la carte avec couleur (cf image suivante) :<br>
-![Choix du type de carte](reporting-tp1/06-quatrieme-feuille--changement-carte.png)
+![Choix du type de carte](reporting/tp1/06-quatrieme-feuille--changement-carte.png)
 4. On a maintenant une carte avec la même couleur pour chaque département dont au moins un répondant vient. Pour spécifier la couleur en fonction d'une variable, vous pouvez glisser *# Number of Records* sur *Color*.
 5. On peut agrémenter la carte en ajoutant *Salaire Net Mensuel* (en indiquant la médiane) et *# Number of Records* sur *Tooltip* pour voir ces informations lorsque on cliquera sur un département.
 6. Renommer cette feuille en *Origine Etudiants*.
@@ -127,7 +127,7 @@ L'idée d'un tableau de bord (ou **dashboard** en anglais) est de regrouper plus
 3. Glisser *Text* en haut (écrivez `"Origine des étudiants"`, et, en sélectionnant le texte, choississez la police d'écriture *Calibri*, une taille de 18, un style en gras, et un alignement centré).
 4. Ensuite, pour assembler les éléments (*Sheets* ou autre : texte, image, page web, ...), il faut jouer sur les répartitions disponibles (*Horizontal* ou *Vertical*) et en bougeant les éléments.
 5. En intégrant les feuilles *Répartition DUT*, *Répartition Sexe* et *Origine Etudiants*, et en jouant sur la position et la taille des éléments et des légendes, vous pouvez obtenir un tableau de bord comme celui-ci :<br>
-![Résultat final du tableau de bord sur l'origine des étudiants](reporting-tp1/07-tableau1-resultat.png)
+![Résultat final du tableau de bord sur l'origine des étudiants](reporting/tp1/07-tableau1-resultat.png)
 
 ## Sauvegarde de votre travail
 

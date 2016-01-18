@@ -10,7 +10,7 @@
 
 
 
-<title>Logiciels stats</title>
+<title>TP - Utilisation de Leaflet.js</title>
 
 <script src="libs/jquery-1.11.0/jquery.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -152,46 +152,53 @@ img {
 <div class="contenu">
 
 <div id="header">
-<h1 class="title">Logiciels stats</h1>
+<h1 class="title">TP - Utilisation de Leaflet.js</h1>
 </div>
 
 
-<p>Ce cours a pour but d’introduire deux logiciels statistiques majeurs du marché :</p>
+<p>Voici quelques liens qui ont permis de réaliser la base du TP ou qui vous aideront à réaliser la demande :</p>
 <ul>
-<li><a href="http://www.sas.com">SAS</a>
+<li>Données :
 <ul>
-<li><a href="https://odamid.oda.sas.com/">SAS On Demand For Academics</a> : interface web permettant d’utiliser l’application web <strong>SAS Studio</strong></li>
-<li><a href="slides/langage-sas.html">Langage SAS</a></li>
+<li>Les <a href="https://github.com/gregoiredavid/france-geojson">communes au format GeoJSON</a> : <strong>attention</strong>, dans ces fichiers, les coordonnées sont inversées (<code>[long, lat]</code> au lieu de <code>[lat, long]</code>)</li>
+<li>Les <a href="http://www.insee.fr/fr/themes/tableau.asp?reg_id=99&amp;ref_id=TCRD_025">données du chômage</a> issues de l’INSEE</li>
 </ul></li>
-<li><a href="http://www.r-project.org">R</a>
+<li>Lien pour le code
 <ul>
-<li><a href="slides/langage-r.html">Langage R</a></li>
+<li>Un <a href="http://papaparse.com/">parser</a> pour lire un fichier CSV</li>
+<li>Un <a href="http://leafletjs.com/examples/geojson.html">exeple</a> pour travailler avec du GeoJSON et Leaflet</li>
+<li>Un <a href="http://leafletjs.com/examples/choropleth.html">autre</a> un peu plus poussé, pour ajouter de l’interaction</li>
+<li>Une <a href="http://bost.ocks.org/mike/leaflet/">présentation</a> par Mike Bostocks pour l’utilisation avec <strong>d3.js</strong></li>
 </ul></li>
 </ul>
-<div id="tps" class="section level2">
-<h2>TPs</h2>
-<div id="sas" class="section level3">
-<h3>SAS</h3>
-<ol style="list-style-type: decimal">
-<li><a href="">#</a>Découverte du logiciel et du langage</li>
-<li><a href="">#</a>Manipulation de données</li>
-<li><a href="">#</a>Statistiques descriptives</li>
-<li><a href="">#</a>Statistiques exploratoires</li>
-<li><a href="">#</a>Visualisation de données avancées (??)</li>
-<li><a href="">#</a>Récapitulatif</li>
-</ol>
+<p>Base de travail :</p>
+<ul>
+<li><a href="webreporting/tp-leaflet/base-simple/">sans d3.js</a></li>
+<li><a href="webreporting/tp-leaflet/base-d3/">avec d3.js</a></li>
+</ul>
+<div id="a-faire" class="section level2">
+<h2>A faire</h2>
+<p>A partir de cette base, vous devez :</p>
+<ul>
+<li>faire en sorte que le zoom de la carte soit limité (ni trop grand, ni trop petit)</li>
+<li>jouer sur l’opacité lors du passage de la souris pour que le département soit bien visible</li>
+<li>améliorer l’affichage des informations en créant une fenêtre <code>tooltip</code> affichant toutes les informations dont on dispose</li>
+<li>donner la possibilité de choisir l’indicateur permettant la coloration des départements
+<ul>
+<li>dans ce cas, il serait judicieux de faire une échelle commune à tous les indicateurs, du genre de celle de l’INSEE</li>
+</ul></li>
+<li>s’intéresser aux autres tuiles disponibles via Open Street Map, et les autres fournisseurs</li>
+</ul>
+<!--
+Pour avoir le résultat proposé, regarder :
+
+- [solution sans d3.js](webreporting/tp-leaflet/solution-simple/)
+- [solution avec d3.js](webreporting/tp-leaflet/solution-d3/) 
+-->
 </div>
-<div id="r" class="section level3">
-<h3>R</h3>
-<ol style="list-style-type: decimal">
-<li><a href="">#</a>Découverte du logiciel et du langage</li>
-<li><a href="">#</a>Manipulation de données</li>
-<li><a href="">#</a>Statistiques descriptives</li>
-<li><a href="">#</a>Statistiques exploratoires</li>
-<li><a href="">#</a>Visualisation de données avancées (??)</li>
-<li><a href="">#</a>Récapitulatif</li>
-</ol>
-</div>
+<div id="bonus" class="section level2">
+<h2><em>Bonus</em></h2>
+<p>Pour ceux qui ont fini tôt, vous pouvez réaliser une cartographie des scénarios de prévision de la population à horizon 2040 selon l’INSEE (<a href="http://www.insee.fr/fr/themes/detail.asp?reg_id=99&amp;ref_id=proj-dep-population-2010">fichiers source</a>). Il vous sera bien évidemment nécessaire de faire un peu de manipulation de fichiers auparavant. Essayez d’abord avec le scénario central.</p>
 </div>
 
 </div>

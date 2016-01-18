@@ -13,7 +13,7 @@ em {
 }
 </style>
 
-Dans **Tableau Public**, ouvrez le résultat obtenu suite au TP1 ([workbook téléchargeable](reporting-tp2/Reporting - TP1.twbx)). Vous noterez que tous les graphiques sont présents avec une couleur dans l'onglet en bas, permettant de repérer quels graphiques sont pour quels tableaux. Les données sont intégrées dans le fichier.
+Dans **Tableau Public**, ouvrez le résultat obtenu suite au TP1 ([workbook téléchargeable](reporting/tp2/Reporting - TP1.twbx)). Vous noterez que tous les graphiques sont présents avec une couleur dans l'onglet en bas, permettant de repérer quels graphiques sont pour quels tableaux. Les données sont intégrées dans le fichier.
 
 ## Création d'une table de contingence, avec les pourcentages en lignes ou en colonnes
 
@@ -29,7 +29,7 @@ Dans **Tableau Public**, ouvrez le résultat obtenu suite au TP1 ([workbook tél
 
 Pour avoir la même représentation, mais graphique cette fois-ci, il faut créer ce qu'on appelle un diagramme en barres empilées.
 
-- A partir du tableau obtenu précédemment, cliquer sur l'icône suivante<br>![icône pour un diagramme en barres empilées](reporting-tp2/icone-diagramme-barres-empilees.tiff)
+- A partir du tableau obtenu précédemment, cliquer sur l'icône suivante<br>![icône pour un diagramme en barres empilées](reporting/tp2/icone-diagramme-barres-empilees.png)
 - Comme la variable *DUT* est passée en colonne, les pourcentages ne sont plus corrects.
 - Aller dans *Analysis* puis *Percentage of* (remarquez que *None* est cochée), et cliquer sur *Column*.
 
@@ -96,7 +96,7 @@ Une hiérarchie entre plusieurs variables permettra une navigation entre les dif
 On va utiliser cette hiérarchie pour créer une représentation moins traditionnelle mais très utilisée en ce moment, un *treemap*.
 
 - Refaire une *sheet* avec *Nature DUT* en ligne et *Number of Records* en contenu de cellule.
-- Cliquer sur l'icône suivante :<br>![icône pour créer un treemap](reporting-tp2/icone-treemap.tiff)
+- Cliquer sur l'icône suivante :<br>![icône pour créer un treemap](reporting/tp2/icone-treemap.png)
 - Pour naviguer dans la hiérarchie, vous devez maintenant cliquer sur les *+* ou *-* qui sont dans la fenêtre *Marks*.
 - Malheureusement, l'intégration de d'un *treemap* dans un *dashboard* ou une *story* n'intégre pas la possibilité de ce drill-down direcetement, au contraire d'autres représentations.
 

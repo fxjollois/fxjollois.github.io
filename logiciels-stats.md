@@ -10,3 +10,23 @@ Ce cours a pour but d'introduire deux logiciels statistiques majeurs du marché 
 - [R](http://www.r-project.org)
     - [Langage R](slides/langage-r.html)
 
+## TPs
+
+### SAS
+
+1. [#]()Découverte du logiciel et du langage
+2. [#]()Manipulation de données
+3. [#]()Statistiques descriptives
+4. [#]()Statistiques exploratoires
+5. [#]()Visualisation de données avancées (??)
+6. [#]()Récapitulatif
+
+### R
+
+1. [#]()Découverte du logiciel et du langage
+2. [#]()Manipulation de données
+3. [#]()Statistiques descriptives
+4. [#]()Statistiques exploratoires
+5. [#]()Visualisation de données avancées (??)
+6. [#]()Récapitulatif
+

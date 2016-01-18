@@ -2,7 +2,7 @@
 title: Reporting - TP5
 ---
 
-Dans ce TP, nous allons utiliser les données synthétiques de la production scientifique mondiale de 1996 à 2014 ([lien vers le fichier Excel](reporting-tp5/scimagojr%20all.xlsx) - source : [SCImago Journal & Country Rank](http://www.scimagojr.com/help.php))
+Dans ce TP, nous allons utiliser les données synthétiques de la production scientifique mondiale de 1996 à 2014 ([lien vers le fichier Excel](reporting/tp5/scimagojr%20all.xlsx) - source : [SCImago Journal & Country Rank](http://www.scimagojr.com/help.php))
 
 Ce fichier comporte les variables suivantes :
 
@@ -30,7 +30,7 @@ On voit que la production scientifique mondiale a nettement progressé, particul
 
 1. Cliquer sur l'onglet *Analytics* dans le panneau à gauche
 2. Cliquer-Déplacer *Constant Line* sur le graphique. Vous devriez voir apparaître une fenêtre comme suit :
-![Fenêtre d'ajout de ligne de référence](reporting-tp5/evolution-constant-line-choose-axes.jpg)
+![Fenêtre d'ajout de ligne de référence](reporting/tp5/evolution-constant-line-choose-axes.jpg)
 3. En gardant votre clic, placez-vous sur la cellule à droite de `Year` de manière à ce qu'elle soit en surbrillance comme ci-dessus
 4. Ensuite, indiquer `2002`. Vous devriez voir apparaître une ligne verticale pour l'année 2002
 5. Il est possible de personnaliser le texte affiché à droite. Cliquer sur le 2002 et cliquer sur *Edit*
