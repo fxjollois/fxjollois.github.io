@@ -5,6 +5,9 @@ title: TP - Utilisation de Leaflet.js
 Voici quelques liens qui ont permis de réaliser la base du TP ou qui vous aideront à réaliser la demande :
 
 - Données :
+    - [fichier GeoJSON des départements](webreporting/tp-leaflet/departements.geojson)
+    - [fichier Taux de chômage](webreporting/tp-leaflet/departements-chomage.tsv)
+- Source des données :
     - Les [communes au format GeoJSON](https://github.com/gregoiredavid/france-geojson) : **attention**, dans ces fichiers, les coordonnées sont inversées (`[long, lat]` au lieu de `[lat, long]`)
     - Les [données du chômage](http://www.insee.fr/fr/themes/tableau.asp?reg_id=99&ref_id=TCRD_025) issues de l'INSEE
 - Lien pour le code
