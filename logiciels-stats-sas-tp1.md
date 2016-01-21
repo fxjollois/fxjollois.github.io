@@ -23,7 +23,7 @@ Vous devez importer les fichiers texte qui suivent. Vous pouvez y accéder via l
 
 Pas de difficulté majeure, si ce n'est la taille de la variable `Species` (des valeurs ont plus de 8 caractères).
 
-<object data="logiciels-stats/sas-tp1/Iris.dat" type="text/plain" class="fichier">
+<object data="logiciels-stats/sas-tp1/Iris.txt" type="text/plain" class="fichier">
     impossible à afficher
 </object>
       
