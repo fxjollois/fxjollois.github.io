@@ -19,7 +19,7 @@ Vous devez importer les fichiers texte qui suivent. Vous pouvez y accéder via l
 /courses/dee4fb65ba27fe300/fichier.ext
 ```
 
-[`Iris.dat`](logiciels-stats/sas-tp1/Iris.dat)
+[`Iris.txt`](logiciels-stats/sas-tp1/Iris.txt)
 
 Pas de difficulté majeure, si ce n'est la taille de la variable `Species` (des valeurs ont plus de 8 caractères).
 
