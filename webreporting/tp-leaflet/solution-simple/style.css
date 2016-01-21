@@ -16,6 +16,15 @@ h1, p {
     stroke: #000;
 }
 
+/* pour le choix */
+#choix {
+    text-align: center;
+}
+
+/* legende */
+.legend-icon {
+    color: black;
+}
 
 /* tooltip */
 #tooltip {

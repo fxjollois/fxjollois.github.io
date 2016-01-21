@@ -14,7 +14,7 @@ Ce cours a pour but d'introduire deux logiciels statistiques majeurs du marché 
 
 ### SAS
 
-1. [#]()Découverte du logiciel et du langage
+1. [#](logiciels-stats-sas-tp1.html)Découverte du logiciel et du langage
 2. [#]()Manipulation de données
 3. [#]()Statistiques descriptives
 4. [#]()Statistiques exploratoires

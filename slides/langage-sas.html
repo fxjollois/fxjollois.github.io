@@ -88,75 +88,429 @@
           </hgroup>
   </slide>
 
-<p>Concepts SAS :</p>
+<slide class=''><hgroup><h2>Le logiciel</h2></hgroup><article  id="le-logiciel">
+
+<p><a href='http://www.sas.com' title=''>SAS</a> :</p>
 
 <ul>
-<li>Table</li>
-<li>Etape <code>DATA</code></li>
-<li>Procédure (<code>PROC</code>)</li>
-<li>&#8230; (peut-être)</li>
+<li>acteur majeur sur le marché des logiciels de statistiques</li>
+<li>outil principal : SAS Base ou SAS Studio (en ligne)
+
+<ul>
+<li>langage propriétaire</li>
+<li>scripts à exécuter (tout ou partie au choix)</li>
+<li>3 parties importantes :
+
+<ul>
+<li>éditeur de texte</li>
+<li>journal d&#39;exécution</li>
+<li>résultats</li>
+</ul></li>
+</ul></li>
 </ul>
 
-<slide class=''><hgroup><h2>Importation de données</h2></hgroup><article  id="importation-de-donnees">
+</article></slide><slide class=''><hgroup><h2>Concepts importants - Données</h2></hgroup><article  id="concepts-importants---donnees">
 
-<h3>Etape <code>DATA</code></h3>
+<ul>
+<li>Table
 
-<p>Avec insertion directe des données</p>
+<ul>
+<li>ensemble de lignes décrites par des colonnes nommées (dites aussi variables)</li>
+<li>types de variable : numérique, alpha-numérique, date</li>
+<li>stockées dans des librairies</li>
+</ul></li>
+<li>Librairie
+
+<ul>
+<li>répertoire de stockage des tables</li>
+<li><code>work</code> : espace temporaire (vidé à la fin d&#39;une session), utilisé par défaut</li>
+<li><code>sashelp</code>, <code>maps</code>, &#8230; : librairies existantes par défaut</li>
+<li>possibilité de créer sa propre librairie, en poitant le répertoire voulu pour le stockage (persistant)</li>
+</ul></li>
+</ul>
+
+<pre class = 'prettyprint lang-sas'>libname lib &#39;/chemin/vers/repertoire&#39;;</pre>
+
+</article></slide><slide class=''><hgroup><h2>Concepts importants - Langage</h2></hgroup><article  id="concepts-importants---langage">
+
+<ul>
+<li>Etape <code>DATA</code>
+
+<ul>
+<li>définition, importation, modification des tables</li>
+<li>commandes exécutées pour chaque ligne de manière identique et séparée</li>
+<li>quelques commandes spécifiques pour travailler avec des infos de lignes précédentes</li>
+</ul></li>
+<li>Procédure (<code>PROC</code>)
+
+<ul>
+<li>manipulation sur des colonnes</li>
+<li>calculs statistiques, graphiques, &#8230;</li>
+<li>quelques procédures spécifiques de manipulation de tables</li>
+</ul></li>
+</ul>
+
+</article></slide><slide class=''><hgroup><h2>Importation de données</h2></hgroup><article  id="importation-de-donnees">
+
+<h3>Etape <code>DATA</code> - Avec insertion directe des données</h3>
+
+<ul>
+<li>table stockée dans la librairie <code>work</code> si non spécifiée</li>
+<li>indiquer <code>lib.tab</code> pour mettre la librairie <code>lib</code></li>
+<li>3 variables créées
+
+<ul>
+<li><code>X</code> numérique</li>
+<li><code>Y</code> numérique</li>
+<li><code>Z</code> alpha-numérique</li>
+</ul></li>
+<li><code>label</code> : permet d&#39;ajouter une description à une variable ou à une table</li>
+</ul>
+
+</article></slide><slide class=''><hgroup><h2>Importation de données</h2></hgroup><article  id="importation-de-donnees-1">
+
+<h3>Etape <code>DATA</code> - Avec insertion directe des données</h3>
+
+<pre class = 'prettyprint lang-sas'>data tab (label= &quot;table exemple&quot;);
+    input X Y Z$;
+    label X = &quot;Variable X&quot;
+          Y = &quot;Variable Y&quot;
+    cards;
+1 12 A
+2 15 A
+1 10 B
+1  9 C
+3 13 B
+3  8 A
+run;</pre>
+
+</article></slide><slide class=''><hgroup><h2>Importation de données</h2></hgroup><article  id="importation-de-donnees-2">
+
+<h3>Etape <code>DATA</code> - Avec importation</h3>
+
+<ul>
+<li>données dans un fichier texte</li>
+<li>options usuels :
+
+<ul>
+<li>délimiteur (avec <code>dlm = &#39;;&#39;</code> par exemple)</li>
+<li>première observation à considérer (<code>firstobs =</code>)</li>
+<li>nombre d&#39;observation (<code>n =</code>)</li>
+</ul></li>
+<li>variables
+
+<ul>
+<li>nombre et type à connaître</li>
+</ul></li>
+</ul>
+
+<pre class = 'prettyprint lang-sas'>data tab;
+    infile &#39;chemin/vers/fichier&#39; options;
+    input variables;
+run;</pre>
+
+</article></slide><slide class=''><hgroup><h2>Importation de données</h2></hgroup><article  id="importation-de-donnees-3">
+
+<h3>Procédure <code>IMPORT</code></h3>
+
+<ul>
+<li>données possibles : fichier texte, Excel, Access, &#8230;</li>
+<li>options usuelles :
+
+<ul>
+<li>type de données (avec <code>dbms=dlm</code> pour texte par exemple)</li>
+<li><code>replace</code> pour indiquer si on remplace la table si elle existe</li>
+</ul></li>
+<li>paramètres usuels :
+
+<ul>
+<li>si <code>dbms=dlm</code>, alors <code>delimiter=&quot;;&quot;</code></li>
+<li>présence ou non des noms de varaibles (avec <code>getnames=yes</code> ou <code>no</code>)</li>
+</ul></li>
+</ul>
+
+<pre class = 'prettyprint lang-sas'>proc import datafile=&#39;/chemin/vers/fichier&#39; out=tab options;
+    paramètres;
+run;</pre>
+
+</article></slide><slide class=''><hgroup><h2><code>FORMAT</code> et <code>INFORMAT</code></h2></hgroup><article  id="format-et-informat">
+
+<p>2 concepts complémentaires :</p>
+
+<ul>
+<li><code>FORMAT</code> : indique comment présenter une valeur stockée dans un type spécifique
+
+<ul>
+<li>pas d&#39;impact dans les calculs car pas de modifications du stockage</li>
+<li>exemple : un nombre réel stocké très précisemment (sans limite de précision) pourra être affiché avec un arrondià 2 décimales</li>
+</ul></li>
+<li><code>INFORMAT</code> : indique comment transformer une valeur (souvent à l&#39;importation) pour la mettre dans un format spécifique
+
+<ul>
+<li>impact fort dans les calculs car modification du stockage</li>
+<li>exemple : une variable sexe codée 1 ou 2 (numérique donc) transformée en caractère <code>H</code> ou <code>F</code></li>
+</ul></li>
+</ul>
+
+</article></slide><slide class=''><hgroup><h2><code>INFORMAT</code></h2></hgroup><article  id="informat">
+
+<h3>Par défaut</h3>
+
+<ul>
+<li><code>X</code> et <code>Y</code> implicitement au format numérique</li>
+<li><code>Z</code> alpha-numérique (informat spécifié <code>$</code>)</li>
+</ul>
 
 <pre class = 'prettyprint lang-sas'>data tab;
     input X Y Z$;
     cards;
 1 12 A
 2 15 A
-1 10 B
-1  9 C
+3 13 B
+3  8 ABCDEFGHIJ
 run;</pre>
 
-<p>Avec importation de données dans un fichier texte basique</p>
+<p>Par défaut, la taille d&#39;une chaîne alpha-numérique est de 8. Ici, la dernière valeur de <code>Z</code> sera donc <code>ABCDEFGH</code>.</p>
+
+</article></slide><slide class=''><hgroup><h2><code>INFORMAT</code></h2></hgroup><article  id="informat-1">
+
+<h3>Spécification dans <code>input</code></h3>
+
+<ul>
+<li><code>X</code> qui débute au début de la ligne (<code>@1</code>) et qui sera un caractère de taille 1 (<code>$1.</code>)</li>
+<li><code>Y</code> qui débute à la position 3 (<code>@3</code>) et qui sera un numérique (<code>2.</code> qui devient <code>8.</code> automatiquement)</li>
+<li><code>Z</code> qui débute à la position 6 (<code>@6</code>) et qui sera une chaîne de taille 10 (<code>$10.</code>)</li>
+</ul>
 
 <pre class = 'prettyprint lang-sas'>data tab;
-    infile &#39;fichier&#39; paramètres;
-    input variables;
+    input @1 X $1. @3 Y 2. @6 Z $10.;
+    cards;
+1 12 A
+2 15 A
+3 13 B
+3  8 ABCDEFGHIJ
 run;</pre>
 
-<h3><code>PROC IMPORT</code></h3>
+</article></slide><slide class=''><hgroup><h2><code>INFORMAT</code></h2></hgroup><article  id="informat-2">
 
-<p>Quelques exemples aussi ici</p>
+<h3>Spécification dans <code>informat</code></h3>
+
+<ul>
+<li>Informat idem à précédemment, sans nécessité de spécifier la position de départ de la variable</li>
+</ul>
+
+<pre class = 'prettyprint lang-sas'>data tab;
+    informat X $1. Y 2. Z $10.;
+    input X $ Y Z $;
+    cards;
+1 12 A
+2 15 A
+3 13 B
+3  8 ABCDEFGHIJ
+run;</pre>
+
+</article></slide><slide class=''><hgroup><h2><code>FORMAT</code></h2></hgroup><article  id="format">
+
+<h3>Spécification dans <code>format</code></h3>
+
+<ul>
+<li>Limitation de <code>Z</code> à 5 caractères pour l&#39;affichage (<code>format Z $5.</code>)</li>
+<li>Pas de modification du stockage (cf <code>ZZ</code> qui contient bien toute la dernière chaîne)</li>
+</ul>
+
+<pre class = 'prettyprint lang-sas'>data tab;
+    informat X $1. Y 2. Z $10.;
+    format Z $5.;
+    input X $ Y Z $;
+    ZZ = Z;
+    cards;
+1 12 A
+2 15 A
+3 13 B
+3  8 ABCDEFGHIJ
+run;</pre>
+
+</article></slide><slide class=''><hgroup><h2>Procédure <code>FORMAT</code></h2></hgroup><article  id="procedure-format">
+
+<p>Permet de définir des informats (avec <code>invalue</code>) ou des formats (avec <code>value</code>) spécifiques</p>
+
+<pre class = 'prettyprint lang-sas'>proc format;
+    value $typeX 
+        &#39;1&#39; = &#39;Valeur A&#39;
+        &#39;2&#39; = &#39;Valeur B&#39;
+        &#39;3&#39; = &#39;Autre&#39;;
+run;
+proc print data = tab;
+    format X $typeX.;
+run;</pre>
+
+<p>Un autre moyen d&#39;utiliser les formats est de le faire localement dans une procédure <code>PRINT</code> comme ci-dessus. Le format ne sera utilisé que pour l&#39;affichage lors de l&#39;exécution de cette procédure.</p>
+
+</article></slide><slide class=''><hgroup><h2>Procédure <code>FORMAT</code></h2></hgroup><article  id="procedure-format-1">
+
+<h3>Résultat :</h3>
+
+<table class = 'rmdtable'>
+<tr class="header">
+<th align="left">Obs.</th>
+<th align="left">X</th>
+<th align="left">Y</th>
+<th align="left">Z</th>
+<th align="left">ZZ</th>
+</tr>
+<tr class="odd">
+<td align="left">1</td>
+<td align="left">Valeur A</td>
+<td align="left">12</td>
+<td align="left">A</td>
+<td align="left">A</td>
+</tr>
+<tr class="even">
+<td align="left">2</td>
+<td align="left">Valeur B</td>
+<td align="left">15</td>
+<td align="left">A</td>
+<td align="left">A</td>
+</tr>
+<tr class="odd">
+<td align="left">3</td>
+<td align="left">Autre</td>
+<td align="left">13</td>
+<td align="left">B</td>
+<td align="left">B</td>
+</tr>
+<tr class="even">
+<td align="left">4</td>
+<td align="left">Autre</td>
+<td align="left">8</td>
+<td align="left">ABCDE</td>
+<td align="left">ABCDEFGHIJ</td>
+</tr>
+</table>
 
 </article></slide><slide class=''><hgroup><h2>Restitution de données</h2></hgroup><article  id="restitution-de-donnees">
 
-<h3>Affichage simple</h3>
-
-<p>Si on veut afficher simplement la table <code>tab</code></p>
-
-<pre class = 'prettyprint lang-sas'>proc print data = tab;
-run;</pre>
-
-<p>Si on veut spécifier certains paramètres :</p>
+<h3>Affichage simple - procédure <code>PRINT</code></h3>
 
 <ul>
-<li><code>noobs</code> : n&#39;affiche pas le numéro de la ligne</li>
-<li><code>var</code> : sélectionne les variables à afficher
+<li>options usuelles :
+
+<ul>
+<li><code>noobs</code> pour ne pas afficher le numéro des lignes</li>
+<li><code>label</code> pour afficher le label des variables et non le nom</li>
+</ul></li>
+<li>paramètres usuels :
+
+<ul>
+<li><code>var</code> pour lister les variables à afficher</li>
+<li><code>by</code> pour faire un affichage pour chaque modalité d&#39;une variable (ou plusieurs)</li>
+<li><code>sum</code> pour spécifier des variables à sommer (ajout d&#39;une ligne de total)</li>
+</ul></li>
+</ul>
+
+<pre class = 'prettyprint lang-sas'>proc print data = tab options;
+    paramètres;
+run;</pre>
+
+</article></slide><slide class=''><hgroup><h2>Sélecteur de variables</h2></hgroup><article  id="selecteur-de-variables">
+
+<p>Il existe des moyens de sélectionner plusieurs variables ensemble, sans les lister toutes :</p>
 
 <ul>
 <li><code>_ALL_</code> : sélecteur spécifique pour toutes les variables</li>
 <li><code>_NUMERIC_</code> : sélecteur spécifique pour les variables numériques</li>
-<li><code>_ALPHA_</code> : sélecteur spécifique pour les variables alpha-numériques</li>
+<li><code>_CHARACTER_</code> : sélecteur spécifique pour les variables alpha-numériques</li>
 <li><code>v1-vN</code> : sélecteur spécifique pour les variables nommées <code>v1</code>, <code>v2</code>, <code>v3</code>, &#8230;, <code>vN</code></li>
 <li><code>X--Z</code> : sélecteur spécifique pour les variables de <code>X</code> à <code>Z</code> dans la liste des variables de la table</li>
-</ul></li>
 </ul>
 
-<pre class = 'prettyprint lang-sas'>proc print data = tab noobs;
-    var X Y;
-run;</pre>
+</article></slide><slide class=''><hgroup><h2>Restitution de données</h2></hgroup><article  id="restitution-de-donnees-1">
 
 <h3>Sauvegarde dans une table à partir d&#39;une autre</h3>
+
+<p>Pour récupérer les données d&#39;une table pour les mettre dans une autre, qui sera créée (si existante alors détruite), on utilise une étape <code>DATA</code></p>
 
 <pre class = 'prettyprint lang-sas'>data tab_out;
     set tab_in;
     opérations;
 run;</pre>
+
+</article></slide><slide class=''><hgroup><h2>Quelques éléments de langages</h2></hgroup><article  id="quelques-elements-de-langages">
+
+<h3>Création de variables</h3>
+
+<ul>
+<li>Opérateurs usuels : <code>+</code>, <code>-</code>, <code>*</code>, <code>/</code>, <code>()</code></li>
+<li>Fonctions diverses :
+
+<ul>
+<li>chaînes</li>
+<li>dates</li>
+<li>numériques</li>
+</ul></li>
+<li><code>_N_</code> : numéro de la ligne courante</li>
+<li>Clause <code>WHERE</code> permettant de sélectionner seulement les lignes respectant une condition précise
+
+<ul>
+<li>utilisable aussi dans une procédure</li>
+</ul></li>
+</ul>
+
+</article></slide><slide class=''><hgroup><h2>Quelques éléments de langages</h2></hgroup><article  id="quelques-elements-de-langages-1">
+
+<h3>Traitement conditionnel - <code>if</code></h3>
+
+<h4>Simple</h4>
+
+<pre class = 'prettyprint lang-sas'>if (condition) then opération;</pre>
+
+<h4>Complet</h4>
+
+<pre class = 'prettyprint lang-sas'>if (condition) then
+do;
+    opérations
+end;
+else
+do;
+    opérations;
+end;</pre>
+
+</article></slide><slide class=''><hgroup><h2>Quelques éléments de langages</h2></hgroup><article  id="quelques-elements-de-langages-2">
+
+<h3>Données manquantes</h3>
+
+<ul>
+<li>Numérique : <code>.</code></li>
+<li>Alpha-numérique : <code>&quot;&quot;</code></li>
+</ul>
+
+<h3>Ecriture ou suppression dans une étape <code>DATA</code></h3>
+
+<ul>
+<li><code>delete</code> permet de supprimer la ligne</li>
+<li><code>output</code> permet d&#39;écrire la ligne dans la table résultat
+
+<ul>
+<li><code>output tab1</code> permet de spécifier la table de sortie</li>
+</ul></li>
+<li>à combiner avec une condition</li>
+</ul>
+
+</article></slide><slide class=''><hgroup><h2>Quelques éléments de langages</h2></hgroup><article  id="quelques-elements-de-langages-3">
+
+<h3>Exemple</h3>
+
+<pre class = 'prettyprint lang-sas'>data tabA tabB;
+    set tab;
+    XY = X + Y;
+    Z1 = substr(X, 1, 1);
+    id = &#39;no&#39; || _N_;
+    where Y &gt; 10;
+    if (X = .) then 
+        output tabA;
+    else
+        output tabB;
+run; </pre>
 
 </article></slide><slide class=''><hgroup><h2>Interrogation de données</h2></hgroup><article  id="interrogation-de-donnees">
 
@@ -169,80 +523,28 @@ run;</pre>
 
 </article></slide><slide class=''><hgroup><h2>Manipulations supplémentaires</h2></hgroup><article  id="manipulations-supplementaires">
 
-<h3>Transposition de matice</h3>
+<h3>Transposition de matrice</h3>
 
 <pre class = 'prettyprint lang-sas'>proc transpose data = tab;
 run;</pre>
 
 <h3>Autre ?</h3>
 
-</article></slide><slide class=''><hgroup><h2>Statistiques descriptives univariées</h2></hgroup><article  id="statistiques-descriptives-univariees">
+</article></slide><slide class=''><hgroup><h2>Statistiques descriptives</h2></hgroup><article  id="statistiques-descriptives">
 
-<h3>Variable quantitative</h3>
+<p>cf slides</p>
 
-<h4>Numérique</h4>
-
-<p>Moyenne, écart-type, minimum, maximum, &#8230;</p>
-
-<h4>Graphique</h4>
-
-<p>Histogramme, boîte à moustache, QQ-plot</p>
-
-<h3>Variable qualitative</h3>
-
-<h4>Numérique</h4>
-
-<p>Occurences, fréquences</p>
-
-<h4>Graphique</h4>
-
-<p>Diagramme en barres, diagramme circulaire</p>
-
-</article></slide><slide class=''><hgroup><h2>Statistiques descriptives bivariées</h2></hgroup><article  id="statistiques-descriptives-bivariees">
-
-<h3>Variables quantitative vs quantitative</h3>
-
-<h4>Numérique</h4>
-
-<p>Covariance, coefficient de corrélation, &#8230;</p>
-
-<h4>Graphique</h4>
-
-<p>Nuage de points</p>
-
-<h3>Variables qualitative vs qualitative</h3>
-
-<h4>Numérique</h4>
-
-<p>Table de contingence, table des fréquences, profils lignes, profils colonnes, chi2, &#8230;</p>
-
-<h4>Graphique</h4>
-
-<p>Diagramme en barres séparées, diagramme barres empilées, diagrammes circulaires multiple, diagramme d&#39;association</p>
-
-<h3>Variables quantitative vs qualitative</h3>
-
-<h4>Numérique</h4>
-
-<p>Moyenne, écart-type, minimum, maximum, &#8230; par modalité</p>
-
-<h4>Graphique</h4>
-
-<p>Histogramme, boîte à moustache, QQ-plot par modalité</p>
+<ul>
+<li><a href='stats-desc-sas.html' title=''>Statistiques descriptives sous SAS</a></li>
+</ul>
 
 </article></slide><slide class=''><hgroup><h2>Statistiques exploratoires</h2></hgroup><article  id="statistiques-exploratoires">
 
-<h3>Analyse en composants principales</h3>
+<p>cf slides</p>
 
-<h3>Analyse factorielle des correspondances</h3>
-
-<h3>Analyse factorielle des correspondances multiples</h3>
-
-<h3>Multidimensionnal Scaling</h3>
-
-<h3>Classification hiérarchique</h3>
-
-<h3>Classification directe</h3></article></slide>
+<ul>
+<li><a href='stats-explo-sas.html' title=''>Statistiques exploratoires sous SAS</a></li>
+</ul></article></slide>
 
 
   <slide class="backdrop"></slide>

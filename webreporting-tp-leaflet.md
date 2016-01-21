@@ -32,12 +32,11 @@ A partir de cette base, vous devez :
     - dans ce cas, il serait judicieux de faire une échelle commune à tous les indicateurs, du genre de celle de l'INSEE
 - s'intéresser aux autres tuiles disponibles via Open Street Map, et les autres fournisseurs
 
-<!--
 Pour avoir le résultat proposé, regarder :
 
 - [solution sans d3.js](webreporting/tp-leaflet/solution-simple/)
 - [solution avec d3.js](webreporting/tp-leaflet/solution-d3/) 
--->
+
 
 ## *Bonus*
 
