@@ -47,7 +47,7 @@ libname lib '/chemin/vers/repertoire';
 ### Etape `DATA` - Avec insertion directe des données 
 
 - table stockée dans la librairie `work` si non spécifiée
-- indiquer `lib.tab` pour mettre la librairie `lib`
+- indiquer `lib.tab` pour mettre la table dans la librairie `lib`
 - 3 variables créées 
     - `X` numérique
     - `Y` numérique
@@ -62,7 +62,7 @@ libname lib '/chemin/vers/repertoire';
 data tab (label= "table exemple");
     input X Y Z$;
     label X = "Variable X"
-          Y = "Variable Y"
+          Y = "Variable Y";
     cards;
 1 12 A
 2 15 A
@@ -102,7 +102,7 @@ run;
     - `replace` pour indiquer si on remplace la table si elle existe
 - paramètres usuels :
     - si `dbms=dlm`, alors	`delimiter=";"`
-    - présence ou non des noms de varaibles (avec `getnames=yes` ou `no`)
+    - présence ou non des noms de variables (avec `getnames=yes` ou `no`)
 
 ```sas
 proc import datafile='/chemin/vers/fichier' out=tab options;
@@ -114,12 +114,12 @@ run;
 
 2 concepts complémentaires :
 
-- `FORMAT` : indique comment présenter une valeur stockée dans un type spécifique
-    - pas d'impact dans les calculs car pas de modifications du stockage
-    - exemple : un nombre réel stocké très précisemment (sans limite de précision) pourra être affiché avec un arrondià 2 décimales
 - `INFORMAT` : indique comment transformer une valeur (souvent à l'importation) pour la mettre dans un format spécifique
     - impact fort dans les calculs car modification du stockage
     - exemple : une variable sexe codée 1 ou 2 (numérique donc) transformée en caractère `H` ou `F`
+- `FORMAT` : indique comment présenter une valeur stockée dans un type spécifique
+    - pas d'impact dans les calculs car pas de modifications du stockage
+    - exemple : un nombre réel stocké très précisemment (sans limite de précision) pourra être affiché avec un arrondià 2 décimales
 
 ## `INFORMAT` 
 
@@ -145,9 +145,29 @@ Par défaut, la taille d'une chaîne alpha-numérique est de 8. Ici, la dernièr
 
 ### Spécification dans `input`
 
-- `X` qui débute au début de la ligne (`@1`) et qui sera un caractère de taille 1 (`$1.`)
-- `Y` qui débute à la position 3 (`@3`) et qui sera un numérique (`2.` qui devient `8.` automatiquement)
-- `Z` qui débute à la position 6 (`@6`) et qui sera une chaîne de taille 10 (`$10.`)
+- idem pour `X` et `Y`
+- On spécifie que la variable `Z` a 10 caractères maximum possibles
+
+```sas
+data tab;
+    input X Y Z $10.;
+    cards;
+1 12 A
+2 15 A
+3 13 B
+3  8 ABCDEFGHIJ
+run;
+```
+
+## `INFORMAT` 
+
+### Spécification dans `input`
+
+Avec indication de la position de début de lecture de la variable 
+
+- `X` : débute au début de la ligne (`@1`) et  caractère de taille 1 (`$1.`)
+- `Y` : débute à la position 3 (`@3`) et numérique (`2.` qui devient `8.` automatiquement)
+- `Z` : débute à la position 6 (`@6`) et chaîne de taille 10 (`$10.`)
 
 ```sas
 data tab;
@@ -164,12 +184,13 @@ run;
 
 ### Spécification dans `informat`
 
-- Informat idem à précédemment, sans nécessité de spécifier la position de départ de la variable
+- idem que précédemment, sans nécessité de spécifier la position de départ 
+- pratique dans beaucoup de cas avec des informats spécifiques
 
 ```sas
 data tab;
     informat X $1. Y 2. Z $10.;
-    input X $ Y Z $;
+    input X Y Z $;
     cards;
 1 12 A
 2 15 A

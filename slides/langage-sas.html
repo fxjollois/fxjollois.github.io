@@ -156,7 +156,7 @@
 
 <ul>
 <li>table stockée dans la librairie <code>work</code> si non spécifiée</li>
-<li>indiquer <code>lib.tab</code> pour mettre la librairie <code>lib</code></li>
+<li>indiquer <code>lib.tab</code> pour mettre la table dans la librairie <code>lib</code></li>
 <li>3 variables créées
 
 <ul>
@@ -174,7 +174,7 @@
 <pre class = 'prettyprint lang-sas'>data tab (label= &quot;table exemple&quot;);
     input X Y Z$;
     label X = &quot;Variable X&quot;
-          Y = &quot;Variable Y&quot;
+          Y = &quot;Variable Y&quot;;
     cards;
 1 12 A
 2 15 A
@@ -225,7 +225,7 @@ run;</pre>
 
 <ul>
 <li>si <code>dbms=dlm</code>, alors <code>delimiter=&quot;;&quot;</code></li>
-<li>présence ou non des noms de varaibles (avec <code>getnames=yes</code> ou <code>no</code>)</li>
+<li>présence ou non des noms de variables (avec <code>getnames=yes</code> ou <code>no</code>)</li>
 </ul></li>
 </ul>
 
@@ -238,17 +238,17 @@ run;</pre>
 <p>2 concepts complémentaires :</p>
 
 <ul>
-<li><code>FORMAT</code> : indique comment présenter une valeur stockée dans un type spécifique
-
-<ul>
-<li>pas d&#39;impact dans les calculs car pas de modifications du stockage</li>
-<li>exemple : un nombre réel stocké très précisemment (sans limite de précision) pourra être affiché avec un arrondià 2 décimales</li>
-</ul></li>
 <li><code>INFORMAT</code> : indique comment transformer une valeur (souvent à l&#39;importation) pour la mettre dans un format spécifique
 
 <ul>
 <li>impact fort dans les calculs car modification du stockage</li>
 <li>exemple : une variable sexe codée 1 ou 2 (numérique donc) transformée en caractère <code>H</code> ou <code>F</code></li>
+</ul></li>
+<li><code>FORMAT</code> : indique comment présenter une valeur stockée dans un type spécifique
+
+<ul>
+<li>pas d&#39;impact dans les calculs car pas de modifications du stockage</li>
+<li>exemple : un nombre réel stocké très précisemment (sans limite de précision) pourra être affiché avec un arrondià 2 décimales</li>
 </ul></li>
 </ul>
 
@@ -277,9 +277,29 @@ run;</pre>
 <h3>Spécification dans <code>input</code></h3>
 
 <ul>
-<li><code>X</code> qui débute au début de la ligne (<code>@1</code>) et qui sera un caractère de taille 1 (<code>$1.</code>)</li>
-<li><code>Y</code> qui débute à la position 3 (<code>@3</code>) et qui sera un numérique (<code>2.</code> qui devient <code>8.</code> automatiquement)</li>
-<li><code>Z</code> qui débute à la position 6 (<code>@6</code>) et qui sera une chaîne de taille 10 (<code>$10.</code>)</li>
+<li>idem pour <code>X</code> et <code>Y</code></li>
+<li>On spécifie que la variable <code>Z</code> a 10 caractères maximum possibles</li>
+</ul>
+
+<pre class = 'prettyprint lang-sas'>data tab;
+    input X Y Z $10.;
+    cards;
+1 12 A
+2 15 A
+3 13 B
+3  8 ABCDEFGHIJ
+run;</pre>
+
+</article></slide><slide class=''><hgroup><h2><code>INFORMAT</code></h2></hgroup><article  id="informat-2">
+
+<h3>Spécification dans <code>input</code></h3>
+
+<p>Avec indication de la position de début de lecture de la variable</p>
+
+<ul>
+<li><code>X</code> : débute au début de la ligne (<code>@1</code>) et caractère de taille 1 (<code>$1.</code>)</li>
+<li><code>Y</code> : débute à la position 3 (<code>@3</code>) et numérique (<code>2.</code> qui devient <code>8.</code> automatiquement)</li>
+<li><code>Z</code> : débute à la position 6 (<code>@6</code>) et chaîne de taille 10 (<code>$10.</code>)</li>
 </ul>
 
 <pre class = 'prettyprint lang-sas'>data tab;
@@ -291,17 +311,18 @@ run;</pre>
 3  8 ABCDEFGHIJ
 run;</pre>
 
-</article></slide><slide class=''><hgroup><h2><code>INFORMAT</code></h2></hgroup><article  id="informat-2">
+</article></slide><slide class=''><hgroup><h2><code>INFORMAT</code></h2></hgroup><article  id="informat-3">
 
 <h3>Spécification dans <code>informat</code></h3>
 
 <ul>
-<li>Informat idem à précédemment, sans nécessité de spécifier la position de départ de la variable</li>
+<li>idem que précédemment, sans nécessité de spécifier la position de départ</li>
+<li>pratique dans beaucoup de cas avec des informats spécifiques</li>
 </ul>
 
 <pre class = 'prettyprint lang-sas'>data tab;
     informat X $1. Y 2. Z $10.;
-    input X $ Y Z $;
+    input X Y Z $;
     cards;
 1 12 A
 2 15 A

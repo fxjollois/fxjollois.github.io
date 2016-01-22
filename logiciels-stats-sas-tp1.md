@@ -50,7 +50,7 @@ Reprendre l'importation du fichier `heart.txt` (cf ci-dessus), et répondre aux 
 
 1. Créer une indicatrice binaire `0/1` pour la présence ou non de problème de coeur (dernière variable)
 2. Créer une variable comptant le nombre de fois où une variable est égale à `A` (entre `type_douleur`, `sucre`, `electro`, et `vaisseau`)
-3. Créer un format pour l'indicatrice binaire faite en 1 pour afficher `presence` pour `1` et `absence` pour `0`
+3. Créer un format pour l'indicatrice binaire faite au point 1. pour afficher `presence` pour `1` et `absence` pour `0`
 4. Créer un informat pour la variable sexe qui vaudra `M` pour `masculin` et `F` pour `féminin`
 5. Créer le format associé pour afficher la valeur initiale
 6. Sélectionner uniquement les individus ayant strictement moins de 60 ans
