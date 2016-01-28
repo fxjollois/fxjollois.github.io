@@ -1,0 +1,969 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+<meta charset="utf-8">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="pandoc" />
+
+<meta name="author" content="DU Analyste Big Data" />
+
+
+<title>Initiation à R</title>
+
+<script src="libs/jquery-1.11.0/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="libs/bootstrap-3.3.1/css/journal.min.css" rel="stylesheet" />
+<script src="libs/bootstrap-3.3.1/js/bootstrap.min.js"></script>
+<script src="libs/bootstrap-3.3.1/shim/html5shiv.min.js"></script>
+<script src="libs/bootstrap-3.3.1/shim/respond.min.js"></script>
+<style>
+.contenu {
+	margin-bottom: 50px;
+}
+
+.contact-liens {
+	text-align: center;
+}
+.contact-icones {
+	height: 30px;
+}
+
+/* Espacement pour barre du haut et pied de page */
+#header, .section.level1 {
+	margin-top: 60px;
+	margin-bottom: 60px;
+}
+
+.footer {
+	position: fixed;
+	width: 100%;
+	text-align: center;
+	bottom: 0;
+	left: 0;
+	background-color: #E6E6E6;
+}
+</style>
+
+<style type="text/css">code{white-space: pre;}</style>
+<link rel="stylesheet"
+      href="libs/highlight/default.css"
+      type="text/css" />
+<script src="libs/highlight/highlight.js"></script>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
+<script type="text/javascript">
+if (window.hljs && document.readyState && document.readyState === "complete") {
+   window.setTimeout(function() {
+      hljs.initHighlighting();
+   }, 0);
+}
+</script>
+
+
+<link rel="stylesheet" href="libs/bootstrap-journal.min.css" type="text/css" />
+
+</head>
+
+<body>
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img { 
+  max-width:100%; 
+  height: auto; 
+}
+</style>
+<div class="container-fluid main-container">
+
+<div class="navbar navbar-default navbar-fixed-top">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-main">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">FX Jollois</a>
+    </div>
+    <div id="navbar-main" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li><a href="accesdonnees.html">Données</a></li>
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button">Enseignement <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li class="dropdown-header">DUT 1ère année</li>
+            <li><a href="interrogation-donnees.html">Interrogation de données</a></li>
+            <li><a href="reporting.html">Reporting</a></li>
+            <li class="dropdown-header">DUT 2ème année</li>
+            <li><a href="sid.html">SID</a></li>
+            <li class="dropdown-header">DU Analyste Big Data</li>
+            <li><a href="initiation-r-et-rmongodb.html">Intiation à R</a></li>
+            <li role="separator" class="divider"></li>
+            <li class="dropdown-header">Master MIAGE</li>
+            <li><a href="webreporting.html">Web-Reporting</a></li>
+            <li class="dropdown-header">Master</li>
+            <li><a href="logiciels-stats.html">Logiciels statistiques</a></li>
+          </ul>
+        </li>
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button">Recherche <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li><a href="recherche.html">Sujets</a></li>
+            <li><a href="publications.html">Publications</a></li>
+          </ul>
+        </li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container-fluid -->
+</div>
+<div class="contenu">
+
+<div id="header">
+<h1 class="title">Initiation à <code>R</code></h1>
+<h4 class="author"><em>DU Analyste Big Data</em></h4>
+</div>
+
+
+<p>Dans ce document est présenté les concepts principaux du logiciel <code>R</code> (éléments de langage, données manipulées, manipulation de données, …). L’utilisation du package <code>rmongodb</code> permettant la connection à une base de données <a href="">MongoDB</a> est aussi abordé à la fin.</p>
+<div id="donnees-et-elements-de-langage" class="section level2">
+<h2>Données et éléments de langage</h2>
+<div id="types-de-donnees" class="section level3">
+<h3>Types de données</h3>
+<p><code>R</code> permet de manipuler différents types de données tel que :</p>
+<ul>
+<li>scalaire : une valeur de type <code>numeric</code>, <code>character</code>, <code>logical</code>, <code>date</code></li>
+<li><code>vector</code> : tableau de scalaires de même type (<code>numeric</code>, <code>character</code>, <code>logical</code>, <code>date</code>, <code>factor</code>)</li>
+<li><code>matrix</code> : tableau à deux dimensions de scalaires de même type (<code>numeric</code>, <code>logicial</code> ou <code>character</code>)</li>
+<li><code>array</code> : extension de <code>matrix</code> à <span class="math inline">\(d\)</span> dimensions</li>
+<li><code>data.frame</code> : ensemble de lignes (entités, parfois nommées) décrites par des colonnes nommées (dites variables aussi), pouvant être de types différents - très proche de la définition d’une table dans un SGBD classique</li>
+<li><code>list</code> : liste d’éléments (nommés ou non, et pas forcément de même type)</li>
+</ul>
+<p>Voici un exemple avec le jeu de données <code>mtcars</code> déjà présent dans le logiciel <code>R</code> :</p>
+<pre class="r"><code># Type de la variable mtcars
+class(mtcars) </code></pre>
+<pre><code>## [1] &quot;data.frame&quot;</code></pre>
+<pre class="r"><code># Dimensions
+dim(mtcars)</code></pre>
+<pre><code>## [1] 32 11</code></pre>
+<pre class="r"><code>nrow(mtcars)</code></pre>
+<pre><code>## [1] 32</code></pre>
+<pre class="r"><code>ncol(mtcars)</code></pre>
+<pre><code>## [1] 11</code></pre>
+<pre class="r"><code># Données en elles-mêmes
+mtcars</code></pre>
+<pre><code>##                      mpg cyl  disp  hp drat    wt  qsec vs am gear carb
+## Mazda RX4           21.0   6 160.0 110 3.90 2.620 16.46  0  1    4    4
+## Mazda RX4 Wag       21.0   6 160.0 110 3.90 2.875 17.02  0  1    4    4
+## Datsun 710          22.8   4 108.0  93 3.85 2.320 18.61  1  1    4    1
+## Hornet 4 Drive      21.4   6 258.0 110 3.08 3.215 19.44  1  0    3    1
+## Hornet Sportabout   18.7   8 360.0 175 3.15 3.440 17.02  0  0    3    2
+## Valiant             18.1   6 225.0 105 2.76 3.460 20.22  1  0    3    1
+## Duster 360          14.3   8 360.0 245 3.21 3.570 15.84  0  0    3    4
+## Merc 240D           24.4   4 146.7  62 3.69 3.190 20.00  1  0    4    2
+## Merc 230            22.8   4 140.8  95 3.92 3.150 22.90  1  0    4    2
+## Merc 280            19.2   6 167.6 123 3.92 3.440 18.30  1  0    4    4
+## Merc 280C           17.8   6 167.6 123 3.92 3.440 18.90  1  0    4    4
+## Merc 450SE          16.4   8 275.8 180 3.07 4.070 17.40  0  0    3    3
+## Merc 450SL          17.3   8 275.8 180 3.07 3.730 17.60  0  0    3    3
+## Merc 450SLC         15.2   8 275.8 180 3.07 3.780 18.00  0  0    3    3
+## Cadillac Fleetwood  10.4   8 472.0 205 2.93 5.250 17.98  0  0    3    4
+## Lincoln Continental 10.4   8 460.0 215 3.00 5.424 17.82  0  0    3    4
+## Chrysler Imperial   14.7   8 440.0 230 3.23 5.345 17.42  0  0    3    4
+## Fiat 128            32.4   4  78.7  66 4.08 2.200 19.47  1  1    4    1
+## Honda Civic         30.4   4  75.7  52 4.93 1.615 18.52  1  1    4    2
+## Toyota Corolla      33.9   4  71.1  65 4.22 1.835 19.90  1  1    4    1
+## Toyota Corona       21.5   4 120.1  97 3.70 2.465 20.01  1  0    3    1
+## Dodge Challenger    15.5   8 318.0 150 2.76 3.520 16.87  0  0    3    2
+## AMC Javelin         15.2   8 304.0 150 3.15 3.435 17.30  0  0    3    2
+## Camaro Z28          13.3   8 350.0 245 3.73 3.840 15.41  0  0    3    4
+## Pontiac Firebird    19.2   8 400.0 175 3.08 3.845 17.05  0  0    3    2
+## Fiat X1-9           27.3   4  79.0  66 4.08 1.935 18.90  1  1    4    1
+## Porsche 914-2       26.0   4 120.3  91 4.43 2.140 16.70  0  1    5    2
+## Lotus Europa        30.4   4  95.1 113 3.77 1.513 16.90  1  1    5    2
+## Ford Pantera L      15.8   8 351.0 264 4.22 3.170 14.50  0  1    5    4
+## Ferrari Dino        19.7   6 145.0 175 3.62 2.770 15.50  0  1    5    6
+## Maserati Bora       15.0   8 301.0 335 3.54 3.570 14.60  0  1    5    8
+## Volvo 142E          21.4   4 121.0 109 4.11 2.780 18.60  1  1    4    2</code></pre>
+</div>
+<div id="typage-faible" class="section level3">
+<h3>Typage faible</h3>
+<p><code>R</code> est un langage de programmation à typage faible : le type de la variable est déterminée par la valeur qui lui est affectée. Ce qui veut dire qu’il est possible d’affecter une chaîne de caractères à une variable numérique. Celle-ci deviendra automatique de type chaîne de caractère. Et il n’y a pas d’opérateurs de déclaration de variables. Celle-ci est créée à sa première utilisation, dans l’environnement actuel.</p>
+<div id="creation-dune-variable-numerique" class="section level4">
+<h4>Création d’une variable numérique</h4>
+<pre class="r"><code>a = 1
+print(a)</code></pre>
+<pre><code>## [1] 1</code></pre>
+<pre class="r"><code>class(a)</code></pre>
+<pre><code>## [1] &quot;numeric&quot;</code></pre>
+</div>
+<div id="affectation-dune-chaine-de-caractere-a-une-variable-numerique" class="section level4">
+<h4>Affectation d’une chaîne de caractère à une variable numérique</h4>
+<pre class="r"><code>a = &quot;bonjour&quot;
+print(a)</code></pre>
+<pre><code>## [1] &quot;bonjour&quot;</code></pre>
+<pre class="r"><code>class(a)</code></pre>
+<pre><code>## [1] &quot;character&quot;</code></pre>
+</div>
+<div id="conclusion" class="section level4">
+<h4>Conclusion</h4>
+<p><strong>Attention</strong> donc lors de l’écriture des programmes…</p>
+</div>
+</div>
+<div id="langage-scripte" class="section level3">
+<h3>Langage scripté</h3>
+<p><code>R</code> est un langage scripté : il faut exécuter les commandes les unes après les autres dans la console. Mais il est possible d’écrire des scripts dans des fichiers (souvent avec l’extension <code>.R</code>), puis de les appeler via la commande <code>source()</code></p>
+<pre class="r"><code>source(&quot;chemin/vers/mon/fichier.R&quot;)</code></pre>
+</div>
+<div id="acces-aux-donnees" class="section level3">
+<h3>Accès aux données</h3>
+<p>Voici quelques éléments pour accéder aux différentes valeurs présentes dans le <code>data.frame</code> <code>mtcars</code> :</p>
+<div id="valeurs-de-la-1ere-ligne---vector" class="section level4">
+<h4>Valeurs de la 1ère ligne -&gt; vector</h4>
+<pre class="r"><code>mtcars[1,]</code></pre>
+<pre><code>##           mpg cyl disp  hp drat   wt  qsec vs am gear carb
+## Mazda RX4  21   6  160 110  3.9 2.62 16.46  0  1    4    4</code></pre>
+</div>
+<div id="valeurs-de-la-1ere-colonne-nommee-mpg---vector" class="section level4">
+<h4>Valeurs de la 1ère colonne (nommée mpg) -&gt; vector</h4>
+<pre class="r"><code>mtcars[,1]</code></pre>
+<pre><code>##  [1] 21.0 21.0 22.8 21.4 18.7 18.1 14.3 24.4 22.8 19.2 17.8 16.4 17.3 15.2
+## [15] 10.4 10.4 14.7 32.4 30.4 33.9 21.5 15.5 15.2 13.3 19.2 27.3 26.0 30.4
+## [29] 15.8 19.7 15.0 21.4</code></pre>
+<pre class="r"><code>mtcars$mpg</code></pre>
+<pre><code>##  [1] 21.0 21.0 22.8 21.4 18.7 18.1 14.3 24.4 22.8 19.2 17.8 16.4 17.3 15.2
+## [15] 10.4 10.4 14.7 32.4 30.4 33.9 21.5 15.5 15.2 13.3 19.2 27.3 26.0 30.4
+## [29] 15.8 19.7 15.0 21.4</code></pre>
+</div>
+<div id="valeur-a-la-cellule-11" class="section level4">
+<h4>Valeur à la cellule (1,1)</h4>
+<pre class="r"><code>mtcars[1,1]</code></pre>
+<pre><code>## [1] 21</code></pre>
+<pre class="r"><code>mtcars$mpg[1]</code></pre>
+<pre><code>## [1] 21</code></pre>
+</div>
+<div id="noms-des-variables" class="section level4">
+<h4>Noms des variables</h4>
+<pre class="r"><code>names(mtcars)</code></pre>
+<pre><code>##  [1] &quot;mpg&quot;  &quot;cyl&quot;  &quot;disp&quot; &quot;hp&quot;   &quot;drat&quot; &quot;wt&quot;   &quot;qsec&quot; &quot;vs&quot;   &quot;am&quot;   &quot;gear&quot;
+## [11] &quot;carb&quot;</code></pre>
+<pre class="r"><code>colnames(mtcars)</code></pre>
+<pre><code>##  [1] &quot;mpg&quot;  &quot;cyl&quot;  &quot;disp&quot; &quot;hp&quot;   &quot;drat&quot; &quot;wt&quot;   &quot;qsec&quot; &quot;vs&quot;   &quot;am&quot;   &quot;gear&quot;
+## [11] &quot;carb&quot;</code></pre>
+</div>
+<div id="nom-des-lignes" class="section level4">
+<h4>Nom des lignes</h4>
+<pre class="r"><code>rownames(mtcars)</code></pre>
+<pre><code>##  [1] &quot;Mazda RX4&quot;           &quot;Mazda RX4 Wag&quot;       &quot;Datsun 710&quot;         
+##  [4] &quot;Hornet 4 Drive&quot;      &quot;Hornet Sportabout&quot;   &quot;Valiant&quot;            
+##  [7] &quot;Duster 360&quot;          &quot;Merc 240D&quot;           &quot;Merc 230&quot;           
+## [10] &quot;Merc 280&quot;            &quot;Merc 280C&quot;           &quot;Merc 450SE&quot;         
+## [13] &quot;Merc 450SL&quot;          &quot;Merc 450SLC&quot;         &quot;Cadillac Fleetwood&quot; 
+## [16] &quot;Lincoln Continental&quot; &quot;Chrysler Imperial&quot;   &quot;Fiat 128&quot;           
+## [19] &quot;Honda Civic&quot;         &quot;Toyota Corolla&quot;      &quot;Toyota Corona&quot;      
+## [22] &quot;Dodge Challenger&quot;    &quot;AMC Javelin&quot;         &quot;Camaro Z28&quot;         
+## [25] &quot;Pontiac Firebird&quot;    &quot;Fiat X1-9&quot;           &quot;Porsche 914-2&quot;      
+## [28] &quot;Lotus Europa&quot;        &quot;Ford Pantera L&quot;      &quot;Ferrari Dino&quot;       
+## [31] &quot;Maserati Bora&quot;       &quot;Volvo 142E&quot;</code></pre>
+</div>
+<div id="descriptif-de-chaque-variable-dun-data.frame" class="section level4">
+<h4>Descriptif de chaque variable d’un <code>data.frame</code></h4>
+<pre class="r"><code>str(mtcars)</code></pre>
+<pre><code>## &#39;data.frame&#39;:    32 obs. of  11 variables:
+##  $ mpg : num  21 21 22.8 21.4 18.7 18.1 14.3 24.4 22.8 19.2 ...
+##  $ cyl : num  6 6 4 6 8 6 8 4 4 6 ...
+##  $ disp: num  160 160 108 258 360 ...
+##  $ hp  : num  110 110 93 110 175 105 245 62 95 123 ...
+##  $ drat: num  3.9 3.9 3.85 3.08 3.15 2.76 3.21 3.69 3.92 3.92 ...
+##  $ wt  : num  2.62 2.88 2.32 3.21 3.44 ...
+##  $ qsec: num  16.5 17 18.6 19.4 17 ...
+##  $ vs  : num  0 0 1 1 0 1 0 1 1 1 ...
+##  $ am  : num  1 1 1 0 0 0 0 0 0 0 ...
+##  $ gear: num  4 4 4 3 3 3 3 4 4 4 ...
+##  $ carb: num  4 4 1 1 2 1 4 2 2 4 ...</code></pre>
+</div>
+</div>
+<div id="elements-de-langage" class="section level3">
+<h3>Eléments de langage</h3>
+<p>Voici quelques commandes utiles</p>
+<div id="creation-dun-vecteur-et-dune-matrice" class="section level4">
+<h4>Création d’un vecteur et d’une matrice</h4>
+<pre class="r"><code># vecteur de numériques
+c(1, 3, 5)</code></pre>
+<pre><code>## [1] 1 3 5</code></pre>
+<pre class="r"><code># vecteur de chaînes de caractères
+c(&quot;a&quot;, &quot;b&quot;)</code></pre>
+<pre><code>## [1] &quot;a&quot; &quot;b&quot;</code></pre>
+<pre class="r"><code># vecteur de type et de taille définie
+vector(&#39;logical&#39;, 5)</code></pre>
+<pre><code>## [1] FALSE FALSE FALSE FALSE FALSE</code></pre>
+<pre class="r"><code># séquence de base
+1:5</code></pre>
+<pre><code>## [1] 1 2 3 4 5</code></pre>
+<pre class="r"><code># idem
+seq(1, 5)</code></pre>
+<pre><code>## [1] 1 2 3 4 5</code></pre>
+<pre class="r"><code># séquence avec définition de la taille du vecteur
+seq(1, 5, length = 10)</code></pre>
+<pre><code>##  [1] 1.000000 1.444444 1.888889 2.333333 2.777778 3.222222 3.666667
+##  [8] 4.111111 4.555556 5.000000</code></pre>
+<pre class="r"><code># séquence avec définition du pas
+seq(0, 1, by = 0.1)</code></pre>
+<pre><code>##  [1] 0.0 0.1 0.2 0.3 0.4 0.5 0.6 0.7 0.8 0.9 1.0</code></pre>
+<pre class="r"><code># matrice
+matrix(1:10, 2, 5)</code></pre>
+<pre><code>##      [,1] [,2] [,3] [,4] [,5]
+## [1,]    1    3    5    7    9
+## [2,]    2    4    6    8   10</code></pre>
+<pre class="r"><code># création d&#39;un vecteur et redimensionnement de celui-ci -&gt; résultat identique à précédemment
+m = 1:10
+dim(m) = c(2,5)
+print(m)</code></pre>
+<pre><code>##      [,1] [,2] [,3] [,4] [,5]
+## [1,]    1    3    5    7    9
+## [2,]    2    4    6    8   10</code></pre>
+</div>
+<div id="creation-dune-liste" class="section level4">
+<h4>Création d’une liste</h4>
+<pre class="r"><code>l = list()
+class(l)</code></pre>
+<pre><code>## [1] &quot;list&quot;</code></pre>
+<pre class="r"><code>l[[1]] = 1
+l[[2]] = &quot;a&quot;
+l$trois = 1:3
+l[[4]] = m
+print(l)</code></pre>
+<pre><code>## [[1]]
+## [1] 1
+## 
+## [[2]]
+## [1] &quot;a&quot;
+## 
+## $trois
+## [1] 1 2 3
+## 
+## [[4]]
+##      [,1] [,2] [,3] [,4] [,5]
+## [1,]    1    3    5    7    9
+## [2,]    2    4    6    8   10</code></pre>
+<pre class="r"><code>length(l)</code></pre>
+<pre><code>## [1] 4</code></pre>
+</div>
+<div id="fonction-sur-les-lignes-ou-les-colonnes-dune-matrice" class="section level4">
+<h4>Fonction sur les lignes ou les colonnes d’une matrice</h4>
+<p>Application d’une fonction (<code>sum()</code> ici) sur les lignes (<code>1</code>) ou sur les colonnes (<code>2</code>) d’une matrice.</p>
+<pre class="r"><code>apply(m, 1, sum) # somme sur les lignes</code></pre>
+<pre><code>## [1] 25 30</code></pre>
+<pre class="r"><code>apply(m, 2, sum) # somme sur les colonnes</code></pre>
+<pre><code>## [1]  3  7 11 15 19</code></pre>
+</div>
+<div id="fonction-sur-les-parties-dun-vecteur" class="section level4">
+<h4>Fonction sur les parties d’un vecteur</h4>
+<p>Application d’une fonction (ici <code>mean()</code>) sur les groupes de valeurs d’un vecteur, groupes déterminés par les modalités d’un autre vecteur.</p>
+<pre class="r"><code># Consommation des voitures (Miles/(US) gallon)
+mtcars$mpg</code></pre>
+<pre><code>##  [1] 21.0 21.0 22.8 21.4 18.7 18.1 14.3 24.4 22.8 19.2 17.8 16.4 17.3 15.2
+## [15] 10.4 10.4 14.7 32.4 30.4 33.9 21.5 15.5 15.2 13.3 19.2 27.3 26.0 30.4
+## [29] 15.8 19.7 15.0 21.4</code></pre>
+<pre class="r"><code># Transmission (0 = automatic, 1 = manual)
+mtcars$am</code></pre>
+<pre><code>##  [1] 1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 1 1 0 0 0 0 0 1 1 1 1 1 1 1</code></pre>
+<pre class="r"><code># Consommation moyenne par type de transmission
+tapply(mtcars$mpg, mtcars$am, mean)</code></pre>
+<pre><code>##        0        1 
+## 17.14737 24.39231</code></pre>
+</div>
+<div id="combinaison-des-deux-fonctions-precedentes" class="section level4">
+<h4>Combinaison des deux fonctions précédentes</h4>
+<p>En combinant les deux méthodes vu avant, on peut effectuer des opérations de type moyenne de plusieurs variables d’un jeu de données, pour chaque modalité d’une variable qualitative.</p>
+<pre class="r"><code># Moyenne par type de moteurs (en terme de nombre de cylindres)
+# sur les variables quantitatives de mtcars
+apply(mtcars[,c(&quot;mpg&quot;, &quot;disp&quot;, &quot;hp&quot;, &quot;drat&quot;, &quot;wt&quot;, &quot;qsec&quot;)], 2, tapply, mtcars$cyl, mean)</code></pre>
+<pre><code>##        mpg     disp        hp     drat       wt     qsec
+## 4 26.66364 105.1364  82.63636 4.070909 2.285727 19.13727
+## 6 19.74286 183.3143 122.28571 3.585714 3.117143 17.97714
+## 8 15.10000 353.1000 209.21429 3.229286 3.999214 16.77214</code></pre>
+</div>
+<div id="fonction-sur-chaque-element-dune-liste" class="section level4">
+<h4>Fonction sur chaque élément d’une liste</h4>
+<p>Application d’une fonction (ici <code>class()</code>) sur chaque élément de la liste. Si l’élément passé en paramètre est un <code>data.frame</code>, c’est sur chaque colonne. Et si c’est un <code>vector</code> ou une <code>matrix</code>, ce sera sur chaque valeur.</p>
+<pre class="r"><code>lapply(l, class)</code></pre>
+<pre><code>## [[1]]
+## [1] &quot;numeric&quot;
+## 
+## [[2]]
+## [1] &quot;character&quot;
+## 
+## $trois
+## [1] &quot;integer&quot;
+## 
+## [[4]]
+## [1] &quot;matrix&quot;</code></pre>
+</div>
+</div>
+</div>
+<div id="interrogation-de-donnees" class="section level2">
+<h2>Interrogation de données</h2>
+<p>Il est fait référence ici aux principes de l’interrogation de données au sens <code>SQL</code> (et plus particulièrement la partie requêtage).</p>
+<div id="restriction-et-projection" class="section level3">
+<h3>Restriction et projection</h3>
+<p>La fonction <code>subset()</code> permet d’effectuer les deux opérations. Dans le paramètre <code>subset</code>, on indique la condition (simple ou combinée) permet de faire la restriction. Et dans le paramètre <code>select</code>, on liste les variables de la projection.</p>
+<pre class="r"><code>subset(mtcars, subset = cyl == 4, select = c(cyl, mpg))</code></pre>
+<pre><code>##                cyl  mpg
+## Datsun 710       4 22.8
+## Merc 240D        4 24.4
+## Merc 230         4 22.8
+## Fiat 128         4 32.4
+## Honda Civic      4 30.4
+## Toyota Corolla   4 33.9
+## Toyota Corona    4 21.5
+## Fiat X1-9        4 27.3
+## Porsche 914-2    4 26.0
+## Lotus Europa     4 30.4
+## Volvo 142E       4 21.4</code></pre>
+<p>Il est aussi possible de faire ces deux opérations dans les <code>[]</code> avec un test logique et en indiquant la liste des variables à prendre.</p>
+<pre class="r"><code>mtcars[mtcars$cyl == 4, c(&quot;cyl&quot;, &quot;mpg&quot;)]</code></pre>
+<pre><code>##                cyl  mpg
+## Datsun 710       4 22.8
+## Merc 240D        4 24.4
+## Merc 230         4 22.8
+## Fiat 128         4 32.4
+## Honda Civic      4 30.4
+## Toyota Corolla   4 33.9
+## Toyota Corona    4 21.5
+## Fiat X1-9        4 27.3
+## Porsche 914-2    4 26.0
+## Lotus Europa     4 30.4
+## Volvo 142E       4 21.4</code></pre>
+</div>
+<div id="calcul-de-nouvelles-variables" class="section level3">
+<h3>Calcul de nouvelles variables</h3>
+<p>La fonction <code>tranform()</code> permet d’ajouter de nouvelles variables, soit résultantes d’un calcul (cf ci-dessous), soit permettant seulement un renommage d’une variable.</p>
+<pre class="r"><code>transform(mtcars[,c(&quot;cyl&quot;, &quot;disp&quot;)], disp_cyl = round(disp / cyl, 2))</code></pre>
+<pre><code>##                     cyl  disp disp_cyl
+## Mazda RX4             6 160.0    26.67
+## Mazda RX4 Wag         6 160.0    26.67
+## Datsun 710            4 108.0    27.00
+## Hornet 4 Drive        6 258.0    43.00
+## Hornet Sportabout     8 360.0    45.00
+## Valiant               6 225.0    37.50
+## Duster 360            8 360.0    45.00
+## Merc 240D             4 146.7    36.67
+## Merc 230              4 140.8    35.20
+## Merc 280              6 167.6    27.93
+## Merc 280C             6 167.6    27.93
+## Merc 450SE            8 275.8    34.48
+## Merc 450SL            8 275.8    34.48
+## Merc 450SLC           8 275.8    34.48
+## Cadillac Fleetwood    8 472.0    59.00
+## Lincoln Continental   8 460.0    57.50
+## Chrysler Imperial     8 440.0    55.00
+## Fiat 128              4  78.7    19.68
+## Honda Civic           4  75.7    18.93
+## Toyota Corolla        4  71.1    17.77
+## Toyota Corona         4 120.1    30.02
+## Dodge Challenger      8 318.0    39.75
+## AMC Javelin           8 304.0    38.00
+## Camaro Z28            8 350.0    43.75
+## Pontiac Firebird      8 400.0    50.00
+## Fiat X1-9             4  79.0    19.75
+## Porsche 914-2         4 120.3    30.07
+## Lotus Europa          4  95.1    23.77
+## Ford Pantera L        8 351.0    43.88
+## Ferrari Dino          6 145.0    24.17
+## Maserati Bora         8 301.0    37.62
+## Volvo 142E            4 121.0    30.25</code></pre>
+</div>
+<div id="calcul-dagregat" class="section level3">
+<h3>Calcul d’agrégat</h3>
+<p>On peut déjà se servir de la combinaison des fonctions <code>apply()</code> et <code>tapply()</code> comme vu précédemment. Il existe aussi la fonction <code>aggregate()</code>, où l’on définit explicitement les agrégats à effectuer et les calculs à produire (un seul type de calcul par fonction néanmoins).</p>
+<pre class="r"><code># Agrégat simple : consommation moyenne générale
+aggregate(mpg ~ 1, data = mtcars, mean)</code></pre>
+<pre><code>##        mpg
+## 1 20.09062</code></pre>
+<pre class="r"><code># Agrégat classique : consommation moyenne en fonction du nombre de cylindres
+aggregate(mpg ~ cyl, data = mtcars, mean)</code></pre>
+<pre><code>##   cyl      mpg
+## 1   4 26.66364
+## 2   6 19.74286
+## 3   8 15.10000</code></pre>
+<pre class="r"><code># Agrégat à deux variables : idem en fonction en plus de la transmission
+aggregate(mpg ~ cyl + am, data = mtcars, mean)</code></pre>
+<pre><code>##   cyl am      mpg
+## 1   4  0 22.90000
+## 2   6  0 19.12500
+## 3   8  0 15.05000
+## 4   4  1 28.07500
+## 5   6  1 20.56667
+## 6   8  1 15.40000</code></pre>
+<pre class="r"><code># Agrégat sur deux variables : idem mais pour la puissance aussi
+aggregate(cbind(mpg, hp) ~ cyl + am, data = mtcars, mean)</code></pre>
+<pre><code>##   cyl am      mpg        hp
+## 1   4  0 22.90000  84.66667
+## 2   6  0 19.12500 115.25000
+## 3   8  0 15.05000 194.16667
+## 4   4  1 28.07500  81.87500
+## 5   6  1 20.56667 131.66667
+## 6   8  1 15.40000 299.50000</code></pre>
+</div>
+<div id="jointures" class="section level3">
+<h3>Jointures</h3>
+<p>Pour effectuer tout type de jointure, nous utilisons la fonction <code>merge()</code>, dans laquelle on indique les deux tables (correspondant à <code>x</code> et <code>y</code> respectivement). Les paramètres booléens <code>all</code>, <code>all.x</code> et <code>all.y</code> permettent de dire, s’ils sont à la valeur <code>TRUE</code>, quelle type de jointure externe on désire (resp. <code>FULL</code>, <code>LEFT</code> et <code>RIGHT</code>). Par défaut, la jointure se faire sur l’égalité des variables de mêmes noms entre les deux <code>data.frame</code>. On peut spécifier les variables à utiliser dans les paramètres <code>by</code>, <code>by.x</code> et <code>by.y</code>.</p>
+<pre class="r"><code>moteur = data.frame(cyl = c(4, 6, 8, 12), def = c(&quot;petit moteur&quot;, &quot;moteur moyen&quot;, &quot;gros moteur&quot;, &quot;encore plus gros moteur&quot;))
+print(moteur)</code></pre>
+<pre><code>##   cyl                     def
+## 1   4            petit moteur
+## 2   6            moteur moyen
+## 3   8             gros moteur
+## 4  12 encore plus gros moteur</code></pre>
+<pre class="r"><code>merge(
+  moteur,
+  aggregate(mpg ~ cyl, data = mtcars, mean),
+  all = TRUE
+)</code></pre>
+<pre><code>##   cyl                     def      mpg
+## 1   4            petit moteur 26.66364
+## 2   6            moteur moyen 19.74286
+## 3   8             gros moteur 15.10000
+## 4  12 encore plus gros moteur       NA</code></pre>
+</div>
+<div id="sinon-du-sql-sur-les-data.frame" class="section level3">
+<h3>Sinon, du <code>SQL</code> sur les <code>data.frame</code></h3>
+<p>La librairie <code>sqldf</code> permet d’exécuter des requêtes <code>SQL</code> directement sur les <code>data.frame</code> présents dans <code>R</code>. Voici un exemple simple :</p>
+<pre class="r"><code>library(sqldf)</code></pre>
+<pre><code>## Loading required package: gsubfn</code></pre>
+<pre><code>## Loading required package: proto</code></pre>
+<pre><code>## Could not load tcltk.  Will use slower R code instead.</code></pre>
+<pre><code>## Loading required package: RSQLite</code></pre>
+<pre><code>## Loading required package: DBI</code></pre>
+<pre class="r"><code>sqldf(&quot;
+SELECT cyl, AVG(mpg), AVG(disp), AVG(hp), AVG(drat), AVG(wt), AVG(qsec)
+  FROM mtcars
+  GROUP BY cyl;
+      &quot;)</code></pre>
+<pre><code>##   cyl AVG(mpg) AVG(disp)   AVG(hp) AVG(drat)  AVG(wt) AVG(qsec)
+## 1   4 26.66364  105.1364  82.63636  4.070909 2.285727  19.13727
+## 2   6 19.74286  183.3143 122.28571  3.585714 3.117143  17.97714
+## 3   8 15.10000  353.1000 209.21429  3.229286 3.999214  16.77214</code></pre>
+</div>
+</div>
+<div id="quelques-statistiques" class="section level2">
+<h2>Quelques statistiques</h2>
+<div id="descriptives" class="section level3">
+<h3>Descriptives</h3>
+<p>La fonction <code>summary()</code> calcule des statistiques basiques sur un vecteur, celles-ci étant dépendantes du type du vecteur. Si elle est appliquée sur un <code>data.frame</code>, elle s’applique sur chaque variable.</p>
+<pre class="r"><code>summary(mtcars)</code></pre>
+<pre><code>##       mpg             cyl             disp             hp       
+##  Min.   :10.40   Min.   :4.000   Min.   : 71.1   Min.   : 52.0  
+##  1st Qu.:15.43   1st Qu.:4.000   1st Qu.:120.8   1st Qu.: 96.5  
+##  Median :19.20   Median :6.000   Median :196.3   Median :123.0  
+##  Mean   :20.09   Mean   :6.188   Mean   :230.7   Mean   :146.7  
+##  3rd Qu.:22.80   3rd Qu.:8.000   3rd Qu.:326.0   3rd Qu.:180.0  
+##  Max.   :33.90   Max.   :8.000   Max.   :472.0   Max.   :335.0  
+##       drat             wt             qsec             vs        
+##  Min.   :2.760   Min.   :1.513   Min.   :14.50   Min.   :0.0000  
+##  1st Qu.:3.080   1st Qu.:2.581   1st Qu.:16.89   1st Qu.:0.0000  
+##  Median :3.695   Median :3.325   Median :17.71   Median :0.0000  
+##  Mean   :3.597   Mean   :3.217   Mean   :17.85   Mean   :0.4375  
+##  3rd Qu.:3.920   3rd Qu.:3.610   3rd Qu.:18.90   3rd Qu.:1.0000  
+##  Max.   :4.930   Max.   :5.424   Max.   :22.90   Max.   :1.0000  
+##        am              gear            carb      
+##  Min.   :0.0000   Min.   :3.000   Min.   :1.000  
+##  1st Qu.:0.0000   1st Qu.:3.000   1st Qu.:2.000  
+##  Median :0.0000   Median :4.000   Median :2.000  
+##  Mean   :0.4062   Mean   :3.688   Mean   :2.812  
+##  3rd Qu.:1.0000   3rd Qu.:4.000   3rd Qu.:4.000  
+##  Max.   :1.0000   Max.   :5.000   Max.   :8.000</code></pre>
+<pre class="r"><code>summary(mtcars$mpg)</code></pre>
+<pre><code>##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+##   10.40   15.42   19.20   20.09   22.80   33.90</code></pre>
+<pre class="r"><code>summary(mtcars$cyl)</code></pre>
+<pre><code>##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+##   4.000   4.000   6.000   6.188   8.000   8.000</code></pre>
+<pre class="r"><code>summary(as.factor(mtcars$cyl))</code></pre>
+<pre><code>##  4  6  8 
+## 11  7 14</code></pre>
+<div id="univarie" class="section level4">
+<h4>Univarié</h4>
+<p>On peut accéder aux fonctions de calculs des statistiques descriptives directement. Pour les variables quantitatives, nous allons utiliser comme exemple <code>mpg</code> qui représente la consommation.</p>
+<pre class="r"><code>mean(mtcars$mpg)</code></pre>
+<pre><code>## [1] 20.09062</code></pre>
+<pre class="r"><code>sum(mtcars$mpg)</code></pre>
+<pre><code>## [1] 642.9</code></pre>
+<pre class="r"><code>var(mtcars$mpg)</code></pre>
+<pre><code>## [1] 36.3241</code></pre>
+<pre class="r"><code>sd(mtcars$mpg)</code></pre>
+<pre><code>## [1] 6.026948</code></pre>
+<pre class="r"><code>min(mtcars$mpg)</code></pre>
+<pre><code>## [1] 10.4</code></pre>
+<pre class="r"><code>max(mtcars$mpg)</code></pre>
+<pre><code>## [1] 33.9</code></pre>
+<pre class="r"><code>range(mtcars$mpg)</code></pre>
+<pre><code>## [1] 10.4 33.9</code></pre>
+<pre class="r"><code>median(mtcars$mpg)</code></pre>
+<pre><code>## [1] 19.2</code></pre>
+<pre class="r"><code>quantile(mtcars$mpg)</code></pre>
+<pre><code>##     0%    25%    50%    75%   100% 
+## 10.400 15.425 19.200 22.800 33.900</code></pre>
+<pre class="r"><code>quantile(mtcars$mpg, probs = 0.99)</code></pre>
+<pre><code>##    99% 
+## 33.435</code></pre>
+<pre class="r"><code>quantile(mtcars$mpg, probs = c(0.01, 0.1, 0.9, 0.99))</code></pre>
+<pre><code>##     1%    10%    90%    99% 
+## 10.400 14.340 30.090 33.435</code></pre>
+<p>Il existe tout un ensemble de fonctions graphiques, dont voici quelques exemples.</p>
+<pre class="r"><code>hist(mtcars$mpg)</code></pre>
+<p><img src="initiation-r-et-rmongodb_files/figure-html/unnamed-chunk-25-1.png" title="" alt="" width="672" /></p>
+<pre class="r"><code>hist(mtcars$mpg, breaks = 20)</code></pre>
+<p><img src="initiation-r-et-rmongodb_files/figure-html/unnamed-chunk-25-2.png" title="" alt="" width="672" /></p>
+<pre class="r"><code>hist(mtcars$mpg, breaks = c(10, 15, 18, 20, 22, 25, 35))</code></pre>
+<p><img src="initiation-r-et-rmongodb_files/figure-html/unnamed-chunk-25-3.png" title="" alt="" width="672" /></p>
+<pre class="r"><code>boxplot(mtcars$mpg)</code></pre>
+<p><img src="initiation-r-et-rmongodb_files/figure-html/unnamed-chunk-25-4.png" title="" alt="" width="672" /></p>
+<pre class="r"><code>qqnorm(mtcars$mpg)
+qqline(mtcars$mpg)</code></pre>
+<p><img src="initiation-r-et-rmongodb_files/figure-html/unnamed-chunk-25-5.png" title="" alt="" width="672" /></p>
+<p>Pour les variables qualitatives, nous allons utiliser la variable <code>cyl</code> qui représente le nombre de cylindre. Celle-ci étant codée numériquement, toutes les fonctions vues précédemment pour s’appliquer (mais n’avoir aucun sens).</p>
+<pre class="r"><code>table(mtcars$cyl)</code></pre>
+<pre><code>## 
+##  4  6  8 
+## 11  7 14</code></pre>
+<pre class="r"><code>prop.table(table(mtcars$cyl))</code></pre>
+<pre><code>## 
+##       4       6       8 
+## 0.34375 0.21875 0.43750</code></pre>
+<pre class="r"><code>barplot(table(mtcars$cyl))</code></pre>
+<p><img src="initiation-r-et-rmongodb_files/figure-html/unnamed-chunk-26-1.png" title="" alt="" width="672" /></p>
+<pre class="r"><code>pie(table(mtcars$cyl))</code></pre>
+<p><img src="initiation-r-et-rmongodb_files/figure-html/unnamed-chunk-26-2.png" title="" alt="" width="672" /></p>
+</div>
+<div id="bivarie" class="section level4">
+<h4>Bivarié</h4>
+<div id="quanti---quanti" class="section level5">
+<h5>Quanti - Quanti</h5>
+<p>Dans ce cadre, on peut bien évidemment calculer les statistiques usuelles (covariance, corrélation) et le nuage de points.</p>
+<pre class="r"><code>cov(mtcars$mpg, mtcars$wt)</code></pre>
+<pre><code>## [1] -5.116685</code></pre>
+<pre class="r"><code>cor(mtcars$mpg, mtcars$wt)</code></pre>
+<pre><code>## [1] -0.8676594</code></pre>
+<pre class="r"><code>plot(mtcars$mpg, mtcars$wt)</code></pre>
+<p><img src="initiation-r-et-rmongodb_files/figure-html/unnamed-chunk-27-1.png" title="" alt="" width="672" /></p>
+<pre class="r"><code>plot(mtcars$mpg ~ mtcars$wt)</code></pre>
+<p><img src="initiation-r-et-rmongodb_files/figure-html/unnamed-chunk-27-2.png" title="" alt="" width="672" /></p>
+<p>On peut aller plus loin en faisant un modéle linéaire simple.</p>
+<pre class="r"><code>m = lm(mpg ~ wt, data = mtcars)
+m</code></pre>
+<pre><code>## 
+## Call:
+## lm(formula = mpg ~ wt, data = mtcars)
+## 
+## Coefficients:
+## (Intercept)           wt  
+##      37.285       -5.344</code></pre>
+<pre class="r"><code>summary(m)</code></pre>
+<pre><code>## 
+## Call:
+## lm(formula = mpg ~ wt, data = mtcars)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -4.5432 -2.3647 -0.1252  1.4096  6.8727 
+## 
+## Coefficients:
+##             Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept)  37.2851     1.8776  19.858  &lt; 2e-16 ***
+## wt           -5.3445     0.5591  -9.559 1.29e-10 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 3.046 on 30 degrees of freedom
+## Multiple R-squared:  0.7528, Adjusted R-squared:  0.7446 
+## F-statistic: 91.38 on 1 and 30 DF,  p-value: 1.294e-10</code></pre>
+<pre class="r"><code>plot(m)</code></pre>
+<p><img src="initiation-r-et-rmongodb_files/figure-html/unnamed-chunk-28-1.png" title="" alt="" width="672" /><img src="initiation-r-et-rmongodb_files/figure-html/unnamed-chunk-28-2.png" title="" alt="" width="672" /><img src="initiation-r-et-rmongodb_files/figure-html/unnamed-chunk-28-3.png" title="" alt="" width="672" /><img src="initiation-r-et-rmongodb_files/figure-html/unnamed-chunk-28-4.png" title="" alt="" width="672" /></p>
+<pre class="r"><code>plot(mpg ~ wt, data = mtcars)
+abline(m, col = &quot;red&quot;)</code></pre>
+<p><img src="initiation-r-et-rmongodb_files/figure-html/unnamed-chunk-28-5.png" title="" alt="" width="672" /></p>
+</div>
+<div id="quali---quali" class="section level5">
+<h5>Quali - Quali</h5>
+<p>Ici, on calcule bien évidemment la talbe de contingence, mais aussi les fréquences totales et marginales (en lignes et en colonnes).</p>
+<pre class="r"><code>t &lt;- table(mtcars$cyl, mtcars$am)
+print(t)</code></pre>
+<pre><code>##    
+##      0  1
+##   4  3  8
+##   6  4  3
+##   8 12  2</code></pre>
+<pre class="r"><code>prop.table(t)</code></pre>
+<pre><code>##    
+##           0       1
+##   4 0.09375 0.25000
+##   6 0.12500 0.09375
+##   8 0.37500 0.06250</code></pre>
+<pre class="r"><code>prop.table(t, margin = 1)</code></pre>
+<pre><code>##    
+##             0         1
+##   4 0.2727273 0.7272727
+##   6 0.5714286 0.4285714
+##   8 0.8571429 0.1428571</code></pre>
+<pre class="r"><code>prop.table(t, margin = 2)</code></pre>
+<pre><code>##    
+##             0         1
+##   4 0.1578947 0.6153846
+##   6 0.2105263 0.2307692
+##   8 0.6315789 0.1538462</code></pre>
+<pre class="r"><code>mosaicplot(t) </code></pre>
+<p><img src="initiation-r-et-rmongodb_files/figure-html/unnamed-chunk-29-1.png" title="" alt="" width="672" /></p>
+<pre class="r"><code>assocplot(t)</code></pre>
+<p><img src="initiation-r-et-rmongodb_files/figure-html/unnamed-chunk-29-2.png" title="" alt="" width="672" /></p>
+<pre class="r"><code>barplot(t)</code></pre>
+<p><img src="initiation-r-et-rmongodb_files/figure-html/unnamed-chunk-29-3.png" title="" alt="" width="672" /></p>
+<pre class="r"><code>barplot(prop.table(t, margin = 2))</code></pre>
+<p><img src="initiation-r-et-rmongodb_files/figure-html/unnamed-chunk-29-4.png" title="" alt="" width="672" /></p>
+<pre class="r"><code>barplot(t, beside = T)</code></pre>
+<p><img src="initiation-r-et-rmongodb_files/figure-html/unnamed-chunk-29-5.png" title="" alt="" width="672" /></p>
+<pre class="r"><code>barplot(prop.table(t, margin = 2), beside = T)</code></pre>
+<p><img src="initiation-r-et-rmongodb_files/figure-html/unnamed-chunk-29-6.png" title="" alt="" width="672" /></p>
+</div>
+<div id="quali---quanti" class="section level5">
+<h5>Quali - Quanti</h5>
+<p>En plus d’obtenir les statistiques par modalité de la variable qualitative, on peut représenter les boîtes à moustaches.</p>
+<pre class="r"><code>tapply(mtcars$mpg, mtcars$cyl, mean)</code></pre>
+<pre><code>##        4        6        8 
+## 26.66364 19.74286 15.10000</code></pre>
+<pre class="r"><code>tapply(mtcars$mpg, mtcars$cyl, summary)</code></pre>
+<pre><code>## $`4`
+##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+##   21.40   22.80   26.00   26.66   30.40   33.90 
+## 
+## $`6`
+##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+##   17.80   18.65   19.70   19.74   21.00   21.40 
+## 
+## $`8`
+##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+##   10.40   14.40   15.20   15.10   16.25   19.20</code></pre>
+<pre class="r"><code>boxplot(mpg ~ cyl, data = mtcars)</code></pre>
+<p><img src="initiation-r-et-rmongodb_files/figure-html/unnamed-chunk-30-1.png" title="" alt="" width="672" /></p>
+<pre class="r"><code>par(mfrow = c(3, 1), mar = c(2, 2, 2, 0) + 0.1)
+for (c in c(4, 6, 8)) {
+  hist(mtcars$mpg[mtcars$cyl == c], xlim = range(mtcars$mpg), main = c)
+}</code></pre>
+<p><img src="initiation-r-et-rmongodb_files/figure-html/unnamed-chunk-30-2.png" title="" alt="" width="672" /></p>
+</div>
+</div>
+</div>
+</div>
+<div id="r-et-mongodb" class="section level2">
+<h2><code>R</code> et MongoDB</h2>
+<p>Les résultats des commandes suivantes ne sont pas présentes dans ce document car le serveur MongoDB n’est accessible que depuis l’IUT.</p>
+<div id="connexion" class="section level3">
+<h3>Connexion</h3>
+<p>Pour interroger MongoDB dans <code>R</code>, il faut créer une connexion entre les deux. Ici, je créé une connexion au serveur local sur ma machine. A l’IUT, l’adresse du serveur MongoDB est : <code>172.19.32.10</code>.</p>
+<pre class="r"><code>library(rmongodb)
+conn = mongo.create(host = &quot;127.0.0.1&quot;)
+mongo.is.connected(conn)</code></pre>
+</div>
+<div id="recuperation-dinformations-simples" class="section level3">
+<h3>Récupération d’informations simples</h3>
+<p>Une fois cette connexion créée, il est possible de regarder quelles sont les bases de données contenues, ainsi que les collections présentes dans ces BD. .</p>
+<pre class="r"><code>mongo.get.databases(conn)
+mongo.get.database.collections(conn, &quot;gym&quot;)
+# Nombre d&#39;enregistrement de la collection Sportifs de la BD gym
+mongo.count(conn, &quot;gym.Sportifs&quot;)</code></pre>
+<div id="premier-enregistrement-dune-collection" class="section level4">
+<h4>Premier enregistrement d’une collection</h4>
+<p>Dans Mongo, il n’y a pas de schéma pour une base de données, ni même pour une collection. Un moyen de s’approprier les données est donc de regarder le premier élément. C’est pourquoi il existe la fonction <code>mongo.findOne()</code>.</p>
+<pre class="r"><code># Premier enregistrement de la collection Sportifs de la BD gym
+mongo.findOne(conn, &quot;gym.Sportifs&quot;)
+# Idem mais converti en list
+mongo.bson.to.list(mongo.findOne(conn, &quot;gym.Sportifs&quot;))</code></pre>
+<p>sur cet enregistrement, on peut vouloir avoir accès aux données directement. Une première façon de faire est de garder l’enregistrement au format <code>bson</code>.</p>
+<pre class="r"><code>enr1 = mongo.findOne(conn, &quot;gym.Sportifs&quot;)
+mongo.bson.value(enr1, &quot;Nom&quot;)
+mongo.bson.value(enr1, &quot;Sports&quot;)</code></pre>
+<p>Une autre façon de transformer le <code>bson</code> en <code>list</code> comme précédemment, et de manipuler la liste.</p>
+<pre class="r"><code>l1 = mongo.bson.to.list(enr1)
+l1$Nom
+l1$Sports</code></pre>
+</div>
+<div id="valeurs-distinctes-dun-element-dune-collection" class="section level4">
+<h4>Valeurs distinctes d’un élément d’une collection</h4>
+<p>Puisqu’on n’a pas de schéma, on peut aussi vouloir avoir la liste des valeurs prises par un élément particulier.</p>
+<pre class="r"><code># Liste des valeurs prises par l&#39;élement Sexe dans tous les enregistrements de gym.Sportifs
+mongo.distinct(conn, &quot;gym.Sportifs&quot;, &quot;Sexe&quot;)</code></pre>
+</div>
+</div>
+<div id="interrogation-de-donnees-1" class="section level3">
+<h3>Interrogation de données</h3>
+<p>On fait référence ici aussi à l’interrogation de type <code>SQL</code>, mais dans un environnement NoSQL (sans schéma explicite, sans stricte égalité de schéma entre les enregistrements, sans jointure).</p>
+<div id="restriction-et-projection-1" class="section level4">
+<h4>Restriction et projection</h4>
+<p>La fonction <code>mongo.find()</code> permet de renvoyer tous les enregistements par défaut. Il faut donc la manipuler prudemment si on en a beaucoup. Par contre, elle renvoie un <code>mongo.cursor</code> qu’il faut parcourir pour afficher les résultats.</p>
+<pre class="r"><code>curs = mongo.find(conn, &quot;gym.Sportifs&quot;)
+while (mongo.cursor.next(curs))
+  print(mongo.cursor.value(curs))</code></pre>
+<p>Pour effectuer une restriction, on utilise le paramètre <code>query</code> de la fonction <code>mongo.find()</code>. Cette requête doit être une chaîne de caractère, et dans le même format que dans le langage <code>JS</code> de la console Mongo.</p>
+<pre class="r"><code>curs = mongo.find(conn, &quot;gym.Sportifs&quot;, query = &#39;{ &quot;Nom&quot;: &quot;BOUTAHAR&quot; }&#39;)
+while (mongo.cursor.next(curs))
+  print(mongo.cursor.value(curs))</code></pre>
+<p>La projection se fait avec le paramètre <code>fields</code>, recevant une chaîne de caractère, au format du langage console de Mongo.</p>
+<pre class="r"><code>curs = mongo.find(conn, &quot;gym.Sportifs&quot;, fields = &#39;{ &quot;Nom&quot;: 1, &quot;_id&quot;: 0 }&#39;)
+while (mongo.cursor.next(curs))
+  print(mongo.cursor.value(curs))</code></pre>
+<p>Il est bien évidemment possible de combiner ces deux paramètres pour faire les deux opérations.</p>
+<pre class="r"><code>curs = mongo.find(conn, &quot;gym.Sportifs&quot;, 
+                  query = &#39;{ &quot;Sexe&quot;: &quot;F&quot;}&#39;,
+                  fields = &#39;{ &quot;Nom&quot;: 1, &quot;_id&quot;: 0 }&#39;)
+while (mongo.cursor.next(curs))
+  print(mongo.cursor.value(curs))</code></pre>
+</div>
+<div id="agregat" class="section level4">
+<h4>Agrégat</h4>
+<p>Les agrégats sont effectués avec la fonction <code>mongo.aggregation()</code>, dans laquelle on définit un <code>pipeline</code> sous forme de <code>list</code>, avec une syntaxe proche de celle de Mongo. Les variables de regroupement sont celles indiquées dans le <code>_id</code> de l’élement <code>$group</code>. Si la valeur est <code>null</code>, il regroupe tous les enregistrements.</p>
+<pre class="r"><code>mongo.aggregation(
+  conn, 
+  &quot;gym.Sportifs&quot;,
+  pipeline = list(&#39;{ 
+                    &quot;$group&quot;: { 
+                      &quot;_id&quot;: &quot;null&quot;, 
+                      &quot;AgeMoyen&quot;: { &quot;$avg&quot;: &quot;$Age&quot; }, 
+                      &quot;Nb&quot;: { &quot;$sum&quot;: 1 } 
+                    } 
+                  }&#39;)
+)</code></pre>
+<p>Par contre, si on indique une variable (ici <code>Sexe</code> par exemple), il fait le regroupement par modalité, classiquement.</p>
+<pre class="r"><code>mongo.aggregation(
+  conn, 
+  &quot;gym.Sportifs&quot;,
+  pipeline = list(&#39;{ 
+                    &quot;$group&quot;: { 
+                      &quot;_id&quot;: &quot;$Sexe&quot;, 
+                      &quot;AgeMoyen&quot;: { &quot;$avg&quot;: &quot;$Age&quot; }, 
+                      &quot;Nb&quot;: { &quot;$sum&quot;: 1 } 
+                    } 
+                  }&#39;)
+)</code></pre>
+<p>On remarque ici qu’il y a la modalité <code>m</code> et la modalité <code>M</code>. Pour mettre en majuscule, on peut le définir directement dans la définition de <code>_id</code>.</p>
+<pre class="r"><code>mongo.aggregation(
+  conn, 
+  &quot;gym.Sportifs&quot;,
+  pipeline = list(&#39;{ 
+                    &quot;$group&quot;: { 
+                      &quot;_id&quot;: { &quot;$toUpper&quot; : &quot;$Sexe&quot; }, 
+                      &quot;AgeMoyen&quot;: { &quot;$avg&quot;: &quot;$Age&quot; }, 
+                      &quot;Nb&quot;: { &quot;$sum&quot;: 1 } 
+                    } 
+                  }&#39;)
+)</code></pre>
+</div>
+<div id="calcul" class="section level4">
+<h4>Calcul</h4>
+<p>Pour créer des nouveaux éléments dans un enregistrement, il est nécessaire d’utiliser la fonction d’aggrégation, avec <code>$project</code>.</p>
+<pre class="r"><code>mongo.aggregation(
+  conn,
+  &quot;gym.Sportifs&quot;,
+  pipeline = list(&#39;{
+                    &quot;$project&quot;: {
+                      &quot;_id&quot;: 0,
+                      &quot;Nom&quot;: 1,
+                      &quot;Prenom&quot;: { &quot;$toLower&quot;: &quot;$Prenom&quot; },
+                      &quot;Sexe&quot;: { &quot;$toUpper&quot;: &quot;$Sexe&quot; }
+                    }
+                  }&#39;)
+)</code></pre>
+</div>
+<div id="recherche-complexe" class="section level4">
+<h4>Recherche complexe</h4>
+<p>Cette commande d’agrégation sert aussi à faire des recherches compexes dans les sous-éléments présents dans les enregistrements.</p>
+<p>Par exemple, dans la collection <code>Gymnases</code>, nous avons la liste des séances avec les jours et les sports. Si on cherche les jours et les gymnases où il y a des séances de <code>Hand ball</code>, la recherche simple comme suit ne suffit pas. On obtient bien les informations voulues, mais on a aussi les séances des gymnases pour les autres sports.</p>
+<pre class="r"><code>curs = mongo.find(
+  conn,
+  &quot;gym.Gymnases&quot;,
+  query = &#39;{ &quot;Seances.Libelle&quot;: &quot;Hand ball&quot; }&#39;,
+  fields = &#39;{ 
+    &quot;_id&quot;: 0, &quot;NomGymnase&quot;: 1, &quot;Ville&quot;: 1, &quot;Seances.Jour&quot;: 1, &quot;Seances.Libelle&quot;: 1 
+  }&#39;
+)
+while (mongo.cursor.next(curs))
+  print(mongo.cursor.value(curs))</code></pre>
+<p>Pour résoudre ce problème, nous allons utilisons la fonction d’aggrégation, avec la commande <code>$unwind</code>. Celle-ci permet de séparer les éléments du tableau passé en paramètre. Ici, d’un enregistrement par gymnase, on passe à un enregistrement par gymnase et par séance.</p>
+<pre class="r"><code>mongo.aggregation(
+  conn,
+  &quot;gym.Gymnases&quot;,
+  pipeline = list(
+    &#39;{ &quot;$unwind&quot;: &quot;$Seances&quot; }&#39;
+  )
+)</code></pre>
+<p>Dans le <code>pipeline</code>, on peut aussi ajouter des restrictions, avec la commande <code>$match</code>. On peut mettre celui-ci avant et/ou après le <code>$unwind</code>. Et choisir les éléments retournés avec <code>$project</code>. Pour répondre à la question <em>jours et gymnases où il y a des séances de <code>Hand ball</code></em>, on peut faire ainsi :</p>
+<pre class="r"><code>mongo.aggregation(
+  conn,
+  &quot;gym.Gymnases&quot;,
+  pipeline = list(
+    &#39;{ &quot;$match&quot;: { &quot;Seances&quot;: { &quot;$elemMatch&quot;: { &quot;Libelle&quot;: &quot;Hand ball&quot; } } } }&#39;,
+    &#39;{ &quot;$unwind&quot;: &quot;$Seances&quot; }&#39;,
+    &#39;{ &quot;$match&quot;: { &quot;Seances.Libelle&quot;: &quot;Hand ball&quot;} }&#39;,
+    &#39;{ 
+      &quot;$group&quot;: { 
+        &quot;_id&quot;: &quot;$NomGymnase&quot;, 
+        &quot;Jours&quot; : { &quot;$addToSet&quot;: { &quot;$toLower&quot;: &quot;$Seances.Jour&quot; } } ,
+        &quot;Sports&quot; : { &quot;$addToSet&quot;: &quot;$Seances.Libelle&quot; }
+      } 
+    }&#39;
+  )
+)</code></pre>
+</div>
+</div>
+<div id="deconnexion" class="section level3">
+<h3>Déconnexion</h3>
+<p>Comme pour toute connexion, il faut déconnecter pour être propre.</p>
+<pre class="r"><code>mongo.disconnect(conn)</code></pre>
+</div>
+</div>
+
+</div>
+<div class="footer">
+      Site créé avec <a href="http://www.r-project.org" target="_blank"><code>R</code></a> et la 
+      librairie  <a href="http://rmarkdown.rstudio.com/" target="_blank"><code>rmarkdown</code></a>.
+</div>
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+$(document).ready(function () {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+});
+
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

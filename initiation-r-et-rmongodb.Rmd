@@ -1,0 +1,598 @@
+---
+title: Initiation à `R`
+author: DU Analyste Big Data
+---
+
+Dans ce document est présenté les concepts principaux du logiciel `R` (éléments de langage, données manipulées, manipulation de données, ...). L'utilisation du package `rmongodb` permettant la connection à une base de données [MongoDB]() est aussi abordé à la fin.
+
+## Données et éléments de langage
+
+### Types de données
+
+`R` permet de manipuler différents types de données tel que :
+
+- scalaire : une valeur de type `numeric`, `character`, `logical`, `date`
+- `vector` : tableau de scalaires de même type (`numeric`, `character`, `logical`, `date`, `factor`)
+- `matrix` : tableau à deux dimensions de scalaires de même type (`numeric`, `logicial` ou `character`)
+- `array` : extension de `matrix` à $d$ dimensions
+- `data.frame` : ensemble de lignes (entités, parfois nommées) décrites par des colonnes nommées (dites variables aussi), pouvant être de types différents - très proche de la définition d'une table dans un SGBD classique
+- `list` : liste d'éléments (nommés ou non, et pas forcément de même type)
+
+Voici un exemple avec le jeu de données `mtcars` déjà présent dans le logiciel `R` :
+
+```{r}
+# Type de la variable mtcars
+class(mtcars) 
+# Dimensions
+dim(mtcars)
+nrow(mtcars)
+ncol(mtcars)
+# Données en elles-mêmes
+mtcars
+```
+
+### Typage faible 
+
+`R` est un langage de programmation à typage faible : le type de la variable est déterminée par la valeur qui lui est affectée. Ce qui veut dire qu'il est possible d'affecter une chaîne de caractères à une variable numérique. Celle-ci deviendra automatique de type chaîne de caractère. Et il n'y a pas d'opérateurs de déclaration de variables. Celle-ci est créée à sa première utilisation, dans l'environnement actuel.
+
+#### Création d'une variable numérique
+
+```{r}
+a = 1
+print(a)
+class(a)
+```
+
+#### Affectation d'une chaîne de caractère à une variable numérique
+
+```{r}
+a = "bonjour"
+print(a)
+class(a)
+```
+
+#### Conclusion
+
+**Attention** donc lors de l'écriture des programmes...
+
+### Langage scripté
+
+`R` est un langage scripté : il faut exécuter les commandes les unes après les autres dans la console. Mais il est possible d'écrire des scripts dans des fichiers (souvent avec l'extension `.R`), puis de les appeler via la commande `source()`
+
+```{r, eval=FALSE}
+source("chemin/vers/mon/fichier.R")
+```
+
+### Accès aux données
+
+Voici quelques éléments pour accéder aux différentes valeurs présentes dans le `data.frame` `mtcars` :
+
+#### Valeurs de la 1ère ligne -> vector
+
+```{r}
+mtcars[1,]
+```
+
+#### Valeurs de la 1ère colonne (nommée mpg) -> vector
+
+```{r}
+mtcars[,1]
+mtcars$mpg
+```
+
+#### Valeur à la cellule (1,1)
+
+```{r}
+mtcars[1,1]
+mtcars$mpg[1]
+```
+
+#### Noms des variables
+
+```{r}
+names(mtcars)
+colnames(mtcars)
+```
+
+#### Nom des lignes
+
+```{r}
+rownames(mtcars)
+```
+
+#### Descriptif de chaque variable d'un `data.frame`
+
+```{r}
+str(mtcars)
+```
+
+### Eléments de langage
+
+Voici quelques commandes utiles 
+
+#### Création d'un vecteur et d'une matrice
+
+```{r}
+# vecteur de numériques
+c(1, 3, 5)
+# vecteur de chaînes de caractères
+c("a", "b")
+# vecteur de type et de taille définie
+vector('logical', 5)
+# séquence de base
+1:5
+# idem
+seq(1, 5)
+# séquence avec définition de la taille du vecteur
+seq(1, 5, length = 10)
+# séquence avec définition du pas
+seq(0, 1, by = 0.1)
+# matrice
+matrix(1:10, 2, 5)
+# création d'un vecteur et redimensionnement de celui-ci -> résultat identique à précédemment
+m = 1:10
+dim(m) = c(2,5)
+print(m)
+```
+
+#### Création d'une liste
+
+```{r}
+l = list()
+class(l)
+l[[1]] = 1
+l[[2]] = "a"
+l$trois = 1:3
+l[[4]] = m
+print(l)
+length(l)
+```
+
+#### Fonction sur les lignes ou les colonnes d'une matrice
+
+Application d'une fonction (`sum()` ici) sur les lignes (`1`) ou sur les colonnes (`2`) d'une matrice.
+
+```{r}
+apply(m, 1, sum) # somme sur les lignes
+apply(m, 2, sum) # somme sur les colonnes
+```
+
+#### Fonction sur les parties d'un vecteur
+
+Application d'une fonction (ici `mean()`) sur les groupes de valeurs d'un vecteur, groupes déterminés par les modalités d'un autre vecteur.
+
+```{r}
+# Consommation des voitures (Miles/(US) gallon)
+mtcars$mpg
+# Transmission (0 = automatic, 1 = manual)
+mtcars$am
+# Consommation moyenne par type de transmission
+tapply(mtcars$mpg, mtcars$am, mean)
+```
+
+#### Combinaison des deux fonctions précédentes
+
+En combinant les deux méthodes vu avant, on peut effectuer des opérations de type moyenne de plusieurs variables d'un jeu de données, pour chaque modalité d'une variable qualitative.
+
+```{r}
+# Moyenne par type de moteurs (en terme de nombre de cylindres)
+# sur les variables quantitatives de mtcars
+apply(mtcars[,c("mpg", "disp", "hp", "drat", "wt", "qsec")], 2, tapply, mtcars$cyl, mean)
+```
+
+#### Fonction sur chaque élément d'une liste
+
+Application d'une fonction (ici `class()`) sur chaque élément de la liste. Si l'élément passé en paramètre est un `data.frame`, c'est sur chaque colonne. Et si c'est un `vector` ou une `matrix`, ce sera sur chaque valeur.
+
+```{r}
+lapply(l, class)
+```
+
+## Interrogation de données
+
+Il est fait référence ici aux principes de l'interrogation de données au sens `SQL` (et plus particulièrement la partie requêtage).
+
+### Restriction et projection
+
+La fonction `subset()` permet d'effectuer les deux opérations. Dans le paramètre `subset`, on indique la condition (simple ou combinée) permet de faire la restriction. Et dans le paramètre `select`, on liste les variables de la projection.
+
+```{r}
+subset(mtcars, subset = cyl == 4, select = c(cyl, mpg))
+```
+
+Il est aussi possible de faire ces deux opérations dans les `[]` avec un test logique et en indiquant la liste des variables à prendre.
+
+```{r}
+mtcars[mtcars$cyl == 4, c("cyl", "mpg")]
+```
+
+### Calcul de nouvelles variables
+
+La fonction `tranform()` permet d'ajouter de nouvelles variables, soit résultantes d'un calcul (cf ci-dessous), soit permettant seulement un renommage d'une variable.
+
+```{r}
+transform(mtcars[,c("cyl", "disp")], disp_cyl = round(disp / cyl, 2))
+```
+
+### Calcul d'agrégat
+
+On peut déjà se servir de la combinaison des fonctions `apply()` et `tapply()` comme vu précédemment. Il existe aussi la fonction `aggregate()`, où l'on définit explicitement les agrégats à effectuer et les calculs à produire (un seul type de calcul par fonction néanmoins).
+
+```{r}
+# Agrégat simple : consommation moyenne générale
+aggregate(mpg ~ 1, data = mtcars, mean)
+# Agrégat classique : consommation moyenne en fonction du nombre de cylindres
+aggregate(mpg ~ cyl, data = mtcars, mean)
+# Agrégat à deux variables : idem en fonction en plus de la transmission
+aggregate(mpg ~ cyl + am, data = mtcars, mean)
+# Agrégat sur deux variables : idem mais pour la puissance aussi
+aggregate(cbind(mpg, hp) ~ cyl + am, data = mtcars, mean)
+```
+
+### Jointures
+
+Pour effectuer tout type de jointure, nous utilisons la fonction `merge()`, dans laquelle on indique les deux tables (correspondant à `x` et `y` respectivement). Les paramètres booléens `all`, `all.x` et `all.y` permettent de dire, s'ils sont à la valeur `TRUE`, quelle type de jointure externe on désire (resp. `FULL`, `LEFT` et `RIGHT`). Par défaut, la jointure se faire sur l'égalité des variables de mêmes noms entre les deux `data.frame`. On peut spécifier les variables à utiliser dans les paramètres `by`, `by.x` et `by.y`.
+
+```{r}
+moteur = data.frame(cyl = c(4, 6, 8, 12), def = c("petit moteur", "moteur moyen", "gros moteur", "encore plus gros moteur"))
+print(moteur)
+merge(
+  moteur,
+  aggregate(mpg ~ cyl, data = mtcars, mean),
+  all = TRUE
+)
+```
+
+### Sinon, du `SQL` sur les `data.frame`
+
+La librairie `sqldf` permet d'exécuter des requêtes `SQL` directement sur les `data.frame` présents dans `R`. Voici un exemple simple :
+
+```{r}
+library(sqldf)
+sqldf("
+SELECT cyl, AVG(mpg), AVG(disp), AVG(hp), AVG(drat), AVG(wt), AVG(qsec)
+  FROM mtcars
+  GROUP BY cyl;
+      ")
+```
+
+## Quelques statistiques
+
+### Descriptives
+
+La fonction `summary()` calcule des statistiques basiques sur un vecteur, celles-ci étant dépendantes du type du vecteur. Si elle est appliquée sur un `data.frame`, elle s'applique sur chaque variable.
+
+```{r}
+summary(mtcars)
+summary(mtcars$mpg)
+summary(mtcars$cyl)
+summary(as.factor(mtcars$cyl))
+```
+
+#### Univarié
+
+On peut accéder aux fonctions de calculs des statistiques descriptives directement. Pour les variables quantitatives, nous allons utiliser comme exemple `mpg` qui représente la consommation.
+
+```{r}
+mean(mtcars$mpg)
+sum(mtcars$mpg)
+var(mtcars$mpg)
+sd(mtcars$mpg)
+min(mtcars$mpg)
+max(mtcars$mpg)
+range(mtcars$mpg)
+median(mtcars$mpg)
+quantile(mtcars$mpg)
+quantile(mtcars$mpg, probs = 0.99)
+quantile(mtcars$mpg, probs = c(0.01, 0.1, 0.9, 0.99))
+```
+
+Il existe tout un ensemble de fonctions graphiques, dont voici quelques exemples.
+
+```{r}
+hist(mtcars$mpg)
+hist(mtcars$mpg, breaks = 20)
+hist(mtcars$mpg, breaks = c(10, 15, 18, 20, 22, 25, 35))
+boxplot(mtcars$mpg)
+qqnorm(mtcars$mpg)
+qqline(mtcars$mpg)
+```
+
+Pour les variables qualitatives, nous allons utiliser la variable `cyl` qui représente le nombre de cylindre. Celle-ci étant codée numériquement, toutes les fonctions vues précédemment pour s'appliquer (mais n'avoir aucun sens).
+
+```{r}
+table(mtcars$cyl)
+prop.table(table(mtcars$cyl))
+barplot(table(mtcars$cyl))
+pie(table(mtcars$cyl))
+```
+
+#### Bivarié
+
+##### Quanti - Quanti
+
+Dans ce cadre, on peut bien évidemment calculer les statistiques usuelles (covariance, corrélation) et le nuage de points.
+
+```{r}
+cov(mtcars$mpg, mtcars$wt)
+cor(mtcars$mpg, mtcars$wt)
+plot(mtcars$mpg, mtcars$wt)
+plot(mtcars$mpg ~ mtcars$wt)
+```
+
+On peut aller plus loin en faisant un modéle linéaire simple. 
+
+```{r}
+m = lm(mpg ~ wt, data = mtcars)
+m
+summary(m)
+plot(m)
+plot(mpg ~ wt, data = mtcars)
+abline(m, col = "red")
+```
+
+##### Quali - Quali
+
+Ici, on calcule bien évidemment la talbe de contingence, mais aussi les fréquences totales et marginales (en lignes et en colonnes).
+
+```{r}
+t <- table(mtcars$cyl, mtcars$am)
+print(t)
+prop.table(t)
+prop.table(t, margin = 1)
+prop.table(t, margin = 2)
+mosaicplot(t) 
+assocplot(t)
+barplot(t)
+barplot(prop.table(t, margin = 2))
+barplot(t, beside = T)
+barplot(prop.table(t, margin = 2), beside = T)
+```
+
+##### Quali - Quanti
+
+En plus d'obtenir les statistiques par modalité de la variable qualitative, on peut représenter les boîtes à moustaches.
+
+```{r}
+tapply(mtcars$mpg, mtcars$cyl, mean)
+tapply(mtcars$mpg, mtcars$cyl, summary)
+boxplot(mpg ~ cyl, data = mtcars)
+par(mfrow = c(3, 1), mar = c(2, 2, 2, 0) + 0.1)
+for (c in c(4, 6, 8)) {
+  hist(mtcars$mpg[mtcars$cyl == c], xlim = range(mtcars$mpg), main = c)
+}
+```
+
+## `R` et MongoDB
+
+Les résultats des commandes suivantes ne sont pas présentes dans ce document car le serveur MongoDB n'est accessible que depuis l'IUT.
+
+### Connexion
+
+Pour interroger MongoDB dans `R`, il faut créer une connexion entre les deux. Ici, je créé une connexion au serveur local sur ma machine. A l'IUT, l'adresse du serveur MongoDB est : `172.19.32.10`.
+
+```{r eval=FALSE}
+library(rmongodb)
+conn = mongo.create(host = "127.0.0.1")
+mongo.is.connected(conn)
+```
+
+### Récupération d'informations simples
+
+Une fois cette connexion créée, il est possible de regarder quelles sont les bases de données contenues, ainsi que les collections présentes dans ces BD. .
+
+```{r eval=FALSE}
+mongo.get.databases(conn)
+mongo.get.database.collections(conn, "gym")
+# Nombre d'enregistrement de la collection Sportifs de la BD gym
+mongo.count(conn, "gym.Sportifs")
+```
+
+#### Premier enregistrement d'une collection
+
+Dans Mongo, il n'y a pas de schéma pour une base de données, ni même pour une collection. Un moyen de s'approprier les données est donc de regarder le premier élément. C'est pourquoi il existe la fonction `mongo.findOne()`.
+
+```{r eval=FALSE}
+# Premier enregistrement de la collection Sportifs de la BD gym
+mongo.findOne(conn, "gym.Sportifs")
+# Idem mais converti en list
+mongo.bson.to.list(mongo.findOne(conn, "gym.Sportifs"))
+```
+
+sur cet enregistrement, on peut vouloir avoir accès aux données directement. Une première façon de faire est de garder l'enregistrement au format `bson`.
+
+```{r eval=FALSE}
+enr1 = mongo.findOne(conn, "gym.Sportifs")
+mongo.bson.value(enr1, "Nom")
+mongo.bson.value(enr1, "Sports")
+```
+
+Une autre façon de transformer le `bson` en `list` comme précédemment, et de manipuler la liste.
+
+```{r eval=FALSE}
+l1 = mongo.bson.to.list(enr1)
+l1$Nom
+l1$Sports
+```
+
+#### Valeurs distinctes d'un élément d'une collection
+
+Puisqu'on n'a pas de schéma, on peut aussi vouloir avoir la liste des valeurs prises par un élément particulier.
+
+```{r eval=FALSE}
+# Liste des valeurs prises par l'élement Sexe dans tous les enregistrements de gym.Sportifs
+mongo.distinct(conn, "gym.Sportifs", "Sexe")
+```
+
+### Interrogation de données
+
+On fait référence ici aussi à l'interrogation de type `SQL`, mais dans un environnement NoSQL (sans schéma explicite, sans stricte égalité de schéma entre les enregistrements, sans jointure).
+
+#### Restriction et projection 
+
+La fonction `mongo.find()` permet de renvoyer tous les enregistements par défaut. Il faut donc la manipuler prudemment si on en a beaucoup. Par contre, elle renvoie un `mongo.cursor` qu'il faut parcourir pour afficher les résultats.
+
+```{r eval=FALSE}
+curs = mongo.find(conn, "gym.Sportifs")
+while (mongo.cursor.next(curs))
+  print(mongo.cursor.value(curs))
+```
+
+Pour effectuer une restriction, on utilise le paramètre `query` de la fonction `mongo.find()`. Cette requête doit être une chaîne de caractère, et dans le même format que dans le langage `JS` de la console Mongo.
+
+```{r eval=FALSE}
+curs = mongo.find(conn, "gym.Sportifs", query = '{ "Nom": "BOUTAHAR" }')
+while (mongo.cursor.next(curs))
+  print(mongo.cursor.value(curs))
+```
+
+La projection se fait avec le paramètre `fields`, recevant une chaîne de caractère, au format du langage console de Mongo. 
+
+```{r eval=FALSE}
+curs = mongo.find(conn, "gym.Sportifs", fields = '{ "Nom": 1, "_id": 0 }')
+while (mongo.cursor.next(curs))
+  print(mongo.cursor.value(curs))
+```
+
+Il est bien évidemment possible de combiner ces deux paramètres pour faire les deux opérations.
+
+```{r eval=FALSE}
+curs = mongo.find(conn, "gym.Sportifs", 
+                  query = '{ "Sexe": "F"}',
+                  fields = '{ "Nom": 1, "_id": 0 }')
+while (mongo.cursor.next(curs))
+  print(mongo.cursor.value(curs))
+```
+
+#### Agrégat
+
+Les agrégats sont effectués avec la fonction `mongo.aggregation()`, dans laquelle on définit un `pipeline` sous forme de `list`, avec une syntaxe proche de celle de Mongo. Les variables de regroupement sont celles indiquées dans le `_id` de l'élement `$group`. Si la valeur est `null`, il regroupe tous les enregistrements.
+
+```{r eval=FALSE}
+mongo.aggregation(
+  conn, 
+  "gym.Sportifs",
+  pipeline = list('{ 
+                    "$group": { 
+                      "_id": "null", 
+                      "AgeMoyen": { "$avg": "$Age" }, 
+                      "Nb": { "$sum": 1 } 
+                    } 
+                  }')
+)
+```
+
+Par contre, si on indique une variable (ici `Sexe` par exemple), il fait le regroupement par modalité, classiquement.
+
+```{r eval=FALSE}
+mongo.aggregation(
+  conn, 
+  "gym.Sportifs",
+  pipeline = list('{ 
+                    "$group": { 
+                      "_id": "$Sexe", 
+                      "AgeMoyen": { "$avg": "$Age" }, 
+                      "Nb": { "$sum": 1 } 
+                    } 
+                  }')
+)
+```
+
+On remarque ici qu'il y a la modalité `m` et la modalité `M`. Pour mettre en majuscule, on peut le définir directement dans la définition de `_id`.
+
+```{r eval=FALSE}
+mongo.aggregation(
+  conn, 
+  "gym.Sportifs",
+  pipeline = list('{ 
+                    "$group": { 
+                      "_id": { "$toUpper" : "$Sexe" }, 
+                      "AgeMoyen": { "$avg": "$Age" }, 
+                      "Nb": { "$sum": 1 } 
+                    } 
+                  }')
+)
+```
+
+
+#### Calcul
+
+Pour créer des nouveaux éléments dans un enregistrement, il est nécessaire d'utiliser la fonction d'aggrégation, avec `$project`.
+
+```{r eval=FALSE}
+mongo.aggregation(
+  conn,
+  "gym.Sportifs",
+  pipeline = list('{
+                    "$project": {
+                      "_id": 0,
+                      "Nom": 1,
+                      "Prenom": { "$toLower": "$Prenom" },
+                      "Sexe": { "$toUpper": "$Sexe" }
+                    }
+                  }')
+)
+```
+
+#### Recherche complexe
+
+Cette commande d'agrégation sert aussi à faire des recherches compexes dans les sous-éléments présents dans les enregistrements.
+
+Par exemple, dans la collection `Gymnases`, nous avons la liste des séances avec les jours et les sports. Si on cherche les jours et les gymnases où il y a des séances de `Hand ball`, la recherche simple comme suit ne suffit pas. On obtient bien les informations voulues, mais on a aussi les séances des gymnases pour les autres sports.
+
+```{r eval=FALSE}
+curs = mongo.find(
+  conn,
+  "gym.Gymnases",
+  query = '{ "Seances.Libelle": "Hand ball" }',
+  fields = '{ 
+    "_id": 0, "NomGymnase": 1, "Ville": 1, "Seances.Jour": 1, "Seances.Libelle": 1 
+  }'
+)
+while (mongo.cursor.next(curs))
+  print(mongo.cursor.value(curs))
+```
+
+Pour résoudre ce problème, nous allons utilisons la fonction d'aggrégation, avec la commande `$unwind`. Celle-ci permet de séparer les éléments du tableau passé en paramètre. Ici, d'un enregistrement par gymnase, on passe à un enregistrement par gymnase et par séance.
+
+```{r eval=FALSE}
+mongo.aggregation(
+  conn,
+  "gym.Gymnases",
+  pipeline = list(
+    '{ "$unwind": "$Seances" }'
+  )
+)
+```
+
+Dans le `pipeline`, on peut aussi ajouter des restrictions, avec la commande `$match`. On peut mettre celui-ci avant et/ou après le `$unwind`. Et choisir les éléments retournés avec `$project`. Pour répondre à la question *jours et gymnases où il y a des séances de `Hand ball`*, on peut faire ainsi :
+
+```{r eval=FALSE}
+mongo.aggregation(
+  conn,
+  "gym.Gymnases",
+  pipeline = list(
+    '{ "$match": { "Seances": { "$elemMatch": { "Libelle": "Hand ball" } } } }',
+    '{ "$unwind": "$Seances" }',
+    '{ "$match": { "Seances.Libelle": "Hand ball"} }',
+    '{ 
+      "$group": { 
+        "_id": "$NomGymnase", 
+        "Jours" : { "$addToSet": { "$toLower": "$Seances.Jour" } } ,
+        "Sports" : { "$addToSet": "$Seances.Libelle" }
+      } 
+    }'
+  )
+)
+```
+
+
+### Déconnexion
+
+Comme pour toute connexion, il faut déconnecter pour être propre.
+
+```{r eval=FALSE}
+mongo.disconnect(conn)
+```
+
+
