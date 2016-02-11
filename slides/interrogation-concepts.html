@@ -112,7 +112,7 @@
 
 <h3>Qu&#39;est-ce qu&#39;une base de données ?</h3>
 
-<p>Ensemble de données simples (dites atomiques) réparties dans des tables et reliées entre elles, permettant le fonctionnement d&#39;une organisation, d&#39;une entreprise via une ou plusieurs applications informatiques.</p>
+<p>Ensemble de données simples (dites atomiques) réparties dans des tables etreliées entre elles, permettant le fonctionnement d&#39;une organisation, d&#39;une entreprisevia une ou plusieurs applications informatiques.</p>
 
 <ul>
 <li>Ensemble de données non indépendantes,</li>
@@ -122,7 +122,7 @@
 
 <h3><strong>SGBD</strong> : Système de Gestion de Bases de Données</h3>
 
-<p>Ensemble des logiciels permettant aux utilisateurs d&#39;insérer, de modifier et de rechercher efficacement des données spécifiques dans une grande masse d&#39;informations partagée par de multiples utilisateurs.</p>
+<p>Ensemble des logiciels permettant aux utilisateurs d&#39;insérer, de modifier et derechercher efficacement des données spécifiques dans une grande masse d&#39;informationspartagée par de multiples utilisateurs.</p>
 
 </article></slide><slide class=''><hgroup><h2>Introduction au modèle relationnel</h2></hgroup><article  id="introduction-au-modele-relationnel">
 
@@ -152,9 +152,9 @@ Date : nombre de jours depuis une date de référence </pre>
 
 </article></slide><slide class=''><hgroup><h2>Concepts et définitions</h2></hgroup><article  id="concepts-et-definitions-1">
 
-<p><strong>Produit cartésien</strong> : Ensemble des n-uplets (\(d_1, d_2, \ldots, d_n\)) où chaque \(d_i\) est un élément du domaine \(\mathbf{D}_i\)</p>
+<p><strong>Produit cartésien</strong> : Ensemble des n-uplets (\(d_1, d_2, \ldots, d_n\)) où chaque\(d_i\) est un élément du domaine \(\mathbf{D}_i\)</p>
 
-<p>Si on a un premier attribut <code>Code</code> dont le domaine est <code>{1, 2, 3, 4}</code> (cardinal = 4) et un autre <code>TVA</code> de domaine <code>{0, 5, 10}</code> (cardinal = 3), le produit cartésien des deux domaines <code>Codes X TVA</code> aura un cardinal de 12 (4 * 3) et prendra les valeurs suivantes :</p>
+<p>Si on a un premier attribut <code>Code</code> dont le domaine est <code>{1, 2, 3, 4}</code> (cardinal = 4) etun autre <code>TVA</code> de domaine <code>{0, 5, 10}</code> (cardinal = 3), le produit cartésien des deuxdomaines <code>Codes X TVA</code> aura un cardinal de 12 (4 * 3) et prendra les valeurs suivantes :</p>
 
 <pre class = 'prettyprint lang-sql'>{
     (1, 0), (2, 0), (3, 0), (4, 0), 
@@ -182,7 +182,7 @@ Date : nombre de jours depuis une date de référence </pre>
 <ul>
 <li>Permet de définir l&#39;ensemble de valeurs possibles pour chaque attribut</li>
 <li>Important pour limiter les erreurs (mettre un caractère dans un entier par exemple)</li>
-<li>Attention à ne pas trop restreindre (choisir un entier alors qu&#39;il est possible qu&#39;à l&#39;avenir il y ait des réels par exemple)</li>
+<li>Attention à ne pas trop restreindre (choisir un entier alors qu&#39;il est possible qu&#39;àl&#39;avenir il y ait des réels par exemple)</li>
 </ul>
 
 </article></slide><slide class=''><hgroup><h2>Règles d&#39;intégrité structurelles</h2></hgroup><article  id="regles-dintegrite-structurelles-1">
@@ -202,14 +202,14 @@ Date : nombre de jours depuis une date de référence </pre>
 
 <ul>
 <li>Une clé primaire ne peut pas avoir de valeur <code>NULL</code> (non-présence de l&#39;information)</li>
-<li>Il doit absolument y avoir une valeur pour l&#39;attribut, ou pour chaque attribut dans le cas d&#39;une clé multiple</li>
+<li>Il doit absolument y avoir une valeur pour l&#39;attribut, ou pour chaque attribut dans lecas d&#39;une clé multiple</li>
 </ul>
 
 <h3>Contrainte de référence</h3>
 
 <ul>
 <li>Attribut(s) d&#39;une relation devant apparaître comme clé dans une autre relation</li>
-<li>On doit bien évidemment indiquer la table, et le nom de l&#39;attribut (si celui-ci n&#39;a pas le même nom)</li>
+<li>On doit bien évidemment indiquer la table, et le nom de l&#39;attribut (si celui-ci n&#39;apas le même nom)</li>
 <li>On parle aussi de <strong>clé externe</strong></li>
 </ul>
 
@@ -278,7 +278,7 @@ Date : nombre de jours depuis une date de référence </pre>
 
 </article></slide><slide class=''><hgroup><h2>Restriction</h2></hgroup><article  id="restriction">
 
-<p>Sélection de lignes d&#39;une table, sur la base d&#39;une condition à respecter (cette condition peut être une combinaison de comparaison à l&#39;aide de <code>AND</code> et de <code>OR</code> - attention aux parenthèses dans ce cas)</p>
+<p>Sélection de lignes d&#39;une table, sur la base d&#39;une condition à respecter (cette conditionpeut être une combinaison de comparaison à l&#39;aide de <code>AND</code> et de <code>OR</code> - attention auxparenthèses dans ce cas)</p>
 
 <ul>
 <li>Restriction sur <code>Age &gt;= 19</code>, sur la table <code>Etudiant</code></li>
@@ -322,7 +322,7 @@ Date : nombre de jours depuis une date de référence </pre>
 
 </article></slide><slide class=''><hgroup><h2>Agrégat</h2></hgroup><article  id="agregat">
 
-<p>Calcul statistique (somme, moyenne, nombre de valeurs, &#8230;) sur un attribut, éventuellement en fonction des valeurs d&#39;un autre attribut</p>
+<p>Calcul statistique (somme, moyenne, nombre de valeurs, &#8230;) sur un attribut,éventuellement en fonction des valeurs d&#39;un autre attribut</p>
 
 <ul>
 <li>Calcul de la moyenne d&#39;âge globalement, puis par sexe</li>
@@ -573,7 +573,7 @@ run;</pre>
 <li>La clause <code>merge</code> permet de déterminer les tables pour les jointures ;</li>
 <li>Les projections se font dans le <code>keep</code> ou le <code>drop</code> ;</li>
 <li>Les restrictions sont détaillées dans le <code>where</code> ;</li>
-<li>Les calculs classiques se font dans l&#39;étape <code>data</code> et les agrégats dans une procédure <code>summary</code>, <code>means</code> ou <code>freq</code>.</li>
+<li>Les calculs classiques se font dans l&#39;étape <code>data</code> et les agrégats dans une procédure<code>summary</code>, <code>means</code> ou <code>freq</code>.</li>
 </ul>
 
 <blockquote>

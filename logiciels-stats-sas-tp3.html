@@ -10,7 +10,7 @@
 
 
 
-<title>Logiciels stats - SAS - TP1</title>
+<title>Logiciels stats - SAS - TP3</title>
 
 <script src="libs/jquery-1.11.0/jquery.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -135,11 +135,126 @@ img {
 <div class="contenu">
 
 <div id="header">
-<h1 class="title">Logiciels stats - SAS - TP1</h1>
+<h1 class="title">Logiciels stats - SAS - TP3</h1>
 </div>
 
 
-
+<div id="donnees" class="section level2">
+<h2>Données</h2>
+<p>Nous allons utiliser le jeu de données <code>prdsale</code> déjà présent dans la librairie <code>sashelp</code> dans <strong>SAS Studio</strong>. Il y a 1440 lignes et 10 colonnes dans cette table.</p>
+<p>Voici le résultat de <code>proc contents</code> (permettant d’avoir des informations sur une table) :</p>
+<table>
+<thead>
+<tr class="header">
+<th align="left"></th>
+<th align="left">Variable</th>
+<th align="left">Type</th>
+<th align="left">Long.</th>
+<th align="left">Format</th>
+<th align="left">Libellé</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">1</td>
+<td align="left">ACTUAL</td>
+<td align="left">Num.</td>
+<td align="left">8</td>
+<td align="left">DOLLAR12.2</td>
+<td align="left">Actual Sales</td>
+</tr>
+<tr class="even">
+<td align="left">2</td>
+<td align="left">PREDICT</td>
+<td align="left">Num.</td>
+<td align="left">8</td>
+<td align="left">DOLLAR12.2</td>
+<td align="left">Predicted Sales</td>
+</tr>
+<tr class="odd">
+<td align="left">3</td>
+<td align="left">COUNTRY</td>
+<td align="left">Texte</td>
+<td align="left">10</td>
+<td align="left">$CHAR10.</td>
+<td align="left">Country</td>
+</tr>
+<tr class="even">
+<td align="left">4</td>
+<td align="left">REGION</td>
+<td align="left">Texte</td>
+<td align="left">10</td>
+<td align="left">$CHAR10.</td>
+<td align="left">Region</td>
+</tr>
+<tr class="odd">
+<td align="left">5</td>
+<td align="left">DIVISION</td>
+<td align="left">Texte</td>
+<td align="left">10</td>
+<td align="left">$CHAR10.</td>
+<td align="left">Division</td>
+</tr>
+<tr class="even">
+<td align="left">6</td>
+<td align="left">PRODTYPE</td>
+<td align="left">Texte</td>
+<td align="left">10</td>
+<td align="left">$CHAR10.</td>
+<td align="left">Product type</td>
+</tr>
+<tr class="odd">
+<td align="left">7</td>
+<td align="left">PRODUCT</td>
+<td align="left">Texte</td>
+<td align="left">10</td>
+<td align="left">$CHAR10.</td>
+<td align="left">Product</td>
+</tr>
+<tr class="even">
+<td align="left">8</td>
+<td align="left">QUARTER</td>
+<td align="left">Num.</td>
+<td align="left">8</td>
+<td align="left">8.</td>
+<td align="left">Quarter</td>
+</tr>
+<tr class="odd">
+<td align="left">9</td>
+<td align="left">YEAR</td>
+<td align="left">Num.</td>
+<td align="left">8</td>
+<td align="left">4.</td>
+<td align="left">Year</td>
+</tr>
+<tr class="even">
+<td align="left">10</td>
+<td align="left">MONTH</td>
+<td align="left">Num.</td>
+<td align="left">8</td>
+<td align="left">MONNAME3.</td>
+<td align="left">Month</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="travail-a-faire" class="section level2">
+<h2>Travail à faire</h2>
+<ol style="list-style-type: decimal">
+<li>Décrire chaque variable de manière appropriée, selon le type de la variable</li>
+<li>Décrire le lien entre les variables <code>ACTUAL</code> et <code>PREDICT</code></li>
+<li>Décrire le lien entre
+<ul>
+<li><code>ACTUAL</code> et chacune des autres variables de la table</li>
+<li>idem pour <code>PREDICT</code></li>
+</ul></li>
+<li>Décrire les différences entre <code>ACTUAL</code> et <code>PREDICT</code>, et chacune des autres variables de la table
+<ul>
+<li>il existe plusieurs moyens de représenter chaque lien</li>
+<li>n’hésiter à en essayer plusieurs pour trouver la plus représentative</li>
+</ul></li>
+</ol>
+</div>
 
 </div>
 <div class="footer">

@@ -142,9 +142,9 @@
 
 </article></slide><slide class=''><hgroup><h2>Paradigme de MapReduce</h2></hgroup><article  id="paradigme-de-mapreduce">
 
-<p>Le framework MapReduce est constitué de : - un seul <em>JobTracker</em>, qui sera le chef d&#39;orchestre : - programmation (<em>scheduling</em>) des jobs aux musiciens - gestion des défaillances de ceux-ci - un <em>TaskTracker</em> par noeud du cluster, qui sera un musicien : - exécution des tâches demandés par le chef</p>
+<p>Le framework MapReduce est constitué de :- un seul <em>JobTracker</em>, qui sera le chef d&#39;orchestre :- programmation (<em>scheduling</em>) des jobs aux musiciens- gestion des défaillances de ceux-ci- un <em>TaskTracker</em> par noeud du cluster, qui sera un musicien :- exécution des tâches demandés par le chef</p>
 
-<p>Le travail se fait exclusivement sur des paires \(&lt; key, value&gt;\) - Entrées : ensemble de paires \(&lt; key, value&gt;\) - Sorties d&#39;un job : paires \(&lt; key, value&gt;\)</p>
+<p>Le travail se fait exclusivement sur des paires \(&lt; key, value&gt;\)- Entrées : ensemble de paires \(&lt; key, value&gt;\)- Sorties d&#39;un job : paires \(&lt; key, value&gt;\)</p>
 
 </article></slide><slide class=''><hgroup><h2>Schéma de MapReduce</h2></hgroup><article  id="schema-de-mapreduce">
 
@@ -155,7 +155,7 @@ Source : <a href="http://commons.wikimedia.org/wiki/File:Mapreduce.png" target="
 
 </article></slide><slide class=''><hgroup><h2>Etapes Map et Reduce</h2></hgroup><article  id="etapes-map-et-reduce">
 
-<p>Comme indiqué, cela s&#39;articule autour de deux grandes étapes (<strong>Map</strong> et <strong>Reduce</strong>) : - Etape <strong>Map</strong> : - réalisé dans chaque noeud du cluster - souvent un seul des deux paramètres intéressant - calcule une liste de couples \(&lt; key, value &gt;\) - Etape <strong>Reduce</strong> : - traitement sur les valeurs (\(value\)) pour chaque \(key\) - travail possible en parallèle - tous les couples avec le même \(key\) arrivent au même <em>worker</em></p>
+<p>Comme indiqué, cela s&#39;articule autour de deux grandes étapes (<strong>Map</strong> et <strong>Reduce</strong>) :- Etape <strong>Map</strong> :- réalisé dans chaque noeud du cluster- souvent un seul des deux paramètres intéressant- calcule une liste de couples \(&lt; key, value &gt;\)- Etape <strong>Reduce</strong> :- traitement sur les valeurs (\(value\)) pour chaque \(key\)- travail possible en parallèle- tous les couples avec le même \(key\) arrivent au même <em>worker</em></p>
 
 </article></slide><slide class=''><hgroup><h2>Exemple basique : comptage de mots</h2></hgroup><article  id="exemple-basique-comptage-de-mots">
 
@@ -434,7 +434,7 @@ Source : <a href="http://blog.trifork.com/wp-content/uploads/2009/08/" target="_
 
 </article></slide><slide class=''><hgroup><h2><em>Fully Distributed EM for Very Large Datasets</em>, Jason Wolfe et al <a href='http://w01fe.com/berkeley/pubs/08-icml-em.pdf' title=''>lien</a></h2></hgroup><article  id="fully-distributed-em-for-very-large-datasets-jason-wolfe-et-al-lien">
 
-<p>Implémentation de EM selon trois topologies différentes : - <strong>MapReduce</strong> : - Etape E sur les données locales par chaque noeud - Reducer qui récupère les résultats et les agrègent pour les renvoyer aux noeuds - Etape M calculé sur les données locales par chaque noeud - <strong>AllPairs</strong> : - Approche décentralisée, et synchronisée - Chaque noeud renvoie à tous les autres noeuds ses résultats locaux - <strong>JunctionTree</strong> : - Réseau de noeuds sous forme d&#39;arbre de structure arbitraire - Résultats locaux renvoyés et retransmis par les noeuds intermédiaires de l&#39;arbre</p>
+<p>Implémentation de EM selon trois topologies différentes :- <strong>MapReduce</strong> :- Etape E sur les données locales par chaque noeud- Reducer qui récupère les résultats et les agrègent pour les renvoyer aux noeuds- Etape M calculé sur les données locales par chaque noeud- <strong>AllPairs</strong> :- Approche décentralisée, et synchronisée- Chaque noeud renvoie à tous les autres noeuds ses résultats locaux- <strong>JunctionTree</strong> :- Réseau de noeuds sous forme d&#39;arbre de structure arbitraire- Résultats locaux renvoyés et retransmis par les noeuds intermédiaires de l&#39;arbre</p>
 
 </article></slide><slide class=''><hgroup><h2>D&#39;autres voies encore</h2></hgroup><article  id="dautres-voies-encore">
 
