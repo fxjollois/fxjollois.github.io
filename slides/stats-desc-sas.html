@@ -256,6 +256,24 @@ run;</pre>
 
 </article></slide><slide class=''><hgroup><h2>Univarié - quali</h2></hgroup><article  id="univarie---quali-1">
 
+<h3><code>PROC FREQ</code> - diagramme en barres</h3>
+
+<ul>
+<li><code>plots</code> permet d&#39;afficher les diagrammes
+
+<ul>
+<li><code>freqplot</code> : diagramme en barres</li>
+<li>&#8230;</li>
+<li><code>all</code> : tous les diagrammes disponibles</li>
+</ul></li>
+</ul>
+
+<pre class = 'prettyprint lang-sas'>proc freq data=sashelp.cars;
+    tables Origin / plots=freqplot;
+run;</pre>
+
+</article></slide><slide class=''><hgroup><h2>Univarié - quali</h2></hgroup><article  id="univarie---quali-2">
+
 <h3><code>PROC SGPLOT</code> - Diagramme en barres ou équivalent</h3>
 
 <ul>
@@ -269,7 +287,7 @@ run;</pre>
 run;
 quit;</pre>
 
-</article></slide><slide class=''><hgroup><h2>Univarié - quali</h2></hgroup><article  id="univarie---quali-2">
+</article></slide><slide class=''><hgroup><h2>Univarié - quali</h2></hgroup><article  id="univarie---quali-3">
 
 <h3><code>PROC GCHART</code> - Diagramme circulaire</h3>
 
@@ -675,10 +693,10 @@ run; quit;</pre>
 
 <pre class = 'prettyprint lang-sas'>data cars_temp;
     set sashelp.cars;
-    jitter = rand(&#39;uniform&#39;)*.3
+    jitter = rand(&#39;uniform&#39;)*.3 +
         1*(Origin=&quot;Asia&quot;) + 2*(Origin=&quot;Europe&quot;) + 3*(Origin=&quot;USA&quot;);
 proc sgplot data = cars_temp;
-    scatter X=val Y=Invoice / group=Origin groupdisplay=cluster;
+    scatter X=jitter Y=Invoice / group=Origin groupdisplay=cluster;
     xaxis display=none;
 run; quit;</pre>
 

@@ -151,6 +151,21 @@ run;
 
 ## Univarié - quali
 
+### `PROC FREQ` - diagramme en barres
+
+- `plots` permet d'afficher les diagrammes
+	- `freqplot` : diagramme en barres
+	- ...
+	- `all` : tous les diagrammes disponibles
+
+```sas
+proc freq data=sashelp.cars;
+	tables Origin / plots=freqplot;
+run;
+```
+
+## Univarié - quali
+
 ### `PROC SGPLOT` - Diagramme en barres ou équivalent
 
 - `hbar` ou `vbar` pour définir les variables pour le diagramme en barres (resp. horizontales et verticales)
@@ -557,10 +572,10 @@ run; quit;
 ```sas
 data cars_temp;
 	set sashelp.cars;
-	jitter = rand('uniform')*.3
+	jitter = rand('uniform')*.3 +
 		1*(Origin="Asia") + 2*(Origin="Europe") + 3*(Origin="USA");
 proc sgplot data = cars_temp;
-	scatter X=val Y=Invoice / group=Origin groupdisplay=cluster;
+	scatter X=jitter Y=Invoice / group=Origin groupdisplay=cluster;
 	xaxis display=none;
 run; quit;
 ```
