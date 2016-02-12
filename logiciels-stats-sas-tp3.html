@@ -141,7 +141,7 @@ img {
 
 <div id="donnees" class="section level2">
 <h2>Données</h2>
-<p>Nous allons utiliser le jeu de données <code>prdsale</code> déjà présent dans la librairie <code>sashelp</code> dans <strong>SAS Studio</strong>. Il y a 1440 lignes et 10 colonnes dans cette table.</p>
+<p>Nous allons utiliser le jeu de données <code>prdsal2</code> déjà présent dans la librairie <code>sashelp</code> dans <strong>SAS Studio</strong>. Il y a 1440 lignes et 10 colonnes dans cette table.</p>
 <p>Voici le résultat de <code>proc contents</code> (permettant d’avoir des informations sur une table) :</p>
 <table>
 <thead>
@@ -157,75 +157,75 @@ img {
 <tbody>
 <tr class="odd">
 <td align="left">1</td>
+<td align="left">COUNTRY</td>
+<td align="left">Texte</td>
+<td align="left">10</td>
+<td align="left"><code>$</code>CHAR10.</td>
+<td align="left">Country</td>
+</tr>
+<tr class="even">
+<td align="left">2</td>
+<td align="left">STATE</td>
+<td align="left">Texte</td>
+<td align="left">22</td>
+<td align="left"><code>$</code>CHAR22.</td>
+<td align="left">State/Province</td>
+</tr>
+<tr class="odd">
+<td align="left">3</td>
+<td align="left">COUNTY</td>
+<td align="left">Texte</td>
+<td align="left">20</td>
+<td align="left"><code>$</code>CHAR20.</td>
+<td align="left">County</td>
+</tr>
+<tr class="even">
+<td align="left">4</td>
 <td align="left">ACTUAL</td>
 <td align="left">Num.</td>
 <td align="left">8</td>
 <td align="left">DOLLAR12.2</td>
 <td align="left">Actual Sales</td>
 </tr>
-<tr class="even">
-<td align="left">2</td>
+<tr class="odd">
+<td align="left">5</td>
 <td align="left">PREDICT</td>
 <td align="left">Num.</td>
 <td align="left">8</td>
 <td align="left">DOLLAR12.2</td>
 <td align="left">Predicted Sales</td>
 </tr>
-<tr class="odd">
-<td align="left">3</td>
-<td align="left">COUNTRY</td>
-<td align="left">Texte</td>
-<td align="left">10</td>
-<td align="left">$CHAR10.</td>
-<td align="left">Country</td>
-</tr>
-<tr class="even">
-<td align="left">4</td>
-<td align="left">REGION</td>
-<td align="left">Texte</td>
-<td align="left">10</td>
-<td align="left">$CHAR10.</td>
-<td align="left">Region</td>
-</tr>
-<tr class="odd">
-<td align="left">5</td>
-<td align="left">DIVISION</td>
-<td align="left">Texte</td>
-<td align="left">10</td>
-<td align="left">$CHAR10.</td>
-<td align="left">Division</td>
-</tr>
 <tr class="even">
 <td align="left">6</td>
 <td align="left">PRODTYPE</td>
 <td align="left">Texte</td>
 <td align="left">10</td>
-<td align="left">$CHAR10.</td>
-<td align="left">Product type</td>
+<td align="left"><code>$</code>CHAR10.</td>
+<td align="left">Product Type</td>
 </tr>
 <tr class="odd">
 <td align="left">7</td>
 <td align="left">PRODUCT</td>
 <td align="left">Texte</td>
 <td align="left">10</td>
-<td align="left">$CHAR10.</td>
+<td align="left"><code>$</code>CHAR10.</td>
 <td align="left">Product</td>
 </tr>
 <tr class="even">
 <td align="left">8</td>
-<td align="left">QUARTER</td>
-<td align="left">Num.</td>
-<td align="left">8</td>
-<td align="left">8.</td>
-<td align="left">Quarter</td>
-</tr>
-<tr class="odd">
-<td align="left">9</td>
 <td align="left">YEAR</td>
 <td align="left">Num.</td>
 <td align="left">8</td>
 <td align="left">4.</td>
 <td align="left">Year</td>
+</tr>
+<tr class="odd">
+<td align="left">9</td>
+<td align="left">QUARTER</td>
+<td align="left">Num.</td>
+<td align="left">8</td>
+<td align="left">8.</td>
+<td align="left">Quarter</td>
 </tr>
 <tr class="even">
 <td align="left">10</td>
@@ -234,6 +234,14 @@ img {
 <td align="left">8</td>
 <td align="left">MONNAME3.</td>
 <td align="left">Month</td>
+</tr>
+<tr class="odd">
+<td align="left">11</td>
+<td align="left">MONYR</td>
+<td align="left">Num.</td>
+<td align="left">8</td>
+<td align="left">MONYY.</td>
+<td align="left">MONYY. Month/Year</td>
 </tr>
 </tbody>
 </table>
@@ -248,10 +256,10 @@ img {
 <li><code>ACTUAL</code> et chacune des autres variables de la table</li>
 <li>idem pour <code>PREDICT</code></li>
 </ul></li>
-<li>Décrire les différences entre <code>ACTUAL</code> et <code>PREDICT</code>, et chacune des autres variables de la table
+<li>Décrire les lien entre <code>ACTUAL</code> et <code>PREDICT</code>, et chacune des autres variables de la table
 <ul>
 <li>il existe plusieurs moyens de représenter chaque lien</li>
-<li>n’hésiter à en essayer plusieurs pour trouver la plus représentative</li>
+<li>ne pas hésiter à en essayer plusieurs pour trouver la plus représentative</li>
 </ul></li>
 </ol>
 </div>
