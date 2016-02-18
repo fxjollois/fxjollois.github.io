@@ -1,0 +1,31 @@
+---
+title: "Classification non-supervisée avec Modèles de mélange"
+author: "FX Jollois"
+date: "CNAM - mars 2016"
+output: ioslides_presentation
+---
+
+## Plan
+
+## Classification non-supervisée
+
+## Modèles de mélange
+
+### Cadre général
+
+### Gaussien
+
+### Binaire
+
+### Multinomial
+
+## Algorithmes
+
+### EM
+
+### CEM
+
+### SEM ?
+
+## Utilisation dans `R`
+

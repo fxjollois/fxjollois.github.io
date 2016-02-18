@@ -10,7 +10,7 @@
 
 
 
-<title>Logiciels stats - SAS - TP1</title>
+<title>Logiciels stats - SAS - TP4</title>
 
 <script src="libs/jquery-1.11.0/jquery.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -104,6 +104,9 @@ img {
         <li class="dropdown">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button">Enseignement <span class="caret"></span></a>
           <ul class="dropdown-menu">
+            <li><a href="enseignement.html">Informations</a></li>
+            <li><a href="supports.html">Supports</a></li>
+            <li role="separator" class="divider"></li>
             <li class="dropdown-header">DUT 1ère année</li>
             <li><a href="interrogation-donnees.html">Interrogation de données</a></li>
             <li><a href="reporting.html">Reporting</a></li>
@@ -135,11 +138,32 @@ img {
 <div class="contenu">
 
 <div id="header">
-<h1 class="title">Logiciels stats - SAS - TP1</h1>
+<h1 class="title">Logiciels stats - SAS - TP4</h1>
 </div>
 
 
-
+<div id="donnees" class="section level2">
+<h2>Données</h2>
+<p>Nous allons travailler sur le jeu de données <code>us_data</code> disponible dans la librairie <code>sashelp</code> de SAS, basé sur les <a href="http://www.census.gov/2010census/data/">données de l’US Census 2010</a>.</p>
+<p>Ce jeu de données concernent les états des USA, sur plusieurs dizaines d’indicateurs, sur la population, de 1910 à 2010.</p>
+</div>
+<div id="travail-a-faire" class="section level2">
+<h2>Travail à faire</h2>
+<ul>
+<li>Analyser les états en fonction de leur population (variables <code>POPULATION_xxxx</code>) à l’aide
+<ul>
+<li>d’une ACP (essayer avec standardisation et sans)</li>
+<li>d’une AFC</li>
+</ul></li>
+<li>Faire de même pour la densité (variables <code>DENSITY_xxxx</code>)</li>
+<li>Faire une partition en un nombre de classes adapté sur chaque ensemble de données précédent
+<ul>
+<li>Choisir le nombre de classes à l’aide de la CAH</li>
+<li>Affiner la partition avec <span class="math inline">\(k\)</span>-means (en l’initialisant avec les centres des classes obtenus précédemment)</li>
+<li>Comparer les deux partitions obtenues entre elles, et avec les régions et les divisions présentes dans les données</li>
+</ul></li>
+</ul>
+</div>
 
 </div>
 <div class="footer">
