@@ -24,8 +24,8 @@ Ce cours a pour but d'introduire deux logiciels statistiques majeurs du marché 
 2. [#](logiciels-stats-sas-tp2.html)Manipulation de données
 3. [#](logiciels-stats-sas-tp3.html)Statistiques descriptives
 4. [#](logiciels-stats-sas-tp4.html)Statistiques exploratoires
-5. [#]()Récapitulatif
-6. [#]()TP noté
+5. [#](logiciels-stats-sas-tp5.html)Récapitulatif
+6. [#](logiciels-stats-sas-tp6.html)TP noté
 
 ### R
 
