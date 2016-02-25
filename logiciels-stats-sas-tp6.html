@@ -10,7 +10,7 @@
 
 
 
-<title>Logiciels stats - SAS - TP1</title>
+<title>Logiciels stats - SAS - TP6</title>
 
 <script src="libs/jquery-1.11.0/jquery.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -138,11 +138,123 @@ img {
 <div class="contenu">
 
 <div id="header">
-<h1 class="title">Logiciels stats - SAS - TP1</h1>
+<h1 class="title">Logiciels stats - SAS - TP6</h1>
 </div>
 
 
-
+<div id="donnees" class="section level2">
+<h2>Données</h2>
+<p>Nou allons travailler sur les données présentes dans les fichiers suivants (présents dans le répertoire <code>/courses/dee4fb65ba27fe300/CA/</code>), avec un petit explicatif de certaines variables (les autres pouvant se déduire assez facilement) :</p>
+<ul>
+<li><code>ca.csv</code> :
+<ul>
+<li><code>ca</code> : chiffre d’affaires des ventes correspondant au mois, au groupe et à la provenance indiquée</li>
+</ul></li>
+<li><code>groupe.csv</code> :
+<ul>
+<li><code>departement</code> &gt; <code>groupe</code> &gt; <code>sous-groupe</code> (un sous-groupe fait partie d’un groupe, qui fait lui-même partie d’un département)</li>
+</ul></li>
+<li><code>mois.csv</code></li>
+<li><code>provenance.csv</code> :
+<ul>
+<li><code>provenance</code> de la vente</li>
+</ul></li>
+</ul>
+<p>On a donc dans ces tables les chiffres d’affaires (ou CA) des ventes de janvier 2003 à décembre 2004, pour des provenances diverses et pour des groupes différents (plus spécifiquement, on va jusqu’au détail sous-groupe, mais qu’on peut regrouper par groupe, puis par département).</p>
+<p>Voici les correspondances entre les attributs de la table <code>ca</code> et les attributs des autres tables pour les jointures :</p>
+<table>
+<thead>
+<tr class="header">
+<th align="left"><code>ca</code></th>
+<th align="left">Table</th>
+<th align="left">Attribut de jointure</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left"><code>groupe_no</code></td>
+<td align="left"><code>groupe</code></td>
+<td align="left"><code>no</code></td>
+</tr>
+<tr class="even">
+<td align="left"><code>mois_no</code></td>
+<td align="left"><code>mois</code></td>
+<td align="left"><code>no</code></td>
+</tr>
+<tr class="odd">
+<td align="left"><code>prov_no</code></td>
+<td align="left"><code>provenance</code></td>
+<td align="left"><code>no</code></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="travail-a-faire" class="section level2">
+<h2>Travail à faire</h2>
+<div id="importation-2-points" class="section level3">
+<h3>Importation (2 points)</h3>
+<p>Importer les données dans quatre tables - une table par fichier donc.</p>
+<p><strong>Bonus</strong> : écrire une macro simplifiant cette étape d’importation (<em>1 point</em>)</p>
+</div>
+<div id="manipulation-de-donnees-10-points" class="section level3">
+<h3>Manipulation de données (10 points)</h3>
+<p>Traiter les demandes suivantes en <strong>créant les tables</strong> <code>demandeX</code> (avec <code>X</code> étant le numéro de la demande), en créant toutes les tables intermédiaires qu’ils vous semblent nécessaires :</p>
+<ol style="list-style-type: decimal">
+<li>Somme, Moyenne, médiane, minimum, maximum, premier et troisième quartile du CA (au global donc) - <em>1 point</em></li>
+<li>Somme des CA par provenance - <em>1 point</em></li>
+<li>Somme des CA par département et par groupe - <em>1 point</em></li>
+<li>Somme des CA par provenance, pour 2004 uniquement - <em>2 point</em></li>
+<li>Somme des CA par département, pour 2003 d’un côté et pour 2004 de l’autre (2 colonnes à avoir donc) - <em>2 points</em>
+<ul>
+<li>Table résultante avec
+<ul>
+<li>en ligne : les départements</li>
+<li>en colonne : somme CA 2003 et somme CA 2004</li>
+</ul></li>
+</ul></li>
+<li>Différence des sommes de CA entre 2003 et 2004, pour chaque mois et pour chaque provenance - <em>3 points</em>
+<ul>
+<li>Table résultante avec
+<ul>
+<li>en ligne : les provenance</li>
+<li>en colonne : les mois</li>
+<li>une cellule : différence entre 2003 et 2004 pour un mois et une provenance précise</li>
+</ul></li>
+</ul></li>
+</ol>
+</div>
+<div id="statistiques-descriptives-5-points" class="section level3">
+<h3>Statistiques descriptives (5 points)</h3>
+<p>Traiter les demandes suivantes en <strong>créant les graphiques</strong> ayant pour titre <code>graphiqueX</code> (avec <code>X</code> étant le numéro du graphique), en créant toutes les tables intermédiaires qu’ils vous semblent nécessaires :</p>
+<ol style="list-style-type: decimal">
+<li>Evolution par mois de la somme des CA pour 2003 et pour 2004, globalement - <em>1 point</em></li>
+<li>Idem, mais pour chaque département - <em>1.5 point</em></li>
+<li>Carte de couleur (<em>heatmap</em>) pour les mois de 2004 (en abcisse), et pour les provenances (en ordonnée), représentant les sommes de CA dans chaque cellule - <em>1.5 points</em></li>
+</ol>
+</div>
+<div id="statistiques-exploratoires-3-points" class="section level3">
+<h3>Statistiques exploratoires (3 points)</h3>
+<p>Sur la table <code>demande6</code> :</p>
+<ol style="list-style-type: decimal">
+<li>Faire une ACP et une AFC, et produire les premiers plans factoriel de chaque analyse - <em>1.5 point</em></li>
+<li>Faire une CAH sur les départements et afficher les graphiques permettant de choisir du nombre de classes - <em>1.5 point</em></li>
+</ol>
+</div>
+</div>
+<div id="rendu" class="section level2">
+<h2>Rendu</h2>
+<p>Vous devez suivre les indications suivantes :</p>
+<ul>
+<li>Envoyer votre code SAS par courriel :
+<ul>
+<li>adresse : <code>francois - xavier . jollois [@] parisdescartes . fr</code></li>
+<li>supprimer les espaces et les <code>[]</code></li>
+</ul></li>
+<li>Commenter votre code SAS pour décrire les différentes étapes effectuées</li>
+<li>Travail autonome : en cas de copie flagrante, les notes seront divisées par autant de TP identiques</li>
+<li>Respecter <strong>très strictement</strong> les consignes</li>
+</ul>
+</div>
 
 </div>
 <div class="footer">
