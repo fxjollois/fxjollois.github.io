@@ -19,27 +19,27 @@ Vous devez importer les fichiers texte qui suivent. Vous pouvez y accéder via l
 /courses/dee4fb65ba27fe300/fichier.ext
 ```
 
-[`Iris.txt`](logiciels-stats/sas-tp1/Iris.txt)
+[`Iris.txt`](logiciels-stats/Iris.txt)
 
 Pas de difficulté majeure, si ce n'est la taille de la variable `Species` (des valeurs ont plus de 8 caractères).
 
-<object data="logiciels-stats/sas-tp1/Iris.txt" type="text/plain" class="fichier">
+<object data="logiciels-stats/Iris.txt" type="text/plain" class="fichier">
     impossible à afficher
 </object>
       
-[`heart.txt`](logiciels-stats/sas-tp1/heart.txt)Ici non plus, pas de difficulté. Le séparateur est la tabulation (`'09'x` pour SAS). 
+[`heart.txt`](logiciels-stats/heart.txt)Ici non plus, pas de difficulté. Le séparateur est la tabulation (`'09'x` pour SAS). 
 
 Utiliser la procédure `IMPORT` ici.
-<object data="logiciels-stats/sas-tp1/heart.txt" type="text/plain" class="fichier">
+<object data="logiciels-stats/heart.txt" type="text/plain" class="fichier">
     impossible à afficher
 </object>
 
-[`Detroit_homicide.txt`](logiciels-stats/sas-tp1/Detroit_homicide.txt)Ici, les premières lignes ne sont pas à prendre en considération lors de l'importation. Et nous avons des `labels` pour les variables.<object data="logiciels-stats/sas-tp1/Detroit_homicide.txt" type="text/plain" class="fichier">
+[`Detroit_homicide.txt`](logiciels-stats/Detroit_homicide.txt)Ici, les premières lignes ne sont pas à prendre en considération lors de l'importation. Et nous avons des `labels` pour les variables.<object data="logiciels-stats/Detroit_homicide.txt" type="text/plain" class="fichier">
     impossible à afficher
 </object>
 
-[`hepatitis.TXT`](logiciels-stats/sas-tp1/hepatitis.TXT)Attention à l'indicateur de données manquantes (`?` dans ce fichier).
-<object data="logiciels-stats/sas-tp1/hepatitis.TXT" type="text/plain" class="fichier">
+[`hepatitis.TXT`](logiciels-stats/hepatitis.TXT)Attention à l'indicateur de données manquantes (`?` dans ce fichier).
+<object data="logiciels-stats/hepatitis.TXT" type="text/plain" class="fichier">
     impossible à afficher
 </object>      
 

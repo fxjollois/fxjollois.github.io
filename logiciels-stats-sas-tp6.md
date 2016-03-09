@@ -64,7 +64,7 @@ Traiter les demandes suivantes en **créant les graphiques** ayant pour titre `g
 Sur la table `demande6` :
 
 1. Faire une ACP et une AFC, et produire les premiers plans factoriel de chaque analyse - *1.5 point*
-2. Faire une CAH sur les départements et afficher les graphiques permettant de choisir du nombre de classes - *1.5 point*
+2. Faire une CAH sur les provenances et afficher les graphiques permettant de choisir du nombre de classes - *1.5 point*
 
 
 ## Rendu

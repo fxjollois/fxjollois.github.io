@@ -1,4 +1,5 @@
 ioslides_presentation:
+  widescreen: true
   self_contained: false
   lib_dir: libs
   include:

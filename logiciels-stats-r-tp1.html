@@ -10,7 +10,7 @@
 
 
 
-<title>Logiciels stats</title>
+<title>Logiciels stats - R - TP1</title>
 
 <script src="libs/jquery-1.11.0/jquery.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -138,55 +138,60 @@ img {
 <div class="contenu">
 
 <div id="header">
-<h1 class="title">Logiciels stats</h1>
+<h1 class="title">Logiciels stats - R - TP1</h1>
 </div>
 
 
-<p>Ce cours a pour but d’introduire deux logiciels statistiques majeurs du marché :</p>
-<ul>
-<li><a href="http://www.sas.com">SAS</a>
-<ul>
-<li><a href="https://odamid.oda.sas.com/">SAS On Demand For Academics</a> : interface web permettant d’utiliser l’application web <strong>SAS Studio</strong></li>
-<li><a href="https://odamid.oda.sas.com/SASODAControlCenter/enroll.html?enroll=5987151c-9317-479b-889e-9e696608d9cb">Inscription à mon cours Logiciels Stats</a> sous <em>SAS On Demand for Academics</em>) : pour pouvoir accéder aux données et aux solutions des TP<br />
-</li>
-<li><a href="slides/langage-sas.html">Langage SAS</a></li>
-<li>Interrogation de données
-<ul>
-<li><a href="slides/interrogation-concepts.html">Concepts</a></li>
-<li><a href="slides/interrogation-sas.html">Sous SAS</a></li>
-</ul></li>
-<li><a href="slides/stats-desc-sas.html">Statistiques descriptives</a></li>
-<li><a href="slides/stats-explo-sas.html">Statistiques exploratoires</a></li>
-</ul></li>
-<li><a href="http://www.r-project.org">R</a>
-<ul>
-<li><a href="slides/langage-r.html">Langage R</a></li>
-</ul></li>
-</ul>
-<div id="tps" class="section level2">
-<h2>TPs</h2>
-<div id="sas" class="section level3">
-<h3>SAS</h3>
-<ol style="list-style-type: decimal">
-<li><a href="logiciels-stats-sas-tp1.html">#</a>Découverte du logiciel et du langage</li>
-<li><a href="logiciels-stats-sas-tp2.html">#</a>Manipulation de données</li>
-<li><a href="logiciels-stats-sas-tp3.html">#</a>Statistiques descriptives</li>
-<li><a href="logiciels-stats-sas-tp4.html">#</a>Statistiques exploratoires</li>
-<li><a href="logiciels-stats-sas-tp5.html">#</a>Récapitulatif</li>
-<li><a href="logiciels-stats-sas-tp6.html">#</a>TP noté</li>
-</ol>
+<style>
+.fichier {
+    width: 100%;
+    height: 100px;
+)
+</style>
+<p>Le but de ce TP est de commencer à manipuler les fichiers, et les <code>data.frame</code> <strong>R</strong> pour se familiariser avec le langage.</p>
+<div id="importation-de-fichiers" class="section level2">
+<h2>Importation de fichiers</h2>
+<p>Vous devez importer les fichiers texte qui suivent, après les avoir enregistrer et placer dans un répertoire spécifique de préférence.</p>
+<p><a href="logiciels-stats/Iris.txt"><code>Iris.txt</code></a></p>
+<p>Pas de difficulté majeure, si ce n’est la taille de la variable <code>Species</code> (des valeurs ont plus de 8 caractères).</p>
+<object data="logiciels-stats/Iris.txt" type="text/plain" class="fichier">
+<pre><code>impossible à afficher</code></pre>
+</object>
+<p><a href="logiciels-stats/heart.txt"><code>heart.txt</code></a></p>
+<p>Ici non plus, pas de difficulté. Le séparateur est la tabulation (<code>\t</code> en R).</p>
+<object data="logiciels-stats/heart.txt" type="text/plain" class="fichier">
+<pre><code>impossible à afficher</code></pre>
+</object>
+<p><a href="logiciels-stats/Detroit_homicide.txt"><code>Detroit_homicide.txt</code></a></p>
+<p>Ici, les premières lignes ne sont pas à prendre en considération lors de l’importation. Et nous avons des <code>labels</code> pour les variables.</p>
+<object data="logiciels-stats/Detroit_homicide.txt" type="text/plain" class="fichier">
+<pre><code>impossible à afficher</code></pre>
+</object>
+<p><a href="logiciels-stats/hepatitis.TXT"><code>hepatitis.TXT</code></a></p>
+<p>Attention à l’indicateur de données manquantes (<code>?</code> dans ce fichier).</p>
+<object data="logiciels-stats/hepatitis.TXT" type="text/plain" class="fichier">
+<pre><code>impossible à afficher</code></pre>
+</object>
 </div>
-<div id="r" class="section level3">
-<h3>R</h3>
+<div id="complements-de-langage" class="section level2">
+<h2>Compléments de langage</h2>
+<p>Reprendre l’importation du fichier <code>heart.txt</code> (cf ci-dessus), et répondre aux questions suivantes en complétant le code précédemment écrit.</p>
 <ol style="list-style-type: decimal">
-<li><a href="logiciels-stats-r-tp1.html">#</a>Découverte du logiciel et du langage</li>
-<li><a href="">#</a>Manipulation de données</li>
-<li><a href="">#</a>Statistiques descriptives</li>
-<li><a href="">#</a>Statistiques exploratoires</li>
-<li><a href="">#</a>Récapitulatif</li>
-<li><a href="">#</a>TP noté</li>
+<li>Créer une indicatrice binaire <code>FALSE/TRUE</code> pour la présence ou non de problème de coeur (dernière variable)</li>
+<li>Créer une variable comptant le nombre de fois où une variable est égale à <code>A</code> (entre <code>type_douleur</code>, <code>sucre</code>, <code>electro</code>, et <code>vaisseau</code>)</li>
+<li>Créer une variable <code>factor</code> à partir de l’indicatrice binaire faite au point 1 avec comme labels des modalités <code>presence</code> pour <code>TRUE</code> et <code>absence</code> pour <code>FALSE</code></li>
+<li>Créer un nouveau <code>data.frame</code> avec uniquement les individus ayant strictement moins de 60 ans</li>
+<li>Créer maintenant, à partir du précédent, deux <code>data.frames</code> :
+<ul>
+<li>une pour les hommes</li>
+<li>une autre pour les femmes</li>
+</ul></li>
 </ol>
-</div>
+<p>Reprendre l’importation du fichier <code>detroit_homicide.txt</code> (cf ci-dessus)</p>
+<ol style="list-style-type: decimal">
+<li>Intégrer le texte introductif dans un attribut du <code>data.frame</code></li>
+<li>Intégrer les labels des variables dans un autre attribut, sous forme de <code>data.frame</code> à deux colonnes</li>
+</ol>
 </div>
 
 </div>

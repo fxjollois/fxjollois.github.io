@@ -4,10 +4,10 @@ title: Langage SAS
 
 ## Le logiciel
 
-[SAS](http://www.sas.com) :
+[**SAS**](http://www.sas.com) :
 
 - acteur majeur sur le marché des logiciels de statistiques
-- outil principal : SAS Base ou SAS Studio (en ligne)
+- outil principal : **SAS Base** ou **SAS Studio** (en ligne)
     - langage propriétaire
     - scripts à exécuter (tout ou partie au choix)
     - 3 parties importantes :
