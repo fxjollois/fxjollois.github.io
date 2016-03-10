@@ -15,6 +15,7 @@ Ce cours a pour but d'introduire deux logiciels statistiques majeurs du marché 
     - [Statistiques exploratoires](slides/stats-explo-sas.html)
 - [R](http://www.r-project.org)
     - [Langage R](slides/langage-r.html)
+    - [Interrogation de données R](slides/interrogation-r.html)
 
 ## TPs
 
@@ -29,8 +30,8 @@ Ce cours a pour but d'introduire deux logiciels statistiques majeurs du marché 
 
 ### R
 
-1. [#](logiciels-stats-r-tp1.html)Découverte du logiciel et du langage
-2. [#]()Manipulation de données
+1. [#](logiciels-stats-r-tp1.html)Découverte du logiciel et du langage ([solution](logiciels-stats/tp1.R))
+2. [#](logiciels-stats-r-tp2.html)Manipulation de données
 3. [#]()Statistiques descriptives
 4. [#]()Statistiques exploratoires
 5. [#]()Récapitulatif

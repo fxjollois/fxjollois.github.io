@@ -10,7 +10,7 @@
 
 
 
-<title>Logiciels stats</title>
+<title>Logiciels stats - R - TP2</title>
 
 <script src="libs/jquery-1.11.0/jquery.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -138,54 +138,110 @@ img {
 <div class="contenu">
 
 <div id="header">
-<h1 class="title">Logiciels stats</h1>
+<h1 class="title">Logiciels stats - R - TP2</h1>
 </div>
 
 
-<p>Ce cours a pour but d’introduire deux logiciels statistiques majeurs du marché :</p>
-<ul>
-<li><a href="http://www.sas.com">SAS</a>
-<ul>
-<li><a href="https://odamid.oda.sas.com/">SAS On Demand For Academics</a> : interface web permettant d’utiliser l’application web <strong>SAS Studio</strong></li>
-<li><a href="https://odamid.oda.sas.com/SASODAControlCenter/enroll.html?enroll=5987151c-9317-479b-889e-9e696608d9cb">Inscription à mon cours Logiciels Stats</a> sous <em>SAS On Demand for Academics</em>) : pour pouvoir accéder aux données et aux solutions des TP<br />
-</li>
-<li><a href="slides/langage-sas.html">Langage SAS</a></li>
-<li>Interrogation de données
-<ul>
-<li><a href="slides/interrogation-concepts.html">Concepts</a></li>
-<li><a href="slides/interrogation-sas.html">Sous SAS</a></li>
-</ul></li>
-<li><a href="slides/stats-desc-sas.html">Statistiques descriptives</a></li>
-<li><a href="slides/stats-explo-sas.html">Statistiques exploratoires</a></li>
-</ul></li>
-<li><a href="http://www.r-project.org">R</a>
-<ul>
-<li><a href="slides/langage-r.html">Langage R</a></li>
-<li><a href="slides/interrogation-r.html">Interrogation de données R</a></li>
-</ul></li>
-</ul>
-<div id="tps" class="section level2">
-<h2>TPs</h2>
-<div id="sas" class="section level3">
-<h3>SAS</h3>
+<div id="base-de-donnees-utilisee" class="section level2">
+<h2>Base de données utilisée</h2>
+<p>Nous allons utiliser dans ce TP une base de données classique, <code>Gymnase2000</code>. Cette base de données concernent des sportifs, des sports et des gymnases. Un sportif peut jouer, arbitrer et/ou entraîner un ou plusieurs sports (ou aucun). Dans un gymnase, il peut y avoir une ou plusieurs séances d’un sport, avec un entraîneur spécifié.</p>
+<p>Vous pouvez accéder aux tables de cette base de données via le chargement du fichier <code>Gymnase2000.RData</code> avec la commande <code>load()</code> dans <strong>R</strong>. Le fichier est disponible <a href="https://drive.google.com/folderview?id=0BzA8L2nqa1n5NXZBTHJnclFZMDA&amp;usp=drive_web">ici</a>.</p>
+</div>
+<div id="exemples" class="section level2">
+<h2>Exemples</h2>
+<div id="sportifs-identifiant-nom-et-prenom-entre-20-et-30-ans" class="section level3">
+<h3>Sportifs (identifiant, nom et prénom) entre 20 et 30 ans ?</h3>
+<pre class="r"><code>subset(Sportifs, 
+       subset = Age &gt; 20 &amp; Age &lt; 30, 
+       select = c(IdSportif, Nom, Prenom)
+       )</code></pre>
+</div>
+<div id="gymnases-avec-des-seances-le-dimanche" class="section level3">
+<h3>Gymnases avec des séances le dimanche</h3>
+<pre class="r"><code># avec jointure
+unique(
+    subset(
+        merge(Gymnases, Seances),
+        subset = tolower(Jour) == &quot;dimanche&quot;,
+        select = c(Ville, NomGymnase)
+    )
+)
+# sans jointure
+subset(Gymnases,
+       subset = IdGymnase %in% subset(Seances, subset = tolower(Jour) == &quot;dimanche&quot;)$IdGymnase,
+       select = c(Ville, NomGymnase)
+)</code></pre>
+</div>
+<div id="nom-et-prenom-du-conseiller-de-kervadec" class="section level3">
+<h3>Nom et prénom du conseiller de “Kervadec”</h3>
+<pre class="r"><code># avec jointure
+subset(
+    merge(
+        subset(Sportifs, subset = Nom == &quot;KERVADEC&quot;, select = c(Nom, IdSportifConseiller)),
+        Sportifs,
+        by.x = &quot;IdSportifConseiller&quot;,
+        by.y = &quot;IdSportif&quot;
+    ),
+    select = c(Nom.y, Prenom)
+)
+# sans jointure
+subset(
+    Sportifs,
+    subset = IdSportif == subset(Sportifs, subset = Nom == &quot;KERVADEC&quot;)$IdSportifConseiller,
+    select = c(Nom, Prenom)
+)</code></pre>
+</div>
+<div id="dans-quels-gymnases-et-quels-jours-y-a-t-il-des-seances-de-hand-ball" class="section level3">
+<h3>Dans quels gymnases et quels jours y a t-il des séances de hand ball ?</h3>
+<pre class="r"><code>unique(
+    transform(
+        subset(
+            merge(Gymnases, Seances),
+            subset = IdSport == subset(Sports, subset = Libelle == &quot;Hand ball&quot;)$IdSport,
+            select = c(Ville, NomGymnase, Jour)
+        ),
+        Jour = tolower(Jour)
+    )
+)</code></pre>
+</div>
+<div id="gymnases-avec-la-plus-petite-superficie" class="section level3">
+<h3>Gymnases avec la plus petite superficie</h3>
+<pre class="r"><code># avec calcul direct
+subset(
+    Gymnases,
+    subset = Surface == min(Gymnases$Surface)
+)
+# avec jointure et calcul d&#39;agrégat
+merge(
+    Gymnases,
+    aggregate(Surface ~ 1, data = Gymnases, min)
+)</code></pre>
+</div>
+</div>
+<div id="questions" class="section level2">
+<h2>Questions</h2>
+<div id="recuperation-de-donnees-simples" class="section level3">
+<h3>Récupération de données simples</h3>
 <ol style="list-style-type: decimal">
-<li><a href="logiciels-stats-sas-tp1.html">#</a>Découverte du logiciel et du langage</li>
-<li><a href="logiciels-stats-sas-tp2.html">#</a>Manipulation de données</li>
-<li><a href="logiciels-stats-sas-tp3.html">#</a>Statistiques descriptives</li>
-<li><a href="logiciels-stats-sas-tp4.html">#</a>Statistiques exploratoires</li>
-<li><a href="logiciels-stats-sas-tp5.html">#</a>Récapitulatif</li>
-<li><a href="logiciels-stats-sas-tp6.html">#</a>TP noté</li>
+<li>Quels sont les gymnases de “Villetaneuse” ou de “Sarcelles” qui ont une surface de plus de 400 m2 ?</li>
+<li>Quels sportifs n’ont pas de conseillers ?</li>
+<li>Quels sportifs (identifiant et nom) ne jouent aucun sport ?</li>
+<li>Quels sont les sportifs qui sont aussi des conseillers ?</li>
+<li>Quels sont les entraîneurs qui sont aussi joueurs ?</li>
+<li>Quels sont les sportifs (identifiant et nom) qui jouent du hand ball ?</li>
+<li>Dans quels gymnases peut-on jouer au hockey le mercredi apres 15H ?</li>
 </ol>
 </div>
-<div id="r" class="section level3">
-<h3>R</h3>
+<div id="calcul-dagregats" class="section level3">
+<h3>Calcul d’agrégats</h3>
 <ol style="list-style-type: decimal">
-<li><a href="logiciels-stats-r-tp1.html">#</a>Découverte du logiciel et du langage (<a href="logiciels-stats/tp1.R">solution</a>)</li>
-<li><a href="logiciels-stats-r-tp2.html">#</a>Manipulation de données</li>
-<li><a href="">#</a>Statistiques descriptives</li>
-<li><a href="">#</a>Statistiques exploratoires</li>
-<li><a href="">#</a>Récapitulatif</li>
-<li><a href="">#</a>TP noté</li>
+<li>Quelle est la moyenne d’âge des sportives qui jouent du basket ball ?</li>
+<li>Pour chaque sportif donner le nombre de sports qu’il joue.</li>
+<li>Pour chaque gymnase de Montmorency : quel est le nombre de séances journalières de chaque sport propose ?</li>
+<li>Pour chaque entraîneurs de hand ball quel est le nombre de séances journalières qu’il assure ?</li>
+<li>A partir de la réponse à la question 2, ajouter le nombre de sports qu’il arbitre et qu’il entraîne. On veut avoir tous les sportifs dans le tableau final.</li>
+<li>Quels sont les sportifs les plus jeunes ?</li>
+<li>Pour chaque gymnase de Stains donner par jour d’ouverture les horaires des premières et dernières séances</li>
 </ol>
 </div>
 </div>
