@@ -177,8 +177,11 @@ subset(Gymnases,
 <pre class="r"><code># avec jointure
 subset(
     merge(
-        subset(Sportifs, subset = Nom == &quot;KERVADEC&quot;, select = c(Nom, IdSportifConseiller)),
-        Sportifs,
+        subset(Sportifs, 
+               subset = Nom == &quot;KERVADEC&quot;, 
+               select = c(Nom, IdSportifConseiller)),
+        subset(Sportifs,
+               select = -IdSportifConseiller),
         by.x = &quot;IdSportifConseiller&quot;,
         by.y = &quot;IdSportif&quot;
     ),

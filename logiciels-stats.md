@@ -31,7 +31,7 @@ Ce cours a pour but d'introduire deux logiciels statistiques majeurs du marché 
 ### R
 
 1. [#](logiciels-stats-r-tp1.html)Découverte du logiciel et du langage ([solution](logiciels-stats/tp1.R))
-2. [#](logiciels-stats-r-tp2.html)Manipulation de données
+2. [#](logiciels-stats-r-tp2.html)Manipulation de données ([solution](logiciels-stats/tp2.R))
 3. [#]()Statistiques descriptives
 4. [#]()Statistiques exploratoires
 5. [#]()Récapitulatif

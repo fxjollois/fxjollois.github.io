@@ -44,8 +44,11 @@ subset(Gymnases,
 # avec jointure
 subset(
     merge(
-        subset(Sportifs, subset = Nom == "KERVADEC", select = c(Nom, IdSportifConseiller)),
-        Sportifs,
+        subset(Sportifs, 
+               subset = Nom == "KERVADEC", 
+               select = c(Nom, IdSportifConseiller)),
+        subset(Sportifs,
+               select = -IdSportifConseiller),
         by.x = "IdSportifConseiller",
         by.y = "IdSportif"
     ),
