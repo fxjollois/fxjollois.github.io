@@ -10,7 +10,7 @@
 
 
 
-<title>FX Jollois</title>
+<title>BD avancées - TP1</title>
 
 <script src="libs/jquery-1.11.0/jquery.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -139,29 +139,74 @@ img {
 <div class="contenu">
 
 <div id="header">
-<h1 class="title">FX Jollois</h1>
+<h1 class="title">BD avancées - TP1</h1>
 </div>
 
 
-<div id="presentation" class="section level2">
-<h2>Présentation</h2>
-<p>Enseignant-chercheur en informatique, mon domaine de compétence se situe à la frontière entre l’informatique et la statistique. J’enseigne dans le département <a href="http://www.stid-paris.fr/">STID</a> de l’<a href="http://www.iut.parisdescartes.fr">IUT Paris Descartes</a>. J’effectue ma recherche dans l’équipe Fouille de données du <a href="http://www.lipade.fr">LIPADE</a>, dans l’équipe <a href="http://www.math-info.univ-paris5.fr/~nadifmoh/Accueil.html#">MLDS</a>.</p>
-<p>Pour votre information, ce site étant encore en construction, certains liens ne sont pas accessibles, et certaines pages sont encore en cours de réalisation.</p>
-</div>
-<div id="informations-sur-le-contenu-du-site" class="section level2">
-<h2>Informations sur le contenu du site</h2>
-<ul>
-<li>Dans la partie <a href="enseignement.html">Enseignement</a>, vous trouverez un ensemble de documents de cours : des études de cas plus ou moins liées à mes cours.</li>
-<li>Dans la partie <a href="recherche.html">Recherche</a>, vous trouverez mes thématiques de recherche, ainsi que mes <a href="publications.html">publications</a>.</li>
-</ul>
-</div>
-<div id="quelques-liens-interessants" class="section level2">
-<h2>Quelques liens intéressants</h2>
-<ul>
-<li><a href="https://sites.google.com/site/groupeecais/">ECAIS</a> : groupe de travail de l’IUT Paris Descartes, regroupant des informaticiens et des statisticiens ;</li>
-<li><a href="http://www.stid-france.fr/">STID-France</a> : ensemble des départements STID de France ;</li>
-<li><a href="http://www.sfds.asso.fr/323-Rendez_vous_SFdS_Methodes_et_Logiciels">Groupe Méthodes &amp; Logiciels</a> : séminaires d’échanges sur différentes thématiques autour de la statistique, intégrant des aspects méthodologiques et pratiques.</li>
-</ul>
+<p>Dans ce TP, nous allons reprendre la base de données Gymnase2000 (disponible au format <code>JSON</code> <a href="https://drive.google.com/folderview?id=0BzA8L2nqa1n5NXZBTHJnclFZMDA&amp;usp=drive_web">ici</a>).</p>
+<p>Mais nous allons utiliser ce script de connexion sous <code>R</code> en utilisant la librairie <a href="https://github.com/mongosoup/rmongodb">rmongodb</a> (les requêtes sont très ressemblantes à ce qu’on peut faire en direct sur la console) :</p>
+<pre class="r"><code>library(rmongodb)
+
+# Création de la connextion
+con = mongo.create(host = &quot;172.19.32.10&quot;)
+mongo.is.connected(con) # renvoie TRUE si c&#39;est OK
+
+# Liste des bases de données et des collections de la base &quot;gym&quot;
+mongo.get.databases(con)
+mongo.get.database.collections(con, &quot;gym&quot;)
+
+# Nombre de documents dans la collection &quot;Sportifs&quot; de la BD &quot;gym&quot;
+mongo.count(con, &quot;gym.Sportifs&quot;)
+# Liste les valeurs distinctes de la variable &quot;Sexe&quot; de la collection &quot;gym.Sportifs&quot;
+mongo.distinct(con, &quot;gym.Sportifs&quot;, &quot;Sexe&quot;)
+# Retourne le premier document
+mongo.find.one(con, &quot;gym.Sportifs&quot;)
+# Idem mais transformé en liste
+mongo.bson.to.list(mongo.find.one(con, &quot;gym.Sportifs&quot;))
+# Valeur de la variable &quot;Nom&quot; du résultat précédemment trouvé
+mongo.bson.value(mongo.find.one(con, &quot;gym.Sportifs&quot;), &quot;Nom&quot;)
+# Liste de tous les documents
+mongo.find.all(con, &quot;gym.Sportifs&quot;)
+# Idem mais dans un curseur
+cursor = mongo.find(con, &quot;gym.Sportifs&quot;)
+while (mongo.cursor.next(cursor))
+  print(mongo.cursor.value(cursor))
+# Liste des noms de toutes les sportives
+mongo.find.all(
+  con, &quot;gym.Sportifs&quot;,
+  query = &#39;{ &quot;Sexe&quot;: &quot;F&quot;}&#39;,
+  fields= &#39;{ &quot;_id&quot;: 0, &quot;Nom&quot;: 1 }&#39;
+  )</code></pre>
+<p>Il est impératif de répondre aux demandes sans utiliser le langage SQL.</p>
+<div id="requetes" class="section level3">
+<h3>Requêtes :</h3>
+<ol style="list-style-type: decimal">
+<li>Quels sont les sportifs (identifiant, nom et prénom) qui ont entre 20 et 30 ans ?</li>
+<li>Quels sont les gymnases de “Villetaneuse” ou de “Sarcelles” qui ont une surface de plus de 400 m2 ?</li>
+<li>Quels sont les sportifs (identifiant et nom) qui pratiquent du hand ball ?</li>
+<li>Dans quels gymnases et quels jours y a t-il des séances de hand ball ?</li>
+<li>Dans quels gymnases peut-on jouer au hockey le mercredi apres 15H ?</li>
+<li>Quels sportifs (identifiant et nom) ne pratiquent aucun sport ?</li>
+<li>Quels gymnases n’ont pas de séances le dimanche ?</li>
+<li>Quels gymnases ne proposent que des séances de basket ball ou de volley ball ?</li>
+<li>Quels sont les entraîneurs qui sont aussi joueurs ?</li>
+<li>Quels sont les sportifs qui sont des conseillers ?</li>
+<li>Pour le sportif “Kervadec” quel est le nom de son conseiller ?</li>
+<li>Quels entraîneurs entraînent du hand ball et du basket ball ?</li>
+<li>Quels sont les couples de sportifs (identifiant et nom et prénom de chaque) de même age ?</li>
+<li>Quelle est la moyenne d’âge des sportives qui pratiquent du basket ball ?</li>
+<li>Quels sont les sportifs les plus jeunes ?</li>
+<li>Quels sont les gymnases de “Stains” ou de “Montmorency” qui ont la plus grande surface ?</li>
+<li>Quels entraîneurs n’entraînent que du hand ball ou du basket ball ?</li>
+<li>Quels sont les couples de sportifs (identifiant et nom et prénom de chaque) de même âge avec le même conseiller ?</li>
+<li>Quels sportifs n’ont pas de conseillers ?</li>
+<li>Pour chaque sportif donner le nombre de sports qu’il arbitre</li>
+<li>Pour chaque gymnase de Stains donner par jour d’ouverture les horaires des premières et dernières séances</li>
+<li>Pour chaque entraîneurs de hand ball quel est le nombre de séances journalières qu’il assure ?</li>
+<li>Quels sont les gymnases ayant plus de 15 séances le mercredi ?</li>
+<li>Pour chaque gymnase de Montmorency : quel est le nombre de séances journalières de chaque sport propose ?</li>
+<li>Dans quels gymnases et quels jours y a t-il au moins 4 séances de volley ball dans la journée ?</li>
+</ol>
 </div>
 
 </div>

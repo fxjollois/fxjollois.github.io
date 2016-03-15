@@ -6,7 +6,7 @@ title: Publications
 
 - **2015** :
 	- Dani, M. C., Freixo, C., Jollois, F. X., & Nadif, M. (2015). Unsupervised anomaly detection for Aircraft Condition Monitoring System. In Aerospace Conference, 2015 IEEE (pp. 1-7). IEEE.
-
+	- MC Dani, FX Jollois, M Nadif, C Freixo. Adaptive Threshold for Anomaly Detection Using Time Series Segmentation. Neural Information Processing, 82-89
 - **2011** : 
 	- Bobbia, M., Jollois, F.-X., Poggi, J.-M. and Portier, B. (2011), Quantifying local and background contributions to PM10 concentrations in Haute-Normandie, using random forests. Environmetrics, 22: 758-768.
 - **2009** : 

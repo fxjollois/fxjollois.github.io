@@ -1,0 +1,345 @@
+---
+title: "Classification et modèles de mélange"
+author: "FX Jollois"
+date: "CNAM - 16 mars 2016"
+output: 
+    ioslides_presentation:
+      widescreen: yes
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+
+library(mclust)
+library(Rmixmod)
+library(NbClust)
+```
+
+## Plan
+
+1. Problème de classification
+2. Modèles de mélange
+3. Nombre de classes
+4. Applications
+
+## Classification
+
+- Réduction d'un nuage de points d’un espace quelconque en un ensemble de représentants moins nombreux
+- Représentation simplifiée des données initiales : Méthode de réduction des données
+- Applications nombreuses
+- Deux grandes familles de classification : 
+    - par partitionnement
+    - par hiérarchie
+
+*Notation* : Soit $x$ une matrice de données $n \times d$ définie par $x = {x^j_i ; i \in I; j \in J}$, où $I$ est un ensemble de $n$ objets (lignes, observations, instances, individus) et $J$ est un ensemble de $d$ variables (colonnes, attributs).
+
+## Partition
+
+**Définition** : Une partition de $I$ en $s$ classes ($s$ est supposé connu) est un ensemble de parties non vides $z_1,\dots,z_s$ vérifiant :
+
+- $\forall k, k' = 1,\ldots,s , k \neq k', z_k \cap z_{k'} = \emptyset$, 
+- $\cup^s_{k = 1} z_k = I$
+
+- Nombre de partitions possibles très important
+    - 1701 partitions possibles de 8 objets répartis en 4 classes
+- Meilleure partition : problème très complexe
+- Partition optimale localement
+
+> On se place ici dans le cadre de partitions dites non-recouvrantes : un individu appartient à une et une seule classe
+
+## Partitionnement 
+
+- Classification directe
+- Algorithme 
+    1. Initialisation : $s$ points tirés au hasard pour les centres de gravité de chaque classe,
+    2. Affectation : On affecte les points à la classe la plus proche,
+    3. Représentation : On recalcule les nouveaux centres de gravité,
+    4. On répète les étapes d’affectation et de représentation jusqu’à la convergence de l’algorithme (i. e. plus de changement de le partition).
+- Convergence assez rapide (moins de 20 itérations généralement)
+- Résultats dépendant de l'initialisation
+- Nombre de classes devant être connu
+
+## $k$-means
+
+- Critère à minimiser :
+\[
+    W(z,g) =  \sum_{k=1}^s \sum_{i \in z_k}  d^2(x_i,g_k)
+\]
+- Somme des inerties intra-classes
+- Basé sur la distance euclidienne
+
+## Inconvénients
+
+- Données continues : $k$-means
+    - Classes sphériques, et de même taille
+    - Classes petites *vidées*
+- Données binaires :
+    - Adaptation du critère de $k$-means
+    - Contrainte sur les centres des classes (pas de moyenne, mais valeur $0$ ou $1$ la plus présente)
+- Données catégorielles : $k$-modes 
+    - $k$-means avec la métrique du $\chi^2$
+    - Problèmes similaires à $k$-means
+
+## Fuzzy $c$-means
+
+- Critère à minimiser :
+\[
+    J_m(\mu,g) =  \sum_{k=1}^s \sum_{i=1}^n (\mu_{ik})^m d^2(x_i,g_k)
+\]
+- $\mu = [\mu_{ik}]$ : degré d'appartenance de $i$ à la classe $k$ (entre 0 et 1)
+- Un individu peut donc appartenir à plusieurs classes, avec un degré spécifique 
+    - $\sum_k \mu_{ik} = 1$
+- Problèmes similaires à $k$-means pour les formes des classes et les proportions
+
+## Hiérarchie
+
+??
+
+## Modèles de mélange
+
+- Distribution de probabilité : mélange de $s$ distributions associées aux classes
+- Cas d’une variable continue, avec deux classes sont présentes
+
+```{r ex-modele, fig.align='center'}
+set.seed(1)
+x = data.frame(x = c(rnorm(n = 100, mean = 2, sd = 1), rnorm(n = 100, mean = 6, sd = 2)))
+m = mixmodCluster(x, 2)
+par(mar = c(2, 2, 2, 0) + 0.1)
+histCluster(m["bestResult"], x, variables = 1)
+rm(x, m)
+```
+
+## Densité de probabilité
+
+- Tableau de données $x$ considéré comme échantillon $(x_1, \ldots,x_n)$ i.i.d. de taille $n$ d’une variable aléatoire avec la densité $\varphi(x,\theta)$ définie par :
+\[
+    \varphi(x_i;\theta) = \sum_{k=1}^s p_k \varphi_k (x_i;\alpha_k)
+\]
+- $\varphi_k(x_i, \alpha_k)$ : densité de probabilité de la classe $k$
+- $p_k$ : probabilité qu’un élément de l’échantillon suive la loi $\varphi_k$ (proportions du mélange)
+    - $\forall k=1,\ldots,n, p_k \in ]0,1[$
+    - $\sum_{k=1}^s p_k = 1$
+- $\theta = (p_1, \ldots ,p_s; \alpha_1, \ldots ,\alpha_s)$ : paramètre du modèle de mélange
+
+## Vraissemblance
+
+- Problème statistique : estimer les proportions des composants ( les $(p_k)$) et les paramètres (les $(\alpha_k)$)
+- Utilisation de la log-vraisemblance :
+\[
+    L(x_1,\ldots,x_n;\theta) = \sum_{i=1}^n \log \left( \sum_{k=1}^s p_k \varphi_k (x_i;\alpha_k) \right)
+\]
+- Pour la classification, chaque $x_i$ appartiendra à une classe $k$, tel que $z_{ik} = 1$ (et 0 sinon)
+- Log-vraissemblance complétée :
+\[
+    L_c(x_1,\ldots,x_n;\theta) = \sum_{i=1}^n \sum_{k=1}^s z_{ik} \log\left( p_k \varphi_k (x_i;\alpha_k) \right)
+\]
+
+## Deux approches
+
+- Approche **Estimation**
+    - Estimation des paramètres du mélange
+    - Déduction de la partition, avec la méthode du maximum a posteriori *MAP*
+    - Maximisation de la log-vraisemblance $L(x,\theta)$
+    - Utilisation de l'lagorithme **EM**
+- Approche **Classification**
+    - Estimation conjointe des paramètres et de la partition
+    - Maximisation de la log-vraisemblance classifiante $L_C(x,\theta)$
+    - Utilisation de l'algorithme **CEM**
+
+## Algorithme EM
+
+- **EM** : *Estimation-Maximisation*
+- Algorithme :
+    1. Déterminer une situation initiale
+    2. **Estimation** des probabilités a posteriori
+    \[
+        t_{ik} = \frac{p_k \varphi_k (x_i;\alpha_k)}{\sum_{\ell=1}^s p_\ell \varphi_\ell (x_i;\alpha_\ell)}
+    \]
+    3. **Maximisation** : calcul des paramètres du mélange
+    \[
+        \begin{aligned}
+            p_k &= \frac{\sum_{i=1}^n t_{ik}}{n} \\
+            \alpha_k &= \mbox{dépendant du modèle}
+        \end{aligned}
+    \]
+    4. Itérer les étapes 2 et 3, jusqu'à la convergence (évolution très faible de $L$)
+
+## Algorithme CEM
+
+- **CEM** : *Classification EM*
+- Ajout d'une étape de classification dans **EM**
+    1. Déterminer une situation initiale
+    2. **Estimation** des probabilités a posteriori $t_{ik}$ (identique)
+    3. **Classification** des individus avec la méthode du *MAP*
+    \[
+        z_k = \{ i | t_{ik} = max_{\ell=1,\ldots,s} t_{i\ell} \}
+    \]
+    4. **Maximisation** : calcul des paramètres du mélange
+    \[
+        \begin{aligned}
+            p_k &= \frac{Card(z_k)}{n} \\
+            \alpha_k &= \mbox{dépendant du modèle}
+        \end{aligned}
+    \]
+    5. Itérer les étapes 2 à 4, jusqu'à la convergence (évolution très faible de $L_c$)
+
+## Compléments sur EM et CEM
+
+- Résultats dépendant fortement de l'initialisation
+    - Lancement avec des initialisations différentes
+    - Récupération de la meilleure solution, selon $L$ (ou $L_c$)
+    - Initialisation de **EM** avec la meilleure solution de **CEM**
+- Cas gaussien
+    - Fuzzy $c$-means : **EM** avc contraintes sur le modèle
+    - $k$-means : **CEM** avec contraintes sur le modèle
+- Cas qualitatif :
+    - $k$-modes : **CEM** avec contraintes sur le modèle
+
+## Hiérarchique
+
+??
+
+## Données quantitatives
+
+- En présence de données continues, utilisation du modèle gaussien
+- Densité de probabilité de la classe $k$ : 
+\[
+    \varphi(x_i;g_k,\Sigma_k) = (2\pi)^{-d/2} |\Sigma_k|^{-1/2} \exp \left( -\frac{1}{2} (x_i - g_k)' \Sigma_k^{-1} (x_i - g_k) \right)
+\]
+- $g_k$ : moyenne des variables pour la classe $k$
+- $\Sigma_k$ : matrice de variance-covariance de la classe $k$
+
+## Décomposition de la matrice de variance
+
+Expression de la matrice de variance en fonction de sa décomposition en valeurs propres
+\[
+    \Sigma_k = \lambda_k D_k A_k' D_k'
+\]
+
+- $\lambda_k = |\Sigma_k|^{1/d}$, détermine le **volume** de la classe
+- $D_k$ : matrice des vecteurs propres, détermine l'**orientation** de la classe
+- $A_k$ : matrice diagonale (tel $|A_k|=1$), avec les valeurs propres de $\Sigma_k$, détermine la **forme** de la classe
+
+En imposant des contraintes sur ces valeurs, utilisation de modèles plus ou moins parcimonieux
+
+## 14 modèles gaussiens retreints {.center .smaller}
+
+<div class = "columns-2">
+- **Famille générale**
+    - Volumes différents ($\lambda_k$) ou identiques ($\lambda$)
+    - Formes différentes ($A_k$) ou identiques ($A$)
+    - Orientations différentes ($D_k$) ou identiques ($D$)
+- **Famille diagonale**
+    - Matrices $\Sigma_k$ diagonales
+    - $D_k$ : matrices de permutation 
+- **Famille sphérique**
+    - $A_k$ : matrice identité ($I_k$)
+    - Formes sphériques
+
+<img src="cnam-classif-modeles-14modeles.png" alt="14 modèles de décomposition" style="height: 10cm">
+</div>
+
+Proportions $p_k$ pouvant être contraintes à être identiques (donc 28 modèles en tout)
+
+## Données qualitatives
+
+- Utilisation du modèle des classes latentes
+- Densité de probabilité de la classe $k$
+\[
+    \varphi(x_i;\alpha_k) = \prod_{j=1}^d \prod_{e=1}{c_j} \left( a_k^{je} \right)^{x_i^{je}}
+\]
+- Variable $j$ à $c_j$ modalités 
+- $x_i^{je} = 1$ si l'individu $i$ a la modalité $e$ pour la variable $j$ 
+- $a_k^{je}$ : probabilité de la modalité $e$ de la variable $j$ pour la classe $z_k$
+
+## Restriction sur les paramètres
+
+- De manière identique au cas gaussien, possibilité de créer des modèles restreints
+- Modèle générale : une probabilité pour chaque modalité de chaque variable dans chaque classe
+- Restriction première : 
+    - $m_k^j$ : modalité majoritaire pour la variable $j$ dans la classe $k$
+    - $\varepsilon_k^j$ : probabilité d'erreur 
+    - $\delta(x,y) = 0$ si $x=y$, et $1$ sinon
+\[
+    \varphi(x_i;\alpha_k) = \prod_{j=1}^d (1 - \varepsilon_k^j)^{1 - \delta(x_i^j,m_k^j)} \left( \frac{\varepsilon_k^j}{c_j - 1} \right)^{\delta(x_i^j,m_k^j)}
+\]
+
+## 10 modèles des classes latentes restreints {.center .smaller}
+
+<div class = "columns-2">
+- $\alpha_k^{je}$ : une probabilité pour chaque modalité
+- $\varepsilon_k^j$ : erreur spécifique à une classe et une variable
+- $\varepsilon_k$ : erreur spécifique à une classe (et identique pour toutes les variables)
+- $\varepsilon^j$ : erreur spécifique à une variable (et identique pour toutes les classes)
+- $\varepsilon$ : erreur identique pour toutes les variables dans toutes les classes
+- $p_k$ : proportions des classes différentes
+- $p$ : proportions des classes identiques
+
+<img src="cnam-classif-modeles-Quantimodeles.png" alt="Modèles restreints" style="height: 10cm">
+</div>
+
+## Nombre de classes
+
+Dans toutes ces méthodes, le nombre de classes doit être **connu**.
+
+- Choix fait par un expert métier
+- Méthodes de recherche du nombre de classes
+    - Utilisation de la vraisemblance seule impossible (conduit à une classe par objet)
+    - Classification hiérarchique (inutilisable si trop d'objets)
+    - Critères de choix de modèles
+        - (ici) basé sur une pénalisation de la vraisemblance
+        \[
+            C(s) = -2 \left( L_{max}(s) + \gamma_C \times \nu(s) \right)
+        \]
+        - $L_{max}(s)$ : vraisemblance maximum pour $s$ classes
+        - $\gamma_C$ : coefficient de pénalisation, spécifique à chaque critère $C$
+        - $\nu(s)$ : nombre de paramètres libres du modèle considéré
+
+## $AIC$ et dérivés
+
+- $AIC$ : critère d'information d'Akaike ($\gamma_{AIC} = 1$)
+$$
+    AIC(s) = -2L(s) + 2 \nu(s)
+$$
+- $AIC3$ : version modifiée ($\gamma_{AIC3} = \frac{3}{2}$)
+$$
+    AIC3(s) = -2L(s) + 3 \nu(s)
+$$
+- $AWE$ : approximation de la solution exacte ($\gamma_{AWE} = \frac{1}{2}\left( \frac{3}{2} + \log n\right)$)
+$$
+    AWE(s) = -2L(s) + \nu(s) \left( \frac{3}{2} + \log n\right)
+$$
+- Critères finalement peu utilisés, mais pouvant donner de bons résultats (notemment $AIC3$)
+
+## Critères bayésiens
+
+- $BIC$ : estimation de la vraisemblance intégrée (et similaire aux précédents avec $\gamma_{BIC}=\frac{\log n}{2}$)
+$$
+    BIC(s) = L(s) - \frac{\nu(s)}{2} \log n
+$$
+- $ICL$ : basée sur la vraissemblance intégrée complétée
+$$
+    ICL(s) = L_C(s) - n\sum_{k=1}^s p_k \log p_k - \frac{\nu(s)}{2} \log n + S(np_1, \ldots, np_s)
+$$
+- $ICL$ et principalement $BIC$ sont les plus utilisés (comparaison de ces deux critères dans la suite)
+
+## Quelques liens d'applications
+
+- Packages **R**
+    - [Rmixmod](http://www.mixmod.org/)
+    - [mclust](http://www.stat.washington.edu/mclust/)
+- Packages **Python**
+    - [Scikit-learn](http://scikit-learn.org/stable/index.html)
+    - [Pymix](http://www.pymix.org/pymix/)
+- Procédure [`FMM`](https://support.sas.com/documentation/cdl/en/statug/68162/HTML/default/viewer.htm#statug_fmm_toc.htm) dans **SAS** 
+- Logiciel [**mixmod**](http://www.mixmod.org/)
+
+## Exemple d'applications
+
+```{r}
+# dans la librairie Rmixmod
+# geyser, titanic
+
+res.faithful = mixmodCluster(faithful, nbCluster = 1:10)
+
+```
