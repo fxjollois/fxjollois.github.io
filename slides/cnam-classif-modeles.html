@@ -97,14 +97,44 @@
           </hgroup>
   </slide>
 
-<slide class=''><hgroup><h2>Plan</h2></hgroup><article  id="plan">
+<slide class=''><hgroup><h2>Informations</h2></hgroup><article  id="informations">
+
+<div class="columns-2">
+<h3>Plan</h3>
 
 <ol>
-<li>Problème de classification</li>
-<li>Modèles de mélange</li>
-<li>Nombre de classes</li>
-<li>Applications</li>
+<li>Problème de classification
+
+<ul>
+<li>Partition</li>
+<li>Hiérarchie</li>
+</ul></li>
+<li>Modèles de mélange
+
+<ul>
+<li>Algorithmes EM et CEM</li>
+</ul></li>
+<li>Nombre de classes
+
+<ul>
+<li>Critères de choix</li>
+</ul></li>
+<li>Applications
+
+<ul>
+<li>avec code <code>R</code></li>
+</ul></li>
 </ol>
+
+<h3>Librairies <code>R</code> utilisées</h3>
+
+<pre class = 'prettyprint lang-r'>library(mclust)
+library(knitr)
+library(Rmixmod)
+library(ggplot2)
+library(reshape2)
+library(NbClust)
+library(gridExtra)</pre></div>
 
 </article></slide><slide class=''><hgroup><h2>Classification</h2></hgroup><article  id="classification">
 
@@ -154,9 +184,9 @@
 <li>Représentation : On recalcule les nouveaux centres de gravité,</li>
 <li>On répète les étapes d’affectation et de représentation jusqu’à la convergence de l’algorithme (i. e. plus de changement de le partition).</li>
 </ol></li>
-<li>Convergence assez rapide (moins de 20 itérations généralement)</li>
 <li>Résultats dépendant de l&#39;initialisation</li>
 <li>Nombre de classes devant être connu</li>
+<li>Complexité linéaire</li>
 </ul>
 
 </article></slide><slide class=''><hgroup><h2>\(k\)-means</h2></hgroup><article  id="k-means">
@@ -167,6 +197,17 @@ W(z,g) =  \sum_{k=1}^s \sum_{i \in z_k}  d^2(x_i,g_k)
 \]</li>
 <li>Somme des inerties intra-classes</li>
 <li>Basé sur la distance euclidienne</li>
+<li>Très rapide dans la convergence et dans le calcul
+
+<ul>
+<li>Convergence assez rapide (moins de 20 itérations généralement)</li>
+</ul></li>
+<li>Connu et très utilisé</li>
+<li>Variables devant avoir la même échelle
+
+<ul>
+<li>Standardisation éventuellement nécessaire</li>
+</ul></li>
 </ul>
 
 </article></slide><slide class=''><hgroup><h2>Inconvénients</h2></hgroup><article  id="inconvenients">
@@ -209,16 +250,63 @@ J_m(\mu,g) =  \sum_{k=1}^s \sum_{i=1}^n (\mu_{ik})^m d^2(x_i,g_k)
 
 </article></slide><slide class=''><hgroup><h2>Hiérarchie</h2></hgroup><article  id="hierarchie">
 
-<p>??</p>
+<p><strong>Définition</strong> : Un ensemble \(H\) de parties non vides de \(I\) est une hiérarchie sur \(I\) si</p>
+
+<ul>
+<li>\(I \in H\)</li>
+<li>\(\forall i \in I, {i} \in H\)</li>
+<li>\(\forall h, h&#39; \in H\), on a un des trois cas :
+
+<ul>
+<li>\(h \cap h&#39; = \emptyset\)</li>
+<li>\(h \subset h&#39;\)</li>
+<li>\(h&#39; \subset h\)</li>
+</ul></li>
+<li>Ensemble de partitions emboîtées</li>
+</ul>
+
+<p>On se place ici dans le cadre de la Classification ascendante hiérarchique (CAH) considérée ici</p>
+
+</article></slide><slide class=''><hgroup><h2>Classification hiérarchique</h2></hgroup><article  id="classification-hierarchique">
+
+<ul>
+<li>Algorithme
+
+<ol>
+<li>Chaque objet est dans sa propre classe</li>
+<li>Calcul des distances entre les classes</li>
+<li>Regroupement des deux classes les plus proches
+
+<ul>
+<li>Mise à jour des nouvelles distances</li>
+</ul></li>
+<li>Répétition de l&#39;étape 3 jusqu&#39;à n&#39;avoir plus qu&#39;une seule classe</li>
+</ol></li>
+<li>Pas de nécessité de connaître le nombre de classes</li>
+<li>Algorithme déterministe</li>
+<li>Complexité quadratique</li>
+</ul>
+
+</article></slide><slide class=''><hgroup><h2>CAH</h2></hgroup><article  id="cah">
+
+<ul>
+<li>Critères d&#39;aggrégation à définir : simple, complet, médian, moyen, centroïde</li>
+<li>Le plus utilisé : Critère de <strong>Ward</strong>\[
+\delta_{Ward} (z_h, z_{h&#39;}) = \frac{\#z_h \times \#z_{h&#39;}}{\#z_h + \#z_{h&#39;}} d^2(z_h, z_{h&#39;})
+\]</li>
+<li>Basé sur la distance euclidienne (ou autre distance si besoin)</li>
+<li>Temps de calcul pouvant être long si \(n\) grand</li>
+<li>Nouvelles distances calculées à partir des anciennes dans certains cas (dont Ward)</li>
+</ul>
 
 </article></slide><slide class=''><hgroup><h2>Modèles de mélange</h2></hgroup><article  id="modeles-de-melange">
 
 <ul>
 <li>Distribution de probabilité : mélange de \(s\) distributions associées aux classes</li>
-<li>Cas d’une variable continue, avec deux classes sont présentes</li>
+<li>Cas d’une variable continue, avec deux classes présentes</li>
 </ul>
 
-<p><img src="cnam-classif-modeles_files/figure-html/ex-modele-1.png" title="" alt="" width="720" style="display: block; margin: auto;" /></p>
+<p><img src="cnam-classif-modeles_files/figure-html/ex-modele-1.png" title="" alt="" width="768" style="display: block; margin: auto;" /></p>
 
 </article></slide><slide class=''><hgroup><h2>Densité de probabilité</h2></hgroup><article  id="densite-de-probabilite">
 
@@ -244,12 +332,12 @@ J_m(\mu,g) =  \sum_{k=1}^s \sum_{i=1}^n (\mu_{ik})^m d^2(x_i,g_k)
 L(x_1,\ldots,x_n;\theta) = \sum_{i=1}^n \log \left( \sum_{k=1}^s p_k \varphi_k (x_i;\alpha_k) \right)
 \]</li>
 <li>Pour la classification, chaque \(x_i\) appartiendra à une classe \(k\), tel que \(z_{ik} = 1\) (et 0 sinon)</li>
-<li>Log-vraissemblance complétée :\[
-L_c(x_1,\ldots,x_n;\theta) = \sum_{i=1}^n \sum_{k=1}^s z_{ik} \log\left( p_k \varphi_k (x_i;\alpha_k) \right)
+<li>Log-vraissemblance complétée (ou classifiante) :\[
+L_c(x_1,\ldots,x_n; z, \theta) = \sum_{i=1}^n \sum_{k=1}^s z_{ik} \log\left( p_k \varphi_k (x_i;\alpha_k) \right)
 \]</li>
 </ul>
 
-</article></slide><slide class=''><hgroup><h2>Deux approches</h2></hgroup><article  id="deux-approches">
+</article></slide><slide class=''><hgroup><h2>Trois approches</h2></hgroup><article  id="trois-approches">
 
 <ul>
 <li>Approche <strong>Estimation</strong>
@@ -257,15 +345,20 @@ L_c(x_1,\ldots,x_n;\theta) = \sum_{i=1}^n \sum_{k=1}^s z_{ik} \log\left( p_k \va
 <ul>
 <li>Estimation des paramètres du mélange</li>
 <li>Déduction de la partition, avec la méthode du maximum a posteriori <em>MAP</em></li>
-<li>Maximisation de la log-vraisemblance \(L(x,\theta)\)</li>
+<li>Maximisation de la log-vraisemblance \(L(x; \theta)\)</li>
 <li>Utilisation de l&#39;lagorithme <strong>EM</strong></li>
 </ul></li>
 <li>Approche <strong>Classification</strong>
 
 <ul>
 <li>Estimation conjointe des paramètres et de la partition</li>
-<li>Maximisation de la log-vraisemblance classifiante \(L_C(x,\theta)\)</li>
+<li>Maximisation de la log-vraisemblance classifiante \(L_C(x; z, \theta)\)</li>
 <li>Utilisation de l&#39;algorithme <strong>CEM</strong></li>
+</ul></li>
+<li>Approche <strong>Hiérarchique</strong>
+
+<ul>
+<li>Utilisation de la log-vraisemblance classifiante \(L_C(x; z, \theta)\)</li>
 </ul></li>
 </ul>
 
@@ -320,7 +413,8 @@ z_k = \{ i | t_{ik} = max_{\ell=1,\ldots,s} t_{i\ell} \}
 <ul>
 <li>Lancement avec des initialisations différentes</li>
 <li>Récupération de la meilleure solution, selon \(L\) (ou \(L_c\))</li>
-<li>Initialisation de <strong>EM</strong> avec la meilleure solution de <strong>CEM</strong></li>
+<li>Initialisation de <strong>EM</strong> avec la meilleure solution de <strong>CEM</strong> (ou autre)</li>
+<li><strong>SEM</strong> : Version stochastique (étape de classification : affectation stochastique)</li>
 </ul></li>
 <li>Cas gaussien
 
@@ -335,9 +429,25 @@ z_k = \{ i | t_{ik} = max_{\ell=1,\ldots,s} t_{i\ell} \}
 </ul></li>
 </ul>
 
-</article></slide><slide class=''><hgroup><h2>Hiérarchique</h2></hgroup><article  id="hierarchique">
+</article></slide><slide class=''><hgroup><h2>Approche hiérarchique</h2></hgroup><article  id="approche-hierarchique">
 
-<p>??</p>
+<ul>
+<li>Utilisation de la log-vraisemblance classifiante\[
+L_C(x; z, \theta) = \sum_{k=1}^s L_(z_k, \theta_k)
+\]</li>
+<li>Distance entre deux classes définie par\[
+d(z_k, z_{k&#39;}) = L_C(z_k, \theta_k) + L_C(Z_{k&#39;}, \theta_{k&#39;}) - L_C(z_{k \cup k&#39;}, \theta_{k \cup k&#39;})
+\]
+
+<ul>
+<li>Evolution de la log-vraissemblance lors de la fusion des deux classes</li>
+</ul></li>
+<li>Cas gaussien :
+
+<ul>
+<li>CAH avec Ward : CAH avec modèles de mélange + contraintes sur le modèle</li>
+</ul></li>
+</ul>
 
 </article></slide><slide class=''><hgroup><h2>Données quantitatives</h2></hgroup><article  id="donnees-quantitatives">
 
@@ -445,7 +555,7 @@ z_k = \{ i | t_{ik} = max_{\ell=1,\ldots,s} t_{i\ell} \}
 <li>Méthodes de recherche du nombre de classes
 
 <ul>
-<li>Utilisation de la vraisemblance seule impossible (conduit à une classe par objet)</li>
+<li>Utilisation de la vraisemblance seule impossible</li>
 <li>Classification hiérarchique (inutilisable si trop d&#39;objets)</li>
 <li>Critères de choix de modèles
 
@@ -506,7 +616,1046 @@ ICL(s) = L_C(s) - n\sum_{k=1}^s p_k \log p_k - \frac{\nu(s)}{2} \log n + S(np_1,
 <li>Logiciel <a href='http://www.mixmod.org/' title=''><strong>mixmod</strong></a></li>
 </ul>
 
-</article></slide><slide class=''><hgroup><h2>Exemple d&#39;applications</h2></hgroup><article  id="exemple-dapplications"></article></slide>
+</article></slide><slide class=''><hgroup><h2>Exemple d&#39;applications</h2></hgroup><article  id="exemple-dapplications">
+
+<ul>
+<li>Old Faithful Geyser
+
+<ul>
+<li>avec <code>mclust</code></li>
+<li>Données quantitatives</li>
+<li>EM, avec BIC et ICL</li>
+</ul></li>
+<li>Iris
+
+<ul>
+<li>avec <code>Rmixmod</code></li>
+<li>Données quantitatives, avec une variable qualitative</li>
+<li>EM (initialisé par EM rapide), avec BIC et ICL</li>
+<li>Comparaison EM et CEM, avec \(s=3\)</li>
+</ul></li>
+<li>Birds
+
+<ul>
+<li>avec <code>Rmixmod</code></li>
+<li>Données qualitatives</li>
+<li>2 classes présentes (mais non connues)</li>
+<li>EM (initialisé par EM rapide), avec BIC</li>
+</ul></li>
+</ul>
+
+</article></slide><slide class=''><hgroup><h2>Old Faithful Geyser - Données</h2></hgroup><article  id="old-faithful-geyser---donnees">
+
+<ul>
+<li>Utilisation de la librairie <code>mclust</code></li>
+</ul>
+
+<pre class = 'prettyprint lang-r'>plot(faithful)</pre>
+
+<p><img src="cnam-classif-modeles_files/figure-html/ex-faithful-donnees-1.png" title="" alt="" width="960" style="display: block; margin: auto;" /></p>
+
+</article></slide><slide class=''><hgroup><h2>Old Faithful Geyser - Application</h2></hgroup><article  id="old-faithful-geyser---application">
+
+<pre class = 'prettyprint lang-r'>faithful.mclust = Mclust(faithful)
+summary(faithful.mclust)</pre>
+
+<pre >## ----------------------------------------------------
+## Gaussian finite mixture model fitted by EM algorithm 
+## ----------------------------------------------------
+## 
+## Mclust EEE (ellipsoidal, equal volume, shape and orientation) model with 3 components:
+## 
+##  log.likelihood   n df       BIC       ICL
+##       -1126.361 272 11 -2314.386 -2360.865
+## 
+## Clustering table:
+##   1   2   3 
+## 130  97  45</pre>
+
+</article></slide><slide class=''><hgroup><h2>Old Faithful Geyser - BIC</h2></hgroup><article  id="old-faithful-geyser---bic">
+
+<pre class = 'prettyprint lang-r'>summary(faithful.mclust$BIC)</pre>
+
+<pre >## Best BIC values:
+##              EEE,3        EEE,4        VVE,2
+## BIC      -2314.386 -2320.207047 -2320.432965
+## BIC diff     0.000    -5.820699    -6.046616</pre>
+
+</article></slide><slide class=''><hgroup><h2>Old Faithful Geyser - BIC</h2></hgroup><article  id="old-faithful-geyser---bic-1">
+
+<pre class = 'prettyprint lang-r'>plot(faithful.mclust, what = &quot;BIC&quot;)</pre>
+
+<p><img src="cnam-classif-modeles_files/figure-html/ex-faithful-plot-BIC-1.png" title="" alt="" width="960" style="display: block; margin: auto;" /></p>
+
+</article></slide><slide class=''><hgroup><h2>Old Faithful Geyser - BIC</h2></hgroup><article  id="old-faithful-geyser---bic-2" class="smaller">
+
+<table class = 'rmdtable'>
+<tr class="header">
+<th align="left"></th>
+<th align="right">EII</th>
+<th align="right">VII</th>
+<th align="right">EEI</th>
+<th align="right">VEI</th>
+<th align="right">EVI</th>
+<th align="right">VVI</th>
+<th align="right">EEE</th>
+<th align="right">EVE</th>
+<th align="right">VEE</th>
+<th align="right">VVE</th>
+<th align="right">EEV</th>
+<th align="right">VEV</th>
+<th align="right">EVV</th>
+<th align="right">VVV</th>
+</tr>
+<tr class="odd">
+<td align="left">s=1</td>
+<td align="right">-4025</td>
+<td align="right">-4025</td>
+<td align="right">-3056</td>
+<td align="right">-3056</td>
+<td align="right">-3056</td>
+<td align="right">-3056</td>
+<td align="right">-2608</td>
+<td align="right">-2608</td>
+<td align="right">-2608</td>
+<td align="right">-2608</td>
+<td align="right">-2608</td>
+<td align="right">-2608</td>
+<td align="right">-2608</td>
+<td align="right">-2608</td>
+</tr>
+<tr class="even">
+<td align="left">s=2</td>
+<td align="right">-3453</td>
+<td align="right">-3458</td>
+<td align="right">-2355</td>
+<td align="right">-2351</td>
+<td align="right">-2353</td>
+<td align="right">-2346</td>
+<td align="right">-2325</td>
+<td align="right">-2324</td>
+<td align="right">-2323</td>
+<td align="right">-2320</td>
+<td align="right">-2329</td>
+<td align="right">-2325</td>
+<td align="right">-2328</td>
+<td align="right">-2322</td>
+</tr>
+<tr class="odd">
+<td align="left">s=3</td>
+<td align="right">-3378</td>
+<td align="right">-3337</td>
+<td align="right">-2323</td>
+<td align="right">-2333</td>
+<td align="right">-2332</td>
+<td align="right">-2342</td>
+<td align="right">-2314</td>
+<td align="right">-2323</td>
+<td align="right">-2322</td>
+<td align="right">-2332</td>
+<td align="right">-2339</td>
+<td align="right">-2329</td>
+<td align="right">-2336</td>
+<td align="right">-2334</td>
+</tr>
+<tr class="even">
+<td align="left">s=4</td>
+<td align="right">-3230</td>
+<td align="right">-3246</td>
+<td align="right">-2324</td>
+<td align="right">-2332</td>
+<td align="right">-2335</td>
+<td align="right">-2343</td>
+<td align="right">-2320</td>
+<td align="right">-2340</td>
+<td align="right">-2333</td>
+<td align="right">-2355</td>
+<td align="right">-2337</td>
+<td align="right">-2342</td>
+<td align="right">-2345</td>
+<td align="right">-2359</td>
+</tr>
+<tr class="odd">
+<td align="left">s=5</td>
+<td align="right">-3149</td>
+<td align="right">-3128</td>
+<td align="right">-2338</td>
+<td align="right">-2348</td>
+<td align="right">-2356</td>
+<td align="right">-2374</td>
+<td align="right">-2337</td>
+<td align="right">-2354</td>
+<td align="right">-2353</td>
+<td align="right">-2376</td>
+<td align="right">-2356</td>
+<td align="right">-2366</td>
+<td align="right">-2374</td>
+<td align="right">-2385</td>
+</tr>
+<tr class="even">
+<td align="left">s=6</td>
+<td align="right">-3081</td>
+<td align="right">-3068</td>
+<td align="right">-2338</td>
+<td align="right">-2363</td>
+<td align="right">-2358</td>
+<td align="right">-2373</td>
+<td align="right">-2347</td>
+<td align="right">-2369</td>
+<td align="right">-2364</td>
+<td align="right">-2392</td>
+<td align="right">-2372</td>
+<td align="right">-2387</td>
+<td align="right">-2387</td>
+<td align="right">-2399</td>
+</tr>
+<tr class="odd">
+<td align="left">s=7</td>
+<td align="right">-2990</td>
+<td align="right">-2998</td>
+<td align="right">-2356</td>
+<td align="right">-2370</td>
+<td align="right">-2376</td>
+<td align="right">-2393</td>
+<td align="right">-2361</td>
+<td align="right">-2381</td>
+<td align="right">-2375</td>
+<td align="right">-2399</td>
+<td align="right">-2393</td>
+<td align="right">-2384</td>
+<td align="right">-2414</td>
+<td align="right">-2426</td>
+</tr>
+<tr class="even">
+<td align="left">s=8</td>
+<td align="right">-2978</td>
+<td align="right">-2992</td>
+<td align="right">-2372</td>
+<td align="right">NA</td>
+<td align="right">-2396</td>
+<td align="right">NA</td>
+<td align="right">-2377</td>
+<td align="right">-2401</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+<td align="right">-2386</td>
+<td align="right">-2405</td>
+<td align="right">-2435</td>
+<td align="right">-2435</td>
+</tr>
+<tr class="odd">
+<td align="left">s=9</td>
+<td align="right">-2900</td>
+<td align="right">-2921</td>
+<td align="right">-2389</td>
+<td align="right">NA</td>
+<td align="right">-2399</td>
+<td align="right">NA</td>
+<td align="right">-2394</td>
+<td align="right">-2404</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+<td align="right">-2418</td>
+<td align="right">-2428</td>
+<td align="right">-2431</td>
+<td align="right">-2447</td>
+</tr>
+</table>
+
+</article></slide><slide class=''><hgroup><h2>Old Faithful Geyser - BIC</h2></hgroup><article  id="old-faithful-geyser---bic-3">
+
+<p><img src="cnam-classif-modeles_files/figure-html/ex-faithful-heatmap-BIC-1.png" title="" alt="" width="960" style="display: block; margin: auto;" /></p>
+
+</article></slide><slide class=''><hgroup><h2>Old Faithful Geyser - Classification</h2></hgroup><article  id="old-faithful-geyser---classification">
+
+<pre class = 'prettyprint lang-r'>plot(faithful.mclust, what = &quot;classification&quot;)</pre>
+
+<p><img src="cnam-classif-modeles_files/figure-html/ex-faithful-plot-classification-1.png" title="" alt="" width="960" style="display: block; margin: auto;" /></p>
+
+</article></slide><slide class=''><hgroup><h2>Old Faithful Geyser - Incertitude</h2></hgroup><article  id="old-faithful-geyser---incertitude">
+
+<pre class = 'prettyprint lang-r'>plot(faithful.mclust, what = &quot;uncertainty&quot;)</pre>
+
+<p><img src="cnam-classif-modeles_files/figure-html/ex-faithful-plot-uncertainty-1.png" title="" alt="" width="960" style="display: block; margin: auto;" /></p>
+
+</article></slide><slide class=''><hgroup><h2>Old Faithful Geyser - et ICL ?</h2></hgroup><article  id="old-faithful-geyser---et-icl">
+
+<pre class = 'prettyprint lang-r'>faithful.mclustICL = mclustICL(faithful)
+summary(faithful.mclustICL)</pre>
+
+<pre >## Best ICL values:
+##              VVE,2       VVV,2        VEE,2
+## ICL      -2320.763 -2322.69508 -2323.395969
+## ICL diff     0.000    -1.93217    -2.633054</pre>
+
+</article></slide><slide class=''><hgroup><h2>Old Faithful Geyser - et ICL ?</h2></hgroup><article  id="old-faithful-geyser---et-icl-1">
+
+<pre class = 'prettyprint lang-r'>plot(faithful.mclustICL)</pre>
+
+<p><img src="cnam-classif-modeles_files/figure-html/ex-faithful-plot-ICL-1.png" title="" alt="" width="960" style="display: block; margin: auto;" /></p>
+
+</article></slide><slide class=''><hgroup><h2>Old Faithful Geyser - et ICL ?</h2></hgroup><article  id="old-faithful-geyser---et-icl-2">
+
+<p><img src="cnam-classif-modeles_files/figure-html/ex-faithful-heatmap-ICL-1.png" title="" alt="" width="960" style="display: block; margin: auto;" /></p>
+
+</article></slide><slide class=''><hgroup><h2>Iris - Données</h2></hgroup><article  id="iris---donnees">
+
+<p><img src="cnam-classif-modeles_files/figure-html/ex-iris-donnees-1.png" title="" alt="" width="960" style="display: block; margin: auto;" /></p>
+
+</article></slide><slide class=''><hgroup><h2>Iris - Application</h2></hgroup><article  id="iris---application" class="smaller">
+
+<pre class = 'prettyprint lang-r'>iris.mixmod = mixmodCluster(iris[-5], nbCluster = 1:9,
+                            model = mixmodGaussianModel())
+summary(iris.mixmod)</pre>
+
+<pre >## **************************************************************
+## * Number of samples    =  150 
+## * Problem dimension    =  4 
+## **************************************************************
+## *       Number of cluster =  3 
+## *              Model Type =  Gaussian_p_Lk_Dk_A_Dk 
+## *               Criterion =  BIC(553.4049)
+## *              Parameters =  list by cluster
+## *                  Cluster  1 : 
+##                          Proportion =  0.3333 
+##                               Means =  5.9176 2.7781 4.2105 1.3021 
+##                           Variances = |     0.2273     0.0761     0.1486     0.0441 |
+##                                       |     0.0761     0.0807     0.0744     0.0347 |
+##                                       |     0.1486     0.0744     0.1691     0.0510 |
+##                                       |     0.0441     0.0347     0.0510     0.0342 |
+## *                  Cluster  2 : 
+##                          Proportion =  0.3333 
+##                               Means =  6.5515 2.9509 5.4908 1.9903 
+##                           Variances = |     0.4282     0.1078     0.3310     0.0630 |
+##                                       |     0.1078     0.1155     0.0879     0.0607 |
+##                                       |     0.3310     0.0879     0.3585     0.0831 |
+##                                       |     0.0630     0.0607     0.0831     0.0847 |
+## *                  Cluster  3 : 
+##                          Proportion =  0.3333 
+##                               Means =  5.0060 3.4280 1.4620 0.2460 
+##                           Variances = |     0.1328     0.1089     0.0192     0.0116 |
+##                                       |     0.1089     0.1545     0.0120     0.0100 |
+##                                       |     0.0192     0.0120     0.0283     0.0058 |
+##                                       |     0.0116     0.0100     0.0058     0.0107 |
+## *          Log-likelihood =  -186.5110 
+## **************************************************************</pre>
+
+</article></slide><slide class=''><hgroup><h2>Iris - Evolution du critère</h2></hgroup><article  id="iris---evolution-du-critere">
+
+<p><img src="cnam-classif-modeles_files/figure-html/ex-iris-criterion-1.png" title="" alt="" width="960" style="display: block; margin: auto;" /></p>
+
+</article></slide><slide class=''><hgroup><h2>Iris - Evolution du critère</h2></hgroup><article  id="iris---evolution-du-critere-1">
+
+<p><img src="cnam-classif-modeles_files/figure-html/ex-iris-heatmap-1.png" title="" alt="" width="960" style="display: block; margin: auto;" /></p>
+
+</article></slide><slide class=''><hgroup><h2>Iris - Densité par classe</h2></hgroup><article  id="iris---densite-par-classe">
+
+<pre class = 'prettyprint lang-r'>histCluster(iris.mixmod[&quot;bestResult&quot;], iris[-5])</pre>
+
+<p><img src="cnam-classif-modeles_files/figure-html/ex-iris-hist-1.png" title="" alt="" width="960" style="display: block; margin: auto;" /></p>
+
+</article></slide><slide class=''><hgroup><h2>Iris - Classification</h2></hgroup><article  id="iris---classification">
+
+<pre class = 'prettyprint lang-r'>plot(iris.mixmod)</pre>
+
+<p><img src="cnam-classif-modeles_files/figure-html/ex-iris-plot-1.png" title="" alt="" width="960" style="display: block; margin: auto;" /></p>
+
+</article></slide><slide class=''><hgroup><h2>Iris - Classification</h2></hgroup><article  id="iris---classification-1">
+
+<pre class = 'prettyprint lang-r'>plotCluster(iris.mixmod[&quot;bestResult&quot;], iris[-5], variable1 = 1, variable2 = 2)</pre>
+
+<p><img src="cnam-classif-modeles_files/figure-html/ex-iris-plotCluster-1.png" title="" alt="" width="960" style="display: block; margin: auto;" /></p>
+
+</article></slide><slide class=''><hgroup><h2>Iris - ICL</h2></hgroup><article  id="iris---icl">
+
+<pre class = 'prettyprint lang-r'>iris.mixmodICL = mixmodCluster(iris[-5], nbCluster = 1:9,
+                               criterion = &quot;ICL&quot;,
+                               model = mixmodGaussianModel())
+summary(iris.mixmodICL)</pre>
+
+<pre >## **************************************************************
+## * Number of samples    =  150 
+## * Problem dimension    =  4 
+## **************************************************************
+## *       Number of cluster =  8 
+## *              Model Type =  Gaussian_pk_Lk_Bk 
+## *               Criterion =  ICL(-1164.6037)
+## *              Parameters =  list by cluster
+## *                  Cluster  1 : 
+##                          Proportion =  0.1459 
+##                               Means =  5.5344 2.5704 3.8456 1.1645 
+##                           Variances = |     0.0990     0.0000     0.0000     0.0000 |
+##                                       |     0.0000     0.0619     0.0000     0.0000 |
+##                                       |     0.0000     0.0000     0.1195     0.0000 |
+##                                       |     0.0000     0.0000     0.0000     0.0182 |
+## *                  Cluster  2 : 
+##                          Proportion =  0.1666 
+##                               Means =  6.1697 2.8038 5.1412 1.8186 
+##                           Variances = |     0.0953     0.0000     0.0000     0.0000 |
+##                                       |     0.0000     0.0537     0.0000     0.0000 |
+##                                       |     0.0000     0.0000     0.0826     0.0000 |
+##                                       |     0.0000     0.0000     0.0000     0.0445 |
+## *                  Cluster  3 : 
+##                          Proportion =  0.1933 
+##                               Means =  4.9724 3.3793 1.4448 0.2000 
+##                           Variances = |     0.1213     0.0000     0.0000     0.0000 |
+##                                       |     0.0000     0.0913     0.0000     0.0000 |
+##                                       |     0.0000     0.0000     0.0287     0.0000 |
+##                                       |     0.0000     0.0000     0.0000     0.0000 |
+## *                  Cluster  4 : 
+##                          Proportion =  0.1694 
+##                               Means =  6.1949 2.9049 4.5306 1.4319 
+##                           Variances = |     0.2323     0.0000     0.0000     0.0000 |
+##                                       |     0.0000     0.0763     0.0000     0.0000 |
+##                                       |     0.0000     0.0000     0.0377     0.0000 |
+##                                       |     0.0000     0.0000     0.0000     0.0138 |
+## *                  Cluster  5 : 
+##                          Proportion =  0.0504 
+##                               Means =  4.7148 3.0934 1.3543 0.1960 
+##                           Variances = |     0.0506     0.0000     0.0000     0.0000 |
+##                                       |     0.0000     0.1490     0.0000     0.0000 |
+##                                       |     0.0000     0.0000     0.0132     0.0000 |
+##                                       |     0.0000     0.0000     0.0000     0.0100 |
+## *                  Cluster  6 : 
+##                          Proportion =  0.0896 
+##                               Means =  5.2421 3.7210 1.5595 0.3733 
+##                           Variances = |     0.0569     0.0000     0.0000     0.0000 |
+##                                       |     0.0000     0.0892     0.0000     0.0000 |
+##                                       |     0.0000     0.0000     0.0240     0.0000 |
+##                                       |     0.0000     0.0000     0.0000     0.0127 |
+## *                  Cluster  7 : 
+##                          Proportion =  0.0761 
+##                               Means =  7.4933 3.1305 6.3202 2.0477 
+##                           Variances = |     0.0636     0.0000     0.0000     0.0000 |
+##                                       |     0.0000     0.1520     0.0000     0.0000 |
+##                                       |     0.0000     0.0000     0.1143     0.0000 |
+##                                       |     0.0000     0.0000     0.0000     0.0617 |
+## *                  Cluster  8 : 
+##                          Proportion =  0.1086 
+##                               Means =  6.6229 3.1492 5.5644 2.2647 
+##                           Variances = |     0.0596     0.0000     0.0000     0.0000 |
+##                                       |     0.0000     0.0270     0.0000     0.0000 |
+##                                       |     0.0000     0.0000     0.0653     0.0000 |
+##                                       |     0.0000     0.0000     0.0000     0.0200 |
+## *          Log-likelihood =  775.1415 
+## **************************************************************</pre>
+
+</article></slide><slide class=''><hgroup><h2>Iris - Comparaison EM et CEM</h2></hgroup><article  id="iris---comparaison-em-et-cem">
+
+<pre class = 'prettyprint lang-r'>iris.EM = mixmodCluster(iris[-5], 3, strategy = mixmodStrategy(&quot;EM&quot;, 20, &quot;random&quot;))
+iris.CEM = mixmodCluster(iris[-5], 3, strategy = mixmodStrategy(&quot;CEM&quot;, 20, &quot;random&quot;))</pre>
+
+<p><img src="cnam-classif-modeles_files/figure-html/ex-iris-comparaison-EM-CEM-plot-1.png" title="" alt="" width="960" style="display: block; margin: auto;" /></p>
+
+</article></slide><slide class=''><hgroup><h2>Birds - Données</h2></hgroup><article  id="birds---donnees">
+
+<table class = 'rmdtable'>
+<tr class="header">
+<th align="left"></th>
+<th align="left">gender</th>
+<th align="left">eyebrow</th>
+<th align="left">collar</th>
+<th align="left">sub-caudal</th>
+<th align="left">border</th>
+</tr>
+<tr class="odd">
+<td align="left">1</td>
+<td align="left">male</td>
+<td align="left">poor pronounced</td>
+<td align="left">dotted</td>
+<td align="left">white</td>
+<td align="left">few</td>
+</tr>
+<tr class="even">
+<td align="left">2</td>
+<td align="left">female</td>
+<td align="left">none</td>
+<td align="left">dotted</td>
+<td align="left">black</td>
+<td align="left">none</td>
+</tr>
+<tr class="odd">
+<td align="left">3</td>
+<td align="left">female</td>
+<td align="left">pronounced</td>
+<td align="left">none</td>
+<td align="left">white</td>
+<td align="left">none</td>
+</tr>
+<tr class="even">
+<td align="left">4</td>
+<td align="left">male</td>
+<td align="left">pronounced</td>
+<td align="left">dotted</td>
+<td align="left">white</td>
+<td align="left">none</td>
+</tr>
+<tr class="odd">
+<td align="left">5</td>
+<td align="left">male</td>
+<td align="left">pronounced</td>
+<td align="left">dotted</td>
+<td align="left">white</td>
+<td align="left">none</td>
+</tr>
+<tr class="even">
+<td align="left">6</td>
+<td align="left">male</td>
+<td align="left">pronounced</td>
+<td align="left">dotted</td>
+<td align="left">white</td>
+<td align="left">none</td>
+</tr>
+<tr class="odd">
+<td align="left">7</td>
+<td align="left">female</td>
+<td align="left">pronounced</td>
+<td align="left">dotted</td>
+<td align="left">white</td>
+<td align="left">none</td>
+</tr>
+<tr class="even">
+<td align="left">8</td>
+<td align="left">female</td>
+<td align="left">poor pronounced</td>
+<td align="left">dotted</td>
+<td align="left">white</td>
+<td align="left">none</td>
+</tr>
+<tr class="odd">
+<td align="left">9</td>
+<td align="left">female</td>
+<td align="left">poor pronounced</td>
+<td align="left">dotted</td>
+<td align="left">white</td>
+<td align="left">none</td>
+</tr>
+<tr class="even">
+<td align="left">10</td>
+<td align="left">female</td>
+<td align="left">poor pronounced</td>
+<td align="left">dotted</td>
+<td align="left">white</td>
+<td align="left">none</td>
+</tr>
+<tr class="odd">
+<td align="left">11</td>
+<td align="left">female</td>
+<td align="left">poor pronounced</td>
+<td align="left">dotted</td>
+<td align="left">black</td>
+<td align="left">none</td>
+</tr>
+<tr class="even">
+<td align="left">12</td>
+<td align="left">male</td>
+<td align="left">pronounced</td>
+<td align="left">dotted</td>
+<td align="left">white</td>
+<td align="left">none</td>
+</tr>
+<tr class="odd">
+<td align="left">13</td>
+<td align="left">female</td>
+<td align="left">poor pronounced</td>
+<td align="left">dotted</td>
+<td align="left">black</td>
+<td align="left">none</td>
+</tr>
+<tr class="even">
+<td align="left">14</td>
+<td align="left">male</td>
+<td align="left">poor pronounced</td>
+<td align="left">dotted</td>
+<td align="left">black &amp; white</td>
+<td align="left">none</td>
+</tr>
+<tr class="odd">
+<td align="left">15</td>
+<td align="left">female</td>
+<td align="left">poor pronounced</td>
+<td align="left">dotted</td>
+<td align="left">white</td>
+<td align="left">none</td>
+</tr>
+<tr class="even">
+<td align="left">16</td>
+<td align="left">female</td>
+<td align="left">poor pronounced</td>
+<td align="left">dotted</td>
+<td align="left">black</td>
+<td align="left">none</td>
+</tr>
+<tr class="odd">
+<td align="left">17</td>
+<td align="left">female</td>
+<td align="left">poor pronounced</td>
+<td align="left">dotted</td>
+<td align="left">black</td>
+<td align="left">none</td>
+</tr>
+<tr class="even">
+<td align="left">18</td>
+<td align="left">male</td>
+<td align="left">poor pronounced</td>
+<td align="left">dotted</td>
+<td align="left">black</td>
+<td align="left">none</td>
+</tr>
+<tr class="odd">
+<td align="left">19</td>
+<td align="left">female</td>
+<td align="left">poor pronounced</td>
+<td align="left">dotted</td>
+<td align="left">white</td>
+<td align="left">none</td>
+</tr>
+<tr class="even">
+<td align="left">20</td>
+<td align="left">female</td>
+<td align="left">none</td>
+<td align="left">dotted</td>
+<td align="left">white</td>
+<td align="left">none</td>
+</tr>
+<tr class="odd">
+<td align="left">21</td>
+<td align="left">male</td>
+<td align="left">poor pronounced</td>
+<td align="left">dotted</td>
+<td align="left">black</td>
+<td align="left">none</td>
+</tr>
+<tr class="even">
+<td align="left">22</td>
+<td align="left">male</td>
+<td align="left">pronounced</td>
+<td align="left">dotted</td>
+<td align="left">white</td>
+<td align="left">none</td>
+</tr>
+<tr class="odd">
+<td align="left">23</td>
+<td align="left">male</td>
+<td align="left">poor pronounced</td>
+<td align="left">dotted</td>
+<td align="left">black &amp; white</td>
+<td align="left">none</td>
+</tr>
+<tr class="even">
+<td align="left">24</td>
+<td align="left">male</td>
+<td align="left">poor pronounced</td>
+<td align="left">dotted</td>
+<td align="left">black</td>
+<td align="left">none</td>
+</tr>
+<tr class="odd">
+<td align="left">25</td>
+<td align="left">male</td>
+<td align="left">poor pronounced</td>
+<td align="left">dotted</td>
+<td align="left">black</td>
+<td align="left">none</td>
+</tr>
+<tr class="even">
+<td align="left">26</td>
+<td align="left">female</td>
+<td align="left">poor pronounced</td>
+<td align="left">none</td>
+<td align="left">black</td>
+<td align="left">none</td>
+</tr>
+<tr class="odd">
+<td align="left">27</td>
+<td align="left">female</td>
+<td align="left">poor pronounced</td>
+<td align="left">dotted</td>
+<td align="left">black &amp; white</td>
+<td align="left">none</td>
+</tr>
+<tr class="even">
+<td align="left">28</td>
+<td align="left">male</td>
+<td align="left">poor pronounced</td>
+<td align="left">dotted</td>
+<td align="left">black &amp; WHITE</td>
+<td align="left">none</td>
+</tr>
+<tr class="odd">
+<td align="left">29</td>
+<td align="left">male</td>
+<td align="left">none</td>
+<td align="left">dotted</td>
+<td align="left">black</td>
+<td align="left">none</td>
+</tr>
+<tr class="even">
+<td align="left">30</td>
+<td align="left">male</td>
+<td align="left">none</td>
+<td align="left">none</td>
+<td align="left">white</td>
+<td align="left">none</td>
+</tr>
+<tr class="odd">
+<td align="left">31</td>
+<td align="left">male</td>
+<td align="left">poor pronounced</td>
+<td align="left">dotted</td>
+<td align="left">white</td>
+<td align="left">none</td>
+</tr>
+<tr class="even">
+<td align="left">32</td>
+<td align="left">male</td>
+<td align="left">none</td>
+<td align="left">none</td>
+<td align="left">white</td>
+<td align="left">none</td>
+</tr>
+<tr class="odd">
+<td align="left">33</td>
+<td align="left">female</td>
+<td align="left">poor pronounced</td>
+<td align="left">dotted</td>
+<td align="left">white</td>
+<td align="left">few</td>
+</tr>
+<tr class="even">
+<td align="left">34</td>
+<td align="left">male</td>
+<td align="left">none</td>
+<td align="left">none</td>
+<td align="left">white</td>
+<td align="left">none</td>
+</tr>
+<tr class="odd">
+<td align="left">35</td>
+<td align="left">female</td>
+<td align="left">pronounced</td>
+<td align="left">none</td>
+<td align="left">white</td>
+<td align="left">none</td>
+</tr>
+<tr class="even">
+<td align="left">36</td>
+<td align="left">female</td>
+<td align="left">pronounced</td>
+<td align="left">none</td>
+<td align="left">white</td>
+<td align="left">none</td>
+</tr>
+<tr class="odd">
+<td align="left">37</td>
+<td align="left">female</td>
+<td align="left">pronounced</td>
+<td align="left">none</td>
+<td align="left">white</td>
+<td align="left">none</td>
+</tr>
+<tr class="even">
+<td align="left">38</td>
+<td align="left">male</td>
+<td align="left">pronounced</td>
+<td align="left">none</td>
+<td align="left">white</td>
+<td align="left">none</td>
+</tr>
+<tr class="odd">
+<td align="left">39</td>
+<td align="left">male</td>
+<td align="left">pronounced</td>
+<td align="left">none</td>
+<td align="left">white</td>
+<td align="left">none</td>
+</tr>
+<tr class="even">
+<td align="left">40</td>
+<td align="left">female</td>
+<td align="left">pronounced</td>
+<td align="left">none</td>
+<td align="left">white</td>
+<td align="left">none</td>
+</tr>
+<tr class="odd">
+<td align="left">41</td>
+<td align="left">female</td>
+<td align="left">pronounced</td>
+<td align="left">none</td>
+<td align="left">white</td>
+<td align="left">none</td>
+</tr>
+<tr class="even">
+<td align="left">42</td>
+<td align="left">male</td>
+<td align="left">pronounced</td>
+<td align="left">none</td>
+<td align="left">white</td>
+<td align="left">none</td>
+</tr>
+<tr class="odd">
+<td align="left">43</td>
+<td align="left">female</td>
+<td align="left">pronounced</td>
+<td align="left">none</td>
+<td align="left">white</td>
+<td align="left">none</td>
+</tr>
+<tr class="even">
+<td align="left">44</td>
+<td align="left">female</td>
+<td align="left">pronounced</td>
+<td align="left">none</td>
+<td align="left">white</td>
+<td align="left">none</td>
+</tr>
+<tr class="odd">
+<td align="left">45</td>
+<td align="left">female</td>
+<td align="left">pronounced</td>
+<td align="left">none</td>
+<td align="left">white</td>
+<td align="left">none</td>
+</tr>
+<tr class="even">
+<td align="left">46</td>
+<td align="left">female</td>
+<td align="left">pronounced</td>
+<td align="left">none</td>
+<td align="left">white</td>
+<td align="left">none</td>
+</tr>
+<tr class="odd">
+<td align="left">47</td>
+<td align="left">male</td>
+<td align="left">pronounced</td>
+<td align="left">none</td>
+<td align="left">white</td>
+<td align="left">none</td>
+</tr>
+<tr class="even">
+<td align="left">48</td>
+<td align="left">male</td>
+<td align="left">pronounced</td>
+<td align="left">none</td>
+<td align="left">white</td>
+<td align="left">none</td>
+</tr>
+<tr class="odd">
+<td align="left">49</td>
+<td align="left">female</td>
+<td align="left">pronounced</td>
+<td align="left">none</td>
+<td align="left">white</td>
+<td align="left">none</td>
+</tr>
+<tr class="even">
+<td align="left">50</td>
+<td align="left">female</td>
+<td align="left">very pronounced</td>
+<td align="left">none</td>
+<td align="left">black &amp; WHITE</td>
+<td align="left">none</td>
+</tr>
+<tr class="odd">
+<td align="left">51</td>
+<td align="left">female</td>
+<td align="left">pronounced</td>
+<td align="left">none</td>
+<td align="left">white</td>
+<td align="left">none</td>
+</tr>
+<tr class="even">
+<td align="left">52</td>
+<td align="left">male</td>
+<td align="left">pronounced</td>
+<td align="left">none</td>
+<td align="left">white</td>
+<td align="left">none</td>
+</tr>
+<tr class="odd">
+<td align="left">53</td>
+<td align="left">male</td>
+<td align="left">pronounced</td>
+<td align="left">none</td>
+<td align="left">white</td>
+<td align="left">many</td>
+</tr>
+<tr class="even">
+<td align="left">54</td>
+<td align="left">female</td>
+<td align="left">pronounced</td>
+<td align="left">none</td>
+<td align="left">white</td>
+<td align="left">none</td>
+</tr>
+<tr class="odd">
+<td align="left">55</td>
+<td align="left">male</td>
+<td align="left">pronounced</td>
+<td align="left">none</td>
+<td align="left">white</td>
+<td align="left">none</td>
+</tr>
+<tr class="even">
+<td align="left">56</td>
+<td align="left">female</td>
+<td align="left">pronounced</td>
+<td align="left">none</td>
+<td align="left">white</td>
+<td align="left">none</td>
+</tr>
+<tr class="odd">
+<td align="left">57</td>
+<td align="left">female</td>
+<td align="left">very pronounced</td>
+<td align="left">none</td>
+<td align="left">white</td>
+<td align="left">few</td>
+</tr>
+<tr class="even">
+<td align="left">58</td>
+<td align="left">female</td>
+<td align="left">very pronounced</td>
+<td align="left">none</td>
+<td align="left">white</td>
+<td align="left">none</td>
+</tr>
+<tr class="odd">
+<td align="left">59</td>
+<td align="left">male</td>
+<td align="left">pronounced</td>
+<td align="left">none</td>
+<td align="left">white</td>
+<td align="left">none</td>
+</tr>
+<tr class="even">
+<td align="left">60</td>
+<td align="left">female</td>
+<td align="left">pronounced</td>
+<td align="left">none</td>
+<td align="left">white</td>
+<td align="left">none</td>
+</tr>
+<tr class="odd">
+<td align="left">61</td>
+<td align="left">male</td>
+<td align="left">pronounced</td>
+<td align="left">none</td>
+<td align="left">white</td>
+<td align="left">none</td>
+</tr>
+<tr class="even">
+<td align="left">62</td>
+<td align="left">male</td>
+<td align="left">pronounced</td>
+<td align="left">none</td>
+<td align="left">white</td>
+<td align="left">none</td>
+</tr>
+<tr class="odd">
+<td align="left">63</td>
+<td align="left">male</td>
+<td align="left">pronounced</td>
+<td align="left">none</td>
+<td align="left">white</td>
+<td align="left">none</td>
+</tr>
+<tr class="even">
+<td align="left">64</td>
+<td align="left">male</td>
+<td align="left">pronounced</td>
+<td align="left">none</td>
+<td align="left">white</td>
+<td align="left">none</td>
+</tr>
+<tr class="odd">
+<td align="left">65</td>
+<td align="left">female</td>
+<td align="left">pronounced</td>
+<td align="left">none</td>
+<td align="left">white</td>
+<td align="left">none</td>
+</tr>
+<tr class="even">
+<td align="left">66</td>
+<td align="left">female</td>
+<td align="left">pronounced</td>
+<td align="left">none</td>
+<td align="left">white</td>
+<td align="left">none</td>
+</tr>
+<tr class="odd">
+<td align="left">67</td>
+<td align="left">female</td>
+<td align="left">pronounced</td>
+<td align="left">none</td>
+<td align="left">white</td>
+<td align="left">none</td>
+</tr>
+<tr class="even">
+<td align="left">68</td>
+<td align="left">male</td>
+<td align="left">very pronounced</td>
+<td align="left">none</td>
+<td align="left">white</td>
+<td align="left">none</td>
+</tr>
+<tr class="odd">
+<td align="left">69</td>
+<td align="left">male</td>
+<td align="left">pronounced</td>
+<td align="left">none</td>
+<td align="left">white</td>
+<td align="left">none</td>
+</tr>
+</table>
+
+</article></slide><slide class=''><hgroup><h2>Birds - Application</h2></hgroup><article  id="birds---application">
+
+<pre class = 'prettyprint lang-r'>birds.mixmod = mixmodCluster(birds, 2,
+                             models = mixmodMultinomialModel())
+summary(birds.mixmod)</pre>
+
+<pre >## **************************************************************
+## * Number of samples    =  69 
+## * Problem dimension    =  5 
+## **************************************************************
+## *       Number of cluster =  2 
+## *              Model Type =  Binary_p_Ej 
+## *               Criterion =  BIC(485.2674)
+## *              Parameters =  list by cluster
+## *                  Cluster  1 : 
+##                          Proportion =  0.5000 
+##                              Center =  2.0000 3.0000 1.0000 1.0000 1.0000 
+##                             Scatter = |     0.4681     0.4681 |
+##                                       |     0.0851     0.0851     0.2554     0.0851 |
+##                                       |     0.0301     0.0075     0.0075     0.0075     0.0075 |
+##                                       |     0.2479     0.0620     0.0620     0.0620     0.0620 |
+##                                       |     0.0751     0.0376     0.0376 |
+## *                  Cluster  2 : 
+##                          Proportion =  0.5000 
+##                              Center =  1.0000 2.0000 2.0000 1.0000 1.0000 
+##                             Scatter = |     0.4681     0.4681 |
+##                                       |     0.0851     0.2554     0.0851     0.0851 |
+##                                       |     0.0075     0.0301     0.0075     0.0075     0.0075 |
+##                                       |     0.2479     0.0620     0.0620     0.0620     0.0620 |
+##                                       |     0.0751     0.0376     0.0376 |
+## *          Log-likelihood =  -232.0484 
+## **************************************************************</pre>
+
+</article></slide><slide class=''><hgroup><h2>Birds - Représentation via MCA</h2></hgroup><article  id="birds---representation-via-mca">
+
+<pre class = 'prettyprint lang-r'>plot(birds.mixmod)</pre>
+
+<p><img src="cnam-classif-modeles_files/figure-html/ex-birds-plot-1.png" title="" alt="" width="960" style="display: block; margin: auto;" /></p>
+
+</article></slide><slide class=''><hgroup><h2>Birds - Répartition par classes</h2></hgroup><article  id="birds---repartition-par-classes">
+
+<pre class = 'prettyprint lang-r'>barplot(birds.mixmod)</pre>
+
+<p><img src="cnam-classif-modeles_files/figure-html/ex-birds-barplot-1.png" title="" alt="" width="960" style="display: block; margin: auto;" /></p></article></slide>
 
 
   <slide class="backdrop"></slide>

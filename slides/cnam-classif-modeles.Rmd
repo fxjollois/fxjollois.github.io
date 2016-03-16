@@ -8,19 +8,36 @@ output:
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = FALSE)
-
-library(mclust)
-library(Rmixmod)
-library(NbClust)
+knitr::opts_chunk$set(echo = FALSE, fig.align = "center", fig.width = 10, fig.height = 4)
 ```
 
-## Plan
+## Informations
+
+<div class="columns-2">
+### Plan
 
 1. Problème de classification
+    - Partition
+    - Hiérarchie
 2. Modèles de mélange
+    - Algorithmes EM et CEM
 3. Nombre de classes
+    - Critères de choix
 4. Applications
+    - avec code `R`
+
+### Librairies `R` utilisées
+
+```{r libraries, echo=TRUE, message=FALSE, warning=FALSE}
+library(mclust)
+library(knitr)
+library(Rmixmod)
+library(ggplot2)
+library(reshape2)
+library(NbClust)
+library(gridExtra)
+```
+</div>
 
 ## Classification
 
@@ -55,9 +72,9 @@ library(NbClust)
     2. Affectation : On affecte les points à la classe la plus proche,
     3. Représentation : On recalcule les nouveaux centres de gravité,
     4. On répète les étapes d’affectation et de représentation jusqu’à la convergence de l’algorithme (i. e. plus de changement de le partition).
-- Convergence assez rapide (moins de 20 itérations généralement)
 - Résultats dépendant de l'initialisation
 - Nombre de classes devant être connu
+- Complexité linéaire
 
 ## $k$-means
 
@@ -67,6 +84,11 @@ library(NbClust)
 \]
 - Somme des inerties intra-classes
 - Basé sur la distance euclidienne
+- Très rapide dans la convergence et dans le calcul
+    - Convergence assez rapide (moins de 20 itérations généralement)
+- Connu et très utilisé
+- Variables devant avoir la même échelle
+    - Standardisation éventuellement nécessaire
 
 ## Inconvénients
 
@@ -93,15 +115,48 @@ library(NbClust)
 
 ## Hiérarchie
 
-??
+**Définition** : Un ensemble $H$ de parties non vides de $I$ est une hiérarchie sur $I$ si
+
+- $I \in H$
+- $\forall i \in I, {i} \in H$
+- $\forall h, h' \in H$, on a un des trois cas :
+    - $h \cap h' = \emptyset$
+    - $h \subset h'$
+    - $h' \subset h$
+
+- Ensemble de partitions emboîtées
+
+On se place ici dans le cadre de la Classification ascendante hiérarchique (CAH) considérée ici
+
+## Classification hiérarchique
+
+- Algorithme
+    1. Chaque objet est dans sa propre classe
+    2. Calcul des distances entre les classes
+    3. Regroupement des deux classes les plus proches 
+        - Mise à jour des nouvelles distances
+    4. Répétition de l'étape 3 jusqu'à n'avoir plus qu'une seule classe
+- Pas de nécessité de connaître le nombre de classes
+- Algorithme déterministe
+- Complexité quadratique
+
+## CAH
+
+- Critères d'aggrégation à définir : simple, complet, médian, moyen, centroïde
+- Le plus utilisé : Critère de **Ward**
+$$
+    \delta_{Ward} (z_h, z_{h'}) = \frac{\#z_h \times \#z_{h'}}{\#z_h + \#z_{h'}} d^2(z_h, z_{h'})
+$$
+- Basé sur la distance euclidienne (ou autre distance si besoin)
+- Temps de calcul pouvant être long si $n$ grand
+- Nouvelles distances calculées à partir des anciennes dans certains cas (dont Ward)
 
 ## Modèles de mélange
 
 - Distribution de probabilité : mélange de $s$ distributions associées aux classes
-- Cas d’une variable continue, avec deux classes sont présentes
+- Cas d’une variable continue, avec deux classes présentes
 
-```{r ex-modele, fig.align='center'}
-set.seed(1)
+```{r ex-modele, fig.width = 8, fig.height = 4}
 x = data.frame(x = c(rnorm(n = 100, mean = 2, sd = 1), rnorm(n = 100, mean = 6, sd = 2)))
 m = mixmodCluster(x, 2)
 par(mar = c(2, 2, 2, 0) + 0.1)
@@ -129,22 +184,24 @@ rm(x, m)
     L(x_1,\ldots,x_n;\theta) = \sum_{i=1}^n \log \left( \sum_{k=1}^s p_k \varphi_k (x_i;\alpha_k) \right)
 \]
 - Pour la classification, chaque $x_i$ appartiendra à une classe $k$, tel que $z_{ik} = 1$ (et 0 sinon)
-- Log-vraissemblance complétée :
+- Log-vraissemblance complétée (ou classifiante) :
 \[
-    L_c(x_1,\ldots,x_n;\theta) = \sum_{i=1}^n \sum_{k=1}^s z_{ik} \log\left( p_k \varphi_k (x_i;\alpha_k) \right)
+    L_c(x_1,\ldots,x_n; z, \theta) = \sum_{i=1}^n \sum_{k=1}^s z_{ik} \log\left( p_k \varphi_k (x_i;\alpha_k) \right)
 \]
 
-## Deux approches
+## Trois approches
 
 - Approche **Estimation**
     - Estimation des paramètres du mélange
     - Déduction de la partition, avec la méthode du maximum a posteriori *MAP*
-    - Maximisation de la log-vraisemblance $L(x,\theta)$
+    - Maximisation de la log-vraisemblance $L(x; \theta)$
     - Utilisation de l'lagorithme **EM**
 - Approche **Classification**
     - Estimation conjointe des paramètres et de la partition
-    - Maximisation de la log-vraisemblance classifiante $L_C(x,\theta)$
+    - Maximisation de la log-vraisemblance classifiante $L_C(x; z, \theta)$
     - Utilisation de l'algorithme **CEM**
+- Approche **Hiérarchique**
+    - Utilisation de la log-vraisemblance classifiante $L_C(x; z, \theta)$
 
 ## Algorithme EM
 
@@ -188,16 +245,27 @@ rm(x, m)
 - Résultats dépendant fortement de l'initialisation
     - Lancement avec des initialisations différentes
     - Récupération de la meilleure solution, selon $L$ (ou $L_c$)
-    - Initialisation de **EM** avec la meilleure solution de **CEM**
+    - Initialisation de **EM** avec la meilleure solution de **CEM** (ou autre)
+    - **SEM** : Version stochastique (étape de classification : affectation stochastique)
 - Cas gaussien
     - Fuzzy $c$-means : **EM** avc contraintes sur le modèle
     - $k$-means : **CEM** avec contraintes sur le modèle
 - Cas qualitatif :
     - $k$-modes : **CEM** avec contraintes sur le modèle
 
-## Hiérarchique
+## Approche hiérarchique
 
-??
+- Utilisation de la log-vraisemblance classifiante 
+$$
+    L_C(x; z, \theta) = \sum_{k=1}^s L_(z_k, \theta_k)
+$$
+- Distance entre deux classes définie par
+$$
+    d(z_k, z_{k'}) = L_C(z_k, \theta_k) + L_C(Z_{k'}, \theta_{k'}) - L_C(z_{k \cup k'}, \theta_{k \cup k'})
+$$
+    - Evolution de la log-vraissemblance lors de la fusion des deux classes
+- Cas gaussien :
+    - CAH avec Ward : CAH avec modèles de mélange + contraintes sur le modèle
 
 ## Données quantitatives
 
@@ -284,7 +352,7 @@ Dans toutes ces méthodes, le nombre de classes doit être **connu**.
 
 - Choix fait par un expert métier
 - Méthodes de recherche du nombre de classes
-    - Utilisation de la vraisemblance seule impossible (conduit à une classe par objet)
+    - Utilisation de la vraisemblance seule impossible 
     - Classification hiérarchique (inutilisable si trop d'objets)
     - Critères de choix de modèles
         - (ici) basé sur une pénalisation de la vraisemblance
@@ -336,10 +404,259 @@ $$
 
 ## Exemple d'applications
 
+- Old Faithful Geyser 
+    - avec `mclust`
+    - Données quantitatives
+    - EM, avec BIC et ICL
+- Iris
+    - avec `Rmixmod`
+    - Données quantitatives, avec une variable qualitative
+    - EM (initialisé par EM rapide), avec BIC et ICL
+    - Comparaison EM et CEM, avec $s=3$
+- Birds
+    - avec `Rmixmod`
+    - Données qualitatives
+    - 2 classes présentes (mais non connues)
+    - EM (initialisé par EM rapide), avec BIC
+
 ```{r}
 # dans la librairie Rmixmod
 # geyser, titanic
 
-res.faithful = mixmodCluster(faithful, nbCluster = 1:10)
-
+# res.faithful = mixmodCluster(faithful, nbCluster = 1:10)
+# plot(res.faithful)
 ```
+
+## Old Faithful Geyser - Données
+
+- Utilisation de la librairie `mclust`
+
+```{r ex-faithful-donnees, echo=TRUE}
+plot(faithful)
+```
+
+## Old Faithful Geyser - Application
+
+```{r ex-faithful-apply, echo=TRUE}
+faithful.mclust = Mclust(faithful)
+summary(faithful.mclust)
+```
+
+## Old Faithful Geyser - BIC
+
+```{r ex-faithful-summary-BIC, echo=TRUE}
+summary(faithful.mclust$BIC)
+```
+
+## Old Faithful Geyser - BIC
+
+```{r ex-faithful-plot-BIC, echo=TRUE}
+plot(faithful.mclust, what = "BIC")
+```
+
+## Old Faithful Geyser - BIC {.smaller}
+
+```{r ex-faithful-print-BIC, results='asis'}
+BIC = round(faithful.mclust$BIC)
+class(BIC) = "matrix"
+rownames(BIC) = paste("s", rownames(BIC), sep="=")
+kable(BIC, row.names = 1)
+```
+
+## Old Faithful Geyser - BIC
+
+```{r ex-faithful-heatmap-BIC, echo=FALSE}
+BICmelt = setNames(melt(BIC), c("NbClasses", "Modele", "BIC"))
+ggplot(BICmelt, 
+       aes(x = NbClasses, y = Modele, fill = BIC)) + 
+    geom_tile()
+```
+
+## Old Faithful Geyser - Classification
+
+```{r ex-faithful-plot-classification, echo=TRUE}
+plot(faithful.mclust, what = "classification")
+```
+
+## Old Faithful Geyser - Incertitude
+
+```{r ex-faithful-plot-uncertainty, echo=TRUE}
+plot(faithful.mclust, what = "uncertainty")
+```
+
+## Old Faithful Geyser - et ICL ?
+
+```{r ex-faithful-ICL, echo=TRUE}
+faithful.mclustICL = mclustICL(faithful)
+summary(faithful.mclustICL)
+```
+
+## Old Faithful Geyser - et ICL ?
+
+```{r ex-faithful-plot-ICL, echo=TRUE}
+plot(faithful.mclustICL)
+```
+
+## Old Faithful Geyser - et ICL ?
+
+```{r ex-faithful-heatmap-ICL}
+ICL = faithful.mclustICL
+class(ICL) = "matrix"
+rownames(ICL) = paste("s", rownames(ICL), sep="=")
+ICLmelt = setNames(melt(ICL), c("NbClasses", "Modele", "ICL"))
+ggplot(ICLmelt, 
+       aes(x = NbClasses, y = Modele, fill = ICL)) + 
+    geom_tile()
+```
+    
+## Iris - Données
+
+```{r ex-iris-donnees}
+# cf https://gastonsanchez.wordpress.com/2012/08/27/scatterplot-matrices-with-ggplot/
+makePairs <- function(data) 
+{
+    grid <- expand.grid(x = 1:ncol(data), y = 1:ncol(data))
+    grid <- subset(grid, x != y)
+    all <- do.call("rbind", lapply(1:nrow(grid), function(i) {
+        xcol <- grid[i, "x"]
+        ycol <- grid[i, "y"]
+        data.frame(xvar = names(data)[ycol], yvar = names(data)[xcol], 
+                   x = data[, xcol], y = data[, ycol], data)
+    }))
+    all$xvar <- factor(all$xvar, levels = names(data))
+    all$yvar <- factor(all$yvar, levels = names(data))
+    densities <- do.call("rbind", lapply(1:ncol(data), function(i) {
+        data.frame(xvar = names(data)[i], yvar = names(data)[i], x = data[, i])
+    }))
+    list(all=all, densities=densities)
+}
+
+# expand iris data frame for pairs plot
+gg1 = makePairs(iris[,-5])
+
+# new data frame mega iris
+mega_iris = data.frame(gg1$all, Species=rep(iris$Species, length=nrow(gg1$all)))
+
+# pairs plot
+ggplot(mega_iris, aes_string(x = "x", y = "y")) + 
+    facet_grid(xvar ~ yvar, scales = "free") + 
+    geom_point(aes(colour=Species), na.rm = TRUE, alpha=0.8) + 
+    stat_density(aes(x = x, y = ..scaled.. * diff(range(x)) + min(x)), 
+                 data = gg1$densities, position = "identity", 
+                 colour = "grey20", geom = "line")
+```
+
+## Iris - Application {.smaller}
+
+```{r ex-iris-apply, echo=TRUE}
+iris.mixmod = mixmodCluster(iris[-5], nbCluster = 1:9,
+                            model = mixmodGaussianModel())
+summary(iris.mixmod)
+```
+
+## Iris - Evolution du critère
+
+```{r ex-iris-criterion}
+iris.BICtemp = lapply(iris.mixmod["results"], function (r) {
+  return (list(nbCluster = attr(r, "nbCluster"), 
+                     model = attr(r, "model"), 
+                     criterionValue = attr(r, "criterionValue"), 
+                     stringsAsFactors = FALSE))  
+})
+iris.BIC = data.frame(
+    nbCluster = sapply(iris.BICtemp, function(r) return (r$nbCluster)),
+    model = sub("Gaussian_", "", sapply(iris.BICtemp, function(r) return (r$model) )),
+    value = sapply(iris.BICtemp, function(r) return (r$criterionValue) )
+)
+ggplot(data=iris.BIC,
+       aes(x=nbCluster, y=value, color=model)) +
+       geom_line()
+```
+
+## Iris - Evolution du critère
+
+```{r ex-iris-heatmap}
+ggplot(iris.BIC, 
+       aes(x = nbCluster, y = model, fill = value))  +
+    geom_tile()  + scale_x_discrete(breaks=1:9, limits=1:9) +
+    scale_fill_distiller(direction=1)
+```
+
+## Iris - Densité par classe
+
+```{r ex-iris-hist, echo=TRUE}
+histCluster(iris.mixmod["bestResult"], iris[-5])
+```
+
+## Iris - Classification
+
+```{r ex-iris-plot, echo=TRUE}
+plot(iris.mixmod)
+```
+
+## Iris - Classification
+
+```{r ex-iris-plotCluster, echo=TRUE}
+plotCluster(iris.mixmod["bestResult"], iris[-5], variable1 = 1, variable2 = 2)
+```
+
+## Iris - ICL
+
+```{r ex-iris-apply-ICL, echo=TRUE}
+iris.mixmodICL = mixmodCluster(iris[-5], nbCluster = 1:9,
+                               criterion = "ICL",
+                               model = mixmodGaussianModel())
+summary(iris.mixmodICL)
+```
+
+## Iris - Comparaison EM et CEM
+
+```{r ex-iris-comparaison-EM-CEM, echo=TRUE}
+iris.EM = mixmodCluster(iris[-5], 3, strategy = mixmodStrategy("EM", 20, "random"))
+iris.CEM = mixmodCluster(iris[-5], 3, strategy = mixmodStrategy("CEM", 20, "random"))
+```
+
+```{r ex-iris-comparaison-EM-CEM-plot}
+tEM = table(iris$Species, iris.EM["bestResult"]["partition"])
+tCEM = table(iris$Species, iris.CEM["bestResult"]["partition"])
+tEMCEM = table(iris.EM["bestResult"]["partition"], iris.EM["bestResult"]["partition"])
+
+mEM = setNames(melt(-tEM), c("Species", "EM", "value"))
+mCEM = setNames(melt(-tCEM), c("Species", "CEM", "value"))
+mEMCEM = setNames(melt(-tEMCEM), c("EM", "CEM", "value"))
+
+options = theme(legend.position="none")
+pEM = ggplot(mEM, aes(x = Species, y = EM, fill = value)) + geom_tile() + options
+pCEM = ggplot(mCEM, aes(x = Species, y = CEM, fill = value)) + geom_tile() + options
+pEMCEM = ggplot(mEMCEM, aes(x = EM, y = CEM, fill = value)) + geom_tile() + options
+
+grid.arrange(pEM, pCEM, pEMCEM, nrow=1, ncol=3)
+```
+
+## Birds - Données
+
+```{r ex-birds-donnees, results='asis'}
+data(birds)
+kable(birds, row.names=-1)
+```
+
+## Birds - Application
+
+```{r ex-birds-apply, echo=TRUE}
+birds.mixmod = mixmodCluster(birds, 2,
+                             models = mixmodMultinomialModel())
+summary(birds.mixmod)
+```
+
+## Birds - Représentation via MCA
+
+```{r ex-birds-plot, echo=TRUE}
+plot(birds.mixmod)
+```
+
+## Birds - Répartition par classes
+
+```{r ex-birds-barplot, echo=TRUE}
+barplot(birds.mixmod)
+```
+
