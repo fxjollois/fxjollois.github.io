@@ -290,9 +290,8 @@ Expression de la matrice de variance en fonction de sa décomposition en valeurs
 
 En imposant des contraintes sur ces valeurs, utilisation de modèles plus ou moins parcimonieux
 
-## 14 modèles gaussiens retreints {.center .smaller}
+## 14 modèles gaussiens retreints
 
-<div class = "columns-2">
 - **Famille générale**
     - Volumes différents ($\lambda_k$) ou identiques ($\lambda$)
     - Formes différentes ($A_k$) ou identiques ($A$)
@@ -304,10 +303,12 @@ En imposant des contraintes sur ces valeurs, utilisation de modèles plus ou moi
     - $A_k$ : matrice identité ($I_k$)
     - Formes sphériques
 
-<img src="cnam-classif-modeles-14modeles.png" alt="14 modèles de décomposition" style="height: 10cm">
-</div>
-
 Proportions $p_k$ pouvant être contraintes à être identiques (donc 28 modèles en tout)
+
+## 14 modèles gaussiens retreints {.center}
+
+<img src="cnam-classif-modeles-14modeles.png" alt="14 modèles de décomposition" style="height: 12cm">
+
 
 ## Données qualitatives
 
@@ -332,9 +333,8 @@ Proportions $p_k$ pouvant être contraintes à être identiques (donc 28 modèle
     \varphi(x_i;\alpha_k) = \prod_{j=1}^d (1 - \varepsilon_k^j)^{1 - \delta(x_i^j,m_k^j)} \left( \frac{\varepsilon_k^j}{c_j - 1} \right)^{\delta(x_i^j,m_k^j)}
 \]
 
-## 10 modèles des classes latentes restreints {.center .smaller}
+## 10 modèles des classes latentes restreints 
 
-<div class = "columns-2">
 - $\alpha_k^{je}$ : une probabilité pour chaque modalité
 - $\varepsilon_k^j$ : erreur spécifique à une classe et une variable
 - $\varepsilon_k$ : erreur spécifique à une classe (et identique pour toutes les variables)
@@ -343,8 +343,9 @@ Proportions $p_k$ pouvant être contraintes à être identiques (donc 28 modèle
 - $p_k$ : proportions des classes différentes
 - $p$ : proportions des classes identiques
 
-<img src="cnam-classif-modeles-Quantimodeles.png" alt="Modèles restreints" style="height: 10cm">
-</div>
+## 10 modèles des classes latentes restreints {.center}
+
+<img src="cnam-classif-modeles-Quantimodeles.png" alt="Modèles restreints" style="height: 12cm">
 
 ## Nombre de classes
 
@@ -402,7 +403,7 @@ $$
 - Procédure [`FMM`](https://support.sas.com/documentation/cdl/en/statug/68162/HTML/default/viewer.htm#statug_fmm_toc.htm) dans **SAS** 
 - Logiciel [**mixmod**](http://www.mixmod.org/)
 
-## Exemple d'applications
+## Exemple d'applications {.smaller}
 
 - Old Faithful Geyser 
     - avec `mclust`
