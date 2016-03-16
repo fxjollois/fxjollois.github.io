@@ -305,7 +305,7 @@ En imposant des contraintes sur ces valeurs, utilisation de modèles plus ou moi
 
 Proportions $p_k$ pouvant être contraintes à être identiques (donc 28 modèles en tout)
 
-## 14 modèles gaussiens retreints {.center}
+## 14 modèles gaussiens retreints {.centered}
 
 <img src="cnam-classif-modeles-14modeles.png" alt="14 modèles de décomposition" style="height: 12cm">
 
@@ -315,7 +315,7 @@ Proportions $p_k$ pouvant être contraintes à être identiques (donc 28 modèle
 - Utilisation du modèle des classes latentes
 - Densité de probabilité de la classe $k$
 \[
-    \varphi(x_i;\alpha_k) = \prod_{j=1}^d \prod_{e=1}{c_j} \left( a_k^{je} \right)^{x_i^{je}}
+    \varphi(x_i;\alpha_k) = \prod_{j=1}^d \prod_{e=1}^{c_j} \left( a_k^{je} \right)^{x_i^{je}}
 \]
 - Variable $j$ à $c_j$ modalités 
 - $x_i^{je} = 1$ si l'individu $i$ a la modalité $e$ pour la variable $j$ 
@@ -343,7 +343,7 @@ Proportions $p_k$ pouvant être contraintes à être identiques (donc 28 modèle
 - $p_k$ : proportions des classes différentes
 - $p$ : proportions des classes identiques
 
-## 10 modèles des classes latentes restreints {.center}
+## 10 modèles des classes latentes restreints {.centered}
 
 <img src="cnam-classif-modeles-Quantimodeles.png" alt="Modèles restreints" style="height: 12cm">
 
@@ -391,17 +391,6 @@ $$
     ICL(s) = L_C(s) - n\sum_{k=1}^s p_k \log p_k - \frac{\nu(s)}{2} \log n + S(np_1, \ldots, np_s)
 $$
 - $ICL$ et principalement $BIC$ sont les plus utilisés (comparaison de ces deux critères dans la suite)
-
-## Quelques liens d'applications
-
-- Packages **R**
-    - [Rmixmod](http://www.mixmod.org/)
-    - [mclust](http://www.stat.washington.edu/mclust/)
-- Packages **Python**
-    - [Scikit-learn](http://scikit-learn.org/stable/index.html)
-    - [Pymix](http://www.pymix.org/pymix/)
-- Procédure [`FMM`](https://support.sas.com/documentation/cdl/en/statug/68162/HTML/default/viewer.htm#statug_fmm_toc.htm) dans **SAS** 
-- Logiciel [**mixmod**](http://www.mixmod.org/)
 
 ## Exemple d'applications {.smaller}
 
@@ -661,3 +650,13 @@ plot(birds.mixmod)
 barplot(birds.mixmod)
 ```
 
+## Quelques liens
+
+- Logiciel [**mixmod**](http://www.mixmod.org/)
+- Packages **R**
+    - [Rmixmod](http://www.mixmod.org/)
+    - [mclust](http://www.stat.washington.edu/mclust/)
+- Procédure [`FMM`](https://support.sas.com/documentation/cdl/en/statug/68162/HTML/default/viewer.htm#statug_fmm_toc.htm) dans **SAS** 
+
+- *Finite Mixture Models*, G.J. McLachlan et D. Peel
+- [*Modèle de mélange et classification*](http://www.sfds.asso.fr/ressource.php?fct=ddoc&i=382), Présentation de G. Govaert (2008)
