@@ -120,6 +120,7 @@ img {
             <li><a href="webreporting.html">Web-Reporting</a></li>
             <li class="dropdown-header">Master</li>
             <li><a href="logiciels-stats.html">Logiciels statistiques</a></li>
+            <li><a href="slides/cnam-classif-modeles.html">Classification et Modèles de mélange</a></li>
           </ul>
         </li>
         <li class="dropdown">
@@ -157,13 +158,13 @@ img {
 <p>Dans un nouveau répertoire, créer les deux fichiers <code>R</code> avec le contenu suivant :</p>
 <div id="server.r" class="section level4">
 <h4><code>server.R</code> :</h4>
-<pre><code>library(shiny)
+<pre class="r"><code>library(shiny)
 
 shinyServer(function(input, output) {})</code></pre>
 </div>
 <div id="ui.r" class="section level4">
 <h4><code>ui.R</code> :</h4>
-<pre><code>library(shiny)
+<pre class="r"><code>library(shiny)
 
 shinyUI(fluidPage(
   titlePanel(&quot;Première application&quot;)
@@ -176,7 +177,7 @@ shinyUI(fluidPage(
 <p>On va ajouter un nuage de points entre la variable <code>mpg</code> (consommation en Miles/US Gallon) et <code>wt</code> (poids) du jeu de données <code>mtcars</code>. Il faut donc modifier les deux fichiers :</p>
 <div id="server.r-1" class="section level4">
 <h4><code>server.R</code> :</h4>
-<pre><code>library(shiny)
+<pre class="r"><code>library(shiny)
 
 shinyServer(function(input, output) {
   output$nuage &lt;- renderPlot({
@@ -186,7 +187,7 @@ shinyServer(function(input, output) {
 </div>
 <div id="ui.r-1" class="section level4">
 <h4><code>ui.R</code> :</h4>
-<pre><code>library(shiny)
+<pre class="r"><code>library(shiny)
 
 shinyUI(fluidPage(
   titlePanel(&quot;Première application&quot;),
@@ -204,7 +205,7 @@ shinyUI(fluidPage(
 <p>On ajoute ici un bouton permettant de sélectionner la variable de l’axe <span class="math inline">\(x\)</span> (<code>wt</code> dans notre exemple). Nous allons laisser à l’utilisateur le choix entre <code>wt</code>, <code>hp</code> (puissance) et <code>disp</code> (cylindrée). Il faut donc modifier les deux fichiers :</p>
 <div id="server.r-2" class="section level4">
 <h4><code>server.R</code> :</h4>
-<pre><code>library(shiny)
+<pre class="r"><code>library(shiny)
 
 shinyServer(function(input, output) {
   output$nuage &lt;- renderPlot({
@@ -214,7 +215,7 @@ shinyServer(function(input, output) {
 </div>
 <div id="ui.r-2" class="section level4">
 <h4><code>ui.R</code> :</h4>
-<pre><code>library(shiny)
+<pre class="r"><code>library(shiny)
 
 shinyUI(fluidPage(
   titlePanel(&quot;Première application&quot;),
@@ -233,7 +234,7 @@ shinyUI(fluidPage(
 <p>On souhaite ajouter maintenant le calcul automatique de la moyenne des deux variables sélectionnées. Pour cela, nous allons modifier les fichiers comme suit :</p>
 <div id="server.r-3" class="section level4">
 <h4><code>server.R</code> :</h4>
-<pre><code>library(shiny)
+<pre class="r"><code>library(shiny)
 
 shinyServer(function(input, output) {
   output$nuage &lt;- renderPlot({
@@ -250,7 +251,7 @@ shinyServer(function(input, output) {
 </div>
 <div id="ui.r-3" class="section level4">
 <h4><code>ui.R</code> :</h4>
-<pre><code>library(shiny)
+<pre class="r"><code>library(shiny)
 
 shinyUI(fluidPage(
   titlePanel(&quot;Première application&quot;),
@@ -276,7 +277,7 @@ shinyUI(fluidPage(
 <p>On ne modifie ici que le fichier d’interface.</p>
 <div id="ui.r-4" class="section level4">
 <h4><code>ui.R</code></h4>
-<pre><code>library(shiny)
+<pre class="r"><code>library(shiny)
 
 shinyUI(fluidPage(
   titlePanel(&quot;Première application&quot;),
@@ -305,7 +306,7 @@ shinyUI(fluidPage(
 <div id="a-faire" class="section level2">
 <h2>A FAIRE</h2>
 <p>Dans la partie interface, il est possible de créer un système d’onglet avec :</p>
-<pre><code>shinyUI(fluidPage(
+<pre class="r"><code>shinyUI(fluidPage(
   tabsetPanel(
     tabPanel(&quot;Panel1&quot;,
       titlePanel(&quot;titre Panel 1&quot;)

@@ -18,14 +18,14 @@ Une application `shiny` nécessite deux fichiers nommés spécifiquement au mini
 Dans un nouveau répertoire, créer les deux fichiers `R` avec le contenu suivant :
 
 #### `server.R` :
-```
+```r
 library(shiny)
 
 shinyServer(function(input, output) {})
 ```
 
 #### `ui.R` :
-```
+```r
 library(shiny)
 
 shinyUI(fluidPage(
@@ -40,7 +40,7 @@ Une fois ces fichiers enregistrés, pour voir le résultat, vous pouvez soit cli
 On va ajouter un nuage de points entre la variable `mpg` (consommation en Miles/US Gallon) et `wt` (poids) du jeu de données `mtcars`. Il faut donc modifier les deux fichiers :
 
 #### `server.R` :
-```
+```r
 library(shiny)
 
 shinyServer(function(input, output) {
@@ -51,7 +51,7 @@ shinyServer(function(input, output) {
 ```
 
 #### `ui.R` :
-```
+```r
 library(shiny)
 
 shinyUI(fluidPage(
@@ -70,7 +70,7 @@ Que faut-il noter ?
 On ajoute ici un bouton permettant de sélectionner la variable de l'axe $x$ (`wt` dans notre exemple). Nous allons laisser à l'utilisateur le choix entre `wt`, `hp` (puissance) et `disp` (cylindrée). Il faut donc modifier les deux fichiers :
 
 #### `server.R` :
-```
+```r
 library(shiny)
 
 shinyServer(function(input, output) {
@@ -81,7 +81,7 @@ shinyServer(function(input, output) {
 ```
 
 #### `ui.R` :
-```
+```r
 library(shiny)
 
 shinyUI(fluidPage(
@@ -101,7 +101,7 @@ Que faut-il noter ?
 On souhaite ajouter maintenant le calcul automatique de la moyenne des deux variables sélectionnées. Pour cela, nous allons modifier les fichiers comme suit :
 
 #### `server.R` :
-```
+```r
 library(shiny)
 
 shinyServer(function(input, output) {
@@ -119,7 +119,7 @@ shinyServer(function(input, output) {
 ```
 
 #### `ui.R` :
-```
+```r
 library(shiny)
 
 shinyUI(fluidPage(
@@ -146,7 +146,7 @@ Il est prévu une mise en page en deux zones :
 On ne modifie ici que le fichier d'interface.
 
 #### `ui.R`
-```
+```r
 library(shiny)
 
 shinyUI(fluidPage(
@@ -175,7 +175,7 @@ Que faut-il noter ?
 ## A FAIRE
 
 Dans la partie interface, il est possible de créer un système d'onglet avec :
-```
+```r
 shinyUI(fluidPage(
   tabsetPanel(
     tabPanel("Panel1",

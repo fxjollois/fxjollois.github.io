@@ -43,7 +43,7 @@ mongo.find.all(
 
 Il est impératif de répondre aux demandes sans utiliser le langage SQL.
 
-### Requêtes :
+### Requêtes à créer
 
 01. Quels sont les sportifs (identifiant, nom et prénom) qui ont entre 20 et 30 ans ?
 02. Quels sont les gymnases de "Villetaneuse" ou de "Sarcelles" qui ont une surface de plus de 400 m2 ?
@@ -72,3 +72,7 @@ séances
 24. Pour chaque gymnase de Montmorency : quel est le nombre de séances journalières de chaque sport
 propose ?
 25. Dans quels gymnases et quels jours y a t-il au moins 4 séances de volley ball dans la journée ?
+
+## Solutions
+
+- [Première partie](bd-prog-avancees-bd-tp1-solution1.R) : 4 premières questions
