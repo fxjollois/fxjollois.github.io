@@ -10,7 +10,7 @@
 
 
 
-<title>Logiciels stats</title>
+<title>Logiciels stats - R - TP 3</title>
 
 <script src="libs/jquery-1.11.0/jquery.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -140,57 +140,31 @@ img {
 <div class="contenu">
 
 <div id="header">
-<h1 class="title">Logiciels stats</h1>
+<h1 class="title">Logiciels stats - R - TP 3</h1>
 </div>
 
 
-<p>Ce cours a pour but d’introduire deux logiciels statistiques majeurs du marché :</p>
-<ul>
-<li><a href="http://www.sas.com">SAS</a>
-<ul>
-<li><a href="https://odamid.oda.sas.com/">SAS On Demand For Academics</a> : interface web permettant d’utiliser l’application web <strong>SAS Studio</strong></li>
-<li><a href="https://odamid.oda.sas.com/SASODAControlCenter/enroll.html?enroll=5987151c-9317-479b-889e-9e696608d9cb">Inscription à mon cours Logiciels Stats</a> sous <em>SAS On Demand for Academics</em>) : pour pouvoir accéder aux données et aux solutions des TP<br />
-</li>
-<li><a href="slides/langage-sas.html">Langage SAS</a></li>
-<li>Interrogation de données
-<ul>
-<li><a href="slides/interrogation-concepts.html">Concepts</a></li>
-<li><a href="slides/interrogation-sas.html">Sous SAS</a></li>
-</ul></li>
-<li><a href="slides/stats-desc-sas.html">Statistiques descriptives</a></li>
-<li><a href="slides/stats-explo-sas.html">Statistiques exploratoires</a></li>
-</ul></li>
-<li><a href="http://www.r-project.org">R</a>
-<ul>
-<li><a href="slides/langage-r.html">Langage R</a></li>
-<li><a href="slides/interrogation-r.html">Interrogation de données R</a></li>
-<li><a href="slides/stats-desc-r.html">Statistiques descriptives</a></li>
-</ul></li>
-</ul>
-<div id="tps" class="section level2">
-<h2>TPs</h2>
-<div id="sas" class="section level3">
-<h3>SAS</h3>
-<ol style="list-style-type: decimal">
-<li><a href="logiciels-stats-sas-tp1.html">#</a>Découverte du logiciel et du langage</li>
-<li><a href="logiciels-stats-sas-tp2.html">#</a>Manipulation de données</li>
-<li><a href="logiciels-stats-sas-tp3.html">#</a>Statistiques descriptives</li>
-<li><a href="logiciels-stats-sas-tp4.html">#</a>Statistiques exploratoires</li>
-<li><a href="logiciels-stats-sas-tp5.html">#</a>Récapitulatif</li>
-<li><a href="logiciels-stats-sas-tp6.html">#</a>TP noté</li>
-</ol>
+<div id="donnees" class="section level2">
+<h2>Données</h2>
+<p>Nous allons utiliser le jeu de données <code>adult</code> disponible sur le site <a href="https://archive.ics.uci.edu/ml/">UCI MLR</a> (<a href="https://archive.ics.uci.edu/ml/datasets/Adult">lien direct vers <code>adult</code></a>). Il y a 48842 lignes et 14 colonnes dans cette table.</p>
+<p>Vous devez commencer par importer les données dans R (fichier <code>adult.data</code>). Pour les noms, regarder dans le fichier <code>adult.names</code>.</p>
 </div>
-<div id="r" class="section level3">
-<h3>R</h3>
+<div id="travail-a-faire" class="section level2">
+<h2>Travail à faire</h2>
 <ol style="list-style-type: decimal">
-<li><a href="logiciels-stats-r-tp1.html">#</a>Découverte du logiciel et du langage (<a href="logiciels-stats/tp1.R">solution</a>)</li>
-<li><a href="logiciels-stats-r-tp2.html">#</a>Manipulation de données (<a href="logiciels-stats/tp2.R">solution</a>)</li>
-<li><a href="logiciels-stats-r-tp3.html">#</a>Statistiques descriptives</li>
-<li><a href="">#</a>Statistiques exploratoires</li>
-<li><a href="">#</a>Récapitulatif</li>
-<li><a href="">#</a>TP noté</li>
+<li>Décrire chaque variable de manière appropriée, selon le type de la variable</li>
+<li>Décrire le lien entre les variables <code>age</code> et <code>class</code></li>
+<li>Décrire le lien entre
+<ul>
+<li><code>class</code> et chacune des autres variables de la table</li>
+<li>idem pour <code>age</code></li>
+</ul></li>
+<li>Décrire les lien entre <code>age</code> et <code>class</code>, et chacune des autres variables de la table
+<ul>
+<li>il existe plusieurs moyens de représenter chaque lien</li>
+<li>ne pas hésiter à en essayer plusieurs pour trouver la plus représentative</li>
+</ul></li>
 </ol>
-</div>
 </div>
 
 </div>
