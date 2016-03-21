@@ -18,24 +18,24 @@ Cette base de données est un **data warehouse** contenant :
 Nous allons faire un travail sur plusieurs onglets, pour présenter les résultats de l'entreprise sous la forme d'un reporting dynamique à l'aide de Shiny sous RStudio. Voici la demande à réaliser pour chaque onglet :
 
 - **Global** :
-  - On veut voir le montant total sur les deux années, et pour chaque année
-  - Evolution de deux façon :
-    - sur la totalité de la période
-    - comparaison des deux années
+	- On veut voir le montant total sur les deux années, et pour chaque année
+		- Evolution de deux façon :
+		- sur la totalité de la période
+		- comparaison des deux années
 - **Provenance** :
-  - Réprésentation de toutes les provenances sur le même graphique
-  - Evolution sur la période ou comparaison des deux années (au choix)
-  - Choix de la provenance (toutes par défaut)
+	- Réprésentation de toutes les provenances sur le même graphique
+		- Evolution sur la période ou comparaison des deux années (au choix)
+		- Choix de la provenance (toutes par défaut)
 - **Groupe** :
-  - Réprésentation d'une sélection (département, groupe ou sous-groupe) sur le même graphique
-  - Evolution sur la période ou comparaison des deux années (au choix)
-  - Choix du département (aucun par défaut)
-    - une fois le département choisi, choix du groupe ou tout le département si aucun choix
-      - une fois le groupe choisi, choix du sous-groupe ou tout le groupe si aucun choix
-  - Comment faire pour permettre une comparaison entre les départements ? entre les groupes d'un département ? entre les sous-groupes d'un groupe ?
+	- Réprésentation d'une sélection (département, groupe ou sous-groupe) sur le même graphique
+	- Evolution sur la période ou comparaison des deux années (au choix)
+	- Choix du département (aucun par défaut)
+		- une fois le département choisi, choix du groupe ou tout le département si aucun choix
+		- une fois le groupe choisi, choix du sous-groupe ou tout le groupe si aucun choix
+	- Comment faire pour permettre une comparaison entre les départements ? entre les groupes d'un département ? entre les sous-groupes d'un groupe ?
 - **Analyse approfondie** :
-  - Quelles analyses statistiques peut-on réaliser pour analyser les résultats de l'entreprise ?
-  - Quelles visualisations peut-on mettre en place dans le même but ?
+	- Quelles analyses statistiques peut-on réaliser pour analyser les résultats de l'entreprise ?
+	- Quelles visualisations peut-on mettre en place dans le même but ?
 
 A vous de développer une application permettant les rendus indiqués, et laissant les choix à l'utilisateur tels qu'indiqués. Si toutefois vous voulez apporter des compléments (graphiques et/ou tableaux supplémentaires, choix différent), vous êtes libre totalement libre de le faire. 
 

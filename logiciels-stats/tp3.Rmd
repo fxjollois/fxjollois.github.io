@@ -1,0 +1,249 @@
+---
+title: "TP 3"
+author: "FX Jollois"
+date: "18 mars 2016"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+# Librairies utilisées dans ce document
+library(ggplot2)
+library(knitr)
+library(cowplot)
+theme_set(theme_gray())
+
+# Config pour ggplot2
+axeXvide = theme(axis.title.x = element_blank())
+axeYvide = theme(axis.title.y = element_blank())
+sansTicks = theme(axis.ticks = element_blank(), axis.text.x = element_blank(), axis.text.y = element_blank())
+
+# Paramètres pour tous les "chunks"
+# Ici, "echo = FALSE" pour ne pas voir le code apparaître dans la page résultat
+opts_chunk$set(echo = FALSE, message = FALSE, warning = FALSE)
+
+# Importation des données
+adult = read.table("adult.data", sep = ",", na.strings = " ?")
+names(adult) = c(
+    gsub("-", ".", read.table("adult.names", sep = ":", 
+               skip = 96, stringsAsFactors = F)[,1]),
+    # Autre façon de faire
+    # unlist(
+    #    lapply(
+    #        tail(readLines("adult.names"), 14), 
+    #        function(n) return (strsplit(n, ":")[[1]][1]))
+    #    ),
+    "class"
+)
+
+# Création de deux vecteurs contenant les noms des variables quantitatives et qualitatives
+quanti = c("age", "capital.gain", "capital.loss", "hours.per.week")
+quali = c("workclass", "education", "marital.status", "occupation", "relationship", "race", "sex", "native.country")
+
+# Nom des modalités de education dans l'ordre de education-num
+qui <- apply(table(adult$education, adult$education.num), 1, which.max)
+educationLabels = names(qui[order(qui)])
+rm(qui)
+    
+# Variable flnweight : poids permettant de rééquilibrer l'échantillon, non prise en compte ici
+
+# Fonction de création d'un tableau occurence/fréquence/et cumulé (si besoin)
+tabFreq <- function(vecteur, cum = FALSE, names = NULL) {
+    enPourcent <- function(p) return(paste(round(p * 100, 2), "%"))
+    t = table(vecteur)
+    p = prop.table(t)
+    df = setNames(data.frame(t, enPourcent(p)), c("Modalité", "Occurence", "Proportion"))
+    if (length(names) > 0) {
+        df$Modalité = names
+    }
+    if (cum) {
+        df["Prop. Cumulée"] = enPourcent(cumsum(p))
+        res = kable(df, align = c("l", "r", "r", "r"))
+    } else {
+        res = kable(df, align = c("l", "r", "r"))
+    }
+    return (res)
+}
+
+# Couleurs pour les modalités de classes
+colClass = scale_fill_manual(values=c("#CC6666", "#66CC99"))
+```
+
+## Décrire chaque variable de manière appropriée, selon le type de la variable
+
+### Variable cible : `class`
+
+Le but de ce jeu de données est de déterminer quels sont les critères qui déterminent qu'une personne gagne plus ou moins de 50 k$ (variable `class` dans notre jeu de données). Voici la répartition de l'échantillon concernance cette variable.
+
+```{r class-table}
+tabFreq(adult$class)
+```
+
+```{r class-plot}
+ggplot(adult, aes(x = 1, fill = class)) + geom_bar(width = 1) + coord_polar(theta = "y") +
+            axeXvide + axeYvide + sansTicks + colClass
+```
+
+### Variable quantitatives
+
+Nous décrivons ces `r length(quanti)` variables quantitatives (qui sont `r paste(quanti, collapse = ", ")`) par un tableau d'indicateurs statistiques usuels, puis par leur distribution (histogramme).
+
+```{r quanti-desc}
+# La fonction kable() du package knitr permet d'écrire un tableau au format Markdown
+# pour que son affichage dans la page résultat soit plus esthétique
+kable(sapply(adult[,quanti], function(v) {
+    return (round(c(Moyenne   = mean(v, na.rm = TRUE), 
+                    EcartType = sd(v, na.rm = TRUE),
+                    Minimum   = min(v, na.rm = TRUE),
+                    Médiane   = median(v, na.rm = TRUE),
+                    Maximum   = max(v, na.rm = TRUE)
+                    ), 2))
+}))
+```
+
+```{r quanti-hist}
+for (v in quanti) {
+    sub = setNames(adult[v], "variable")
+    boxplot = ggplot(sub, aes(x=1, y=variable)) + geom_boxplot() + 
+        coord_flip() + ylim(range(sub$variable)) + ggtitle(v) + axeXvide + axeYvide
+    hist = ggplot(sub, aes(x=variable)) + geom_histogram() +
+        xlim(range(sub$variable)) + axeXvide + axeYvide
+    print(plot_grid(boxplot, hist, labels = NULL, align = "v", ncol = 1))
+}
+rm(v, sub, hist, boxplot) # pour nettoyer l'espace
+```
+
+### Variables qualitatives
+
+Pour ces `r length(quali)` variables, nous proposons d'afficher le tableau des occurences et des proportions, suivi de la représentation graphique (si celle-ci a du sens).
+
+#### `workclass`
+
+```{r workclass-desc}
+tabFreq(adult$workclass)
+    
+ggplot(adult, aes(x = workclass, fill = workclass)) + geom_bar() + 
+            axeXvide + axeYvide
+```
+
+#### `education`
+
+```{r education-desc}
+tabFreq(adult$education.num, cum = TRUE, names = educationLabels)
+
+ggplot(adult, aes(x = education.num, fill = factor(education.num))) + geom_bar() + 
+    scale_fill_discrete(name = element_blank(), labels=educationLabels) + axeXvide + axeYvide
+```
+
+#### `marital.status`
+
+```{r maritalstatus-desc}
+tabFreq(adult$marital.status)
+    
+ggplot(adult, aes(x = marital.status, fill = marital.status)) + geom_bar() + 
+            axeXvide + axeYvide
+```
+
+#### `occupation`
+
+```{r occupation-desc}
+tabFreq(adult$occupation)
+    
+ggplot(adult, aes(x = occupation, fill = occupation)) + geom_bar() + 
+            axeXvide + axeYvide
+```
+
+#### `relationship`
+
+```{r relationship-desc}
+tabFreq(adult$relationship)
+    
+ggplot(adult, aes(x = relationship, fill = relationship)) + geom_bar() + 
+            axeXvide + axeYvide
+```
+
+#### `race`
+
+```{r race-desc}
+tabFreq(adult$race)
+    
+ggplot(adult, aes(x = race, fill = race)) + geom_bar() + 
+            axeXvide + axeYvide
+```
+
+#### `sex`
+
+```{r sex-desc}
+tabFreq(adult$sex)
+    
+ggplot(adult, aes(x = 1, fill = sex)) + geom_bar(width = 1) + coord_polar(theta = "y") +
+            axeXvide + axeYvide + sansTicks
+```
+
+#### `native.country`
+
+```{r nativecountry-desc}
+tabFreq(adult$native.country)
+```
+
+## Décrire le lien entre les variables `age` et `class`
+
+```{r age-class-tab}
+kable(sapply(tapply(adult$age, adult$class, function(v) {
+    return (round(c(Moyenne   = mean(v, na.rm = TRUE), 
+                    EcartType = sd(v, na.rm = TRUE),
+                    Minimum   = min(v, na.rm = TRUE),
+                    Médiane   = median(v, na.rm = TRUE),
+                    Maximum   = max(v, na.rm = TRUE)
+                    ), 2))
+}), function(c) return(c)))
+```
+
+```{r age-class-plot}
+ggplot(adult, aes(x=class, y=age, fill=class)) + geom_boxplot() + colClass +
+    axeXvide + axeYvide
+```
+
+## Décrire le lien entre class et chacune des autres variables de la table
+
+...
+
+## idem pour age
+
+...
+
+## Décrire les lien entre age et class, et chacune des autres variables de la table
+
+il existe plusieurs moyens de représenter chaque lien
+ne pas hésiter à en essayer plusieurs pour trouver la plus représentative
+
+### `sex`
+
+```{r age-class-sex-tab}
+res = aggregate(age ~ class + sex, adult, mean)
+kable(res)
+```
+
+```{r age-class-sex-plot}
+ggplot(adult, aes(x=class, y=age, fill=class)) + geom_boxplot() + colClass +
+    axeXvide + axeYvide + facet_grid(1 ~ sex)
+```
+
+```{r age-class-sex-heatmap}
+ggplot(res, aes(x=class, y=sex, fill=age)) + geom_tile() + 
+    scale_fill_gradient(low = "green", high = "blue")
+rm(res)
+```
+
+### `hours.per.week`
+
+```{r age-class-hoursperweek-plot}
+ggplot(adult, aes(x=hours.per.week, y=age, color=class)) + geom_point() + colClass +
+    facet_grid(1 ~ class)
+```
+
+```{r age-class-hoursperweek-heatmap}
+ggplot(adult, aes(x=hours.per.week, y=age)) + geom_bin2d() + 
+    facet_grid(1 ~ class)
+```
+
+...
