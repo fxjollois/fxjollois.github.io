@@ -2,18 +2,44 @@
 title: Programmation avancées - TP 2 - Reporting sur un data warehouse
 ---
 
-Nous allons travailler sur la base de données **CA.mdb** (disponible [ici](https://drive.google.com/folderview?id=0BzA8L2nqa1n5aFRpSklFNnZfdm8&usp=drive_web)). 
-Cette base de données est un **data warehouse** contenant :
+Nous allons travailler sur la base de données **CA** (disponible au format `.RData` [ici](https://drive.google.com/folderview?id=0BzA8L2nqa1n5aFRpSklFNnZfdm8&usp=drive_web)). Pour charger les données, vous devez faire :
 
-- une table des faits avec :
-  - le chiffre d'affaire selon les dimensions
-  - les clés de chaque dimension
+```r
+load("ca.RData")
+```
+
+Cette base de données est un (petit) **data warehouse** contenant :
+
+- une table des faits (`ca`) avec :
+	- le chiffre d'affaire selon les dimensions
+	- les clés de chaque dimension
 - trois dimensions :
-  - date (avec le mois et l'année)
-  - groupe (avec une hiérarchie : département > groupe > sous-groupe)
-  - provenance
+	- `mois` : date (avec le mois et l'année)
+	- `groupe` : avec une hiérarchie (département > groupe > sous-groupe)
+	- `provenance`
 
-## A FAIRE (sur les trois derniers TDs)
+Pour réaliser une jointure entre la table `ca` et chacune des autres, voici le code à exécuter :
+
+```r
+# Avec la dimension groupe
+ca_groupe = merge(ca, groupe, 
+                  by.x = "groupe_no", 
+                  by.y = "no")
+# Avec la dimension mois
+ca_mois = merge(ca, mois, 
+                  by.x = "mois_no", 
+                  by.y = "no")
+# Avec la dimension provenance
+ca_prov = merge(ca, provenance, 
+                  by.x = "prov_no", 
+                  by.y = "no")
+# Avec toutes les dimensions en une seule fois
+ca_all = merge(merge(merge(ca, groupe, by.x = "groupe_no", by.y = "no"),
+                     mois, by.x = "mois_no", by.y = "no"),
+               provenance, by.x = "prov_no", by.y = "no")
+```
+
+## A FAIRE 
 
 Nous allons faire un travail sur plusieurs onglets, pour présenter les résultats de l'entreprise sous la forme d'un reporting dynamique à l'aide de Shiny sous RStudio. Voici la demande à réaliser pour chaque onglet :
 

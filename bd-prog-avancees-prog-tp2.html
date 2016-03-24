@@ -144,18 +144,41 @@ img {
 </div>
 
 
-<p>Nous allons travailler sur la base de données <strong>CA.mdb</strong> (disponible <a href="https://drive.google.com/folderview?id=0BzA8L2nqa1n5aFRpSklFNnZfdm8&amp;usp=drive_web">ici</a>). Cette base de données est un <strong>data warehouse</strong> contenant :</p>
+<p>Nous allons travailler sur la base de données <strong>CA</strong> (disponible au format <code>.RData</code> <a href="https://drive.google.com/folderview?id=0BzA8L2nqa1n5aFRpSklFNnZfdm8&amp;usp=drive_web">ici</a>). Pour charger les données, vous devez faire :</p>
+<pre class="r"><code>load(&quot;ca.RData&quot;)</code></pre>
+<p>Cette base de données est un (petit) <strong>data warehouse</strong> contenant :</p>
 <ul>
-<li>une table des faits avec :</li>
+<li>une table des faits (<code>ca</code>) avec :
+<ul>
 <li>le chiffre d’affaire selon les dimensions</li>
 <li>les clés de chaque dimension</li>
-<li>trois dimensions :</li>
-<li>date (avec le mois et l’année)</li>
-<li>groupe (avec une hiérarchie : département &gt; groupe &gt; sous-groupe)</li>
-<li>provenance</li>
+</ul></li>
+<li>trois dimensions :
+<ul>
+<li><code>mois</code> : date (avec le mois et l’année)</li>
+<li><code>groupe</code> : avec une hiérarchie (département &gt; groupe &gt; sous-groupe)</li>
+<li><code>provenance</code></li>
+</ul></li>
 </ul>
-<div id="a-faire-sur-les-trois-derniers-tds" class="section level2">
-<h2>A FAIRE (sur les trois derniers TDs)</h2>
+<p>Pour réaliser une jointure entre la table <code>ca</code> et chacune des autres, voici le code à exécuter :</p>
+<pre class="r"><code># Avec la dimension groupe
+ca_groupe = merge(ca, groupe, 
+                  by.x = &quot;groupe_no&quot;, 
+                  by.y = &quot;no&quot;)
+# Avec la dimension mois
+ca_mois = merge(ca, mois, 
+                  by.x = &quot;mois_no&quot;, 
+                  by.y = &quot;no&quot;)
+# Avec la dimension provenance
+ca_prov = merge(ca, provenance, 
+                  by.x = &quot;prov_no&quot;, 
+                  by.y = &quot;no&quot;)
+# Avec toutes les dimensions en une seule fois
+ca_all = merge(merge(merge(ca, groupe, by.x = &quot;groupe_no&quot;, by.y = &quot;no&quot;),
+                     mois, by.x = &quot;mois_no&quot;, by.y = &quot;no&quot;),
+               provenance, by.x = &quot;prov_no&quot;, by.y = &quot;no&quot;)</code></pre>
+<div id="a-faire" class="section level2">
+<h2>A FAIRE</h2>
 <p>Nous allons faire un travail sur plusieurs onglets, pour présenter les résultats de l’entreprise sous la forme d’un reporting dynamique à l’aide de Shiny sous RStudio. Voici la demande à réaliser pour chaque onglet :</p>
 <ul>
 <li><strong>Global</strong> :
