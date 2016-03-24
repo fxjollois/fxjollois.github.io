@@ -10,7 +10,7 @@
 
 
 
-<title>Logiciels stats</title>
+<title>Logiciels stats - R - TP4</title>
 
 <script src="libs/jquery-1.11.0/jquery.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -140,58 +140,30 @@ img {
 <div class="contenu">
 
 <div id="header">
-<h1 class="title">Logiciels stats</h1>
+<h1 class="title">Logiciels stats - R - TP4</h1>
 </div>
 
 
-<p>Ce cours a pour but d’introduire deux logiciels statistiques majeurs du marché :</p>
+<div id="donnees" class="section level2">
+<h2>Données</h2>
+<p>Nous allons reprendre sur le jeu de données <code>us_data</code> disponible dans la librairie <code>sashelp</code> de SAS, basé sur les <a href="http://www.census.gov/2010census/data/">données de l’US Census 2010</a>, et disponible au format <code>csv</code><a href="logiciels-stats/US_DATA.csv">ici</a>.</p>
+</div>
+<div id="travail-a-faire" class="section level2">
+<h2>Travail à faire</h2>
 <ul>
-<li><a href="http://www.sas.com">SAS</a>
+<li>Analyser les états en fonction de leur population (variables <code>POPULATION_xxxx</code>) à l’aide
 <ul>
-<li><a href="https://odamid.oda.sas.com/">SAS On Demand For Academics</a> : interface web permettant d’utiliser l’application web <strong>SAS Studio</strong></li>
-<li><a href="https://odamid.oda.sas.com/SASODAControlCenter/enroll.html?enroll=5987151c-9317-479b-889e-9e696608d9cb">Inscription à mon cours Logiciels Stats</a> sous <em>SAS On Demand for Academics</em>) : pour pouvoir accéder aux données et aux solutions des TP<br />
-</li>
-<li><a href="slides/langage-sas.html">Langage SAS</a></li>
-<li>Interrogation de données
-<ul>
-<li><a href="slides/interrogation-concepts.html">Concepts</a></li>
-<li><a href="slides/interrogation-sas.html">Sous SAS</a></li>
+<li>d’une ACP (essayer avec standardisation et sans)</li>
+<li>d’une AFC</li>
 </ul></li>
-<li><a href="slides/stats-desc-sas.html">Statistiques descriptives</a></li>
-<li><a href="slides/stats-explo-sas.html">Statistiques exploratoires</a></li>
-</ul></li>
-<li><a href="http://www.r-project.org">R</a>
+<li>Faire de même pour la densité (variables <code>DENSITY_xxxx</code>)</li>
+<li>Faire une partition en un nombre de classes adapté sur chaque ensemble de données précédent
 <ul>
-<li><a href="slides/langage-r.html">Langage R</a></li>
-<li><a href="slides/interrogation-r.html">Interrogation de données R</a></li>
-<li><a href="slides/stats-desc-r.html">Statistiques descriptives</a></li>
-<li><a href="slides/stats-explo-r.html">Statistiques exploratoires</a></li>
+<li>Choisir le nombre de classes à l’aide de la CAH et de <span class="math inline">\(k\)</span>-means (avec <span class="math inline">\(r^2\)</span> et <span class="math inline">\(PseudoF\)</span>)</li>
+<li>Prendre la partition obtenue avec <span class="math inline">\(k\)</span>-means (et le nombre de classes choisi)</li>
+<li>Comparer les deux partitions obtenues entre elles, et avec les régions et les divisions présentes dans les données</li>
 </ul></li>
 </ul>
-<div id="tps" class="section level2">
-<h2>TPs</h2>
-<div id="sas" class="section level3">
-<h3>SAS</h3>
-<ol style="list-style-type: decimal">
-<li><a href="logiciels-stats-sas-tp1.html">#</a>Découverte du logiciel et du langage</li>
-<li><a href="logiciels-stats-sas-tp2.html">#</a>Manipulation de données</li>
-<li><a href="logiciels-stats-sas-tp3.html">#</a>Statistiques descriptives</li>
-<li><a href="logiciels-stats-sas-tp4.html">#</a>Statistiques exploratoires</li>
-<li><a href="logiciels-stats-sas-tp5.html">#</a>Récapitulatif</li>
-<li><a href="logiciels-stats-sas-tp6.html">#</a>TP noté</li>
-</ol>
-</div>
-<div id="r" class="section level3">
-<h3>R</h3>
-<ol style="list-style-type: decimal">
-<li><a href="logiciels-stats-r-tp1.html">#</a>Découverte du logiciel et du langage (<a href="logiciels-stats/tp1.R">solution</a>)</li>
-<li><a href="logiciels-stats-r-tp2.html">#</a>Manipulation de données (<a href="logiciels-stats/tp2.R">solution</a>)</li>
-<li><a href="logiciels-stats-r-tp3.html">#</a>Statistiques descriptives (solution : <a href="logiciels-stats/tp3.Rmd">source</a> et <a href="logiciels-stats/tp3.html">résultat</a>)</li>
-<li><a href="logiciels-stats-r-tp4.html">#</a>Statistiques exploratoires</li>
-<li><a href="">#</a>Récapitulatif</li>
-<li><a href="">#</a>TP noté</li>
-</ol>
-</div>
 </div>
 
 </div>

@@ -181,5 +181,14 @@ ggplot(transform(acp$ind$coord, km3 = factor(km3$cluster)),
 Avec `kmeans()`
 
 ```r
-
+lk = 1:9
+km = lapply(lk, kmeans, x = iris[-5], nstart = 20)
+I = km[[1]]$totss
+W = unlist(lapply(km, function(res) return(res$tot.withinss))) 
+B = unlist(lapply(km, function(res) return(res$betweenss))) 
+r2 = B / I
+PsF = (r2 / (lk - 1)) / ((1 - r2) / (nrow(iris) - lk))
+library(ggplot2)
+plot(1:9, r2, type = "l")
+plot(1:9, PsF, type = "l")
 ```

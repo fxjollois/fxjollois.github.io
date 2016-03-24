@@ -243,7 +243,7 @@ table(zward, iris$Species)</pre>
 
 <p>Utilisation de la fonction <code>kmeans()</code> du package <code>stats</code></p>
 
-<pre class = 'prettyprint lang-r'>km3 = kmeans(iris[-5], 3)
+<pre class = 'prettyprint lang-r'>km3 = kmeans(iris[-5], 3, nstart = 30, iter.max = 20)
 print(km3)
 pairs(iris[-5], col = rainbow(3)[km3$cluster], pch = 19)
 
@@ -251,7 +251,24 @@ library(ggplot2)
 library(FactoMineR)
 acp = PCA(iris[-5], graph = FALSE)
 ggplot(transform(acp$ind$coord, km3 = factor(km3$cluster)), 
-    aes(x=Dim.1, y=Dim.2, color=km3)) + geom_point()</pre></article></slide>
+    aes(x=Dim.1, y=Dim.2, color=km3)) + geom_point()</pre>
+
+</article></slide><slide class=''><hgroup><h2>Classification</h2></hgroup><article  id="classification-2">
+
+<h3>Choix du nombre de classe</h3>
+
+<p>Avec <code>kmeans()</code></p>
+
+<pre class = 'prettyprint lang-r'>lk = 1:9
+km = lapply(lk, kmeans, x = iris[-5], nstart = 20)
+I = km[[1]]$totss
+W = unlist(lapply(km, function(res) return(res$tot.withinss))) 
+B = unlist(lapply(km, function(res) return(res$betweenss))) 
+r2 = B / I
+PsF = (r2 / (lk - 1)) / ((1 - r2) / (nrow(iris) - lk))
+library(ggplot2)
+plot(1:9, r2, type = &quot;l&quot;)
+plot(1:9, PsF, type = &quot;l&quot;)</pre></article></slide>
 
 
   <slide class="backdrop"></slide>
