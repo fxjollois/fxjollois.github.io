@@ -7,44 +7,49 @@
 <meta charset="utf-8">
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="generator" content="pandoc" />
+<meta name="viewport" content="width=device-width, initial-scale=1">
 
 <meta name="author" content="DU Analyste Big Data" />
 
 
 <title>Initiation à R</title>
 
-<script src="libs/jquery-1.11.0/jquery.min.js"></script>
+<script src="libs/jquery-1.11.3/jquery.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<link href="libs/bootstrap-3.3.1/css/journal.min.css" rel="stylesheet" />
-<script src="libs/bootstrap-3.3.1/js/bootstrap.min.js"></script>
-<script src="libs/bootstrap-3.3.1/shim/html5shiv.min.js"></script>
-<script src="libs/bootstrap-3.3.1/shim/respond.min.js"></script>
+<link href="libs/bootstrap-3.3.5/css/journal.min.css" rel="stylesheet" />
+<script src="libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="libs/bootstrap-3.3.5/shim/respond.min.js"></script>
 <style>
-.contenu {
-	margin-bottom: 50px;
-}
+    .contenu {
+        margin-bottom: 50px;
+    }
 
-.contact-liens {
-	text-align: center;
-}
-.contact-icones {
-	height: 30px;
-}
+    .contact-liens {
+        text-align: center;
+    }
+    .contact-icones {
+        height: 30px;
+    }
 
-/* Espacement pour barre du haut et pied de page */
-#header, .section.level1 {
-	margin-top: 60px;
-	margin-bottom: 60px;
-}
-
-.footer {
-	position: fixed;
-	width: 100%;
-	text-align: center;
-	bottom: 0;
-	left: 0;
-	background-color: #E6E6E6;
-}
+    /* Espacement pour barre du haut et pied de page */
+    #header, .section.level1 {
+        margin-top: 60px;
+        margin-bottom: 60px;
+    }
+    /* Espacement pour table des matières */
+    #TOC {
+        margin-top: 100px;
+    }
+    
+    .footer {
+        position: fixed;
+        width: 100%;
+        text-align: center;
+        bottom: 0;
+        left: 0;
+        background-color: #E6E6E6;
+    }
 </style>
 
 <style type="text/css">code{white-space: pre;}</style>
@@ -66,6 +71,7 @@ if (window.hljs && document.readyState && document.readyState === "complete") {
 </script>
 
 
+
 <link rel="stylesheet" href="libs/bootstrap-journal.min.css" type="text/css" />
 
 </head>
@@ -82,12 +88,55 @@ code {
   color: inherit;
   background-color: rgba(0, 0, 0, 0.04);
 }
-img { 
-  max-width:100%; 
-  height: auto; 
+img {
+  max-width:100%;
+  height: auto;
+}
+h1 {
+  font-size: 34px;
+}
+h1.title {
+  font-size: 38px;
+}
+h2 {
+  font-size: 30px;
+}
+h3 {
+  font-size: 24px;
+}
+h4 {
+  font-size: 18px;
+}
+h5 {
+  font-size: 16px;
+}
+h6 {
+  font-size: 12px;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+button.code-folding-btn:focus {
+  outline: none;
 }
 </style>
+
+
 <div class="container-fluid main-container">
+
+<!-- tabsets -->
+<script src="libs/navigation-1.0/tabsets.js"></script>
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+</script>
+
+<!-- code folding -->
+
+
+
+
 
 <div class="navbar navbar-default navbar-fixed-top">
   <div class="container">
@@ -101,7 +150,13 @@ img {
     </div>
     <div id="navbar-main" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
-        <li><a href="accesdonnees.html">Données</a></li>
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button">Données <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+              <li><a href="accesdonnees.html">A télécharger</a></li>
+              <li><a href="donnees-integrees-r.html">Sous R</a></li>
+          </ul>
+        </li>
         <li class="dropdown">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button">Enseignement <span class="caret"></span></a>
           <ul class="dropdown-menu">
@@ -116,6 +171,8 @@ img {
             <li><a href="bd-prog-avancees.html">BD et Programmation avancées</a></li>
             <li class="dropdown-header">DU Analyste Big Data</li>
             <li><a href="initiation-r-et-rmongodb.html">Intiation à R</a></li>
+            <li class="dropdown-header">DU Dataviz</li>
+            <li><a href="visualisation-donnees.html">Visualisation de données</a></li>
             <li role="separator" class="divider"></li>
             <li class="dropdown-header">Master MIAGE</li>
             <li><a href="webreporting.html">Web-Reporting</a></li>
@@ -140,9 +197,12 @@ img {
 </div>
 <div class="contenu">
 
-<div id="header">
+<div class="fluid-row" id="header">
+
+
 <h1 class="title">Initiation à <code>R</code></h1>
 <h4 class="author"><em>DU Analyste Big Data</em></h4>
+
 </div>
 
 
@@ -554,11 +614,6 @@ print(moteur)</code></pre>
 <pre class="r"><code>library(sqldf)</code></pre>
 <pre><code>## Loading required package: gsubfn</code></pre>
 <pre><code>## Loading required package: proto</code></pre>
-<pre><code>## Warning in doTryCatch(return(expr), name, parentenv, handler): impossible de charger l&#39;objet partagé &#39;/Library/Frameworks/R.framework/Resources/modules//R_X11.so&#39;:
-##   dlopen(/Library/Frameworks/R.framework/Resources/modules//R_X11.so, 6): Library not loaded: /opt/X11/lib/libSM.6.dylib
-##   Referenced from: /Library/Frameworks/R.framework/Resources/modules//R_X11.so
-##   Reason: image not found</code></pre>
-<pre><code>## Could not load tcltk.  Will use slower R code instead.</code></pre>
 <pre><code>## Loading required package: RSQLite</code></pre>
 <pre><code>## Loading required package: DBI</code></pre>
 <pre class="r"><code>sqldf(&quot;
@@ -566,6 +621,7 @@ SELECT cyl, AVG(mpg), AVG(disp), AVG(hp), AVG(drat), AVG(wt), AVG(qsec)
   FROM mtcars
   GROUP BY cyl;
       &quot;)</code></pre>
+<pre><code>## Loading required package: tcltk</code></pre>
 <pre><code>##   cyl AVG(mpg) AVG(disp)   AVG(hp) AVG(drat)  AVG(wt) AVG(qsec)
 ## 1   4 26.66364  105.1364  82.63636  4.070909 2.285727  19.13727
 ## 2   6 19.74286  183.3143 122.28571  3.585714 3.117143  17.97714
@@ -952,6 +1008,11 @@ while (mongo.cursor.next(curs))
       Site créé avec <a href="http://www.r-project.org" target="_blank"><code>R</code></a> et la 
       librairie  <a href="http://rmarkdown.rstudio.com/" target="_blank"><code>rmarkdown</code></a>.
 </div>
+<script>
+    $("#TOC").css("margin-top", "100px");
+</script>
+
+
 
 </div>
 
