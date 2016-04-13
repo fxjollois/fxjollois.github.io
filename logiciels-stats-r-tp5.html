@@ -11,7 +11,7 @@
 
 
 
-<title>Logiciels stats</title>
+<title>Logiciels stats - R - TP5</title>
 
 <script src="libs/jquery-1.11.3/jquery.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -199,59 +199,75 @@ $(document).ready(function () {
 <div class="fluid-row" id="header">
 
 
-<h1 class="title">Logiciels stats</h1>
+<h1 class="title">Logiciels stats - R - TP5</h1>
 
 </div>
 
 
-<p>Ce cours a pour but d’introduire deux logiciels statistiques majeurs du marché :</p>
+<div id="donnees" class="section level2">
+<h2>Données</h2>
+<p>Nous allons travailler sur les données <strong>Pen Digits</strong> de l’<em>UCI Machine Learning Repository</em> (cf <a href="https://archive.ics.uci.edu/ml/datasets/Pen-Based+Recognition+of+Handwritten+Digits">Pen-Based Recognition of Handwritten Digits Data Set</a>). Nous disposons de deux fichiers</p>
 <ul>
-<li><a href="http://www.sas.com">SAS</a>
-<ul>
-<li><a href="https://odamid.oda.sas.com/">SAS On Demand For Academics</a> : interface web permettant d’utiliser l’application web <strong>SAS Studio</strong></li>
-<li><a href="https://odamid.oda.sas.com/SASODAControlCenter/enroll.html?enroll=5987151c-9317-479b-889e-9e696608d9cb">Inscription à mon cours Logiciels Stats</a> sous <em>SAS On Demand for Academics</em>) : pour pouvoir accéder aux données et aux solutions des TP<br />
-</li>
-<li><a href="slides/langage-sas.html">Langage SAS</a></li>
-<li>Interrogation de données
-<ul>
-<li><a href="slides/interrogation-concepts.html">Concepts</a></li>
-<li><a href="slides/interrogation-sas.html">Sous SAS</a></li>
-</ul></li>
-<li><a href="slides/stats-desc-sas.html">Statistiques descriptives</a></li>
-<li><a href="slides/stats-explo-sas.html">Statistiques exploratoires</a></li>
-</ul></li>
-<li><a href="http://www.r-project.org">R</a>
-<ul>
-<li><a href="slides/langage-r.html">Langage R</a></li>
-<li><a href="slides/interrogation-r.html">Interrogation de données R</a></li>
-<li><a href="slides/stats-desc-r.html">Statistiques descriptives</a></li>
-<li><a href="slides/stats-explo-r.html">Statistiques exploratoires</a></li>
-</ul></li>
+<li><a href="logiciels-stats/pendigits.tra"><code>pendigits.tra</code></a></li>
+<li><a href="logiciels-stats/pendigits.tes"><code>pendigits.tes</code></a></li>
 </ul>
-<div id="tps" class="section level2">
-<h2>TPs</h2>
-<div id="sas" class="section level3">
-<h3>SAS</h3>
-<ol style="list-style-type: decimal">
-<li><a href="logiciels-stats-sas-tp1.html">#</a>Découverte du logiciel et du langage</li>
-<li><a href="logiciels-stats-sas-tp2.html">#</a>Manipulation de données</li>
-<li><a href="logiciels-stats-sas-tp3.html">#</a>Statistiques descriptives</li>
-<li><a href="logiciels-stats-sas-tp4.html">#</a>Statistiques exploratoires</li>
-<li><a href="logiciels-stats-sas-tp5.html">#</a>Récapitulatif</li>
-<li><a href="logiciels-stats-sas-tp6.html">#</a>TP noté</li>
-</ol>
+<p>Ces données sont composées de :</p>
+<ul>
+<li>Coordonnées <span class="math inline">\((X_i,Y_i)\)</span> de huit points (<span class="math inline">\(i=1,\ldots,8\)</span>) dans le tracé du chiffre écrit par le scripteur</li>
+<li>Chiffre normalement écrit par le scripteur (parmi <span class="math inline">\(0, 1, \ldots, 9\)</span>)</li>
+</ul>
+<p>Il y a en tout 10992 tracés (un millier environ par chiffre).</p>
 </div>
-<div id="r" class="section level3">
-<h3>R</h3>
-<ol style="list-style-type: decimal">
-<li><a href="logiciels-stats-r-tp1.html">#</a>Découverte du logiciel et du langage (<a href="logiciels-stats/tp1.R">solution</a>)</li>
-<li><a href="logiciels-stats-r-tp2.html">#</a>Manipulation de données (<a href="logiciels-stats/tp2.R">solution</a>)</li>
-<li><a href="logiciels-stats-r-tp3.html">#</a>Statistiques descriptives (solution : <a href="logiciels-stats/tp3.Rmd">source</a> et <a href="logiciels-stats/tp3.html">résultat</a>)</li>
-<li><a href="logiciels-stats-r-tp4.html">#</a>Statistiques exploratoires (solution : <a href="logiciels-stats/tp4.Rmd">source</a> et <a href="logiciels-stats/tp4.html">résultat</a>)</li>
-<li><a href="logiciels-stats-r-tp5.html">#</a>Récapitulatif</li>
-<li><a href="">#</a>TP noté</li>
-</ol>
+<div id="fonction-specifique" class="section level2">
+<h2>Fonction spécifique</h2>
+<p>La fonction suivante permet de dessiner le chiffre dela première ligne d’une table passée en paramètre :</p>
+<pre class="r"><code>dessineChiffre &lt;- function(v, titre = NULL) {
+    if (is.data.frame(v))
+        v = unlist(v)
+    don = data.frame(
+        x = v[seq(1,15,by=2)],
+        y = v[seq(2,16,by=2)],
+        position = 1:8
+    )
+    g = ggplot(don, aes(x, y)) + xlim(0, 100) + ylim(0, 100) +
+        geom_polygon(fill = &quot;white&quot;, col = &quot;black&quot;) +
+        geom_text(aes(label = position)) + 
+        theme_void() 
+    if (!is.null(titre))
+        g = g + ggtitle(titre)
+    g
+}</code></pre>
+<p>Cette fonction peut donc être utilisée à n’importe quel moment det vous pouvez voir le résultat de son exécution en testant (après avoir importer correctement les données) :</p>
+<pre class="r"><code>dessineChiffre(pen.tra[1,1:16], pen.tra[1,17])</code></pre>
 </div>
+<div id="travail" class="section level2">
+<h2>Travail</h2>
+<ol style="list-style-type: decimal">
+<li>Importer les deux fichiers</li>
+<li>Assembler les deux tables en une seule, et renommer les variables comme suit :
+<ul>
+<li><code>V1</code>, <code>V3</code>, <code>V5</code>, …, <code>V15</code> : <code>Xi</code> (<code>i</code> de 1 à 8)</li>
+<li><code>V2</code>, <code>V4</code>, <code>V6</code>, …, <code>V16</code> : <code>Yi</code> (idem pour <code>i</code>)</li>
+<li><code>V17</code> : <code>chiffre</code></li>
+</ul></li>
+<li>Trouver combien il y a de tracés pour chaque chiffre de <span class="math inline">\(0\)</span> à <span class="math inline">\(9\)</span></li>
+<li>Dessiner le premier exemple de chaque chiffre, en utilisant la fonction ci-dessus</li>
+<li>Calculer les moyennes pour chaque variable, pour chaque chiffre</li>
+<li>Représenter les <em>tracés moyens</em> pour chaque chiffre, à l’aide de la fonction</li>
+<li>Comparer les <span class="math inline">\(X\)</span> et les <span class="math inline">\(Y\)</span> pour chaque chiffre
+<ul>
+<li>une manipulation des données est peut-être utile pour représenter de manière à pouvoir comparer les chiffres</li>
+</ul></li>
+<li>Faire une ACP sur les données et représenter le premier plan factoriel, en ajoutant l’information du chiffre pour chaque point, via une couleur par exemple</li>
+<li>Représenter, sur le plan factoriel, les points pour chaque chiffre séparemment, et repèrer les chiffres pour lesquels un découpage en partition est judicieuse</li>
+<li>Faire une classification sur les chiffres nécessitant un partitionnement
+<ul>
+<li>Faire une CAH et choisir un nombre de classes</li>
+<li>Effectuer un <span class="math inline">\(k\)</span>-means avec ce nombre de classes (pour affiner la partition)</li>
+<li>Représenter les points sur le premier plan factoriel pour chaque classe</li>
+<li>Représenter les <em>tracés moyens</em> de chaque classe</li>
+</ul></li>
+</ol>
 </div>
 
 </div>
