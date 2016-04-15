@@ -1,0 +1,59 @@
+---
+title: "Logiciels stats - R - TP5"
+author: "FX Jollois"
+date: "13 avril 2016"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+```
+
+## Importation des données
+
+```{r}
+pen.tra = read.table("pendigits.tra", sep = ",")
+names(pen.tra) = c(paste(c("X", "Y"), rep(1:8, each = 2), sep = ""), "chiffre")
+pen.tes = read.table("pendigits.tes", sep = ",")
+names(pen.tes) = c(paste(c("X", "Y"), rep(1:8, each = 2), sep = ""), "chiffre")
+```
+
+## Dessin d'un chiffre
+
+```{r}
+## Dessin d'un chiffre
+dessineChiffre <- function(v, titre = "", indice = F, new = TRUE, tcol = "gray20", ep = 1) {
+  vv = as.vector(as.matrix(v))
+  x = vv[seq(1, 15, by = 2)]
+  y = vv[seq(2, 16, by = 2)]
+  if (new) 
+    plot(NULL, NULL, 
+         xlim = c(0, 100), ylim = c(0, 100), 
+         xlab = "", ylab = "",
+         bty = "n", axes = "F", main = titre)
+  lines(x, y, col = tcol, type = "l", lwd = ep)
+  if (indice)
+    text(x, y, labels = 1:8, cex = 0.9, font = 2)
+}
+```
+
+```{r}
+dessineChiffre <- function(v, titre = NULL) {
+    if (is.data.frame(v))
+        v = unlist(v)
+    don = data.frame(
+        x = v[seq(1,15,by=2)],
+        y = v[seq(2,16,by=2)],
+        position = 1:8
+    )
+    g = ggplot(don, aes(x, y)) + xlim(0, 100) + ylim(0, 100) +
+        geom_polygon(fill = "white", col = "black") +
+        geom_text(aes(label = position)) + 
+        theme_void() 
+    if (!is.null(titre))
+        g = g + ggtitle(titre)
+    g
+}
+dessineChiffre(pen.tra[1,1:16], pen.tra[1,17])
+```
