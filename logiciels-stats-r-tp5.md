@@ -30,7 +30,7 @@ dessineChiffre <- function(v, titre = NULL) {
         position = 1:8
     )
     g = ggplot(don, aes(x, y)) + xlim(0, 100) + ylim(0, 100) +
-        geom_polygon(fill = "white", col = "black") +
+        geom_path() +
         geom_text(aes(label = position)) + 
         theme_void() 
     if (!is.null(titre))

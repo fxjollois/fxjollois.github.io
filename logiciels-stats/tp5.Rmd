@@ -7,36 +7,38 @@ output: html_document
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
-
+library(ggplot2)
+library(gridExtra)
 ```
 
 ## Importation des données
 
-```{r}
+En premier lieu, on importe les données, puis on assemble les deux fichiers en un seul jeu de données, dans lequel on modifie les noms de variables (étape $1$ et $2$ du TP).
+
+```{r importation}
 pen.tra = read.table("pendigits.tra", sep = ",")
-names(pen.tra) = c(paste(c("X", "Y"), rep(1:8, each = 2), sep = ""), "chiffre")
 pen.tes = read.table("pendigits.tes", sep = ",")
-names(pen.tes) = c(paste(c("X", "Y"), rep(1:8, each = 2), sep = ""), "chiffre")
+pen = rbind(pen.tra, pen.tes)
+names(pen) = c(paste(c("X", "Y"), rep(1:8, each = 2), sep = ""), "chiffre")
+```
+
+## Un peu de dénombrement
+
+Chaque chiffre est écrit en moyenne `r round(nrow(pen)/10)` fois, avec quelques variations entre les chiffres
+
+```{r occurences-table, results='asis'}
+occur.chiffre = setNames(data.frame(table(pen$chiffre)), c("chiffre", "occurences"))
+knitr::kable(occur.chiffre)
+```
+
+```{r occurences-plot}
+ggplot(occur.chiffre, aes(chiffre, fill = chiffre)) + geom_bar(aes(weight=occurences)) +
+    ylab("")
 ```
 
 ## Dessin d'un chiffre
 
-```{r}
-## Dessin d'un chiffre
-dessineChiffre <- function(v, titre = "", indice = F, new = TRUE, tcol = "gray20", ep = 1) {
-  vv = as.vector(as.matrix(v))
-  x = vv[seq(1, 15, by = 2)]
-  y = vv[seq(2, 16, by = 2)]
-  if (new) 
-    plot(NULL, NULL, 
-         xlim = c(0, 100), ylim = c(0, 100), 
-         xlab = "", ylab = "",
-         bty = "n", axes = "F", main = titre)
-  lines(x, y, col = tcol, type = "l", lwd = ep)
-  if (indice)
-    text(x, y, labels = 1:8, cex = 0.9, font = 2)
-}
-```
+Pour répondre à la question $3$, il nous faut une fonction permettant de dessiner un chiffre.
 
 ```{r}
 dessineChiffre <- function(v, titre = NULL) {
@@ -55,5 +57,15 @@ dessineChiffre <- function(v, titre = NULL) {
         g = g + ggtitle(titre)
     g
 }
-dessineChiffre(pen.tra[1,1:16], pen.tra[1,17])
+# pour tester : dessineChiffre(pen.tra[1,1:16], pen.tra[1,17])
+```
+
+Voici donc le premier exemple de chaque chiffre. On utilise ici le package `gridExtra` pour pouvoir mettre plusieurs graphiques sur la même page. Et on se base sur le fait que la fonction `ggplot()` renvoie un obet stockable, et donc la fonction `dessineChiffre()` aussi.
+
+```{r}
+premier = lapply(0:9, function(ch) {
+    prem = subset(pen, chiffre == ch)[1,]
+    dessineChiffre(prem, ch)
+})
+marrangeGrob(premier, nrow = 2, ncol = 5)
 ```
