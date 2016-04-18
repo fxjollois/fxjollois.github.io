@@ -214,9 +214,14 @@ for (ch in 0:9) {
             setNames(melt(tmoy[,c(seq(1,15,by=2),17)], id.vars = "id"), c("id", "xvar", "x")),
             setNames(melt(tmoy[,c(seq(2,16,by=2),17)], id.vars = "id"), c("id", "yvar", "y"))
         )
+    temp$position = substr(as.character(temp$xvar), 2, 2)
     sub = data.frame(acp$ind$coord[pen$chiffre == ch,], part = part)
     grid.arrange(
-        ggplot(temp, aes(x, y, group = 1)) + geom_path() + facet_grid(.~id) ,
+        ggplot(temp, aes(x, y, group = 1)) + 
+            geom_path(col = "gray70") + 
+            facet_grid(.~id) +
+            geom_text(aes(label = position)) +
+            theme_void(),
         ggplot(sub, aes(Dim.1, Dim.2)) + geom_point() + facet_grid(.~part)
     )
 }

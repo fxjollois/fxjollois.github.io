@@ -138,7 +138,7 @@
 <li>Syntaxe eronnée complétée à la volée, par le navigateur = gros risque d&#39;erreur</li>
 </ul>
 
-<h3>Schéma de base</h3>
+</article></slide><slide class=''><hgroup><h2>Schéma de base</h2></hgroup><article  id="schema-de-base" class="smaller">
 
 <pre class = 'prettyprint lang-html'>&lt;!doctype html&gt;
 &lt;html&gt;
@@ -160,48 +160,74 @@
     &lt;/body&gt;
 &lt;/html&gt;</pre>
 
-<h3>Méta-données</h3>
+</article></slide><slide class=''><hgroup><h2>Méta-données</h2></hgroup><article  id="meta-donnees">
 
-<h4>Importance de ces méta-données</h4>
+<h3>Importance de ces méta-données</h3>
 
 <ul>
 <li>Pour le navigateur, encodage et lien avec les scripts et les feuilles de styles absolument nécessaire pour bien afficher la page</li>
 <li>Pour les moteurs de recherche, titre, auteur, mots-clés, description sont utilisés pour l&#39;indexation de la page</li>
 </ul>
 
-<h4>Titre</h4>
+<h3>Titre</h3>
 
-<p><code>&lt;title&gt;Page d&#39;exemple HTML&lt;/title&gt;</code>- Titre de la page à afficher dans le titre de l&#39;onglet du navigateur</p>
+<pre class = 'prettyprint lang-html'>&lt;title&gt;Page d&#39;exemple HTML&lt;/title&gt;</pre>
 
-<h4>Nécessaire à la traduction</h4>
+<ul>
+<li>Titre de la page à afficher dans le titre de l&#39;onglet du navigateur</li>
+</ul>
 
-<p><code>&lt;!doctype html&gt;</code>- Indique que c&#39;est une page HTML<strong>5</strong></p>
+</article></slide><slide class=''><hgroup><h2>Méta-données</h2></hgroup><article  id="meta-donnees-1">
 
-<p><code>&lt;meta charset = &quot;utf-8&quot;&gt;</code>- Encodage de la page (ici <code>UTF-8</code>)</p>
+<h3>Nécessaire à la traduction</h3>
 
-<h4>Pour l&#39;indexation</h4>
+<pre class = 'prettyprint lang-html'>&lt;!doctype html&gt;</pre>
 
-<p><code>&lt;meta name = &quot;author&quot; content = &quot;FX Jollois&quot;&gt;</code></p>
+<ul>
+<li>Indique que c&#39;est une page HTML<strong>5</strong></li>
+</ul>
 
-<p><code>&lt;meta name = &quot;keywords&quot; content = &quot;html, css, truc super bien&quot;&gt;</code></p>
+<pre class = 'prettyprint lang-html'>&lt;meta charset = &quot;utf-8&quot;&gt;</pre>
 
-<p><code>&lt;meta name = &quot;description&quot; content = &quot;Super cours !!&quot;&gt;</code>- Auteur, mots-clés et description de la page</p>
+<ul>
+<li>Encodage de la page (ici <code>UTF-8</code>)</li>
+</ul>
 
-<h4>Scripts et styles</h4>
+<h3>Pour l&#39;indexation</h3>
 
-<p><code>&lt;script&gt;&lt;/script&gt;</code>- Écriture de script <code>JS</code> (ou importation du fichier source avec <code>src=&quot;script.js&quot;</code> en paramètre)</p>
+<pre class = 'prettyprint lang-html'>&lt;meta name = &quot;author&quot; content = &quot;FX Jollois&quot;&gt;
+&lt;meta name = &quot;keywords&quot; content = &quot;html, css, truc super bien&quot;&gt;
+&lt;meta name = &quot;description&quot; content = &quot;Super cours !!&quot;&gt;</pre>
 
-<p><code>&lt;style&gt;&lt;/style&gt;</code>- Définition du style <code>CSS</code> de la page</p>
+<ul>
+<li>Auteur, mots-clés et description de la page</li>
+</ul>
 
-<p><code>&lt;link rel = &quot;stylesheet&quot; href=&quot;style.css&quot;&gt;</code>- Importation d&#39;une feuille de style <code>CSS</code></p>
+</article></slide><slide class=''><hgroup><h2>Méta-données</h2></hgroup><article  id="meta-donnees-2">
 
-<p> </p>
+<h3>Scripts et styles</h3>
+
+<pre class = 'prettyprint lang-html'>&lt;script&gt;&lt;/script&gt;</pre>
+
+<ul>
+<li>Écriture de script <code>JS</code> (ou importation du fichier source avec <code>src=&quot;script.js&quot;</code> en paramètre)</li>
+</ul>
+
+<pre class = 'prettyprint lang-html'>&lt;style&gt;&lt;/style&gt;</pre>
+
+<ul>
+<li>Définition du style <code>CSS</code> de la page</li>
+</ul>
+
+<pre class = 'prettyprint lang-html'>&lt;link rel = &quot;stylesheet&quot; href=&quot;style.css&quot;&gt;</pre>
+
+<ul>
+<li>Importation d&#39;une feuille de style <code>CSS</code></li>
+</ul>
 
 <p>Les balises <code>script</code> et <code>style</code> peuvent aussi être intégré dans le corps (dans la balise <code>body</code> donc), selon les besoins.</p>
 
-<h3>Description du contenu</h3>
-
-<h4>2 types de balises</h4>
+</article></slide><slide class=''><hgroup><h2>Description du contenu</h2></hgroup><article  id="description-du-contenu">
 
 <ol>
 <li>Balise de type <strong><code>div</code></strong> :
@@ -217,28 +243,40 @@
 </ol>
 
 <div style="width: 80%; margin: 0 auto;">
-<pre >&lt;div style=&quot;border: solid 1px black; margin: 5px; padding: 5px;&quot;&gt;
-    Ceci est un &lt;code&gt;div&lt;/code&gt;
-    &lt;div style=&quot;border: solid 1px black; margin: 5px; padding: 5px;&quot;&gt;
-        Toujours un &lt;code&gt;div&lt;/code&gt;, dans le premier &lt;code&gt;div&lt;/code&gt;
-    &lt;/div&gt;
-    Ici, un &lt;span style=&quot;background-color: #ddd;&quot;&gt;&lt;code&gt;span&lt;/code&gt;&lt;/span&gt;
-    &lt;div style=&quot;border: solid 1px black; margin: 5px; padding: 5px;&quot;&gt;
-        Idem (un &lt;code&gt;div&lt;/code&gt;), mais ici avec &lt;span style=&quot;background-color: #ddd;&quot;&gt;un &lt;code&gt;span&lt;/code&gt;&lt;/span&gt; et &lt;span style=&quot;background-color: #ddd;&quot;&gt;un autre &lt;code&gt;span&lt;/code&gt;&lt;/span&gt;
-    &lt;/div&gt;
-    Et enfin &lt;span style=&quot;background-color: #ddd;&quot;&gt;un &lt;code&gt;span&lt;/code&gt; avec un &lt;div style=&quot;border: solid 1px black; margin: 5px; padding: 5px;&quot;&gt;&lt;code&gt;div&lt;/code&gt; dedans&lt;/div&gt;&lt;/span&gt; 
-&lt;/div&gt;</pre></div>
+<div style="border: solid 1px black; margin: 5px; padding: 5px;">
+Ceci est un <code>div</code>
 
-<h4>Balises sémantiques principales</h4>
+<div style="border: solid 1px black; margin: 5px; padding: 5px;">
+<p>Toujours un <code>div</code>, dans le premier <code>div</code></p></div>
 
-<p>Sémantique importante pour :- Indexation des pages par les moteurs de recherche- Analyse des pages par des outils d&#39;aide dédiés aux personnes mal-voyantes</p>
+Ici, un <span style="background-color: #ddd;">
+<code>span</code></span>
+
+<div style="border: solid 1px black; margin: 5px; padding: 5px;">
+<p>Idem (un <code>div</code>), mais ici avec <span style="background-color: #ddd;">
+un <code>span</code></span> et <span style="background-color: #ddd;">
+un autre <code>span</code></span></p></div>
+
+Et enfin <span style="background-color: #ddd;">un <code>span</code> avec un
+
+<div style="border: solid 1px black; margin: 5px; padding: 5px;">
+<code>div</code> dedans</div>
+
+<p></span></p></div></div>
+
+</article></slide><slide class=''><hgroup><h2>Balises sémantiques principales</h2></hgroup><article  id="balises-semantiques-principales">
+
+<ul>
+<li>Indexation des pages par les moteurs de recherche</li>
+<li>Analyse des pages par des outils d&#39;aide dédiés aux personnes mal-voyantes</li>
+</ul>
 
 <table class = 'rmdtable'>
 <col width="2%" />
 <col width="2%" />
 <tr class="header">
-<th align="left">balise double</th>
-<th align="left">sens</th>
+<th align="left">balise</th>
+<th align="left">définition</th>
 </tr>
 <tr class="odd">
 <td align="left"><code>header</code> et <code>footer</code></td>
@@ -261,16 +299,12 @@
 <td align="left">titres et sous-titres</td>
 </tr>
 <tr class="even">
-<td align="left"><code>strong</code></td>
-<td align="left">mot(s) important(s)</td>
-</tr>
-<tr class="odd">
-<td align="left"><code>em</code></td>
-<td align="left">mot(s) un peu moins important(s)</td>
+<td align="left"><code>strong</code> et <code>em</code></td>
+<td align="left">mot(s) important(s) et un peu moins important(s)</td>
 </tr>
 </table>
 
-<h4>Balises autres</h4>
+</article></slide><slide class=''><hgroup><h2>Balises autres</h2></hgroup><article  id="balises-autres">
 
 <table class = 'rmdtable'>
 <tr class="header">
@@ -301,6 +335,15 @@
 <td align="left"><code>b</code> et <code>i</code></td>
 <td align="left">mise en gras ou en italique</td>
 </tr>
+</table>
+
+</article></slide><slide class=''><hgroup><h2>Balises autres</h2></hgroup><article  id="balises-autres-1">
+
+<table class = 'rmdtable'>
+<tr class="header">
+<th align="left">balise</th>
+<th align="left">définition</th>
+</tr>
 <tr class="odd">
 <td align="left"><code>pre</code></td>
 <td align="left">texte préformaté sans compactage d&#39;espaces</td>
@@ -329,11 +372,16 @@
 
 <p>Liste non-exhaustive !</p>
 
-<h3>DOM</h3>
+</article></slide><slide class=''><hgroup><h2>DOM</h2></hgroup><article  id="dom">
 
 <p>Comme indiqué plus tôt, la structure de la page est connue sous le nom de <strong>DOM</strong> ou <strong>Document Object Model</strong></p>
 
-<p>Pour avoir une idée de ce qu&#39;est le DOM :- Ouvrir <a href='page.html' title=''>cette page</a> dans un autre onglet- Afficher les outils de développements de votre navigateur</p>
+<p>Pour avoir une idée de ce qu&#39;est le DOM :</p>
+
+<ul>
+<li>Ouvrir <a href='page.html' title=''>cette page</a> dans un autre onglet</li>
+<li>Afficher les outils de développements de votre navigateur</li>
+</ul>
 
 <p>Vous devriez voir la structure (qui correspond à l&#39;indentation car le code de la page est proprement écrit)</p>
 
@@ -344,17 +392,31 @@
 <li>Validation du code via le <a href='https://validator.w3.org/' title=''>validateur</a> du W3C</li>
 </ul>
 
-<h3>Paramètres des balises</h3>
+</article></slide><slide class=''><hgroup><h2>Paramètres communs des balises</h2></hgroup><article  id="parametres-communs-des-balises">
 
-<p>Quelques paramètres sont communs à toutes les balises :</p>
+<pre class = 'prettyprint lang-html'>&lt;balise style = &quot;code CSS&quot;&gt;</pre>
 
-<p><code>&lt;balise style = &quot;code CSS&quot;&gt;</code>- applique un style <code>CSS</code> spécifique (cf plus bas) à l&#39;élément</p>
+<ul>
+<li>applique un style <code>CSS</code> spécifique (cf plus bas) à l&#39;élément</li>
+</ul>
 
-<p><code>&lt;balise width = &quot;valeur&quot; height = &quot;valeur&quot;&gt;</code>- détermine la largeur et la hauteur de l&#39;élément (<code>valeur</code> relative ou absolue)</p>
+<pre class = 'prettyprint lang-html'>&lt;balise width = &quot;valeur&quot; height = &quot;valeur&quot;&gt;</pre>
 
-<p><code>&lt;balise class = &quot;classe(s)&quot;&gt;</code>- définit la ou les classes de l&#39;élément (utile en <code>CSS</code> ou en <code>JS</code>)</p>
+<ul>
+<li>détermine la largeur et la hauteur de l&#39;élément (<code>valeur</code> relative ou absolue)</li>
+</ul>
 
-<p><code>&lt;balise id = &quot;identifiant&quot;&gt;</code>- donne un identifiant (qui doit être unique dans la page - sinon risque de confusion) à l&#39;élément (idem, utile en <code>CSS</code> et en <code>JS</code>)</p>
+<pre class = 'prettyprint lang-html'>&lt;balise class = &quot;classe(s)&quot;&gt;</pre>
+
+<ul>
+<li>définit la ou les classes de l&#39;élément (utile en <code>CSS</code> ou en <code>JS</code>)</li>
+</ul>
+
+<pre class = 'prettyprint lang-html'>&lt;balise id = &quot;identifiant&quot;&gt;</pre>
+
+<ul>
+<li>donne un identifiant (qui doit être unique dans la page - sinon risque de confusion) à l&#39;élément (idem, utile en <code>CSS</code> et en <code>JS</code>)</li>
+</ul>
 
 </article></slide><slide class=''><hgroup><h2>CSS</h2></hgroup><article  id="css">
 
@@ -368,9 +430,15 @@
 <li>Définition de la forme des éléments (couleur, police, taille, position, &#8230;)</li>
 </ul>
 
-<p>Trois possibilités de définition du style :- dans la balise <code>HTML</code> avec le paramètre <code>style</code>- dans la partie <code>head</code> de la page (dans la balise <code>&lt;style&gt;...&lt;/style&gt;</code>- dans un fichier <code>CSS</code> à part (ou plusieurs), à appeler avec <code>&lt;link ...&gt;</code></p>
+<p>Trois possibilités de définition du style :</p>
 
-<h3>Syntaxe</h3>
+<ul>
+<li>dans la balise <code>HTML</code> avec le paramètre <code>style</code></li>
+<li>dans la partie <code>head</code> de la page (dans la balise <code>&lt;style&gt;...&lt;/style&gt;</code></li>
+<li>dans un fichier <code>CSS</code> à part (ou plusieurs), à appeler avec <code>&lt;link ...&gt;</code></li>
+</ul>
+
+</article></slide><slide class=''><hgroup><h2>Syntaxe</h2></hgroup><article  id="syntaxe">
 
 <p>Définition des valeurs de paramètres à appliquer sur les éléments correspondants au sélecteur (soit une <code>balise</code>, soit une <code>classe</code>, soit un <code>identifiant</code>)</p>
 
@@ -387,7 +455,7 @@
     ...
 }</pre>
 
-<h3>Quelques paramètres</h3>
+</article></slide><slide class=''><hgroup><h2>Quelques paramètres <code>CSS</code></h2></hgroup><article  id="quelques-parametres-css">
 
 <table class = 'rmdtable'>
 <col width="2%" />
@@ -426,9 +494,27 @@
 </tr>
 </table>
 
-<p>Les valeurs peuvent être déterminées :- soit en valeur absolue en pixels (<code>px</code>), via le système métrique (<code>cm</code> u <code>mm</code> - à éviter) ou anglais (pouces - <code>in</code>)- soit en valeur relative en pourcentage (<code>%</code>), soit par rapport à la taille de la police (<code>em</code>)</p>
+</article></slide><slide class=''><hgroup><h2>Quelques paramètres <code>CSS</code></h2></hgroup><article  id="quelques-parametres-css-1">
 
-<h3>Exemple (dans le code HTML)</h3>
+<p>Les valeurs peuvent être déterminées :</p>
+
+<ul>
+<li>soit en valeur absolue :
+
+<ul>
+<li>en pixels (<code>px</code>),</li>
+<li>via le système métrique (<code>cm</code> u <code>mm</code> - à éviter)</li>
+<li>ou système anglais (pouces - <code>in</code>)</li>
+</ul></li>
+<li>soit en valeur relative :
+
+<ul>
+<li>en pourcentage (<code>%</code>),</li>
+<li>par rapport à la taille de la police (<code>em</code>)</li>
+</ul></li>
+</ul>
+
+</article></slide><slide class=''><hgroup><h2>Exemple (dans le code HTML)</h2></hgroup><article  id="exemple-dans-le-code-html">
 
 <div style="background-color: #ddd;">
 Une balise à fond gris, sauf pour <span style="background-color: #fdb;">
@@ -451,40 +537,86 @@ blablabl<br>blabla</div>
  position: relative; bottom: -50px&quot;&gt;span qui s&#39;échappe&lt;/span&gt;
 &lt;/div&gt;</pre>
 
-<h3>Sélecteur <code>balise</code></h3>
+</article></slide><slide class=''><hgroup><h2>Sélecteurs</h2></hgroup><article  id="selecteurs">
 
-<p><code>balise</code>- sélectionne donc tous les éléments correspondants à la balise (par exemple, tous les <code>h1</code>, tous les <code>p</code>, &#8230;)</p>
+<pre class = 'prettyprint lang-html'>balise</pre>
 
-<p><code>baliseA baliseB</code>- sélectionne tous les éléments correspondants à la balise B qui sont des <em>fils</em> de la balise A (<code>p strong</code> sélectionne tous les <code>strong</code> qui sont dans un <code>p</code>), avec possibilité de compléter sur plusieurs niveaux</p>
+<ul>
+<li>sélectionne donc tous les éléments correspondants à la balise (par exemple, tous les <code>h1</code>, tous les <code>p</code>, &#8230;)</li>
+</ul>
 
-<p><code>baliseA, baliseB</code>- sélectionne à la fois les éléments de la balise A, et les éléments de la balise B (<code>h1, h2</code> sélectionne les titres de niveau 1 et les titres de niveau 2)</p>
+<pre class = 'prettyprint lang-html'>baliseA baliseB</pre>
 
-<h3>Sélecteur <code>classe</code></h3>
+<ul>
+<li>sélectionne tous les éléments correspondants à la balise B qui sont des <em>fils</em> de la balise A (<code>p strong</code> sélectionne tous les <code>strong</code> qui sont dans un <code>p</code>), avec possibilité de compléter sur plusieurs niveaux</li>
+</ul>
 
-<p><code>.classe</code>- sélectionne tous les éléments correspondants à la classe</p>
+<pre class = 'prettyprint lang-html'>baliseA, baliseB</pre>
 
-<p><code>.classe balise</code>- sélectionne tous les éléments de la balise qui sont des fils de la classe indiquée (<code>.maClasse strong</code> sélectionne tous les <code>strong</code> présents dans un élément de classe <code>maClasse</code>)</p>
+<ul>
+<li>sélectionne à la fois les éléments de la balise A, et les éléments de la balise B (<code>h1, h2</code> sélectionne les titres de niveau 1 et les titres de niveau 2)</li>
+</ul>
 
-<p><code>.classeA.classeB</code>- sélectionne tous les éléments qui sont de classe A ET de classe B</p>
+</article></slide><slide class=''><hgroup><h2>Sélecteurs</h2></hgroup><article  id="selecteurs-1" class="smaller">
 
-<p><code>balise.classe</code>- sélectionne les éléments de la balise qui sont aussi de la classe donnée (<code>div.maClasse</code> sélectionne tous les <code>div</code> qui ont la classe <code>maClasse</code>)</p>
+<pre class = 'prettyprint lang-html'>.classe</pre>
 
-<h3>Sélecteur <code>identifiant</code></h3>
+<ul>
+<li>sélectionne tous les éléments correspondants à la classe</li>
+</ul>
 
-<p><code>#identifiant</code>- sélectionne l&#39;élément (le premier trouvé) nommé <code>identifiant</code> (via <code>id = &quot;identifiant</code>)</p>
+<pre class = 'prettyprint lang-html'>.classe balise</pre>
 
-<p><code>#identifiant balise</code>- sélectionne les éléments de la balise qui sont dans l&#39;élément nommé <code>identifiant</code></p>
+<ul>
+<li>sélectionne tous les éléments de la balise qui sont des fils de la classe indiquée (<code>.maClasse strong</code> sélectionne tous les <code>strong</code> présents dans un élément de classe <code>maClasse</code>)</li>
+</ul>
 
-<p><code>#identifiant.classe</code>- sélectionne l&#39;élément nommé <code>identifiant</code> uniquement lorsque la classe indiquée lui est affectée (intéressant lors d&#39;une modification du <em>DOM</em> en <code>JS</code> par exemple)</p>
+<pre class = 'prettyprint lang-html'>.classeA.classeB</pre>
 
-<h3>Quelques compléments</h3>
+<ul>
+<li>sélectionne tous les éléments qui sont de classe A ET de classe B</li>
+</ul>
 
-<p>Les couleurs peuvent être déclarées :- soit par leur nom (140 couleurs définies : cf <a href='http://www.w3schools.com/cssref/css_colornames.asp' title=''>ici</a>)- soit par leur code hexadécimal (<code>#rrggbb</code> ou <code>#rgb</code> : <code>r</code> pour rouge, <code>g</code> pour vert et <code>b</code> pour bleu)- soit par la fonction <code>rgb(r, g, b)</code> (les valeurs devant être entre 0 et 255)- soit par la fonction <code>rgba(r, g, b, t)</code> identique à la précédente avec la définition de la transparence (avec <code>t</code> entre 0 et 1)</p>
+<pre class = 'prettyprint lang-html'>balise.classe</pre>
+
+<ul>
+<li>sélectionne les éléments de la balise qui sont aussi de la classe donnée (<code>div.maClasse</code> sélectionne tous les <code>div</code> qui ont la classe <code>maClasse</code>)</li>
+</ul>
+
+</article></slide><slide class=''><hgroup><h2>Sélecteurs</h2></hgroup><article  id="selecteurs-2">
+
+<pre class = 'prettyprint lang-html'>#identifiant</pre>
+
+<ul>
+<li>sélectionne l&#39;élément (le premier trouvé) nommé <code>identifiant</code> (via <code>id = &quot;identifiant</code>)</li>
+</ul>
+
+<pre class = 'prettyprint lang-html'>#identifiant balise</pre>
+
+<ul>
+<li>sélectionne les éléments de la balise qui sont dans l&#39;élément nommé <code>identifiant</code></li>
+</ul>
+
+<pre class = 'prettyprint lang-html'>#identifiant.classe</pre>
+
+<ul>
+<li>sélectionne l&#39;élément nommé <code>identifiant</code> uniquement lorsque la classe indiquée lui est affectée (intéressant lors d&#39;une modification du <em>DOM</em> en <code>JS</code> par exemple)</li>
+</ul>
+
+</article></slide><slide class=''><hgroup><h2>Quelques compléments</h2></hgroup><article  id="quelques-complements">
+
+<p>Les couleurs peuvent être déclarées :</p>
+
+<ul>
+<li>soit par leur nom (140 couleurs définies : cf <a href='http://www.w3schools.com/cssref/css_colornames.asp' title=''>ici</a>)</li>
+<li>soit par leur code hexadécimal (<code>#rrggbb</code> ou <code>#rgb</code> : <code>r</code> pour rouge, <code>g</code> pour vert et <code>b</code> pour bleu)</li>
+<li>soit par la fonction <code>rgb(r, g, b)</code> (les valeurs devant être entre 0 et 255)</li>
+<li>soit par la fonction <code>rgba(r, g, b, t)</code> identique à la précédente avec la définition de la transparence (avec <code>t</code> entre 0 et 1)</li>
+</ul>
 
 <pre class = 'prettyprint lang-css'>/*
-    Les commentaires se font avec
-    cette syntaxe (comme dans
-    beaucoup d&#39;autres langages)
+    Les commentaires se font avec cette syntaxe 
+    (comme dans beaucoup d&#39;autres langages)
 */</pre>
 
 <p>Voici la <a href='https://developer.mozilla.org/en/CSS/CSS_Reference' title=''>liste exhaustive</a> des éléments <code>CSS</code></p>
@@ -501,12 +633,12 @@ blablabl<br>blabla</div>
 <li>Pas supporté par tous les navigateurs (en particulier les plus anciens)</li>
 </ul>
 
-<p>Exemple</p>
+</article></slide><slide class=''><hgroup><h2>Exemple de SVG</h2></hgroup><article  id="exemple-de-svg">
 
 <div style="text-align: center;">
 <svg width="250" height="50" style="border: solid 1px black;">
 
-<pre >&lt;rect x = &quot;50&quot; y = &quot;0&quot; width = &quot;200&quot; height = &quot;45&quot; fill = &quot;orange&quot; /&gt;</pre>
+<rect x = "50" y = "0" width = "200" height = "45" fill = "orange" />
 
 </svg></div>
 
@@ -514,7 +646,14 @@ blablabl<br>blabla</div>
     &lt;rect x = &quot;50&quot; y = &quot;0&quot; width = &quot;200&quot; height = &quot;45&quot; fill = &quot;orange&quot; /&gt;
 &lt;/svg&gt;</pre>
 
-<h3>Compléments</h3>
+<h3>A noter</h3>
+
+<ul>
+<li>le rectangle commence au point \((50,0)\)</li>
+<li>ce qui indique le point \((0,0)\) est en <strong>haut</strong> à <strong>gauche</strong> du dessin</li>
+</ul>
+
+</article></slide><slide class=''><hgroup><h2>Compléments</h2></hgroup><article  id="complements">
 
 <ul>
 <li>2 types de balises comme en <code>HTML</code>
@@ -536,11 +675,11 @@ blablabl<br>blabla</div>
 <li>Possibilité d&#39;affecter des classes ou un identifiant à chaque élément</li>
 </ul>
 
-<h3>Ordre de dessin</h3>
+</article></slide><slide class=''><hgroup><h2>Ordre de dessin</h2></hgroup><article  id="ordre-de-dessin">
 
 <ul>
 <li>Pas de notion de couches, contrairement à <code>CSS</code></li>
-<li>Dernier dessiné = forme <em>au-dessus</em> du reste</li>
+<li>Dernier dessiné \(=\) forme <em>au-dessus</em> du reste</li>
 </ul>
 
 <pre class = 'prettyprint lang-css'>&lt;rect x=  &quot;0&quot; y=  &quot;0&quot; width=&quot;70&quot; height=&quot;70&quot; fill=&quot;purple&quot;/&gt;
@@ -550,21 +689,40 @@ blablabl<br>blabla</div>
 &lt;rect x=&quot;200&quot; y=&quot;100&quot; width=&quot;70&quot; height=&quot;70&quot; fill=&quot;red&quot;/&gt;</pre>
 
 <div style="text-align: center;">
-<pre >&lt;svg width = &quot;300&quot; height = &quot;200&quot;&gt;
-    &lt;rect x=  &quot;0&quot; y=  &quot;0&quot; width=&quot;70&quot; height=&quot;70&quot; fill=&quot;purple&quot;/&gt;
-    &lt;rect x= &quot;50&quot; y= &quot;25&quot; width=&quot;70&quot; height=&quot;70&quot; fill=&quot;blue&quot;/&gt;
-    &lt;rect x=&quot;100&quot; y= &quot;50&quot; width=&quot;70&quot; height=&quot;70&quot; fill=&quot;green&quot;/&gt;
-    &lt;rect x=&quot;150&quot; y= &quot;75&quot; width=&quot;70&quot; height=&quot;70&quot; fill=&quot;yellow&quot;/&gt;
-    &lt;rect x=&quot;200&quot; y=&quot;100&quot; width=&quot;70&quot; height=&quot;70&quot; fill=&quot;red&quot;/&gt;
-&lt;/svg&gt;</pre></div>
+<p><svg width = "300" height = "200"><rect x=  "0" y=  "0" width="70" height="70" fill="purple"/><rect x= "50" y= "25" width="70" height="70" fill="blue"/><rect x="100" y= "50" width="70" height="70" fill="green"/><rect x="150" y= "75" width="70" height="70" fill="yellow"/><rect x="200" y="100" width="70" height="70" fill="red"/></svg></p></div>
 
 </article></slide><slide class=''><hgroup><h2>Outils pour développer</h2></hgroup><article  id="outils-pour-developper">
 
-<p>Sites permettant d&#39;écrire du code web directement dans le navigateur, et de le partager :- <a href='http://codepen.io' title=''>CodePen.io</a>- <a href='http://jsfiddle.net' title=''>JSFiddle</a>- <a href='http://jsbin.com' title=''>JSBin</a>- <a href='http://plnkr.co/' title=''>Plunker</a></p>
+<div class="columns-2">
+<p>Sites permettant d&#39;écrire du code web directement dans le navigateur, et de le partager :</p>
 
-<p>Site permettant de faire plein choses très bien :- <a href='http://github.com' title=''>GitHub</a></p>
+<ul>
+<li><a href='http://codepen.io' title=''>CodePen.io</a></li>
+<li><a href='http://jsfiddle.net' title=''>JSFiddle</a></li>
+<li><a href='http://jsbin.com' title=''>JSBin</a></li>
+<li><a href='http://plnkr.co/' title=''>Plunker</a></li>
+</ul>
 
-<p>Sites d&#39;apprentissage et forums- <a href='http://www.w3schools.com' title=''>w3schools</a>- <a href='https://www.codecademy.com/fr/tracks/web' title=''>CodeAcademy</a>- <a href='http://stackoverflow.com' title=''>StackOverFlow</a>- <a href='http://developpez.com' title=''>Developpez.net</a></p></article></slide>
+<p>Site permettant de faire plein choses très bien :</p>
+
+<ul>
+<li><a href='http://github.com' title=''>GitHub</a></li>
+</ul>
+
+<p>Sites d&#39;apprentissage et forums</p>
+
+<ul>
+<li><a href='http://www.w3schools.com' title=''>w3schools</a></li>
+<li><a href='https://www.codecademy.com/fr/tracks/web' title=''>CodeAcademy</a></li>
+<li><a href='http://stackoverflow.com' title=''>StackOverFlow</a></li>
+<li><a href='http://developpez.com' title=''>Developpez.net</a></li>
+</ul>
+
+<p> </p>
+
+<p> </p>
+
+<p> </p></div></article></slide>
 
 
   <slide class="backdrop"></slide>

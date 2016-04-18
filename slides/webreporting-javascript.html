@@ -105,17 +105,33 @@
 <li>Commentaires sur une ligne avec <code>//</code> et sur plusieurs lignes avec <code>/* */</code></li>
 </ul>
 
-</article></slide><slide class=''><hgroup><h2>Exécution</h2></hgroup><article  id="execution">
+</article></slide><slide class=''><hgroup><h2>Exécution et intégration</h2></hgroup><article  id="execution-et-integration">
 
-<p>Code exécutable directement dans la <strong>console</strong> <code>JS</code> présente dans tous les navigateurs- Affichage de la console- Ecriture de commandes <code>JS</code>- Très utile pour le débogage</p>
+<p>Code exécutable directement dans la <strong>console</strong> <code>JS</code> présente dans tous les navigateurs</p>
 
-</article></slide><slide class=''><hgroup><h2>Intégration</h2></hgroup><article  id="integration">
+<ul>
+<li>Affichage de la console</li>
+<li>Ecriture de commandes <code>JS</code></li>
+<li>Très utile pour le débogage</li>
+</ul>
 
-<p>Deux possibilités d&#39;intégration du script :- dans une balise <code>&lt;script&gt;code JS&lt;/script&gt;</code>- dans un fichier texte appelé avec <code>&lt;script src = &quot;code.js&quot;&gt;&lt;/script&gt;</code></p>
+<p>Deux possibilités d&#39;intégration du script :</p>
+
+<ul>
+<li>dans une balise <code>&lt;script&gt;code JS&lt;/script&gt;</code></li>
+<li>dans un fichier texte appelé avec <code>&lt;script src = &quot;code.js&quot;&gt;&lt;/script&gt;</code></li>
+</ul>
 
 </article></slide><slide class=''><hgroup><h2>Typage des variables</h2></hgroup><article  id="typage-des-variables">
 
-<p>Typage faible :- pas de déclaration de type lors de la création de la variable- pas de déclaration de la variable nécessaire avant utilisation- pas de vérification de type lors d&#39;une affectation- <strong>ATTENTION</strong> donc</p>
+<p>Typage faible :</p>
+
+<ul>
+<li>pas de déclaration de type lors de la création de la variable</li>
+<li>pas de déclaration de la variable nécessaire avant utilisation</li>
+<li>pas de vérification de type lors d&#39;une affectation</li>
+<li><strong>ATTENTION</strong> donc</li>
+</ul>
 
 <pre class = 'prettyprint lang-js'>const pi = 3.14;    // pi sera en lecture seule par la suite
 var a = 5, b = &quot;b&quot;; // globale ou locale en fonction du placement de var
@@ -124,7 +140,7 @@ a = b;              // a devient une chaîne
 var z;              // utilisation de var possible à tout moment
 let temp;           // durée de vie = bloc en cours</pre>
 
-</article></slide><slide class=''><hgroup><h2>Type des variables</h2></hgroup><article  id="type-des-variables">
+</article></slide><slide class=''><hgroup><h2>Type des variables</h2></hgroup><article  id="type-des-variables" class="smaller">
 
 <ul>
 <li>Déclarée mais sans valeur : <code>undefined</code></li>
@@ -144,7 +160,7 @@ var obj = {
     t: [12, 23, 98]
 };</pre>
 
-<h3>Format JSON</h3>
+</article></slide><slide class=''><hgroup><h2>Format JSON</h2></hgroup><article  id="format-json">
 
 <ul>
 <li><code>JSON</code> pour <strong>JavaScript Object Notation</strong></li>
@@ -153,16 +169,27 @@ var obj = {
 <li><code>GeoJSON</code> : format spécifique pour stocker les données géographiques (coordonnées et formes)</li>
 </ul>
 
-<p>Exemple- Données retournées par Open Street View pour la localisation de la Tour Eiffel :- <a href='http://nominatim.openstreetmap.org/search?q=tour+eiffel+paris+france&amp;format=json' title=''>données</a> (à ouvrir dans une autre fenêtre)- Activer le plugin <code>JSONView</code> de votre navigateur (ou tout autre plugin permettant de visualiser correctement les données <code>JSON</code>)</p>
-
-</article></slide><slide class=''><hgroup><h2>Opérations mathématiques</h2></hgroup><article  id="operations-mathematiques">
+<p>Exemple</p>
 
 <ul>
-<li>Opérateurs usuels : <code>+</code>, <code>-</code>, <code>*</code>, <code>/</code></li>
+<li>Données fournies Open Street View pour la localisation de la Tour Eiffel :
+
+<ul>
+<li><a href='http://nominatim.openstreetmap.org/search?q=tour+eiffel+paris+france&amp;format=json' title=''>données</a> (à ouvrir dans une autre fenêtre)</li>
+</ul></li>
+<li>Activer le plugin <code>JSONView</code> de votre navigateur (ou tout autre plugin permettant de visualiser correctement les données <code>JSON</code>)</li>
+</ul>
+
+</article></slide><slide class=''><hgroup><h2>Opérations</h2></hgroup><article  id="operations">
+
+<h3>Mathématiques</h3>
+
+<ul>
+<li>Opérateurs usuels : <code>+</code>, <code>-</code>, <code>*</code>, <code>/</code>, <code>()</code>, &#8230;</li>
 <li>Convertion automatique si nécessaire : attention aux mélanges entier/chaîne</li>
 </ul>
 
-</article></slide><slide class=''><hgroup><h2>Opérations logiques</h2></hgroup><article  id="operations-logiques">
+<h3>Logiques</h3>
 
 <ul>
 <li>Opérateurs usuels : <code>==</code>, <code>!=</code>, <code>&lt;</code>, <code>&lt;=</code>, <code>&gt;</code>, <code>&gt;=</code></li>
@@ -232,21 +259,21 @@ var obj = {
     ligne(s) de code;
 }</pre>
 
-</article></slide><slide class=''><hgroup><h2>Traitement itératif : <code>do ... while</code></h2></hgroup><article  id="traitement-iteratif-do-...-while">
+</article></slide><slide class=''><hgroup><h2>Traitement itératif : <code>while</code></h2></hgroup><article  id="traitement-iteratif-while">
+
+<h3><code>do ... while</code></h3>
 
 <pre class = 'prettyprint lang-js'>do {
     ligne(s) de code;
 } while (condition);</pre>
 
-</article></slide><slide class=''><hgroup><h2>Traitement itératif : <code>while</code></h2></hgroup><article  id="traitement-iteratif-while">
+<h3><code>while</code></h3>
 
 <pre class = 'prettyprint lang-js'>while (condition) {
     ligne(s) de code;
 }</pre>
 
 </article></slide><slide class=''><hgroup><h2>Fonctions</h2></hgroup><article  id="fonctions">
-
-<p>La plus utile : <code>console.log(chaîne)</code></p>
 
 <pre class = 'prettyprint lang-js'>function nomFonction (paramètre(s)) {
     ligne(s) de code;
@@ -262,11 +289,50 @@ var obj = {
 
 <p>L&#39;objet <code>arguments</code> contient les paramètres utilisés lors de l&#39;appel de la fonction</p>
 
-</article></slide><slide class=''><hgroup><h2>Manipulation du <strong>DOM</strong></h2></hgroup><article  id="manipulation-du-dom">
+<p>La plus utile, <code>console.log(chaîne)</code>, permet d&#39;afficher du contenu dans la console du navigateur</p>
 
-<p>Deux objets présents :- <code>document</code> : contient le <strong>DOM</strong> justement- <code>window</code> : contient tous les informations de la page (dont les variables et fonctions <code>JS</code>), ainsi que <code>document</code></p>
+</article></slide><slide class=''><hgroup><h2>Manipulation du <strong>DOM</strong></h2></hgroup><article  id="manipulation-du-dom" class="smaller">
 
-<p>Quelques fonctions utiles de <code>document</code> ou des éléments du DOM :- <code>getElementById(&quot;nom&quot;)</code> renvoie un pointeur vers l&#39;élément identifié par <code>&quot;nom&quot;</code>- <code>getElementsByClassName(&quot;classe&quot;)</code> renvoie un tableau de pointeur vers les éléments de la classe donnée- <code>getElementsByTagName(&quot;balise&quot;)</code> idem mais pour les éléments de la balise- <code>createElement(&quot;balise&quot;)</code> créé un élément de type spécifié- <code>innerHTML</code> contient le contenu <code>HTML</code> de l&#39;élément- <code>appendChild</code>, <code>removeChild</code>, <code>insertBefore</code> permet d&#39;ajouter ou de supprimer des éléments du DOM</p></article></slide>
+<p>Deux objets présents :</p>
+
+<ul>
+<li><code>document</code> : contient le <strong>DOM</strong> justement</li>
+<li><code>window</code> : contient tous les informations de la page (dont les variables et fonctions <code>JS</code>), ainsi que <code>document</code></li>
+</ul>
+
+<p>Quelques fonctions utiles de <code>document</code> ou des éléments du DOM :</p>
+
+<ul>
+<li><code>getElementById(&quot;nom&quot;)</code> renvoie un pointeur vers l&#39;élément identifié par <code>&quot;nom&quot;</code></li>
+<li><code>getElementsByClassName(&quot;classe&quot;)</code> renvoie un tableau de pointeur vers les éléments de la classe donnée</li>
+<li><code>getElementsByTagName(&quot;balise&quot;)</code> idem mais pour les éléments de la balise</li>
+<li><code>createElement(&quot;balise&quot;)</code> créé un élément de type spécifié</li>
+<li><code>innerHTML</code> contient le contenu <code>HTML</code> de l&#39;élément</li>
+<li><code>appendChild</code>, <code>removeChild</code>, <code>insertBefore</code> permet d&#39;ajouter ou de supprimer des éléments du DOM</li>
+</ul>
+
+</article></slide><slide class=''><hgroup><h2>Exemple</h2></hgroup><article  id="exemple">
+
+<h3>Résultat</h3>
+
+<div id="exjs">
+</div>
+
+<script>
+var exjs = document.getElementById("exjs");
+exjs.innerHTML = "Remplissage d'un div en rouge";
+exjs.style.color = "red";
+</script>
+
+<h3>Code</h3>
+
+<pre class = 'prettyprint lang-html'>&lt;div id=&quot;exjs&quot;&gt;
+&lt;/div&gt;
+&lt;script&gt;
+    var exjs = document.getElementById(&quot;exjs&quot;);
+    exjs.innerHTML = &quot;Remplissage d&#39;un div en rouge&quot;;
+    exjs.style.color = &quot;red&quot;;
+&lt;/script&gt;</pre></article></slide>
 
 
   <slide class="backdrop"></slide>

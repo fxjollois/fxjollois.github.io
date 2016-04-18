@@ -14,22 +14,23 @@ title: JavaScript
 - Quelques outils disponibles de validation du code
 - Commentaires sur une ligne avec `//` et sur plusieurs lignes avec `/* */`
 
-## Exécution
+## Exécution et intégration
 
 Code exécutable directement dans la **console** `JS` présente dans tous les navigateurs
+
 - Affichage de la console
 - Ecriture de commandes `JS`
 - Très utile pour le débogage 
 
-## Intégration
-
 Deux possibilités d'intégration du script :
+
 - dans une balise `<script>code JS</script>`
 - dans un fichier texte appelé avec `<script src = "code.js"></script>`
 
 ## Typage des variables
 
 Typage faible :
+
 - pas de déclaration de type lors de la création de la variable
 - pas de déclaration de la variable nécessaire avant utilisation
 - pas de vérification de type lors d'une affectation
@@ -44,7 +45,7 @@ var z;              // utilisation de var possible à tout moment
 let temp;           // durée de vie = bloc en cours
 ```
 
-## Type des variables
+## Type des variables {.smaller}
 
 - Déclarée mais sans valeur : `undefined`
 - Nul : `null` 
@@ -64,7 +65,7 @@ var obj = {
 };
 ```
 
-### Format JSON
+## Format JSON
 
 - `JSON` pour **JavaScript Object Notation**
 - Utilisé de plus en plus souvent pour le stockage de données et surtout par les API
@@ -72,16 +73,19 @@ var obj = {
 - `GeoJSON` : format spécifique pour stocker les données géographiques (coordonnées et formes)
 
 Exemple 
-- Données retournées par Open Street View pour la localisation de la Tour Eiffel :
+
+- Données fournies Open Street View pour la localisation de la Tour Eiffel :
     - [données](http://nominatim.openstreetmap.org/search?q=tour+eiffel+paris+france&format=json) (à ouvrir dans une autre fenêtre)
 - Activer le plugin `JSONView` de votre navigateur (ou tout autre plugin permettant de visualiser correctement les données `JSON`)
 
-## Opérations mathématiques
+## Opérations 
 
-- Opérateurs usuels : `+`, `-`, `*`, `/`
+### Mathématiques
+
+- Opérateurs usuels : `+`, `-`, `*`, `/`, `()`, ...
 - Convertion automatique si nécessaire : attention aux mélanges entier/chaîne
 
-## Opérations logiques
+### Logiques
 
 - Opérateurs usuels : `==`, `!=`, `<`, `<= `, ` >`, `>=`
 - Opérateurs complémentaires : `===`, `!==`
@@ -160,7 +164,9 @@ for (variable of tableau) {
 }
 ```
 
-## Traitement itératif : `do ... while`
+## Traitement itératif : `while`
+
+### `do ... while`
 
 ```js
 do {
@@ -168,7 +174,7 @@ do {
 } while (condition);
 ```
 
-## Traitement itératif : `while`
+### `while`
 
 ```js
 while (condition) {
@@ -177,8 +183,6 @@ while (condition) {
 ```
 
 ## Fonctions
-
-La plus utile : `console.log(chaîne)`
 
 ```js
 function nomFonction (paramètre(s)) {
@@ -198,13 +202,17 @@ var nomFonction = function (paramètre(s)) {
 
 L'objet `arguments` contient les paramètres utilisés lors de l'appel de la fonction
 
-## Manipulation du **DOM**
+La plus utile, `console.log(chaîne)`, permet d'afficher du contenu dans la console du navigateur
+
+## Manipulation du **DOM** {.smaller}
 
 Deux objets présents :
+
 - `document` : contient le **DOM** justement
 - `window` : contient tous les informations de la page (dont les variables et fonctions `JS`), ainsi que `document`
 
 Quelques fonctions utiles de `document` ou des éléments du DOM :
+
 - `getElementById("nom")` renvoie un pointeur vers l'élément identifié par `"nom"`
 - `getElementsByClassName("classe")` renvoie un tableau de pointeur vers les éléments de la classe donnée
 - `getElementsByTagName("balise")` idem mais pour les éléments de la balise
@@ -212,3 +220,26 @@ Quelques fonctions utiles de `document` ou des éléments du DOM :
 - `innerHTML` contient le contenu `HTML` de l'élément
 - `appendChild`, `removeChild`, `insertBefore` permet d'ajouter ou de supprimer des éléments du DOM
 
+## Exemple 
+
+### Résultat
+
+<div id="exjs">
+</div>
+<script>
+var exjs = document.getElementById("exjs");
+exjs.innerHTML = "Remplissage d'un div en rouge";
+exjs.style.color = "red";
+</script>
+
+### Code
+
+```html
+<div id="exjs">
+</div>
+<script>
+	var exjs = document.getElementById("exjs");
+	exjs.innerHTML = "Remplissage d'un div en rouge";
+	exjs.style.color = "red";
+</script>
+```

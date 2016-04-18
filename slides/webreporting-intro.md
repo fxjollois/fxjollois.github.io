@@ -13,7 +13,8 @@ title: Web-Reporting
 
 ### Reporting
 
-Rapport (plus ou moins court) sensé rendre compte de l'activité d'un service, d'une direction voire d'une entreprise. Il intègre à la fois des éléments numériques et des éléments graphiques. On a recourt aux techniques suivantes :
+Rapport (plus ou moins court) rendant compte de l'activité d'une entreprise. Il intègre à la fois des éléments numériques et des éléments graphiques :
+
 - **Statistiques**
 - Calcul de **KPI** et création d'indicateurs
 - **Visualisation de données**
@@ -22,6 +23,8 @@ Rapport (plus ou moins court) sensé rendre compte de l'activité d'un service, 
 
 Idem mais accessible via une page web, avec idéalement de l'interactivité et une mise à jour automatisé (sinon, un PDF suffit amplement)
 
+## Le web-reporting ?
+
 ### Pour qui ?
 
 Très généralement adressé à des décideurs (directeur de service, d'agence, DG, ...) qui vont s'appuyer dessus pour orienter à plus ou moins long terme l'avenir de leur service/agence/direction/entreprise/...
@@ -29,6 +32,8 @@ Très généralement adressé à des décideurs (directeur de service, d'agence,
 ### Importance du reporting
 
 A l'heure actuelle (masse de données, besoin de réactivité, ...), il est primordial que les décideurs puissent avoir les informations les plus lisibles, les plus à jour et les plus fiables.
+
+## Le web-reporting ?
 
 ### Place dans le schéma info 
 
@@ -41,9 +46,11 @@ A l'heure actuelle (masse de données, besoin de réactivité, ...), il est prim
 - Réactivité
 - Interactivité : le destinataire doit pouvoir *jouer* avec la représentation pour faire sa propre analyse
 
-Source : https://developers.google.com/chart/interactive/docs/gallery/controls
+## Le web-reporting ?
 
-<iframe src="exemple-reporting.html" style="width:100%; height: 100%; border: 0;"></iframe>
+<iframe src="../webreporting/exemple-reporting.html" style="width:800px; height: 500px; border: 0;"></iframe>
+
+Source : https://developers.google.com/chart/interactive/docs/gallery/controls
 
 ## Pourquoi la visualisation ?
 
