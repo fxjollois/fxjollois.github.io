@@ -25,6 +25,20 @@ title: Web Reporting
 
 ## Projet
 
+L'évaluation sera sous la forme d'un mini-projet sur les dernières séances.
+
+### Master MIAGE M1 FI
+
+- Contraintes :
+    - Données libres (via API ou statique)
+    - Utilisation de **D3.js**
+    - 3 étudiants par groupe maximum
+- Rendu :
+    - Deadline : **26 juin 2016**
+    - URL de la page (donc hébergement à prévoir)
+
+<!--
+
 ### Master MIAGE M1 FA
 
 - Contraintes :
@@ -44,6 +58,8 @@ title: Web Reporting
 - Rendu :
     - Deadline : **à définir**
     - URL de la page (donc hébergement à prévoir)
+
+-->
 
 ## Autres
 
