@@ -193,7 +193,7 @@ Comme indiqué plus tôt, la structure de la page est connue sous le nom de **DO
 
 Pour avoir une idée de ce qu'est le DOM :
 
-- Ouvrir [cette page](page.html) dans un autre onglet
+- Ouvrir [../webreporting/cette page](page.html) dans un autre onglet
 - Afficher les outils de développements de votre navigateur
 
 Vous devriez voir la structure (qui correspond à l'indentation car le code de la page est proprement écrit) 

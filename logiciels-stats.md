@@ -37,5 +37,5 @@ Ce cours a pour but d'introduire deux logiciels statistiques majeurs du marché 
 3. [#](logiciels-stats-r-tp3.html)Statistiques descriptives (solution : [source](logiciels-stats/tp3.Rmd) et [résultat](logiciels-stats/tp3.html))
 4. [#](logiciels-stats-r-tp4.html)Statistiques exploratoires (solution : [source](logiciels-stats/tp4.Rmd) et [résultat](logiciels-stats/tp4.html))
 5. [#](logiciels-stats-r-tp5.html)Récapitulatif (solution : [source](logiciels-stats/tp5.Rmd) et [résultat](logiciels-stats/tp5.html))
-6. [#]()TP noté
+6. [#](logiciels-stats-r-tp6.html)TP noté
 
