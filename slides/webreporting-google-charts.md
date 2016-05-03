@@ -11,7 +11,7 @@ title: Librairie Google Charts
 - Personnalisation possible
 - Sur des données au format `DataTable` spécifique
 
-[Exemple](exemple.html)
+[Exemple](../webreporting/exemple-google-charts.html)
 
 ## Etapes pour son utilisation
 

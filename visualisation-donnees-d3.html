@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+<meta charset="utf-8">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="pandoc" />
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+
+<title>Visualiation de données - D3.js</title>
+
+<script src="libs/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="libs/bootstrap-3.3.5/css/journal.min.css" rel="stylesheet" />
+<script src="libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<style>
+    .contenu {
+        margin-bottom: 50px;
+    }
+
+    .contact-liens {
+        text-align: center;
+    }
+    .contact-icones {
+        height: 30px;
+    }
+
+    /* Espacement pour barre du haut et pied de page */
+    #header, .section.level1 {
+        margin-top: 60px;
+        margin-bottom: 60px;
+    }
+    /* Espacement pour table des matières */
+    #TOC {
+        margin-top: 100px;
+    }
+    
+    .footer {
+        position: fixed;
+        width: 100%;
+        text-align: center;
+        bottom: 0;
+        left: 0;
+        background-color: #E6E6E6;
+    }
+</style>
+
+<style type="text/css">code{white-space: pre;}</style>
+<link rel="stylesheet"
+      href="libs/highlight/default.css"
+      type="text/css" />
+<script src="libs/highlight/highlight.js"></script>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
+<script type="text/javascript">
+if (window.hljs && document.readyState && document.readyState === "complete") {
+   window.setTimeout(function() {
+      hljs.initHighlighting();
+   }, 0);
+}
+</script>
+
+
+
+<link rel="stylesheet" href="libs/bootstrap-journal.min.css" type="text/css" />
+
+</head>
+
+<body>
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img {
+  max-width:100%;
+  height: auto;
+}
+h1 {
+  font-size: 34px;
+}
+h1.title {
+  font-size: 38px;
+}
+h2 {
+  font-size: 30px;
+}
+h3 {
+  font-size: 24px;
+}
+h4 {
+  font-size: 18px;
+}
+h5 {
+  font-size: 16px;
+}
+h6 {
+  font-size: 12px;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+</style>
+
+
+<div class="container-fluid main-container">
+
+<!-- tabsets -->
+<script src="libs/navigation-1.0/tabsets.js"></script>
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+</script>
+
+<!-- code folding -->
+
+
+
+
+
+<div class="navbar navbar-default navbar-fixed-top">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-main">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">FX Jollois</a>
+    </div>
+    <div id="navbar-main" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button">Données <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+              <li><a href="accesdonnees.html">A télécharger</a></li>
+              <li><a href="donnees-integrees-r.html">Sous R</a></li>
+          </ul>
+        </li>
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button">Enseignement <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li><a href="enseignement.html">Informations</a></li>
+            <li><a href="supports.html">Supports</a></li>
+            <li role="separator" class="divider"></li>
+            <li class="dropdown-header">DUT 1ère année</li>
+            <li><a href="interrogation-donnees.html">Interrogation de données</a></li>
+            <li><a href="reporting.html">Reporting</a></li>
+            <li class="dropdown-header">DUT 2ème année</li>
+            <li><a href="sid.html">SID</a></li>
+            <li><a href="bd-prog-avancees.html">BD et Programmation avancées</a></li>
+            <li class="dropdown-header">DU Analyste Big Data</li>
+            <li><a href="initiation-r-et-rmongodb.html">Intiation à R</a></li>
+            <li class="dropdown-header">DU Dataviz</li>
+            <li><a href="visualisation-donnees.html">Visualisation de données - R</a></li>
+            <li><a href="visualisation-donnees-d3.html">Visualisation de données - D3</a></li>
+            <li role="separator" class="divider"></li>
+            <li class="dropdown-header">Master MIAGE</li>
+            <li><a href="webreporting.html">Web-Reporting</a></li>
+            <li class="dropdown-header">Master</li>
+            <li><a href="logiciels-stats.html">Logiciels statistiques</a></li>
+            <li><a href="slides/cnam-classif-modeles.html">Classification et Modèles de mélange</a></li>
+          </ul>
+        </li>
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button">Recherche <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li><a href="recherche.html">Sujets</a></li>
+            <li><a href="publications.html">Publications</a></li>
+          </ul>
+        </li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container-fluid -->
+</div>
+<div class="contenu">
+
+<div class="fluid-row" id="header">
+
+
+<h1 class="title">Visualiation de données - D3.js</h1>
+<h3 class="subtitle"><em>Data-Driven Documents</em></h3>
+
+</div>
+
+
+<p><a href="http://www.d3js.org">D3.js</a> est une librairie <code>javascript</code> très complète avec beaucoup d’exemples à disposition, avec une personnalisation totale possible. Elle permet l’accès à des primitives <code>SVG</code> permettant toute innovation. Malheureusement, elle est peu accessible directement et assez technique.</p>
+<div id="fonctionnement-typique" class="section level2">
+<h2>Fonctionnement typique</h2>
+<p>L’edée principale est de lier les données au <strong>DOM</strong> (<em>Document Object Model</em>), et d’appliquer des transformations, basées sur les données, au document.</p>
+<p>Il y a plusieurs concepts spécifiques à bien comprendre pour l’utiliser pleinement :</p>
+<ul>
+<li>Sélection, modification, ajout et insertion d’éléments</li>
+<li>Ajout de données au DOM</li>
+<li>Propriété dynamique, et Transformation</li>
+<li>Chaînage des fonctions</li>
+</ul>
+</div>
+<div id="base" class="section level2">
+<h2>Base</h2>
+<div id="selection-et-modification" class="section level3">
+<h3>Sélection et modification</h3>
+<p>Il existe deux fonctions de sélection respectivement d’un élément (<code>select()</code>) et de l’ensemble des éléments (<code>selectAll()</code>) correspondant à la définition passée en paramètre (sélecteur idem que pour le CSS) :</p>
+<pre class="js"><code>var selection1 = d3.select(&quot;selecteur&quot;);
+var selection2 = d3.selectAll(&quot;selecteur&quot;);</code></pre>
+<p>On a de plus deux fonctions sur l’objet renvoyé par ces sélecteurs pour connaître la taille de la sélection :</p>
+<ul>
+<li><code>size()</code> : taille de la sélection</li>
+<li><code>empty()</code> : sélection vide ou non</li>
+</ul>
+</div>
+<div id="modification-ajout-et-insertion-delements" class="section level3">
+<h3>Modification, ajout et insertion d’éléments</h3>
+<p>Plusieurs fonctions permettent de modifier les éléments sélectionnés (comme par exemple <code>style()</code> pour appliquer des règles <code>CSS</code> ou <code>html()</code> pour modifier le contenu de la balise). Le code suivant permet de mettre le texte en rouge pour tout le corps de la page</p>
+<pre class="js"><code>var corps = d3.select(&quot;body&quot;);
+corps.style(&quot;color&quot;, &quot;red&quot;);</code></pre>
+<p>Deux fonctions sont utiles pour respectivement insérer un élément <code>HTML</code> fils à la fin (<code>append()</code>) ou au début (<code>insert()</code>) d’un élément père, qui s’utilisent comme suit :</p>
+<pre class="js"><code>selection.append(&quot;balise&quot;);
+selection.insert(&quot;balise&quot;);</code></pre>
+</div>
+<div id="exemple" class="section level3">
+<h3>Exemple</h3>
+<p>Ici, on sélectionne la balise <code>&lt;body&gt;</code> (qui est vide au départ). Dans cette sélection, on ajoute deux balises <code>div</code>,</p>
+<p data-height="330" data-theme-id="0" data-slug-hash="bVMMjZ" data-default-tab="js,result" data-user="fxjollois" data-embed-version="2" class="codepen">
+See the Pen <a href="http://codepen.io/fxjollois/pen/bVMMjZ/">d3.js : base de la librairie</a> by FX Jollois (<a href="http://codepen.io/fxjollois"><span class="citation">@fxjollois</span></a>) on <a href="http://codepen.io">CodePen</a>.
+</p>
+<script async src="//assets.codepen.io/assets/embed/ei.js"></script>
+</div>
+</div>
+<div id="ajout-de-donnees-au-dom" class="section level2">
+<h2>Ajout de données au DOM</h2>
+<p>Avec la fonction <code>data()</code> sur une sélection, il est possible de lier les données passées en paramètres (ce doit être un <strong>tableau</strong>) au DOM à la sélection en question. Le code suivant affecte chaque élément du tableau à chaque élément renvoyé par le sélecteur précédent</p>
+<pre class="js"><code>var selection = d3.selectAll(&quot;selecteur&quot;);
+selection.data(tableau);</code></pre>
+<p>S’il y a différence entre la taille de la sélection et la taille du tableau passé en paramètre de <code>data()</code>, il existe deux fonctions utiles pour gérer ces cas :</p>
+<ul>
+<li><code>enter()</code> : pour gérer les éléments du tableau en plus</li>
+<li><code>exit()</code> : pour gérer les éléments de la sélection en plus</li>
+</ul>
+<div id="propriete-dynamique" class="section level3">
+<h3>Propriété dynamique</h3>
+<p>Sur chaque sélection, on peut appliquer des modifications de style ou de contenu (voire autre), en fonction des données sont liées au DOM. On passe par l’utilisation d’une fonction anonyme, dont les paramètres peuvent être, dans cet ordre :</p>
+<ul>
+<li>la valeur de l’élément du tableau affectée à l’élément</li>
+<li>la position de la valeur dans le tableau</li>
+<li>il est possible de n’utiliser que la valeur, voire aucun paramètre si besoin</li>
+</ul>
+<pre class="js"><code>var selection = d3.selectAll(&quot;selecteur&quot;);
+selection.data(tableau);
+selection.html(function(d, i) {
+    return &quot;position = &quot; + i + &quot;, valeur = &quot; + d;
+})</code></pre>
+</div>
+<div id="exemples" class="section level3">
+<h3>Exemples</h3>
+<div id="ajout-de-donnees-propriete-dynamique" class="section level4">
+<h4>Ajout de données + propriété dynamique</h4>
+<p data-height="266" data-theme-id="0" data-slug-hash="eprrjJ" data-default-tab="html,result" data-user="fxjollois" data-embed-version="2" class="codepen">
+See the Pen <a href="http://codepen.io/fxjollois/pen/eprrjJ/">d3.js : data + style dynamique</a> by FX Jollois (<a href="http://codepen.io/fxjollois"><span class="citation">@fxjollois</span></a>) on <a href="http://codepen.io">CodePen</a>.
+</p>
+<script async src="//assets.codepen.io/assets/embed/ei.js"></script>
+</div>
+<div id="fonction-enter" class="section level4">
+<h4>fonction <code>enter()</code></h4>
+<p data-height="266" data-theme-id="0" data-slug-hash="wKjjXN" data-default-tab="html,result" data-user="fxjollois" data-embed-version="2" class="codepen">
+See the Pen <a href="http://codepen.io/fxjollois/pen/wKjjXN/">d3.js : data + enter()</a> by FX Jollois (<a href="http://codepen.io/fxjollois"><span class="citation">@fxjollois</span></a>) on <a href="http://codepen.io">CodePen</a>.
+</p>
+<script async src="//assets.codepen.io/assets/embed/ei.js"></script>
+</div>
+<div id="fonction-exit" class="section level4">
+<h4>fonction <code>exit()</code></h4>
+<p data-height="266" data-theme-id="0" data-slug-hash="LpmmmL" data-default-tab="html,result" data-user="fxjollois" data-embed-version="2" class="codepen">
+See the Pen <a href="http://codepen.io/fxjollois/pen/LpmmmL/">d3.js : data + exit()</a> by FX Jollois (<a href="http://codepen.io/fxjollois"><span class="citation">@fxjollois</span></a>) on <a href="http://codepen.io">CodePen</a>.
+</p>
+<script async src="//assets.codepen.io/assets/embed/ei.js"></script>
+</div>
+</div>
+</div>
+<div id="chainage-des-fonctions" class="section level2">
+<h2>Chaînage des fonctions</h2>
+<p>Il faut absolument comprendre le principe généralement appliqué en <code>JS</code> orienté objet :</p>
+<blockquote>
+<p><strong>Toute fonction d’un objet renvoie cet objet</strong></p>
+</blockquote>
+<p>Ceci est vrai sauf si la fonction a pour but de renvoyer un résultat spécifique. Et cela ne concerne donc que les procédures (qui sont aussi des fonctions en JS).</p>
+<p>Le corollaire de ce principe est intéressant :</p>
+<blockquote>
+<p>Il est possible d’enchaîner un grand nombre de fonctions directement</p>
+</blockquote>
+<p>Dans l’exemple ci-dessous, on utilise ce principe pour créer autant de <code>div</code> qu’il y a de couleurs dans le tableau, en indiquant le contenu <code>HTML</code> de celles-ci, et en leur appliquant un style <code>CSS</code> spécifique.</p>
+<p data-height="266" data-theme-id="0" data-slug-hash="MaGGxK" data-default-tab="js,result" data-user="fxjollois" data-embed-version="2" class="codepen">
+See the Pen <a href="http://codepen.io/fxjollois/pen/MaGGxK/">d3.js : chaînage des fonctions</a> by FX Jollois (<a href="http://codepen.io/fxjollois"><span class="citation">@fxjollois</span></a>) on <a href="http://codepen.io">CodePen</a>.
+</p>
+<script async src="//assets.codepen.io/assets/embed/ei.js"></script>
+</div>
+
+</div>
+<div class="footer">
+      Site créé avec <a href="http://www.r-project.org" target="_blank"><code>R</code></a> et la 
+      librairie  <a href="http://rmarkdown.rstudio.com/" target="_blank"><code>rmarkdown</code></a>.
+</div>
+<script>
+    $("#TOC").css("margin-top", "100px");
+</script>
+
+
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+$(document).ready(function () {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+});
+
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>
