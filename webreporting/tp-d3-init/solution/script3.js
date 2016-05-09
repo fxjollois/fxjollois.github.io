@@ -8,12 +8,12 @@ function popMove() {
         width = newPop.style("width").replace("px", ""),
         height = newPop.style("height").replace("px", ""),
         mouse = d3.event;
-    if (mouse.clientX > (window.innerWidth - width - 10)) {
+    if (mouse.clientX > (window.innerWidth - width - 50)) {
         newPop.style("left", mouse.clientX - width - 10 + "px");
     } else {
         newPop.style("left", mouse.clientX + 10 + "px");
     }
-    if (mouse.clientY > (window.innerHeight - height - 10)) {
+    if (mouse.clientY > (window.innerHeight - height - 50)) {
         newPop.style("top", mouse.clientY - height - 10 + "px");
     } else {
         newPop.style("top", mouse.clientY + "px");

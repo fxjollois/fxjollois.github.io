@@ -5,6 +5,8 @@ subtitle: Data-Driven Documents
 
 [D3.js](http://www.d3js.org) est une librairie `javascript` très complète avec beaucoup d'exemples à disposition, avec une personnalisation totale possible. Elle permet l'accès à des primitives `SVG` permettant toute innovation. Malheureusement, elle est peu accessible directement et assez technique.
 
+Les exemples présentés ci-dessous sont disponibles directement [sur cette page](http://codepen.io/collection/DojQMG/).
+
 ## Fonctionnement typique
 
 L'edée principale est de lier les données au **DOM** (*Document Object Model*), et d'appliquer des transformations, basées sur les données, au document.
@@ -126,4 +128,136 @@ Dans l'exemple ci-dessous, on utilise ce principe pour créer autant de `div` qu
 <p data-height="266" data-theme-id="0" data-slug-hash="MaGGxK" data-default-tab="js,result" data-user="fxjollois" data-embed-version="2" class="codepen">See the Pen <a href="http://codepen.io/fxjollois/pen/MaGGxK/">d3.js : chaînage des fonctions</a> by FX Jollois (<a href="http://codepen.io/fxjollois">@fxjollois</a>) on <a href="http://codepen.io">CodePen</a>.</p>
 <script async src="//assets.codepen.io/assets/embed/ei.js"></script>
 
+## Lecture de données
 
+Il existe plusieurs fonctions dans la librairie D3 pour charger des données de tout type (`JSON`, `CSV`, `TSV`, `XML`, ...). Les fonctions pour le faire sont toutes de type `d3.xxx()` (`xxx` étant remplacé par le format approprié - `d3.json()` pour du `JSON` par exemple).
+
+L'exemple ci-dessous charge des données obtenues via l'API [**Open Movie Database** (OMDb)](http://www.omdbapi.com/), qui permet d'accéder à une grande base de données de films. Nous avons choisi de faire une recherche sur les termes *Big*, *Bang* et *Theory*. On doit donc charger la page obtenue grâce à l'URL suivante :
+
+> [`http://www.omdbapi.com/?s=big+bang+theory`](http://www.omdbapi.com/?s=big+bang+theory)
+
+<p data-height="372" data-theme-id="0" data-slug-hash="PNxVoY" data-default-tab="js,result" data-user="fxjollois" data-embed-version="2" class="codepen">See the Pen <a href="http://codepen.io/fxjollois/pen/PNxVoY/">d3.js : lecture de données JSON</a> by FX Jollois (<a href="http://codepen.io/fxjollois">@fxjollois</a>) on <a href="http://codepen.io">CodePen</a>.</p>
+<script async src="//assets.codepen.io/assets/embed/ei.js"></script>
+
+## Ajout d'interactivé
+
+Il est possible d'ajouter des gestions d'événements sur les objets créés via la fonction `on()`. Celle-ci prend en premier paramètre l'événement (par exemple `mouseover` pour gérer le positionnement de la souris sur l'objet), et en deuxième paramètre la fonction à appliquer lors de la survenue de cet évènement. 
+
+Dans cette fonction, il n'y aucun paramètre possible. Mais nous avons accès à l'objet via `this`. Si de plus, nous avons pris le soin d'ajouter des propriétés à cet objet (via la fonction `property("nom", valeur)`), nous pouvons y accéder à la valeur via `this.nom`.
+
+Dans l'exemple ci-dessous, nous ajoutons à chaque `div` la gestion du passage de la souris sur celle-ci (ainsi que sa sortie). Pour cela, nous ajoutons une propriété `couleur` à chacune, qui prendra la valeur de la couleur dans le tableau. Ensuite, on indique que lorsque la souris passe sur la `div` (`on("mouseover", ...)`), on change la couleur de la police par celle spécifique à la `div`. 
+
+Si nous ne gérons pas la sortie de la souris, la couleur ne sera jamais rechangé. Nous gérons donc ce cas (via `on("mouseout, ...)`) en indiquant que la couleur redevient noire.
+
+<p data-height="265" data-theme-id="0" data-slug-hash="xVMjxG" data-default-tab="js,result" data-user="fxjollois" data-embed-version="2" class="codepen">See the Pen <a href="http://codepen.io/fxjollois/pen/xVMjxG/">d3.js : ajout d'interactivé</a> by FX Jollois (<a href="http://codepen.io/fxjollois">@fxjollois</a>) on <a href="http://codepen.io">CodePen</a>.</p>
+<script async src="//assets.codepen.io/assets/embed/ei.js"></script>
+
+Pour récupérer les informations de la souris, il existe l'objet `d3.event` qui contient en particulier les informations suivantes :
+
+- `clientX` et `clientY` : position relative à la partie visible du navigateur
+Mouse position relative to the browser's visible viewport.
+- `screenX` et `screenY` : position relative au moniteur
+- `offsetX` et `offsetY` : position relative à l'objet sur lequel la souris est (implémentation varaible entres les navigateurs)
+- `pageX` et `pageY` : position relatice au document `HTML`
+
+Voici un petit exemple de ce qu'on peut récupérer comme informations.
+
+<p data-height="265" data-theme-id="0" data-slug-hash="zqejqx" data-default-tab="html,result" data-user="fxjollois" data-embed-version="2" class="codepen">See the Pen <a href="http://codepen.io/fxjollois/pen/zqejqx/">d3.js : infos sur la souris</a> by FX Jollois (<a href="http://codepen.io/fxjollois">@fxjollois</a>) on <a href="http://codepen.io">CodePen</a>.</p>
+<script async src="//assets.codepen.io/assets/embed/ei.js"></script>
+
+## Graphique `SVG`
+
+La librairie d3 permet de créer des graphiques au format `SVG` (*Scalable Vector Graphics*), et c'est régulièrement dans ce cadre qu'on l'utilise. 
+
+Ces graphiques sont définis dans un langage de type `XML` (et donc similaire à `HTML`). C'est un langage de définition basé sur des primitives de dessin (rectangle, cercle, ligne, texte, ...), qui permet de produire tout type de graphique. L'un des gros avantages est qu'ils sont *zoomable* sans perte de définition.
+
+Vous pouvez trouver dans les liens qui suivent un certain nombre d'informations sur ces graphiques :
+
+- [Section `SVG` sur W3Schools](http://www.w3schools.com/svg/)
+- [REcommandation W3C traduite](http://www.yoyodesign.org/doc/w3c/svg1/)
+- [Section SVG sur Mozilla](https://developer.mozilla.org/fr/docs/Web/SVG)
+
+Dans l'exemple ci-dessous, nous créons un graphique de largeur 200 pixels et de hauteur 100 pixels. Une fois créé, on ajoute une transformation (via la balise `g` ajoutée). Celle-ci est une translation de 10 pixels en $x$ et de 10 pixels en $y$. C'est le résultat de la translation qui est renvoyé, ce qui veut dire que tout ce qu'on ajoute intégrera donc cette première translation.
+
+On ajoute ensuite un rectangle dont le point haut gauche est situé en $(0,0)$. Notez donc que le point origine est donc situé **en haut à gauche** sur un écran. Ce rectangle est un carré de 50 pixels, rempli en rouge. On ajoute finalement un texte.
+
+<p data-height="325" data-theme-id="0" data-slug-hash="EKGPXZ" data-default-tab="js,result" data-user="fxjollois" data-embed-version="2" class="codepen">See the Pen <a href="http://codepen.io/fxjollois/pen/EKGPXZ/">d3.js : création de SVG</a> by FX Jollois (<a href="http://codepen.io/fxjollois">@fxjollois</a>) on <a href="http://codepen.io">CodePen</a>.</p>
+<script async src="//assets.codepen.io/assets/embed/ei.js"></script>
+
+
+## Echelles
+
+Dans un graphique, nous devons faire un passage d'échelle entre les données et la zone graphique. Par exemple, si l'on doit afficher des valeurs entre -1000 et 1000 sur l'axe $x$, il nous faut une fonction pour les transformer dans l'intervalle $[0,largeur]$ (où $largeur$ représente la largeur du graphique `SVG` produit).
+
+Les fonctions dans D3 pour réaliser cela ont toutes comme nom `d3.scale.xxx()`, où `xxx` est à remplacer par le type de changement d'échelle qu'on souhaite. Il faut notre que ces fonctions renvoient elle-même une fonction de changement d'échelle. Il faut de plus déterminer deux éléments importants :
+
+- Le **domaine** (ou *domain*) : la plage des données d'origine
+- L'**étendu** (ou *range*) : la plage de ce qu'on doit obtenir au final
+
+### Quantitatif
+
+#### Vers du numérique
+
+L'exemple proposé ci-dessus est typiquement un problème de changement d'échelle **linéaire**. Il existe pour cela la fonction `d3.scale.linear()`.
+
+```js
+var echelle = d3.scale.linear()
+					.domain([-1000, 1000])
+					.range([0, 100]);
+console.log(echelle(-1000)) // renvoie 0
+console.log(echelle(0))     // renvoie 50
+console.log(echelle(1000))  // renvoie 100
+```
+
+#### Vers des couleurs
+
+L'intérêt de ces échelles réside aussi dans la possibilité de passer de valeurs numériques à des couleurs par exemple. On doit juste définir dans l'étendu les couleurs de début et de fin (et éventuellement certaines intermédiaires).
+
+```js
+var echelle = d3.scale.linear()
+					.domain([-1000, 1000])
+					.range(["red", "green"]);
+console.log(echelle(-1000)) // renvoie "#ff0000"
+console.log(echelle(0))     // renvoie "#804000"
+console.log(echelle(1000))  // renvoie "#008000"
+```
+
+### Qualitatif 
+
+#### Vers du numérique
+
+Un autre changement d'échelle classique est le passage d'un ensemble de modalités à une plage de valeurs. Pour cela, on utilise la fonction `d3.scale.ordinal()`. Ici, nous définissons l'étendu par bandes (`"A"` sera sur la bande ainsi $[0, 33.33...]$)
+
+```js
+var echelle = d3.scale.ordinal()
+					.domain(["A", "B", "Z"])
+					.rangeBands([0, 100]);
+console.log(echelle("A")) // renvoie 0
+console.log(echelle("B")) // renvoie 33.3333...3
+console.log(echelle("Z")) // renvoie 66.6666...7
+```
+
+#### Vers des couleurs
+
+Dans ce cas aussi, on peut affecter une couleur à chaque modalité, toujours en définissant des couleurs dans l'étendu. Il existe de plus des fonctions spécifiques pour cela dans d3, comme `d3.scale.category10()`, dans lesquelles il n'y a pas d'étendu à définir.
+
+```js
+var echelle = d3.scale.category10()
+					.domain(["A", "B", "Z"]);
+console.log(echelle("A")) // renvoie "#1f77b4"
+console.log(echelle("B")) // renvoie "#ff7f0e"
+console.log(echelle("Z")) // renvoie "#2ca02c"
+```
+
+### Exemple 
+
+Dans l'exemple ci-dessous, nous allons utiliser les fonctions de D3 pour faire tous les changements d'échelle vu ci-dessus. Ceux-ci sont classiques dans la création d'un graphique avec cette librairie.
+
+Nos données concernent la répartition des logements en location par **AirBnB** sur Paris le 2 septembre 2015 (voir [les données ici](http://insideairbnb.com/get-the-data.html)), par type (logement complet, chambre privée, chambre partagée). Nous avons le décompte et le prix moyen comme information.
+
+<p data-height="351" data-theme-id="0" data-slug-hash="grQJgb" data-default-tab="html,result" data-user="fxjollois" data-embed-version="2" class="codepen">See the Pen <a href="http://codepen.io/fxjollois/pen/grQJgb/">d3.js : échelles</a> by FX Jollois (<a href="http://codepen.io/fxjollois">@fxjollois</a>) on <a href="http://codepen.io">CodePen</a>.</p>
+<script async src="//assets.codepen.io/assets/embed/ei.js"></script>
+
+## Création d'un graphique
+
+<iframe style="width: 100%; height: 600px" src="http://embed.plnkr.co/dAITTEWo4EJmYZnQjGVv" frameborder="0"></iframe>

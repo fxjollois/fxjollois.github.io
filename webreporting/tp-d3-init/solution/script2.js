@@ -2,6 +2,9 @@
 function creationRendu2() {
     "use strict";
     
+    // si graphique déjà créé, on ne fait rien
+    if (!d3.select("#graph").empty()) return NULL;
+    
     var graph = d3.select("body").append("div").attr("id", "graph");
     graph.selectAll("div")
         .data(donnees.valeurs)

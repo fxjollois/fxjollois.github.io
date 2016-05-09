@@ -9,6 +9,7 @@ title: Web Reporting
 - [Introduction à la programmation web dynamique](slides/webreporting-javascript.html)
 - [Introduction à Google Charts](slides/webreporting-google-charts.html)
 - [Introduction à D3.js](slides/webreporting-d3.html)
+	- [Compléments](visualisation-donnees-d3.html)
 - [Introduction à Leaflet](slides/webreporting-leaflet.html)
 
 ## Sujets TP
