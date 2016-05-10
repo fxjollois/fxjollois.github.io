@@ -12,38 +12,32 @@
     </head>
 
     <body onload="go();">
-        <h1>Exemple - Librairie D3.js</h1>
-        <div id = "dashboard">
-            <div id = "top">
-                <div>
-                    <button id = "reset" onclick = "go();">
-                        Reset
-                    </button>
-                </div>
-                <div id = "groupe">
-                    <div id = "pieChart"></div>
-                    <button id = "repNombre">
-                        Répartition en nombre
-                    </button>
-                    <button id = "repSomme">
-                        Répartition en somme
-                    </button>
-                </div>
-                <div id = "valeur">
-                    <table id = "tab">
-                        <thead>
-                            <tr>
-                                <th>Groupe</th>
-                                <th>Modalité</th>
-                                <th>Valeur</th>
-                            </tr>
-                        </thead>
-                        <tbody></tbody>
-                    </table>
-                </div>
-            </div>
-            <div id = "barV"></div>
-            <div id = "barH"></div>
+        <h1>TP Compléments - Librairie D3.js</h1>
+        <div id = "valeur">
+            <table id = "tab">
+                <thead>
+                    <tr>
+                        <th></th>
+                        <th colspan=2>Global</th>
+                        <th colspan=2>Métro</th>
+                        <th colspan=2>RER</th>
+                    </tr>
+                    <tr>
+                        <th>Arrondissement</th>
+                        <th>Stations</th>
+                        <th>Entrées</th>
+                        <th>Stations</th>
+                        <th>Entrées</th>
+                        <th>Stations</th>
+                        <th>Entrées</th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
         </div>
+        <div id = "bar"></div>
+        <div id = "pieChart"></div>
+        <button id = "repNombre">Répartition en nombre</button>
+        <button id = "repSomme">Répartition en somme</button>
     </body>
 </html>

@@ -44,7 +44,7 @@ function creationRendu3() {
     
     var newGraph = d3.select("#newGraph"), newPop, w, wBar, group, visibility;
 
-    if (newGraph[0][0] !== null) {
+    if (!newGraph.empty()) {
         visibility = newGraph.style("visibility");
         if (visibility === "visible") {
             newGraph.style("visibility", "hidden");
