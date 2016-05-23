@@ -34,6 +34,9 @@ function creationDiagBar(data, type) {
         
         svg = d3.select("#bar").append("svg").attr("width", largeur).attr("height", hauteur);
     
+    svg.append("rect").attr("width", largeur).attr("height", hauteur)
+        .style("stroke", "red").style("stroke-width", 2).style("fill", "transparent");
+    
     if (type === "métro") {
         indicateur = "entréesMétro";
     }
@@ -42,14 +45,14 @@ function creationDiagBar(data, type) {
     }
     
     y.domain([0, d3.max(data.map(function (d) { return d[indicateur]; }))]);
-    console.log(x.domain());
+    console.log(y.range());
     svg.selectAll(".bar").data(data).enter()
         .append("rect")
         .classed({"bar": true})
         .attr("x", function (d) { return x(d.arr); })
         .attr("width", x.rangeBand())
         .attr("y", function (d) { return y(d[indicateur]); })
-        .attr("height", function (d) { return hauteur - y(d[indicateur]); });
+        .attr("height", function (d) { return hauteur - marges.bas - y(d[indicateur]); });
 }
 
 function go() {
@@ -67,6 +70,6 @@ function go() {
         });
         console.log(data[1]);
         remplissageTableau(data);
-        creationDiagBar(data, "global");
+        creationDiagBar(data, "rer");
     });
 }

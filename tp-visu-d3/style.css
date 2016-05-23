@@ -1,0 +1,20 @@
+#mediane {
+    fill: transparent;
+    stroke: black;
+    stroke-width: 2px;
+}
+
+#reference {
+    stroke: #666;
+    stroke-width: 2px;
+}
+
+.intervale {
+    fill: #aaa;
+    visibility: hidden;
+}
+
+.axis path {
+    fill: transparent;
+    stroke: #333;
+}

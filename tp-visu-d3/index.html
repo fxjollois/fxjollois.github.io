@@ -1,0 +1,22 @@
+<!doctype>
+<html>
+    <head>
+        <title>TP Visualisation avec D3</title>
+        <meta charset="utf-8">
+        <!--
+            Données : http://www.metoffice.gov.uk/hadobs/hadcrut4/data/current/download.html
+            Explication : http://www.metoffice.gov.uk/hadobs/hadcrut4/data/current/series_format.html
+            Annuelle : http://www.metoffice.gov.uk/hadobs/hadcrut4/data/current/time_series/HadCRUT.4.4.0.0.annual_ns_avg.txt
+            Mensuelle : http://www.metoffice.gov.uk/hadobs/hadcrut4/data/current/time_series/HadCRUT.4.4.0.0.monthly_ns_avg.txt
+        -->
+        <script src="https://d3js.org/d3.v3.min.js"></script>
+        <link rel="stylesheet" href="style.css">
+    </head>
+    <body>
+        <h1>Temperature change</h1>
+        <form id = "choix"></form>
+        <div id = "courbe"></div>
+        <div id = "infos"></div>
+        <script src="script.js"></script>
+    </body>
+</html>

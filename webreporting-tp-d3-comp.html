@@ -205,8 +205,38 @@ $(document).ready(function () {
 </div>
 
 
-<p>On reprend le sujet du <a href="webreporting-tp-google-charts.html">TP sur Google Charts</a> pour faire le même reporting avec la librairie <a href="http://d3js.org"><strong>d3.js</strong></a>.</p>
-<p>Vous pouvez voir un aperçu du rendu à avoir sur cette <a href="webreporting/tp-d3-comp/rendu/">page</a></p>
+<div id="donnees" class="section level2">
+<h2>Données</h2>
+<p>On va utiliser des données publiques de la RATP : <a href="http://data.ratp.fr/explore/dataset/trafic-annuel-entrant-par-station-du-reseau-ferre-2015-test/">le trafic entrant par station en 2015</a>.</p>
+<p>Nous allons travailler sur le résumé de ces données, par arrondissement, pour la ville de Paris uniquement. Les données sont disponibles <a href="donnees/RATP-trafic-entrant-2015/trafic-annuel-entrant-par-station-du-reseau-ferre-2015-resume.csv">ici</a>.</p>
+<p>Vous devez réaliser les points suivants :</p>
+<ul>
+<li>Lire les données à l’aide de D3</li>
+<li>Afficher un tableau indiquant, pour chaque arrondissement :
+<ul>
+<li>le nombre de stations</li>
+<li>le nombre total d’entrées dans les stations de cet arrondissement</li>
+<li>le nombre de stations de métro</li>
+<li>le nombre total d’entrées dans le métro - le nombre de stations de RER</li>
+<li>le nombre total d’entrées dans le RER</li>
+</ul></li>
+<li>Afficher un diagramme en barres verticales, représentant pour chaque arrondissement, le nombre total d’entrées</li>
+<li>Afficher un diagramme circulaire montrant la répartition <code>Métro</code>/<code>RER</code> des stations
+<ul>
+<li>par défaut, répartition en nombre de stations</li>
+<li>possibilité d’avoir la répartition en nombre d’entrées</li>
+</ul></li>
+<li>Lorsque l’utilisateur cliquera sur le graphique circulaire (donc sélectionnera métro ou RER), le graphique du dessous devra correspondre au réseau choisi</li>
+<li>Réfléchir pour avoir un affichage <strong>graphique</strong> de la répartition métro/RER pour les stations et pour les entrées, par arrondissement</li>
+</ul>
+<!--
+
+On reprend le sujet du [TP sur Google Charts](webreporting-tp-google-charts.html) pour faire le même reporting avec la librairie [**d3.js**](http://d3js.org).
+
+Vous pouvez voir un aperçu du rendu à avoir sur cette [page](webreporting/tp-d3-comp/rendu/)
+
+-->
+</div>
 
 </div>
 <div class="footer">

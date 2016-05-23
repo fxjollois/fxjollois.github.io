@@ -24,7 +24,7 @@ Vous devez réaliser les points suivants :
 	- par défaut, répartition en nombre de stations
 	- possibilité d'avoir la répartition en nombre d'entrées
 - Lorsque l'utilisateur cliquera sur le graphique circulaire (donc sélectionnera métro ou RER), le graphique du dessous devra correspondre au réseau choisi
-- Réfléchir pour avoir un affichage graphique de la répartition métro/RER pour les stations et pour les entrées, par arrondissement (pour remplacer le tableau)
+- Réfléchir pour avoir un affichage **graphique** de la répartition métro/RER pour les stations et pour les entrées, par arrondissement 
 
 
 <!--
