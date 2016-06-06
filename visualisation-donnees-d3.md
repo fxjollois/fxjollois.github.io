@@ -260,4 +260,14 @@ Nos données concernent la répartition des logements en location par **AirBnB**
 
 ## Création d'un graphique
 
+Dans l'exemple ci-dessous, nous utilisons l'ensemble des éléments vu ci-dessous pour créer un diagramme en barres, pour les données suivantes :
+
+| Type            | Nombre | Prix moyen |
+|:----------------|-------:|-----------:|
+| Entire home/apt |  35185 |        106 |
+| Private room    |   5827 |         56 |
+| Shared room     |    464 |         40 |
+
+Le code est commenté pour expliquer ce que chaque partie permet de réaliser dans le graphique.
+
 <iframe style="width: 100%; height: 600px" src="http://embed.plnkr.co/dAITTEWo4EJmYZnQjGVv" frameborder="0"></iframe>

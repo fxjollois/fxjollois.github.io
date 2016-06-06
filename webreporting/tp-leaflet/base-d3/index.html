@@ -80,6 +80,9 @@
                     .property("an15trim2", function(d) { return d.properties.an15trim2;})
                     .on("mouseover", function() {
                         document.getElementById("info").innerHTML = this.nom + ' (' + this.code + ')';
+                    })
+                    .on("mouseout", function() {
+                        document.getElementById("info").innerHTML = " ";
                     });
 
                 map.on("viewreset", reset);

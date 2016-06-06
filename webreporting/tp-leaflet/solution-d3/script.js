@@ -23,7 +23,7 @@ function createGraph(data) {
     "use strict";
     d3.select("#graph").html("");
 
-    var w = 200,
+    var w = 250,
         h = 150,
         margin = 20,
         y = d3.scale.linear().domain([5, 15]).range([margin, h - margin]),
@@ -104,6 +104,13 @@ function hideTooltip() {
     var tooltip = d3.select("#tooltip");
 
     tooltip.style("display", "none");
+}
+
+function changeTaux () {
+    var indice = Array.from(document.getElementsByName("choixTaux")).filter(function(b) { return b.checked; })[0].id;
+    g.selectAll("path").style("fill", function (d) { 
+        return color(d.properties[indice]); 
+    });
 }
 
 d3.tsv("../departements-chomage.tsv", function (error, chomage) {
@@ -194,6 +201,9 @@ d3.tsv("../departements-chomage.tsv", function (error, chomage) {
 
         map.on("viewreset", reset);
         reset();
+        
+        
+        // 
         
     });
 });

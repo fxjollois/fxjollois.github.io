@@ -16,6 +16,10 @@ h1, p {
     stroke: #000;
 }
 
+/* pour le choix */
+#choix {
+    text-align: center;
+}
 
 /* tooltip */
 #tooltip {
@@ -36,6 +40,10 @@ h1, p {
 }
 #tooltip p:first-of-type {
     margin-left: 0;
+}
+
+#graph {
+    background-color: white;
 }
 
 #graph path {
