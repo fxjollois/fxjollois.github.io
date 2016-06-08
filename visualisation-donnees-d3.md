@@ -271,3 +271,25 @@ Dans l'exemple ci-dessous, nous utilisons l'ensemble des éléments vu ci-dessou
 Le code est commenté pour expliquer ce que chaque partie permet de réaliser dans le graphique.
 
 <iframe style="width: 100%; height: 600px" src="http://embed.plnkr.co/dAITTEWo4EJmYZnQjGVv" frameborder="0"></iframe>
+
+## A réaliser 
+
+### Demande
+
+Réaliser la courbe d'évolution des anomalies de température, par rapport à la période de référence 1961-1990 (donc de l'indice *HadCRUT4* - cf lien ci-dessous). Les données sont disponibles sur une grille mondiale, mais nous allons prendre ici la médiane globale de ces anomalies.
+
+- Courbe sur la période 1850-2016, avec les médianes annuelles
+	- Courbe de la période
+	- Ligne de référence à 0 à ajouter
+	- Intervalles de confiance à ajouter, en laissant le choix à l'utilisateur de l'intervalle à utiliser
+- *Heatmap* sur la même période, avec les médianes mensuelles
+	- une colonne par année
+	- une ligne par mois
+	- couleur en fonction de la valeur de l'anomalie
+
+### Quelques liens intéressants
+
+- [Données](http://www.metoffice.gov.uk/hadobs/hadcrut4/data/current/download.html) : disponibles sur le site du **Met Office** (institut météorologique anglais)
+- [Explications](http://www.metoffice.gov.uk/hadobs/hadcrut4/data/current/series_format.html) : détail des colonnes présentes dans les fichiers
+- [Moyennes annuelles](http://www.metoffice.gov.uk/hadobs/hadcrut4/data/current/time_series/HadCRUT.4.4.0.0.annual_ns_avg.txt) : accès direct aux données annuelles (médiane sur le globe)
+- [Moyennes mensuelles](http://www.metoffice.gov.uk/hadobs/hadcrut4/data/current/time_series/HadCRUT.4.4.0.0.monthly_ns_avg.txt) : accès direct aux données mensuelles (médiane sur le globe)

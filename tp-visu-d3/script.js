@@ -1,4 +1,3 @@
-
 /*global console,d3 */
 (function () {
     "use strict";
@@ -39,19 +38,19 @@
         // Fonction de dessin de l'intervale
         valeurInterval,
         intervale = d3.svg.area()
-        .interpolate("linear")
-        .x(function (a) { return x(a.annee); })
-        .y0(function (a) {
-            return y(a[valeurInterval].bas);
-        })
-        .y1(function (a) {
-            return y(a[valeurInterval].haut);
-        }),
+            .interpolate("linear")
+            .x(function (a) { return x(a.annee); })
+            .y0(function (a) {
+                return y(a[valeurInterval].bas);
+            })
+            .y1(function (a) {
+                return y(a[valeurInterval].haut);
+            }),
         
         // Graphique en lui-même
         graphe = d3.select("#courbe").append("svg")
-        .attr("width", largeur)
-        .attr("height", hauteur),
+            .attr("width", largeur)
+            .attr("height", hauteur),
         
         // Création des boutons pour le choix de l'intervale
         entrees = d3.select("#choix").selectAll("input")
@@ -139,7 +138,15 @@
             .attr("id", "reference");
 
         // Ajout des intervales de confiance
-        // [1, 2, 3, 4, 5].forEach(function)
+        [1, 2, 3, 4, 5].forEach(function (i) {
+            valeurInterval = "intervale" + i;
+            graphe.append("path")
+                .attr("id", valeurInterval)
+                .attr("class", "intervale")
+                .attr("d", intervale);
+        
+        })
+        /*
         valeurInterval = "intervale1";
         graphe.append("path")
             .attr("id", "intervale1")
@@ -165,6 +172,7 @@
             .attr("id", "intervale5")
             .attr("class", "intervale")
             .attr("d", intervale);
+        */
 
         // Ajout de la ligne médiane
         graphe.append("path")
