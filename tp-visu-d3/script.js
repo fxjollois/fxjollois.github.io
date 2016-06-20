@@ -1,4 +1,4 @@
-/*global console,d3 */
+/*global console,d3,$ */
 (function () {
     "use strict";
     
@@ -38,43 +38,47 @@
         // Fonction de dessin de l'intervale
         valeurInterval,
         intervale = d3.svg.area()
-            .interpolate("linear")
-            .x(function (a) { return x(a.annee); })
-            .y0(function (a) {
-                return y(a[valeurInterval].bas);
-            })
-            .y1(function (a) {
-                return y(a[valeurInterval].haut);
-            }),
+        .interpolate("linear")
+        .x(function (a) { return x(a.annee); })
+        .y0(function (a) {
+            return y(a[valeurInterval].bas);
+        })
+        .y1(function (a) {
+            return y(a[valeurInterval].haut);
+        }),
         
         // Graphique en lui-même
         graphe = d3.select("#courbe").append("svg")
-            .attr("width", largeur)
-            .attr("height", hauteur),
+        .attr("width", largeur)
+        .attr("height", hauteur),
         
         // Création des boutons pour le choix de l'intervale
         entrees = d3.select("#choix").selectAll("input")
         .data(infos)
         .enter().append("span");
     
-    entrees.append("input")
-        .attr("type", "radio")
+    entrees.append("button")
+        .attr("type", "button")
         .attr("name", "choixInterval")
-        .attr("value", function (d, i) { return i + 1; })
-        .on("click", function (d) {
-            var choix = document.getElementById("choix").choixInterval.value,
+        .attr("class", "btn btn-default")
+        .html(function (d, i) { return "Intervale " + (i + 1); })
+        .on("click", function (d, i) {
+            var choix = i + 1,
                 intervale = "intervale" + choix;
-            Array.from(document.getElementsByClassName("intervale")).forEach(function (i) {
+            $(".intervale").each(function (d, i) {
                 i.style.visibility = "hidden";
             });
-            document.getElementById(intervale).style.visibility = "visible";
-            d3.select("#infos").html(d);
+            if ($(this).hasClass("active")) {
+                d3.select("#infos").html("");
+                $(this).removeClass("active");
+            } else {
+                d3.select("#infos").html(d);
+                document.getElementById(intervale).style.visibility = "visible";
+                $(this).addClass("active");
+            }
         });
-    // d3.selectAll("input")[0].attr("checked", true);
-    entrees.append("span")
-        .html(function (d, i) { return "Intervale " + (i + 1); });
 
-    console.log(document.getElementById("choix").choixInterval.value);
+    // console.log(document.getElementById("choix").choixInterval.value);
     
     graphe.append("rect")
         .attr("x", 0).attr("y", 0)
@@ -145,39 +149,24 @@
                 .attr("class", "intervale")
                 .attr("d", intervale);
         
-        })
-        /*
-        valeurInterval = "intervale1";
-        graphe.append("path")
-            .attr("id", "intervale1")
-            .attr("class", "intervale")
-            .attr("d", intervale);
-        valeurInterval = "intervale2";
-        graphe.append("path")
-            .attr("id", "intervale2")
-            .attr("class", "intervale")
-            .attr("d", intervale);
-        valeurInterval = "intervale3";
-        graphe.append("path")
-            .attr("id", "intervale3")
-            .attr("class", "intervale")
-            .attr("d", intervale);
-        valeurInterval = "intervale4";
-        graphe.append("path")
-            .attr("id", "intervale4")
-            .attr("class", "intervale")
-            .attr("d", intervale);
-        valeurInterval = "intervale5";
-        graphe.append("path")
-            .attr("id", "intervale5")
-            .attr("class", "intervale")
-            .attr("d", intervale);
-        */
+        });
 
         // Ajout de la ligne médiane
         graphe.append("path")
             .attr("id", "mediane")
             .attr("d", ligne);
+        
+        // Ajout d'une droite verticale qui suit la sourie sur le graphe
+        graphe.append("line")
+            .attr("x1", 50).attr("y1", y.range()[0])
+            .attr("x2", 50).attr("y2", y.range()[1])
+            .attr("id", "vertical-barre")
+            .style("stroke", "black")
+            .style("stroke-width", "2px");
+        graphe.on("mousemove", function() {
+            var x = d3.event.offsetX;
+            d3.select("#vertical-barre").attr("x1", x).attr("x2", x);
+        });
         
 
     });
