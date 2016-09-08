@@ -7,14 +7,14 @@
 <meta charset="utf-8">
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="generator" content="pandoc" />
-<meta name="viewport" content="width=device-width, initial-scale=1">
+
 
 <meta name="author" content="DU Dataviz" />
 
 
 <title>Visualisation de données avec R</title>
 
-<script src="libs/jquery-1.11.3/jquery.min.js"></script>
+<script src="libs/jquery-1.12.4/jquery.min.js"></script>
 <script src="libs/jqueryui-1.11.4/jquery-ui.min.js"></script>
 <link href="libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
 <script src="libs/tocify-1.9.1/jquery.tocify.js"></script>
@@ -23,15 +23,15 @@
 <script src="libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
 <script src="libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
 <script src="libs/bootstrap-3.3.5/shim/respond.min.js"></script>
-<script src="libs/htmlwidgets-0.6/htmlwidgets.js"></script>
+<script src="libs/htmlwidgets-0.7/htmlwidgets.js"></script>
 <link href="libs/leaflet-0.7.3/leaflet.css" rel="stylesheet" />
 <script src="libs/leaflet-0.7.3/leaflet.js"></script>
 <link href="libs/leafletfix-1.0.0/leafletfix.css" rel="stylesheet" />
 <script src="libs/leaflet-binding-1.0.1/leaflet.js"></script>
-<script src="libs/datatables-binding-0.1/datatables.js"></script>
-<script src="libs/datatables-1.10.7/jquery.dataTables.min.js"></script>
-<link href="libs/datatables-default-1.10.7/dataTables.extra.css" rel="stylesheet" />
-<link href="libs/datatables-default-1.10.7/jquery.dataTables.min.css" rel="stylesheet" />
+<script src="libs/datatables-binding-0.2/datatables.js"></script>
+<link href="libs/dt-core-1.10.12/css/jquery.dataTables.min.css" rel="stylesheet" />
+<link href="libs/dt-core-1.10.12/css/jquery.dataTables.extra.css" rel="stylesheet" />
+<script src="libs/dt-core-1.10.12/js/jquery.dataTables.min.js"></script>
 <style>
     .contenu {
         margin-bottom: 50px;
@@ -84,26 +84,7 @@ if (window.hljs && document.readyState && document.readyState === "complete") {
 
 
 
-<link rel="stylesheet" href="libs/bootstrap-journal.min.css" type="text/css" />
-
-</head>
-
-<body>
-
-<style type = "text/css">
-.main-container {
-  max-width: 940px;
-  margin-left: auto;
-  margin-right: auto;
-}
-code {
-  color: inherit;
-  background-color: rgba(0, 0, 0, 0.04);
-}
-img {
-  max-width:100%;
-  height: auto;
-}
+<style type="text/css">
 h1 {
   font-size: 34px;
 }
@@ -125,6 +106,31 @@ h5 {
 h6 {
   font-size: 12px;
 }
+.table th:not([align]) {
+  text-align: left;
+}
+</style>
+
+<link rel="stylesheet" href="libs/bootstrap-journal.min.css" type="text/css" />
+
+</head>
+
+<body>
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img {
+  max-width:100%;
+  height: auto;
+}
 .tabbed-pane {
   padding-top: 12px;
 }
@@ -137,7 +143,7 @@ button.code-folding-btn:focus {
 <div class="container-fluid main-container">
 
 <!-- tabsets -->
-<script src="libs/navigation-1.0/tabsets.js"></script>
+<script src="libs/navigation-1.1/tabsets.js"></script>
 <script>
 $(document).ready(function () {
   window.buildTabsets("TOC");
@@ -151,6 +157,12 @@ $(document).ready(function () {
 
 <script>
 $(document).ready(function ()  {
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
     // establish options
     var options = {
       selectors: "h1,h2,h3,h4",
@@ -159,7 +171,7 @@ $(document).ready(function ()  {
       hashGenerator: function (text) {
         return text.replace(/[.\/?&!#<>]/g, '').replace(/\s/g, '_').toLowerCase();
       },
-      ignoreSelector: "h1.title, .toc-ignore",
+      ignoreSelector: ".toc-ignore",
       scrollTo: 0
     };
     options.showAndHide = true;
@@ -181,6 +193,7 @@ $(document).ready(function ()  {
   width: 100%;
 }
 }
+
 
 .toc-content {
   padding-left: 30px;
@@ -259,25 +272,21 @@ div.tocify {
         <li class="dropdown">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button">Enseignement <span class="caret"></span></a>
           <ul class="dropdown-menu">
-            <li><a href="enseignement.html">Informations</a></li>
-            <li><a href="supports.html">Supports</a></li>
-            <li role="separator" class="divider"></li>
             <li class="dropdown-header">DUT 1ère année</li>
-            <li><a href="interrogation-donnees.html">Interrogation de données</a></li>
+            <li><a href="exploitation-donnees.html">Exploitation de données</a></li>
+            <li><a href="initiation-a-r.html">Initiation à R</a></li>
             <li><a href="reporting.html">Reporting</a></li>
             <li class="dropdown-header">DUT 2ème année</li>
-            <li><a href="sid.html">SID</a></li>
-            <li><a href="bd-prog-avancees.html">BD et Programmation avancées</a></li>
+            <li><a href="prog-stat-r.html">Programmation statistique avec R</a></li>
+            <li class="dropdown-header">LP MDS Santé</li>
+            <li><a href="info-dec-santé.html">Informatique décisionnelle</a></li>
             <li class="dropdown-header">DU Analyste Big Data</li>
-            <li><a href="initiation-r-et-rmongodb.html">Intiation à R</a></li>
+            <li><a href="initiation-r-et-rmongodb.html">Initiation à R et MongoDB</a></li>
             <li class="dropdown-header">DU Dataviz</li>
             <li><a href="visualisation-donnees.html">Visualisation de données - R</a></li>
             <li><a href="visualisation-donnees-d3.html">Visualisation de données - D3</a></li>
             <li role="separator" class="divider"></li>
-            <li class="dropdown-header">Master MIAGE</li>
-            <li><a href="webreporting.html">Web-Reporting</a></li>
             <li class="dropdown-header">Master</li>
-            <li><a href="logiciels-stats.html">Logiciels statistiques</a></li>
             <li><a href="slides/cnam-classif-modeles.html">Classification et Modèles de mélange</a></li>
           </ul>
         </li>
@@ -300,7 +309,8 @@ div.tocify {
 <div class="fluid-row" id="header">
 
 
-<h1 class="title">Visualisation de données avec <strong>R</strong></h1>
+
+<h1 class="title toc-ignore">Visualisation de données avec <strong>R</strong></h1>
 <h4 class="author"><em>DU Dataviz</em></h4>
 
 </div>
@@ -338,7 +348,7 @@ for (i in 1:6) {
     rect(0, 0, 1, 1)
     text(.5, .5, i, cex = 2)
 }</code></pre>
-<p><img src="visualisation-donnees_files/figure-html/ex-mfrow-1.png" title="" alt="" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="visualisation-donnees_files/figure-html/ex-mfrow-1.png" width="672" style="display: block; margin: auto;" /></p>
 </div>
 <div id="mfcol" class="section level5">
 <h5><code>mfcol</code></h5>
@@ -349,7 +359,7 @@ for (i in 1:6) {
     rect(0, 0, 1, 1)
     text(.5, .5, i, cex = 2)
 }</code></pre>
-<p><img src="visualisation-donnees_files/figure-html/ex-mfcol-1.png" title="" alt="" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="visualisation-donnees_files/figure-html/ex-mfcol-1.png" width="672" style="display: block; margin: auto;" /></p>
 </div>
 </div>
 <div id="layout" class="section level4">
@@ -368,7 +378,7 @@ for (i in 1:3) {
     rect(0, 0, 1, 1)
     text(.5, .5, i, cex = 2)
 }</code></pre>
-<p><img src="visualisation-donnees_files/figure-html/ex-layout-1.png" title="" alt="" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="visualisation-donnees_files/figure-html/ex-layout-1.png" width="672" style="display: block; margin: auto;" /></p>
 <div id="exemple-dutilisation-de-layout" class="section level5">
 <h5>Exemple d’utilisation de <code>layout</code></h5>
 <p>Nous allons utiliser <code>layout</code> pour représenter une variable quantitative (<code>co2</code> ici, déjà présente dans R), avec les quatre représentations suivantes :</p>
@@ -390,7 +400,7 @@ hist(co2, main = &quot;co2&quot;)
 plot(co2)
 boxplot(co2, axes = FALSE)
 qqnorm(co2, main = &quot;&quot;);qqline(co2)</code></pre>
-<p><img src="visualisation-donnees_files/figure-html/ex-layout-bis-1.png" title="" alt="" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="visualisation-donnees_files/figure-html/ex-layout-bis-1.png" width="672" style="display: block; margin: auto;" /></p>
 </div>
 </div>
 </div>
@@ -423,7 +433,7 @@ outliers_hp = subset(mtcars, subset = hp &gt; 250)
 text(outliers_hp$hp, outliers_hp$mpg, row.names(outliers_hp), pos = c(3, 2), cex = .8, font = 4)
 outliers_mpg = subset(mtcars, subset = mpg &gt; 30)
 text(outliers_mpg$hp, outliers_mpg$mpg, row.names(outliers_mpg), pos = 4, cex = .8, font = 4)</code></pre>
-<p><img src="visualisation-donnees_files/figure-html/ex-amelioration-1.png" title="" alt="" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="visualisation-donnees_files/figure-html/ex-amelioration-1.png" width="672" style="display: block; margin: auto;" /></p>
 <ul>
 <li>La fonction <code>par()</code> permet de modifier les paramètres graphiques, tel que :
 <ul>
@@ -506,30 +516,30 @@ text(outliers_mpg$hp, outliers_mpg$mpg, row.names(outliers_mpg), pos = 4, cex = 
 <h5>Histogramme</h5>
 <p>Il est possible de déclarer le nombre d’intervalles d’un histogramme, ou de les définir directement. Attention, dans ce dernier cas, le premier graphique produit est faux car il est nécessaire d’utiliser la densité (variable spéciale <code>..density..</code> dans <code>ggplot2</code>) et non le dénombrement. Et puisqu’on a préciser des valeurs en <span class="math inline">\(y\)</span>, nous devons préciser que nous souhaitons un histogramme en représentation géométrique.</p>
 <pre class="r"><code>qplot(mtcars$mpg)</code></pre>
-<p><img src="visualisation-donnees_files/figure-html/qplot-uni-hist-1.png" title="" alt="" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="visualisation-donnees_files/figure-html/qplot-uni-hist-1.png" width="672" style="display: block; margin: auto;" /></p>
 <pre class="r"><code>qplot(mpg, data = mtcars)</code></pre>
-<p><img src="visualisation-donnees_files/figure-html/qplot-uni-hist-2.png" title="" alt="" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="visualisation-donnees_files/figure-html/qplot-uni-hist-2.png" width="672" style="display: block; margin: auto;" /></p>
 <pre class="r"><code>qplot(mpg, data = mtcars, binwidth = 2)</code></pre>
-<p><img src="visualisation-donnees_files/figure-html/qplot-uni-hist-3.png" title="" alt="" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="visualisation-donnees_files/figure-html/qplot-uni-hist-3.png" width="672" style="display: block; margin: auto;" /></p>
 <pre class="r"><code>qplot(mpg, data = mtcars, bins = 10)</code></pre>
-<p><img src="visualisation-donnees_files/figure-html/qplot-uni-hist-4.png" title="" alt="" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="visualisation-donnees_files/figure-html/qplot-uni-hist-4.png" width="672" style="display: block; margin: auto;" /></p>
 <pre class="r"><code>qplot(mpg, data = mtcars, breaks = c(10,12.5,15,18,25,35))</code></pre>
-<p><img src="visualisation-donnees_files/figure-html/qplot-uni-hist-5.png" title="" alt="" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="visualisation-donnees_files/figure-html/qplot-uni-hist-5.png" width="672" style="display: block; margin: auto;" /></p>
 <pre class="r"><code>qplot(mpg, y = ..density.., data = mtcars, 
       geom = &quot;histogram&quot;, breaks = c(10,12.5,15,18,25,35))</code></pre>
-<p><img src="visualisation-donnees_files/figure-html/qplot-uni-hist-6.png" title="" alt="" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="visualisation-donnees_files/figure-html/qplot-uni-hist-6.png" width="672" style="display: block; margin: auto;" /></p>
 </div>
 <div id="boite-a-moustaches" class="section level5">
 <h5>Boîte à moustaches</h5>
 <p>Pour avoir une boîte à moustache sur une variable, nous sommes obligé de déclarer en <span class="math inline">\(x\)</span> une valeur fixe (ici une chaîne vide <code>&quot;&quot;</code>), et de préciser la transformation géométrique (<code>boxplot</code> ici donc).</p>
 <pre class="r"><code>qplot(&quot;&quot;, mpg, data = mtcars, geom = &quot;boxplot&quot;)</code></pre>
-<p><img src="visualisation-donnees_files/figure-html/qplot-uni-boxplot-1.png" title="" alt="" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="visualisation-donnees_files/figure-html/qplot-uni-boxplot-1.png" width="672" style="display: block; margin: auto;" /></p>
 </div>
 <div id="qq-plot" class="section level5">
 <h5><span class="math inline">\(qq\)</span>-plot</h5>
 <p>Dans le cas de la représentation géomtrique en <span class="math inline">\(qq\)</span>-plot, nous ne définissons pas de <span class="math inline">\(x\)</span> et de <span class="math inline">\(y\)</span>, mais juste l’échantillon à utiliser (<code>sample</code>).</p>
 <pre class="r"><code>qplot(sample = mpg, data = mtcars, geom = &quot;qq&quot;)</code></pre>
-<p><img src="visualisation-donnees_files/figure-html/qplot-uni-qqplot-1.png" title="" alt="" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="visualisation-donnees_files/figure-html/qplot-uni-qqplot-1.png" width="672" style="display: block; margin: auto;" /></p>
 </div>
 </div>
 <div id="var-qualitative" class="section level4">
@@ -539,40 +549,40 @@ text(outliers_mpg$hp, outliers_mpg$mpg, row.names(outliers_mpg), pos = 4, cex = 
 <h5>Diagramme en barres</h5>
 <p>Comme indiqué, si nous mettons une variable numérique, sans préciser la représentation géométrique, <code>qplot</code> produit un histogramme. C’est pourquoi nous devons spécifier que nous souhaitons une représentation en barre (<code>geom = &quot;bar&quot;</code>) pour l’utiliser sur <code>am</code> de <code>mtcars</code>. Sinon, nous réalisons directement une transformation en variable <code>factor</code>. Ce qui est préférable, au regard de l’axe des abcisses généré.</p>
 <pre class="r"><code>qplot(am, data = mtcars, geom = &quot;bar&quot;)</code></pre>
-<p><img src="visualisation-donnees_files/figure-html/qplot-uni-quali-1.png" title="" alt="" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="visualisation-donnees_files/figure-html/qplot-uni-quali-1.png" width="672" style="display: block; margin: auto;" /></p>
 <pre class="r"><code>qplot(factor(am), data = mtcars)</code></pre>
-<p><img src="visualisation-donnees_files/figure-html/qplot-uni-quali-2.png" title="" alt="" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="visualisation-donnees_files/figure-html/qplot-uni-quali-2.png" width="672" style="display: block; margin: auto;" /></p>
 </div>
 </div>
 <div id="var-quantitative---var-quantitative" class="section level4">
 <h4>Var quantitative - Var quantitative</h4>
 <p>Pour réaliser un nuage de points, nous n’avons rien besoin de spécifier (i.e. c’est le choix par défaut de <code>qplot</code> pour deux variables numériques).</p>
 <pre class="r"><code>qplot(hp, mpg, data = mtcars)</code></pre>
-<p><img src="visualisation-donnees_files/figure-html/qplot-quanti-quanti-1.png" title="" alt="" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="visualisation-donnees_files/figure-html/qplot-quanti-quanti-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>Il est possible aussi de faire un ajustement (avec <code>geom = &quot;smooth</code>) ou une réprésentation des valeurs prises à l’aide de <em>ticks</em> (avec <code>geom = &quot;rug&quot;</code>). Et même de faire un graphique avec toutes ces informations. Mais pour avoir l’ajustement linéaire en plus des points, il est préférable d’utiliser <code>ggplot</code>.</p>
 <pre class="r"><code>qplot(hp, mpg, data = mtcars, geom = &quot;smooth&quot;)</code></pre>
-<p><img src="visualisation-donnees_files/figure-html/qplot-quanti-quanti-autres-1.png" title="" alt="" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="visualisation-donnees_files/figure-html/qplot-quanti-quanti-autres-1.png" width="672" style="display: block; margin: auto;" /></p>
 <pre class="r"><code>qplot(hp, mpg, data = mtcars, geom = &quot;smooth&quot;, method = &quot;lm&quot;)</code></pre>
-<p><img src="visualisation-donnees_files/figure-html/qplot-quanti-quanti-autres-2.png" title="" alt="" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="visualisation-donnees_files/figure-html/qplot-quanti-quanti-autres-2.png" width="672" style="display: block; margin: auto;" /></p>
 <pre class="r"><code>qplot(hp, mpg, data = mtcars, geom = &quot;rug&quot;)</code></pre>
-<p><img src="visualisation-donnees_files/figure-html/qplot-quanti-quanti-autres-3.png" title="" alt="" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="visualisation-donnees_files/figure-html/qplot-quanti-quanti-autres-3.png" width="672" style="display: block; margin: auto;" /></p>
 <pre class="r"><code>qplot(hp, mpg, data = mtcars, geom = c(&quot;smooth&quot;, &quot;rug&quot;, &quot;point&quot;))</code></pre>
-<p><img src="visualisation-donnees_files/figure-html/qplot-quanti-quanti-autres-4.png" title="" alt="" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="visualisation-donnees_files/figure-html/qplot-quanti-quanti-autres-4.png" width="672" style="display: block; margin: auto;" /></p>
 <p>Une autre réprésentation est une <em>carte de chaleur</em> (ou <strong>heatmap</strong>), représentation les deux axes et un ensemble de zones rectangulaires ayant une couleur en fonction du nombre de points présents dans cette zone. Ce graphique est très intéressant dans le cas de données nombreuses.</p>
 <pre class="r"><code>qplot(hp, mpg, data = mtcars, geom = &quot;bin2d&quot;)</code></pre>
-<p><img src="visualisation-donnees_files/figure-html/qplot-quanti-quanti-heatmap-1.png" title="" alt="" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="visualisation-donnees_files/figure-html/qplot-quanti-quanti-heatmap-1.png" width="672" style="display: block; margin: auto;" /></p>
 <pre class="r"><code>qplot(hp, mpg, data = mtcars, geom = &quot;bin2d&quot;, bins = 10)</code></pre>
-<p><img src="visualisation-donnees_files/figure-html/qplot-quanti-quanti-heatmap-2.png" title="" alt="" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="visualisation-donnees_files/figure-html/qplot-quanti-quanti-heatmap-2.png" width="672" style="display: block; margin: auto;" /></p>
 </div>
 <div id="var-qualitative---var-qualitative" class="section level4">
 <h4>Var qualitative - Var qualitative</h4>
 <p>Dans ce cas, la fonction <code>qplot</code> est plutôt utilisé pour réaliser des diagrammes en barres.</p>
 <pre class="r"><code>qplot(factor(am), facets = 1 ~ cyl, data = mtcars, geom = &quot;bar&quot;)</code></pre>
-<p><img src="visualisation-donnees_files/figure-html/qplot-quali-quali-1.png" title="" alt="" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="visualisation-donnees_files/figure-html/qplot-quali-quali-1.png" width="672" style="display: block; margin: auto;" /></p>
 <pre class="r"><code>qplot(factor(am), facets = 1 ~ cyl, fill = factor(am), data = mtcars, geom = &quot;bar&quot;)</code></pre>
-<p><img src="visualisation-donnees_files/figure-html/qplot-quali-quali-2.png" title="" alt="" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="visualisation-donnees_files/figure-html/qplot-quali-quali-2.png" width="672" style="display: block; margin: auto;" /></p>
 <pre class="r"><code>qplot(factor(am), fill = factor(cyl), data = mtcars, geom = &quot;bar&quot;)</code></pre>
-<p><img src="visualisation-donnees_files/figure-html/qplot-quali-quali-3.png" title="" alt="" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="visualisation-donnees_files/figure-html/qplot-quali-quali-3.png" width="672" style="display: block; margin: auto;" /></p>
 <p>Pour les empiler correctement (i.e. somme à 100%), il faut faire une manipulation en deux étapes :</p>
 <ul>
 <li>calculer les profils pour chaque modalité de la variable en <span class="math inline">\(x\)</span>, avec <code>prop.table</code> et <code>table</code></li>
@@ -601,26 +611,26 @@ mel</code></pre>
 ## 6  1   8 0.1538462</code></pre>
 <pre class="r"><code>qplot(factor(am), weight = value, fill = factor(cyl), data = mel, 
       geom = &quot;bar&quot;)</code></pre>
-<p><img src="visualisation-donnees_files/figure-html/qplot-quali-quali-stack-1.png" title="" alt="" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="visualisation-donnees_files/figure-html/qplot-quali-quali-stack-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>Il est possible aussi de réaliser une <em>heatmap</em>, ou chaque zone est colorée en fonction du nombre d’individus ayant les modalités correspondantes dans les deux variables. Et si on veut représenter les profils comme précédemment, on peut réutiliser l’objet <code>mel</code> que l’on a créé précédemment. Ici, la lecture se fait verticalement (les proportions sont en fonction de la valeur de la variable en <span class="math inline">\(x\)</span>).</p>
 <pre class="r"><code>qplot(factor(am), factor(cyl), data = mtcars, geom = &quot;bin2d&quot;)</code></pre>
-<p><img src="visualisation-donnees_files/figure-html/qplot-quali-quali-heatmap-1.png" title="" alt="" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="visualisation-donnees_files/figure-html/qplot-quali-quali-heatmap-1.png" width="672" style="display: block; margin: auto;" /></p>
 <pre class="r"><code>qplot(factor(am), factor(cyl), fill = value, data = mel, geom = &quot;bin2d&quot;)</code></pre>
-<p><img src="visualisation-donnees_files/figure-html/qplot-quali-quali-heatmap-2.png" title="" alt="" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="visualisation-donnees_files/figure-html/qplot-quali-quali-heatmap-2.png" width="672" style="display: block; margin: auto;" /></p>
 </div>
 <div id="var-quantitative---var-qualitative" class="section level4">
 <h4>Var quantitative - Var qualitative</h4>
 <p>Pour croiser deux variables de type différent, nous devons représenter la distribution de la variable quantitative pour chaque modalité de la variable qualitative (ici, respectivement histogramme, densité, boîte à moustaches, et représentation des points avec une opération de <em>jittering</em>).</p>
 <pre class="r"><code>qplot(mpg, data = mtcars, geom = &quot;histogram&quot;, bins = 10, facets = am ~ .)</code></pre>
-<p><img src="visualisation-donnees_files/figure-html/qplot-quanti-quali-1.png" title="" alt="" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="visualisation-donnees_files/figure-html/qplot-quanti-quali-1.png" width="672" style="display: block; margin: auto;" /></p>
 <pre class="r"><code>qplot(mpg, col = factor(am), data = mtcars, geom = &quot;density&quot;)</code></pre>
-<p><img src="visualisation-donnees_files/figure-html/qplot-quanti-quali-2.png" title="" alt="" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="visualisation-donnees_files/figure-html/qplot-quanti-quali-2.png" width="672" style="display: block; margin: auto;" /></p>
 <pre class="r"><code>qplot(factor(am), mpg, data = mtcars, geom = &quot;boxplot&quot;)</code></pre>
-<p><img src="visualisation-donnees_files/figure-html/qplot-quanti-quali-3.png" title="" alt="" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="visualisation-donnees_files/figure-html/qplot-quanti-quali-3.png" width="672" style="display: block; margin: auto;" /></p>
 <pre class="r"><code>qplot(factor(am), mpg, data = mtcars, geom = &quot;jitter&quot;)</code></pre>
-<p><img src="visualisation-donnees_files/figure-html/qplot-quanti-quali-4.png" title="" alt="" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="visualisation-donnees_files/figure-html/qplot-quanti-quali-4.png" width="672" style="display: block; margin: auto;" /></p>
 <pre class="r"><code>qplot(factor(am), mpg, data = mtcars, geom = c(&quot;boxplot&quot;, &quot;jitter&quot;))</code></pre>
-<p><img src="visualisation-donnees_files/figure-html/qplot-quanti-quali-5.png" title="" alt="" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="visualisation-donnees_files/figure-html/qplot-quanti-quali-5.png" width="672" style="display: block; margin: auto;" /></p>
 </div>
 <div id="exemple-ameliore-version-qplot" class="section level4">
 <h4>Exemple amélioré version <code>qplot</code></h4>
@@ -629,7 +639,7 @@ mel</code></pre>
       main = &quot;Consommation et autres&quot;,
       xlab = &quot;Puissance (en ch)&quot;,
       ylab = &quot;Consommation en Miles/Galon&quot;)</code></pre>
-<p><img src="visualisation-donnees_files/figure-html/qplot-amelioration-1.png" title="" alt="" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="visualisation-donnees_files/figure-html/qplot-amelioration-1.png" width="672" style="display: block; margin: auto;" /></p>
 </div>
 </div>
 <div id="fonction-ggplot" class="section level3">
@@ -657,7 +667,7 @@ ggplot(data = iris, aes(y = Sepal.Length, x = Species)) + geom_boxplot() +
     geom_errorbar(data = iris.mean, 
                   aes(y = mean, ymin = mean - sd, ymax = mean + sd), 
                   col = &quot;red&quot;, width = .4)</code></pre>
-<p><img src="visualisation-donnees_files/figure-html/ggplot-ex-1.png" title="" alt="" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="visualisation-donnees_files/figure-html/ggplot-ex-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>Dans le code précédent, vous pouvez remarquer que <span class="math inline">\(x\)</span> n’est défini qu’une seule fois, dans le <code>ggplot()</code>. Cette spécification est conservée pour les fonctions ajoutées, et donc pour <code>geom_errorbar()</code>.</p>
 <p>Pour détailler ce comportement, voici trois commandes permettant de faire strictement le même graphique (le premier produit dans le paragraphe ci-dessous).</p>
 <pre class="r"><code>ggplot(mtcars, aes(x = mpg)) + geom_histogram()
@@ -673,45 +683,45 @@ ggplot() + geom_histogram(data = mtcars, aes(x = mpg))</code></pre>
 <h4>Variable quantitative</h4>
 <p>Pour représenter un histogramme, on a les mêmes possibilités que dans <code>qplot</code>.</p>
 <pre class="r"><code>ggplot(mtcars, aes(x = mpg)) + geom_histogram()</code></pre>
-<p><img src="visualisation-donnees_files/figure-html/ggplot-quanti-hist-1.png" title="" alt="" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="visualisation-donnees_files/figure-html/ggplot-quanti-hist-1.png" width="672" style="display: block; margin: auto;" /></p>
 <pre class="r"><code>ggplot(mtcars, aes(x = mpg)) + geom_histogram(binwidth = 2)</code></pre>
-<p><img src="visualisation-donnees_files/figure-html/ggplot-quanti-hist-2.png" title="" alt="" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="visualisation-donnees_files/figure-html/ggplot-quanti-hist-2.png" width="672" style="display: block; margin: auto;" /></p>
 <pre class="r"><code>ggplot(mtcars, aes(x = mpg)) + geom_histogram(bins = 10)</code></pre>
-<p><img src="visualisation-donnees_files/figure-html/ggplot-quanti-hist-3.png" title="" alt="" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="visualisation-donnees_files/figure-html/ggplot-quanti-hist-3.png" width="672" style="display: block; margin: auto;" /></p>
 <pre class="r"><code>ggplot(mtcars, aes(x = mpg)) + geom_histogram(breaks = c(10,12.5,15,18,25,35))</code></pre>
-<p><img src="visualisation-donnees_files/figure-html/ggplot-quanti-hist-4.png" title="" alt="" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="visualisation-donnees_files/figure-html/ggplot-quanti-hist-4.png" width="672" style="display: block; margin: auto;" /></p>
 <pre class="r"><code>ggplot(mtcars, aes(x = mpg)) + 
     geom_histogram(aes(y = ..density..), breaks = c(10,12.5,15,18,25,35))</code></pre>
-<p><img src="visualisation-donnees_files/figure-html/ggplot-quanti-hist-5.png" title="" alt="" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="visualisation-donnees_files/figure-html/ggplot-quanti-hist-5.png" width="672" style="display: block; margin: auto;" /></p>
 <pre class="r"><code>ggplot(mtcars, aes(x = mpg)) + 
     geom_histogram(aes(y = ..density..), binwidth = 2) +
     geom_density()</code></pre>
-<p><img src="visualisation-donnees_files/figure-html/ggplot-quanti-hist-6.png" title="" alt="" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="visualisation-donnees_files/figure-html/ggplot-quanti-hist-6.png" width="672" style="display: block; margin: auto;" /></p>
 <p>Pour la boîte à moustaches et le <span class="math inline">\(qq\)</span>-plot, il faut utiliser les fonctions <code>geom_boxplot()</code> et <code>geom_qq()</code>, en spécifiant correctement les aspects esthétiques.</p>
 <pre class="r"><code>ggplot(mtcars, aes(y = mpg, x = &quot;&quot;)) + geom_boxplot()</code></pre>
-<p><img src="visualisation-donnees_files/figure-html/ggplot-quanti-autres-1.png" title="" alt="" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="visualisation-donnees_files/figure-html/ggplot-quanti-autres-1.png" width="672" style="display: block; margin: auto;" /></p>
 <pre class="r"><code>ggplot(mtcars, aes(sample = mpg)) + geom_qq()</code></pre>
-<p><img src="visualisation-donnees_files/figure-html/ggplot-quanti-autres-2.png" title="" alt="" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="visualisation-donnees_files/figure-html/ggplot-quanti-autres-2.png" width="672" style="display: block; margin: auto;" /></p>
 </div>
 <div id="variable-qualitative" class="section level4">
 <h4>Variable qualitative</h4>
 <p>Pour un diagramme en barre, on peut se contenter d’utiliser la fonction <code>geom_bar()</code>. Le passage en <code>factor()</code> de la variable qualitative permet d’avoir un axe en abcisse propre (car <code>am</code> est codée numériquement dans <code>mtcars</code>). L’utilisation du calcul <code>(..count..)/sum(..count..)</code> permet de faire le calcul des pourcentages (avec le changement d’échelle sur <span class="math inline">\(y\)</span>).</p>
 <pre class="r"><code>ggplot(mtcars, aes(x = am)) + geom_bar()</code></pre>
-<p><img src="visualisation-donnees_files/figure-html/ggplot-quali-bar-1.png" title="" alt="" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="visualisation-donnees_files/figure-html/ggplot-quali-bar-1.png" width="672" style="display: block; margin: auto;" /></p>
 <pre class="r"><code>ggplot(mtcars, aes(x = factor(am))) + geom_bar()</code></pre>
-<p><img src="visualisation-donnees_files/figure-html/ggplot-quali-bar-2.png" title="" alt="" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="visualisation-donnees_files/figure-html/ggplot-quali-bar-2.png" width="672" style="display: block; margin: auto;" /></p>
 <pre class="r"><code>ggplot(mtcars, aes(x = factor(am))) +  
     geom_bar(aes(y = (..count..)/sum(..count..))) +
     scale_y_continuous(labels = percent) +
     ylab(&quot;&quot;)</code></pre>
-<p><img src="visualisation-donnees_files/figure-html/ggplot-quali-bar-3.png" title="" alt="" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="visualisation-donnees_files/figure-html/ggplot-quali-bar-3.png" width="672" style="display: block; margin: auto;" /></p>
 <p>On peut aussi représenter ce diagramme en version empilé, en faisant quelques modifications sur les aspects esthétiques (<code>fill</code> pour la variable et spécification identique à la précédente pour <span class="math inline">\(y\)</span>), sur l’échelle (idem) et sur les labels. La dernière partie sert à supprimer le trait sur l’axe <span class="math inline">\(x\)</span>.</p>
 <pre class="r"><code>ggplot(mtcars, aes(&quot;&quot;, fill = factor(am))) + 
     geom_bar(aes(y = (..count..)/sum(..count..))) +
     scale_y_continuous(labels = percent) +
     ylab(&quot;&quot;) + xlab(&quot;&quot;) + labs(fill = &quot;am&quot;) +
     theme(axis.ticks = element_blank())</code></pre>
-<p><img src="visualisation-donnees_files/figure-html/ggplot-quali-stack-1.png" title="" alt="" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="visualisation-donnees_files/figure-html/ggplot-quali-stack-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>A partir de la base du graphique précédent, en ajoutant un changement de système de coordonnées (avec <code>coord_polar()</code>), on obtient un diagramme circulaire.</p>
 <pre class="r"><code>ggplot(mtcars, aes(&quot;&quot;, fill = factor(am))) + 
     geom_bar(aes(y = (..count..)/sum(..count..)), width = 1) +
@@ -719,7 +729,7 @@ ggplot() + geom_histogram(data = mtcars, aes(x = mpg))</code></pre>
     ylab(&quot;&quot;) + xlab(&quot;&quot;) + labs(fill = &quot;am&quot;) +
     theme(axis.ticks = element_blank()) + 
     coord_polar(theta = &quot;y&quot;) </code></pre>
-<p><img src="visualisation-donnees_files/figure-html/ggplot-quali-pie-1.png" title="" alt="" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="visualisation-donnees_files/figure-html/ggplot-quali-pie-1.png" width="672" style="display: block; margin: auto;" /></p>
 </div>
 <div id="var-quantitative---var-quantitative-1" class="section level4">
 <h4>Var quantitative - Var quantitative</h4>
@@ -727,25 +737,25 @@ ggplot() + geom_histogram(data = mtcars, aes(x = mpg))</code></pre>
 <pre class="r"><code>ggplot(mtcars, aes(hp, mpg)) + geom_point() +
     geom_rug() +
     geom_smooth(method = &quot;lm&quot;)</code></pre>
-<p><img src="visualisation-donnees_files/figure-html/ggplot-quanti-quanti-1.png" title="" alt="" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="visualisation-donnees_files/figure-html/ggplot-quanti-quanti-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>Et c’est l’utilisation de <code>geom_bin2d()</code> qui permet de faire une <em>heatmap</em>, avec les mêmes options que précédemment.</p>
 <pre class="r"><code>ggplot(mtcars, aes(hp, mpg)) + geom_bin2d()</code></pre>
-<p><img src="visualisation-donnees_files/figure-html/ggplot-quanti-quanti-heatmap-1.png" title="" alt="" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="visualisation-donnees_files/figure-html/ggplot-quanti-quanti-heatmap-1.png" width="672" style="display: block; margin: auto;" /></p>
 <pre class="r"><code>ggplot(mtcars, aes(hp, mpg)) + geom_bin2d(bins = 10)</code></pre>
-<p><img src="visualisation-donnees_files/figure-html/ggplot-quanti-quanti-heatmap-2.png" title="" alt="" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="visualisation-donnees_files/figure-html/ggplot-quanti-quanti-heatmap-2.png" width="672" style="display: block; margin: auto;" /></p>
 </div>
 <div id="var-qualitative---var-qualitative-1" class="section level4">
 <h4>Var qualitative - Var qualitative</h4>
 <p>La création d’un diagramme en barres pour deux variables qualitatives est assez simple. Par contre, pour la version empilée, c’est le paramètre <code>position = &quot;fill&quot;</code> qui permet de le faire sans autre calcul, les fonctions suivantes n’étant la que pour avoir un graphique plus clair.</p>
 <pre class="r"><code>ggplot(mtcars, aes(factor(am))) + geom_bar() + facet_grid(1 ~ cyl)</code></pre>
-<p><img src="visualisation-donnees_files/figure-html/ggplot-quali-quali-1.png" title="" alt="" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="visualisation-donnees_files/figure-html/ggplot-quali-quali-1.png" width="672" style="display: block; margin: auto;" /></p>
 <pre class="r"><code>ggplot(mtcars, aes(factor(am), fill = factor(cyl))) + geom_bar() </code></pre>
-<p><img src="visualisation-donnees_files/figure-html/ggplot-quali-quali-2.png" title="" alt="" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="visualisation-donnees_files/figure-html/ggplot-quali-quali-2.png" width="672" style="display: block; margin: auto;" /></p>
 <pre class="r"><code>ggplot(mtcars, aes(factor(am), fill = factor(cyl))) + 
     geom_bar(position = &quot;fill&quot;) +
     scale_y_continuous(labels = percent) + 
     xlab(&quot;am&quot;) + ylab(&quot;&quot;) + labs(fill = &quot;cyl&quot;)</code></pre>
-<p><img src="visualisation-donnees_files/figure-html/ggplot-quali-quali-3.png" title="" alt="" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="visualisation-donnees_files/figure-html/ggplot-quali-quali-3.png" width="672" style="display: block; margin: auto;" /></p>
 <p>Pour créer les diagrammes circulaires d’une variable pour chaque modalité de l’autre variable, nous allons ré-utiliser l’objet <code>mel</code> créé précédemment.</p>
 <pre class="r"><code>mel</code></pre>
 <pre><code>##   am cyl     value
@@ -762,12 +772,12 @@ ggplot() + geom_histogram(data = mtcars, aes(x = mpg))</code></pre>
     theme(axis.ticks = element_blank()) +
     coord_polar(theta = &quot;y&quot;) +
     facet_grid(~ am)</code></pre>
-<p><img src="visualisation-donnees_files/figure-html/ggplot-quali-quali-pie-1.png" title="" alt="" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="visualisation-donnees_files/figure-html/ggplot-quali-quali-pie-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>Enfin, il est possible de créer une <em>heatmap</em> avec la fonction <code>geom_bin2d()</code>, toujours soit directement (dénombrement donc), soit en utiliser des profils par exemple.</p>
 <pre class="r"><code>ggplot(mtcars, aes(factor(cyl), factor(am))) + geom_bin2d()</code></pre>
-<p><img src="visualisation-donnees_files/figure-html/ggplot-quali-quali-heatmap-1.png" title="" alt="" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="visualisation-donnees_files/figure-html/ggplot-quali-quali-heatmap-1.png" width="672" style="display: block; margin: auto;" /></p>
 <pre class="r"><code>ggplot(mel, aes(factor(am), factor(cyl), fill = value)) + geom_bin2d()</code></pre>
-<p><img src="visualisation-donnees_files/figure-html/ggplot-quali-quali-heatmap-2.png" title="" alt="" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="visualisation-donnees_files/figure-html/ggplot-quali-quali-heatmap-2.png" width="672" style="display: block; margin: auto;" /></p>
 </div>
 <div id="exemple-ameliore-version-ggplot" class="section level4">
 <h4>Exemple amélioré version <code>ggplot</code></h4>
@@ -783,7 +793,7 @@ ggplot(mtcars, aes(x = hp, y = mpg,
     xlab(&quot;Puissance (en ch)&quot;) + xlim(25, 350) +
     ylab(&quot;Consommation en Miles/Galon&quot;) +
     labs(color = &quot;Transmission&quot;, size = &quot;Poids (1000 lbs)&quot;) </code></pre>
-<p><img src="visualisation-donnees_files/figure-html/ggplot-amelioration-1.png" title="" alt="" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="visualisation-donnees_files/figure-html/ggplot-amelioration-1.png" width="672" style="display: block; margin: auto;" /></p>
 </div>
 </div>
 </div>
@@ -796,39 +806,39 @@ ggplot(mtcars, aes(x = hp, y = mpg,
 <p>Voici un premier exemple simple de création de carte du monde</p>
 <pre class="r"><code>m = leaflet() %&gt;% addTiles()
 m</code></pre>
-<p><div id="htmlwidget-369" style="width:672px;height:480px;" class="leaflet html-widget"></div>
-<script type="application/json" data-for="htmlwidget-369">{"x":{"calls":[{"method":"addTiles","args":["http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",null,null,{"minZoom":0,"maxZoom":18,"maxNativeZoom":null,"tileSize":256,"subdomains":"abc","errorTileUrl":"","tms":false,"continuousWorld":false,"noWrap":false,"zoomOffset":0,"zoomReverse":false,"opacity":1,"zIndex":null,"unloadInvisibleTiles":null,"updateWhenIdle":null,"detectRetina":false,"reuseTiles":false,"attribution":"&copy; <a href=\"http://openstreetmap.org\">OpenStreetMap\u003c/a> contributors, <a href=\"http://creativecommons.org/licenses/by-sa/2.0/\">CC-BY-SA\u003c/a>"}]}]},"evals":[],"jsHooks":[]}</script></p>
+<div id="htmlwidget-0937e41e5e292af8cff4" style="width:672px;height:480px;" class="leaflet html-widget"></div>
+<script type="application/json" data-for="htmlwidget-0937e41e5e292af8cff4">{"x":{"calls":[{"method":"addTiles","args":["http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",null,null,{"minZoom":0,"maxZoom":18,"maxNativeZoom":null,"tileSize":256,"subdomains":"abc","errorTileUrl":"","tms":false,"continuousWorld":false,"noWrap":false,"zoomOffset":0,"zoomReverse":false,"opacity":1,"zIndex":null,"unloadInvisibleTiles":null,"updateWhenIdle":null,"detectRetina":false,"reuseTiles":false,"attribution":"&copy; <a href=\"http://openstreetmap.org\">OpenStreetMap\u003c/a> contributors, <a href=\"http://creativecommons.org/licenses/by-sa/2.0/\">CC-BY-SA\u003c/a>"}]}]},"evals":[],"jsHooks":[]}</script>
 <p>Pour laquelle il est possible de choisir la zone d’intêrêt, en indiquant les latitudes et longitudes min et max.</p>
 <pre class="r"><code>m %&gt;% fitBounds(0, 40, 5, 50)</code></pre>
-<p><div id="htmlwidget-2176" style="width:672px;height:480px;" class="leaflet html-widget"></div>
-<script type="application/json" data-for="htmlwidget-2176">{"x":{"calls":[{"method":"addTiles","args":["http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",null,null,{"minZoom":0,"maxZoom":18,"maxNativeZoom":null,"tileSize":256,"subdomains":"abc","errorTileUrl":"","tms":false,"continuousWorld":false,"noWrap":false,"zoomOffset":0,"zoomReverse":false,"opacity":1,"zIndex":null,"unloadInvisibleTiles":null,"updateWhenIdle":null,"detectRetina":false,"reuseTiles":false,"attribution":"&copy; <a href=\"http://openstreetmap.org\">OpenStreetMap\u003c/a> contributors, <a href=\"http://creativecommons.org/licenses/by-sa/2.0/\">CC-BY-SA\u003c/a>"}]}],"fitBounds":[40,0,50,5]},"evals":[],"jsHooks":[]}</script></p>
+<div id="htmlwidget-66da104d7da582cc905a" style="width:672px;height:480px;" class="leaflet html-widget"></div>
+<script type="application/json" data-for="htmlwidget-66da104d7da582cc905a">{"x":{"calls":[{"method":"addTiles","args":["http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",null,null,{"minZoom":0,"maxZoom":18,"maxNativeZoom":null,"tileSize":256,"subdomains":"abc","errorTileUrl":"","tms":false,"continuousWorld":false,"noWrap":false,"zoomOffset":0,"zoomReverse":false,"opacity":1,"zIndex":null,"unloadInvisibleTiles":null,"updateWhenIdle":null,"detectRetina":false,"reuseTiles":false,"attribution":"&copy; <a href=\"http://openstreetmap.org\">OpenStreetMap\u003c/a> contributors, <a href=\"http://creativecommons.org/licenses/by-sa/2.0/\">CC-BY-SA\u003c/a>"}]}],"fitBounds":[40,0,50,5]},"evals":[],"jsHooks":[]}</script>
 <p>Il est aussi possible de préciser les coordonnées géographiques du centre de la carte, ainsi que le niveau de zoom (entre 1 - monde - et 18 - pâté de maison).</p>
 <pre class="r"><code>m = m %&gt;% setView(2.268224, 48.842275, zoom = 17)
 m</code></pre>
-<p><div id="htmlwidget-8909" style="width:672px;height:480px;" class="leaflet html-widget"></div>
-<script type="application/json" data-for="htmlwidget-8909">{"x":{"calls":[{"method":"addTiles","args":["http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",null,null,{"minZoom":0,"maxZoom":18,"maxNativeZoom":null,"tileSize":256,"subdomains":"abc","errorTileUrl":"","tms":false,"continuousWorld":false,"noWrap":false,"zoomOffset":0,"zoomReverse":false,"opacity":1,"zIndex":null,"unloadInvisibleTiles":null,"updateWhenIdle":null,"detectRetina":false,"reuseTiles":false,"attribution":"&copy; <a href=\"http://openstreetmap.org\">OpenStreetMap\u003c/a> contributors, <a href=\"http://creativecommons.org/licenses/by-sa/2.0/\">CC-BY-SA\u003c/a>"}]}],"setView":[[48.842275,2.268224],17,[]]},"evals":[],"jsHooks":[]}</script></p>
+<div id="htmlwidget-a83d4384bcc71d9ce9a2" style="width:672px;height:480px;" class="leaflet html-widget"></div>
+<script type="application/json" data-for="htmlwidget-a83d4384bcc71d9ce9a2">{"x":{"calls":[{"method":"addTiles","args":["http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",null,null,{"minZoom":0,"maxZoom":18,"maxNativeZoom":null,"tileSize":256,"subdomains":"abc","errorTileUrl":"","tms":false,"continuousWorld":false,"noWrap":false,"zoomOffset":0,"zoomReverse":false,"opacity":1,"zIndex":null,"unloadInvisibleTiles":null,"updateWhenIdle":null,"detectRetina":false,"reuseTiles":false,"attribution":"&copy; <a href=\"http://openstreetmap.org\">OpenStreetMap\u003c/a> contributors, <a href=\"http://creativecommons.org/licenses/by-sa/2.0/\">CC-BY-SA\u003c/a>"}]}],"setView":[[48.842275,2.268224],17,[]]},"evals":[],"jsHooks":[]}</script>
 <p>On peut y ajouter une <em>pop-up</em> assez facilement.</p>
 <pre class="r"><code>m %&gt;% addPopups(2.268224, 48.842275, &quot;IUT Paris Descartes&quot;)</code></pre>
-<p><div id="htmlwidget-1190" style="width:672px;height:480px;" class="leaflet html-widget"></div>
-<script type="application/json" data-for="htmlwidget-1190">{"x":{"calls":[{"method":"addTiles","args":["http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",null,null,{"minZoom":0,"maxZoom":18,"maxNativeZoom":null,"tileSize":256,"subdomains":"abc","errorTileUrl":"","tms":false,"continuousWorld":false,"noWrap":false,"zoomOffset":0,"zoomReverse":false,"opacity":1,"zIndex":null,"unloadInvisibleTiles":null,"updateWhenIdle":null,"detectRetina":false,"reuseTiles":false,"attribution":"&copy; <a href=\"http://openstreetmap.org\">OpenStreetMap\u003c/a> contributors, <a href=\"http://creativecommons.org/licenses/by-sa/2.0/\">CC-BY-SA\u003c/a>"}]},{"method":"addPopups","args":[48.842275,2.268224,"IUT Paris Descartes",null,null,{"maxWidth":300,"minWidth":50,"maxHeight":null,"autoPan":true,"keepInView":false,"closeButton":true,"zoomAnimation":true,"closeOnClick":null,"className":""}]}],"setView":[[48.842275,2.268224],17,[]],"limits":{"lat":[48.842275,48.842275],"lng":[2.268224,2.268224]}},"evals":[],"jsHooks":[]}</script></p>
+<div id="htmlwidget-465aabe8baeb61da0e41" style="width:672px;height:480px;" class="leaflet html-widget"></div>
+<script type="application/json" data-for="htmlwidget-465aabe8baeb61da0e41">{"x":{"calls":[{"method":"addTiles","args":["http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",null,null,{"minZoom":0,"maxZoom":18,"maxNativeZoom":null,"tileSize":256,"subdomains":"abc","errorTileUrl":"","tms":false,"continuousWorld":false,"noWrap":false,"zoomOffset":0,"zoomReverse":false,"opacity":1,"zIndex":null,"unloadInvisibleTiles":null,"updateWhenIdle":null,"detectRetina":false,"reuseTiles":false,"attribution":"&copy; <a href=\"http://openstreetmap.org\">OpenStreetMap\u003c/a> contributors, <a href=\"http://creativecommons.org/licenses/by-sa/2.0/\">CC-BY-SA\u003c/a>"}]},{"method":"addPopups","args":[48.842275,2.268224,"IUT Paris Descartes",null,null,{"maxWidth":300,"minWidth":50,"maxHeight":null,"autoPan":true,"keepInView":false,"closeButton":true,"zoomAnimation":true,"closeOnClick":null,"className":""}]}],"setView":[[48.842275,2.268224],17,[]],"limits":{"lat":[48.842275,48.842275],"lng":[2.268224,2.268224]}},"evals":[],"jsHooks":[]}</script>
 <p>Ou un marqueur, pour lequel le texte s’affichera lorsque nous cliquerons sur le marqueur.</p>
 <pre class="r"><code>m %&gt;% addMarkers(2.268224, 48.842275, popup = &quot;IUT Paris Descartes&quot;)</code></pre>
-<p><div id="htmlwidget-3691" style="width:672px;height:480px;" class="leaflet html-widget"></div>
-<script type="application/json" data-for="htmlwidget-3691">{"x":{"calls":[{"method":"addTiles","args":["http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",null,null,{"minZoom":0,"maxZoom":18,"maxNativeZoom":null,"tileSize":256,"subdomains":"abc","errorTileUrl":"","tms":false,"continuousWorld":false,"noWrap":false,"zoomOffset":0,"zoomReverse":false,"opacity":1,"zIndex":null,"unloadInvisibleTiles":null,"updateWhenIdle":null,"detectRetina":false,"reuseTiles":false,"attribution":"&copy; <a href=\"http://openstreetmap.org\">OpenStreetMap\u003c/a> contributors, <a href=\"http://creativecommons.org/licenses/by-sa/2.0/\">CC-BY-SA\u003c/a>"}]},{"method":"addMarkers","args":[48.842275,2.268224,null,null,null,{"clickable":true,"draggable":false,"keyboard":true,"title":"","alt":"","zIndexOffset":0,"opacity":1,"riseOnHover":false,"riseOffset":250},"IUT Paris Descartes",null,null]}],"setView":[[48.842275,2.268224],17,[]],"limits":{"lat":[48.842275,48.842275],"lng":[2.268224,2.268224]}},"evals":[],"jsHooks":[]}</script></p>
+<div id="htmlwidget-5d5c47635947cdfec09a" style="width:672px;height:480px;" class="leaflet html-widget"></div>
+<script type="application/json" data-for="htmlwidget-5d5c47635947cdfec09a">{"x":{"calls":[{"method":"addTiles","args":["http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",null,null,{"minZoom":0,"maxZoom":18,"maxNativeZoom":null,"tileSize":256,"subdomains":"abc","errorTileUrl":"","tms":false,"continuousWorld":false,"noWrap":false,"zoomOffset":0,"zoomReverse":false,"opacity":1,"zIndex":null,"unloadInvisibleTiles":null,"updateWhenIdle":null,"detectRetina":false,"reuseTiles":false,"attribution":"&copy; <a href=\"http://openstreetmap.org\">OpenStreetMap\u003c/a> contributors, <a href=\"http://creativecommons.org/licenses/by-sa/2.0/\">CC-BY-SA\u003c/a>"}]},{"method":"addMarkers","args":[48.842275,2.268224,null,null,null,{"clickable":true,"draggable":false,"keyboard":true,"title":"","alt":"","zIndexOffset":0,"opacity":1,"riseOnHover":false,"riseOffset":250},"IUT Paris Descartes",null,null]}],"setView":[[48.842275,2.268224],17,[]],"limits":{"lat":[48.842275,48.842275],"lng":[2.268224,2.268224]}},"evals":[],"jsHooks":[]}</script>
 <p>Voire des formes classiques (cercle, rectangle, polygone)</p>
 <pre class="r"><code>m %&gt;% addCircles(2.268224, 48.842275, radius = 100) %&gt;% 
     addRectangles(2.27, 48.835, 2.28, 48.84)</code></pre>
-<p><div id="htmlwidget-1624" style="width:672px;height:480px;" class="leaflet html-widget"></div>
-<script type="application/json" data-for="htmlwidget-1624">{"x":{"calls":[{"method":"addTiles","args":["http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",null,null,{"minZoom":0,"maxZoom":18,"maxNativeZoom":null,"tileSize":256,"subdomains":"abc","errorTileUrl":"","tms":false,"continuousWorld":false,"noWrap":false,"zoomOffset":0,"zoomReverse":false,"opacity":1,"zIndex":null,"unloadInvisibleTiles":null,"updateWhenIdle":null,"detectRetina":false,"reuseTiles":false,"attribution":"&copy; <a href=\"http://openstreetmap.org\">OpenStreetMap\u003c/a> contributors, <a href=\"http://creativecommons.org/licenses/by-sa/2.0/\">CC-BY-SA\u003c/a>"}]},{"method":"addCircles","args":[48.842275,2.268224,100,null,null,{"lineCap":null,"lineJoin":null,"clickable":true,"pointerEvents":null,"className":"","stroke":true,"color":"#03F","weight":5,"opacity":0.5,"fill":true,"fillColor":"#03F","fillOpacity":0.2,"dashArray":null},null]},{"method":"addRectangles","args":[48.835,2.27,48.84,2.28,null,null,{"lineCap":null,"lineJoin":null,"clickable":true,"pointerEvents":null,"className":"","stroke":true,"color":"#03F","weight":5,"opacity":0.5,"fill":true,"fillColor":"#03F","fillOpacity":0.2,"dashArray":null,"smoothFactor":1,"noClip":false},null]}],"setView":[[48.842275,2.268224],17,[]],"limits":{"lat":[48.835,48.842275],"lng":[2.268224,2.28]}},"evals":[],"jsHooks":[]}</script></p>
+<div id="htmlwidget-98953d74fe150d7e0df3" style="width:672px;height:480px;" class="leaflet html-widget"></div>
+<script type="application/json" data-for="htmlwidget-98953d74fe150d7e0df3">{"x":{"calls":[{"method":"addTiles","args":["http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",null,null,{"minZoom":0,"maxZoom":18,"maxNativeZoom":null,"tileSize":256,"subdomains":"abc","errorTileUrl":"","tms":false,"continuousWorld":false,"noWrap":false,"zoomOffset":0,"zoomReverse":false,"opacity":1,"zIndex":null,"unloadInvisibleTiles":null,"updateWhenIdle":null,"detectRetina":false,"reuseTiles":false,"attribution":"&copy; <a href=\"http://openstreetmap.org\">OpenStreetMap\u003c/a> contributors, <a href=\"http://creativecommons.org/licenses/by-sa/2.0/\">CC-BY-SA\u003c/a>"}]},{"method":"addCircles","args":[48.842275,2.268224,100,null,null,{"lineCap":null,"lineJoin":null,"clickable":true,"pointerEvents":null,"className":"","stroke":true,"color":"#03F","weight":5,"opacity":0.5,"fill":true,"fillColor":"#03F","fillOpacity":0.2,"dashArray":null},null]},{"method":"addRectangles","args":[48.835,2.27,48.84,2.28,null,null,{"lineCap":null,"lineJoin":null,"clickable":true,"pointerEvents":null,"className":"","stroke":true,"color":"#03F","weight":5,"opacity":0.5,"fill":true,"fillColor":"#03F","fillOpacity":0.2,"dashArray":null,"smoothFactor":1,"noClip":false},null]}],"setView":[[48.842275,2.268224],17,[]],"limits":{"lat":[48.835,48.842275],"lng":[2.268224,2.28]}},"evals":[],"jsHooks":[]}</script>
 <p>A partir du jeu de données <code>ozone</code> du package <code>maps</code>, et contenant des informations géogrpahiques, nous allons représenter ces informations sur une carte.</p>
 <pre class="r"><code>DT::datatable(head(ozone))</code></pre>
-<p><div id="htmlwidget-1667" style="width:100%;height:auto;" class="datatables html-widget"></div>
-<script type="application/json" data-for="htmlwidget-1667">{"x":{"data":[["1","2","3","4","5","6"],[-74.0262,-74.5992,-74.7138,-74.1408,-74.2554,-74.1694],[40.2217,40.5597,40.7832,40.6628,40.6514,40.7001],[59,58,90,80,50,47]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> \u003c/th>\n      <th>x\u003c/th>\n      <th>y\u003c/th>\n      <th>median\u003c/th>\n    \u003c/tr>\n  \u003c/thead>\n\u003c/table>","options":{"columnDefs":[{"className":"dt-right","targets":[1,2,3]},{"orderable":false,"targets":0}],"order":[],"autoWidth":false,"orderClasses":false},"callback":null,"filter":"none"},"evals":[],"jsHooks":[]}</script></p>
+<div id="htmlwidget-a245ff5b5f541a945500" style="width:100%;height:auto;" class="datatables html-widget"></div>
+<script type="application/json" data-for="htmlwidget-a245ff5b5f541a945500">{"x":{"filter":"none","data":[["1","2","3","4","5","6"],[-74.0262,-74.5992,-74.7138,-74.1408,-74.2554,-74.1694],[40.2217,40.5597,40.7832,40.6628,40.6514,40.7001],[59,58,90,80,50,47]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> \u003c/th>\n      <th>x\u003c/th>\n      <th>y\u003c/th>\n      <th>median\u003c/th>\n    \u003c/tr>\n  \u003c/thead>\n\u003c/table>","options":{"columnDefs":[{"className":"dt-right","targets":[1,2,3]},{"orderable":false,"targets":0}],"order":[],"autoWidth":false,"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
 <p>Ici, nous faisons en sorte que la taille des cercles soient dépendantes de la variable <code>median</code>, mais nous devons ajuster <em>à la main</em> pour avoir des valeurs intéressantes pour la représentation.</p>
 <pre class="r"><code>leaflet(ozone) %&gt;% addTiles() %&gt;% 
     addCircles(lng = ~x, lat = ~y, radius = ~median*100)</code></pre>
-<p><div id="htmlwidget-9725" style="width:672px;height:480px;" class="leaflet html-widget"></div>
-<script type="application/json" data-for="htmlwidget-9725">{"x":{"calls":[{"method":"addTiles","args":["http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",null,null,{"minZoom":0,"maxZoom":18,"maxNativeZoom":null,"tileSize":256,"subdomains":"abc","errorTileUrl":"","tms":false,"continuousWorld":false,"noWrap":false,"zoomOffset":0,"zoomReverse":false,"opacity":1,"zIndex":null,"unloadInvisibleTiles":null,"updateWhenIdle":null,"detectRetina":false,"reuseTiles":false,"attribution":"&copy; <a href=\"http://openstreetmap.org\">OpenStreetMap\u003c/a> contributors, <a href=\"http://creativecommons.org/licenses/by-sa/2.0/\">CC-BY-SA\u003c/a>"}]},{"method":"addCircles","args":[[40.2217,40.5597,40.7832,40.6628,40.6514,40.7001,40.7087,40.9379,40.7373,40.7373,40.9665,41.0811,41.1384,41.0639,41.19,41.3905,41.316,41.5624,41.677,41.3905,41.5624,41.6712,41.3619,41.7687,41.8603,41.9004,42.1124,42.2499,42.588,41.7114,42.6453,42.2499,42.3244,42.376,42.3817,42.4218,41.9176,42.4505,42.6281,42.8,43.3214],[-74.0262,-74.5992,-74.7138,-74.1408,-74.2554,-74.1694,-73.9116,-73.8543,-73.5678,-73.1668,-73.7397,-73.6251,-73.5678,-73.5105,-73.1668,-73.4533,-72.9376,-73.0522,-73.2241,-72.4219,-72.6511,-72.7657,-72.0782,-72.7084,-72.6511,-72.0782,-72.5938,-71.7917,-71.7917,-71.1041,-71.3333,-71.0468,-71.1041,-71.1041,-71.2187,-71.0468,-74.0262,-73.2241,-73.7397,-73.9116,-73.6251],[5900,5800,9000,8000,5000,4700,8100,5600,5500,7200,6200,10000,9700,9100,8000,8100,7600,7500,8500,9400,8000,8200,7400,6800,6000,8500,3400,6600,6500,7300,6300,6200,3600,5400,4200,5200,6400,6500,6000,5600,6400],null,null,{"lineCap":null,"lineJoin":null,"clickable":true,"pointerEvents":null,"className":"","stroke":true,"color":"#03F","weight":5,"opacity":0.5,"fill":true,"fillColor":"#03F","fillOpacity":0.2,"dashArray":null},null]}],"limits":{"lat":[40.2217,43.3214],"lng":[-74.7138,-71.0468]}},"evals":[],"jsHooks":[]}</script></p>
+<div id="htmlwidget-fe5e38be4e666470c535" style="width:672px;height:480px;" class="leaflet html-widget"></div>
+<script type="application/json" data-for="htmlwidget-fe5e38be4e666470c535">{"x":{"calls":[{"method":"addTiles","args":["http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",null,null,{"minZoom":0,"maxZoom":18,"maxNativeZoom":null,"tileSize":256,"subdomains":"abc","errorTileUrl":"","tms":false,"continuousWorld":false,"noWrap":false,"zoomOffset":0,"zoomReverse":false,"opacity":1,"zIndex":null,"unloadInvisibleTiles":null,"updateWhenIdle":null,"detectRetina":false,"reuseTiles":false,"attribution":"&copy; <a href=\"http://openstreetmap.org\">OpenStreetMap\u003c/a> contributors, <a href=\"http://creativecommons.org/licenses/by-sa/2.0/\">CC-BY-SA\u003c/a>"}]},{"method":"addCircles","args":[[40.2217,40.5597,40.7832,40.6628,40.6514,40.7001,40.7087,40.9379,40.7373,40.7373,40.9665,41.0811,41.1384,41.0639,41.19,41.3905,41.316,41.5624,41.677,41.3905,41.5624,41.6712,41.3619,41.7687,41.8603,41.9004,42.1124,42.2499,42.588,41.7114,42.6453,42.2499,42.3244,42.376,42.3817,42.4218,41.9176,42.4505,42.6281,42.8,43.3214],[-74.0262,-74.5992,-74.7138,-74.1408,-74.2554,-74.1694,-73.9116,-73.8543,-73.5678,-73.1668,-73.7397,-73.6251,-73.5678,-73.5105,-73.1668,-73.4533,-72.9376,-73.0522,-73.2241,-72.4219,-72.6511,-72.7657,-72.0782,-72.7084,-72.6511,-72.0782,-72.5938,-71.7917,-71.7917,-71.1041,-71.3333,-71.0468,-71.1041,-71.1041,-71.2187,-71.0468,-74.0262,-73.2241,-73.7397,-73.9116,-73.6251],[5900,5800,9000,8000,5000,4700,8100,5600,5500,7200,6200,10000,9700,9100,8000,8100,7600,7500,8500,9400,8000,8200,7400,6800,6000,8500,3400,6600,6500,7300,6300,6200,3600,5400,4200,5200,6400,6500,6000,5600,6400],null,null,{"lineCap":null,"lineJoin":null,"clickable":true,"pointerEvents":null,"className":"","stroke":true,"color":"#03F","weight":5,"opacity":0.5,"fill":true,"fillColor":"#03F","fillOpacity":0.2,"dashArray":null},null]}],"limits":{"lat":[40.2217,43.3214],"lng":[-74.7138,-71.0468]}},"evals":[],"jsHooks":[]}</script>
 </div>
 <div id="avec-la-librairie-ggmap" class="section level3">
 <h3>Avec la librairie <code>ggmap</code></h3>
@@ -840,10 +850,10 @@ m</code></pre>
 </ul>
 <pre class="r"><code>m = get_map(&quot;Paris,France&quot;)
 ggmap(m)</code></pre>
-<p><img src="visualisation-donnees_files/figure-html/-ggmap-1.png" title="" alt="" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="visualisation-donnees_files/figure-html/-ggmap-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>La fonction <code>qmplot()</code> permet de rendre invisible l’étape de récupération des tuiles, et est l’équivalent de <code>qplot</code> par rapport à <code>ggmap()</code>.</p>
 <pre class="r"><code>qmplot(x, y, data = ozone, color = median)</code></pre>
-<p><img src="visualisation-donnees_files/figure-html/-qmplot-1.png" title="" alt="" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="visualisation-donnees_files/figure-html/-qmplot-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>On peut aussi vouloir spécifier nous-même les différentes étapes, comme ci-dessous :</p>
 <ul>
 <li>récupération des tuiles de la carte, en spécifiant les limites de la zone</li>
@@ -856,7 +866,7 @@ top = max(ozone$y) + .5
 m = get_map(location = c(left, bottom, right, top), 
             maptype = &quot;toner-lite&quot;, color = &quot;bw&quot;)
 ggmap(m) + geom_point(data = ozone, aes(x, y, color = median))</code></pre>
-<p><img src="visualisation-donnees_files/figure-html/-ggmap-data-1.png" title="" alt="" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="visualisation-donnees_files/figure-html/-ggmap-data-1.png" width="672" style="display: block; margin: auto;" /></p>
 </div>
 </div>
 <div id="quelques-exemples-complementaires" class="section level2">
@@ -871,20 +881,20 @@ ggmap(m) + geom_point(data = ozone, aes(x, y, color = median))</code></pre>
 for (i in 1:4) {
     boxplot(iris[,i] ~ iris$Species, main = names(iris)[i])
 }</code></pre>
-<p><img src="visualisation-donnees_files/figure-html/iris-boxplot-1.png" title="" alt="" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="visualisation-donnees_files/figure-html/iris-boxplot-1.png" width="672" style="display: block; margin: auto;" /></p>
 </div>
 <div id="avec-ggplot" class="section level4">
 <h4>Avec <code>ggplot</code></h4>
 <pre class="r"><code>ggplot(melt(iris, id.vars = &quot;Species&quot;), aes(Species, value)) + 
     geom_boxplot() + facet_grid(1 ~ variable)</code></pre>
-<p><img src="visualisation-donnees_files/figure-html/iris-boxplot-ggplot-1.png" title="" alt="" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="visualisation-donnees_files/figure-html/iris-boxplot-ggplot-1.png" width="672" style="display: block; margin: auto;" /></p>
 </div>
 </div>
 <div id="donnees-dancombe" class="section level3">
 <h3>Données d’ancombe</h3>
 <pre class="r"><code>DT::datatable(anscombe, options = list(searching = F, ordering = F, paging = F))</code></pre>
-<p><div id="htmlwidget-8104" style="width:100%;height:auto;" class="datatables html-widget"></div>
-<script type="application/json" data-for="htmlwidget-8104">{"x":{"data":[["1","2","3","4","5","6","7","8","9","10","11"],[10,8,13,9,11,14,6,4,12,7,5],[10,8,13,9,11,14,6,4,12,7,5],[10,8,13,9,11,14,6,4,12,7,5],[8,8,8,8,8,8,8,19,8,8,8],[8.04,6.95,7.58,8.81,8.33,9.96,7.24,4.26,10.84,4.82,5.68],[9.14,8.14,8.74,8.77,9.26,8.1,6.13,3.1,9.13,7.26,4.74],[7.46,6.77,12.74,7.11,7.81,8.84,6.08,5.39,8.15,6.42,5.73],[6.58,5.76,7.71,8.84,8.47,7.04,5.25,12.5,5.56,7.91,6.89]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> \u003c/th>\n      <th>x1\u003c/th>\n      <th>x2\u003c/th>\n      <th>x3\u003c/th>\n      <th>x4\u003c/th>\n      <th>y1\u003c/th>\n      <th>y2\u003c/th>\n      <th>y3\u003c/th>\n      <th>y4\u003c/th>\n    \u003c/tr>\n  \u003c/thead>\n\u003c/table>","options":{"searching":false,"ordering":false,"paging":false,"columnDefs":[{"className":"dt-right","targets":[1,2,3,4,5,6,7,8]},{"orderable":false,"targets":0}],"order":[],"autoWidth":false,"orderClasses":false},"callback":null,"filter":"none"},"evals":[],"jsHooks":[]}</script></p>
+<div id="htmlwidget-bf955360067bf8001b70" style="width:100%;height:auto;" class="datatables html-widget"></div>
+<script type="application/json" data-for="htmlwidget-bf955360067bf8001b70">{"x":{"filter":"none","data":[["1","2","3","4","5","6","7","8","9","10","11"],[10,8,13,9,11,14,6,4,12,7,5],[10,8,13,9,11,14,6,4,12,7,5],[10,8,13,9,11,14,6,4,12,7,5],[8,8,8,8,8,8,8,19,8,8,8],[8.04,6.95,7.58,8.81,8.33,9.96,7.24,4.26,10.84,4.82,5.68],[9.14,8.14,8.74,8.77,9.26,8.1,6.13,3.1,9.13,7.26,4.74],[7.46,6.77,12.74,7.11,7.81,8.84,6.08,5.39,8.15,6.42,5.73],[6.58,5.76,7.71,8.84,8.47,7.04,5.25,12.5,5.56,7.91,6.89]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> \u003c/th>\n      <th>x1\u003c/th>\n      <th>x2\u003c/th>\n      <th>x3\u003c/th>\n      <th>x4\u003c/th>\n      <th>y1\u003c/th>\n      <th>y2\u003c/th>\n      <th>y3\u003c/th>\n      <th>y4\u003c/th>\n    \u003c/tr>\n  \u003c/thead>\n\u003c/table>","options":{"searching":false,"ordering":false,"paging":false,"columnDefs":[{"className":"dt-right","targets":[1,2,3,4,5,6,7,8]},{"orderable":false,"targets":0}],"order":[],"autoWidth":false,"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
 <pre class="r"><code>par(mfrow = c(2, 2), mar = c(2, 2, 0, 0)+.1)
 f &lt;- function(df) {
     names(df) = c(&quot;x&quot;, &quot;y&quot;)
@@ -897,7 +907,7 @@ f &lt;- function(df) {
 for (i in 1:4) {
     f(anscombe[,paste(c(&quot;x&quot;, &quot;y&quot;), i, sep = &quot;&quot;)])
 }</code></pre>
-<p><img src="visualisation-donnees_files/figure-html/anscombe-plot-1.png" title="" alt="" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="visualisation-donnees_files/figure-html/anscombe-plot-1.png" width="672" style="display: block; margin: auto;" /></p>
 <pre class="r"><code>ans = transform(
     melt(transform(anscombe, id = 1:nrow(anscombe)), id.vars = &quot;id&quot;),
     axe = substr(as.character(variable), 1, 1),
@@ -911,7 +921,7 @@ ansXY = merge(ansX, ansY, by = c(&quot;id&quot;, &quot;num&quot;))
 ggplot(ansXY, aes(value.x, value.y)) + geom_point() + 
     facet_grid(facetY.x ~ facetX.x) + 
     geom_smooth(method = &quot;lm&quot;, se = FALSE, fullrange = T)</code></pre>
-<p><img src="visualisation-donnees_files/figure-html/anscombe-ggplot-1.png" title="" alt="" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="visualisation-donnees_files/figure-html/anscombe-ggplot-1.png" width="672" style="display: block; margin: auto;" /></p>
 </div>
 </div>
 <div id="a-faire" class="section level2">
@@ -985,14 +995,14 @@ airbnb.comp = read.table(&quot;airbnb-paris-2015-09-02.csv&quot;,
                          quote = &quot;\&quot;&quot;, comment.char = &quot;&quot;)</code></pre>
 <p>Sur ces données, il est déjà possible de représenter chaque logement par un point, assez simplement</p>
 <pre class="r"><code>ggplot(airbnb.summ, aes(x=longitude, y=latitude)) + geom_point()</code></pre>
-<p><img src="visualisation-donnees_files/figure-html/airbnb-point-1.png" title="" alt="" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="visualisation-donnees_files/figure-html/airbnb-point-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>La librairie <a href="https://github.com/ropensci/geojsonio"><code>geojsonio</code></a> permet de lire et d’écrire des données au format <a href="http://geojson.org/geojson-spec.html">GeoJSON</a>, permettant de réprésenter des objets géoraphiques dans un formalisme issue de <code>JSON</code>. Il est très utilisé pour représenter des zones, telles que des villes, des pays, …</p>
 <p>On importe donc les données des arrondissements. La fonction <code>fortify()</code> de <code>ggplot2</code> nous permet ici de passer à un format lisible pour <code>ggplot()</code>.</p>
 <pre class="r"><code>airbnb.neigh = geojson_read(&quot;airbnb-paris-2015-09-02-neighbourhoods.geojson&quot;, what = &quot;sp&quot;)
 airbnb.neigh.for = fortify(airbnb.neigh)
 ggplot(airbnb.neigh.for, aes(long, lat, group=group)) +
     geom_polygon()  + theme_void()</code></pre>
-<p><img src="visualisation-donnees_files/figure-html/airbnb-geo-1.png" title="" alt="" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="visualisation-donnees_files/figure-html/airbnb-geo-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>Le problème dans notre cas est que les quartiers ne sont pas classés dans un ordre spécifique dans les données, et que l’objet <code>airbnb.neigh</code> ne comporte plus le nom du quartier, ce qui va nous empêcher de faire le lien avec les autres données. Le code suivant permet donc de récupérer l’ordre des quartiers et de le stocker dans un <code>data.frame</code>. On lit différement le jeu de données.</p>
 <pre class="r"><code>airbnb.neigh.ord = data.frame(
     id = as.character(0:19),
@@ -1028,14 +1038,14 @@ airbnb.neigh.ord</code></pre>
 ggplot(airbnb.neigh.for, aes(long, lat, group=group)) +
     geom_polygon(fill = &quot;gray70&quot;, color = &quot;gray50&quot;) +
     geom_text(data = airbnb.neigh.cen, aes(label = neighbourhood, group=id)) + theme_void()</code></pre>
-<p><img src="visualisation-donnees_files/figure-html/airbnb-center-1.png" title="" alt="" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="visualisation-donnees_files/figure-html/airbnb-center-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>Au final, on peut faire une carte des arrondissements, en y ajoutant le nom du voisinage, les points des logements et une couleur pour chaque arrondissement dépendant de la variable <code>group</code> par exemple (on pourra utiliser ce schéma pour représenter des informations statistiques par exemple)</p>
 <pre class="r"><code>ggplot(airbnb.neigh.for) +
     geom_polygon(aes(long, lat, group=group, fill=id), color=&quot;gray50&quot;) +
     geom_point(data=airbnb.summ, aes(longitude, latitude), col=&quot;gray30&quot;, alpha=.5) +
     geom_text(data=airbnb.neigh.cen, aes(long, lat, label=neighbourhood, group=id)) + 
     theme_void() + theme(legend.position=&quot;none&quot;)</code></pre>
-<p><img src="visualisation-donnees_files/figure-html/airbnb-tout-1.png" title="" alt="" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="visualisation-donnees_files/figure-html/airbnb-tout-1.png" width="672" style="display: block; margin: auto;" /></p>
 </div>
 <div id="questions" class="section level4">
 <h4>Questions</h4>

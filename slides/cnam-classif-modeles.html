@@ -30,7 +30,7 @@
         usePrettify: true,
         enableSlideAreas: true,
         enableTouch: true,
-              },
+                      },
 
       // Author information
       presenters: [
@@ -192,7 +192,7 @@ library(gridExtra)</pre></div>
 </article></slide><slide class=''><hgroup><h2>\(k\)-means</h2></hgroup><article  id="k-means">
 
 <ul>
-<li>Critère à minimiser :\[
+<li>Critère à minimiser : \[
 W(z,g) =  \sum_{k=1}^s \sum_{i \in z_k}  d^2(x_i,g_k)
 \]</li>
 <li>Somme des inerties intra-classes</li>
@@ -236,7 +236,7 @@ W(z,g) =  \sum_{k=1}^s \sum_{i \in z_k}  d^2(x_i,g_k)
 </article></slide><slide class=''><hgroup><h2>Fuzzy \(c\)-means</h2></hgroup><article  id="fuzzy-c-means">
 
 <ul>
-<li>Critère à minimiser :\[
+<li>Critère à minimiser : \[
 J_m(\mu,g) =  \sum_{k=1}^s \sum_{i=1}^n (\mu_{ik})^m d^2(x_i,g_k)
 \]</li>
 <li>\(\mu = [\mu_{ik}]\) : degré d&#39;appartenance de \(i\) à la classe \(k\) (entre 0 et 1)</li>
@@ -291,7 +291,7 @@ J_m(\mu,g) =  \sum_{k=1}^s \sum_{i=1}^n (\mu_{ik})^m d^2(x_i,g_k)
 
 <ul>
 <li>Critères d&#39;aggrégation à définir : simple, complet, médian, moyen, centroïde</li>
-<li>Le plus utilisé : Critère de <strong>Ward</strong>\[
+<li>Le plus utilisé : Critère de <strong>Ward</strong> \[
 \delta_{Ward} (z_h, z_{h&#39;}) = \frac{\#z_h \times \#z_{h&#39;}}{\#z_h + \#z_{h&#39;}} d^2(z_h, z_{h&#39;})
 \]</li>
 <li>Basé sur la distance euclidienne (ou autre distance si besoin)</li>
@@ -306,12 +306,12 @@ J_m(\mu,g) =  \sum_{k=1}^s \sum_{i=1}^n (\mu_{ik})^m d^2(x_i,g_k)
 <li>Cas d’une variable continue, avec deux classes présentes</li>
 </ul>
 
-<p><img src="cnam-classif-modeles_files/figure-html/ex-modele-1.png" title="" alt="" width="768" style="display: block; margin: auto;" /></p>
+<p><img src="cnam-classif-modeles_files/figure-html/ex-modele-1.png" width="768" style="display: block; margin: auto;" /></p>
 
 </article></slide><slide class=''><hgroup><h2>Densité de probabilité</h2></hgroup><article  id="densite-de-probabilite">
 
 <ul>
-<li>Tableau de données \(x\) considéré comme échantillon \((x_1, \ldots,x_n)\) i.i.d. de taille \(n\) d’une variable aléatoire avec la densité \(\varphi(x,\theta)\) définie par :\[
+<li>Tableau de données \(x\) considéré comme échantillon \((x_1, \ldots,x_n)\) i.i.d. de taille \(n\) d’une variable aléatoire avec la densité \(\varphi(x,\theta)\) définie par : \[
 \varphi(x_i;\theta) = \sum_{k=1}^s p_k \varphi_k (x_i;\alpha_k)
 \]</li>
 <li>\(\varphi_k(x_i, \alpha_k)\) : densité de probabilité de la classe \(k\)</li>
@@ -328,11 +328,11 @@ J_m(\mu,g) =  \sum_{k=1}^s \sum_{i=1}^n (\mu_{ik})^m d^2(x_i,g_k)
 
 <ul>
 <li>Problème statistique : estimer les proportions des composants ( les \((p_k)\)) et les paramètres (les \((\alpha_k)\))</li>
-<li>Utilisation de la log-vraisemblance :\[
+<li>Utilisation de la log-vraisemblance : \[
 L(x_1,\ldots,x_n;\theta) = \sum_{i=1}^n \log \left( \sum_{k=1}^s p_k \varphi_k (x_i;\alpha_k) \right)
 \]</li>
 <li>Pour la classification, chaque \(x_i\) appartiendra à une classe \(k\), tel que \(z_{ik} = 1\) (et 0 sinon)</li>
-<li>Log-vraissemblance complétée (ou classifiante) :\[
+<li>Log-vraissemblance complétée (ou classifiante) : \[
 L_c(x_1,\ldots,x_n; z, \theta) = \sum_{i=1}^n \sum_{k=1}^s z_{ik} \log\left( p_k \varphi_k (x_i;\alpha_k) \right)
 \]</li>
 </ul>
@@ -370,10 +370,10 @@ L_c(x_1,\ldots,x_n; z, \theta) = \sum_{i=1}^n \sum_{k=1}^s z_{ik} \log\left( p_k
 
 <ol>
 <li>Déterminer une situation initiale</li>
-<li><strong>Estimation</strong> des probabilités a posteriori\[
+<li><strong>Estimation</strong> des probabilités a posteriori \[
 t_{ik} = \frac{p_k \varphi_k (x_i;\alpha_k)}{\sum_{\ell=1}^s p_\ell \varphi_\ell (x_i;\alpha_\ell)}
 \]</li>
-<li><strong>Maximisation</strong> : calcul des paramètres du mélange\[
+<li><strong>Maximisation</strong> : calcul des paramètres du mélange \[
 \begin{aligned}
     p_k &amp;= \frac{\sum_{i=1}^n t_{ik}}{n} \\
     \alpha_k &amp;= \mbox{dépendant du modèle}
@@ -392,10 +392,10 @@ t_{ik} = \frac{p_k \varphi_k (x_i;\alpha_k)}{\sum_{\ell=1}^s p_\ell \varphi_\ell
 <ol>
 <li>Déterminer une situation initiale</li>
 <li><strong>Estimation</strong> des probabilités a posteriori \(t_{ik}\) (identique)</li>
-<li><strong>Classification</strong> des individus avec la méthode du <em>MAP</em>\[
+<li><strong>Classification</strong> des individus avec la méthode du <em>MAP</em> \[
 z_k = \{ i | t_{ik} = max_{\ell=1,\ldots,s} t_{i\ell} \}
 \]</li>
-<li><strong>Maximisation</strong> : calcul des paramètres du mélange\[
+<li><strong>Maximisation</strong> : calcul des paramètres du mélange \[
 \begin{aligned}
     p_k &amp;= \frac{Card(z_k)}{n} \\
     \alpha_k &amp;= \mbox{dépendant du modèle}
@@ -432,10 +432,10 @@ z_k = \{ i | t_{ik} = max_{\ell=1,\ldots,s} t_{i\ell} \}
 </article></slide><slide class=''><hgroup><h2>Approche hiérarchique</h2></hgroup><article  id="approche-hierarchique">
 
 <ul>
-<li>Utilisation de la log-vraisemblance classifiante\[
+<li>Utilisation de la log-vraisemblance classifiante \[
 L_C(x; z, \theta) = \sum_{k=1}^s L_(z_k, \theta_k)
 \]</li>
-<li>Distance entre deux classes définie par\[
+<li>Distance entre deux classes définie par \[
 d(z_k, z_{k&#39;}) = L_C(z_k, \theta_k) + L_C(Z_{k&#39;}, \theta_{k&#39;}) - L_C(z_{k \cup k&#39;}, \theta_{k \cup k&#39;})
 \]
 
@@ -453,7 +453,7 @@ d(z_k, z_{k&#39;}) = L_C(z_k, \theta_k) + L_C(Z_{k&#39;}, \theta_{k&#39;}) - L_C
 
 <ul>
 <li>En présence de données continues, utilisation du modèle gaussien</li>
-<li>Densité de probabilité de la classe \(k\) :\[
+<li>Densité de probabilité de la classe \(k\) : \[
 \varphi(x_i;g_k,\Sigma_k) = (2\pi)^{-d/2} |\Sigma_k|^{-1/2} \exp \left( -\frac{1}{2} (x_i - g_k)&#39; \Sigma_k^{-1} (x_i - g_k) \right)
 \]</li>
 <li>\(g_k\) : moyenne des variables pour la classe \(k\)</li>
@@ -462,7 +462,7 @@ d(z_k, z_{k&#39;}) = L_C(z_k, \theta_k) + L_C(Z_{k&#39;}, \theta_{k&#39;}) - L_C
 
 </article></slide><slide class=''><hgroup><h2>Décomposition de la matrice de variance</h2></hgroup><article  id="decomposition-de-la-matrice-de-variance">
 
-<p>Expression de la matrice de variance en fonction de sa décomposition en valeurs propres\[
+<p>Expression de la matrice de variance en fonction de sa décomposition en valeurs propres \[
     \Sigma_k = \lambda_k D_k A_k&#39; D_k&#39;
 \]</p>
 
@@ -508,7 +508,7 @@ d(z_k, z_{k&#39;}) = L_C(z_k, \theta_k) + L_C(Z_{k&#39;}, \theta_{k&#39;}) - L_C
 
 <ul>
 <li>Utilisation du modèle des classes latentes</li>
-<li>Densité de probabilité de la classe \(k\)\[
+<li>Densité de probabilité de la classe \(k\) \[
 \varphi(x_i;\alpha_k) = \prod_{j=1}^d \prod_{e=1}^{c_j} \left( a_k^{je} \right)^{x_i^{je}}
 \]</li>
 <li>Variable \(j\) à \(c_j\) modalités</li>
@@ -526,7 +526,7 @@ d(z_k, z_{k&#39;}) = L_C(z_k, \theta_k) + L_C(Z_{k&#39;}, \theta_{k&#39;}) - L_C
 <ul>
 <li>\(m_k^j\) : modalité majoritaire pour la variable \(j\) dans la classe \(k\)</li>
 <li>\(\varepsilon_k^j\) : probabilité d&#39;erreur</li>
-<li>\(\delta(x,y) = 0\) si \(x=y\), et \(1\) sinon\[
+<li>\(\delta(x,y) = 0\) si \(x=y\), et \(1\) sinon \[
 \varphi(x_i;\alpha_k) = \prod_{j=1}^d (1 - \varepsilon_k^j)^{1 - \delta(x_i^j,m_k^j)} \left( \frac{\varepsilon_k^j}{c_j - 1} \right)^{\delta(x_i^j,m_k^j)}
 \]</li>
 </ul></li>
@@ -562,7 +562,7 @@ d(z_k, z_{k&#39;}) = L_C(z_k, \theta_k) + L_C(Z_{k&#39;}, \theta_{k&#39;}) - L_C
 <li>Critères de choix de modèles
 
 <ul>
-<li>(ici) basé sur une pénalisation de la vraisemblance\[
+<li>(ici) basé sur une pénalisation de la vraisemblance \[
 C(s) = -2 \left( L_{max}(s) + \gamma_C \times \nu(s) \right)
 \]</li>
 <li>\(L_{max}(s)\) : vraisemblance maximum pour \(s\) classes</li>
@@ -575,13 +575,13 @@ C(s) = -2 \left( L_{max}(s) + \gamma_C \times \nu(s) \right)
 </article></slide><slide class=''><hgroup><h2>\(AIC\) et dérivés</h2></hgroup><article  id="aic-et-derives">
 
 <ul>
-<li>\(AIC\) : critère d&#39;information d&#39;Akaike (\(\gamma_{AIC} = 1\))\[
+<li>\(AIC\) : critère d&#39;information d&#39;Akaike (\(\gamma_{AIC} = 1\)) \[
 AIC(s) = -2L(s) + 2 \nu(s)
 \]</li>
-<li>\(AIC3\) : version modifiée (\(\gamma_{AIC3} = \frac{3}{2}\))\[
+<li>\(AIC3\) : version modifiée (\(\gamma_{AIC3} = \frac{3}{2}\)) \[
 AIC3(s) = -2L(s) + 3 \nu(s)
 \]</li>
-<li>\(AWE\) : approximation de la solution exacte (\(\gamma_{AWE} = \frac{1}{2}\left( \frac{3}{2} + \log n\right)\))\[
+<li>\(AWE\) : approximation de la solution exacte (\(\gamma_{AWE} = \frac{1}{2}\left( \frac{3}{2} + \log n\right)\)) \[
 AWE(s) = -2L(s) + \nu(s) \left( \frac{3}{2} + \log n\right)
 \]</li>
 <li>Critères finalement peu utilisés, mais pouvant donner de bons résultats (notemment \(AIC3\))</li>
@@ -590,10 +590,10 @@ AWE(s) = -2L(s) + \nu(s) \left( \frac{3}{2} + \log n\right)
 </article></slide><slide class=''><hgroup><h2>Critères bayésiens</h2></hgroup><article  id="criteres-bayesiens">
 
 <ul>
-<li>\(BIC\) : estimation de la vraisemblance intégrée (et similaire aux précédents avec \(\gamma_{BIC}=\frac{\log n}{2}\))\[
+<li>\(BIC\) : estimation de la vraisemblance intégrée (et similaire aux précédents avec \(\gamma_{BIC}=\frac{\log n}{2}\)) \[
 BIC(s) = L(s) - \frac{\nu(s)}{2} \log n
 \]</li>
-<li>\(ICL\) : basée sur la vraissemblance intégrée complétée\[
+<li>\(ICL\) : basée sur la vraissemblance intégrée complétée \[
 ICL(s) = L_C(s) - n\sum_{k=1}^s p_k \log p_k - \frac{\nu(s)}{2} \log n + S(np_1, \ldots, np_s)
 \]</li>
 <li>\(ICL\) et principalement \(BIC\) sont les plus utilisés (comparaison de ces deux critères dans la suite)</li>
@@ -635,7 +635,7 @@ ICL(s) = L_C(s) - n\sum_{k=1}^s p_k \log p_k - \frac{\nu(s)}{2} \log n + S(np_1,
 
 <pre class = 'prettyprint lang-r'>plot(faithful)</pre>
 
-<p><img src="cnam-classif-modeles_files/figure-html/ex-faithful-donnees-1.png" title="" alt="" width="960" style="display: block; margin: auto;" /></p>
+<p><img src="cnam-classif-modeles_files/figure-html/ex-faithful-donnees-1.png" width="960" style="display: block; margin: auto;" /></p>
 
 </article></slide><slide class=''><hgroup><h2>Old Faithful Geyser - Application</h2></hgroup><article  id="old-faithful-geyser---application">
 
@@ -668,7 +668,7 @@ summary(faithful.mclust)</pre>
 
 <pre class = 'prettyprint lang-r'>plot(faithful.mclust, what = &quot;BIC&quot;)</pre>
 
-<p><img src="cnam-classif-modeles_files/figure-html/ex-faithful-plot-BIC-1.png" title="" alt="" width="960" style="display: block; margin: auto;" /></p>
+<p><img src="cnam-classif-modeles_files/figure-html/ex-faithful-plot-BIC-1.png" width="960" style="display: block; margin: auto;" /></p>
 
 </article></slide><slide class=''><hgroup><h2>Old Faithful Geyser - BIC</h2></hgroup><article  id="old-faithful-geyser---bic-2" class="smaller">
 
@@ -847,19 +847,19 @@ summary(faithful.mclust)</pre>
 
 </article></slide><slide class=''><hgroup><h2>Old Faithful Geyser - BIC</h2></hgroup><article  id="old-faithful-geyser---bic-3">
 
-<p><img src="cnam-classif-modeles_files/figure-html/ex-faithful-heatmap-BIC-1.png" title="" alt="" width="960" style="display: block; margin: auto;" /></p>
+<p><img src="cnam-classif-modeles_files/figure-html/ex-faithful-heatmap-BIC-1.png" width="960" style="display: block; margin: auto;" /></p>
 
 </article></slide><slide class=''><hgroup><h2>Old Faithful Geyser - Classification</h2></hgroup><article  id="old-faithful-geyser---classification">
 
 <pre class = 'prettyprint lang-r'>plot(faithful.mclust, what = &quot;classification&quot;)</pre>
 
-<p><img src="cnam-classif-modeles_files/figure-html/ex-faithful-plot-classification-1.png" title="" alt="" width="960" style="display: block; margin: auto;" /></p>
+<p><img src="cnam-classif-modeles_files/figure-html/ex-faithful-plot-classification-1.png" width="960" style="display: block; margin: auto;" /></p>
 
 </article></slide><slide class=''><hgroup><h2>Old Faithful Geyser - Incertitude</h2></hgroup><article  id="old-faithful-geyser---incertitude">
 
 <pre class = 'prettyprint lang-r'>plot(faithful.mclust, what = &quot;uncertainty&quot;)</pre>
 
-<p><img src="cnam-classif-modeles_files/figure-html/ex-faithful-plot-uncertainty-1.png" title="" alt="" width="960" style="display: block; margin: auto;" /></p>
+<p><img src="cnam-classif-modeles_files/figure-html/ex-faithful-plot-uncertainty-1.png" width="960" style="display: block; margin: auto;" /></p>
 
 </article></slide><slide class=''><hgroup><h2>Old Faithful Geyser - et ICL ?</h2></hgroup><article  id="old-faithful-geyser---et-icl">
 
@@ -875,15 +875,15 @@ summary(faithful.mclustICL)</pre>
 
 <pre class = 'prettyprint lang-r'>plot(faithful.mclustICL)</pre>
 
-<p><img src="cnam-classif-modeles_files/figure-html/ex-faithful-plot-ICL-1.png" title="" alt="" width="960" style="display: block; margin: auto;" /></p>
+<p><img src="cnam-classif-modeles_files/figure-html/ex-faithful-plot-ICL-1.png" width="960" style="display: block; margin: auto;" /></p>
 
 </article></slide><slide class=''><hgroup><h2>Old Faithful Geyser - et ICL ?</h2></hgroup><article  id="old-faithful-geyser---et-icl-2">
 
-<p><img src="cnam-classif-modeles_files/figure-html/ex-faithful-heatmap-ICL-1.png" title="" alt="" width="960" style="display: block; margin: auto;" /></p>
+<p><img src="cnam-classif-modeles_files/figure-html/ex-faithful-heatmap-ICL-1.png" width="960" style="display: block; margin: auto;" /></p>
 
 </article></slide><slide class=''><hgroup><h2>Iris - Données</h2></hgroup><article  id="iris---donnees">
 
-<p><img src="cnam-classif-modeles_files/figure-html/ex-iris-donnees-1.png" title="" alt="" width="960" style="display: block; margin: auto;" /></p>
+<p><img src="cnam-classif-modeles_files/figure-html/ex-iris-donnees-1.png" width="960" style="display: block; margin: auto;" /></p>
 
 </article></slide><slide class=''><hgroup><h2>Iris - Application</h2></hgroup><article  id="iris---application" class="smaller">
 
@@ -895,59 +895,101 @@ summary(iris.mixmod)</pre>
 ## * Number of samples    =  150 
 ## * Problem dimension    =  4 
 ## **************************************************************
-## *       Number of cluster =  3 
-## *              Model Type =  Gaussian_p_Lk_Dk_A_Dk 
-## *               Criterion =  BIC(553.4053)
+## *       Number of cluster =  9 
+## *              Model Type =  Gaussian_pk_Lk_Bk 
+## *               Criterion =  BIC(-1143.8663)
 ## *              Parameters =  list by cluster
 ## *                  Cluster  1 : 
-##                          Proportion =  0.3333 
-##                               Means =  6.5516 2.9510 5.4909 1.9904 
-##                           Variances = |     0.4282     0.1078     0.3310     0.0630 |
-##                                       |     0.1078     0.1154     0.0878     0.0606 |
-##                                       |     0.3310     0.0878     0.3584     0.0831 |
-##                                       |     0.0630     0.0606     0.0831     0.0847 |
+##                          Proportion =  0.0200 
+##                               Means =  4.8333 3.0333 1.4333 0.1666 
+##                           Variances = |     0.0022     0.0000     0.0000     0.0000 |
+##                                       |     0.0000     0.0022     0.0000     0.0000 |
+##                                       |     0.0000     0.0000     0.0022     0.0000 |
+##                                       |     0.0000     0.0000     0.0000     0.0089 |
 ## *                  Cluster  2 : 
-##                          Proportion =  0.3333 
-##                               Means =  5.0060 3.4280 1.4620 0.2460 
-##                           Variances = |     0.1328     0.1089     0.0192     0.0116 |
-##                                       |     0.1089     0.1545     0.0120     0.0100 |
-##                                       |     0.0192     0.0120     0.0283     0.0058 |
-##                                       |     0.0116     0.0100     0.0058     0.0107 |
+##                          Proportion =  0.0649 
+##                               Means =  7.5479 3.1438 6.3968 2.0958 
+##                           Variances = |     0.0537     0.0000     0.0000     0.0000 |
+##                                       |     0.0000     0.1746     0.0000     0.0000 |
+##                                       |     0.0000     0.0000     0.0927     0.0000 |
+##                                       |     0.0000     0.0000     0.0000     0.0486 |
 ## *                  Cluster  3 : 
-##                          Proportion =  0.3333 
-##                               Means =  5.9177 2.7781 4.2106 1.3022 
-##                           Variances = |     0.2274     0.0761     0.1487     0.0441 |
-##                                       |     0.0761     0.0807     0.0744     0.0347 |
-##                                       |     0.1487     0.0744     0.1692     0.0510 |
-##                                       |     0.0441     0.0347     0.0510     0.0342 |
-## *          Log-likelihood =  -186.5112 
+##                          Proportion =  0.1508 
+##                               Means =  5.5421 2.5781 3.8606 1.1690 
+##                           Variances = |     0.0995     0.0000     0.0000     0.0000 |
+##                                       |     0.0000     0.0630     0.0000     0.0000 |
+##                                       |     0.0000     0.0000     0.1228     0.0000 |
+##                                       |     0.0000     0.0000     0.0000     0.0182 |
+## *                  Cluster  4 : 
+##                          Proportion =  0.0581 
+##                               Means =  5.0431 3.5618 1.5447 0.3677 
+##                           Variances = |     0.0047     0.0000     0.0000     0.0000 |
+##                                       |     0.0000     0.0264     0.0000     0.0000 |
+##                                       |     0.0000     0.0000     0.0294     0.0000 |
+##                                       |     0.0000     0.0000     0.0000     0.0182 |
+## *                  Cluster  5 : 
+##                          Proportion =  0.0419 
+##                               Means =  5.4490 3.9071 1.5336 0.3334 
+##                           Variances = |     0.0372     0.0000     0.0000     0.0000 |
+##                                       |     0.0000     0.0897     0.0000     0.0000 |
+##                                       |     0.0000     0.0000     0.0190     0.0000 |
+##                                       |     0.0000     0.0000     0.0000     0.0119 |
+## *                  Cluster  6 : 
+##                          Proportion =  0.2786 
+##                               Means =  6.1516 2.8512 4.7310 1.5679 
+##                           Variances = |     0.1737     0.0000     0.0000     0.0000 |
+##                                       |     0.0000     0.0732     0.0000     0.0000 |
+##                                       |     0.0000     0.0000     0.0928     0.0000 |
+##                                       |     0.0000     0.0000     0.0000     0.0472 |
+## *                  Cluster  7 : 
+##                          Proportion =  0.1725 
+##                               Means =  6.5860 3.0603 5.5418 2.1358 
+##                           Variances = |     0.0938     0.0000     0.0000     0.0000 |
+##                                       |     0.0000     0.0452     0.0000     0.0000 |
+##                                       |     0.0000     0.0000     0.0713     0.0000 |
+##                                       |     0.0000     0.0000     0.0000     0.0587 |
+## *                  Cluster  8 : 
+##                          Proportion =  0.0200 
+##                               Means =  4.4671 2.9005 1.2668 0.2333 
+##                           Variances = |     0.0157     0.0000     0.0000     0.0000 |
+##                                       |     0.0000     0.2068     0.0000     0.0000 |
+##                                       |     0.0000     0.0000     0.0156     0.0000 |
+##                                       |     0.0000     0.0000     0.0000     0.0089 |
+## *                  Cluster  9 : 
+##                          Proportion =  0.1933 
+##                               Means =  4.9724 3.3793 1.4448 0.2000 
+##                           Variances = |     0.1213     0.0000     0.0000     0.0000 |
+##                                       |     0.0000     0.0913     0.0000     0.0000 |
+##                                       |     0.0000     0.0000     0.0287     0.0000 |
+##                                       |     0.0000     0.0000     0.0000     0.0000 |
+## *          Log-likelihood =  772.3585 
 ## **************************************************************</pre>
 
 </article></slide><slide class=''><hgroup><h2>Iris - Evolution du critère</h2></hgroup><article  id="iris---evolution-du-critere">
 
-<p><img src="cnam-classif-modeles_files/figure-html/ex-iris-criterion-1.png" title="" alt="" width="960" style="display: block; margin: auto;" /></p>
+<p><img src="cnam-classif-modeles_files/figure-html/ex-iris-criterion-1.png" width="960" style="display: block; margin: auto;" /></p>
 
 </article></slide><slide class=''><hgroup><h2>Iris - Evolution du critère</h2></hgroup><article  id="iris---evolution-du-critere-1">
 
-<p><img src="cnam-classif-modeles_files/figure-html/ex-iris-heatmap-1.png" title="" alt="" width="960" style="display: block; margin: auto;" /></p>
+<p><img src="cnam-classif-modeles_files/figure-html/ex-iris-heatmap-1.png" width="960" style="display: block; margin: auto;" /></p>
 
 </article></slide><slide class=''><hgroup><h2>Iris - Densité par classe</h2></hgroup><article  id="iris---densite-par-classe">
 
 <pre class = 'prettyprint lang-r'>histCluster(iris.mixmod[&quot;bestResult&quot;], iris[-5])</pre>
 
-<p><img src="cnam-classif-modeles_files/figure-html/ex-iris-hist-1.png" title="" alt="" width="960" style="display: block; margin: auto;" /></p>
+<p><img src="cnam-classif-modeles_files/figure-html/ex-iris-hist-1.png" width="960" style="display: block; margin: auto;" /></p>
 
 </article></slide><slide class=''><hgroup><h2>Iris - Classification</h2></hgroup><article  id="iris---classification">
 
 <pre class = 'prettyprint lang-r'>plot(iris.mixmod)</pre>
 
-<p><img src="cnam-classif-modeles_files/figure-html/ex-iris-plot-1.png" title="" alt="" width="960" style="display: block; margin: auto;" /></p>
+<p><img src="cnam-classif-modeles_files/figure-html/ex-iris-plot-1.png" width="960" style="display: block; margin: auto;" /></p>
 
 </article></slide><slide class=''><hgroup><h2>Iris - Classification</h2></hgroup><article  id="iris---classification-1">
 
 <pre class = 'prettyprint lang-r'>plotCluster(iris.mixmod[&quot;bestResult&quot;], iris[-5], variable1 = 1, variable2 = 2)</pre>
 
-<p><img src="cnam-classif-modeles_files/figure-html/ex-iris-plotCluster-1.png" title="" alt="" width="960" style="display: block; margin: auto;" /></p>
+<p><img src="cnam-classif-modeles_files/figure-html/ex-iris-plotCluster-1.png" width="960" style="display: block; margin: auto;" /></p>
 
 </article></slide><slide class=''><hgroup><h2>Iris - ICL</h2></hgroup><article  id="iris---icl">
 
@@ -965,19 +1007,19 @@ summary(iris.mixmodICL)</pre>
 ## *               Criterion =  ICL(561.7324)
 ## *              Parameters =  list by cluster
 ## *                  Cluster  1 : 
-##                          Proportion =  0.6667 
-##                               Means =  6.2620 2.8720 4.9060 1.6760 
-##                           Variances = |     0.4000     0.1087     0.3994     0.1437 |
-##                                       |     0.1087     0.1093     0.1239     0.0728 |
-##                                       |     0.3994     0.1239     0.6109     0.2574 |
-##                                       |     0.1437     0.0728     0.2574     0.1681 |
-## *                  Cluster  2 : 
 ##                          Proportion =  0.3333 
 ##                               Means =  5.0060 3.4280 1.4620 0.2460 
 ##                           Variances = |     0.1507     0.1308     0.0208     0.0131 |
 ##                                       |     0.1308     0.1760     0.0160     0.0122 |
 ##                                       |     0.0208     0.0160     0.0281     0.0060 |
 ##                                       |     0.0131     0.0122     0.0060     0.0104 |
+## *                  Cluster  2 : 
+##                          Proportion =  0.6667 
+##                               Means =  6.2620 2.8720 4.9060 1.6760 
+##                           Variances = |     0.4000     0.1087     0.3994     0.1437 |
+##                                       |     0.1087     0.1093     0.1239     0.0728 |
+##                                       |     0.3994     0.1239     0.6109     0.2574 |
+##                                       |     0.1437     0.0728     0.2574     0.1681 |
 ## *          Log-likelihood =  -215.7260 
 ## **************************************************************</pre>
 
@@ -986,7 +1028,7 @@ summary(iris.mixmodICL)</pre>
 <pre class = 'prettyprint lang-r'>iris.EM = mixmodCluster(iris[-5], 3, strategy = mixmodStrategy(&quot;EM&quot;, 20, &quot;random&quot;))
 iris.CEM = mixmodCluster(iris[-5], 3, strategy = mixmodStrategy(&quot;CEM&quot;, 20, &quot;random&quot;))</pre>
 
-<p><img src="cnam-classif-modeles_files/figure-html/ex-iris-comparaison-EM-CEM-plot-1.png" title="" alt="" width="960" style="display: block; margin: auto;" /></p>
+<p><img src="cnam-classif-modeles_files/figure-html/ex-iris-comparaison-EM-CEM-plot-1.png" width="960" style="display: block; margin: auto;" /></p>
 
 </article></slide><slide class=''><hgroup><h2>Birds - Données</h2></hgroup><article  id="birds---donnees">
 
@@ -1565,38 +1607,41 @@ summary(birds.mixmod)</pre>
 ## **************************************************************
 ## *       Number of cluster =  2 
 ## *              Model Type =  Binary_p_Ej 
-## *               Criterion =  BIC(485.2674)
+## *               Criterion =  BIC(485.2672)
 ## *              Parameters =  list by cluster
 ## *                  Cluster  1 : 
 ##                          Proportion =  0.5000 
-##                              Center =  2.0000 3.0000 1.0000 1.0000 1.0000 
+##                              Center =  1.0000 2.0000 2.0000 1.0000 1.0000 
 ##                             Scatter = |     0.4681     0.4681 |
-##                                       |     0.0851     0.0851     0.2554     0.0851 |
-##                                       |     0.0301     0.0075     0.0075     0.0075     0.0075 |
+##                                       |     0.0852     0.2555     0.0852     0.0852 |
+##                                       |     0.0075     0.0301     0.0075     0.0075     0.0075 |
 ##                                       |     0.2479     0.0620     0.0620     0.0620     0.0620 |
 ##                                       |     0.0751     0.0376     0.0376 |
 ## *                  Cluster  2 : 
 ##                          Proportion =  0.5000 
-##                              Center =  1.0000 2.0000 2.0000 1.0000 1.0000 
+##                              Center =  2.0000 3.0000 1.0000 1.0000 1.0000 
 ##                             Scatter = |     0.4681     0.4681 |
-##                                       |     0.0851     0.2554     0.0851     0.0851 |
-##                                       |     0.0075     0.0301     0.0075     0.0075     0.0075 |
+##                                       |     0.0852     0.0852     0.2555     0.0852 |
+##                                       |     0.0301     0.0075     0.0075     0.0075     0.0075 |
 ##                                       |     0.2479     0.0620     0.0620     0.0620     0.0620 |
 ##                                       |     0.0751     0.0376     0.0376 |
-## *          Log-likelihood =  -232.0484 
+## *          Log-likelihood =  -232.0483 
 ## **************************************************************</pre>
 
 </article></slide><slide class=''><hgroup><h2>Birds - Représentation via MCA</h2></hgroup><article  id="birds---representation-via-mca">
 
 <pre class = 'prettyprint lang-r'>plot(birds.mixmod)</pre>
 
-<p><img src="cnam-classif-modeles_files/figure-html/ex-birds-plot-1.png" title="" alt="" width="960" style="display: block; margin: auto;" /></p>
+<pre >## round digits : 6NULL
+## duplicated individuals : 46NULL</pre>
+
+<p><img src="cnam-classif-modeles_files/figure-html/ex-birds-plot-1.png" width="960" style="display: block; margin: auto;" /></p>
 
 </article></slide><slide class=''><hgroup><h2>Birds - Répartition par classes</h2></hgroup><article  id="birds---repartition-par-classes">
 
 <pre class = 'prettyprint lang-r'>barplot(birds.mixmod)</pre>
 
-<p><img src="cnam-classif-modeles_files/figure-html/ex-birds-barplot-1.png" title="" alt="" width="960" style="display: block; margin: auto;" /></p>
+<p><img src="cnam-classif-modeles_files/figure-html/ex-birds-barplot-1.png" width="960" style="display: block; margin: auto;" /></p>
 
 </article></slide><slide class=''><hgroup><h2>Quelques liens</h2></hgroup><article  id="quelques-liens">
 

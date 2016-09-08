@@ -1,0 +1,574 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Informatique décisionnelle</title>
+
+  <meta charset="utf-8">
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  <meta name="generator" content="pandoc" />
+
+
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+
+  <link rel="stylesheet" media="all" href="libs/ioslides-13.5.1/fonts/fonts.css">
+
+  <link rel="stylesheet" media="all" href="libs/ioslides-13.5.1/theme/css/default.css">
+  <link rel="stylesheet" media="only screen and (max-device-width: 480px)" href="libs/ioslides-13.5.1/theme/css/phone.css">
+
+  <base target="_blank">
+
+  <script type="text/javascript">
+    var SLIDE_CONFIG = {
+      // Slide settings
+      settings: {
+                title: 'Informatique décisionnelle',
+                        useBuilds: true,
+        usePrettify: true,
+        enableSlideAreas: true,
+        enableTouch: true,
+              },
+
+      // Author information
+      presenters: [
+            {
+        name:  'Introduction' ,
+        company: '',
+        gplus: '',
+        twitter: '',
+        www: '',
+        github: ''
+      },
+            ]
+    };
+  </script>
+
+  <style type="text/css">
+
+    b, strong {
+      font-weight: bold;
+    }
+
+    em {
+      font-style: italic;
+    }
+
+    slides > slide {
+      -webkit-transition: all 0.4s ease-in-out;
+      -moz-transition: all 0.4s ease-in-out;
+      -o-transition: all 0.4s ease-in-out;
+      transition: all 0.4s ease-in-out;
+    }
+
+    .auto-fadein {
+      -webkit-transition: opacity 0.6s ease-in;
+      -webkit-transition-delay: 0.4s;
+      -moz-transition: opacity 0.6s ease-in 0.4s;
+      -o-transition: opacity 0.6s ease-in 0.4s;
+      transition: opacity 0.6s ease-in 0.4s;
+      opacity: 0;
+    }
+
+  </style>
+
+
+  <style>
+  slide img {
+  	max-width: 100%;
+  }
+  </style>
+
+</head>
+
+<body style="opacity: 0">
+
+<slides class="layout-widescreen">
+
+  <slide class="title-slide segue nobackground">
+        <!-- The content of this hgroup is replaced programmatically through the slide_config.json. -->
+    <hgroup class="auto-fadein">
+      <h1 data-config-title><!-- populated from slide_config.json --></h1>
+      <h2 data-config-subtitle><!-- populated from slide_config.json --></h2>
+      <p data-config-presenter><!-- populated from slide_config.json --></p>
+            <p style="margin-top: 6px; margin-left: -2px;">DUT STID 2ème année</p>
+          </hgroup>
+  </slide>
+
+<slide class=''><hgroup><h2>A noter</h2></hgroup><article  id="a-noter">
+
+<h3>Sources intéressantes :</h3>
+
+<ul>
+<li><a href='http://wikissimo.aim.asso.fr/' title=''>http://wikissimo.aim.asso.fr/</a></li>
+<li><a href='http://fr.wikipedia.org/wiki/Syst%C3%A8me_d%27information' title=''>http://fr.wikipedia.org/wiki/Syst%C3%A8me_d%27information</a></li>
+<li><a href='http://fr.wikipedia.org/wiki/Informatique_d%C3%A9cisionnelle' title=''>http://fr.wikipedia.org/wiki/Informatique_d%C3%A9cisionnelle</a></li>
+</ul>
+
+<h3>Livres intéressants :</h3>
+
+<ul>
+<li><em>Entrepôts de données. Guide pratique de modélisation dimensionnelle, 2ème édition</em>,R. Kimball et M. Ross, Vuibert</li>
+<li><em>Concevoir et déployer un data warehouse</em>, R. Kimball, L. Reeves, M. Ross et W.Thornthwaite, Eyrolles</li>
+</ul>
+
+</article></slide><slide class=''><hgroup><h2>Définition d&#39;un SI</h2></hgroup><article  id="definition-dun-si">
+
+<ul>
+<li><p>Ensemble organisé de ressources qui permet de collecter, stocker, traiter et diffuser del&#39;information ;</p></li>
+<li>Composé de deux parties :
+
+<ul>
+<li>Technologique : <strong>logiciels</strong>, de <strong>matériels</strong> et des <strong>réseaux de télécommunication</strong>,</li>
+<li>Sociale : personnels, structure, &#8230; (dont nous parlerons pas) ;</li>
+</ul></li>
+<li><p>Ne se résume donc pas à un unique SGBD</p></li>
+</ul>
+
+<p><em>Un SI est un réseau complexe de relations structurées où interviennent hommes, machines etprocédures qui a pour but d’engendrer des flux ordonnés d’informations pertinentes provenant dedifférentes sources et destinées à servir de base aux décisions (Hugues Angot).</em></p>
+
+</article></slide><slide class=''><hgroup><h2>Composition</h2></hgroup><article  id="composition">
+
+<p>Dans un système d&#39;information d&#39;une grande entreprise, on trouve :- <strong>ERP</strong> (pour <em>Enterprise Resource Planning</em>, <strong>PGI</strong> pour <em>Progiciel de Gestion Intégré</em>),intégrant les systèmes informatisés transactionnels ;</p>
+
+<ul>
+<li><p>des <strong>progiciels métiers</strong>, couvrant aussi le front-office, le middle, et/ou le back-office, etqui ne sont pas de conception maison, mais ont été bati par un éditeur spécialisé sur un métieret dont les modes de fonctionnement logiciels correspondent aux meilleurs pratiques constatéesà un moment donné ;</p></li>
+<li><p>des systèmes <strong>spécifiques</strong> (non standards, de conception <em>maison</em>, développés sur mesure, quel&#39;on ne trouve pas sur le marché, &#8230;), où l&#39;on rencontrera davantage d&#39;applications dans lesdomaines du calcul de coûts, de la facturation, de l&#39;aide à la production, ou de fonctions annexes.</p></li>
+</ul>
+
+</article></slide><slide class=''><hgroup><h2>Pourquoi un SI ?</h2></hgroup><article  id="pourquoi-un-si">
+
+<ul>
+<li><p>Besoin de faciliter la gestion de l&#39;entreprise au quotidien (rapidité de traitement, erreursminimisées, simplicité à prévoir des programmes, &#8230;);</p></li>
+<li><p>Besoin d&#39;intégrer tous les éléments dans un système permettant l&#39;unicité de chaque information(pas de redondance, données mises à jour en temps réel - par exemple, dans la gestion de stock);</p></li>
+<li><p>Limitation des supports non connectés (papiers, fichiers personnels, &#8230;) pour l&#39;intégration detoutes les données dans un même système ;</p></li>
+<li><p>Rendre possible l&#39;interaction directe des clients (particuliers ou entreprises) avec les donnéesde l&#39;entreprise (catalogue en ligne, commande en ligne, échange d&#39;informations entreentreprises, &#8230;).</p></li>
+</ul>
+
+<p>Un SI est fait pour que l&#39;entreprise fonctionne au mieux, mais elle a besoin de faire des analysespour s&#39;améliorer, d&#39;où la nécessité d&#39;un <strong>SI Décisionnel</strong>.</p>
+
+</article></slide><slide class=''><hgroup><h2>Trois concepts importants</h2></hgroup><article  id="trois-concepts-importants">
+
+<ul>
+<li><strong>Données</strong> : mesure simple collectée par un capteur ou renseignée par une personne.</li>
+</ul>
+
+<p><em>Par exemple, le client 123456 a retiré 200€ au DAB n°321 le 01/09/2015</em></p>
+
+<ul>
+<li><strong>Information</strong> : calcul ou agrégation de données.</li>
+</ul>
+
+<p><em>La moyenne journalière des retraits au DAB n°321 est de 500€</em></p>
+
+<ul>
+<li><strong>Connaissance</strong> : résultat d&#39;une réflexion sur la base des informations disponibles, etpermettant à l&#39;entreprise de mieux comprendre son fonctionnement et éventuellement del&#39;améliorer.</li>
+</ul>
+
+<p><em>Le DAB n°321 est très peu utilisé, et d&#39;autres sont présents à proximité, il serait doncéconomique de le supprimer</em></p>
+
+</article></slide><slide class=''><hgroup><h2>Définition</h2></hgroup><article  id="definition">
+
+<p>L&#39;<strong>informatique décisionnelle</strong> (ou <strong>Business Intelligence - BI</strong>) désigne les moyens, lesoutils et les méthodes qui permettent de collecter, consolider, modéliser et restituer lesdonnées d&#39;une entreprise en vue d&#39;offrir une aide à la décision.</p>
+
+<p>Elle cherche à :- Mesurer des indicateurs (ou mesures, <strong>faits</strong>, métriques)- Restituer ceux-ci selon des axes d’analyse (ou <strong>dimensions</strong>)</p>
+
+<p>La réalisation technique est appelée <strong>Entrepôt de données</strong> (ou <strong>Data Warehouse - DW</strong>),global pour l&#39;entreprise, et composé de plusieurs <strong>Magasin de données</strong> (ou <strong>Data Mart -DM</strong>) plus spécifiques.</p>
+
+</article></slide><slide class=''><hgroup><h2>Objectifs du data warehouse</h2></hgroup><article  id="objectifs-du-data-warehouse">
+
+<ul>
+<li><p>Rendre accessible les informations de l&#39;entreprise (en terme de compréhension et denavigation simple et rapide) ;</p></li>
+<li><p>Rendre cohérente l&#39;information d&#39;une entreprise (qualité de l&#39;information) ;</p></li>
+<li><p>Constituer une source d&#39;information souple et adaptable (en prévoyant les modificationsà venir : nouveaux produits, nouveaux processuss, &#8230;) ;</p></li>
+<li><p>Représenter un bastion sécurisé qui protège le capital information (sécurité, visibilité) ;</p></li>
+<li><p>Constituer la base décisionnelle de l&#39;entreprise (dans le cadre de l&#39;aide à la décision,ce pour quoi le système est fait à la base).</p></li>
+</ul>
+
+<p>Ce n&#39;est pas une <em>alternative</em> au SI, mais bien un <em>complément</em>.</p>
+
+</article></slide><slide class=''><hgroup><h2>SI vs SID</h2></hgroup><article  id="si-vs-sid">
+
+<p>2 concepts différents :- <strong>OLTP</strong> : On-Line Transaction Process- <strong>OLAP</strong> : On-Line Analytical Process</p>
+
+<table class = 'rmdtable'>
+<tr class="header">
+<th align="left">OLTP</th>
+<th align="left">OLAP</th>
+</tr>
+<tr class="odd">
+<td align="left">Informatique opérationnelle</td>
+<td align="left">Informatique décisionnelle</td>
+</tr>
+<tr class="even">
+<td align="left">Opérations journalières</td>
+<td align="left">Support décisionnel</td>
+</tr>
+<tr class="odd">
+<td align="left">Orienté applications</td>
+<td align="left">Orienté sujet</td>
+</tr>
+<tr class="even">
+<td align="left">Usage répétitif</td>
+<td align="left">Usage occasionnel</td>
+</tr>
+<tr class="odd">
+<td align="left">Requête simple, courte</td>
+<td align="left">Requête complexe</td>
+</tr>
+<tr class="even">
+<td align="left">Sur peu de données</td>
+<td align="left">Sur des millions de données</td>
+</tr>
+<tr class="odd">
+<td align="left">Beaucoup d’utilisateurs</td>
+<td align="left">Très peu d’utilisateurs</td>
+</tr>
+</table>
+
+</article></slide><slide class=''><hgroup><h2>Eléments importants d&#39;un SID</h2></hgroup><article  id="elements-importants-dun-sid">
+
+<ul>
+<li>Préparation des données : <strong>Extract/Tranform/Load</strong> (<strong>ETL</strong>)
+
+<ul>
+<li><em>Extraction</em> : récupération des différentes données sources</li>
+<li><em>Transformation</em> : calcul d&#39;agrégats, nettoyage, consolidation, &#8230;</li>
+<li><em>Chargement</em> : intégration des données dans les différents data marts</li>
+<li>Zone réservée et inaccessible par les utilisateurs</li>
+<li>Automatisation totale et lancement régulier</li>
+</ul></li>
+<li>Stockages des données :
+
+<ul>
+<li>Coeur du DW</li>
+<li>Data mart : spécifique à un processus de l&#39;entreprise</li>
+<li>Bus permettant la liaison entre data marts</li>
+</ul></li>
+<li>Restitutions des données :
+
+<ul>
+<li>Génération automatique d&#39;états</li>
+<li>Création de reporting ad-hoc</li>
+<li>Outil d&#39;accès aux données (<strong>OLAP</strong>)</li>
+<li>Requêtage pour analyse statistique ou autre</li>
+</ul></li>
+</ul>
+
+<img src='sid/sid--cours-intro-schema-general.svg' title=''/>
+
+</article></slide><slide class=''><hgroup><h2>Préparation des données (ETL)</h2></hgroup><article  id="preparation-des-donnees-etl">
+
+<h3>Extract</h3>
+
+<ul>
+<li>Problèmes réguliers :
+
+<ul>
+<li>Hétérogénéité des sources</li>
+<li>Accès aux différentes applications</li>
+<li>Bases de données réparties sur différents sites</li>
+<li>Différents SGBD, fichiers à plat, services web, &#8230;</li>
+<li>N&#39;extraire que les données nouvelles dans les bases de données sources</li>
+</ul></li>
+<li>A prévoir :
+
+<ul>
+<li>Rafraichissement régulier des données</li>
+<li>Marquage des données par la date de dernière modification</li>
+<li>Utilisation d&#39;un journal des transactions</li>
+<li>Extensibilité de l&#39;outil d&#39;extraction</li>
+<li>Intégrité du système à garantir (en cas de problème, panne, &#8230;)</li>
+</ul></li>
+</ul>
+
+</article></slide><slide class=''><hgroup><h2>Préparation des données (ETL)</h2></hgroup><article  id="preparation-des-donnees-etl-1">
+
+<h3>Transform</h3>
+
+<ul>
+<li>Comment faire :
+
+<ul>
+<li>Filtrage parfois nécessaire</li>
+<li>Nettoyage, correction orthographique, résolution de conflits de domaine, élèmentsmanquants, conversion à des formats standard</li>
+<li>Tris, traitements séquentiels, synchronisation des clés, . . .</li>
+<li>Modélisation en 3NF (trop coûteuse) ou <strong>dimensionnelle</strong></li>
+</ul></li>
+<li>Problèmes usuels :
+
+<ul>
+<li>Connaissance précise des schémas de toutes les bases</li>
+<li>Combinaison à partir de multiples sources</li>
+<li>Recherche de données incohérentes</li>
+<li>Conformité aux règles de références classiques à garantir</li>
+</ul></li>
+<li>Modélisation dimensionnelle à privilégier (simplification, rapidité,économie de temps)</li>
+</ul>
+
+</article></slide><slide class=''><hgroup><h2>Préparation des données (ETL)</h2></hgroup><article  id="preparation-des-donnees-etl-2">
+
+<h3>Chargement</h3>
+
+<ul>
+<li>Réservation d&#39;un espace mémoire temporel dédié
+
+<ul>
+<li>Estimation de la taille à prévoir</li>
+</ul></li>
+<li>Transfert des données vers les magasins de données
+
+<ul>
+<li>Création si besoin des tables dimensionnelles et de faits</li>
+<li>Insertion sinon</li>
+<li>Historisation si mise à jour</li>
+</ul></li>
+<li>Indexation des données pour optimiser les requêtes futures</li>
+<li>Avertissement des utilisateurs de la mise à jour du magasin de données</li>
+<li>Précision sur les changements éventuels dans les dimensions et dans les faits</li>
+</ul>
+
+</article></slide><slide class=''><hgroup><h2>Stockage des données</h2></hgroup><article  id="stockage-des-donnees">
+
+<ul>
+<li>Stockage dans une base de données le plus souvent relationnelle</li>
+<li>Modélisation dite <strong>dimensionnelle</strong> (ou <em>multi-dimensionnelle</em>)
+
+<ul>
+<li>Différente de la modélisation entité/relation</li>
+<li>Basée sur la notion de <strong>fait</strong> et de <strong>dimension</strong></li>
+<li>Lisible par un non-informaticien</li>
+</ul></li>
+<li>Nombre restreint de tables par rapport à la BD original</li>
+<li>Utilisation massive de méta-données
+
+<ul>
+<li>Données sur les données</li>
+<li>Structure des tables</li>
+<li>Définition des faits, des agrégats</li>
+<li>Hiérarchies d&#39;attributs</li>
+<li>Planning des opérations</li>
+</ul></li>
+<li>Requêtage SQL simplifié</li>
+</ul>
+
+</article></slide><slide class=''><hgroup><h2>Restitution des données</h2></hgroup><article  id="restitution-des-donnees">
+
+<ul>
+<li><strong>Reporting</strong> :
+
+<ul>
+<li>on parle aussi d&#39;<em>état</em></li>
+<li>Tableaux complets d&#39;informations, souvent agrégées, et détaillant une activité selondes axes définis</li>
+</ul></li>
+<li><strong>Dashboard</strong> :
+
+<ul>
+<li>on parle aussi de <em>tableaux de bord</em></li>
+<li>Ensemble de graphiques et de tableaux sur des agrégations d&#39;informations</li>
+</ul></li>
+<li><strong>Scorecard</strong> :
+
+<ul>
+<li>ou bien <em>carte de performance</em></li>
+<li>Version plus agrégée du dashboard, sur des indicateurs dits de performance</li>
+</ul></li>
+</ul>
+
+<p>Dans la pratique, on parle globalement de <strong>Reporting</strong> ou de <strong>Tableaux de bord</strong> pour désigner le tout.</p>
+
+</article></slide><slide class=''><hgroup><h2>Logiciels</h2></hgroup><article  id="logiciels">
+
+<p>Liste non exhaustive, quelques logiciels parmi l&#39;offre nombreuse.</p>
+
+<table class = 'rmdtable'>
+<tr class="header">
+<th align="left"></th>
+<th align="left">Payant</th>
+<th align="left">Open source</th>
+</tr>
+<tr class="odd">
+<td align="left"><em>ETL</em></td>
+<td align="left">Microsoft SSIS</td>
+<td align="left">Talend</td>
+</tr>
+<tr class="even">
+<td align="left"></td>
+<td align="left">Oracle Data Integrator</td>
+<td align="left">Pentaho Data Integration</td>
+</tr>
+<tr class="odd">
+<td align="left"><em>DW</em></td>
+<td align="left">Microsoft SQL DataWarehouse</td>
+<td align="left">Pentaho</td>
+</tr>
+<tr class="even">
+<td align="left"></td>
+<td align="left">Microsoft SQL Server</td>
+<td align="left">SpagoBI</td>
+</tr>
+<tr class="odd">
+<td align="left"></td>
+<td align="left">Oracle</td>
+<td align="left">JasperSoft</td>
+</tr>
+<tr class="even">
+<td align="left"><em>Reporting</em></td>
+<td align="left">Tableau Software</td>
+<td align="left">BIRT</td>
+</tr>
+<tr class="odd">
+<td align="left"></td>
+<td align="left">QlikView</td>
+<td align="left">JasperReports</td>
+</tr>
+<tr class="even">
+<td align="left"></td>
+<td align="left">Microsoft SSAS</td>
+<td align="left"></td>
+</tr>
+<tr class="odd">
+<td align="left"></td>
+<td align="left">Business Object</td>
+<td align="left"></td>
+</tr>
+</table>
+
+</article></slide><slide class=''><hgroup><h2>Exemple : Adventures Works</h2></hgroup><article  id="exemple-adventures-works">
+
+<img src='sid/advworks-schema-BD.png' title=''/>
+
+</article></slide><slide class=''><hgroup><h2>Exemple : Adventures Works</h2></hgroup><article  id="exemple-adventures-works-1">
+
+<img src='sid/advworks-schema-DW1.png' title=''/>
+
+<p>Processus modélisé ici : vente d&#39;un produit à un client par un employé à une date</p>
+
+</article></slide><slide class=''><hgroup><h2>Demande</h2></hgroup><article  id="demande">
+
+<p>CA journalier moyen des clients français, pour les ventes par des représentants, avecpaiements par chèque et envoi via Colissimo.</p>
+
+<p>A noter :- Utilisation des presque toutes les tables- Donc beaucoup de jointures- Calcul du CA à partir de <code>Order_Details</code>- Calcul du jour de la semaine à partir de la date <code>OrderDate</code></p>
+
+</article></slide><slide class=''><hgroup><h2>A partir de la BD source</h2></hgroup><article  id="a-partir-de-la-bd-source">
+
+<pre class = 'prettyprint lang-sql'>SELECT CompanyName, JourSemaine, AVG(CA) AS CAmoyen
+  FROM Customers C, Employes E, Payment_Methods PM, 
+       Shipping_Methods SM, Orders O, Payments P,
+       (SELECT OrderID, 
+               SUM(UnitPrice * Quantity * (1 - Discount)) AS CA
+          FROM Order_Details 
+          GROUP BY OrderID) CA,
+       (SELECT OrderID, DAY(OrderDate) AS JourSemaine
+          FROM Orders) J
+    WHERE C.CustomerID = O.CustomerID
+    AND   O.EmployeeID = E.EmployeeID
+    AND   O.ShippineMethodID = SM.ShippingMethodID
+    AND   O.PaymentID = P.PaymentID
+    AND   P.PaymentMethodID = PM.MethodPaymentID
+    AND   O.OrderID = CA.OrderID
+    AND   O.OrderID = J.OrderID
+    AND   C.Country = &quot;France&quot; AND E.Title = &quot;Représentant&quot;
+    AND   SM.ShippingMethod = &quot;Colissimo&quot;
+    AND   PM.PaymentMethod = &quot;Chèque&quot;
+    GROUP BY CompanyName, JourSemaine;</pre>
+
+</article></slide><slide class=''><hgroup><h2>A partir du data mart</h2></hgroup><article  id="a-partir-du-data-mart">
+
+<pre class = 'prettyprint lang-sql'>SELECT CompanyName, WeekDay, AVG(CA) AS CAmoyen
+    FROM FaitVente V, DimClient C, DimEmploye E, DimDate D,
+         (SELECT OrderID, 
+                 SUM(UnitPrice * Quantity * (1 - Discount)) AS CA
+            FROM FraisVente
+            GROUP BY OrderID) CA
+    WHERE V.CustomerID = C.CustomerID
+    AND V.EmployeeID = E.EmployeeID
+    AND V.DateId = D.DateID
+    AND V.OrderID = CA.OrderID
+    AND C.Country = &quot;France&quot;
+    AND E.Title = &quot;Représentant&quot;
+    AND V.ShippingMethod = &quot;Colissimo&quot;
+    AND V.PaymentMethod = &quot;Chèque&quot;
+    GROUP BY CompanyName, WeekDay;</pre>
+
+<p>Requête seulement simplifiée et plus rapide à exécuter. Mais certaines demandes nepeuvent quasiment pas avoir de réponses sur la base de la BD source.</p>
+
+</article></slide><slide class=''><hgroup><h2>Points importants</h2></hgroup><article  id="points-importants">
+
+<ul>
+<li>Se concentrer sur les exigences et les objectifs</li>
+<li>Obtenir le soutien des responsables du côté utilisateur</li>
+<li>Choisir un mode de d´eveloppement itératif plutôt que global</li>
+<li>Prévoir au mieux les coûts de chaque étape (en temps, en homme/jour, en dépenses)</li>
+<li>Préférer la commodité d’utilisation et la performance des requêtes plutôt que lafacilité de développement</li>
+<li>Rechercher au maximum des solutions simples</li>
+<li>Respecter une architecture commune et cohérente</li>
+<li>Ne pas se limiter à une granularité trop importante</li>
+<li>Préparer et prendre en compte l&#39;évolution future du systèmeopérationnel et de l’environnement en général</li>
+<li>S&#39;assurer de l’acceptation du système par les utilisateurs</li>
+</ul>
+
+</article></slide><slide class=''><hgroup><h2>Conclusion</h2></hgroup><article  id="conclusion">
+
+<p>Les SID sont absolument nécessaires dans le cadre d&#39;une entreprise pour :- Avoir une <strong>historisation</strong> complète de ses données ;- Avoir une <strong>vision globale</strong> de son fonctionnement ;- Permettre de répondre à tout demande d&#39;<strong>analyse</strong> pour améliorer ses processus, viades méthodes statistiques et/ou de data-mining ;- Prendre les bonnes <strong>décisions</strong> sur la base de données qualifiées, consolidées etagrégées.</p>
+
+</article></slide><slide class=''><hgroup><h2>Conclusion</h2></hgroup><article  id="conclusion-1">
+
+<h3>Impératifs et perspectives</h3>
+
+<ul>
+<li>Avancées constantes de la technologie</li>
+<li>Sécurité et confidentialité</li>
+<li>Sauvegarde et sureté du système (destructions physiques, piratage, &#8230;)</li>
+<li>Tendances culturelles et politiques
+
+<ul>
+<li>Management par les chiffres</li>
+<li>Utilisation croissante d&#39;indicateurs sophistiqué</li>
+<li>Sous-traitance risquée</li>
+</ul></li>
+</ul>
+
+</article></slide><slide class='segue dark nobackground'><hgroup class = 'auto-fadein'><h2>Bien présenter les bonnes données</h2></hgroup><article  id="bien-presenter-les-bonnes-donnees"></article></slide>
+
+
+  <slide class="backdrop"></slide>
+
+</slides>
+
+<script src="libs/ioslides-13.5.1/js/modernizr.custom.45394.js"></script>
+<script src="libs/ioslides-13.5.1/js/prettify/prettify.js"></script>
+<script src="libs/ioslides-13.5.1/js/prettify/lang-r.js"></script>
+<script src="libs/ioslides-13.5.1/js/prettify/lang-yaml.js"></script>
+<script src="libs/ioslides-13.5.1/js/hammer.js"></script>
+<script src="libs/ioslides-13.5.1/js/slide-controller.js"></script>
+<script src="libs/ioslides-13.5.1/js/slide-deck.js"></script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+<!-- map slide visiblity events into shiny -->
+<script>
+  (function() {
+    if (window.jQuery) {
+       window.jQuery(document).on('slideleave', function(e) {
+         window.jQuery(e.target).trigger('hidden');
+      });
+       window.jQuery(document).on('slideenter', function(e) {
+         window.jQuery(e.target).trigger('shown');
+      });
+    }
+  })();
+</script>
+
+</body>
+</html>

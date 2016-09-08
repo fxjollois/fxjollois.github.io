@@ -7,9 +7,8 @@
 <meta charset="utf-8">
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="generator" content="pandoc" />
-<meta name="viewport" content="width=device-width, initial-scale=1">
 
-<meta name="author" content="DU Analyste Big Data" />
+
 
 
 <title>Initiation à R</title>
@@ -72,26 +71,7 @@ if (window.hljs && document.readyState && document.readyState === "complete") {
 
 
 
-<link rel="stylesheet" href="libs/bootstrap-journal.min.css" type="text/css" />
-
-</head>
-
-<body>
-
-<style type = "text/css">
-.main-container {
-  max-width: 940px;
-  margin-left: auto;
-  margin-right: auto;
-}
-code {
-  color: inherit;
-  background-color: rgba(0, 0, 0, 0.04);
-}
-img {
-  max-width:100%;
-  height: auto;
-}
+<style type="text/css">
 h1 {
   font-size: 34px;
 }
@@ -113,6 +93,31 @@ h5 {
 h6 {
   font-size: 12px;
 }
+.table th:not([align]) {
+  text-align: left;
+}
+</style>
+
+<link rel="stylesheet" href="libs/bootstrap-journal.min.css" type="text/css" />
+
+</head>
+
+<body>
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img {
+  max-width:100%;
+  height: auto;
+}
 .tabbed-pane {
   padding-top: 12px;
 }
@@ -125,7 +130,7 @@ button.code-folding-btn:focus {
 <div class="container-fluid main-container">
 
 <!-- tabsets -->
-<script src="libs/navigation-1.0/tabsets.js"></script>
+<script src="libs/navigation-1.1/tabsets.js"></script>
 <script>
 $(document).ready(function () {
   window.buildTabsets("TOC");
@@ -160,25 +165,21 @@ $(document).ready(function () {
         <li class="dropdown">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button">Enseignement <span class="caret"></span></a>
           <ul class="dropdown-menu">
-            <li><a href="enseignement.html">Informations</a></li>
-            <li><a href="supports.html">Supports</a></li>
-            <li role="separator" class="divider"></li>
             <li class="dropdown-header">DUT 1ère année</li>
-            <li><a href="interrogation-donnees.html">Interrogation de données</a></li>
+            <li><a href="exploitation-donnees.html">Exploitation de données</a></li>
+            <li><a href="initiation-a-r.html">Initiation à R</a></li>
             <li><a href="reporting.html">Reporting</a></li>
             <li class="dropdown-header">DUT 2ème année</li>
-            <li><a href="sid.html">SID</a></li>
-            <li><a href="bd-prog-avancees.html">BD et Programmation avancées</a></li>
+            <li><a href="prog-stat-r.html">Programmation statistique avec R</a></li>
+            <li class="dropdown-header">LP MDS Santé</li>
+            <li><a href="info-dec-santé.html">Informatique décisionnelle</a></li>
             <li class="dropdown-header">DU Analyste Big Data</li>
-            <li><a href="initiation-r-et-rmongodb.html">Intiation à R</a></li>
+            <li><a href="initiation-r-et-rmongodb.html">Initiation à R et MongoDB</a></li>
             <li class="dropdown-header">DU Dataviz</li>
             <li><a href="visualisation-donnees.html">Visualisation de données - R</a></li>
             <li><a href="visualisation-donnees-d3.html">Visualisation de données - D3</a></li>
             <li role="separator" class="divider"></li>
-            <li class="dropdown-header">Master MIAGE</li>
-            <li><a href="webreporting.html">Web-Reporting</a></li>
             <li class="dropdown-header">Master</li>
-            <li><a href="logiciels-stats.html">Logiciels statistiques</a></li>
             <li><a href="slides/cnam-classif-modeles.html">Classification et Modèles de mélange</a></li>
           </ul>
         </li>
@@ -201,8 +202,9 @@ $(document).ready(function () {
 <div class="fluid-row" id="header">
 
 
-<h1 class="title">Initiation à <code>R</code></h1>
-<h4 class="author"><em>DU Analyste Big Data</em></h4>
+
+<h1 class="title toc-ignore">Initiation à <code>R</code></h1>
+<h3 class="subtitle"><em>DU Analyste Big Data</em></h3>
 
 </div>
 
@@ -695,16 +697,16 @@ SELECT cyl, AVG(mpg), AVG(disp), AVG(hp), AVG(drat), AVG(wt), AVG(qsec)
 ## 10.400 14.340 30.090 33.435</code></pre>
 <p>Il existe tout un ensemble de fonctions graphiques, dont voici quelques exemples.</p>
 <pre class="r"><code>hist(mtcars$mpg)</code></pre>
-<p><img src="initiation-r-et-rmongodb_files/figure-html/unnamed-chunk-25-1.png" title="" alt="" width="672" /></p>
+<p><img src="initiation-r-et-rmongodb_files/figure-html/unnamed-chunk-25-1.png" width="672" /></p>
 <pre class="r"><code>hist(mtcars$mpg, breaks = 20)</code></pre>
-<p><img src="initiation-r-et-rmongodb_files/figure-html/unnamed-chunk-25-2.png" title="" alt="" width="672" /></p>
+<p><img src="initiation-r-et-rmongodb_files/figure-html/unnamed-chunk-25-2.png" width="672" /></p>
 <pre class="r"><code>hist(mtcars$mpg, breaks = c(10, 15, 18, 20, 22, 25, 35))</code></pre>
-<p><img src="initiation-r-et-rmongodb_files/figure-html/unnamed-chunk-25-3.png" title="" alt="" width="672" /></p>
+<p><img src="initiation-r-et-rmongodb_files/figure-html/unnamed-chunk-25-3.png" width="672" /></p>
 <pre class="r"><code>boxplot(mtcars$mpg)</code></pre>
-<p><img src="initiation-r-et-rmongodb_files/figure-html/unnamed-chunk-25-4.png" title="" alt="" width="672" /></p>
+<p><img src="initiation-r-et-rmongodb_files/figure-html/unnamed-chunk-25-4.png" width="672" /></p>
 <pre class="r"><code>qqnorm(mtcars$mpg)
 qqline(mtcars$mpg)</code></pre>
-<p><img src="initiation-r-et-rmongodb_files/figure-html/unnamed-chunk-25-5.png" title="" alt="" width="672" /></p>
+<p><img src="initiation-r-et-rmongodb_files/figure-html/unnamed-chunk-25-5.png" width="672" /></p>
 <p>Pour les variables qualitatives, nous allons utiliser la variable <code>cyl</code> qui représente le nombre de cylindre. Celle-ci étant codée numériquement, toutes les fonctions vues précédemment pour s’appliquer (mais n’avoir aucun sens).</p>
 <pre class="r"><code>table(mtcars$cyl)</code></pre>
 <pre><code>## 
@@ -715,9 +717,9 @@ qqline(mtcars$mpg)</code></pre>
 ##       4       6       8 
 ## 0.34375 0.21875 0.43750</code></pre>
 <pre class="r"><code>barplot(table(mtcars$cyl))</code></pre>
-<p><img src="initiation-r-et-rmongodb_files/figure-html/unnamed-chunk-26-1.png" title="" alt="" width="672" /></p>
+<p><img src="initiation-r-et-rmongodb_files/figure-html/unnamed-chunk-26-1.png" width="672" /></p>
 <pre class="r"><code>pie(table(mtcars$cyl))</code></pre>
-<p><img src="initiation-r-et-rmongodb_files/figure-html/unnamed-chunk-26-2.png" title="" alt="" width="672" /></p>
+<p><img src="initiation-r-et-rmongodb_files/figure-html/unnamed-chunk-26-2.png" width="672" /></p>
 </div>
 <div id="bivarie" class="section level4">
 <h4>Bivarié</h4>
@@ -729,9 +731,9 @@ qqline(mtcars$mpg)</code></pre>
 <pre class="r"><code>cor(mtcars$mpg, mtcars$wt)</code></pre>
 <pre><code>## [1] -0.8676594</code></pre>
 <pre class="r"><code>plot(mtcars$mpg, mtcars$wt)</code></pre>
-<p><img src="initiation-r-et-rmongodb_files/figure-html/unnamed-chunk-27-1.png" title="" alt="" width="672" /></p>
+<p><img src="initiation-r-et-rmongodb_files/figure-html/unnamed-chunk-27-1.png" width="672" /></p>
 <pre class="r"><code>plot(mtcars$mpg ~ mtcars$wt)</code></pre>
-<p><img src="initiation-r-et-rmongodb_files/figure-html/unnamed-chunk-27-2.png" title="" alt="" width="672" /></p>
+<p><img src="initiation-r-et-rmongodb_files/figure-html/unnamed-chunk-27-2.png" width="672" /></p>
 <p>On peut aller plus loin en faisant un modéle linéaire simple.</p>
 <pre class="r"><code>m = lm(mpg ~ wt, data = mtcars)
 m</code></pre>
@@ -762,10 +764,10 @@ m</code></pre>
 ## Multiple R-squared:  0.7528, Adjusted R-squared:  0.7446 
 ## F-statistic: 91.38 on 1 and 30 DF,  p-value: 1.294e-10</code></pre>
 <pre class="r"><code>plot(m)</code></pre>
-<p><img src="initiation-r-et-rmongodb_files/figure-html/unnamed-chunk-28-1.png" title="" alt="" width="672" /><img src="initiation-r-et-rmongodb_files/figure-html/unnamed-chunk-28-2.png" title="" alt="" width="672" /><img src="initiation-r-et-rmongodb_files/figure-html/unnamed-chunk-28-3.png" title="" alt="" width="672" /><img src="initiation-r-et-rmongodb_files/figure-html/unnamed-chunk-28-4.png" title="" alt="" width="672" /></p>
+<p><img src="initiation-r-et-rmongodb_files/figure-html/unnamed-chunk-28-1.png" width="672" /><img src="initiation-r-et-rmongodb_files/figure-html/unnamed-chunk-28-2.png" width="672" /><img src="initiation-r-et-rmongodb_files/figure-html/unnamed-chunk-28-3.png" width="672" /><img src="initiation-r-et-rmongodb_files/figure-html/unnamed-chunk-28-4.png" width="672" /></p>
 <pre class="r"><code>plot(mpg ~ wt, data = mtcars)
 abline(m, col = &quot;red&quot;)</code></pre>
-<p><img src="initiation-r-et-rmongodb_files/figure-html/unnamed-chunk-28-5.png" title="" alt="" width="672" /></p>
+<p><img src="initiation-r-et-rmongodb_files/figure-html/unnamed-chunk-28-5.png" width="672" /></p>
 </div>
 <div id="quali---quali" class="section level5">
 <h5>Quali - Quali</h5>
@@ -796,17 +798,17 @@ print(t)</code></pre>
 ##   6 0.2105263 0.2307692
 ##   8 0.6315789 0.1538462</code></pre>
 <pre class="r"><code>mosaicplot(t) </code></pre>
-<p><img src="initiation-r-et-rmongodb_files/figure-html/unnamed-chunk-29-1.png" title="" alt="" width="672" /></p>
+<p><img src="initiation-r-et-rmongodb_files/figure-html/unnamed-chunk-29-1.png" width="672" /></p>
 <pre class="r"><code>assocplot(t)</code></pre>
-<p><img src="initiation-r-et-rmongodb_files/figure-html/unnamed-chunk-29-2.png" title="" alt="" width="672" /></p>
+<p><img src="initiation-r-et-rmongodb_files/figure-html/unnamed-chunk-29-2.png" width="672" /></p>
 <pre class="r"><code>barplot(t)</code></pre>
-<p><img src="initiation-r-et-rmongodb_files/figure-html/unnamed-chunk-29-3.png" title="" alt="" width="672" /></p>
+<p><img src="initiation-r-et-rmongodb_files/figure-html/unnamed-chunk-29-3.png" width="672" /></p>
 <pre class="r"><code>barplot(prop.table(t, margin = 2))</code></pre>
-<p><img src="initiation-r-et-rmongodb_files/figure-html/unnamed-chunk-29-4.png" title="" alt="" width="672" /></p>
+<p><img src="initiation-r-et-rmongodb_files/figure-html/unnamed-chunk-29-4.png" width="672" /></p>
 <pre class="r"><code>barplot(t, beside = T)</code></pre>
-<p><img src="initiation-r-et-rmongodb_files/figure-html/unnamed-chunk-29-5.png" title="" alt="" width="672" /></p>
+<p><img src="initiation-r-et-rmongodb_files/figure-html/unnamed-chunk-29-5.png" width="672" /></p>
 <pre class="r"><code>barplot(prop.table(t, margin = 2), beside = T)</code></pre>
-<p><img src="initiation-r-et-rmongodb_files/figure-html/unnamed-chunk-29-6.png" title="" alt="" width="672" /></p>
+<p><img src="initiation-r-et-rmongodb_files/figure-html/unnamed-chunk-29-6.png" width="672" /></p>
 </div>
 <div id="quali---quanti" class="section level5">
 <h5>Quali - Quanti</h5>
@@ -827,12 +829,12 @@ print(t)</code></pre>
 ##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
 ##   10.40   14.40   15.20   15.10   16.25   19.20</code></pre>
 <pre class="r"><code>boxplot(mpg ~ cyl, data = mtcars)</code></pre>
-<p><img src="initiation-r-et-rmongodb_files/figure-html/unnamed-chunk-30-1.png" title="" alt="" width="672" /></p>
+<p><img src="initiation-r-et-rmongodb_files/figure-html/unnamed-chunk-30-1.png" width="672" /></p>
 <pre class="r"><code>par(mfrow = c(3, 1), mar = c(2, 2, 2, 0) + 0.1)
 for (c in c(4, 6, 8)) {
   hist(mtcars$mpg[mtcars$cyl == c], xlim = range(mtcars$mpg), main = c)
 }</code></pre>
-<p><img src="initiation-r-et-rmongodb_files/figure-html/unnamed-chunk-30-2.png" title="" alt="" width="672" /></p>
+<p><img src="initiation-r-et-rmongodb_files/figure-html/unnamed-chunk-30-2.png" width="672" /></p>
 </div>
 </div>
 </div>

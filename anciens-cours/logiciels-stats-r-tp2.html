@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+<meta charset="utf-8">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="pandoc" />
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+
+<title>Logiciels stats - R - TP2</title>
+
+<script src="libs/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="libs/bootstrap-3.3.5/css/journal.min.css" rel="stylesheet" />
+<script src="libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<style>
+    .contenu {
+        margin-bottom: 50px;
+    }
+
+    .contact-liens {
+        text-align: center;
+    }
+    .contact-icones {
+        height: 30px;
+    }
+
+    /* Espacement pour barre du haut et pied de page */
+    #header, .section.level1 {
+        margin-top: 60px;
+        margin-bottom: 60px;
+    }
+    /* Espacement pour table des matières */
+    #TOC {
+        margin-top: 100px;
+    }
+    
+    .footer {
+        position: fixed;
+        width: 100%;
+        text-align: center;
+        bottom: 0;
+        left: 0;
+        background-color: #E6E6E6;
+    }
+</style>
+
+<style type="text/css">code{white-space: pre;}</style>
+<link rel="stylesheet"
+      href="libs/highlight/default.css"
+      type="text/css" />
+<script src="libs/highlight/highlight.js"></script>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
+<script type="text/javascript">
+if (window.hljs && document.readyState && document.readyState === "complete") {
+   window.setTimeout(function() {
+      hljs.initHighlighting();
+   }, 0);
+}
+</script>
+
+
+
+<link rel="stylesheet" href="libs/bootstrap-journal.min.css" type="text/css" />
+
+</head>
+
+<body>
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img {
+  max-width:100%;
+  height: auto;
+}
+h1 {
+  font-size: 34px;
+}
+h1.title {
+  font-size: 38px;
+}
+h2 {
+  font-size: 30px;
+}
+h3 {
+  font-size: 24px;
+}
+h4 {
+  font-size: 18px;
+}
+h5 {
+  font-size: 16px;
+}
+h6 {
+  font-size: 12px;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+</style>
+
+
+<div class="container-fluid main-container">
+
+<!-- tabsets -->
+<script src="libs/navigation-1.0/tabsets.js"></script>
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+</script>
+
+<!-- code folding -->
+
+
+
+
+
+<div class="navbar navbar-default navbar-fixed-top">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-main">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">FX Jollois</a>
+    </div>
+    <div id="navbar-main" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button">Données <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+              <li><a href="accesdonnees.html">A télécharger</a></li>
+              <li><a href="donnees-integrees-r.html">Sous R</a></li>
+          </ul>
+        </li>
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button">Enseignement <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li><a href="enseignement.html">Informations</a></li>
+            <li><a href="supports.html">Supports</a></li>
+            <li role="separator" class="divider"></li>
+            <li class="dropdown-header">DUT 1ère année</li>
+            <li><a href="interrogation-donnees.html">Interrogation de données</a></li>
+            <li><a href="reporting.html">Reporting</a></li>
+            <li class="dropdown-header">DUT 2ème année</li>
+            <li><a href="sid.html">SID</a></li>
+            <li><a href="bd-prog-avancees.html">BD et Programmation avancées</a></li>
+            <li class="dropdown-header">DU Analyste Big Data</li>
+            <li><a href="initiation-r-et-rmongodb.html">Intiation à R</a></li>
+            <li class="dropdown-header">DU Dataviz</li>
+            <li><a href="visualisation-donnees.html">Visualisation de données - R</a></li>
+            <li><a href="visualisation-donnees-d3.html">Visualisation de données - D3</a></li>
+            <li role="separator" class="divider"></li>
+            <li class="dropdown-header">Master MIAGE</li>
+            <li><a href="webreporting.html">Web-Reporting</a></li>
+            <li class="dropdown-header">Master</li>
+            <li><a href="logiciels-stats.html">Logiciels statistiques</a></li>
+            <li><a href="slides/cnam-classif-modeles.html">Classification et Modèles de mélange</a></li>
+          </ul>
+        </li>
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button">Recherche <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li><a href="recherche.html">Sujets</a></li>
+            <li><a href="publications.html">Publications</a></li>
+          </ul>
+        </li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container-fluid -->
+</div>
+<div class="contenu">
+
+<div class="fluid-row" id="header">
+
+
+<h1 class="title">Logiciels stats - R - TP2</h1>
+
+</div>
+
+
+<div id="base-de-donnees-utilisee" class="section level2">
+<h2>Base de données utilisée</h2>
+<p>Nous allons utiliser dans ce TP une base de données classique, <code>Gymnase2000</code>. Cette base de données concernent des sportifs, des sports et des gymnases. Un sportif peut jouer, arbitrer et/ou entraîner un ou plusieurs sports (ou aucun). Dans un gymnase, il peut y avoir une ou plusieurs séances d’un sport, avec un entraîneur spécifié.</p>
+<p>Vous pouvez accéder aux tables de cette base de données via le chargement du fichier <code>Gymnase2000.RData</code> avec la commande <code>load()</code> dans <strong>R</strong>. Le fichier est disponible <a href="https://drive.google.com/folderview?id=0BzA8L2nqa1n5NXZBTHJnclFZMDA&amp;usp=drive_web">ici</a>.</p>
+</div>
+<div id="exemples" class="section level2">
+<h2>Exemples</h2>
+<div id="sportifs-identifiant-nom-et-prenom-entre-20-et-30-ans" class="section level3">
+<h3>Sportifs (identifiant, nom et prénom) entre 20 et 30 ans ?</h3>
+<pre class="r"><code>subset(Sportifs, 
+       subset = Age &gt; 20 &amp; Age &lt; 30, 
+       select = c(IdSportif, Nom, Prenom)
+       )</code></pre>
+</div>
+<div id="gymnases-avec-des-seances-le-dimanche" class="section level3">
+<h3>Gymnases avec des séances le dimanche</h3>
+<pre class="r"><code># avec jointure
+unique(
+    subset(
+        merge(Gymnases, Seances),
+        subset = tolower(Jour) == &quot;dimanche&quot;,
+        select = c(Ville, NomGymnase)
+    )
+)
+# sans jointure
+subset(Gymnases,
+       subset = IdGymnase %in% subset(Seances, subset = tolower(Jour) == &quot;dimanche&quot;)$IdGymnase,
+       select = c(Ville, NomGymnase)
+)</code></pre>
+</div>
+<div id="nom-et-prenom-du-conseiller-de-kervadec" class="section level3">
+<h3>Nom et prénom du conseiller de “Kervadec”</h3>
+<pre class="r"><code># avec jointure
+subset(
+    merge(
+        subset(Sportifs, 
+               subset = Nom == &quot;KERVADEC&quot;, 
+               select = c(Nom, IdSportifConseiller)),
+        subset(Sportifs,
+               select = -IdSportifConseiller),
+        by.x = &quot;IdSportifConseiller&quot;,
+        by.y = &quot;IdSportif&quot;
+    ),
+    select = c(Nom.y, Prenom)
+)
+# sans jointure
+subset(
+    Sportifs,
+    subset = IdSportif == subset(Sportifs, subset = Nom == &quot;KERVADEC&quot;)$IdSportifConseiller,
+    select = c(Nom, Prenom)
+)</code></pre>
+</div>
+<div id="dans-quels-gymnases-et-quels-jours-y-a-t-il-des-seances-de-hand-ball" class="section level3">
+<h3>Dans quels gymnases et quels jours y a t-il des séances de hand ball ?</h3>
+<pre class="r"><code>unique(
+    transform(
+        subset(
+            merge(Gymnases, Seances),
+            subset = IdSport == subset(Sports, subset = Libelle == &quot;Hand ball&quot;)$IdSport,
+            select = c(Ville, NomGymnase, Jour)
+        ),
+        Jour = tolower(Jour)
+    )
+)</code></pre>
+</div>
+<div id="gymnases-avec-la-plus-petite-superficie" class="section level3">
+<h3>Gymnases avec la plus petite superficie</h3>
+<pre class="r"><code># avec calcul direct
+subset(
+    Gymnases,
+    subset = Surface == min(Gymnases$Surface)
+)
+# avec jointure et calcul d&#39;agrégat
+merge(
+    Gymnases,
+    aggregate(Surface ~ 1, data = Gymnases, min)
+)</code></pre>
+</div>
+</div>
+<div id="questions" class="section level2">
+<h2>Questions</h2>
+<div id="recuperation-de-donnees-simples" class="section level3">
+<h3>Récupération de données simples</h3>
+<ol style="list-style-type: decimal">
+<li>Quels sont les gymnases de “Villetaneuse” ou de “Sarcelles” qui ont une surface de plus de 400 m2 ?</li>
+<li>Quels sportifs n’ont pas de conseillers ?</li>
+<li>Quels sportifs (identifiant et nom) ne jouent aucun sport ?</li>
+<li>Quels sont les sportifs qui sont aussi des conseillers ?</li>
+<li>Quels sont les entraîneurs qui sont aussi joueurs ?</li>
+<li>Quels sont les sportifs (identifiant et nom) qui jouent du hand ball ?</li>
+<li>Dans quels gymnases peut-on jouer au hockey le mercredi apres 15H ?</li>
+</ol>
+</div>
+<div id="calcul-dagregats" class="section level3">
+<h3>Calcul d’agrégats</h3>
+<ol style="list-style-type: decimal">
+<li>Quelle est la moyenne d’âge des sportives qui jouent du basket ball ?</li>
+<li>Pour chaque sportif donner le nombre de sports qu’il joue.</li>
+<li>Pour chaque gymnase de Montmorency : quel est le nombre de séances journalières de chaque sport propose ?</li>
+<li>Pour chaque entraîneurs de hand ball quel est le nombre de séances journalières qu’il assure ?</li>
+<li>A partir de la réponse à la question 2, ajouter le nombre de sports qu’il arbitre et qu’il entraîne. On veut avoir tous les sportifs dans le tableau final.</li>
+<li>Quels sont les sportifs les plus jeunes ?</li>
+<li>Pour chaque gymnase de Stains donner par jour d’ouverture les horaires des premières et dernières séances</li>
+</ol>
+</div>
+</div>
+
+</div>
+<div class="footer">
+      Site créé avec <a href="http://www.r-project.org" target="_blank"><code>R</code></a> et la 
+      librairie  <a href="http://rmarkdown.rstudio.com/" target="_blank"><code>rmarkdown</code></a>.
+</div>
+<script>
+    $("#TOC").css("margin-top", "100px");
+</script>
+
+
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+$(document).ready(function () {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+});
+
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

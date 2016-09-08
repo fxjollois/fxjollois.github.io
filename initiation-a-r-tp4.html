@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+<meta charset="utf-8">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="pandoc" />
+
+
+
+
+<title></title>
+
+<script src="libs/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="libs/bootstrap-3.3.5/css/journal.min.css" rel="stylesheet" />
+<script src="libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<style>
+    .contenu {
+        margin-bottom: 50px;
+    }
+
+    .contact-liens {
+        text-align: center;
+    }
+    .contact-icones {
+        height: 30px;
+    }
+
+    /* Espacement pour barre du haut et pied de page */
+    #header, .section.level1 {
+        margin-top: 60px;
+        margin-bottom: 60px;
+    }
+    /* Espacement pour table des matières */
+    #TOC {
+        margin-top: 100px;
+    }
+    
+    .footer {
+        position: fixed;
+        width: 100%;
+        text-align: center;
+        bottom: 0;
+        left: 0;
+        background-color: #E6E6E6;
+    }
+</style>
+
+<style type="text/css">code{white-space: pre;}</style>
+<link rel="stylesheet"
+      href="libs/highlight/default.css"
+      type="text/css" />
+<script src="libs/highlight/highlight.js"></script>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
+<script type="text/javascript">
+if (window.hljs && document.readyState && document.readyState === "complete") {
+   window.setTimeout(function() {
+      hljs.initHighlighting();
+   }, 0);
+}
+</script>
+
+
+
+<style type="text/css">
+h1 {
+  font-size: 34px;
+}
+h1.title {
+  font-size: 38px;
+}
+h2 {
+  font-size: 30px;
+}
+h3 {
+  font-size: 24px;
+}
+h4 {
+  font-size: 18px;
+}
+h5 {
+  font-size: 16px;
+}
+h6 {
+  font-size: 12px;
+}
+.table th:not([align]) {
+  text-align: left;
+}
+</style>
+
+<link rel="stylesheet" href="libs/bootstrap-journal.min.css" type="text/css" />
+
+</head>
+
+<body>
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img {
+  max-width:100%;
+  height: auto;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+</style>
+
+
+<div class="container-fluid main-container">
+
+<!-- tabsets -->
+<script src="libs/navigation-1.1/tabsets.js"></script>
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+</script>
+
+<!-- code folding -->
+
+
+
+
+
+<div class="navbar navbar-default navbar-fixed-top">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-main">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">FX Jollois</a>
+    </div>
+    <div id="navbar-main" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button">Données <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+              <li><a href="accesdonnees.html">A télécharger</a></li>
+              <li><a href="donnees-integrees-r.html">Sous R</a></li>
+          </ul>
+        </li>
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button">Enseignement <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li class="dropdown-header">DUT 1ère année</li>
+            <li><a href="exploitation-donnees.html">Exploitation de données</a></li>
+            <li><a href="initiation-a-r.html">Initiation à R</a></li>
+            <li><a href="reporting.html">Reporting</a></li>
+            <li class="dropdown-header">DUT 2ème année</li>
+            <li><a href="prog-stat-r.html">Programmation statistique avec R</a></li>
+            <li class="dropdown-header">LP MDS Santé</li>
+            <li><a href="info-dec-santé.html">Informatique décisionnelle</a></li>
+            <li class="dropdown-header">DU Analyste Big Data</li>
+            <li><a href="initiation-r-et-rmongodb.html">Initiation à R et MongoDB</a></li>
+            <li class="dropdown-header">DU Dataviz</li>
+            <li><a href="visualisation-donnees.html">Visualisation de données - R</a></li>
+            <li><a href="visualisation-donnees-d3.html">Visualisation de données - D3</a></li>
+            <li role="separator" class="divider"></li>
+            <li class="dropdown-header">Master</li>
+            <li><a href="slides/cnam-classif-modeles.html">Classification et Modèles de mélange</a></li>
+          </ul>
+        </li>
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button">Recherche <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li><a href="recherche.html">Sujets</a></li>
+            <li><a href="publications.html">Publications</a></li>
+          </ul>
+        </li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container-fluid -->
+</div>
+<div class="contenu">
+
+<div class="fluid-row" id="header">
+
+
+
+
+</div>
+
+
+<p>A garder pour TP4</p>
+<div id="restriction-et-projection" class="section level3">
+<h3>Restriction et projection</h3>
+<div id="a-la-main" class="section level4">
+<h4><em>A la main</em></h4>
+<pre class="r"><code>mtcars[, c(&quot;mpg&quot;, &quot;hp&quot;)]</code></pre>
+<pre><code>##                      mpg  hp
+## Mazda RX4           21.0 110
+## Mazda RX4 Wag       21.0 110
+## Datsun 710          22.8  93
+## Hornet 4 Drive      21.4 110
+## Hornet Sportabout   18.7 175
+## Valiant             18.1 105
+## Duster 360          14.3 245
+## Merc 240D           24.4  62
+## Merc 230            22.8  95
+## Merc 280            19.2 123
+## Merc 280C           17.8 123
+## Merc 450SE          16.4 180
+## Merc 450SL          17.3 180
+## Merc 450SLC         15.2 180
+## Cadillac Fleetwood  10.4 205
+## Lincoln Continental 10.4 215
+## Chrysler Imperial   14.7 230
+## Fiat 128            32.4  66
+## Honda Civic         30.4  52
+## Toyota Corolla      33.9  65
+## Toyota Corona       21.5  97
+## Dodge Challenger    15.5 150
+## AMC Javelin         15.2 150
+## Camaro Z28          13.3 245
+## Pontiac Firebird    19.2 175
+## Fiat X1-9           27.3  66
+## Porsche 914-2       26.0  91
+## Lotus Europa        30.4 113
+## Ford Pantera L      15.8 264
+## Ferrari Dino        19.7 175
+## Maserati Bora       15.0 335
+## Volvo 142E          21.4 109</code></pre>
+<pre class="r"><code>mtcars[mtcars$mpg &lt; 15,]</code></pre>
+<pre><code>##                      mpg cyl disp  hp drat    wt  qsec vs am gear carb
+## Duster 360          14.3   8  360 245 3.21 3.570 15.84  0  0    3    4
+## Cadillac Fleetwood  10.4   8  472 205 2.93 5.250 17.98  0  0    3    4
+## Lincoln Continental 10.4   8  460 215 3.00 5.424 17.82  0  0    3    4
+## Chrysler Imperial   14.7   8  440 230 3.23 5.345 17.42  0  0    3    4
+## Camaro Z28          13.3   8  350 245 3.73 3.840 15.41  0  0    3    4</code></pre>
+<pre class="r"><code>mtcars[mtcars$mpg &lt; 15 &amp; mtcars$qsec &lt; 16,]</code></pre>
+<pre><code>##             mpg cyl disp  hp drat   wt  qsec vs am gear carb
+## Duster 360 14.3   8  360 245 3.21 3.57 15.84  0  0    3    4
+## Camaro Z28 13.3   8  350 245 3.73 3.84 15.41  0  0    3    4</code></pre>
+<pre class="r"><code>mtcars[mtcars$mpg &lt; 15 &amp; mtcars$qsec &lt; 16, c(&quot;mpg&quot;, &quot;hp&quot;)]</code></pre>
+<pre><code>##             mpg  hp
+## Duster 360 14.3 245
+## Camaro Z28 13.3 245</code></pre>
+<pre class="r"><code>mtcars[mtcars$mpg &lt; 15 &amp; mtcars$qsec &lt; 16,][c(&quot;mpg&quot;, &quot;hp&quot;)]</code></pre>
+<pre><code>##             mpg  hp
+## Duster 360 14.3 245
+## Camaro Z28 13.3 245</code></pre>
+</div>
+<div id="avec-la-fonction-subset" class="section level4">
+<h4>Avec la fonction <code>subset()</code></h4>
+<p>Similaire au fonctionnement du SQL.</p>
+<pre class="r"><code>subset(mtcars, select = c(mpg, hp))</code></pre>
+<pre><code>##                      mpg  hp
+## Mazda RX4           21.0 110
+## Mazda RX4 Wag       21.0 110
+## Datsun 710          22.8  93
+## Hornet 4 Drive      21.4 110
+## Hornet Sportabout   18.7 175
+## Valiant             18.1 105
+## Duster 360          14.3 245
+## Merc 240D           24.4  62
+## Merc 230            22.8  95
+## Merc 280            19.2 123
+## Merc 280C           17.8 123
+## Merc 450SE          16.4 180
+## Merc 450SL          17.3 180
+## Merc 450SLC         15.2 180
+## Cadillac Fleetwood  10.4 205
+## Lincoln Continental 10.4 215
+## Chrysler Imperial   14.7 230
+## Fiat 128            32.4  66
+## Honda Civic         30.4  52
+## Toyota Corolla      33.9  65
+## Toyota Corona       21.5  97
+## Dodge Challenger    15.5 150
+## AMC Javelin         15.2 150
+## Camaro Z28          13.3 245
+## Pontiac Firebird    19.2 175
+## Fiat X1-9           27.3  66
+## Porsche 914-2       26.0  91
+## Lotus Europa        30.4 113
+## Ford Pantera L      15.8 264
+## Ferrari Dino        19.7 175
+## Maserati Bora       15.0 335
+## Volvo 142E          21.4 109</code></pre>
+<pre class="r"><code>subset(mtcars, subset = mpg &lt; 15)</code></pre>
+<pre><code>##                      mpg cyl disp  hp drat    wt  qsec vs am gear carb
+## Duster 360          14.3   8  360 245 3.21 3.570 15.84  0  0    3    4
+## Cadillac Fleetwood  10.4   8  472 205 2.93 5.250 17.98  0  0    3    4
+## Lincoln Continental 10.4   8  460 215 3.00 5.424 17.82  0  0    3    4
+## Chrysler Imperial   14.7   8  440 230 3.23 5.345 17.42  0  0    3    4
+## Camaro Z28          13.3   8  350 245 3.73 3.840 15.41  0  0    3    4</code></pre>
+<pre class="r"><code>subset(mtcars, subset = mpg &lt; 15 &amp; qsec &lt; 16)</code></pre>
+<pre><code>##             mpg cyl disp  hp drat   wt  qsec vs am gear carb
+## Duster 360 14.3   8  360 245 3.21 3.57 15.84  0  0    3    4
+## Camaro Z28 13.3   8  350 245 3.73 3.84 15.41  0  0    3    4</code></pre>
+<pre class="r"><code>subset(mtcars, subset = mpg &lt; 15 &amp; qsec &lt; 16, select = c(mpg, hp, qsec))</code></pre>
+<pre><code>##             mpg  hp  qsec
+## Duster 360 14.3 245 15.84
+## Camaro Z28 13.3 245 15.41</code></pre>
+</div>
+</div>
+
+</div>
+<div class="footer">
+      Site créé avec <a href="http://www.r-project.org" target="_blank"><code>R</code></a> et la 
+      librairie  <a href="http://rmarkdown.rstudio.com/" target="_blank"><code>rmarkdown</code></a>.
+</div>
+<script>
+    $("#TOC").css("margin-top", "100px");
+</script>
+
+
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+$(document).ready(function () {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+});
+
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

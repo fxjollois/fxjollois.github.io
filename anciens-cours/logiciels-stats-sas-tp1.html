@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+<meta charset="utf-8">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="pandoc" />
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+
+<title>Logiciels stats - SAS - TP1</title>
+
+<script src="libs/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="libs/bootstrap-3.3.5/css/journal.min.css" rel="stylesheet" />
+<script src="libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<style>
+    .contenu {
+        margin-bottom: 50px;
+    }
+
+    .contact-liens {
+        text-align: center;
+    }
+    .contact-icones {
+        height: 30px;
+    }
+
+    /* Espacement pour barre du haut et pied de page */
+    #header, .section.level1 {
+        margin-top: 60px;
+        margin-bottom: 60px;
+    }
+    /* Espacement pour table des matières */
+    #TOC {
+        margin-top: 100px;
+    }
+    
+    .footer {
+        position: fixed;
+        width: 100%;
+        text-align: center;
+        bottom: 0;
+        left: 0;
+        background-color: #E6E6E6;
+    }
+</style>
+
+<style type="text/css">code{white-space: pre;}</style>
+<link rel="stylesheet"
+      href="libs/highlight/default.css"
+      type="text/css" />
+<script src="libs/highlight/highlight.js"></script>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
+<script type="text/javascript">
+if (window.hljs && document.readyState && document.readyState === "complete") {
+   window.setTimeout(function() {
+      hljs.initHighlighting();
+   }, 0);
+}
+</script>
+
+
+
+<link rel="stylesheet" href="libs/bootstrap-journal.min.css" type="text/css" />
+
+</head>
+
+<body>
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img {
+  max-width:100%;
+  height: auto;
+}
+h1 {
+  font-size: 34px;
+}
+h1.title {
+  font-size: 38px;
+}
+h2 {
+  font-size: 30px;
+}
+h3 {
+  font-size: 24px;
+}
+h4 {
+  font-size: 18px;
+}
+h5 {
+  font-size: 16px;
+}
+h6 {
+  font-size: 12px;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+</style>
+
+
+<div class="container-fluid main-container">
+
+<!-- tabsets -->
+<script src="libs/navigation-1.0/tabsets.js"></script>
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+</script>
+
+<!-- code folding -->
+
+
+
+
+
+<div class="navbar navbar-default navbar-fixed-top">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-main">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">FX Jollois</a>
+    </div>
+    <div id="navbar-main" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button">Données <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+              <li><a href="accesdonnees.html">A télécharger</a></li>
+              <li><a href="donnees-integrees-r.html">Sous R</a></li>
+          </ul>
+        </li>
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button">Enseignement <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li><a href="enseignement.html">Informations</a></li>
+            <li><a href="supports.html">Supports</a></li>
+            <li role="separator" class="divider"></li>
+            <li class="dropdown-header">DUT 1ère année</li>
+            <li><a href="interrogation-donnees.html">Interrogation de données</a></li>
+            <li><a href="reporting.html">Reporting</a></li>
+            <li class="dropdown-header">DUT 2ème année</li>
+            <li><a href="sid.html">SID</a></li>
+            <li><a href="bd-prog-avancees.html">BD et Programmation avancées</a></li>
+            <li class="dropdown-header">DU Analyste Big Data</li>
+            <li><a href="initiation-r-et-rmongodb.html">Intiation à R</a></li>
+            <li class="dropdown-header">DU Dataviz</li>
+            <li><a href="visualisation-donnees.html">Visualisation de données - R</a></li>
+            <li><a href="visualisation-donnees-d3.html">Visualisation de données - D3</a></li>
+            <li role="separator" class="divider"></li>
+            <li class="dropdown-header">Master MIAGE</li>
+            <li><a href="webreporting.html">Web-Reporting</a></li>
+            <li class="dropdown-header">Master</li>
+            <li><a href="logiciels-stats.html">Logiciels statistiques</a></li>
+            <li><a href="slides/cnam-classif-modeles.html">Classification et Modèles de mélange</a></li>
+          </ul>
+        </li>
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button">Recherche <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li><a href="recherche.html">Sujets</a></li>
+            <li><a href="publications.html">Publications</a></li>
+          </ul>
+        </li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container-fluid -->
+</div>
+<div class="contenu">
+
+<div class="fluid-row" id="header">
+
+
+<h1 class="title">Logiciels stats - SAS - TP1</h1>
+
+</div>
+
+
+<style>
+.fichier {
+    width: 100%;
+    height: 100px;
+)
+</style>
+<p>Le but de ce TP est de commencer à manipuler les fichiers, et les tables <strong>SAS</strong> pour se familiariser avec le logiciel et son langage.</p>
+<div id="importation-de-fichiers" class="section level2">
+<h2>Importation de fichiers</h2>
+<p>Vous devez importer les fichiers texte qui suivent. Vous pouvez y accéder via l’adresse suivante sur <strong>SAS Studio</strong> (si vous vous êtes inscrit ici à mon <a href="https://odamid.oda.sas.com/SASODAControlCenter/enroll.html?enroll=5987151c-9317-479b-889e-9e696608d9cb">cours Logiciels Stats</a> sous <em>SAS On Demand for Academics</em>) :</p>
+<pre><code>/courses/dee4fb65ba27fe300/fichier.ext</code></pre>
+<p><a href="logiciels-stats/Iris.txt"><code>Iris.txt</code></a></p>
+<p>Pas de difficulté majeure, si ce n’est la taille de la variable <code>Species</code> (des valeurs ont plus de 8 caractères).</p>
+<object data="logiciels-stats/Iris.txt" type="text/plain" class="fichier">
+<pre><code>impossible à afficher</code></pre>
+</object>
+<p><a href="logiciels-stats/heart.txt"><code>heart.txt</code></a></p>
+<p>Ici non plus, pas de difficulté. Le séparateur est la tabulation (<code>'09'x</code> pour SAS).</p>
+<p>Utiliser la procédure <code>IMPORT</code> ici.</p>
+<object data="logiciels-stats/heart.txt" type="text/plain" class="fichier">
+<pre><code>impossible à afficher</code></pre>
+</object>
+<p><a href="logiciels-stats/Detroit_homicide.txt"><code>Detroit_homicide.txt</code></a></p>
+<p>Ici, les premières lignes ne sont pas à prendre en considération lors de l’importation. Et nous avons des <code>labels</code> pour les variables.</p>
+<object data="logiciels-stats/Detroit_homicide.txt" type="text/plain" class="fichier">
+<pre><code>impossible à afficher</code></pre>
+</object>
+<p><a href="logiciels-stats/hepatitis.TXT"><code>hepatitis.TXT</code></a></p>
+<p>Attention à l’indicateur de données manquantes (<code>?</code> dans ce fichier).</p>
+<object data="logiciels-stats/hepatitis.TXT" type="text/plain" class="fichier">
+<pre><code>impossible à afficher</code></pre>
+</object>
+</div>
+<div id="formats-informats-et-langage" class="section level2">
+<h2>Formats, informats et langage</h2>
+<p>Reprendre l’importation du fichier <code>heart.txt</code> (cf ci-dessus), et répondre aux questions suivantes en modifiant l’étape <code>DATA</code> précédemment écrite</p>
+<ol style="list-style-type: decimal">
+<li>Créer une indicatrice binaire <code>0/1</code> pour la présence ou non de problème de coeur (dernière variable)</li>
+<li>Créer une variable comptant le nombre de fois où une variable est égale à <code>A</code> (entre <code>type_douleur</code>, <code>sucre</code>, <code>electro</code>, et <code>vaisseau</code>)</li>
+<li>Créer un format pour l’indicatrice binaire faite au point 1. pour afficher <code>presence</code> pour <code>1</code> et <code>absence</code> pour <code>0</code></li>
+<li>Créer un informat pour la variable sexe qui vaudra <code>M</code> pour <code>masculin</code> et <code>F</code> pour <code>féminin</code></li>
+<li>Créer le format associé pour afficher la valeur initiale</li>
+<li>Sélectionner uniquement les individus ayant strictement moins de 60 ans</li>
+<li>Créer deux tables :
+<ul>
+<li>une pour les hommes</li>
+<li>une autre pour les femmes</li>
+</ul></li>
+</ol>
+</div>
+
+</div>
+<div class="footer">
+      Site créé avec <a href="http://www.r-project.org" target="_blank"><code>R</code></a> et la 
+      librairie  <a href="http://rmarkdown.rstudio.com/" target="_blank"><code>rmarkdown</code></a>.
+</div>
+<script>
+    $("#TOC").css("margin-top", "100px");
+</script>
+
+
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+$(document).ready(function () {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+});
+
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

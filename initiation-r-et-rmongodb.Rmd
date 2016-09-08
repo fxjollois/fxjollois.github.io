@@ -1,6 +1,6 @@
 ---
 title: Initiation à `R`
-author: DU Analyste Big Data
+subtitle: DU Analyste Big Data
 ---
 
 Dans ce document est présenté les concepts principaux du logiciel `R` (éléments de langage, données manipulées, manipulation de données, ...). L'utilisation du package `rmongodb` permettant la connection à une base de données [MongoDB]() est aussi abordé à la fin.

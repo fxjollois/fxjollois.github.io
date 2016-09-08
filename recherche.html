@@ -7,7 +7,7 @@
 <meta charset="utf-8">
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="generator" content="pandoc" />
-<meta name="viewport" content="width=device-width, initial-scale=1">
+
 
 
 
@@ -71,26 +71,7 @@ if (window.hljs && document.readyState && document.readyState === "complete") {
 
 
 
-<link rel="stylesheet" href="libs/bootstrap-journal.min.css" type="text/css" />
-
-</head>
-
-<body>
-
-<style type = "text/css">
-.main-container {
-  max-width: 940px;
-  margin-left: auto;
-  margin-right: auto;
-}
-code {
-  color: inherit;
-  background-color: rgba(0, 0, 0, 0.04);
-}
-img {
-  max-width:100%;
-  height: auto;
-}
+<style type="text/css">
 h1 {
   font-size: 34px;
 }
@@ -112,6 +93,31 @@ h5 {
 h6 {
   font-size: 12px;
 }
+.table th:not([align]) {
+  text-align: left;
+}
+</style>
+
+<link rel="stylesheet" href="libs/bootstrap-journal.min.css" type="text/css" />
+
+</head>
+
+<body>
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img {
+  max-width:100%;
+  height: auto;
+}
 .tabbed-pane {
   padding-top: 12px;
 }
@@ -124,7 +130,7 @@ button.code-folding-btn:focus {
 <div class="container-fluid main-container">
 
 <!-- tabsets -->
-<script src="libs/navigation-1.0/tabsets.js"></script>
+<script src="libs/navigation-1.1/tabsets.js"></script>
 <script>
 $(document).ready(function () {
   window.buildTabsets("TOC");
@@ -159,25 +165,21 @@ $(document).ready(function () {
         <li class="dropdown">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button">Enseignement <span class="caret"></span></a>
           <ul class="dropdown-menu">
-            <li><a href="enseignement.html">Informations</a></li>
-            <li><a href="supports.html">Supports</a></li>
-            <li role="separator" class="divider"></li>
             <li class="dropdown-header">DUT 1ère année</li>
-            <li><a href="interrogation-donnees.html">Interrogation de données</a></li>
+            <li><a href="exploitation-donnees.html">Exploitation de données</a></li>
+            <li><a href="initiation-a-r.html">Initiation à R</a></li>
             <li><a href="reporting.html">Reporting</a></li>
             <li class="dropdown-header">DUT 2ème année</li>
-            <li><a href="sid.html">SID</a></li>
-            <li><a href="bd-prog-avancees.html">BD et Programmation avancées</a></li>
+            <li><a href="prog-stat-r.html">Programmation statistique avec R</a></li>
+            <li class="dropdown-header">LP MDS Santé</li>
+            <li><a href="info-dec-santé.html">Informatique décisionnelle</a></li>
             <li class="dropdown-header">DU Analyste Big Data</li>
-            <li><a href="initiation-r-et-rmongodb.html">Intiation à R</a></li>
+            <li><a href="initiation-r-et-rmongodb.html">Initiation à R et MongoDB</a></li>
             <li class="dropdown-header">DU Dataviz</li>
             <li><a href="visualisation-donnees.html">Visualisation de données - R</a></li>
             <li><a href="visualisation-donnees-d3.html">Visualisation de données - D3</a></li>
             <li role="separator" class="divider"></li>
-            <li class="dropdown-header">Master MIAGE</li>
-            <li><a href="webreporting.html">Web-Reporting</a></li>
             <li class="dropdown-header">Master</li>
-            <li><a href="logiciels-stats.html">Logiciels statistiques</a></li>
             <li><a href="slides/cnam-classif-modeles.html">Classification et Modèles de mélange</a></li>
           </ul>
         </li>
@@ -200,7 +202,8 @@ $(document).ready(function () {
 <div class="fluid-row" id="header">
 
 
-<h1 class="title">Recherche</h1>
+
+<h1 class="title toc-ignore">Recherche</h1>
 
 </div>
 

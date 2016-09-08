@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+<meta charset="utf-8">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="pandoc" />
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+
+<title>TP - Utilisation de Leaflet.js</title>
+
+<script src="libs/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="libs/bootstrap-3.3.5/css/journal.min.css" rel="stylesheet" />
+<script src="libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<style>
+    .contenu {
+        margin-bottom: 50px;
+    }
+
+    .contact-liens {
+        text-align: center;
+    }
+    .contact-icones {
+        height: 30px;
+    }
+
+    /* Espacement pour barre du haut et pied de page */
+    #header, .section.level1 {
+        margin-top: 60px;
+        margin-bottom: 60px;
+    }
+    /* Espacement pour table des matières */
+    #TOC {
+        margin-top: 100px;
+    }
+    
+    .footer {
+        position: fixed;
+        width: 100%;
+        text-align: center;
+        bottom: 0;
+        left: 0;
+        background-color: #E6E6E6;
+    }
+</style>
+
+<style type="text/css">code{white-space: pre;}</style>
+<link rel="stylesheet"
+      href="libs/highlight/default.css"
+      type="text/css" />
+<script src="libs/highlight/highlight.js"></script>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
+<script type="text/javascript">
+if (window.hljs && document.readyState && document.readyState === "complete") {
+   window.setTimeout(function() {
+      hljs.initHighlighting();
+   }, 0);
+}
+</script>
+
+
+
+<link rel="stylesheet" href="libs/bootstrap-journal.min.css" type="text/css" />
+
+</head>
+
+<body>
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img {
+  max-width:100%;
+  height: auto;
+}
+h1 {
+  font-size: 34px;
+}
+h1.title {
+  font-size: 38px;
+}
+h2 {
+  font-size: 30px;
+}
+h3 {
+  font-size: 24px;
+}
+h4 {
+  font-size: 18px;
+}
+h5 {
+  font-size: 16px;
+}
+h6 {
+  font-size: 12px;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+</style>
+
+
+<div class="container-fluid main-container">
+
+<!-- tabsets -->
+<script src="libs/navigation-1.0/tabsets.js"></script>
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+</script>
+
+<!-- code folding -->
+
+
+
+
+
+<div class="navbar navbar-default navbar-fixed-top">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-main">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">FX Jollois</a>
+    </div>
+    <div id="navbar-main" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button">Données <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+              <li><a href="accesdonnees.html">A télécharger</a></li>
+              <li><a href="donnees-integrees-r.html">Sous R</a></li>
+          </ul>
+        </li>
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button">Enseignement <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li><a href="enseignement.html">Informations</a></li>
+            <li><a href="supports.html">Supports</a></li>
+            <li role="separator" class="divider"></li>
+            <li class="dropdown-header">DUT 1ère année</li>
+            <li><a href="interrogation-donnees.html">Interrogation de données</a></li>
+            <li><a href="reporting.html">Reporting</a></li>
+            <li class="dropdown-header">DUT 2ème année</li>
+            <li><a href="sid.html">SID</a></li>
+            <li><a href="bd-prog-avancees.html">BD et Programmation avancées</a></li>
+            <li class="dropdown-header">DU Analyste Big Data</li>
+            <li><a href="initiation-r-et-rmongodb.html">Intiation à R</a></li>
+            <li class="dropdown-header">DU Dataviz</li>
+            <li><a href="visualisation-donnees.html">Visualisation de données - R</a></li>
+            <li><a href="visualisation-donnees-d3.html">Visualisation de données - D3</a></li>
+            <li role="separator" class="divider"></li>
+            <li class="dropdown-header">Master MIAGE</li>
+            <li><a href="webreporting.html">Web-Reporting</a></li>
+            <li class="dropdown-header">Master</li>
+            <li><a href="logiciels-stats.html">Logiciels statistiques</a></li>
+            <li><a href="slides/cnam-classif-modeles.html">Classification et Modèles de mélange</a></li>
+          </ul>
+        </li>
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button">Recherche <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li><a href="recherche.html">Sujets</a></li>
+            <li><a href="publications.html">Publications</a></li>
+          </ul>
+        </li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container-fluid -->
+</div>
+<div class="contenu">
+
+<div class="fluid-row" id="header">
+
+
+<h1 class="title">TP - Utilisation de Leaflet.js</h1>
+
+</div>
+
+
+<p>Voici quelques liens qui ont permis de réaliser la base du TP ou qui vous aideront à réaliser la demande :</p>
+<ul>
+<li>Données :
+<ul>
+<li><a href="webreporting/tp-leaflet/departements.geojson">fichier GeoJSON des départements</a></li>
+<li><a href="webreporting/tp-leaflet/departements-chomage.tsv">fichier Taux de chômage</a></li>
+</ul></li>
+<li>Source des données :
+<ul>
+<li>Les <a href="https://github.com/gregoiredavid/france-geojson">communes au format GeoJSON</a> : <strong>attention</strong>, dans ces fichiers, les coordonnées sont inversées (<code>[long, lat]</code> au lieu de <code>[lat, long]</code>)</li>
+<li>Les <a href="http://www.insee.fr/fr/themes/tableau.asp?reg_id=99&amp;ref_id=TCRD_025">données du chômage</a> issues de l’INSEE</li>
+</ul></li>
+<li>Lien pour le code
+<ul>
+<li>Un <a href="http://papaparse.com/">parser</a> pour lire un fichier CSV</li>
+<li>Un <a href="http://leafletjs.com/examples/geojson.html">exeple</a> pour travailler avec du GeoJSON et Leaflet</li>
+<li>Un <a href="http://leafletjs.com/examples/choropleth.html">autre</a> un peu plus poussé, pour ajouter de l’interaction</li>
+<li>Une <a href="http://bost.ocks.org/mike/leaflet/">présentation</a> par Mike Bostocks pour l’utilisation avec <strong>d3.js</strong></li>
+</ul></li>
+</ul>
+<p>Base de travail :</p>
+<ul>
+<li><a href="webreporting/tp-leaflet/base-simple/">sans d3.js</a></li>
+<li><a href="webreporting/tp-leaflet/base-d3/">avec d3.js</a></li>
+</ul>
+<div id="a-faire" class="section level2">
+<h2>A faire</h2>
+<p>A partir de cette base, vous devez :</p>
+<ul>
+<li>faire en sorte que le zoom de la carte soit limité (ni trop grand, ni trop petit)</li>
+<li>jouer sur l’opacité lors du passage de la souris pour que le département soit bien visible</li>
+<li>améliorer l’affichage des informations en créant une fenêtre <code>tooltip</code> affichant toutes les informations dont on dispose</li>
+<li>donner la possibilité de choisir l’indicateur permettant la coloration des départements
+<ul>
+<li>dans ce cas, il serait judicieux de faire une échelle commune à tous les indicateurs, du genre de celle de l’INSEE</li>
+</ul></li>
+<li>s’intéresser aux autres tuiles disponibles via Open Street Map, et les autres fournisseurs</li>
+</ul>
+<!--
+<p>Pour avoir le résultat proposé, regarder :</p>
+<ul>
+<li><a href="webreporting/tp-leaflet/solution-simple/">solution sans d3.js</a></li>
+<li><a href="webreporting/tp-leaflet/solution-d3/">solution avec d3.js</a></li>
+</ul>
+-->
+</div>
+<div id="bonus" class="section level2">
+<h2><em>Bonus</em></h2>
+<p>Pour ceux qui ont fini tôt, vous pouvez réaliser une cartographie des scénarios de prévision de la population à horizon 2040 selon l’INSEE (<a href="http://www.insee.fr/fr/themes/detail.asp?reg_id=99&amp;ref_id=proj-dep-population-2010">fichiers source</a>). Il vous sera bien évidemment nécessaire de faire un peu de manipulation de fichiers auparavant. Essayez d’abord avec le scénario central.</p>
+</div>
+
+</div>
+<div class="footer">
+      Site créé avec <a href="http://www.r-project.org" target="_blank"><code>R</code></a> et la 
+      librairie  <a href="http://rmarkdown.rstudio.com/" target="_blank"><code>rmarkdown</code></a>.
+</div>
+<script>
+    $("#TOC").css("margin-top", "100px");
+</script>
+
+
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+$(document).ready(function () {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+});
+
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

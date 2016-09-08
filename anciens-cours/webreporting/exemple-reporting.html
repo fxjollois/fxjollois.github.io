@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Exemple de reporting interactif</title>
+    </head>
+    <body>
+        <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+        <div id="dashboard_div" style="border: 1px solid #ccc; margin-top: 1em">
+            <p style="padding-left: 1em"><strong>Donuts eaten per person</strong></p>
+            <table class="columns">
+                <tr>
+                    <td>
+                        <div id="slider_div" style="padding-left: 15px"></div>
+                    </td>
+                    <td>
+                        <div id="categoryPicker_div"></div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div id="chart_div" style="padding-top: 15px"></div>
+                    </td>
+                    <td>
+                        <div id="table_div" style="padding-top: 30px"></div>
+                    </td>
+                </tr>
+            </table>
+        </div>
+        
+        <script type="text/javascript">
+            google.load('visualization', '1.0', {'packages':['corechart', 'table', 'gauge', 'controls']});
+            google.setOnLoadCallback(drawMainDashboard);
+            
+            function drawMainDashboard() {
+                var dashboard = new google.visualization.Dashboard(
+                    document.getElementById('dashboard_div'));
+                var slider = new google.visualization.ControlWrapper({
+                    'controlType': 'NumberRangeFilter',
+                    'containerId': 'slider_div',
+                    'options': {
+                        'filterColumnIndex': 2,
+                        'ui': {
+                            'labelStacking': 'vertical',
+                            'label': 'Age Filter:'
+                        }
+                    }
+                });
+                var categoryPicker = new google.visualization.ControlWrapper({
+                    'controlType': 'CategoryFilter',
+                    'containerId': 'categoryPicker_div',
+                    'options': {
+                        'filterColumnIndex': 1,
+                        'ui': {
+                            'labelStacking': 'vertical',
+                            'label': 'Gender Selection:',
+                            'allowTyping': false,
+                            'allowMultiple': false
+                        }
+                    }
+                });
+                var pie = new google.visualization.ChartWrapper({
+                    'chartType': 'PieChart',
+                    'containerId': 'chart_div',
+                    'options': {
+                        'width': 300,
+                        'height': 300,
+                        'legend': 'none',
+                        'chartArea': {'left': 15, 'top': 15, 'right': 0, 'bottom': 0},
+                        'pieSliceText': 'label'
+                    },
+                    'view': {'columns': [0, 3]}
+                });
+                var table = new google.visualization.ChartWrapper({
+                    'chartType': 'Table',
+                    'containerId': 'table_div',
+                    'options': {
+                    }
+                });
+                var data = google.visualization.arrayToDataTable([
+                    ['Name', 'Gender', 'Age', 'Donuts'],
+                    ['Michael' , 'Male', 12, 5],
+                    ['Elisa', 'Female', 20, 7],
+                    ['Robert', 'Male', 7, 3],
+                    ['John', 'Male', 54, 2],
+                    ['Jessica', 'Female', 22, 6],
+                    ['Aaron', 'Male', 3, 1],
+                    ['Margareth', 'Female', 42, 8],
+                    ['Miranda', 'Female', 33, 6]
+                ]);
+                dashboard.bind([slider, categoryPicker], [pie, table]);
+                dashboard.draw(data);
+            }
+        </script>
+    </body>
+</html>
+
