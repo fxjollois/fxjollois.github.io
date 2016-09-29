@@ -197,11 +197,12 @@ attr(mtcars, "info")
 
 ### Importation de données
 
-Vous devez importer les données suivantes dans `R`.
+Vous devez importer les données suivantes dans `R`. 
 
 [`heart.txt`](donnees/heart.txt)
 
 Pas de difficulté spéciale ici. Le séparateur est la tabulation (`\t` en R).
+
 
 <object data="donnees/heart.txt" type="text/plain" style="width: 100%">
     impossible à afficher
@@ -227,13 +228,14 @@ Attention à l'indicateur de données manquantes (`?` dans ce fichier).
 
 Dans ces données, il faut noter les points suivants :
 
+- le fichier de données fait 3.8 Mo
 - les données manquantes sont indiquées par des `"?"`
 - les noms des variables sont dans le fichier [`adult.names`](donnees/adult.names) présenté en dessous
 
-<object data="donnees/adult.data" type="text/plain" style="width: 100%">
+<object data="donnees/adult.data" type="text/javascript" style="width: 100%">
     impossible à afficher
 </object>
-<object data="donnees/adult.names" type="text/plain" style="width: 100%">
+<object data="donnees/adult.names" type="text/javascript" style="width: 100%">
     impossible à afficher
 </object>
 
