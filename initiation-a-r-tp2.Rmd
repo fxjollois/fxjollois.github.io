@@ -1,5 +1,6 @@
 ---
-title: "Utilisation de données externes - TP2"
+title: TP2 - Utilisation de données externes
+subtitle: Initiation a `R` - STID 1ère année
 ---
 
 ```{r init, include=FALSE}

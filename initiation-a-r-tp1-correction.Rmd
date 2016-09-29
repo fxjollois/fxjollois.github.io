@@ -1,5 +1,6 @@
 ---
-title: Initiation a `R` - TP1 - correction
+title: TP1 - correction
+subtitle: Initiation a `R` - STID 1ère année
 ---
 
 ```{r init, include=FALSE}
