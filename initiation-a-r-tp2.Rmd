@@ -139,11 +139,11 @@ Nous remarquons les points suivants :
 Pour importer ce fichier, nous devons donc utiliser le code suivant. Vous devez d'abord télécharger le fichier. **Attention** : il est supposé ici que le fichier est dans un sous-répertoire `donnees` du répertoire de travail.
 
 ```{r}
-iris_bis = read.table("donnees/Iris.txt", header = T, sep = ";")
-head(iris_bis)
+iris = read.table("donnees/Iris.txt", header = T, sep = ";")
+head(iris)
 ```
 
-Il est aussi possible d'écrire un fichier texte à partir d'un `data.frame`, en spécifiant aussi les paramètres d'écriture. Par exemple, le code suivant écrit les données `iris_bis` dans un autre formalisme.
+Il est aussi possible d'écrire un fichier texte à partir d'un `data.frame`, en spécifiant aussi les paramètres d'écriture. Par exemple, le code suivant écrit les données `iris` dans un autre formalisme.
 
 - le séparateur de colonnes est le `"%"`
 - les noms des colonnes sont bien écrits
@@ -152,7 +152,7 @@ Il est aussi possible d'écrire un fichier texte à partir d'un `data.frame`, en
 - il n'y a pas de `""` ou de `''` autour des chaînes de caractères
 
 ```{r}
-write.table(iris_bis, file = "donnees/Iris_bis.txt", sep = "%", 
+write.table(iris, file = "donnees/Iris_bis.txt", sep = "%", 
             row.names = FALSE, col.names = TRUE, dec = ",", quote = FALSE)
 ```
 
@@ -172,6 +172,8 @@ iris_lignes[2]
 ## Exercices
 
 ### Importation de données
+
+Vous devez importer les données suivantes dans `R`.
 
 [`heart.txt`](donnees/heart.txt)
 
