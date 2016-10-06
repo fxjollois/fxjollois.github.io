@@ -139,8 +139,8 @@ Nous remarquons les points suivants :
 Pour importer ce fichier, nous devons donc utiliser le code suivant. Vous devez d'abord télécharger le fichier. **Attention** : il est supposé ici que le fichier est dans un sous-répertoire `donnees` du répertoire de travail.
 
 ```{r}
-iris_bis = read.table("donnees/Iris.txt", header = T, sep = ";")
-head(iris_bis)
+ir = read.table("donnees/Iris.txt", header = T, sep = ";")
+head(ir)
 ```
 
 Il est aussi possible d'écrire un fichier texte à partir d'un `data.frame`, en spécifiant aussi les paramètres d'écriture. Par exemple, le code suivant écrit les données `iris_bis` dans un autre formalisme.
@@ -152,7 +152,7 @@ Il est aussi possible d'écrire un fichier texte à partir d'un `data.frame`, en
 - il n'y a pas de `""` ou de `''` autour des chaînes de caractères
 
 ```{r}
-write.table(iris_bis, file = "donnees/Iris_bis.txt", sep = "%", 
+write.table(ir, file = "donnees/Iris_bis.txt", sep = "%", 
             row.names = FALSE, col.names = TRUE, dec = ",", quote = FALSE)
 ```
 
@@ -163,10 +163,10 @@ write.table(iris_bis, file = "donnees/Iris_bis.txt", sep = "%",
 Il est parfois difficile de lire directement avec la commande `read.table()` ou ses dérivés. On peut utiliser dans ce cas la commande `readLines()`, qui comme son nom l'indique, lit les lignes les unes après les autres. Elle renvoie un tableau de chaîne de caractères, chaque valeur du tableau correspondant à une ligne.
 
 ```{r}
-iris_lignes = readLines("donnees/Iris.txt")
-length(iris_lignes)
-iris_lignes[1]
-iris_lignes[2]
+ir_lignes = readLines("donnees/Iris.txt")
+length(ir_lignes)
+ir_lignes[1]
+ir_lignes[2]
 ```
 
 ## Attributs d'un objet
@@ -231,7 +231,7 @@ Dans ces données, il faut noter les points suivants :
 - le fichier de données fait 3.8 Mo
 - les données manquantes sont indiquées par des `"?"`
 - les noms des variables sont dans le fichier [`adult.names`](donnees/adult.names) 
-- Ne sont présentées ci-arpès que les 6 premières lignes du fichier
+- Ne sont présentées ci-après que les 6 premières lignes du fichier
 
 ```{r, echo=FALSE, comment=""}
 cat(readLines("donnees/adult.data", 6), sep = "\n")
@@ -246,8 +246,8 @@ Reprendre l'importation du fichier `heart.txt` (cf ci-dessus), et répondre aux 
 3. Créer une variable `factor` à partir de l'indicatrice binaire faite au point 1 avec comme labels des modalités `presence` pour `TRUE` et `absence` pour `FALSE`
 4. Créer un nouveau `data.frame` avec uniquement les individus ayant strictement moins de 60 ans
 5. Créer maintenant, à partir du précédent, deux `data.frames` : 
-    - une pour les hommes
-    - une autre pour les femmes
+    - un pour les hommes
+    - un autre pour les femmes
 
 Reprendre l'importation du fichier `detroit_homicide.txt` (cf ci-dessus)
 

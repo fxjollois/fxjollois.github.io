@@ -1,0 +1,81 @@
+---
+title: Utilisation de données externes - *correction*
+subtitle: Programmation statistique avec `R` - STID 2ème année
+---
+
+```{r init, include=FALSE}
+knitr::opts_chunk$set(comment = NA)
+```
+
+## Exercices
+
+### Importation de données
+
+Vous devez importer les données suivantes dans `R`. 
+
+[`heart.txt`](donnees/heart.txt)
+
+Pas de difficulté spéciale ici. Le séparateur est la tabulation (`\t` en R).
+
+```{r}
+heart = read.table("donnees/heart.txt", header = TRUE)
+head(heart)
+summary(heart)
+```
+
+[`Detroit_homicide.txt`](donnees/Detroit_homicide.txt)
+
+Ici, les premières lignes ne sont pas à prendre en considération lors de l'importation. Et nous avons des `labels` pour les variables.
+
+```{r}
+dh = read.table("donnees/Detroit_homicide.txt", header = TRUE, skip = 35)
+head(dh)
+summary(dh)
+```
+
+[`hepatitis.TXT`](donnees/hepatitis.TXT)
+
+Attention à l'indicateur de données manquantes (`?` dans ce fichier).
+
+```{r}
+hep = read.table("donnees/hepatitis.TXT", header = TRUE, na.strings = "?")
+head(hep)
+summary(hep)
+```
+
+[`adult.data`](donnees/adult.data)
+
+Dans ces données, il faut noter les points suivants :
+
+- le fichier de données fait 3.8 Mo
+- les données manquantes sont indiquées par des `"?"`
+- les noms des variables sont dans le fichier [`adult.names`](donnees/adult.names) 
+- Ne sont présentées ci-après que les 6 premières lignes du fichier
+
+```{r}
+adult = read.table("donnees/adult.data", sep = ",", na.strings = " ?")
+head(adult)
+adult.names = read.table("donnees/adult.names", 
+                         sep = ":", skip = 95, stringsAsFactors = FALSE)
+head(adult.names)
+adult.names$V1
+names(adult) = c(adult.names$V1, "class")
+summary(adult)
+```
+
+### Compléments
+
+Reprendre l'importation du fichier `heart.txt` (cf ci-dessus), et répondre aux questions suivantes en complétant le code précédemment écrit.
+
+1. Créer une indicatrice binaire `FALSE/TRUE` pour la présence ou non de problème de coeur (dernière variable)
+2. Créer une variable comptant le nombre de fois où une variable est égale à `A` (entre `type_douleur`, `sucre`, `electro`, et `vaisseau`)
+3. Créer une variable `factor` à partir de l'indicatrice binaire faite au point 1 avec comme labels des modalités `presence` pour `TRUE` et `absence` pour `FALSE`
+4. Créer un nouveau `data.frame` avec uniquement les individus ayant strictement moins de 60 ans
+5. Créer maintenant, à partir du précédent, deux `data.frames` : 
+    - une pour les hommes
+    - une autre pour les femmes
+
+Reprendre l'importation du fichier `detroit_homicide.txt` (cf ci-dessus)
+
+1. Intégrer le texte introductif dans un attribut du `data.frame`
+2. Intégrer les labels des variables dans un autre attribut, sous forme de `data.frame` à deux colonnes
