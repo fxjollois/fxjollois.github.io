@@ -158,10 +158,10 @@ SELECT *
 
 Reprenez le jeu de données présent dans le fichier [`heart.txt`](donnees/heart.txt).
 
-1. Créer un nouveau `data.frame` avec uniquement les individus ayant strictement moins de 60 ans
-2. Créer maintenant, à partir du précédent, deux `data.frames` (en supprimant l'information sur le sexe) : 
-    - un pour les hommes
-    - un autre pour les femmes
+1. Créer un nouveau `data.frame` avec uniquement les individus ayant un problème cardiaque
+2. Créer maintenant, à partir du précédent, deux `data.frames` (en supprimant l'information sur l'âge) : 
+    - un pour les personnes de plus de 60 ans
+    - un autre pour les personnes de 60 ans et mois
 3. Créer un nouveau `data.frame` à partir des données complètes, avec
     1. une variable comptant le nombre de fois où une variable des variables suivantes est égale à `A` : `type_douleur`, `sucre`, `electro`, et `vaisseau`
     2. une variable binaire qui sera égale à `TRUE` si la personne a eu un problème de coeur en même temps qu'une angine
