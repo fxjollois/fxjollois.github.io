@@ -156,18 +156,51 @@ SELECT *
 
 ## Exercices
 
+### `iris`
+
+A partir des données `iris`, déjà présentes dans `R`, créer les tableaux suivantes, à l'aide des fonctions `aggregate()` et `merge()` :
+
+- Moyenne
+```{r, echo=FALSE}
+aggregate(. ~ Species, iris, mean)
+```
+- Ecart-type
+```{r, echo=FALSE}
+aggregate(. ~ Species, iris, sd)
+```
+- Infos sur `Sepal.Length`
+```{r, echo=FALSE}
+aggregate(Sepal.Length ~ Species, iris, summary)
+```
+- Moyenne et médiane
+```{r, echo=FALSE}
+merge(setNames(aggregate(Sepal.Length ~ Species, iris, mean), c("Espèce", "Moyenne")), 
+      setNames(aggregate(Sepal.Length ~ Species, iris, median), c("Espèce", "Médiane")))
+```
+
+### `heart.txt`
+
 Reprenez le jeu de données présent dans le fichier [`heart.txt`](donnees/heart.txt).
 
-1. Créer un nouveau `data.frame` avec uniquement les individus ayant un problème cardiaque
-2. Créer maintenant, à partir du précédent, deux `data.frames` (en supprimant l'information sur l'âge) : 
-    - un pour les personnes de plus de 60 ans
-    - un autre pour les personnes de 60 ans et mois
-3. Créer un nouveau `data.frame` à partir des données complètes, avec
-    1. une variable comptant le nombre de fois où une variable des variables suivantes est égale à `A` : `type_douleur`, `sucre`, `electro`, et `vaisseau`
-    2. une variable binaire qui sera égale à `TRUE` si la personne a eu un problème de coeur en même temps qu'une angine
-4. Comparer la pression moyenne et le cholesterol selon la présence ou non de problème de coeur
-5. Calculer le nombre de personnes concernés par un problème de coeur
-6. Fusionner les deux `data.frame`s précédement créés pour avoir les informations en une seule table 
+#### Manipulation
+
+1. Créer un nouveau `data.frame` avec uniquement les individus masculins ayant un problème cardiaque 
+2. Avec ces données, en créer un autre ne gardant que les variables suivantes :
+    - `type_douleur`, `sucre`, `electro`, et `vaisseau`
+    - `angine`, `depression`
+3. Créer un nouveau `data.frame` à partir de ce `data.frame`, avec
+    1. une variable `nbA` comptant le nombre de fois où une variable des variables suivantes est égale à `A` : `type_douleur`, `sucre`, `electro`, et `vaisseau`
+    2. une variable `flag` avec les deux modalités suivantes :
+        - `"problème"` : `angine` à `"oui"` et `depression` supérieur ou égal à `4.0`
+        - `"attention"` : sinon
+
+#### Agrégats
+
+1. Comparer le cholesterol selon la présence ou non de problème de coeur
+2. Calculer le nombre de personnes concernés par un problème de coeur
+3. Fusionner les deux `data.frame`s précédement créés pour avoir les informations en une seule table
+4. Calculer les moyennes de chaque variable quantitative selon la présence ou non de problème de coeur
+5. Comparer l'âge selon la présence ou de problème de coeur et de problème d'angine
 
 
 
