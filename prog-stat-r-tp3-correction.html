@@ -209,14 +209,11 @@ $(document).ready(function () {
 </div>
 
 
-<div id="exercices" class="section level2">
-<h2>Exercices</h2>
-<div id="importation-de-donnees" class="section level3">
-<h3>Importation de données</h3>
-<p>Vous devez importer les données suivantes dans <code>R</code>.</p>
-<p><a href="donnees/heart.txt"><code>heart.txt</code></a></p>
-<p>Pas de difficulté spéciale ici. Le séparateur est la tabulation (<code>\t</code> en R).</p>
-<pre class="r"><code>heart = read.table(&quot;donnees/heart.txt&quot;, header = TRUE)
+<div id="importation-de-donnees" class="section level2">
+<h2>Importation de données</h2>
+<div id="heart.txt" class="section level3">
+<h3>heart.txt</h3>
+<pre class="r"><code>heart = read.table(&quot;donnees/heart.txt&quot;, header = T)
 head(heart)</code></pre>
 <pre><code>  age     sexe type_douleur pression cholester sucre electro taux_max
 1  70 masculin            D      130       322     A       C      109
@@ -232,31 +229,11 @@ head(heart)</code></pre>
 4    oui        0.2   2        B  absence
 5    oui        0.2   1        B  absence
 6    non        0.4   1        A  absence</code></pre>
-<pre class="r"><code>summary(heart)</code></pre>
-<pre><code>      age              sexe     type_douleur    pression    
- Min.   :29.00   feminin : 87   A: 20        Min.   : 94.0  
- 1st Qu.:48.00   masculin:183   B: 42        1st Qu.:120.0  
- Median :55.00                  C: 79        Median :130.0  
- Mean   :54.43                  D:129        Mean   :131.3  
- 3rd Qu.:61.00                               3rd Qu.:140.0  
- Max.   :77.00                               Max.   :200.0  
-   cholester     sucre   electro    taux_max     angine      depression  
- Min.   :126.0   A:230   A:131   Min.   : 71.0   non:181   Min.   :0.00  
- 1st Qu.:213.0   B: 40   B:  2   1st Qu.:133.0   oui: 89   1st Qu.:0.00  
- Median :245.0           C:137   Median :153.5             Median :0.80  
- Mean   :249.7                   Mean   :149.7             Mean   :1.05  
- 3rd Qu.:280.0                   3rd Qu.:166.0             3rd Qu.:1.60  
- Max.   :564.0                   Max.   :202.0             Max.   :6.20  
-      pic        vaisseau      coeur    
- Min.   :1.000   A:160    absence :150  
- 1st Qu.:1.000   B: 58    presence:120  
- Median :2.000   C: 33                  
- Mean   :1.585   D: 19                  
- 3rd Qu.:2.000                          
- Max.   :3.000                          </code></pre>
-<p><a href="donnees/Detroit_homicide.txt"><code>Detroit_homicide.txt</code></a></p>
-<p>Ici, les premières lignes ne sont pas à prendre en considération lors de l’importation. Et nous avons des <code>labels</code> pour les variables.</p>
-<pre class="r"><code>dh = read.table(&quot;donnees/Detroit_homicide.txt&quot;, header = TRUE, skip = 35)
+</div>
+<div id="detroit_homicide.txt" class="section level3">
+<h3>Detroit_homicide.txt</h3>
+<pre class="r"><code>dh = read.table(&quot;donnees/Detroit_homicide.txt&quot;, 
+                skip = 35, header = T)
 head(dh)</code></pre>
 <pre><code>     FTP UEMP   MAN    LIC     GR CLEAR     WM  NMAN   GOV   HE     WE
 1 260.35 11.0 455.5 178.15 215.98  93.4 558724 538.1 133.9 2.98 117.18
@@ -272,38 +249,13 @@ head(dh)</code></pre>
 4  8.89 49.51 234.07
 5 13.07 55.05 230.84
 6 14.57 53.90 217.99</code></pre>
-<pre class="r"><code>summary(dh)</code></pre>
-<pre><code>      FTP             UEMP             MAN             LIC        
- Min.   :260.4   Min.   : 3.200   Min.   :455.5   Min.   : 156.4  
- 1st Qu.:269.8   1st Qu.: 3.900   1st Qu.:535.8   1st Qu.: 222.1  
- Median :273.0   Median : 5.200   Median :569.3   Median : 583.2  
- Mean   :304.5   Mean   : 5.792   Mean   :556.4   Mean   : 537.5  
- 3rd Qu.:341.4   3rd Qu.: 7.100   3rd Qu.:596.9   3rd Qu.: 794.9  
- Max.   :390.2   Max.   :11.000   Max.   :613.5   Max.   :1131.2  
-       GR             CLEAR             WM              NMAN      
- Min.   : 180.5   Min.   :58.90   Min.   :359647   Min.   :538.1  
- 1st Qu.: 231.7   1st Qu.:73.90   1st Qu.:401518   1st Qu.:591.0  
- Median : 616.5   Median :87.40   Median :448267   Median :686.2  
- Mean   : 545.7   Mean   :81.45   Mean   :452508   Mean   :673.9  
- 3rd Qu.: 750.4   3rd Qu.:91.00   3rd Qu.:500457   3rd Qu.:755.3  
- Max.   :1029.8   Max.   :94.40   Max.   :558724   Max.   :819.8  
-      GOV              HE              WE             HOM       
- Min.   :133.9   Min.   :2.910   Min.   :117.2   Min.   : 8.52  
- 1st Qu.:150.3   1st Qu.:3.230   1st Qu.:141.7   1st Qu.: 8.90  
- Median :187.5   Median :3.600   Median :157.2   Median :21.36  
- Mean   :185.8   Mean   :3.948   Mean   :170.0   Mean   :25.13  
- 3rd Qu.:223.8   3rd Qu.:4.470   3rd Qu.:178.7   3rd Qu.:37.39  
- Max.   :230.9   Max.   :5.760   Max.   :258.1   Max.   :52.33  
-      ACC             ASR       
- Min.   :39.17   Min.   :218.0  
- 1st Qu.:44.17   1st Qu.:277.5  
- Median :45.80   Median :306.2  
- Mean   :46.92   Mean   :311.9  
- 3rd Qu.:50.62   3rd Qu.:323.0  
- Max.   :55.05   Max.   :473.0  </code></pre>
-<p><a href="donnees/hepatitis.TXT"><code>hepatitis.TXT</code></a></p>
-<p>Attention à l’indicateur de données manquantes (<code>?</code> dans ce fichier).</p>
-<pre class="r"><code>hep = read.table(&quot;donnees/hepatitis.TXT&quot;, header = TRUE, na.strings = &quot;?&quot;)
+<pre class="r"><code>dim(dh)</code></pre>
+<pre><code>[1] 13 14</code></pre>
+</div>
+<div id="hepatitis.txt" class="section level3">
+<h3>hepatitis.TXT</h3>
+<pre class="r"><code>hep = read.table(&quot;donnees/hepatitis.TXT&quot;,
+                 header = T, na.strings = &quot;?&quot;)
 head(hep)</code></pre>
 <pre><code>  AGE    SEX STEROID ANTIVIRALS FATIGUE MALAISE ANOREXIA LIVER_BIG
 1  30   male      no         no      no      no       no        no
@@ -326,44 +278,11 @@ head(hep)</code></pre>
 4         46.00   52     4.0   80.00        no  LIVE
 5        105.33  200     4.0   61.85        no  LIVE
 6         95.00   28     4.0   75.00        no  LIVE</code></pre>
-<pre class="r"><code>summary(hep)</code></pre>
-<pre><code>      AGE           SEX      STEROID   ANTIVIRALS FATIGUE    MALAISE  
- Min.   : 7.0   female:139   no  :76   no :131    no  : 54   no  :93  
- 1st Qu.:32.0   male  : 16   yes :78   yes: 24    yes :100   yes :61  
- Median :39.0                NA&#39;s: 1              NA&#39;s:  1   NA&#39;s: 1  
- Mean   :41.2                                                         
- 3rd Qu.:50.0                                                         
- Max.   :78.0                                                         
- ANOREXIA   LIVER_BIG  LIVER_FIRM SPLEEN_PALPABLE SPIDERS   ASCITES   
- no  :122   no  : 25   no  :84    no  :120        no  :99   no  :130  
- yes : 32   yes :120   yes :60    yes : 30        yes :51   yes : 20  
- NA&#39;s:  1   NA&#39;s: 10   NA&#39;s:11    NA&#39;s:  5        NA&#39;s: 5   NA&#39;s:  5  
-                                                                      
-                                                                      
-                                                                      
- VARICES      BILIRUBIN     ALK_PHOSPHATE        SGOT       
- no  :132   Min.   :0.300   Min.   : 26.0   Min.   : 14.00  
- yes : 18   1st Qu.:0.800   1st Qu.: 78.0   1st Qu.: 32.50  
- NA&#39;s:  5   Median :1.000   Median :102.0   Median : 59.00  
-            Mean   :1.428   Mean   :105.3   Mean   : 85.89  
-            3rd Qu.:1.500   3rd Qu.:119.5   3rd Qu.: 99.00  
-            Max.   :8.000   Max.   :295.0   Max.   :648.00  
-    ALBUMIN         PROTIME       HISTOLOGY  Class    
- Min.   :2.100   Min.   :  0.00   no :85    DIE : 32  
- 1st Qu.:3.500   1st Qu.: 57.00   yes:70    LIVE:123  
- Median :3.900   Median : 61.85                       
- Mean   :3.818   Mean   : 61.85                       
- 3rd Qu.:4.200   3rd Qu.: 65.00                       
- Max.   :6.400   Max.   :100.00                       </code></pre>
-<p><a href="donnees/adult.data"><code>adult.data</code></a></p>
-<p>Dans ces données, il faut noter les points suivants :</p>
-<ul>
-<li>le fichier de données fait 3.8 Mo</li>
-<li>les données manquantes sont indiquées par des <code>&quot;?&quot;</code></li>
-<li>les noms des variables sont dans le fichier <a href="donnees/adult.names"><code>adult.names</code></a></li>
-<li>Ne sont présentées ci-après que les 6 premières lignes du fichier</li>
-</ul>
-<pre class="r"><code>adult = read.table(&quot;donnees/adult.data&quot;, sep = &quot;,&quot;, na.strings = &quot; ?&quot;)
+</div>
+<div id="adult" class="section level3">
+<h3>adult</h3>
+<pre class="r"><code>adult = read.table(&quot;donnees/adult.data&quot;, 
+                   sep = &quot;,&quot;, na.strings = &quot; ?&quot;)
 head(adult)</code></pre>
 <pre><code>  V1                V2     V3         V4 V5                  V6
 1 39         State-gov  77516  Bachelors 13       Never-married
@@ -386,90 +305,173 @@ head(adult)</code></pre>
 4  United-States  &lt;=50K
 5           Cuba  &lt;=50K
 6  United-States  &lt;=50K</code></pre>
-<pre class="r"><code>adult.names = read.table(&quot;donnees/adult.names&quot;, 
-                         sep = &quot;:&quot;, skip = 95, stringsAsFactors = FALSE)
-head(adult.names)</code></pre>
-<pre><code>              V1
-1            age
-2      workclass
-3         fnlwgt
-4      education
-5  education-num
-6 marital-status
-                                                                                                                                                       V2
-1                                                                                                                                             continuous.
-2                                                  Private, Self-emp-not-inc, Self-emp-inc, Federal-gov, Local-gov, State-gov, Without-pay, Never-worked.
-3                                                                                                                                             continuous.
-4  Bachelors, Some-college, 11th, HS-grad, Prof-school, Assoc-acdm, Assoc-voc, 9th, 7th-8th, 12th, Masters, 1st-4th, 10th, Doctorate, 5th-6th, Preschool.
-5                                                                                                                                             continuous.
-6                                              Married-civ-spouse, Divorced, Never-married, Separated, Widowed, Married-spouse-absent, Married-AF-spouse.</code></pre>
+<pre class="r"><code>names(adult)</code></pre>
+<pre><code> [1] &quot;V1&quot;  &quot;V2&quot;  &quot;V3&quot;  &quot;V4&quot;  &quot;V5&quot;  &quot;V6&quot;  &quot;V7&quot;  &quot;V8&quot;  &quot;V9&quot;  &quot;V10&quot; &quot;V11&quot;
+[12] &quot;V12&quot; &quot;V13&quot; &quot;V14&quot; &quot;V15&quot;</code></pre>
+<pre class="r"><code>adult.names = read.table(&quot;donnees/adult.names&quot;,
+                         skip = 96, sep = &quot;:&quot;,
+                         stringsAsFactors = FALSE)
+adult.names</code></pre>
+<pre><code>               V1
+1             age
+2       workclass
+3          fnlwgt
+4       education
+5   education-num
+6  marital-status
+7      occupation
+8    relationship
+9            race
+10            sex
+11   capital-gain
+12   capital-loss
+13 hours-per-week
+14 native-country
+                                                                                                                                                                                                                                                                                                                                                                                                                                 V2
+1                                                                                                                                                                                                                                                                                                                                                                                                                       continuous.
+2                                                                                                                                                                                                                                                                                                                            Private, Self-emp-not-inc, Self-emp-inc, Federal-gov, Local-gov, State-gov, Without-pay, Never-worked.
+3                                                                                                                                                                                                                                                                                                                                                                                                                       continuous.
+4                                                                                                                                                                                                                                                                            Bachelors, Some-college, 11th, HS-grad, Prof-school, Assoc-acdm, Assoc-voc, 9th, 7th-8th, 12th, Masters, 1st-4th, 10th, Doctorate, 5th-6th, Preschool.
+5                                                                                                                                                                                                                                                                                                                                                                                                                       continuous.
+6                                                                                                                                                                                                                                                                                                                        Married-civ-spouse, Divorced, Never-married, Separated, Widowed, Married-spouse-absent, Married-AF-spouse.
+7                                                                                                                                                                                                         Tech-support, Craft-repair, Other-service, Sales, Exec-managerial, Prof-specialty, Handlers-cleaners, Machine-op-inspct, Adm-clerical, Farming-fishing, Transport-moving, Priv-house-serv, Protective-serv, Armed-Forces.
+8                                                                                                                                                                                                                                                                                                                                                               Wife, Own-child, Husband, Not-in-family, Other-relative, Unmarried.
+9                                                                                                                                                                                                                                                                                                                                                                      White, Asian-Pac-Islander, Amer-Indian-Eskimo, Other, Black.
+10                                                                                                                                                                                                                                                                                                                                                                                                                    Female, Male.
+11                                                                                                                                                                                                                                                                                                                                                                                                                      continuous.
+12                                                                                                                                                                                                                                                                                                                                                                                                                      continuous.
+13                                                                                                                                                                                                                                                                                                                                                                                                                      continuous.
+14  United-States, Cambodia, England, Puerto-Rico, Canada, Germany, Outlying-US(Guam-USVI-etc), India, Japan, Greece, South, China, Cuba, Iran, Honduras, Philippines, Italy, Poland, Jamaica, Vietnam, Mexico, Portugal, Ireland, France, Dominican-Republic, Laos, Ecuador, Taiwan, Haiti, Columbia, Hungary, Guatemala, Nicaragua, Scotland, Thailand, Yugoslavia, El-Salvador, Trinadad&amp;Tobago, Peru, Hong, Holand-Netherlands.</code></pre>
 <pre class="r"><code>adult.names$V1</code></pre>
 <pre><code> [1] &quot;age&quot;            &quot;workclass&quot;      &quot;fnlwgt&quot;         &quot;education&quot;     
  [5] &quot;education-num&quot;  &quot;marital-status&quot; &quot;occupation&quot;     &quot;relationship&quot;  
  [9] &quot;race&quot;           &quot;sex&quot;            &quot;capital-gain&quot;   &quot;capital-loss&quot;  
 [13] &quot;hours-per-week&quot; &quot;native-country&quot;</code></pre>
 <pre class="r"><code>names(adult) = c(adult.names$V1, &quot;class&quot;)
-summary(adult)</code></pre>
-<pre><code>      age                    workclass         fnlwgt       
- Min.   :17.00    Private         :22696   Min.   :  12285  
- 1st Qu.:28.00    Self-emp-not-inc: 2541   1st Qu.: 117827  
- Median :37.00    Local-gov       : 2093   Median : 178356  
- Mean   :38.58    State-gov       : 1298   Mean   : 189778  
- 3rd Qu.:48.00    Self-emp-inc    : 1116   3rd Qu.: 237051  
- Max.   :90.00   (Other)          :  981   Max.   :1484705  
-                 NA&#39;s             : 1836                    
-         education     education-num                  marital-status 
-  HS-grad     :10501   Min.   : 1.00    Divorced             : 4443  
-  Some-college: 7291   1st Qu.: 9.00    Married-AF-spouse    :   23  
-  Bachelors   : 5355   Median :10.00    Married-civ-spouse   :14976  
-  Masters     : 1723   Mean   :10.08    Married-spouse-absent:  418  
-  Assoc-voc   : 1382   3rd Qu.:12.00    Never-married        :10683  
-  11th        : 1175   Max.   :16.00    Separated            : 1025  
- (Other)      : 5134                    Widowed              :  993  
-            occupation             relationship  
-  Prof-specialty : 4140    Husband       :13193  
-  Craft-repair   : 4099    Not-in-family : 8305  
-  Exec-managerial: 4066    Other-relative:  981  
-  Adm-clerical   : 3770    Own-child     : 5068  
-  Sales          : 3650    Unmarried     : 3446  
- (Other)         :10993    Wife          : 1568  
- NA&#39;s            : 1843                          
-                  race            sex         capital-gain  
-  Amer-Indian-Eskimo:  311    Female:10771   Min.   :    0  
-  Asian-Pac-Islander: 1039    Male  :21790   1st Qu.:    0  
-  Black             : 3124                   Median :    0  
-  Other             :  271                   Mean   : 1078  
-  White             :27816                   3rd Qu.:    0  
-                                             Max.   :99999  
-                                                            
-  capital-loss    hours-per-week         native-country     class      
- Min.   :   0.0   Min.   : 1.00    United-States:29170    &lt;=50K:24720  
- 1st Qu.:   0.0   1st Qu.:40.00    Mexico       :  643    &gt;50K : 7841  
- Median :   0.0   Median :40.00    Philippines  :  198                 
- Mean   :  87.3   Mean   :40.44    Germany      :  137                 
- 3rd Qu.:   0.0   3rd Qu.:45.00    Canada       :  121                 
- Max.   :4356.0   Max.   :99.00   (Other)       : 1709                 
-                                  NA&#39;s          :  583                 </code></pre>
+head(adult)</code></pre>
+<pre><code>  age         workclass fnlwgt  education education-num
+1  39         State-gov  77516  Bachelors            13
+2  50  Self-emp-not-inc  83311  Bachelors            13
+3  38           Private 215646    HS-grad             9
+4  53           Private 234721       11th             7
+5  28           Private 338409  Bachelors            13
+6  37           Private 284582    Masters            14
+       marital-status         occupation   relationship   race     sex
+1       Never-married       Adm-clerical  Not-in-family  White    Male
+2  Married-civ-spouse    Exec-managerial        Husband  White    Male
+3            Divorced  Handlers-cleaners  Not-in-family  White    Male
+4  Married-civ-spouse  Handlers-cleaners        Husband  Black    Male
+5  Married-civ-spouse     Prof-specialty           Wife  Black  Female
+6  Married-civ-spouse    Exec-managerial           Wife  White  Female
+  capital-gain capital-loss hours-per-week native-country  class
+1         2174            0             40  United-States  &lt;=50K
+2            0            0             13  United-States  &lt;=50K
+3            0            0             40  United-States  &lt;=50K
+4            0            0             40  United-States  &lt;=50K
+5            0            0             40           Cuba  &lt;=50K
+6            0            0             40  United-States  &lt;=50K</code></pre>
 </div>
-<div id="complements" class="section level3">
-<h3>Compléments</h3>
-<p>Reprendre l’importation du fichier <code>heart.txt</code> (cf ci-dessus), et répondre aux questions suivantes en complétant le code précédemment écrit.</p>
-<ol style="list-style-type: decimal">
-<li>Créer une indicatrice binaire <code>FALSE/TRUE</code> pour la présence ou non de problème de coeur (dernière variable)</li>
-<li>Créer une variable comptant le nombre de fois où une variable est égale à <code>A</code> (entre <code>type_douleur</code>, <code>sucre</code>, <code>electro</code>, et <code>vaisseau</code>)</li>
-<li>Créer une variable <code>factor</code> à partir de l’indicatrice binaire faite au point 1 avec comme labels des modalités <code>presence</code> pour <code>TRUE</code> et <code>absence</code> pour <code>FALSE</code></li>
-<li>Créer un nouveau <code>data.frame</code> avec uniquement les individus ayant strictement moins de 60 ans</li>
-<li>Créer maintenant, à partir du précédent, deux <code>data.frames</code> :
+</div>
+<div id="complements" class="section level2">
+<h2>Compléments</h2>
+<p>Reprendre l’importation du fichier <code>&quot;heart.txt&quot;</code> (cf ci-dessus), et répondre aux questions suivantes en complétant le code précédemment écrit.</p>
+<div id="creer-une-indicatrice-binaire-falsetrue-pour-la-presence-ou-non-de-probleme-de-coeur-derniere-variable" class="section level3">
+<h3>Créer une indicatrice binaire FALSE/TRUE pour la présence ou non de problème de coeur (dernière variable)</h3>
+<pre class="r"><code>heart$indicatrice = heart$coeur == &quot;presence&quot;</code></pre>
+</div>
+<div id="creer-une-variable-comptant-le-nombre-de-fois-ou-une-variable-est-egale-a-a-entre-type_douleur-sucre-electro-et-vaisseau" class="section level3">
+<h3>Créer une variable comptant le nombre de fois où une variable est égale à A (entre type_douleur, sucre, electro, et vaisseau)</h3>
+<pre class="r"><code>heart$nbA = (heart$type_douleur == &quot;A&quot;) + 
+  (heart$sucre == &quot;A&quot;) +
+  (heart$electro == &quot;A&quot;) +
+  (heart$vaisseau == &quot;A&quot;)</code></pre>
+<pre class="r"><code>heart$nbAbis = 
+  rowSums(heart[c(&quot;type_douleur&quot;, &quot;sucre&quot;, &quot;electro&quot;, &quot;vaisseau&quot;)] == &quot;A&quot;)</code></pre>
+</div>
+<div id="creer-une-variable-factor-a-partir-de-lindicatrice-binaire-faite-au-point-1-avec-comme-labels-des-modalites-presence-pour-true-et-absence-pour-false" class="section level3">
+<h3>Créer une variable factor à partir de l’indicatrice binaire faite au point 1 avec comme labels des modalités presence pour TRUE et absence pour FALSE</h3>
+<pre class="r"><code>heart$ind2 = factor(heart$indicatrice, labels = c(&quot;Absence&quot;, &quot;Présence&quot;))
+head(heart)</code></pre>
+<pre><code>  age     sexe type_douleur pression cholester sucre electro taux_max
+1  70 masculin            D      130       322     A       C      109
+2  67  feminin            C      115       564     A       C      160
+3  57 masculin            B      124       261     A       A      141
+4  64 masculin            D      128       263     A       A      105
+5  74  feminin            B      120       269     A       C      121
+6  65 masculin            D      120       177     A       A      140
+  angine depression pic vaisseau    coeur indicatrice nbA nbAbis     ind2
+1    non        2.4   2        D presence        TRUE   1      1 Présence
+2    non        1.6   2        A  absence       FALSE   2      2  Absence
+3    non        0.3   1        A presence        TRUE   3      3 Présence
+4    oui        0.2   2        B  absence       FALSE   2      2  Absence
+5    oui        0.2   1        B  absence       FALSE   1      1  Absence
+6    non        0.4   1        A  absence       FALSE   3      3  Absence</code></pre>
+</div>
+<div id="creer-un-nouveau-data.frame-avec-uniquement-les-individus-ayant-strictement-moins-de-60-ans" class="section level3">
+<h3>Créer un nouveau data.frame avec uniquement les individus ayant strictement moins de 60 ans</h3>
+<pre class="r"><code>heart1a = heart[heart$age &lt; 60,]
+heart1b = heart[which(heart$age &lt; 60),]
+heart1 = subset(heart, age &lt; 60)</code></pre>
+</div>
+<div id="creer-maintenant-a-partir-du-precedent-deux-data.frames" class="section level3">
+<h3>Créer maintenant, à partir du précédent, deux data.frames :</h3>
 <ul>
-<li>une pour les hommes</li>
-<li>une autre pour les femmes</li>
-</ul></li>
-</ol>
-<p>Reprendre l’importation du fichier <code>detroit_homicide.txt</code> (cf ci-dessus)</p>
-<ol style="list-style-type: decimal">
-<li>Intégrer le texte introductif dans un attribut du <code>data.frame</code></li>
-<li>Intégrer les labels des variables dans un autre attribut, sous forme de <code>data.frame</code> à deux colonnes</li>
-</ol>
+<li>un pour les hommes</li>
+<li>un autre pour les femmes</li>
+</ul>
+<pre class="r"><code>heart1f = subset(heart1, sexe == &quot;feminin&quot;)
+heart1m = subset(heart1, sexe == &quot;masculin&quot;)</code></pre>
+</div>
+</div>
+<div id="reprendre-limportation-du-fichier-detroit_homicide.txt-cf-ci-dessus" class="section level2">
+<h2>Reprendre l’importation du fichier detroit_homicide.txt (cf ci-dessus)</h2>
+<div id="integrer-le-texte-introductif-dans-un-attribut-du-data.frame" class="section level3">
+<h3>Intégrer le texte introductif dans un attribut du data.frame</h3>
+<pre class="r"><code>attributes(dh)</code></pre>
+<pre><code>$names
+ [1] &quot;FTP&quot;   &quot;UEMP&quot;  &quot;MAN&quot;   &quot;LIC&quot;   &quot;GR&quot;    &quot;CLEAR&quot; &quot;WM&quot;    &quot;NMAN&quot; 
+ [9] &quot;GOV&quot;   &quot;HE&quot;    &quot;WE&quot;    &quot;HOM&quot;   &quot;ACC&quot;   &quot;ASR&quot;  
+
+$class
+[1] &quot;data.frame&quot;
+
+$row.names
+ [1]  1  2  3  4  5  6  7  8  9 10 11 12 13</code></pre>
+<pre class="r"><code>attr(dh, &quot;names&quot;)</code></pre>
+<pre><code> [1] &quot;FTP&quot;   &quot;UEMP&quot;  &quot;MAN&quot;   &quot;LIC&quot;   &quot;GR&quot;    &quot;CLEAR&quot; &quot;WM&quot;    &quot;NMAN&quot; 
+ [9] &quot;GOV&quot;   &quot;HE&quot;    &quot;WE&quot;    &quot;HOM&quot;   &quot;ACC&quot;   &quot;ASR&quot;  </code></pre>
+<pre class="r"><code>attr(dh, &quot;info&quot;) = 
+  paste(readLines(&quot;donnees/Detroit_homicide.txt&quot;, n = 19), collapse = &quot;\n&quot;)
+cat(attr(dh, &quot;info&quot;))</code></pre>
+<pre><code>This is the data set called `DETROIT&#39; in the book `Subset selection in
+regression&#39; by Alan J. Miller published in the Chapman &amp; Hall series of
+monographs on Statistics &amp; Applied Probability, no. 40.   The data are
+unusual in that a subset of three predictors can be found which gives a
+very much better fit to the data than the subsets found from the Efroymson
+stepwise algorithm, or from forward selection or backward elimination.
+
+The original data were given in appendix A of `Regression analysis and its
+application: A data-oriented approach&#39; by Gunst &amp; Mason, Statistics
+textbooks and monographs no. 24, Marcel Dekker.   It has caused problems
+because some copies of the Gunst &amp; Mason book do not contain all of the data,
+and because Miller does not say which variables he used as predictors and
+which is the dependent variable.   (HOM was the dependent variable, and the
+predictors were FTP ... WE)
+
+The data were collected by J.C. Fisher and used in his paper: &quot;Homicide in
+Detroit: The Role of Firearms&quot;, Criminology, vol.14, 387-400 (1976)
+
+The data are on the homicide rate in Detroit for the years 1961-1973.</code></pre>
+</div>
+<div id="integrer-les-labels-des-variables-dans-un-autre-attribut-sous-forme-de-data.frame-a-deux-colonnes" class="section level3">
+<h3>Intégrer les labels des variables dans un autre attribut, sous forme de data.frame à deux colonnes</h3>
+<pre class="r"><code>noms = tail(readLines(&quot;donnees/Detroit_homicide.txt&quot;, n = 34), 15)
+noms = noms[noms != &quot;&quot;]
+attr(dh, &quot;info.var&quot;) = data.frame(
+  var = trimws(substr(noms, 1, 6)),
+  descriptif = substr(noms, 10, 100),
+  stringsAsFactors = FALSE
+)</code></pre>
 </div>
 </div>
 
