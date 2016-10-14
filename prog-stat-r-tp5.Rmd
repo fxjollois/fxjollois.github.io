@@ -1,0 +1,56 @@
+---
+title: Document automatique
+subtitle: Programmation statistique avec `R` - STID 2ème année
+---
+
+Nous allons voir dans ce TP comment on peut produire un document (`HTML`, `PDF` voire `Word`) incluant à la fois le texte et les commandes `R` pour produire les éléments pour appuyer les commentaires (importation de données, tableaux, graphiques, ...).
+
+## Librairies
+
+`R` fonctionne sur le principe d'un moteur de base, avec des fonctionnalités limitées. Celles-ci peuvent être augmentées grâce à l'ajout de **librairies** (appelées aussi *packages*). Il en existe de nombreuses, disponibles sur le site du [**CRAN**](http://??) (*Comprehensive R Archive Network*).
+
+### Chemin(s) de recherche des librairies
+
+La commande `.libPaths()` permet de lister les différents répertoires dans lesquels `R` va pouvoir chercher les librairies. Si nous voulons en installer de nouvelles, et pouvoir les réutiliser plus tard, il faut donc spécifier un répertoire dans lequel nous avons les droits d'écriture.
+
+Premièrement, il vous faut créer un répertoire dans votre `"Z:/"` qui contiendra les librairies `R`, par exemple nommé `"Rlib"`, directement à la racine de votre `"Z:/"`. Une fois celui-ci créé, vous pouvez indiquez à `R` qu'il doit aussi prendre en compte ce répertoire pour la recherche de librairies. Pour cela, vous devez exécuter la commande `.libPaths("z:/Rlib")`. Afin de vérfier que le répertoire a bien été ajouté, vous pouvez de nouveau lister les dossiers connus de `R` avec `.libPaths()`. Normalement, votre répertoire (ici `"Z:/Rlib"`) doit être affiché en premier.
+
+Voici donc les commandes à exécutées ici.
+
+```{r, eval=FALSE}
+.libPaths()
+.libPaths("z:/Rlib")
+.libPaths()
+```
+
+**Attention.** Cet ajout du répertoire `"Z:/Rlib"` aux chemins connus de `R`, via la commande `.libPaths()`, devra être effectué à chaque nouvelle session (i.e. à chaque fois que vous relancez RStudio donc).
+
+### Installation d'une librairie
+
+Une fois le répertoire ajouté, nous pouvons installer les librairies directement dans `R` avec la commande `install.packages()`, en y listant les librairies voulues. Nous allons utilsier ici la librairie `rmarkdown`. Vous devez donc executer la commande suivante.
+
+```{r, eval=FALSE}
+install.packages("rmarkdown")
+```
+
+Quand vous l'exécuterez, vous verrez qu'il doit aussi installer d'autres librairies, appelées ici dépendances. Tout ceci est géré automatiquement par `R` sans que nous ayons à connaître la liste de ces dépendances.
+
+**Attention.** L'installation d'une librairie n'est à faire qu'une seule fois.
+
+### Chargement d'une librairie
+
+Une fois les librairies installées, il sera donc possible de les utiliser. Mais pour ceci, il faut tout d'abord les charger, à chaque session grâce à la fonction `library()`. Pour charger une librairie, il faudra donc exécuter un code de type :
+
+```{r, eval=FALSE}
+library(rmarkdown)
+```
+
+**Attention.** Le chargement d'une librairie via `library()` devra être effectuée à chaque nouvelle session, pour les librairies dont vous avez besoin.
+
+## Document `R markdown`
+
+
+
+
+
+

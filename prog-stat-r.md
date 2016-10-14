@@ -9,4 +9,5 @@ title: Programmation statistique avec R
 3. [TP3 : importation de données](prog-stat-r-tp3.html)
 	- [correction](prog-stat-r-tp3-correction.html)
 4. [TP4 : interrogation de données *à la SQL*](prog-stat-r-tp4.html)
+	- [correction](prog-stat-r-tp4-correction.html)
 

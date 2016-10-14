@@ -11,7 +11,7 @@
 
 
 
-<title>Initiation à R</title>
+<title>Document automatique</title>
 
 <script src="libs/jquery-1.11.3/jquery.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -210,21 +210,41 @@ $(document).ready(function () {
 
 
 
-<h1 class="title toc-ignore">Initiation à R</h1>
+<h1 class="title toc-ignore">Document automatique</h1>
+<h3 class="subtitle"><em>Programmation statistique avec <code>R</code> - STID 2ème année</em></h3>
 
 </div>
 
 
-<div id="cours-de-1ere-annee" class="section level2">
-<h2>Cours de 1ère année</h2>
-<ol style="list-style-type: decimal">
-<li><a href="initiation-a-r-tp1.html">TP1 - Introduction</a>
-<ul>
-<li><a href="initiation-a-r-tp1-correction.html">correction</a></li>
-</ul></li>
-<li><a href="initiation-a-r-tp2.html">TP2 - Utilisation de données externes</a></li>
-<li><a href="initiation-a-r-tp3.html">TP3 - Interrogation de données <em>à la SQL</em></a></li>
-</ol>
+<p>Nous allons voir dans ce TP comment on peut produire un document (<code>HTML</code>, <code>PDF</code> voire <code>Word</code>) incluant à la fois le texte et les commandes <code>R</code> pour produire les éléments pour appuyer les commentaires (importation de données, tableaux, graphiques, …).</p>
+<div id="librairies" class="section level2">
+<h2>Librairies</h2>
+<p><code>R</code> fonctionne sur le principe d’un moteur de base, avec des fonctionnalités limitées. Celles-ci peuvent être augmentées grâce à l’ajout de <strong>librairies</strong> (appelées aussi <em>packages</em>). Il en existe de nombreuses, disponibles sur le site du <a href="http://??"><strong>CRAN</strong></a> (<em>Comprehensive R Archive Network</em>).</p>
+<div id="chemins-de-recherche-des-librairies" class="section level3">
+<h3>Chemin(s) de recherche des librairies</h3>
+<p>La commande <code>.libPaths()</code> permet de lister les différents répertoires dans lesquels <code>R</code> va pouvoir chercher les librairies. Si nous voulons en installer de nouvelles, et pouvoir les réutiliser plus tard, il faut donc spécifier un répertoire dans lequel nous avons les droits d’écriture.</p>
+<p>Premièrement, il vous faut créer un répertoire dans votre <code>&quot;Z:/&quot;</code> qui contiendra les librairies <code>R</code>, par exemple nommé <code>&quot;Rlib&quot;</code>, directement à la racine de votre <code>&quot;Z:/&quot;</code>. Une fois celui-ci créé, vous pouvez indiquez à <code>R</code> qu’il doit aussi prendre en compte ce répertoire pour la recherche de librairies. Pour cela, vous devez exécuter la commande <code>.libPaths(&quot;z:/Rlib&quot;)</code>. Afin de vérfier que le répertoire a bien été ajouté, vous pouvez de nouveau lister les dossiers connus de <code>R</code> avec <code>.libPaths()</code>. Normalement, votre répertoire (ici <code>&quot;Z:/Rlib&quot;</code>) doit être affiché en premier.</p>
+<p>Voici donc les commandes à exécutées ici.</p>
+<pre class="r"><code>.libPaths()
+.libPaths(&quot;z:/Rlib&quot;)
+.libPaths()</code></pre>
+<p><strong>Attention.</strong> Cet ajout du répertoire <code>&quot;Z:/Rlib&quot;</code> aux chemins connus de <code>R</code>, via la commande <code>.libPaths()</code>, devra être effectué à chaque nouvelle session (i.e. à chaque fois que vous relancez RStudio donc).</p>
+</div>
+<div id="installation-dune-librairie" class="section level3">
+<h3>Installation d’une librairie</h3>
+<p>Une fois le répertoire ajouté, nous pouvons installer les librairies directement dans <code>R</code> avec la commande <code>install.packages()</code>, en y listant les librairies voulues. Nous allons utilsier ici la librairie <code>rmarkdown</code>. Vous devez donc executer la commande suivante.</p>
+<pre class="r"><code>install.packages(&quot;rmarkdown&quot;)</code></pre>
+<p>Quand vous l’exécuterez, vous verrez qu’il doit aussi installer d’autres librairies, appelées ici dépendances. Tout ceci est géré automatiquement par <code>R</code> sans que nous ayons à connaître la liste de ces dépendances.</p>
+<p><strong>Attention.</strong> L’installation d’une librairie n’est à faire qu’une seule fois.</p>
+</div>
+<div id="chargement-dune-librairie" class="section level3">
+<h3>Chargement d’une librairie</h3>
+<p>Une fois les librairies installées, il sera donc possible de les utiliser. Mais pour ceci, il faut tout d’abord les charger, à chaque session grâce à la fonction <code>library()</code>.</p>
+<p>Lorsque nous avons installé la librairie <code>rmarkdown</code>, en tant que dépendance, la librairie <code>knitr</code> a aussi été installé. Nous pouvons donc exécuté le code suivant.</p>
+<pre class="r"><code>library(knitr)
+kable(head(iris))</code></pre>
+<p><strong>Attention.</strong> Le chargement d’une librairie via <code>library()</code> devra être effectuée à chaque nouvelle session, pour les librairies dont vous avez besoin.</p>
+</div>
 </div>
 
 </div>
