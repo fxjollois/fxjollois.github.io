@@ -1,0 +1,50 @@
+---
+title: "TP5"
+author: "FX Jollois"
+date: "17/10/2016"
+output: html_document
+---
+
+```{r initialisation, include = FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+## Données
+
+Le jeu de données `mtcars` contient `r nrow(mtcars)` lignes et `r ncol(mtcars)` colonnes.
+
+```{r donnees}
+knitr::kable(mtcars)
+```
+
+## Consommation
+
+```{r conso_hist}
+hist(mtcars$mpg, col = "red", main = "")
+```
+
+```{r conso_box}
+boxplot(mtcars$mpg, col = "red", main = "", horizontal = TRUE)
+```
+
+## Transmission
+
+```{r trans_create, echo = TRUE}
+mtcars$trans = factor(mtcars$am, labels = c("automatic", "manual"))
+```
+
+```{r trans_table}
+knitr::kable(setNames(data.frame(table(mtcars$trans)), c("Transmission", "Effectif")))
+```
+
+```{r trans_pie, fig.cap="Répartition des voitures selon leur transmission", fig.width=2.5, fig.height=2.5, fig.align='center'}
+par(mar = rep(.1, 4)) # permet de réduire les marges de la figure
+pie(table(mtcars$trans), col = c("orange", "blue"))
+```
+
+## Consommation et transmission
+
+```{r conso_trans, fig.cap="Consommation des voitures selon leur transmission", fig.subcap="test", fig.align='center', fig.width=2.5, fig.height=2.5}
+par(mar = c(2, 2, 0, 0) + .1)
+boxplot(mpg ~ trans, mtcars, col = c("orange", "blue"))
+```
