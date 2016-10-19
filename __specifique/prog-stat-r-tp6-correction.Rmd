@@ -1,0 +1,93 @@
+---
+title: "mtcars"
+output: 
+  flexdashboard::flex_dashboard:
+    orientation: rows
+    vertical_layout: fill
+    source_code: "prog-stat-r-tp6-correction.Rmd"
+---
+
+```{r, include=FALSE}
+library(flexdashboard)
+library(knitr)
+mtcars$trans = factor(mtcars$am, labels = c("automatique", "manuelle"))
+```
+
+#  Informations
+
+## ligne
+
+### Voitures
+
+```{r}
+valueBox(nrow(mtcars), icon = "fa-car")
+```
+
+### Consommation (en Miles/Galon)
+
+```{r}
+valueBox(round(mean(mtcars$mpg), 2), icon = "fa-warning", color = "red")
+```
+
+### Part des voitures automatiques
+
+```{r}
+valueBox(round(sum(mtcars$am==0)/nrow(mtcars) * 100), icon = "fa-question", color = "orange")
+```
+
+## ligne
+
+### Données brutes
+
+```{r}
+kable(mtcars)
+```
+
+# Consommation et transmission
+
+## Ligne
+
+### Moyenne des consommations en fonction de la transmission
+    
+```{r}
+kable(setNames(aggregate(mpg ~ trans, mtcars, mean), c("Transmission", "Consommation")))
+```
+
+### Répartition
+
+```{r}
+boxplot(mpg ~ trans, mtcars, col = c("orange", "blue"))
+```
+
+
+## ligne
+
+### Et par rapport au poids ?
+
+```{r}
+plot(mpg ~ wt, mtcars, col = c("orange", "blue")[mtcars$trans], pch = 19, bty = "n",
+     xlab = "Poids (1000 lbs)", ylab = "Consommation")
+legend("topright", legend = levels(mtcars$trans), fill = c("orange", "blue"), bty = "n", text.width = 1)
+```
+
+# test
+
+Row
+-------------------------------------
+
+
+Row
+-------------------------------------
+    
+### Chart 2
+    
+```{r, fig.width=5, fig.height=5}
+plot(pressure)
+```
+    
+### Chart 3
+
+```{r, fig.width=5, fig.height=5}
+plot(airmiles)
+```
+

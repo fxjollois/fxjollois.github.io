@@ -172,7 +172,7 @@ aggregate(. ~ Species, iris, sd)
 ```{r, echo=FALSE}
 aggregate(Sepal.Length ~ Species, iris, summary)
 ```
-- Moyenne et médiane
+- Moyenne et médiane de `Sepal.Length`
 ```{r, echo=FALSE}
 merge(setNames(aggregate(Sepal.Length ~ Species, iris, mean), c("Espèce", "Moyenne")), 
       setNames(aggregate(Sepal.Length ~ Species, iris, median), c("Espèce", "Médiane")))
