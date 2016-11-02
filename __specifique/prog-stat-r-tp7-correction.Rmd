@@ -1,0 +1,103 @@
+---
+title: "Météo en France"
+output: 
+  flexdashboard::flex_dashboard:
+    orientation: columns
+    vertical_layout: fill
+    source_code: "prog-stat-r-tp6-correction.Rmd"
+---
+
+```{r, include=FALSE}
+# Librairies utiles pour le dashboard
+library(flexdashboard)
+library(knitr)
+library(leaflet)
+
+# Importation des données
+lieux = read.table("../donnees/MeteoFrance/postesSynop.csv", header = T, sep = ";", quote = NULL, stringsAsFactors = FALSE)
+mesures = read.table("../donnees/MeteoFrance/synop.2016101912.csv", header = T, sep = ";", na.strings = "mq", stringsAsFactors = FALSE)
+infos = merge(mesures, lieux, by.x = "numer_sta", by.y = "ID")
+rownames(infos) = infos$Nom
+infos$temp = infos$t - 273.15
+
+# Calcul des infos pour les valueBox
+date = strptime(as.character(unique(infos$date)), "%Y%m%d%H%M%S", tz = "Europe/Paris")
+tempmax.val = max(infos$temp, na.rm = TRUE)
+tempmax.nom = infos$Nom[which.max(infos$temp)]
+tempmin.val = min(infos$temp, na.rm = TRUE)
+tempmin.nom = infos$Nom[which.min(infos$temp)]
+
+# Calcul de la table résumant les températures
+stats = data.frame(
+    Statistique = c("Moyenne", "Médiane", "Ecart-type"),
+    Valeur = round(c(mean(infos$temp, na.rm = TRUE),
+                     median(infos$temp, na.rm = TRUE),
+                     sd(infos$temp, na.rm = TRUE)), 2)
+)
+
+# Création du HTML pour les popups
+infos$popup = paste("<strong>", infos$Nom, "</strong><br>", infos$temp, "°", sep = "")
+```
+
+# Informations
+
+## colonne
+
+### Date de la mesure
+
+```{r}
+valueBox(format(date, "%d-%m-%Y, %H:%M"), icon = "fa-calendar", color = gray(.3))
+```
+
+### Stations mesurées (sur `r nrow(lieux)`)
+
+```{r}
+valueBox(nrow(infos), icon = "ion-flag", color = gray(.3))
+```
+
+### Température maximale (à `r tempmax.nom`)
+
+```{r}
+valueBox(tempmax.val, icon = "ion-thermometer", color = "darkred")
+```
+
+### Température minimale (à `r tempmin.nom`)
+
+```{r}
+valueBox(tempmin.val, icon = "ion-thermometer", color = "darkblue")
+```
+
+## colonne
+
+### Température {data-height=150}
+
+```{r}
+kable(stats)
+```
+
+### Répartition
+
+```{r}
+layout(matrix(c(1, 1, 2), 3, 1))
+par(mar = c(0, 2, 0, 0) + .1)
+hist(infos$temp, col = "grey30", main = "", axes = FALSE)
+par(mar = c(2, 2, 0, 0) + .1)
+boxplot(infos$temp, col = "grey30", horizontal = TRUE)
+```
+
+# Carte
+
+### Stations météo en France métropolitaine
+
+```{r, eval = FALSE}
+infos.sub = subset(infos, Latitude > 40 & Longitude > -2)
+pal = colorNumeric("RdYlBu", domain = range(-infos.sub$temp, na.rm = TRUE))
+leaflet(infos.sub) %>% 
+    addTiles(options = list(opacity = .5)) %>%
+    # setView(2, 48, zoom = 5) %>%
+    addCircleMarkers(~Longitude, ~Latitude, 
+                     fillColor = ~pal(-temp), fillOpacity = 1,
+                     stroke = FALSE, radius = 10,
+                     popup = ~popup)
+```
+

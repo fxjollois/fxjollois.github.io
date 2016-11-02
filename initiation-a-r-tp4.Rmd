@@ -1,0 +1,9 @@
+---
+title: TP4 - ??
+subtitle: Initiation a `R` - STID 1ère année
+---
+
+```{r init, include=FALSE}
+knitr::opts_chunk$set(comment = NA)
+```
+

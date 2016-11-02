@@ -1,0 +1,107 @@
+---
+title: TP3 - Interrogation de données *à la SQL* - *correction*
+subtitle: Initiation a `R` - STID 1ère année
+---
+
+```{r init, include=FALSE}
+knitr::opts_chunk$set(comment = NA)
+```
+
+
+## Exercices
+
+### `iris`
+
+A partir des données `iris`, déjà présentes dans `R`, créer les tableaux suivantes, à l'aide des fonctions `aggregate()` et `merge()` :
+
+- Moyenne
+```{r}
+aggregate(. ~ Species, iris, mean)
+```
+- Ecart-type
+```{r}
+aggregate(. ~ Species, iris, sd)
+```
+- Infos sur `Sepal.Length`
+```{r}
+aggregate(Sepal.Length ~ Species, iris, summary)
+```
+- Moyenne et médiane de `Sepal.Length`
+```{r}
+merge(setNames(aggregate(Sepal.Length ~ Species, iris, mean), c("Espèce", "Moyenne")), 
+      setNames(aggregate(Sepal.Length ~ Species, iris, median), c("Espèce", "Médiane")))
+# ou
+setNames(
+    merge(aggregate(Sepal.Length ~ Species, iris, mean), 
+          aggregate(Sepal.Length ~ Species, iris, median),
+          by = "Species"),
+    c("Espèce", "Moyenne", "Médiane")
+)
+```
+
+### `heart.txt`
+
+```{r}
+heart = read.table("donnees/heart.txt", header = T)
+```
+
+#### Manipulation
+
+1. Créer un nouveau `data.frame` avec uniquement les individus masculins ayant un problème cardiaque 
+```{r}
+heartM = subset(heart, subset = sexe == "masculin")
+```
+2. Avec ces données, en créer un autre ne gardant que les variables suivantes :
+    - `type_douleur`, `sucre`, `electro`, et `vaisseau`
+    - `angine`, `depression`
+```{r}
+heartMbis = subset(heartM, select = c(type_douleur, sucre, electro, vaisseau,
+                                      angine, depression))
+```
+3. Créer un nouveau `data.frame` à partir de ce `data.frame`, avec
+    1. une variable `nbA` comptant le nombre de fois où une variable des variables suivantes est égale à `A` : `type_douleur`, `sucre`, `electro`, et `vaisseau`
+    2. une variable `flag` avec les deux modalités suivantes :
+        - `"problème"` : `angine` à `"oui"` et `depression` supérieur ou égal à `4.0`
+        - `"attention"` : sinon
+```{r}
+heartMter = transform(heartMbis,
+                      nbA = (type_douleur == "A") + (sucre == "A") +
+                          (electro == "A") + (vaisseau == "A"),
+                      flag = factor(angine == "oui" & depression >= 4, 
+                                    labels = c("attention", "probleme")))
+```
+
+#### Agrégats
+
+1. Comparer le cholesterol selon la présence ou non de problème de coeur
+```{r}
+aggregate(cholester ~ coeur, heart, mean)
+```
+2. Calculer le nombre de personnes concernés par un problème de coeur
+```{r}
+# Ici, pour length, on peut mettre n'importe quelle autre variable que coeur à gauche
+setNames(aggregate(age ~ coeur, heart, length), c("coeur", "nb"))
+```
+3. Fusionner les deux `data.frame`s précédement créés pour avoir les informations en une seule table
+```{r}
+merge(aggregate(cholester ~ coeur, heart, mean),
+      setNames(aggregate(age ~ coeur, heart, length), c("coeur", "nb")))
+```
+4. Calculer les moyennes de chaque variable quantitative selon la présence ou non de problème de coeur
+```{r}
+# pic et depression sont des quantis discrètes a priori
+aggregate(. ~ coeur, 
+          subset(heart, select = c(age, pression, cholester, 
+                                   taux_max, depression, pic,
+                                   coeur)), 
+          mean)
+```
+5. Comparer l'âge selon la présence ou de problème de coeur et de problème d'angine
+```{r}
+aggregate(age ~ angine + coeur, heart, mean)
+```
+
+
+
+
+
