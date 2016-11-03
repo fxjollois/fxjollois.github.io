@@ -12,4 +12,4 @@ title: Programmation statistique avec R
 	- [correction](prog-stat-r-tp4-correction.html)
 4. [TP5 : document automatique](prog-stat-r-tp5.html)
 	- [correction](prog-stat-r-tp5-correction.html)
-
+4. [TP6 noté](prog-stat-r-tp6note-bis.html)

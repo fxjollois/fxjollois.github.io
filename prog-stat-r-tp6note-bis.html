@@ -11,7 +11,7 @@
 
 
 
-<title>Programmation statistique avec R</title>
+<title>TP noté - sujet</title>
 
 <script src="libs/jquery-1.11.3/jquery.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -210,29 +210,60 @@ $(document).ready(function () {
 
 
 
-<h1 class="title toc-ignore">Programmation statistique avec R</h1>
+<h1 class="title toc-ignore">TP noté - <em>sujet</em></h1>
+<h3 class="subtitle"><em>Programmation statistique avec <code>R</code> - STID 2ème année</em></h3>
 
 </div>
 
 
-<div id="cours-de-2eme-annee" class="section level2">
-<h2>Cours de 2ème année</h2>
+<div id="rendu" class="section level2">
+<h2>Rendu</h2>
+<p><em>4 points</em></p>
+<p>Vous devez rédiger un compte-rendu de TP sous la forme d’un document <code>R markdown</code>. Les fichiers <code>.Rmd</code> et <code>.html</code> seront à déposer sur <strong>Moodle</strong>. Les fichiers <code>.txt</code> doivent être lues dans le même répertoire que le fichier <code>.Rmd</code>. La notation sur cette partie prendra en compte la présence ou non d’erreurs à la compilation, la clarté du document et la qualité du rendu.</p>
+</div>
+<div id="importation-des-donnees" class="section level2">
+<h2>Importation des données</h2>
+<p><em>4 points</em></p>
+<p>Vous devez <strong>importer</strong> les quatre fichiers suivants :</p>
+<ul>
+<li><a href="donnees/ca/ca.txt"><code>ca.txt</code></a></li>
+<li><a href="donnees/ca/groupe.txt"><code>groupe.txt</code></a></li>
+<li><a href="donnees/ca/mois.txt"><code>mois.txt</code></a></li>
+<li><a href="donnees/ca/provenance.txt"><code>provenance.txt</code></a></li>
+</ul>
+<p>Dans le fichier <code>groupe.txt</code>, il faut faire attention à la présence d’apostrophe (<code>&quot;'&quot;</code>) dans certains mots. La fonction <code>read.table()</code> considère ce caractère comme un début (ou une fin) de chaîne de caractères. Il faut donc modifier l’option <code>quote</code> pour indiquer qu’il n’y a pas de caractères pour les chaînes de caractères dans ce fichier.</p>
+</div>
+<div id="manipulation" class="section level2">
+<h2>Manipulation</h2>
+<p><em>6 points</em> (3 points par question)</p>
+<div id="informations-completes" class="section level3">
+<h3>Informations complètes</h3>
+<p>Ces quatre tables constituent un data-mart simple d’un magasin fictif. <code>ca</code> est la table des faits, et les trois autres sont les tables de dimension. Dans chaque table, la clé primaire est dénommée <code>no</code>. Dans la table <code>ca</code>, les clés externes sont dénommées <code>dim_no</code>, <code>dim</code> étant remplacé par le nom de la dimension bien évidemment. Voici donc le <em>modèle relationnel des données</em> de ce data-mart.</p>
+<p><img src="prog-stat-r-tp6note-bis_files/figure-html/unnamed-chunk-2-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>Pour pouvoir faire des analyses, il faut donc réaliser une <strong>jointure</strong> entre ces quatre tables. Le résultat des jointures doit être stockée dans un <code>data.frame</code> nommée <code>ca_tout</code>.</p>
+</div>
+<div id="comparaison-entre-annee" class="section level3">
+<h3>Comparaison entre année</h3>
+<p>Nous souhaitons pouvoir comparer les deux années, pour évaluer l’évolution du chiffre d’affaires. Pour cela, vous devez créer un <code>data.frame</code>, nommé <code>ca_evol</code>, qui contient donc, pour chaque mois, provenance et groupe, le CA en 2003 (<code>ca2003</code>), en 2004 (<code>ca2004</code>) et l’évolution entre les deux (<code>evolution</code>, égale à la différence entre <code>ca2004</code> et <code>ca2003</code>).</p>
+</div>
+</div>
+<div id="informations-sur-le-ca" class="section level2">
+<h2>Informations sur le CA</h2>
+<p><em>6 points</em> (1 point par question, sauf pour la dernière, 2 points)</p>
+<p>La table ainsi créée contient donc toutes les informations concernant le chiffre d’affaires de l’entreprise, déclinée par chaque dimension. Nous pouvons donc obtenir les informations suivantes. Les résultats sont à présenter sous la forme de tableaux.</p>
 <ol style="list-style-type: decimal">
-<li>TP1 : prise en main du logiciel (cf répertoire COMMUN)</li>
-<li>TP2 : matrices et <code>data.frames</code> (cf répertoire COMMUN)</li>
-<li><a href="prog-stat-r-tp3.html">TP3 : importation de données</a>
+<li>Chiffre d’affaires total sur l’ensemble de la période</li>
+<li>CA total par département</li>
+<li>CA total par année d’exercice</li>
+<li>CA total par mois dans l’année,
 <ul>
-<li><a href="prog-stat-r-tp3-correction.html">correction</a></li>
+<li>en faisant attention à la présentation dans l’ordre des mois, cf l’attribut <code>mois_numero</code></li>
+<li>il faut donc ici un tableau à 12 lignes, une par mois, et deux colonnes, la deuxième colonne contenant le CA total pour chaque mois sur les deux ans</li>
 </ul></li>
-<li><a href="prog-stat-r-tp4.html">TP4 : interrogation de données <em>à la SQL</em></a>
+<li>CA total par mois pour 2003 et 2004
 <ul>
-<li><a href="prog-stat-r-tp4-correction.html">correction</a></li>
+<li>tableau à 4 colonnes : <code>mois</code>, <code>ca2003</code>, <code>ca2004</code>, <code>évolution</code></li>
 </ul></li>
-<li><a href="prog-stat-r-tp5.html">TP5 : document automatique</a>
-<ul>
-<li><a href="prog-stat-r-tp5-correction.html">correction</a></li>
-</ul></li>
-<li><a href="prog-stat-r-tp6note-bis.html">TP6 noté</a></li>
 </ol>
 </div>
 
