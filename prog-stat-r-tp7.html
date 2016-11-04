@@ -11,7 +11,7 @@
 
 
 
-<title>Programmation statistique avec R</title>
+<title>Reporting</title>
 
 <script src="libs/jquery-1.11.3/jquery.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -211,43 +211,89 @@ $(document).ready(function () {
 
 
 
-<h1 class="title toc-ignore">Programmation statistique avec R</h1>
+<h1 class="title toc-ignore">Reporting</h1>
+<h3 class="subtitle"><em>Programmation statistique avec <code>R</code> - STID 2ème année</em></h3>
 
 </div>
 
 
-<div id="cours-de-2eme-annee" class="section level2">
-<h2>Cours de 2ème année</h2>
+<p>Dans ce TP, nous allons voir comment utiliser la librairie <code>flexdashboard</code> (basée entre autres sur <code>rmarkdown</code>) pour générer des tableaux de bords automatisés.</p>
+<div id="fichiers-.rdata" class="section level2">
+<h2>Fichiers <code>.RData</code></h2>
+<p>Plutôt que de devoir importer plusieurs fois des données, il est possible d’utiliser le format de données <code>.RData</code>, qui permet de sauvegarder tout ou partie de l’environnement de travail. Pour cela, nous allons utiliser les fonctions <code>save()</code> et <code>save.image()</code> pour sauvegarder, et la fonction <code>load()</code> pour charger les variables sauvegardées.</p>
+<div id="sauvegarde-de-variables" class="section level3">
+<h3>Sauvegarde de variable(s)</h3>
+<p>En premier lieu, il est possible de sauvegarder uniquement une variable créée dans un fichier <code>.RData</code>. Ci-dessous, nous créons l’objet <code>a</code>, qui est une chaîne simple, puis nous la sauvegardons dans le fichier <code>a.RData</code>. Enfin, nous la supprimons (et l’affichons pour bien voir qu’elle n’existe plus).</p>
+<pre class="r"><code>a = &quot;test de RData&quot;
+print(a)</code></pre>
+<pre><code>## [1] &quot;test de RData&quot;</code></pre>
+<pre class="r"><code>save(a, file = &quot;a.RData&quot;)
+rm(a)
+print(a)</code></pre>
+<pre><code>## Error in print(a): objet &#39;a&#39; introuvable</code></pre>
+<p>L’intérêt est donc que la variable <code>a</code> est dans le fichier <code>.RData</code>, qu’il est possible de charger dans <code>R</code> comme suit.</p>
+<pre class="r"><code>load(&quot;a.RData&quot;)
+print(a)</code></pre>
+<pre><code>## [1] &quot;test de RData&quot;</code></pre>
+<p>Pour sauvegarder plusieurs variables, il faut juste les lister dans la fonction <code>save()</code>.</p>
+<pre class="r"><code>b = &quot;deuxième test de RData&quot;
+c = 123456789
+save(b, c, file = &quot;bc.RData&quot;)
+rm(b, c)
+print(b, c)</code></pre>
+<pre><code>## Error in print(b, c): objet &#39;b&#39; introuvable</code></pre>
+<p>Et on les charge de la même façon.</p>
+<pre class="r"><code>load(&quot;bc.RData&quot;)
+print(b)</code></pre>
+<pre><code>## [1] &quot;deuxième test de RData&quot;</code></pre>
+<pre class="r"><code>print(c)</code></pre>
+<pre><code>## [1] 123456789</code></pre>
+</div>
+<div id="sauvegarde-de-lenvironnement" class="section level3">
+<h3>Sauvegarde de l’environnement</h3>
+<p>Quand on lance la fonction <code>ls()</code>, on liste l’ensemble des objets créés dans l’environnement de travail. La fonction <code>save.image()</code> va tous les sauvegarder dans un même fichier <code>.RData</code>.</p>
+<pre class="r"><code>ls()</code></pre>
+<pre><code>## [1] &quot;a&quot; &quot;b&quot; &quot;c&quot;</code></pre>
+<pre class="r"><code>save.image(&quot;env.RData&quot;)</code></pre>
+<p>Ensuite, nous allons nettoyer l’environnement de travail, en supprimant tous les objets (1ère ligne ci-dessous). Ainsi, en listant les variables avec <code>ls()</code>, on s’aperçoit qu’il n’y a plus rien.</p>
+<pre class="r"><code>rm(list = ls()) # Pour tout supprimer de l&#39;environnement
+ls()</code></pre>
+<pre><code>## character(0)</code></pre>
+<p>Enfin, toujours avec la fonction <code>load()</code>, on charge les variables présentes dans le fichier, qu’on retrouve bien en faisant un <code>ls()</code>.</p>
+<pre class="r"><code>load(&quot;env.RData&quot;)
+ls()</code></pre>
+<pre><code>## [1] &quot;a&quot; &quot;b&quot; &quot;c&quot;</code></pre>
+</div>
+<div id="donnees-utilisees" class="section level3">
+<h3>Données utilisées</h3>
+<p>Nous allons donc utiliser les données du <em>data-mart</em> utilisé dans le TP6, contenues dans le fichier <code>ca.RData</code>. Pour ce faire, nous allons utiliser la commande <code>load()</code>.</p>
+<pre class="r"><code>load(&quot;donnees/ca/ca.RData&quot;)
+ls()</code></pre>
+<pre><code>## [1] &quot;ca&quot;         &quot;ca_evol&quot;    &quot;ca_tout&quot;    &quot;groupe&quot;     &quot;mois&quot;      
+## [6] &quot;provenance&quot;</code></pre>
+</div>
+</div>
+<div id="package-flexdashboard" class="section level2">
+<h2>Package <code>flexdashboard</code></h2>
+<p>Vous devez d’abord installer le package via la commande <code>install.packages()</code>. Pour rappel, voici les étapes à suivre (non exécutées dans ce document).</p>
+<pre class="r"><code>.libPaths(&quot;z:/Rlib&quot;)    # ou un autre chemin en fonction de vos choix précédents
+install.packages(&quot;flexdashboard&quot;)
+library(flexdashboard)</code></pre>
+<p>Une fois que vous avez chargé la librairie, il est possible de créer un document de base de type <code>flexdashboard</code> en suivant les étapes suivantes :</p>
 <ol style="list-style-type: decimal">
-<li>TP1 : prise en main du logiciel (cf répertoire COMMUN)</li>
-<li>TP2 : matrices et <code>data.frames</code> (cf répertoire COMMUN)</li>
-<li><a href="prog-stat-r-tp3.html">TP3 : importation de données</a>
-<ul>
-<li><a href="prog-stat-r-tp3-correction.html">correction</a></li>
-</ul></li>
-<li><a href="prog-stat-r-tp4.html">TP4 : interrogation de données <em>à la SQL</em></a>
-<ul>
-<li><a href="prog-stat-r-tp4-correction.html">correction</a></li>
-</ul></li>
-<li><a href="prog-stat-r-tp5.html">TP5 : document automatique</a>
-<ul>
-<li><a href="__specifique/prog-stat-r-tp5-correction.Rmd">correction (Rmd)</a></li>
-<li><a href="__specifique/prog-stat-r-tp5-correction.html">correction (html)</a></li>
-</ul></li>
-<li>TP6 noté
-<ul>
-<li><a href="prog-stat-r-tp6note.html">sujet 1</a>
-<ul>
-<li><a href="__specifique/prog-stat-r-tp6note-correction.Rmd">correction (Rmd)</a></li>
-<li><a href="__specifique/prog-stat-r-tp6note-correction.html">correction (html)</a></li>
-</ul></li>
-<li><a href="prog-stat-r-tp6note-bis.html">sujet 2</a>
-<ul>
-<li><a href="__specifique/prog-stat-r-tp6note-correction-bis.Rmd">correction (Rmd)</a></li>
-<li><a href="__specifique/prog-stat-r-tp6note-correction-bis.html">correction (html)</a></li>
-</ul></li>
-</ul></li>
+<li>Cliquer la création d’un nouveau document (<img src="icon_Rstudio_plus.jpg" alt="img + RStudio" />)</li>
+<li>Choisir <strong>R markdown…</strong></li>
+<li>Choisir ensuite <strong>From Template</strong> et sélection <strong>Flex Dashboard</strong></li>
 </ol>
+<p>Vous devez obtenir un document commençant par</p>
+<pre class="markdown"><code>---
+title: &quot;Untitled&quot;
+output: 
+  flexdashboard::flex_dashboard:
+    orientation: columns
+    vertical_layout: fill
+---</code></pre>
+<p>En cliquant sur <strong>Knit</strong> (<img src="icon_Rstudio_knitHTML.jpg" alt="bouton knit" />), vous devez obtenir le <a href="__specifique/prog-stat-r-tp7-etap1.html">document suivant</a></p>
 </div>
 
 </div>

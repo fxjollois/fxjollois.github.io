@@ -1,0 +1,122 @@
+---
+title: Reporting
+subtitle: Programmation statistique avec `R` - STID 2ème année
+---
+
+Dans ce TP, nous allons voir comment utiliser la librairie `flexdashboard` (basée entre autres sur `rmarkdown`) pour générer des tableaux de bords automatisés. 
+
+## Fichiers `.RData`
+
+Plutôt que de devoir importer plusieurs fois des données, il est possible d'utiliser le format de données `.RData`, qui permet de sauvegarder tout ou partie de l'environnement de travail. Pour cela, nous allons utiliser les fonctions `save()` et `save.image()`  pour sauvegarder, et la fonction `load()` pour charger les variables sauvegardées.
+
+### Sauvegarde de variable(s)
+
+En premier lieu, il est possible de sauvegarder uniquement une variable créée dans un fichier `.RData`. Ci-dessous, nous créons l'objet `a`, qui est une chaîne simple, puis nous la sauvegardons dans le fichier `a.RData`. Enfin, nous la supprimons (et l'affichons pour bien voir qu'elle n'existe plus).
+
+```{r, error=TRUE}
+a = "test de RData"
+print(a)
+save(a, file = "a.RData")
+rm(a)
+print(a)
+```
+
+L'intérêt est donc que la variable `a` est dans le fichier `.RData`, qu'il est possible de charger dans `R` comme suit.
+
+```{r}
+load("a.RData")
+print(a)
+```
+
+Pour sauvegarder plusieurs variables, il faut juste les lister dans la fonction `save()`.
+
+```{r, error=TRUE}
+b = "deuxième test de RData"
+c = 123456789
+save(b, c, file = "bc.RData")
+rm(b, c)
+print(b, c)
+```
+
+Et on les charge de la même façon.
+
+```{r}
+load("bc.RData")
+print(b)
+print(c)
+```
+
+### Sauvegarde de l'environnement
+
+Quand on lance la fonction `ls()`, on liste l'ensemble des objets créés dans l'environnement de travail. La fonction `save.image()` va tous les sauvegarder dans un même fichier `.RData`.
+
+```{r}
+ls()
+save.image("env.RData")
+```
+
+Ensuite, nous allons nettoyer l'environnement de travail, en supprimant tous les objets (1ère ligne ci-dessous). Ainsi, en listant les variables avec `ls()`, on s'aperçoit qu'il n'y a plus rien.
+
+```{r}
+rm(list = ls()) # Pour tout supprimer de l'environnement
+ls()
+```
+
+Enfin, toujours avec la fonction `load()`, on charge les variables présentes dans le fichier, qu'on retrouve bien en faisant un `ls()`.
+
+```{r}
+load("env.RData")
+ls()
+```
+
+```{r echo=FALSE}
+rm(list = ls())
+```
+
+### Données utilisées
+
+Nous allons donc utiliser les données du *data-mart* utilisé dans le TP6, contenues dans le fichier `ca.RData`. Pour ce faire, nous allons utiliser la commande `load()`.
+
+```{r}
+load("donnees/ca/ca.RData")
+ls()
+```
+
+## Package `flexdashboard`
+
+Vous devez d'abord installer le package via la commande `install.packages()`. Pour rappel, voici les étapes à suivre (non exécutées dans ce document).
+
+```{r, eval=FALSE}
+.libPaths("z:/Rlib")    # ou un autre chemin en fonction de vos choix précédents
+install.packages("flexdashboard")
+library(flexdashboard)
+```
+
+Une fois que vous avez chargé la librairie, il est possible de créer un document de base de type `flexdashboard` en suivant les étapes suivantes :
+
+1. Cliquer la création d'un nouveau document (![img + RStudio](icon_Rstudio_plus.jpg))
+1. Choisir **R markdown...**
+1. Choisir ensuite **From Template** et sélection **Flex Dashboard**
+
+Vous devez obtenir un document commençant par 
+
+```{markdown, eval=FALSE}
+---
+title: "Untitled"
+output: 
+  flexdashboard::flex_dashboard:
+    orientation: columns
+    vertical_layout: fill
+---
+```
+
+En cliquant sur **Knit**, vous devez obtenir le [document suivant](__specifique/prog-stat-r-tp7-etape1.html). Vous remarquerez qu'il y a de la place pour mettre des graphiques et/ou des tableaux. Nous allons commencer par importer les données dans ce tableau de bord, grâce au code ci-dessus. Vous devez donc introduire le code suivant dans un *chunck*, en mettant comme option `include=FALSE`.
+
+```{r}
+
+
+
+
+
+
+

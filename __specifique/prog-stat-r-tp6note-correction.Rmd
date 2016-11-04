@@ -14,10 +14,10 @@ On choisit donc ici d'afficher le code, et faire en sorte que les tableaux soien
 ## Importation des données
 
 ```{r}
-ca = read.table("donnees/ca/ca.txt", sep = "%", header = T)
-groupe = read.table("donnees/ca/groupe.txt", sep = "%", header = T, quote = NULL)
-mois = read.table("donnees/ca/mois.txt", sep = "%", header = T)
-provenance = read.table("donnees/ca/provenance.txt", sep = "%", header = T)
+ca = read.table("../donnees/ca/ca.csv", sep = ";", header = T)
+groupe = read.table("../donnees/ca/groupe.csv", sep = ";", header = T, quote = NULL)
+mois = read.table("../donnees/ca/mois.csv", sep = ";", header = T)
+provenance = read.table("../donnees/ca/provenance.csv", sep = ";", header = T)
 ```
 
 ## Manipulation
