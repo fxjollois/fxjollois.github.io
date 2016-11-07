@@ -19,6 +19,15 @@
 <script src="libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
 <script src="libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
 <script src="libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<!--
+    Font Awesome
+-->
+<script src="https://use.fontawesome.com/32d8325004.js"></script>
+<link rel="stylesheet" href="libs/font-awesome-4.7.0/css/font-awesome.min.css">
+
+<!--
+    CSS perso
+-->
 <style>
     .contenu {
         margin-bottom: 50px;
@@ -26,6 +35,9 @@
 
     .contact-liens {
         text-align: center;
+    }
+    .contact-liens:hover {
+        text-decoration: none;
     }
     .contact-icones {
         height: 30px;
@@ -192,8 +204,10 @@ $(document).ready(function () {
           </ul>
         </li>
         <li class="dropdown">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button">Réalisation <span class="caret"></span></a>
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button">Réalisations <span class="caret"></span></a>
           <ul class="dropdown-menu">
+            <li><a href="realisations.html">Détail</a></li>
+            <li role="separator" class="divider"></li>
             <li><a href="http://up5.fr/explore-data" target="_blank">explore-data</a></li>
             <li><a href="http://fxjollois.github.io/cours-sql/" target="_blank">Appli web de cours pour SQL</a></li>
           </ul>
@@ -253,7 +267,9 @@ print(b)</code></pre>
 <h3>Sauvegarde de l’environnement</h3>
 <p>Quand on lance la fonction <code>ls()</code>, on liste l’ensemble des objets créés dans l’environnement de travail. La fonction <code>save.image()</code> va tous les sauvegarder dans un même fichier <code>.RData</code>.</p>
 <pre class="r"><code>ls()</code></pre>
-<pre><code>## [1] &quot;a&quot; &quot;b&quot; &quot;c&quot;</code></pre>
+<pre><code>##  [1] &quot;a&quot;          &quot;b&quot;          &quot;c&quot;          &quot;ca&quot;         &quot;ca_evol&quot;   
+##  [6] &quot;ca_tout&quot;    &quot;d&quot;          &quot;groupe&quot;     &quot;mois&quot;       &quot;provenance&quot;
+## [11] &quot;v&quot;</code></pre>
 <pre class="r"><code>save.image(&quot;env.RData&quot;)</code></pre>
 <p>Ensuite, nous allons nettoyer l’environnement de travail, en supprimant tous les objets (1ère ligne ci-dessous). Ainsi, en listant les variables avec <code>ls()</code>, on s’aperçoit qu’il n’y a plus rien.</p>
 <pre class="r"><code>rm(list = ls()) # Pour tout supprimer de l&#39;environnement
@@ -262,7 +278,9 @@ ls()</code></pre>
 <p>Enfin, toujours avec la fonction <code>load()</code>, on charge les variables présentes dans le fichier, qu’on retrouve bien en faisant un <code>ls()</code>.</p>
 <pre class="r"><code>load(&quot;env.RData&quot;)
 ls()</code></pre>
-<pre><code>## [1] &quot;a&quot; &quot;b&quot; &quot;c&quot;</code></pre>
+<pre><code>##  [1] &quot;a&quot;          &quot;b&quot;          &quot;c&quot;          &quot;ca&quot;         &quot;ca_evol&quot;   
+##  [6] &quot;ca_tout&quot;    &quot;d&quot;          &quot;groupe&quot;     &quot;mois&quot;       &quot;provenance&quot;
+## [11] &quot;v&quot;</code></pre>
 </div>
 <div id="donnees-utilisees" class="section level3">
 <h3>Données utilisées</h3>

@@ -19,6 +19,15 @@
 <script src="libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
 <script src="libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
 <script src="libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<!--
+    Font Awesome
+-->
+<script src="https://use.fontawesome.com/32d8325004.js"></script>
+<link rel="stylesheet" href="libs/font-awesome-4.7.0/css/font-awesome.min.css">
+
+<!--
+    CSS perso
+-->
 <style>
     .contenu {
         margin-bottom: 50px;
@@ -26,6 +35,9 @@
 
     .contact-liens {
         text-align: center;
+    }
+    .contact-liens:hover {
+        text-decoration: none;
     }
     .contact-icones {
         height: 30px;
@@ -127,6 +139,7 @@ button.code-folding-btn:focus {
 </style>
 
 
+
 <div class="container-fluid main-container">
 
 <!-- tabsets -->
@@ -191,8 +204,10 @@ $(document).ready(function () {
           </ul>
         </li>
         <li class="dropdown">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button">Réalisation <span class="caret"></span></a>
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button">Réalisations <span class="caret"></span></a>
           <ul class="dropdown-menu">
+            <li><a href="realisations.html">Détail</a></li>
+            <li role="separator" class="divider"></li>
             <li><a href="http://up5.fr/explore-data" target="_blank">explore-data</a></li>
             <li><a href="http://fxjollois.github.io/cours-sql/" target="_blank">Appli web de cours pour SQL</a></li>
           </ul>
@@ -239,6 +254,17 @@ $(document).ready(function () {
 <div id="informations-completes" class="section level3">
 <h3>Informations complètes</h3>
 <p>Ces quatre tables constituent un data-mart simple d’un magasin fictif. <code>ca</code> est la table des faits, et les trois autres sont les tables de dimension. Dans chaque table, la clé primaire est dénommée <code>no</code>. Dans la table <code>ca</code>, les clés externes sont dénommées <code>dim_no</code>, <code>dim</code> étant remplacé par le nom de la dimension bien évidemment. Voici donc le <em>modèle relationnel des données</em> de ce data-mart.</p>
+<pre><code>## Warning in polygon(xy[, 1], xy[, 2], lwd = lwd, col = box.col, border =
+## lcol, : &quot;cex.csv&quot; n&#39;est pas un paramètre graphique
+
+## Warning in polygon(xy[, 1], xy[, 2], lwd = lwd, col = box.col, border =
+## lcol, : &quot;cex.csv&quot; n&#39;est pas un paramètre graphique
+
+## Warning in polygon(xy[, 1], xy[, 2], lwd = lwd, col = box.col, border =
+## lcol, : &quot;cex.csv&quot; n&#39;est pas un paramètre graphique
+
+## Warning in polygon(xy[, 1], xy[, 2], lwd = lwd, col = box.col, border =
+## lcol, : &quot;cex.csv&quot; n&#39;est pas un paramètre graphique</code></pre>
 <p><img src="prog-stat-r-tp6note_files/figure-html/unnamed-chunk-2-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>Pour pouvoir faire des analyses, il faut donc réaliser une <strong>jointure</strong> entre ces quatre tables. Le résultat des jointures doit être stockée dans un <code>data.frame</code> nommée <code>ca_tout</code>.</p>
 </div>
@@ -286,6 +312,7 @@ $(document).ready(function () {
 $(document).ready(function () {
   $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
 });
+
 
 </script>
 

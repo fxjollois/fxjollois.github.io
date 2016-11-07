@@ -28,16 +28,16 @@ ou
 ## Quelques liens me concernant:
 
 <div class="btn-group" style="align: center;">
- <a class="btn btn-default" href="https://github.com/fxjollois" target="_blank">
+ <a class="btn btn-info" href="https://github.com/fxjollois" target="_blank">
   <i class="fa fa-github"></i> Github
  </a>
- <a class="btn btn-default" href="http://fr.linkedin.com/in/fxjollois" target="_blank">
+ <a class="btn btn-info" href="http://fr.linkedin.com/in/fxjollois" target="_blank">
   <i class="fa fa-linkedin"></i> LinkedIn
  </a>
- <a class="btn btn-default" href="https://twitter.com/fxjollois" target="_blank">
+ <a class="btn btn-info" href="https://twitter.com/fxjollois" target="_blank">
   <i class="fa fa-twitter"></i>Twitter
  </a>
- <a class="btn btn-default" href="http://rpubs.com/fxjolloisUPD" target="_blank">
+ <a class="btn btn-info" href="http://rpubs.com/fxjolloisUPD" target="_blank">
   <i class="fa fa-user-circle"></i>Rpubs
  </a>
 </div>

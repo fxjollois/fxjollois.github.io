@@ -15,14 +15,14 @@
 <title>Visualisation de données avec R</title>
 
 <script src="libs/jquery-1.12.4/jquery.min.js"></script>
-<script src="libs/jqueryui-1.11.4/jquery-ui.min.js"></script>
-<link href="libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
-<script src="libs/tocify-1.9.1/jquery.tocify.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link href="libs/bootstrap-3.3.5/css/journal.min.css" rel="stylesheet" />
 <script src="libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
 <script src="libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
 <script src="libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<script src="libs/jqueryui-1.11.4/jquery-ui.min.js"></script>
+<link href="libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
+<script src="libs/tocify-1.9.1/jquery.tocify.js"></script>
 <script src="libs/htmlwidgets-0.7/htmlwidgets.js"></script>
 <link href="libs/leaflet-0.7.3/leaflet.css" rel="stylesheet" />
 <script src="libs/leaflet-0.7.3/leaflet.js"></script>
@@ -32,6 +32,15 @@
 <link href="libs/dt-core-1.10.12/css/jquery.dataTables.min.css" rel="stylesheet" />
 <link href="libs/dt-core-1.10.12/css/jquery.dataTables.extra.css" rel="stylesheet" />
 <script src="libs/dt-core-1.10.12/js/jquery.dataTables.min.js"></script>
+<!--
+    Font Awesome
+-->
+<script src="https://use.fontawesome.com/32d8325004.js"></script>
+<link rel="stylesheet" href="libs/font-awesome-4.7.0/css/font-awesome.min.css">
+
+<!--
+    CSS perso
+-->
 <style>
     .contenu {
         margin-bottom: 50px;
@@ -39,6 +48,9 @@
 
     .contact-liens {
         text-align: center;
+    }
+    .contact-liens:hover {
+        text-decoration: none;
     }
     .contact-icones {
         height: 30px;
@@ -138,6 +150,7 @@ button.code-folding-btn:focus {
   outline: none;
 }
 </style>
+
 
 
 <div class="container-fluid main-container">
@@ -298,8 +311,10 @@ div.tocify {
           </ul>
         </li>
         <li class="dropdown">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button">Réalisation <span class="caret"></span></a>
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button">Réalisations <span class="caret"></span></a>
           <ul class="dropdown-menu">
+            <li><a href="realisations.html">Détail</a></li>
+            <li role="separator" class="divider"></li>
             <li><a href="http://up5.fr/explore-data" target="_blank">explore-data</a></li>
             <li><a href="http://fxjollois.github.io/cours-sql/" target="_blank">Appli web de cours pour SQL</a></li>
           </ul>
@@ -1092,6 +1107,7 @@ ggplot(airbnb.neigh.for, aes(long, lat, group=group)) +
 $(document).ready(function () {
   $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
 });
+
 
 </script>
 
