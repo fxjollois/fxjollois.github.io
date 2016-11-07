@@ -176,6 +176,35 @@ valueBox(v, icon = "fa-arrow-circle-up", color = "green")
 
 Vous devriez avoir cette [page](__specifique/prog-stat-r-tp7-etape4.html) une fois le document `Rmd` compilé.
 
+#### Plusieurs onglets
+
+Il est possible de créer un système d'onglet pour avoir plusieurs pages dans le reporting. Pour cela, vous devez d'abord créer un titre de niveau 1 (`#`) pour la première page (en la nommant par exemple `"Synthèse"`). Ce titre doit être placé avant la ligne `Column...`.
+
+Vous devriez avoir [cette page](__specifique/prog-stat-r-tp7.-etape5.html) comme résultat.
+
+Créer un deuxième onglet, nommé `"Détail"`, dans lequel nous allons mettre deux tables : une pour les départements et une pour les provenances. Voici les codes des deux *chunks* pour créer ces tableaux.
+
+```{r}
+d = aggregate(cbind(ca2003, ca2004, evolution) / 1000 ~ departement, ca_evol, sum)
+names(d) = c("Département", "2003", "2004", "Evolution")
+knitr::kable(d, digits = 0)
+```
+
+```{r}
+d = aggregate(cbind(ca2003, ca2004, evolution) / 1000 ~ provenance, ca_evol, sum)
+names(d) = c("Provenance", "2003", "2004", "Evolution")
+knitr::kable(d, digits = 0)
+```
+
+Une fois compilé, vous devriez avoir le [tableau de bord](__specifique/prog-stat-r-tp7-etape6.html) suivant.
+
+### Publication
+
+Pour publier un tableau de bord ainsi créé, il faut juste placer le document `.Rmd`, ainsi que les données si besoin, sur un serveur `shiny` dédié. Vous pouvez voir un exemple avec [ce lien](http://193.51.82.116:3838/demo/prog-stat-r-tp7/).
+
+## Exercice
+
+
 
 
 

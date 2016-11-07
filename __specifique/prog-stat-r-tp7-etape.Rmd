@@ -11,6 +11,8 @@ library(flexdashboard)
 load("../donnees/ca/ca.RData")
 ```
 
+# Synthèse
+
 Column {data-width=650}
 -----------------------------------------------------------------------
 
@@ -46,3 +48,20 @@ v = paste(round((d$ca[2] / d$ca[1] - 1) * 100, 2), "%")
 valueBox(v, icon = "fa-arrow-circle-up", color = "green")
 ```
 
+# Détail
+
+### Par département (en k€)
+
+```{r}
+d = aggregate(cbind(ca2003, ca2004, evolution) / 1000 ~ departement, ca_evol, sum)
+names(d) = c("Département", "2003", "2004", "Evolution")
+knitr::kable(d, digits = 0)
+```
+
+### Par provenance (en k€)
+
+```{r}
+d = aggregate(cbind(ca2003, ca2004, evolution) / 1000 ~ provenance, ca_evol, sum)
+names(d) = c("Provenance", "2003", "2004", "Evolution")
+knitr::kable(d, digits = 0)
+```

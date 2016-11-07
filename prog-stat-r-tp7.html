@@ -267,9 +267,7 @@ print(b)</code></pre>
 <h3>Sauvegarde de l’environnement</h3>
 <p>Quand on lance la fonction <code>ls()</code>, on liste l’ensemble des objets créés dans l’environnement de travail. La fonction <code>save.image()</code> va tous les sauvegarder dans un même fichier <code>.RData</code>.</p>
 <pre class="r"><code>ls()</code></pre>
-<pre><code>##  [1] &quot;a&quot;          &quot;b&quot;          &quot;c&quot;          &quot;ca&quot;         &quot;ca_evol&quot;   
-##  [6] &quot;ca_tout&quot;    &quot;d&quot;          &quot;groupe&quot;     &quot;mois&quot;       &quot;provenance&quot;
-## [11] &quot;v&quot;</code></pre>
+<pre><code>## [1] &quot;a&quot; &quot;b&quot; &quot;c&quot;</code></pre>
 <pre class="r"><code>save.image(&quot;env.RData&quot;)</code></pre>
 <p>Ensuite, nous allons nettoyer l’environnement de travail, en supprimant tous les objets (1ère ligne ci-dessous). Ainsi, en listant les variables avec <code>ls()</code>, on s’aperçoit qu’il n’y a plus rien.</p>
 <pre class="r"><code>rm(list = ls()) # Pour tout supprimer de l&#39;environnement
@@ -278,9 +276,7 @@ ls()</code></pre>
 <p>Enfin, toujours avec la fonction <code>load()</code>, on charge les variables présentes dans le fichier, qu’on retrouve bien en faisant un <code>ls()</code>.</p>
 <pre class="r"><code>load(&quot;env.RData&quot;)
 ls()</code></pre>
-<pre><code>##  [1] &quot;a&quot;          &quot;b&quot;          &quot;c&quot;          &quot;ca&quot;         &quot;ca_evol&quot;   
-##  [6] &quot;ca_tout&quot;    &quot;d&quot;          &quot;groupe&quot;     &quot;mois&quot;       &quot;provenance&quot;
-## [11] &quot;v&quot;</code></pre>
+<pre><code>## [1] &quot;a&quot; &quot;b&quot; &quot;c&quot;</code></pre>
 </div>
 <div id="donnees-utilisees" class="section level3">
 <h3>Données utilisées</h3>
@@ -359,7 +355,27 @@ v = paste(round((d$ca[2] / d$ca[1] - 1) * 100, 2), &quot;%&quot;)
 valueBox(v, icon = &quot;fa-arrow-circle-up&quot;, color = &quot;green&quot;)</code></pre>
 <p>Vous devriez avoir cette <a href="__specifique/prog-stat-r-tp7-etape4.html">page</a> une fois le document <code>Rmd</code> compilé.</p>
 </div>
+<div id="plusieurs-onglets" class="section level4">
+<h4>Plusieurs onglets</h4>
+<p>Il est possible de créer un système d’onglet pour avoir plusieurs pages dans le reporting. Pour cela, vous devez d’abord créer un titre de niveau 1 (<code>#</code>) pour la première page (en la nommant par exemple <code>&quot;Synthèse&quot;</code>). Ce titre doit être placé avant la ligne <code>Column...</code>.</p>
+<p>Vous devriez avoir <a href="__specifique/prog-stat-r-tp7.-etape5.html">cette page</a> comme résultat.</p>
+<p>Créer un deuxième onglet, nommé <code>&quot;Détail&quot;</code>, dans lequel nous allons mettre deux tables : une pour les départements et une pour les provenances. Voici les codes des deux <em>chunks</em> pour créer ces tableaux.</p>
+<pre class="r"><code>d = aggregate(cbind(ca2003, ca2004, evolution) / 1000 ~ departement, ca_evol, sum)
+names(d) = c(&quot;Département&quot;, &quot;2003&quot;, &quot;2004&quot;, &quot;Evolution&quot;)
+knitr::kable(d, digits = 0)</code></pre>
+<pre class="r"><code>d = aggregate(cbind(ca2003, ca2004, evolution) / 1000 ~ provenance, ca_evol, sum)
+names(d) = c(&quot;Provenance&quot;, &quot;2003&quot;, &quot;2004&quot;, &quot;Evolution&quot;)
+knitr::kable(d, digits = 0)</code></pre>
+<p>Une fois compilé, vous devriez avoir le <a href="__specifique/prog-stat-r-tp7-etape6.html">tableau de bord</a> suivant.</p>
 </div>
+</div>
+<div id="publication" class="section level3">
+<h3>Publication</h3>
+<p>Pour publier un tableau de bord ainsi créé, il faut juste placer le document <code>.Rmd</code>, ainsi que les données si besoin, sur un serveur <code>shiny</code> dédié. Vous pouvez voir un exemple avec <a href="http://193.51.82.116:3838/demo/prog-stat-r-tp7/">ce lien</a>.</p>
+</div>
+</div>
+<div id="exercice" class="section level2">
+<h2>Exercice</h2>
 </div>
 
 </div>
