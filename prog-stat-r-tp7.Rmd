@@ -185,24 +185,61 @@ Vous devriez avoir [cette page](__specifique/prog-stat-r-tp7.-etape5.html) comme
 Créer un deuxième onglet, nommé `"Détail"`, dans lequel nous allons mettre deux tables : une pour les départements et une pour les provenances. Voici les codes des deux *chunks* pour créer ces tableaux.
 
 ```{r}
-d = aggregate(cbind(ca2003, ca2004, evolution) / 1000 ~ departement, ca_evol, sum)
-names(d) = c("Département", "2003", "2004", "Evolution")
-knitr::kable(d, digits = 0)
+evol.dpt = aggregate(cbind(ca2003, ca2004, evolution) / 1000 ~ departement, 
+                     ca_evol, sum)
+names(evol.dpt) = c("Département", "2003", "2004", "Evolution")
+knitr::kable(evol.dpt, digits = 0)
 ```
 
 ```{r}
-d = aggregate(cbind(ca2003, ca2004, evolution) / 1000 ~ provenance, ca_evol, sum)
-names(d) = c("Provenance", "2003", "2004", "Evolution")
-knitr::kable(d, digits = 0)
+evol.prov = aggregate(cbind(ca2003, ca2004, evolution) / 1000 ~ provenance, 
+                      ca_evol, sum)
+names(evol.prov) = c("Provenance", "2003", "2004", "Evolution")
+knitr::kable(evol.prov, digits = 0)
 ```
 
 Une fois compilé, vous devriez avoir le [tableau de bord](__specifique/prog-stat-r-tp7-etape6.html) suivant.
+
+### Modification de l'orientation
+
+Dans la première page, nous avions disposer les différents éléments par colonnes (un élément dans la première et deux dans la deuxième). Il est possible de modifier cela pour une page spécifique. Dans la deuxième, à la suite du titre et sur la même ligne, il est possible d'ajouter `{data-orientation=rows}`. 
+
+Ainsi, le tableau devient [celui-ci](_specifique/prog-stat-r-tp7-etape7.html).
+
+Et si nous souhaitions avoir des graphiques prenant toute la page en bas, il faudrait faire deux étapes :
+
+- Insérer un titre de niveau 2 avant les deux *chunks* créés
+- Insérer un nouveau titre de niveau 2 puis les *chunk* contenant le code pour les graphiques
+
+##### Nombre de département en hausse
+```{r}
+gauge(sum(evol.dpt$Evolution > 0), 0, nrow(evol.dpt))
+```
+
+##### Département avec la plus grosse évolution
+```{r}
+valueBox(evol.dpt$Département[which.max(evol.dpt$Evolution)], icon = "fa-level-up")
+```
+
+##### Nombre de provenance en hausse
+```{r}
+gauge(sum(evol.prov$Evolution > 0), 0, nrow(evol.prov))
+```
+
+##### Provenance avec la plus grosse évolution
+```{r}
+valueBox(evol.prov$Provenance[which.max(evol.prov$Evolution)], icon = "fa-level-up")
+```
+
+Au final, nous obtenons donc le [tableau de bord](__specifique/prog-stat-r-tp7-etape8.html) suivant.
+
 
 ### Publication
 
 Pour publier un tableau de bord ainsi créé, il faut juste placer le document `.Rmd`, ainsi que les données si besoin, sur un serveur `shiny` dédié. Vous pouvez voir un exemple avec [ce lien](http://193.51.82.116:3838/demo/prog-stat-r-tp7/).
 
 ## Exercice
+
 
 
 

@@ -48,20 +48,52 @@ v = paste(round((d$ca[2] / d$ca[1] - 1) * 100, 2), "%")
 valueBox(v, icon = "fa-arrow-circle-up", color = "green")
 ```
 
-# Détail
+# Détail {data-orientation=rows}
+
+## Ligne 1
 
 ### Par département (en k€)
 
 ```{r}
-d = aggregate(cbind(ca2003, ca2004, evolution) / 1000 ~ departement, ca_evol, sum)
-names(d) = c("Département", "2003", "2004", "Evolution")
-knitr::kable(d, digits = 0)
+evol.dpt = aggregate(cbind(ca2003, ca2004, evolution) / 1000 ~ departement, 
+                     ca_evol, sum)
+names(evol.dpt) = c("Département", "2003", "2004", "Evolution")
+knitr::kable(evol.dpt, digits = 0)
 ```
 
 ### Par provenance (en k€)
 
 ```{r}
-d = aggregate(cbind(ca2003, ca2004, evolution) / 1000 ~ provenance, ca_evol, sum)
-names(d) = c("Provenance", "2003", "2004", "Evolution")
-knitr::kable(d, digits = 0)
+evol.prov = aggregate(cbind(ca2003, ca2004, evolution) / 1000 ~ provenance, 
+                      ca_evol, sum)
+names(evol.prov) = c("Provenance", "2003", "2004", "Evolution")
+knitr::kable(evol.prov, digits = 0)
 ```
+
+## Ligne 2
+
+### Nombre de département en hausse
+
+```{r}
+gauge(sum(evol.dpt$Evolution > 0), 0, nrow(evol.dpt))
+```
+
+### Département avec la plus grosse évolution
+
+```{r}
+valueBox(evol.dpt$Département[which.max(evol.dpt$Evolution)], icon = "fa-level-up")
+```
+
+### Nombre de provenance en hausse
+
+```{r}
+gauge(sum(evol.prov$Evolution > 0), 0, nrow(evol.prov))
+```
+
+### Provenance avec la plus grosse évolution
+
+```{r}
+valueBox(evol.prov$Provenance[which.max(evol.prov$Evolution)], icon = "fa-level-up")
+```
+
+
