@@ -9,7 +9,7 @@ Nous allons voir dans ce TP comment on peut produire un document (`HTML`, `PDF` 
 
 > ce document a été écrit en `R markdown`. Vous pouvez voir le fichier source [ici][sourceTP5]. Pour mieux comprendre le langage, il est préférable de regarder le fichier source et ce document qui est donc la traduction du source en HTML.
 
-[sourceTP5]: https://github.com/fxjollois/fxjollois.github.io/blob/master/prog-stat-r-tp5.Rmd "Fichier source du TP5, disponible sur github"
+[sourceTP5]: prog-stat-r-tp5.Rmd "Fichier source du TP5"
 
 ## Librairies
 

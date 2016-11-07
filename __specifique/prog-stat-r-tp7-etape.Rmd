@@ -1,5 +1,5 @@
 ---
-title: "Untitled"
+title: "Evolution CA"
 output: 
   flexdashboard::flex_dashboard:
     orientation: columns
@@ -8,29 +8,41 @@ output:
 
 ```{r setup, include=FALSE}
 library(flexdashboard)
+load("../donnees/ca/ca.RData")
 ```
 
 Column {data-width=650}
 -----------------------------------------------------------------------
 
-### Chart A
+### Evolution mois par mois
 
 ```{r}
-
+d = setNames(aggregate(ca / 1000000 ~ mois_no, ca_tout, sum), c("mois", "ca"))
+par(mar = c(4, 4, 0, 0) + .1)
+plot(ca ~ mois, d, type = "b",
+     xlab = "Mois", ylab = "Chiffre d'affaires (M€)")
+abline(h = mean(d$ca), lty = 3, col = "gray50")
 ```
 
 Column {data-width=350}
 -----------------------------------------------------------------------
 
-### Chart B
+### Comparaison mois par mois (en k€)
 
 ```{r}
-
+d = aggregate(cbind(ca2003, ca2004, evolution) / 1000 ~ mois + mois_numero, 
+              ca_evol, sum)
+d = subset(d, select = -mois_numero)
+names(d) = c("Mois", "2003", "2004", "Evolution")
+knitr::kable(d, digits = 0)
 ```
 
-### Chart C
+
+### Augmentation entre 2003 et 2004
 
 ```{r}
-
+d = aggregate(ca ~ annee, ca_tout, sum)
+v = paste(round((d$ca[2] / d$ca[1] - 1) * 100, 2), "%")
+valueBox(v, icon = "fa-arrow-circle-up", color = "green")
 ```
 

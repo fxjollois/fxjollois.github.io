@@ -3,7 +3,7 @@ title: Reporting
 subtitle: Programmation statistique avec `R` - STID 2ème année
 ---
 
-Dans ce TP, nous allons voir comment utiliser la librairie `flexdashboard` (basée entre autres sur `rmarkdown`) pour générer des tableaux de bords automatisés. 
+Dans ce TP, nous allons voir comment utiliser la librairie [`flexdashboard`](http://rmarkdown.rstudio.com/flexdashboard) (basée entre autres sur `rmarkdown`) pour générer des tableaux de bords automatisés. Nous allons voir ici quelques éléments de base, vous trouverez beaucoup d'autres informations sur le site indiqué.
 
 ## Fichiers `.RData`
 
@@ -69,28 +69,34 @@ load("env.RData")
 ls()
 ```
 
-```{r echo=FALSE}
-rm(list = ls())
-```
-
 ### Données utilisées
 
-Nous allons donc utiliser les données du *data-mart* utilisé dans le TP6, contenues dans le fichier `ca.RData`. Pour ce faire, nous allons utiliser la commande `load()`.
+Nous allons donc utiliser les données du *data-mart* utilisé dans le TP6, contenues dans le fichier `ca.RData`. Pour ce faire, nous allons utiliser la commande `load()`. Nous vérifions ensuite qu'on a bien toutes les données voulues (en ayant supprimé en premier les objets existants).
 
 ```{r}
+rm(list = ls())
 load("donnees/ca/ca.RData")
 ls()
 ```
 
 ## Package `flexdashboard`
 
+```{r setup, include=FALSE}
+rm(list = ls())
+knitr::opts_chunk$set(eval=FALSE)
+```
+
+### Installation
+
 Vous devez d'abord installer le package via la commande `install.packages()`. Pour rappel, voici les étapes à suivre (non exécutées dans ce document).
 
-```{r, eval=FALSE}
+```{r}
 .libPaths("z:/Rlib")    # ou un autre chemin en fonction de vos choix précédents
 install.packages("flexdashboard")
 library(flexdashboard)
 ```
+
+### Création d'un premier document
 
 Une fois que vous avez chargé la librairie, il est possible de créer un document de base de type `flexdashboard` en suivant les étapes suivantes :
 
@@ -100,7 +106,7 @@ Une fois que vous avez chargé la librairie, il est possible de créer un docume
 
 Vous devez obtenir un document commençant par 
 
-```{markdown, eval=FALSE}
+```{r}
 ---
 title: "Untitled"
 output: 
@@ -108,11 +114,67 @@ output:
     orientation: columns
     vertical_layout: fill
 ---
+
+...
 ```
 
-En cliquant sur **Knit**, vous devez obtenir le [document suivant](__specifique/prog-stat-r-tp7-etape1.html). Vous remarquerez qu'il y a de la place pour mettre des graphiques et/ou des tableaux. Nous allons commencer par importer les données dans ce tableau de bord, grâce au code ci-dessus. Vous devez donc introduire le code suivant dans un *chunck*, en mettant comme option `include=FALSE`.
+En cliquant sur **Knit**, vous devez obtenir le [document suivant](__specifique/prog-stat-r-tp7-etape1.html). Vous remarquerez qu'il y a de la place pour mettre des graphiques et/ou des tableaux. Nous allons agrémenter ce tableau de bord à l'aide de graphiques et de pastilles d'informations.
+
+#### Modification du titre
+
+En premier lieu, il faut changer le titre du reporting, en mettant par exemple `"Evolution CA"`.
+
+#### Importation de données
+
+Nous allons commencer par importer les données dans ce tableau de bord, grâce au code ci-dessus. Ceci permettra donc de ne pas avoir d'étapes de chargement des fichiers texte et de jointures, pouvant prendre du temps et inutiles puisque les données n'évoluent pas en temps réel.
+
+Vous devez donc introduire le code suivant dans le premier *chunck* (en dessous du chargement de la librairie `flexdashboard`), nommé `setup` et ayant l'option `include=FALSE`. Ceci permettra donc d'avoir les données à disposition, mais que le code ne s'affiche pas dans le document final.
 
 ```{r}
+load("donnees/ca/ca.RData")
+```
+
+#### Premier graphique
+
+Pour le premier graphique (`Chart A`), nous allons représenter l'évolution du chiffre d'affaires sur la période 2003-2004, mois par mois. Dans la partie `### Chart A`, nous allons d'abord modifier le titre en `"Evolution mois par mois"`, par exemple (au lieu de `"Chart A"` donc). Ensuite, il faut mettre le code suivant dans le *chunck* correspondant.
+
+```{r, fig.align="center"}
+d = setNames(aggregate(ca / 1000000 ~ mois_no, ca_tout, sum), c("mois", "ca"))
+par(mar = c(4, 4, 0, 0) + .1)
+plot(ca ~ mois, d, type = "b",
+     xlab = "Mois", ylab = "Chiffre d'affaires (M€)")
+abline(h = mean(d$ca), lty = 3, col = "gray50")
+```
+
+Une fois que vous compilez votre document, vous devez obtenir la [page suivante](__specifique/prog-stat-r-tp7-etape2.html). 
+
+#### Deuxième graphique
+
+Dans la fenêtre en haut à gauche (`Chart B`), nous allons placer un tableau, indiquant le chiffre d'affaires pour 2003 et pour 2004, mois par mois. Pour cela, nous allons d'abord renommer le titre en `"Comparaison mois par mois (en k€)"`. Puis nous allons mettre le code suivant dans le *chunk* correspondant.
+
+```{r}
+d = aggregate(cbind(ca2003, ca2004, evolution) / 1000 ~ mois + mois_numero, 
+              ca_evol, sum)
+d = subset(d, select = -mois_numero)
+names(d) = c("Mois", "2003", "2004", "Evolution")
+knitr::kable(d, digits = 0)
+```
+
+Une fois exécuté, vous obtenez le [document suivant](__specifique/prog-stat-r-tp7-etape3.html). Il est possible de naviguer dans le tableau avec la souris pour voir les mois caché.
+
+#### Troisième graphique
+
+Nous allons utiliser ici ce qu'on pourrait appeler une *pastille*, avec la fonction `valueBox()` du package `flewdashboard`. Celle-ci prend en paramètre une valeur à afficher (numérique ou textuelle), une icône, et éventuellement une couleur. Elle affichera aussi le titre (de niveau 3, `###`) mis avant le *chunk* la contenant. 
+
+Il faut tout d'abord remplacer le titre par `"Augmentation entre 2003 et 2004"`. Ensuite, on va placer le code suivant dans le *chunk*.
+
+```{r}
+d = aggregate(ca ~ annee, ca_tout, sum)
+v = paste(round((d$ca[2] / d$ca[1] - 1) * 100, 2), "%")
+valueBox(v, icon = "fa-arrow-circle-up", color = "green")
+```
+
+Vous devriez avoir cette [page](__specifique/prog-stat-r-tp7-etape4.html) une fois le document `Rmd` compilé.
 
 
 

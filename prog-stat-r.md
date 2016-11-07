@@ -20,3 +20,4 @@ title: Programmation statistique avec R
     - [sujet 2](prog-stat-r-tp6note-bis.html) 
         - [correction (Rmd)](__specifique/prog-stat-r-tp6note-correction-bis.Rmd)
         - [correction (html)](__specifique/prog-stat-r-tp6note-correction-bis.html)
+1. [TP7 : reporting](prog-stat-r-tp7.html)
