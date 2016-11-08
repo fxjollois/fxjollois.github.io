@@ -1,103 +1,182 @@
 ---
-title: "Météo en France"
+title: "Evolution CA"
 output: 
   flexdashboard::flex_dashboard:
     orientation: columns
     vertical_layout: fill
-    source_code: "prog-stat-r-tp6-correction.Rmd"
+    source_code: "prog-stat-r-tp7-correction.Rmd"
 ---
 
-```{r, include=FALSE}
-# Librairies utiles pour le dashboard
+
+```{r setup, include=FALSE}
 library(flexdashboard)
-library(knitr)
-library(leaflet)
-
-# Importation des données
-lieux = read.table("../donnees/MeteoFrance/postesSynop.csv", header = T, sep = ";", quote = NULL, stringsAsFactors = FALSE)
-mesures = read.table("../donnees/MeteoFrance/synop.2016101912.csv", header = T, sep = ";", na.strings = "mq", stringsAsFactors = FALSE)
-infos = merge(mesures, lieux, by.x = "numer_sta", by.y = "ID")
-rownames(infos) = infos$Nom
-infos$temp = infos$t - 273.15
-
-# Calcul des infos pour les valueBox
-date = strptime(as.character(unique(infos$date)), "%Y%m%d%H%M%S", tz = "Europe/Paris")
-tempmax.val = max(infos$temp, na.rm = TRUE)
-tempmax.nom = infos$Nom[which.max(infos$temp)]
-tempmin.val = min(infos$temp, na.rm = TRUE)
-tempmin.nom = infos$Nom[which.min(infos$temp)]
-
-# Calcul de la table résumant les températures
-stats = data.frame(
-    Statistique = c("Moyenne", "Médiane", "Ecart-type"),
-    Valeur = round(c(mean(infos$temp, na.rm = TRUE),
-                     median(infos$temp, na.rm = TRUE),
-                     sd(infos$temp, na.rm = TRUE)), 2)
-)
-
-# Création du HTML pour les popups
-infos$popup = paste("<strong>", infos$Nom, "</strong><br>", infos$temp, "°", sep = "")
+load("../donnees/ca/ca.RData")
 ```
 
-# Informations
+# Synthèse
 
-## colonne
+Column {data-width=650}
+-----------------------------------------------------------------------
 
-### Date de la mesure
+### Evolution mois par mois
 
 ```{r}
-valueBox(format(date, "%d-%m-%Y, %H:%M"), icon = "fa-calendar", color = gray(.3))
+d = setNames(aggregate(ca / 1000000 ~ mois_no, ca_tout, sum), c("mois", "ca"))
+par(mar = c(4, 4, 0, 0) + .1)
+plot(ca ~ mois, d, type = "b",
+     xlab = "Mois", ylab = "Chiffre d'affaires (M€)")
+abline(h = mean(d$ca), lty = 3, col = "gray50")
 ```
 
-### Stations mesurées (sur `r nrow(lieux)`)
+Column {data-width=350}
+-----------------------------------------------------------------------
+
+### Comparaison mois par mois (en k€)
 
 ```{r}
-valueBox(nrow(infos), icon = "ion-flag", color = gray(.3))
+d = aggregate(cbind(ca2003, ca2004, evolution) / 1000 ~ mois + mois_numero, 
+              ca_evol, sum)
+d = subset(d, select = -mois_numero)
+names(d) = c("Mois", "2003", "2004", "Evolution")
+knitr::kable(d, digits = 0)
 ```
 
-### Température maximale (à `r tempmax.nom`)
+
+### Augmentation entre 2003 et 2004
 
 ```{r}
-valueBox(tempmax.val, icon = "ion-thermometer", color = "darkred")
+d = aggregate(ca ~ annee, ca_tout, sum)
+v = paste(round((d$ca[2] / d$ca[1] - 1) * 100, 2), "%")
+valueBox(v, icon = "fa-arrow-circle-up", color = "green")
 ```
 
-### Température minimale (à `r tempmin.nom`)
+# Détail {data-orientation=rows}
+
+## Ligne 1
+
+### Par département (en k€)
 
 ```{r}
-valueBox(tempmin.val, icon = "ion-thermometer", color = "darkblue")
+evol.dpt = aggregate(cbind(ca2003, ca2004, evolution) / 1000 ~ departement, 
+                     ca_evol, sum)
+names(evol.dpt) = c("Département", "2003", "2004", "Evolution")
+knitr::kable(evol.dpt, digits = 0)
 ```
 
-## colonne
-
-### Température {data-height=150}
+### Par provenance (en k€)
 
 ```{r}
-kable(stats)
+evol.prov = aggregate(cbind(ca2003, ca2004, evolution) / 1000 ~ provenance, 
+                      ca_evol, sum)
+names(evol.prov) = c("Provenance", "2003", "2004", "Evolution")
+knitr::kable(evol.prov, digits = 0)
 ```
 
-### Répartition
+## Ligne 2
+
+### Nombre de département en hausse
 
 ```{r}
-layout(matrix(c(1, 1, 2), 3, 1))
-par(mar = c(0, 2, 0, 0) + .1)
-hist(infos$temp, col = "grey30", main = "", axes = FALSE)
-par(mar = c(2, 2, 0, 0) + .1)
-boxplot(infos$temp, col = "grey30", horizontal = TRUE)
+gauge(sum(evol.dpt$Evolution > 0), 0, nrow(evol.dpt))
 ```
 
-# Carte
+### Département avec la plus grosse évolution
 
-### Stations météo en France métropolitaine
-
-```{r, eval = FALSE}
-infos.sub = subset(infos, Latitude > 40 & Longitude > -2)
-pal = colorNumeric("RdYlBu", domain = range(-infos.sub$temp, na.rm = TRUE))
-leaflet(infos.sub) %>% 
-    addTiles(options = list(opacity = .5)) %>%
-    # setView(2, 48, zoom = 5) %>%
-    addCircleMarkers(~Longitude, ~Latitude, 
-                     fillColor = ~pal(-temp), fillOpacity = 1,
-                     stroke = FALSE, radius = 10,
-                     popup = ~popup)
+```{r}
+valueBox(evol.dpt$Département[which.max(evol.dpt$Evolution)], icon = "fa-level-up")
 ```
+
+### Nombre de provenance en hausse
+
+```{r}
+gauge(sum(evol.prov$Evolution > 0), 0, nrow(evol.prov))
+```
+
+### Provenance avec la plus grosse évolution
+
+```{r}
+valueBox(evol.prov$Provenance[which.max(evol.prov$Evolution)], icon = "fa-level-up")
+```
+
+# Performance {data-orientation=rows}
+
+```{r, include=FALSE}
+agg.dpt = aggregate(ca ~ departement, ca_tout, sum)
+top3.dpt = head(agg.dpt[order(agg.dpt$ca, decreasing = TRUE),], 3)
+best.dpt = top3.dpt$departement[1]
+part.dpt = top3.dpt$ca[1]
+
+agg.prov = aggregate(ca ~ provenance, ca_tout, sum)
+top3.prov = head(agg.prov[order(agg.prov$ca, decreasing = TRUE),], 3)
+best.prov = top3.prov$provenance[1]
+part.prov = top3.prov$ca[1]
+
+agg.mois = aggregate(ca ~ mois + annee, ca_tout, sum)
+top3.mois = head(agg.mois[order(agg.mois$ca, decreasing = TRUE),], 3)
+best.mois = paste(top3.mois$mois[1], top3.mois$annee[1])
+part.mois = top3.mois$ca[1]
+```
+
+## Ligne 1 - Département {data-height=200}
+
+### Meilleur département sur la période
+
+```{r}
+valueBox(best.dpt)
+```
+
+### Part du meilleur département
+
+```{r}
+gauge(part.dpt, 0, sum(ca_tout$ca))
+```
+
+### Top 3 départements
+
+```{r}
+knitr::kable(top3.dpt, row.names = F)
+```
+
+## Ligne 2 - Provenance {data-height=200}
+
+### Meilleur provenance sur la période
+
+```{r}
+valueBox(best.prov)
+```
+
+### Part de la meilleure provenance
+
+```{r}
+gauge(part.prov, 0, sum(ca_tout$ca))
+```
+
+### Top 3 provenance
+
+```{r}
+knitr::kable(top3.prov, row.names = F)
+```
+
+## Ligne 3 - Mois {data-height=200}
+
+### Meilleur mois sur la période
+
+```{r}
+valueBox(best.mois)
+```
+
+### Part du meilleur mois
+
+```{r}
+gauge(part.mois, 0, sum(ca_tout$ca))
+```
+
+### Top 3 mois
+
+```{r}
+knitr::kable(top3.mois, row.names = F)
+```
+
+
+
 

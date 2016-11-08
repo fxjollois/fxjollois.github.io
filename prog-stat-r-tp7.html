@@ -358,7 +358,7 @@ valueBox(v, icon = &quot;fa-arrow-circle-up&quot;, color = &quot;green&quot;)</c
 <div id="plusieurs-onglets" class="section level4">
 <h4>Plusieurs onglets</h4>
 <p>Il est possible de créer un système d’onglet pour avoir plusieurs pages dans le reporting. Pour cela, vous devez d’abord créer un titre de niveau 1 (<code>#</code>) pour la première page (en la nommant par exemple <code>&quot;Synthèse&quot;</code>). Ce titre doit être placé avant la ligne <code>Column...</code>.</p>
-<p>Vous devriez avoir <a href="__specifique/prog-stat-r-tp7.-etape5.html">cette page</a> comme résultat.</p>
+<p>Vous devriez avoir <a href="__specifique/prog-stat-r-tp7-etape5.html">cette page</a> comme résultat.</p>
 <p>Créer un deuxième onglet, nommé <code>&quot;Détail&quot;</code>, dans lequel nous allons mettre deux tables : une pour les départements et une pour les provenances. Voici les codes des deux <em>chunks</em> pour créer ces tableaux.</p>
 <pre class="r"><code>evol.dpt = aggregate(cbind(ca2003, ca2004, evolution) / 1000 ~ departement, 
                      ca_evol, sum)
@@ -374,16 +374,16 @@ knitr::kable(evol.prov, digits = 0)</code></pre>
 <div id="modification-de-lorientation" class="section level3">
 <h3>Modification de l’orientation</h3>
 <p>Dans la première page, nous avions disposer les différents éléments par colonnes (un élément dans la première et deux dans la deuxième). Il est possible de modifier cela pour une page spécifique. Dans la deuxième, à la suite du titre et sur la même ligne, il est possible d’ajouter <code>{data-orientation=rows}</code>.</p>
-<p>Ainsi, le tableau devient <a href="_specifique/prog-stat-r-tp7-etape7.html">celui-ci</a>.</p>
-<p>Et si nous souhaitions avoir des graphiques prenant toute la page en bas, il faudrait faire deux étapes :</p>
+<p>Ainsi, le tableau devient <a href="__specifique/prog-stat-r-tp7-etape7.html">celui-ci</a>.</p>
+<p>Nous allons maintenant utiliser une jauge, avec la fonction <code>gauge()</code> du package <code>flexdashboard</code>. Celle-ci prend au minimum en paramètre une valeur, un minimum et un maximum.</p>
+<p>Et pour avoir des graphiques prenant toute la page en bas, il faut réaliser deux étapes :</p>
 <ul>
 <li>Insérer un titre de niveau 2 avant les deux <em>chunks</em> créés</li>
 <li>Insérer un nouveau titre de niveau 2 puis les <em>chunk</em> contenant le code pour les graphiques</li>
 </ul>
 <div id="nombre-de-departement-en-hausse" class="section level5">
 <h5>Nombre de département en hausse</h5>
-<pre class="r"><code>gauge(sum(evol.dpt$Evolution &gt; 0),
-      0, nrow(evol.dpt))</code></pre>
+<pre class="r"><code>gauge(sum(evol.dpt$Evolution &gt; 0), 0, nrow(evol.dpt))</code></pre>
 </div>
 <div id="departement-avec-la-plus-grosse-evolution" class="section level5">
 <h5>Département avec la plus grosse évolution</h5>
@@ -391,21 +391,41 @@ knitr::kable(evol.prov, digits = 0)</code></pre>
 </div>
 <div id="nombre-de-provenance-en-hausse" class="section level5">
 <h5>Nombre de provenance en hausse</h5>
-<pre class="r"><code>gauge(sum(evol.prov$Evolution &gt; 0),
-      0, nrow(evol.prov))</code></pre>
+<pre class="r"><code>gauge(sum(evol.prov$Evolution &gt; 0), 0, nrow(evol.prov))</code></pre>
 </div>
 <div id="provenance-avec-la-plus-grosse-evolution" class="section level5">
 <h5>Provenance avec la plus grosse évolution</h5>
 <pre class="r"><code>valueBox(evol.prov$Provenance[which.max(evol.prov$Evolution)], icon = &quot;fa-level-up&quot;)</code></pre>
+<p>Au final, nous obtenons donc le <a href="__specifique/prog-stat-r-tp7-etape8.html">tableau de bord</a> suivant.</p>
 </div>
 </div>
 <div id="publication" class="section level3">
 <h3>Publication</h3>
-<p>Pour publier un tableau de bord ainsi créé, il faut juste placer le document <code>.Rmd</code>, ainsi que les données si besoin, sur un serveur <code>shiny</code> dédié. Vous pouvez voir un exemple avec <a href="http://193.51.82.116:3838/demo/prog-stat-r-tp7/">ce lien</a>.</p>
+<p>Pour inforation, pour publier un tableau de bord ainsi créé, il faut juste placer le document <code>.Rmd</code>, ainsi que les données si besoin, sur un serveur dédié ayant l’application <code>shiny server</code> dessus. C’est une opération simple, mais que souvent seul le service informatique pourra effectué.</p>
+<p>Vous pouvez voir un exemple avec <a href="http://193.51.82.116:3838/demo/prog-stat-r-tp7/">ce lien</a>.</p>
 </div>
 </div>
 <div id="exercice" class="section level2">
 <h2>Exercice</h2>
+<p>Créer un troisième onglet, nommé <strong>Performance</strong>, ayant les informations suivantes :</p>
+<ul>
+<li>trois lignes, chacune pour respectivement les départements, les provenances et les mois</li>
+<li>chaque ligne avec 3 informations
+<ul>
+<li>une <code>valueBox()</code> du meilleur</li>
+<li>une <code>gauge()</code>, représentant la partie du CA représenté par le meilleur obtenu ci-dessus</li>
+<li>un <em>top 3</em>
+<ul>
+<li>vous pouvez utiliser la librairie <code>sqldf</code> pour réaliser les requêtes, ou utiliser la fonction <code>order()</code></li>
+<li>on ne veut pas le numéro des lignes dans le résultat</li>
+</ul></li>
+</ul></li>
+<li>chaque ligne doit avoir une hauteur de 200 px. Pour cela, il faut ajouter le paramètre <code>data-height</code> à la suite de la déclaration de la nouvelle ligne
+<ul>
+<li>vous pouvez regarder les déclarations de colonnes créées automatique dans le premier onglet (cf <code>Column 1...</code>)</li>
+</ul></li>
+</ul>
+<p>Vous devriez avoir le <a href="__specifique/prog-stat-r-tp7-correction.html">résultat suivant</a></p>
 </div>
 
 </div>

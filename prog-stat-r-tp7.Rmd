@@ -180,7 +180,7 @@ Vous devriez avoir cette [page](__specifique/prog-stat-r-tp7-etape4.html) une fo
 
 Il est possible de créer un système d'onglet pour avoir plusieurs pages dans le reporting. Pour cela, vous devez d'abord créer un titre de niveau 1 (`#`) pour la première page (en la nommant par exemple `"Synthèse"`). Ce titre doit être placé avant la ligne `Column...`.
 
-Vous devriez avoir [cette page](__specifique/prog-stat-r-tp7.-etape5.html) comme résultat.
+Vous devriez avoir [cette page](__specifique/prog-stat-r-tp7-etape5.html) comme résultat.
 
 Créer un deuxième onglet, nommé `"Détail"`, dans lequel nous allons mettre deux tables : une pour les départements et une pour les provenances. Voici les codes des deux *chunks* pour créer ces tableaux.
 
@@ -204,9 +204,11 @@ Une fois compilé, vous devriez avoir le [tableau de bord](__specifique/prog-sta
 
 Dans la première page, nous avions disposer les différents éléments par colonnes (un élément dans la première et deux dans la deuxième). Il est possible de modifier cela pour une page spécifique. Dans la deuxième, à la suite du titre et sur la même ligne, il est possible d'ajouter `{data-orientation=rows}`. 
 
-Ainsi, le tableau devient [celui-ci](_specifique/prog-stat-r-tp7-etape7.html).
+Ainsi, le tableau devient [celui-ci](__specifique/prog-stat-r-tp7-etape7.html).
 
-Et si nous souhaitions avoir des graphiques prenant toute la page en bas, il faudrait faire deux étapes :
+Nous allons maintenant utiliser une jauge, avec la fonction `gauge()` du package `flexdashboard`. Celle-ci prend au minimum en paramètre une valeur, un minimum et un maximum.
+
+Et pour avoir des graphiques prenant toute la page en bas, il faut réaliser deux étapes :
 
 - Insérer un titre de niveau 2 avant les deux *chunks* créés
 - Insérer un nouveau titre de niveau 2 puis les *chunk* contenant le code pour les graphiques
@@ -236,12 +238,25 @@ Au final, nous obtenons donc le [tableau de bord](__specifique/prog-stat-r-tp7-e
 
 ### Publication
 
-Pour publier un tableau de bord ainsi créé, il faut juste placer le document `.Rmd`, ainsi que les données si besoin, sur un serveur `shiny` dédié. Vous pouvez voir un exemple avec [ce lien](http://193.51.82.116:3838/demo/prog-stat-r-tp7/).
+Pour inforation, pour publier un tableau de bord ainsi créé, il faut juste placer le document `.Rmd`, ainsi que les données si besoin, sur un serveur dédié ayant l'application `shiny server` dessus. C'est une opération simple, mais que souvent seul le service informatique pourra effectué.
+
+Vous pouvez voir un exemple avec [ce lien](http://193.51.82.116:3838/demo/prog-stat-r-tp7/).
 
 ## Exercice
 
+Créer un troisième onglet, nommé **Performance**, ayant les informations suivantes :
 
+- trois lignes, chacune pour respectivement les départements, les provenances et les mois
+- chaque ligne avec 3 informations
+    - une `valueBox()` du meilleur
+    - une `gauge()`, représentant la partie du CA représenté par le meilleur obtenu ci-dessus
+    - un *top 3* 
+        - vous pouvez utiliser la librairie `sqldf` pour réaliser les requêtes, ou utiliser la fonction `order()` 
+        - on ne veut pas le numéro des lignes dans le résultat
+- chaque ligne doit avoir une hauteur de 200 px. Pour cela, il faut ajouter le paramètre `data-height` à la suite de la déclaration de la nouvelle ligne
+    - vous pouvez regarder les déclarations de colonnes créées automatique dans le premier onglet (cf `Column 1...`)
 
+Vous devriez avoir le [résultat suivant](__specifique/prog-stat-r-tp7-correction.html)
 
 
 

@@ -21,3 +21,4 @@ title: Programmation statistique avec R
         - [correction (Rmd)](__specifique/prog-stat-r-tp6note-correction-bis.Rmd)
         - [correction (html)](__specifique/prog-stat-r-tp6note-correction-bis.html)
 1. [TP7 : reporting](prog-stat-r-tp7.html)
+1. [TP8 : visualisation de données](prog-stat-r-tp8.html)
