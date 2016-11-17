@@ -1,0 +1,215 @@
+---
+title: Base de données Médicaments - *correction*
+subtitle: Informatique Décisionnelle - LP MDS Santé
+---
+
+## Exercices
+
+### Importation
+
+La première étape ici est donc d'importer les données. Il faut pour cela utiliser la fonction `read.table()`, en évitant que les variables textuelles deviennent des `factors`. Il faut aussi renommer les variables pour chaque table, selon les informations fournies dans le PDF associé aux données. Il faut aussi gérer les dates pour qu'elles soient correctement représentées. Pour certaines variables, nous avons le descriptif des modalités dans ce document. Enfin, il faudrait ajouter le court descriptif de chaque table comme attribut de celles-ci.
+
+#### CIS
+
+```{r}
+CIS = read.table("donnees/medicaments/2016-11-09/CIS_bdpm.txt", 
+                 header = F, encoding = "latin1", quote = NULL,
+                 stringsAsFactors = F, sep = "\t")
+names(CIS) = c(
+  "CodeCIS",
+  "Denomination",
+  "FormePharma",
+  "VoiesAdm",
+  "StatutAMM",
+  "ProcedureAMM",
+  "EtatComm",
+  "DateAMM",
+  "StatutBdm",
+  "NumAutorEuro",
+  "Titulaires",
+  "Surveillance"
+)
+CIS = transform(CIS,
+                DateAMM = as.Date(DateAMM, "%d/%m/%Y"))
+knitr::kable(head(CIS))
+```
+
+#### CIS_CIP
+
+```{r}
+CIS_CIP = read.table("donnees/medicaments/2016-11-09/CIS_CIP_bdpm.txt", 
+                     header = F, encoding = "latin1", 
+                     stringsAsFactors = F, sep = "\t", quote = NULL)
+names(CIS_CIP) = c(
+  "CodeCIS",
+  "CodeCIP7",
+  "Libelle",
+  "StatutAdm",
+  "EtatComm",
+  "DateComm",
+  "CodeCIP13",
+  "Agrement",
+  "Taux",
+  "Prix",
+  "Indication1",
+  "Indication2",
+  "Indication3"
+)
+CIS_CIP = transform(CIS_CIP,
+                    DateComm = as.Date(DateComm, "%d/%m/%Y"),
+                    Prix = as.numeric(sub(",", ".", Prix)),
+                    Taux = as.numeric(sub("%", "", Taux)))
+knitr::kable(head(CIS_CIP))
+```
+
+#### CIS_COMPO
+
+```{r}
+CIS_COMPO = read.table("donnees/medicaments/2016-11-09/CIS_COMPO_bdpm.txt", 
+                       header = F, encoding = "latin1", quote = NULL,
+                       stringsAsFactors = F, sep = "\t")
+CIS_COMPO$V9 = NULL
+names(CIS_COMPO) = c(
+  "CodeCIS",
+  "Designation",
+  "Code",
+  "Denomination",
+  "Dosage",
+  "Reference",
+  "NatureCompo",
+  "NumLien"
+)
+knitr::kable(head(CIS_COMPO))
+```
+
+#### CIS_HAS_SMR
+
+```{r}
+CIS_HAS_SMR = read.table("donnees/medicaments/2016-11-09/CIS_HAS_SMR_bdpm.txt",
+                         header = F, encoding = "latin1", quote = "\"",
+                         stringsAsFactors = F, sep = "\t")
+names(CIS_HAS_SMR) = c(
+  "CodeCIS",
+  "CodeHAS",
+  "MotifEval",
+  "Date",
+  "ValeurSMR",
+  "LibelleSMR"
+)
+CIS_HAS_SMR = transform(CIS_HAS_SMR,
+                        Date = as.Date(as.character(Date), "%Y%m%d"))
+knitr::kable(head(CIS_HAS_SMR))
+```
+
+
+#### CIS_HAS_ASMR
+
+```{r}
+CIS_HAS_ASMR = read.table("donnees/medicaments/2016-11-09/CIS_HAS_ASMR_bdpm.txt",
+                          header = F, encoding = "latin1", quote = "\"",
+                          stringsAsFactors = F, sep = "\t")
+names(CIS_HAS_ASMR) = c(
+  "CodeCIS",
+  "CodeHAS",
+  "MotifEval",
+  "Date",
+  "ValeurASMR",
+  "LibelleASMR"
+)
+CIS_HAS_SMR = transform(CIS_HAS_ASMR,
+                        Date = as.Date(as.character(Date), "%Y%m%d"))
+knitr::kable(head(CIS_HAS_ASMR))
+```
+
+#### HAS_LiensPageCT
+
+```{r}
+HAS_LiensPageCT = read.table("donnees/medicaments/2016-11-09/HAS_LiensPageCT_bdpm.txt",
+                             header = F, encoding = "latin1", quote = NULL,
+                             stringsAsFactors = F, sep = "\t")
+names(HAS_LiensPageCT) = c(
+  "CodeHAS",
+  "Lien"
+)
+```
+
+#### CIS_GENER
+
+```{r}
+CIS_GENER = read.table("donnees/medicaments/2016-11-09/CIS_GENER_bdpm.txt", 
+                       header = F, encoding = "latin1", quote = NULL,
+                       stringsAsFactors = F, sep = "\t")
+CIS_GENER$V6 = NULL
+names(CIS_GENER) = c(
+  "Identifiant",
+  "Libelle",
+  "CodeCIS",
+  "TypeGenerique",
+  "Numero"
+)
+knitr::kable(head(CIS_GENER))
+```
+
+#### CIS_CPD
+
+```{r}
+CIS_CPD = read.table("donnees/medicaments/2016-11-09/CIS_CPD_bdpm.txt", 
+                     header = F, encoding = "latin1", quote = NULL,
+                     stringsAsFactors = F, sep = "\t")
+names(CIS_CPD) = c(
+  "CodeCIS",
+  "Condition"
+)
+knitr::kable(head(CIS_CPD))
+```
+
+#### CIS_InfoImportantes_AAAAMMJJhhmiss
+
+```{r, eval = FALSE}
+CIS_InfoImportantes = read.table("donnees/medicaments/2016-11-09/CIS_InfoImportantes_20161109111012_bdpm.txt", 
+                                 header = F, encoding = "latin1", quote = NULL,
+                                 stringsAsFactors = F, sep = "\t")
+names(CIS_InfoImportantes) = c(
+  "CodeCIS",
+  "DateDebut",
+  "DateFin",
+  "Texte" 
+)
+```
+
+
+
+### Interrogation
+
+#### Résumé statistique
+
+On veut les informations suivantes dans une table à deux colonnes (`statistique`, `valeur`) :
+
+- Nombre de médicaments
+- Nombre de médicaments avec autorisation active
+- Nombre de médicaments avec surveillance renforcée
+- Taux moyen de remboursement (pour ceux avec autorisation active)
+- Prix moyen (idem que le taux)
+- Durée moyenne de leur mise sur le marché (en nombre de jours - idem que le taux)
+
+```{r}
+
+```
+
+
+#### Top 10 composants
+
+Quels sont les dix médicaments avec le plus de composants (Code CIS, Dénomination et nombre de composants) ?
+
+#### Groupe de générique
+
+Pour chaque groupe de générique, on veut savoir le nombre de médicaments associés, ainsi que leur taux de remboursement moyen et leur prix moyen.
+
+#### Voies administration
+
+Quelles sont les voies d'administration possibles ? Et combien de médicaments sont concernés pour chaque voie ?
+
+#### SMR insuffisant
+
+Quels sont les médicaments dont le service médical rendu (ou **SMR**) est jugé insuffisant ? Indiquez leur taux de remboursement et leur prix, en les classant par prix décroissant.
+

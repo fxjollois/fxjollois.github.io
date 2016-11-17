@@ -71,7 +71,7 @@ ls()
 
 ### Données utilisées
 
-Nous allons donc utiliser les données du *data-mart* utilisé dans le TP6, contenues dans le fichier `ca.RData`. Pour ce faire, nous allons utiliser la commande `load()`. Nous vérifions ensuite qu'on a bien toutes les données voulues (en ayant supprimé en premier les objets existants).
+Nous allons donc utiliser les données du *data-mart* utilisé dans le TP6, contenues dans le fichier [`ca.RData`](donnees/ca/ca.RData). Pour ce faire, nous allons utiliser la commande `load()`. Nous vérifions ensuite qu'on a bien toutes les données voulues (en ayant supprimé en premier les objets existants).
 
 ```{r}
 rm(list = ls())

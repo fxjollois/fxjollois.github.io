@@ -1,0 +1,961 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+<meta charset="utf-8">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="pandoc" />
+
+
+
+
+<title>Base de données Médicaments - correction</title>
+
+<script src="libs/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="libs/bootstrap-3.3.5/css/journal.min.css" rel="stylesheet" />
+<script src="libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<!--
+    Font Awesome
+-->
+<script src="https://use.fontawesome.com/32d8325004.js"></script>
+<link rel="stylesheet" href="libs/font-awesome-4.7.0/css/font-awesome.min.css">
+
+<!--
+    CSS perso
+-->
+<style>
+    .contenu {
+        margin-bottom: 50px;
+    }
+
+    .contact-liens {
+        text-align: center;
+    }
+    .contact-liens:hover {
+        text-decoration: none;
+    }
+    .contact-icones {
+        height: 30px;
+    }
+
+    /* Espacement pour barre du haut et pied de page */
+    #header, .section.level1 {
+        margin-top: 60px;
+        margin-bottom: 60px;
+    }
+    /* Espacement pour table des matières */
+    #TOC {
+        margin-top: 100px;
+    }
+    
+    .footer {
+        position: fixed;
+        width: 100%;
+        text-align: center;
+        bottom: 0;
+        left: 0;
+        background-color: #E6E6E6;
+    }
+</style>
+
+<style type="text/css">code{white-space: pre;}</style>
+<link rel="stylesheet"
+      href="libs/highlight/default.css"
+      type="text/css" />
+<script src="libs/highlight/highlight.js"></script>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
+<script type="text/javascript">
+if (window.hljs && document.readyState && document.readyState === "complete") {
+   window.setTimeout(function() {
+      hljs.initHighlighting();
+   }, 0);
+}
+</script>
+
+
+
+<style type="text/css">
+h1 {
+  font-size: 34px;
+}
+h1.title {
+  font-size: 38px;
+}
+h2 {
+  font-size: 30px;
+}
+h3 {
+  font-size: 24px;
+}
+h4 {
+  font-size: 18px;
+}
+h5 {
+  font-size: 16px;
+}
+h6 {
+  font-size: 12px;
+}
+.table th:not([align]) {
+  text-align: left;
+}
+</style>
+
+<link rel="stylesheet" href="libs/bootstrap-journal.min.css" type="text/css" />
+
+</head>
+
+<body>
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img {
+  max-width:100%;
+  height: auto;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+</style>
+
+
+
+<div class="container-fluid main-container">
+
+<!-- tabsets -->
+<script src="libs/navigation-1.1/tabsets.js"></script>
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+</script>
+
+<!-- code folding -->
+
+
+
+
+
+<div class="navbar navbar-default navbar-fixed-top">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-main">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">FX Jollois</a>
+    </div>
+    <div id="navbar-main" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button">Données <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+              <li><a href="accesdonnees.html">A télécharger</a></li>
+              <li><a href="donnees-integrees-r.html">Sous R</a></li>
+          </ul>
+        </li>
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button">Enseignement <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li class="dropdown-header">DUT 1ère année</li>
+            <li><a href="exploitation-donnees.html">Exploitation de données</a></li>
+            <li><a href="initiation-a-r.html">Initiation à R</a></li>
+            <li><a href="reporting.html">Reporting</a></li>
+            <li class="dropdown-header">DUT 2ème année</li>
+            <li><a href="prog-stat-r.html">Programmation statistique avec R</a></li>
+            <li class="dropdown-header">LP MDS Santé</li>
+            <li><a href="info-dec-sante.html">Informatique décisionnelle</a></li>
+            <li class="dropdown-header">DU Analyste Big Data</li>
+            <li><a href="initiation-r-et-rmongodb.html">Initiation à R et MongoDB</a></li>
+            <li class="dropdown-header">DU Dataviz</li>
+            <li><a href="visualisation-donnees.html">Visualisation de données - R</a></li>
+            <li><a href="visualisation-donnees-d3.html">Visualisation de données - D3</a></li>
+            <li role="separator" class="divider"></li>
+            <li class="dropdown-header">Master</li>
+            <li><a href="slides/cnam-classif-modeles.html">Classification et Modèles de mélange</a></li>
+          </ul>
+        </li>
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button">Recherche <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li><a href="recherche.html">Sujets</a></li>
+            <li><a href="publications.html">Publications</a></li>
+          </ul>
+        </li>
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button">Réalisations <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li><a href="realisations.html">Détail</a></li>
+            <li role="separator" class="divider"></li>
+            <li><a href="http://up5.fr/explore-data" target="_blank">explore-data</a></li>
+            <li><a href="http://fxjollois.github.io/cours-sql/" target="_blank">Appli web de cours pour SQL</a></li>
+          </ul>
+        </li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container-fluid -->
+</div>
+<div class="contenu">
+
+<div class="fluid-row" id="header">
+
+
+
+<h1 class="title toc-ignore">Base de données Médicaments - <em>correction</em></h1>
+<h3 class="subtitle"><em>Informatique Décisionnelle - LP MDS Santé</em></h3>
+
+</div>
+
+
+<div id="exercices" class="section level2">
+<h2>Exercices</h2>
+<div id="importation" class="section level3">
+<h3>Importation</h3>
+<p>La première étape ici est donc d’importer les données. Il faut pour cela utiliser la fonction <code>read.table()</code>, en évitant que les variables textuelles deviennent des <code>factors</code>. Il faut aussi renommer les variables pour chaque table, selon les informations fournies dans le PDF associé aux données. Il faut aussi gérer les dates pour qu’elles soient correctement représentées. Pour certaines variables, nous avons le descriptif des modalités dans ce document. Enfin, il faudrait ajouter le court descriptif de chaque table comme attribut de celles-ci.</p>
+<div id="cis" class="section level4">
+<h4>CIS</h4>
+<pre class="r"><code>CIS = read.table(&quot;donnees/medicaments/2016-11-09/CIS_bdpm.txt&quot;, 
+                 header = F, encoding = &quot;latin1&quot;, quote = NULL,
+                 stringsAsFactors = F, sep = &quot;\t&quot;)
+names(CIS) = c(
+  &quot;CodeCIS&quot;,
+  &quot;Denomination&quot;,
+  &quot;FormePharma&quot;,
+  &quot;VoiesAdm&quot;,
+  &quot;StatutAMM&quot;,
+  &quot;ProcedureAMM&quot;,
+  &quot;EtatComm&quot;,
+  &quot;DateAMM&quot;,
+  &quot;StatutBdm&quot;,
+  &quot;NumAutorEuro&quot;,
+  &quot;Titulaires&quot;,
+  &quot;Surveillance&quot;
+)
+CIS = transform(CIS,
+                DateAMM = as.Date(DateAMM, &quot;%d/%m/%Y&quot;))
+knitr::kable(head(CIS))</code></pre>
+<table>
+<thead>
+<tr class="header">
+<th align="right">CodeCIS</th>
+<th align="left">Denomination</th>
+<th align="left">FormePharma</th>
+<th align="left">VoiesAdm</th>
+<th align="left">StatutAMM</th>
+<th align="left">ProcedureAMM</th>
+<th align="left">EtatComm</th>
+<th align="left">DateAMM</th>
+<th align="left">StatutBdm</th>
+<th align="left">NumAutorEuro</th>
+<th align="left">Titulaires</th>
+<th align="left">Surveillance</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="right">61266250</td>
+<td align="left">A 313 200 000 UI POUR CENT, pommade</td>
+<td align="left">pommade</td>
+<td align="left">cutanée</td>
+<td align="left">Autorisation active</td>
+<td align="left">Procédure nationale</td>
+<td align="left">Commercialisée</td>
+<td align="left">1998-03-12</td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left">PHARMA DEVELOPPEMENT</td>
+<td align="left">Non</td>
+</tr>
+<tr class="even">
+<td align="right">62869109</td>
+<td align="left">A 313 50 000 U.I., capsule molle</td>
+<td align="left">capsule molle</td>
+<td align="left">orale</td>
+<td align="left">Autorisation active</td>
+<td align="left">Procédure nationale</td>
+<td align="left">Commercialisée</td>
+<td align="left">1997-07-07</td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left">PHARMA DEVELOPPEMENT</td>
+<td align="left">Non</td>
+</tr>
+<tr class="odd">
+<td align="right">66513085</td>
+<td align="left">ABASAGLAR 100 unités/ml, solution injectable en cartouche</td>
+<td align="left">solution injectable</td>
+<td align="left">sous-cutanée</td>
+<td align="left">Autorisation active</td>
+<td align="left">Procédure centralisée</td>
+<td align="left">Commercialisée</td>
+<td align="left">2014-09-09</td>
+<td align="left"></td>
+<td align="left">EU/1/14/944</td>
+<td align="left">ELI LILLY REGIONAL OPERATIONS (AUTRICHE)</td>
+<td align="left">Oui</td>
+</tr>
+<tr class="even">
+<td align="right">64332894</td>
+<td align="left">ABASAGLAR 100 unités/ml, solution injectable en stylo prérempli</td>
+<td align="left">solution injectable</td>
+<td align="left">sous-cutanée</td>
+<td align="left">Autorisation active</td>
+<td align="left">Procédure centralisée</td>
+<td align="left">Commercialisée</td>
+<td align="left">2014-09-09</td>
+<td align="left"></td>
+<td align="left">EU/1/14/944</td>
+<td align="left">ELI LILLY REGIONAL OPERATIONS (AUTRICHE)</td>
+<td align="left">Oui</td>
+</tr>
+<tr class="odd">
+<td align="right">66207341</td>
+<td align="left">ABELCET 5 mg/ml, suspension à diluer pour perfusion</td>
+<td align="left">suspension à diluer pour perfusion</td>
+<td align="left">intraveineuse</td>
+<td align="left">Autorisation active</td>
+<td align="left">Procédure nationale</td>
+<td align="left">Commercialisée</td>
+<td align="left">1997-06-10</td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left">ACINO FRANCE</td>
+<td align="left">Non</td>
+</tr>
+<tr class="even">
+<td align="right">60538772</td>
+<td align="left">ABIES CANADENSIS BOIRON, degré de dilution compris entre 2CH et 30CH ou entre 4DH et 60DH</td>
+<td align="left">poudre et pommade et comprimé et granules et solution(s)</td>
+<td align="left">cutanée;orale;sublinguale</td>
+<td align="left">Autorisation active</td>
+<td align="left">Enreg homéo (Proc. Nat.)</td>
+<td align="left">Commercialisée</td>
+<td align="left">2013-09-20</td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left">BOIRON</td>
+<td align="left">Non</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="cis_cip" class="section level4">
+<h4>CIS_CIP</h4>
+<pre class="r"><code>CIS_CIP = read.table(&quot;donnees/medicaments/2016-11-09/CIS_CIP_bdpm.txt&quot;, 
+                     header = F, encoding = &quot;latin1&quot;, 
+                     stringsAsFactors = F, sep = &quot;\t&quot;, quote = NULL)
+names(CIS_CIP) = c(
+  &quot;CodeCIS&quot;,
+  &quot;CodeCIP7&quot;,
+  &quot;Libelle&quot;,
+  &quot;StatutAdm&quot;,
+  &quot;EtatComm&quot;,
+  &quot;DateComm&quot;,
+  &quot;CodeCIP13&quot;,
+  &quot;Agrement&quot;,
+  &quot;Taux&quot;,
+  &quot;Prix&quot;,
+  &quot;Indication1&quot;,
+  &quot;Indication2&quot;,
+  &quot;Indication3&quot;
+)
+CIS_CIP = transform(CIS_CIP,
+                    DateComm = as.Date(DateComm, &quot;%d/%m/%Y&quot;),
+                    Prix = as.numeric(sub(&quot;,&quot;, &quot;.&quot;, Prix)),
+                    Taux = as.numeric(sub(&quot;%&quot;, &quot;&quot;, Taux)))</code></pre>
+<pre><code>## Warning: NAs introduits lors de la conversion automatique</code></pre>
+<pre class="r"><code>knitr::kable(head(CIS_CIP))</code></pre>
+<table>
+<thead>
+<tr class="header">
+<th align="right">CodeCIS</th>
+<th align="right">CodeCIP7</th>
+<th align="left">Libelle</th>
+<th align="left">StatutAdm</th>
+<th align="left">EtatComm</th>
+<th align="left">DateComm</th>
+<th align="right">CodeCIP13</th>
+<th align="left">Agrement</th>
+<th align="right">Taux</th>
+<th align="right">Prix</th>
+<th align="left">Indication1</th>
+<th align="left">Indication2</th>
+<th align="left">Indication3</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="right">60002283</td>
+<td align="right">4949729</td>
+<td align="left">plaquette(s) thermoformée(s) PVC PVDC aluminium de 30 comprimé(s)</td>
+<td align="left">Présentation active</td>
+<td align="left">Déclaration de commercialisation</td>
+<td align="left">2011-03-16</td>
+<td align="right">3.400949e+12</td>
+<td align="left">oui</td>
+<td align="right">100</td>
+<td align="right">44.38</td>
+<td align="left">45,40</td>
+<td align="left">1,02</td>
+<td align="left"></td>
+</tr>
+<tr class="even">
+<td align="right">60002283</td>
+<td align="right">4949770</td>
+<td align="left">plaquette(s) thermoformée(s) PVC PVDC aluminium de 90 comprimé(s)</td>
+<td align="left">Présentation active</td>
+<td align="left">Déclaration de commercialisation</td>
+<td align="left">2011-09-19</td>
+<td align="right">3.400949e+12</td>
+<td align="left">oui</td>
+<td align="right">100</td>
+<td align="right">120.04</td>
+<td align="left">121,06</td>
+<td align="left">1,02</td>
+<td align="left"></td>
+</tr>
+<tr class="odd">
+<td align="right">60002504</td>
+<td align="right">3320863</td>
+<td align="left">tube(s) polypropylène de 30 comprimé(s)</td>
+<td align="left">Présentation active</td>
+<td align="left">Déclaration de commercialisation</td>
+<td align="left">2003-12-03</td>
+<td align="right">3.400933e+12</td>
+<td align="left">oui</td>
+<td align="right">15</td>
+<td align="right">7.75</td>
+<td align="left">8,77</td>
+<td align="left">1,02</td>
+<td align="left"></td>
+</tr>
+<tr class="even">
+<td align="right">60003620</td>
+<td align="right">3696350</td>
+<td align="left">20 récipient(s) unidose(s) polypropylène de 2 ml</td>
+<td align="left">Présentation active</td>
+<td align="left">Déclaration de commercialisation</td>
+<td align="left">2006-11-30</td>
+<td align="right">3.400937e+12</td>
+<td align="left">oui</td>
+<td align="right">65</td>
+<td align="right">38.11</td>
+<td align="left">39,13</td>
+<td align="left">1,02</td>
+<td align="left"></td>
+</tr>
+<tr class="odd">
+<td align="right">60004277</td>
+<td align="right">3614582</td>
+<td align="left">plaquette(s) thermoformée(s) PVC aluminium de 30 gélule(s)</td>
+<td align="left">Présentation active</td>
+<td align="left">Déclaration de commercialisation</td>
+<td align="left">2003-06-11</td>
+<td align="right">3.400936e+12</td>
+<td align="left">oui</td>
+<td align="right">65</td>
+<td align="right">1.43</td>
+<td align="left">2,45</td>
+<td align="left">1,02</td>
+<td align="left"></td>
+</tr>
+<tr class="even">
+<td align="right">60004487</td>
+<td align="right">3972519</td>
+<td align="left">plaquette(s) thermoformée(s) opaque(s) PVC-Aluminium de 30 comprimé(s)</td>
+<td align="left">Présentation active</td>
+<td align="left">Déclaration de commercialisation</td>
+<td align="left">2011-12-12</td>
+<td align="right">3.400940e+12</td>
+<td align="left">oui</td>
+<td align="right">65</td>
+<td align="right">12.07</td>
+<td align="left">13,09</td>
+<td align="left">1,02</td>
+<td align="left"></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="cis_compo" class="section level4">
+<h4>CIS_COMPO</h4>
+<pre class="r"><code>CIS_COMPO = read.table(&quot;donnees/medicaments/2016-11-09/CIS_COMPO_bdpm.txt&quot;, 
+                       header = F, encoding = &quot;latin1&quot;, quote = NULL,
+                       stringsAsFactors = F, sep = &quot;\t&quot;)
+CIS_COMPO$V9 = NULL
+names(CIS_COMPO) = c(
+  &quot;CodeCIS&quot;,
+  &quot;Designation&quot;,
+  &quot;Code&quot;,
+  &quot;Denomination&quot;,
+  &quot;Dosage&quot;,
+  &quot;Reference&quot;,
+  &quot;NatureCompo&quot;,
+  &quot;NumLien&quot;
+)
+knitr::kable(head(CIS_COMPO))</code></pre>
+<table>
+<thead>
+<tr class="header">
+<th align="right">CodeCIS</th>
+<th align="left">Designation</th>
+<th align="right">Code</th>
+<th align="left">Denomination</th>
+<th align="left">Dosage</th>
+<th align="left">Reference</th>
+<th align="left">NatureCompo</th>
+<th align="right">NumLien</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="right">60002283</td>
+<td align="left">comprimé</td>
+<td align="right">42215</td>
+<td align="left">ANASTROZOLE</td>
+<td align="left">1,00 mg</td>
+<td align="left">un comprimé</td>
+<td align="left">SA</td>
+<td align="right">1</td>
+</tr>
+<tr class="even">
+<td align="right">60002504</td>
+<td align="left">comprimé</td>
+<td align="right">25783</td>
+<td align="left">RANITIDINE (CHLORHYDRATE DE)</td>
+<td align="left">168 mg</td>
+<td align="left">un comprimé</td>
+<td align="left">SA</td>
+<td align="right">1</td>
+</tr>
+<tr class="odd">
+<td align="right">60002504</td>
+<td align="left">comprimé</td>
+<td align="right">49632</td>
+<td align="left">RANITIDINE BASE</td>
+<td align="left">150 mg</td>
+<td align="left">un comprimé</td>
+<td align="left">FT</td>
+<td align="right">1</td>
+</tr>
+<tr class="even">
+<td align="right">60002746</td>
+<td align="left">granules</td>
+<td align="right">5319</td>
+<td align="left">ACTAEA RACEMOSA POUR PRÉPARATIONS HOMÉOPATHIQUES</td>
+<td align="left">2CH à 30CH et 4DH à 60DH</td>
+<td align="left">un comprimé</td>
+<td align="left">SA</td>
+<td align="right">7</td>
+</tr>
+<tr class="odd">
+<td align="right">60002746</td>
+<td align="left">solution buvable en gouttes</td>
+<td align="right">5319</td>
+<td align="left">ACTAEA RACEMOSA POUR PRÉPARATIONS HOMÉOPATHIQUES</td>
+<td align="left">2CH à 30CH et 4DH à 60DH</td>
+<td align="left">un comprimé</td>
+<td align="left">SA</td>
+<td align="right">8</td>
+</tr>
+<tr class="even">
+<td align="right">60003620</td>
+<td align="left">suspension</td>
+<td align="right">4179</td>
+<td align="left">DIPROPIONATE DE BÉCLOMÉTASONE</td>
+<td align="left">800 microgrammes</td>
+<td align="left">2 ml de suspension</td>
+<td align="left">SA</td>
+<td align="right">1</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="cis_has_smr" class="section level4">
+<h4>CIS_HAS_SMR</h4>
+<pre class="r"><code>CIS_HAS_SMR = read.table(&quot;donnees/medicaments/2016-11-09/CIS_HAS_SMR_bdpm.txt&quot;,
+                         header = F, encoding = &quot;latin1&quot;, quote = &quot;\&quot;&quot;,
+                         stringsAsFactors = F, sep = &quot;\t&quot;)
+names(CIS_HAS_SMR) = c(
+  &quot;CodeCIS&quot;,
+  &quot;CodeHAS&quot;,
+  &quot;MotifEval&quot;,
+  &quot;Date&quot;,
+  &quot;ValeurSMR&quot;,
+  &quot;LibelleSMR&quot;
+)
+CIS_HAS_SMR = transform(CIS_HAS_SMR,
+                        Date = as.Date(as.character(Date), &quot;%Y%m%d&quot;))
+knitr::kable(head(CIS_HAS_SMR))</code></pre>
+<table>
+<thead>
+<tr class="header">
+<th align="right">CodeCIS</th>
+<th align="left">CodeHAS</th>
+<th align="left">MotifEval</th>
+<th align="left">Date</th>
+<th align="left">ValeurSMR</th>
+<th align="left">LibelleSMR</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="right">66300735</td>
+<td align="left">CT-15660</td>
+<td align="left">Modification des conditions d’inscription (CT)</td>
+<td align="left">2016-10-19</td>
+<td align="left">Important</td>
+<td align="left">Le service médical rendu par CARTREX 100 mg (B/30 et B/100) est important dans le traitement symptomatique de la douleur et de l’inflammation dans l’arthrose, la polyarthrite rhumatoïde et la spondylarthrite ankylosante.</td>
+</tr>
+<tr class="even">
+<td align="right">66300735</td>
+<td align="left">CT-15660</td>
+<td align="left">Modification des conditions d’inscription (CT)</td>
+<td align="left">2016-10-19</td>
+<td align="left">Insuffisant</td>
+<td align="left">Le service médical rendu par ces spécialités est insuffisant dans la sous-population des patients présentant des facteurs de risque de survenue dun événement cardiovasculaire.</td>
+</tr>
+<tr class="odd">
+<td align="right">69627877</td>
+<td align="left">CT-15656</td>
+<td align="left">Modification des conditions d’inscription (CT)</td>
+<td align="left">2016-10-19</td>
+<td align="left">Important</td>
+<td align="left">Le service médical rendu par ORDIPHA reste important pour lensemble des indications excepté dans lindication « surinfections des bronchites aiguës ».</td>
+</tr>
+<tr class="even">
+<td align="right">69627877</td>
+<td align="left">CT-15656</td>
+<td align="left">Modification des conditions d’inscription (CT)</td>
+<td align="left">2016-10-19</td>
+<td align="left">Insuffisant</td>
+<td align="left">Le service médical rendu par ORDIPHA reste insuffisant dans lindication « surinfections des bronchites aiguës ».</td>
+</tr>
+<tr class="odd">
+<td align="right">65725263</td>
+<td align="left">CT-15639</td>
+<td align="left">Inscription (CT)</td>
+<td align="left">2016-10-05</td>
+<td align="left">Important</td>
+<td align="left">Le service médical rendu par MILRINONE CARINOPHARM est important dans les indications de lAMM.</td>
+</tr>
+<tr class="even">
+<td align="right">66136969</td>
+<td align="left">CT-15638</td>
+<td align="left">Inscription (CT)</td>
+<td align="left">2016-09-21</td>
+<td align="left">Important</td>
+<td align="left">le service médical rendu par VORICONAZOLE OHRE PHARMA est important dans les indications de lAMM.</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="cis_has_asmr" class="section level4">
+<h4>CIS_HAS_ASMR</h4>
+<pre class="r"><code>CIS_HAS_ASMR = read.table(&quot;donnees/medicaments/2016-11-09/CIS_HAS_ASMR_bdpm.txt&quot;,
+                          header = F, encoding = &quot;latin1&quot;, quote = &quot;\&quot;&quot;,
+                          stringsAsFactors = F, sep = &quot;\t&quot;)
+names(CIS_HAS_ASMR) = c(
+  &quot;CodeCIS&quot;,
+  &quot;CodeHAS&quot;,
+  &quot;MotifEval&quot;,
+  &quot;Date&quot;,
+  &quot;ValeurASMR&quot;,
+  &quot;LibelleASMR&quot;
+)
+CIS_HAS_SMR = transform(CIS_HAS_ASMR,
+                        Date = as.Date(as.character(Date), &quot;%Y%m%d&quot;))
+knitr::kable(head(CIS_HAS_ASMR))</code></pre>
+<table>
+<thead>
+<tr class="header">
+<th align="right">CodeCIS</th>
+<th align="left">CodeHAS</th>
+<th align="left">MotifEval</th>
+<th align="right">Date</th>
+<th align="left">ValeurASMR</th>
+<th align="left">LibelleASMR</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="right">65725263</td>
+<td align="left">CT-15639</td>
+<td align="left">Inscription (CT)</td>
+<td align="right">20161005</td>
+<td align="left">V</td>
+<td align="left">Ces spécialités sont des génériques de COROTROPE 10 mg/10 ml solution injectable IV qui napportent pas damélioration du service médical rendu (ASMR V).</td>
+</tr>
+<tr class="even">
+<td align="right">66136969</td>
+<td align="left">CT-15638</td>
+<td align="left">Inscription (CT)</td>
+<td align="right">20160921</td>
+<td align="left">V</td>
+<td align="left">Cette spécialité est un médicament générique qui napporte pas damélioration du service médical rendu (ASMR V) rapport à la spécialité VFEND 200 mg, poudre pour solution pour perfusion, déjà inscrite.</td>
+</tr>
+<tr class="odd">
+<td align="right">60447461</td>
+<td align="left">CT-15636</td>
+<td align="left">Inscription (CT)</td>
+<td align="right">20161019</td>
+<td align="left">V</td>
+<td align="left">Cette spécialité napporte pas damélioration du service médical rendu par rapport aux autres alternatives diagnostiques (ASMR V) disponibles dans les mêmes indications (échographie, tomodensitométrie, IRM ou TEP utilisant le fludésoxyglucose (18F)).</td>
+</tr>
+<tr class="even">
+<td align="right">67097355</td>
+<td align="left">CT-15610</td>
+<td align="left">Inscription (CT)</td>
+<td align="right">20161005</td>
+<td align="left">V</td>
+<td align="left">Ces spécialités napportent pas damélioration du service médical rendu (ASMR V) par rapport aux présentations déjà inscrites de TAXOTERE 20mg/1ml, TAXOTERE 80 mg/4 ml, et à TAXOTERE 160 mg/8 ml, solution à diluer et solvant pour perfusion.</td>
+</tr>
+<tr class="odd">
+<td align="right">69086891</td>
+<td align="left">CT-15603</td>
+<td align="left">Inscription (CT)</td>
+<td align="right">20161005</td>
+<td align="left">V</td>
+<td align="left">Cette spécialité est un complément de gamme qui napporte pas damélioration du service médical rendu (ASMR V) par rapport aux présentations déjà inscrites.</td>
+</tr>
+<tr class="even">
+<td align="right">68049705</td>
+<td align="left">CT-15600</td>
+<td align="left">Inscription (CT)</td>
+<td align="right">20160921</td>
+<td align="left">V</td>
+<td align="left">Cette spécialité napporte pas damélioration du service médical rendu (ASMR V) par rapport par rapport au princeps ZYVOXID 2 mg/ml, solution pour perfusion.</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="has_lienspagect" class="section level4">
+<h4>HAS_LiensPageCT</h4>
+<pre class="r"><code>HAS_LiensPageCT = read.table(&quot;donnees/medicaments/2016-11-09/HAS_LiensPageCT_bdpm.txt&quot;,
+                             header = F, encoding = &quot;latin1&quot;, quote = NULL,
+                             stringsAsFactors = F, sep = &quot;\t&quot;)
+names(HAS_LiensPageCT) = c(
+  &quot;CodeHAS&quot;,
+  &quot;Lien&quot;
+)</code></pre>
+</div>
+<div id="cis_gener" class="section level4">
+<h4>CIS_GENER</h4>
+<pre class="r"><code>CIS_GENER = read.table(&quot;donnees/medicaments/2016-11-09/CIS_GENER_bdpm.txt&quot;, 
+                       header = F, encoding = &quot;latin1&quot;, quote = NULL,
+                       stringsAsFactors = F, sep = &quot;\t&quot;)
+CIS_GENER$V6 = NULL
+names(CIS_GENER) = c(
+  &quot;Identifiant&quot;,
+  &quot;Libelle&quot;,
+  &quot;CodeCIS&quot;,
+  &quot;TypeGenerique&quot;,
+  &quot;Numero&quot;
+)
+knitr::kable(head(CIS_GENER))</code></pre>
+<table>
+<thead>
+<tr class="header">
+<th align="right">Identifiant</th>
+<th align="left">Libelle</th>
+<th align="right">CodeCIS</th>
+<th align="right">TypeGenerique</th>
+<th align="right">Numero</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="right">1</td>
+<td align="left">CIMETIDINE 200 mg - TAGAMET 200 mg, comprimé pelliculé</td>
+<td align="right">65383183</td>
+<td align="right">0</td>
+<td align="right">1</td>
+</tr>
+<tr class="even">
+<td align="right">1</td>
+<td align="left">CIMETIDINE 200 mg - TAGAMET 200 mg, comprimé pelliculé</td>
+<td align="right">67535309</td>
+<td align="right">1</td>
+<td align="right">2</td>
+</tr>
+<tr class="odd">
+<td align="right">2</td>
+<td align="left">CIMETIDINE 200 mg - TAGAMET 200 mg, comprimé effervescent</td>
+<td align="right">65025026</td>
+<td align="right">0</td>
+<td align="right">1</td>
+</tr>
+<tr class="even">
+<td align="right">2</td>
+<td align="left">CIMETIDINE 200 mg - TAGAMET 200 mg, comprimé effervescent</td>
+<td align="right">68053454</td>
+<td align="right">1</td>
+<td align="right">2</td>
+</tr>
+<tr class="odd">
+<td align="right">2</td>
+<td align="left">CIMETIDINE 200 mg - TAGAMET 200 mg, comprimé effervescent</td>
+<td align="right">64073139</td>
+<td align="right">1</td>
+<td align="right">3</td>
+</tr>
+<tr class="even">
+<td align="right">3</td>
+<td align="left">CIMETIDINE 400 mg - TAGAMET 400 mg, comprimé pelliculé</td>
+<td align="right">69472373</td>
+<td align="right">0</td>
+<td align="right">1</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="cis_cpd" class="section level4">
+<h4>CIS_CPD</h4>
+<pre class="r"><code>CIS_CPD = read.table(&quot;donnees/medicaments/2016-11-09/CIS_CPD_bdpm.txt&quot;, 
+                     header = F, encoding = &quot;latin1&quot;, quote = NULL,
+                     stringsAsFactors = F, sep = &quot;\t&quot;)
+names(CIS_CPD) = c(
+  &quot;CodeCIS&quot;,
+  &quot;Condition&quot;
+)
+knitr::kable(head(CIS_CPD))</code></pre>
+<table>
+<thead>
+<tr class="header">
+<th align="right">CodeCIS</th>
+<th align="left">Condition</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="right">60002283</td>
+<td align="left">liste I</td>
+</tr>
+<tr class="even">
+<td align="right">60002504</td>
+<td align="left">liste II</td>
+</tr>
+<tr class="odd">
+<td align="right">60003620</td>
+<td align="left">liste I</td>
+</tr>
+<tr class="even">
+<td align="right">60004277</td>
+<td align="left">liste II</td>
+</tr>
+<tr class="odd">
+<td align="right">60004487</td>
+<td align="left">liste I</td>
+</tr>
+<tr class="even">
+<td align="right">60005856</td>
+<td align="left">liste II</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="cis_infoimportantes_aaaammjjhhmiss" class="section level4">
+<h4>CIS_InfoImportantes_AAAAMMJJhhmiss</h4>
+<pre class="r"><code>CIS_InfoImportantes = read.table(&quot;donnees/medicaments/2016-11-09/CIS_InfoImportantes_20161109111012_bdpm.txt&quot;, 
+                                 header = F, encoding = &quot;latin1&quot;, quote = NULL,
+                                 stringsAsFactors = F, sep = &quot;\t&quot;)
+names(CIS_InfoImportantes) = c(
+  &quot;CodeCIS&quot;,
+  &quot;DateDebut&quot;,
+  &quot;DateFin&quot;,
+  &quot;Texte&quot; 
+)</code></pre>
+</div>
+</div>
+<div id="interrogation" class="section level3">
+<h3>Interrogation</h3>
+<div id="resume-statistique" class="section level4">
+<h4>Résumé statistique</h4>
+<p>On veut les informations suivantes dans une table à deux colonnes (<code>statistique</code>, <code>valeur</code>) :</p>
+<ul>
+<li>Nombre de médicaments</li>
+<li>Nombre de médicaments avec autorisation active</li>
+<li>Nombre de médicaments avec surveillance renforcée</li>
+<li>Taux moyen de remboursement (pour ceux avec autorisation active)</li>
+<li>Prix moyen (idem que le taux)</li>
+<li>Durée moyenne de leur mise sur le marché (en nombre de jours - idem que le taux)</li>
+</ul>
+</div>
+<div id="top-10-composants" class="section level4">
+<h4>Top 10 composants</h4>
+<p>Quels sont les dix médicaments avec le plus de composants (Code CIS, Dénomination et nombre de composants) ?</p>
+</div>
+<div id="groupe-de-generique" class="section level4">
+<h4>Groupe de générique</h4>
+<p>Pour chaque groupe de générique, on veut savoir le nombre de médicaments associés, ainsi que leur taux de remboursement moyen et leur prix moyen.</p>
+</div>
+<div id="voies-administration" class="section level4">
+<h4>Voies administration</h4>
+<p>Quelles sont les voies d’administration possibles ? Et combien de médicaments sont concernés pour chaque voie ?</p>
+</div>
+<div id="smr-insuffisant" class="section level4">
+<h4>SMR insuffisant</h4>
+<p>Quels sont les médicaments dont le service médical rendu (ou <strong>SMR</strong>) est jugé insuffisant ? Indiquez leur taux de remboursement et leur prix, en les classant par prix décroissant.</p>
+</div>
+</div>
+</div>
+
+</div>
+<div class="footer">
+      Site créé avec <a href="http://www.r-project.org" target="_blank"><code>R</code></a> et la 
+      librairie  <a href="http://rmarkdown.rstudio.com/" target="_blank"><code>rmarkdown</code></a>.
+</div>
+<script>
+    $("#TOC").css("margin-top", "100px");
+</script>
+
+
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+$(document).ready(function () {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+});
+
+
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

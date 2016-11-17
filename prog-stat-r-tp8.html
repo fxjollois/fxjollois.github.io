@@ -362,9 +362,9 @@ text(outliers_mpg$hp, outliers_mpg$mpg, row.names(outliers_mpg), pos = 4, cex = 
 <div id="var-qualitative---var-qualitative" class="section level3">
 <h3>Var qualitative - Var qualitative</h3>
 <p>Dans ce cas, la fonction <code>qplot</code> est plutôt utilisé pour réaliser des diagrammes en barres.</p>
-<pre class="r"><code>qplot(factor(am), facets = 1 ~ cyl, data = mtcars, geom = &quot;bar&quot;)</code></pre>
+<pre class="r"><code>qplot(factor(am), facets = ~ cyl, data = mtcars, geom = &quot;bar&quot;)</code></pre>
 <p><img src="prog-stat-r-tp8_files/figure-html/qplot-quali-quali-1.png" width="672" /></p>
-<pre class="r"><code>qplot(factor(am), facets = 1 ~ cyl, fill = factor(am), data = mtcars, geom = &quot;bar&quot;)</code></pre>
+<pre class="r"><code>qplot(factor(am), facets = ~ cyl, fill = factor(am), data = mtcars, geom = &quot;bar&quot;)</code></pre>
 <p><img src="prog-stat-r-tp8_files/figure-html/qplot-quali-quali-2.png" width="672" /></p>
 <pre class="r"><code>qplot(factor(am), fill = factor(cyl), data = mtcars, geom = &quot;bar&quot;)</code></pre>
 <p><img src="prog-stat-r-tp8_files/figure-html/qplot-quali-quali-3.png" width="672" /></p>
@@ -533,7 +533,7 @@ ggplot() + geom_histogram(data = mtcars, aes(x = mpg))</code></pre>
 <div id="var-qualitative---var-qualitative-1" class="section level3">
 <h3>Var qualitative - Var qualitative</h3>
 <p>La création d’un diagramme en barres pour deux variables qualitatives est assez simple. Par contre, pour la version empilée, c’est le paramètre <code>position = &quot;fill&quot;</code> qui permet de le faire sans autre calcul, les fonctions suivantes n’étant la que pour avoir un graphique plus clair.</p>
-<pre class="r"><code>ggplot(mtcars, aes(factor(am))) + geom_bar() + facet_grid(1 ~ cyl)</code></pre>
+<pre class="r"><code>ggplot(mtcars, aes(factor(am))) + geom_bar() + facet_grid( ~ cyl)</code></pre>
 <p><img src="prog-stat-r-tp8_files/figure-html/ggplot-quali-quali-1.png" width="672" /></p>
 <pre class="r"><code>ggplot(mtcars, aes(factor(am), fill = factor(cyl))) + geom_bar() </code></pre>
 <p><img src="prog-stat-r-tp8_files/figure-html/ggplot-quali-quali-2.png" width="672" /></p>

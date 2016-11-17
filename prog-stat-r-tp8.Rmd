@@ -147,8 +147,8 @@ qplot(hp, mpg, data = mtcars, geom = "bin2d", bins = 10)
 Dans ce cas, la fonction `qplot` est plutôt utilisé pour réaliser des diagrammes en barres. 
 
 ```{r qplot-quali-quali}
-qplot(factor(am), facets = 1 ~ cyl, data = mtcars, geom = "bar")
-qplot(factor(am), facets = 1 ~ cyl, fill = factor(am), data = mtcars, geom = "bar")
+qplot(factor(am), facets = ~ cyl, data = mtcars, geom = "bar")
+qplot(factor(am), facets = ~ cyl, fill = factor(am), data = mtcars, geom = "bar")
 qplot(factor(am), fill = factor(cyl), data = mtcars, geom = "bar")
 ```
 
@@ -322,7 +322,7 @@ ggplot(mtcars, aes(hp, mpg)) + geom_bin2d(bins = 10)
 La création d'un diagramme en barres pour deux variables qualitatives est assez simple. Par contre, pour la version empilée, c'est le paramètre `position = "fill"` qui permet de le faire sans autre calcul, les fonctions suivantes n'étant la que pour avoir un graphique plus clair.
 
 ```{r ggplot-quali-quali}
-ggplot(mtcars, aes(factor(am))) + geom_bar() + facet_grid(1 ~ cyl)
+ggplot(mtcars, aes(factor(am))) + geom_bar() + facet_grid( ~ cyl)
 ggplot(mtcars, aes(factor(am), fill = factor(cyl))) + geom_bar() 
 ggplot(mtcars, aes(factor(am), fill = factor(cyl))) + 
     geom_bar(position = "fill") +
