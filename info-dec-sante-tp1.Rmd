@@ -284,7 +284,7 @@ CIS_bdpm = read.table("donnees/medicaments/2016-11-09/CIS_bdpm.txt",
     - Prix moyen (idem que le taux)
     - Durée moyenne de leur mise sur le marché (en nombre de jours - idem que le taux)
 2. Quels sont les dix médicaments avec le plus de composants (Code CIS, Dénomination et nombre de composants) ?
-3. Pour chaque groupe de générique, on veut savoir le nombre de médicaments associés, ainsi que leur taux de remboursement moyen et leur prix moyen.
+3. Pour chaque type de générique, on veut savoir le nombre de médicaments associés, ainsi que leur taux de remboursement moyen et leur prix moyen.
 4. Quelles sont les voies d'administration possibles ? Et combien de médicaments sont concernés pour chaque voie ?
 5. Quels sont les médicaments dont le service médical rendu (ou **SMR**) est jugé insuffisant ? Indiquez leur taux de remboursement et leur prix, en les classant par prix décroissant.
 

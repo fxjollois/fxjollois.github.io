@@ -31,6 +31,24 @@ names(CIS) = c(
 )
 CIS = transform(CIS,
                 DateAMM = as.Date(DateAMM, "%d/%m/%Y"))
+attr(CIS, "info") = "Il contient la liste des médicaments commercialisés ou en arrêt de commercialisation depuis moins de trois ans."
+attr(CIS, "labels") = data.frame(
+    stringsAsFactors = FALSE,
+    variable = names(CIS),
+    label = c("Code CIS (Code Identifiant de Spécialité)",
+              "Dénomination du médicament",
+              "Forme pharmaceutique",
+              "Voies d'administration (avec un séparateur « ; » entre chaque valeur quand il y en a plusieurs)",
+              "Statut administratif de l’autorisation de mise sur le marché (AMM)",
+              "Type de procédure d'autorisation de mise sur le marché (AMM)",
+              "Etat de commercialisation",
+              "Date d’AMM (format JJ/MM/AAAA)",
+              "StatutBdm : valeurs possibles : « Alerte » (icône rouge) ou « Warning disponibilité » (icône grise)",
+              "Numéro de l’autorisation européenne",
+              "Titulaire(s) : S’il y a plusieurs titulaires, les valeurs seront séparées par des « ; »",
+              "Surveillance renforcée (triangle noir) : valeurs « Oui » ou « Non »"
+    )
+)
 knitr::kable(head(CIS))
 ```
 
@@ -59,6 +77,24 @@ CIS_CIP = transform(CIS_CIP,
                     DateComm = as.Date(DateComm, "%d/%m/%Y"),
                     Prix = as.numeric(sub(",", ".", Prix)),
                     Taux = as.numeric(sub("%", "", Taux)))
+attr(CIS_CIP, "info") = "Il contient la liste des présentations (boîtes de médicaments) disponibles pour les médicaments présents dans le fichier CIS_bdpm."
+attr(CIS_CIP, "labels") = data.frame(
+    stringsAsFactors = FALSE,
+    variable = names(CIS_CIP),
+    label = c("Code CIS",
+              "Code CIP7 (Code Identifiant de Présentation à 7 chiffres)",
+              "Libellé de la présentation",
+              "Statut administratif de la présentation",
+              "Etat de commercialisation de la présentation tel que déclaré par le titulaire de l'AMM",
+              "Date de la déclaration de commercialisation (format JJ/MM/AAAA)",
+              "Code CIP13 (Code Identifiant de Présentation à 13 chiffres)",
+              "Agrément aux collectivités (\"oui\", \"non\" ou « inconnu »)",
+              "Taux de remboursement (avec un séparateur « ; » entre chaque valeur quand il y en a plusieurs)",
+              "Prix du médicament en euro",
+              "Texte présentant les indications ouvrant droit au remboursement par l’assurance maladie s’il y a plusieurs taux de remboursement pour la même présentation.",
+              "cf précédent",
+              "cf précédent")
+)
 knitr::kable(head(CIS_CIP))
 ```
 
@@ -79,6 +115,19 @@ names(CIS_COMPO) = c(
   "NatureCompo",
   "NumLien"
 )
+attr(CIS_COMPO, "info") = "Il contient la composition qualitative et quantitative en substances actives et fractions thérapeutiques (telle que figurant dans le Résumé des Caractéristiques du Produit) des médicaments de la BDPM."
+attr(CIS_COMPO, "label") = data.frame(
+    stringsAsFactors = FALSE,
+    variable = names(CIS_COMPO),
+    label = c("Code CIS",
+              "Désignation de l'élément pharmaceutique",
+              "Code de la substance",
+              "Dénomination de la substance",
+              "Dosage de la substance",
+              "Référence de ce dosage (exemple : \"[pour] un comprimé\")",
+              "Nature du composant (principe actif : « SA » ou fraction thérapeutique : « ST »)",
+              "Numéro permettant de lier, le cas échéant, substances actives et fractions thérapeutiques")
+)
 knitr::kable(head(CIS_COMPO))
 ```
 
@@ -98,6 +147,17 @@ names(CIS_HAS_SMR) = c(
 )
 CIS_HAS_SMR = transform(CIS_HAS_SMR,
                         Date = as.Date(as.character(Date), "%Y%m%d"))
+attr(CIS_HAS_SMR, "info") = "Il contient l’ensemble des avis de SMR de la HAS postérieurs à l’année 2002."
+attr(CIS_HAS_SMR, "label") = data.frame(
+    stringsAsFactors = FALSE,
+    variable = names(CIS_HAS_SMR),
+    label = c("Code CIS",
+              "Code de dossier HAS",
+              "Motif d’évaluation",
+              "Date de l’avis de la Commission de la transparence (format AAAAMMJJ)",
+              "Valeur du SMR",
+              "Libellé du SMR")
+)
 knitr::kable(head(CIS_HAS_SMR))
 ```
 
@@ -116,8 +176,19 @@ names(CIS_HAS_ASMR) = c(
   "ValeurASMR",
   "LibelleASMR"
 )
-CIS_HAS_SMR = transform(CIS_HAS_ASMR,
+CIS_HAS_ASMR = transform(CIS_HAS_ASMR,
                         Date = as.Date(as.character(Date), "%Y%m%d"))
+attr(CIS_HAS_ASMR, "info") = "Il contient l’ensemble des avis d’ASMR de la HAS postérieurs à l’année 2002."
+attr(CIS_HAS_ASMR, "label") = data.frame(
+    stringsAsFactors = FALSE,
+    variable = names(CIS_HAS_ASMR),
+    label = c("Code CIS",
+              "Code de dossier HAS",
+              "Motif d’évaluation",
+              "Date de l’avis de la Commission de la transparence (format AAAAMMJJ)",
+              "Valeur de l’ ASMR",
+              "Libellé de l’ ASMR")
+)
 knitr::kable(head(CIS_HAS_ASMR))
 ```
 
@@ -131,6 +202,14 @@ names(HAS_LiensPageCT) = c(
   "CodeHAS",
   "Lien"
 )
+attr(HAS_LiensPageCT, "info") = "Il contient l’ensemble des liens permettant d’accéder aux avis complets de la commission de la transparence pour les SMR et ASMR postérieurs à l’année 2002."
+attr(HAS_LiensPageCT, "label") = data.frame(
+    stringsAsFactors = FALSE,
+    variable = names(HAS_LiensPageCT),
+    label = c("Code de dossier HAS",
+              "Lien vers les pages d’avis de la CT")
+)
+knitr::kable(head(HAS_LiensPageCT))
 ```
 
 #### CIS_GENER
@@ -147,6 +226,21 @@ names(CIS_GENER) = c(
   "TypeGenerique",
   "Numero"
 )
+CIS_GENER$TypeGenerique = factor(CIS_GENER$TypeGenerique,
+                                 labels = c("princeps", 
+                                            "générique",
+                                            "générique par complémentarité posologique",
+                                            "générique substituable"))
+attr(CIS_GENER, "info") = "Il contient l’ensemble groupes génériques, avec les médicaments en faisant partie."
+attr(CIS_GENER, "labels") = data.frame(
+    stringsAsFactors = FALSE,
+    variable = names(CIS_GENER),
+    label = c("Identifiant du groupe générique",
+              "Libellé du groupe générique",
+              "Code CIS",
+              "Type de générique, avec les valeurs suivantes : (0:«princeps», 1:«générique», 2 : « génériques par complémentarité posologique », 4 : « générique substituable »)",
+              "Numéro permettant de trier les éléments d’un groupe")
+)
 knitr::kable(head(CIS_GENER))
 ```
 
@@ -159,6 +253,13 @@ CIS_CPD = read.table("donnees/medicaments/2016-11-09/CIS_CPD_bdpm.txt",
 names(CIS_CPD) = c(
   "CodeCIS",
   "Condition"
+)
+attr(CIS_CPD, "info") = "Il contient l’ensemble des conditions de prescription et de délivrance associées à un médicament."
+attr(CIS_CPD, "labels") = data.frame(
+    stringsAsFactors = FALSE,
+    variable = names(CIS_CPD),
+    label = c("Code CIS",
+              "Condition de prescription ou de délivrance")
 )
 knitr::kable(head(CIS_CPD))
 ```
@@ -181,7 +282,7 @@ names(CIS_InfoImportantes) = c(
 
 ### Interrogation
 
-```{r}
+```{r, include=FALSE}
 knitr::opts_chunk$set(echo = FALSE)
 ```
 
@@ -247,9 +348,9 @@ res
 ```
 
 
-#### Groupe de générique
+#### Type de générique
 
-Pour chaque groupe de générique, on veut savoir le nombre de médicaments associés, ainsi que leur taux de remboursement moyen et leur prix moyen.
+Pour chaque type de générique, on veut savoir le nombre de médicaments associés, ainsi que leur taux de remboursement moyen et leur prix moyen.
 
 ```{r}
 # En R
@@ -260,11 +361,14 @@ temp = merge(CIS_GENER,
              by = "CodeCIS")
 res = merge(
     merge(
-        setNames(aggregate(CodeCIS ~ Libelle, temp, length), c("Groupe", "Nombre")),
-        setNames(aggregate(Prix ~ Libelle, temp, mean), c("Groupe", "Prix moyen")),
+        setNames(aggregate(CodeCIS ~ TypeGenerique, temp, length), 
+                 c("Type", "Nombre")),
+        setNames(aggregate(Prix ~ TypeGenerique, temp, mean), 
+                 c("Type", "Prix moyen")),
         all = TRUE
     ),
-    setNames(aggregate(Taux ~ Libelle, temp, mean), c("Groupe", "Taux moyen")),
+    setNames(aggregate(Taux ~ TypeGenerique, temp, mean), 
+             c("Type", "Taux moyen")),
     all = TRUE
 )    
 knitr::kable(res, digits = 2)
