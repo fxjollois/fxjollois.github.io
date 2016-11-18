@@ -181,6 +181,11 @@ names(CIS_InfoImportantes) = c(
 
 ### Interrogation
 
+```{r}
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+
 #### Résumé statistique
 
 On veut les informations suivantes dans une table à deux colonnes (`statistique`, `valeur`) :
@@ -193,7 +198,26 @@ On veut les informations suivantes dans une table à deux colonnes (`statistique
 - Durée moyenne de leur mise sur le marché (en nombre de jours - idem que le taux)
 
 ```{r}
-
+CIS_active = subset(CIS, StatutAMM == "Autorisation active")
+CIS_surv = subset(CIS, Surveillance == "Oui")
+CIS_CIP_active = merge(CIS_active, CIS_CIP, by = "CodeCIS")
+res = data.frame(
+    statistique = c("Nombre de médicaments",
+                    "Nombre de médicaments avec autorisation active",
+                    "Nombre de médicaments avec surveillance renforcée",
+                    "Taux moyen de remboursement (autorisation active)",
+                    "Prix moyen (autorisation active)",
+                    "Durée moyenne de leur mise sur le marché (autorisation active)"),
+    valeur = c(nrow(CIS),
+               nrow(CIS_active),
+               nrow(CIS_surv),
+               paste(round(mean(CIS_CIP_active$Taux, na.rm = T)), "%"),
+               paste(round(mean(CIS_CIP_active$Prix, na.rm = T)), "euro"),
+               paste(round(mean(as.Date("2016-11-09") - CIS_CIP_active$DateAMM)),
+                     "jours")),
+    stringsAsFactors = FALSE
+)
+knitr::kable(res)
 ```
 
 
@@ -201,13 +225,66 @@ On veut les informations suivantes dans une table à deux colonnes (`statistique
 
 Quels sont les dix médicaments avec le plus de composants (Code CIS, Dénomination et nombre de composants) ?
 
+```{r}
+# En R
+res = aggregate(Code ~ CodeCIS + Denomination, 
+                merge(CIS, subset(CIS_COMPO, select = c(CodeCIS, Code)), by = "CodeCIS"), 
+                length)
+knitr::kable(res[head(order(res$Code, decreasing = TRUE), 10),], row.names = FALSE)
+```
+
+```{r}
+# En SQL
+library(sqldf)
+res = sqldf("
+SELECT CIS.CodeCIS, CIS.Denomination, COUNT(*) AS NbComposants
+    FROM CIS INNER JOIN CIS_COMPO ON CIS.CodeCIS = CIS_COMPO.CodeCIS
+    GROUP BY CIS.CodeCIS
+    ORDER BY COUNT(*) DESC
+    LIMIT 10;
+      ")
+res
+```
+
+
 #### Groupe de générique
 
 Pour chaque groupe de générique, on veut savoir le nombre de médicaments associés, ainsi que leur taux de remboursement moyen et leur prix moyen.
 
+```{r}
+# En R
+temp = merge(CIS_GENER, 
+             merge(CIS, 
+                   subset(CIS_CIP, select = c(CodeCIS, Taux, Prix)), 
+                   by = "CodeCIS"), 
+             by = "CodeCIS")
+res = merge(
+    merge(
+        setNames(aggregate(CodeCIS ~ Libelle, temp, length), c("Groupe", "Nombre")),
+        setNames(aggregate(Prix ~ Libelle, temp, mean), c("Groupe", "Prix moyen")),
+        all = TRUE
+    ),
+    setNames(aggregate(Taux ~ Libelle, temp, mean), c("Groupe", "Taux moyen")),
+    all = TRUE
+)    
+knitr::kable(res, digits = 2)
+```
+
+
 #### Voies administration
 
 Quelles sont les voies d'administration possibles ? Et combien de médicaments sont concernés pour chaque voie ?
+
+```{r}
+voies = unique(unlist(strsplit(CIS$VoiesAdm, ";")))
+temp = data.frame(CodeCIS = CIS$CodeCIS,
+                  matrix(FALSE, nrow(CIS), length(voies)))
+names(temp)[-1] = voies
+for (i in 1:nrow(CIS)) {
+    temp[i,-1] = (voies %in% unlist(strsplit(CIS$VoiesAdm[i], ";")))
+}
+```
+
 
 #### SMR insuffisant
 
