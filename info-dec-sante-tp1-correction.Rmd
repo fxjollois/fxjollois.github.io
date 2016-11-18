@@ -283,7 +283,8 @@ names(CIS_InfoImportantes) = c(
 ### Interrogation
 
 ```{r, include=FALSE}
-knitr::opts_chunk$set(echo = FALSE)
+knitr::opts_chunk$set(echo = TRUE)
+library(sqldf)
 ```
 
 
@@ -302,7 +303,7 @@ On veut les informations suivantes dans une table à deux colonnes (`statistique
 CIS_active = subset(CIS, StatutAMM == "Autorisation active")
 CIS_surv = subset(CIS, Surveillance == "Oui")
 CIS_CIP_active = merge(CIS_active, CIS_CIP, by = "CodeCIS")
-res = data.frame(
+rep1 = data.frame(
     statistique = c("Nombre de médicaments",
                     "Nombre de médicaments avec autorisation active",
                     "Nombre de médicaments avec surveillance renforcée",
@@ -318,7 +319,7 @@ res = data.frame(
                      "jours")),
     stringsAsFactors = FALSE
 )
-knitr::kable(res)
+knitr::kable(rep1)
 ```
 
 
@@ -326,25 +327,30 @@ knitr::kable(res)
 
 Quels sont les dix médicaments avec le plus de composants (Code CIS, Dénomination et nombre de composants) ?
 
-```{r}
-# En R
-res = aggregate(Code ~ CodeCIS + Denomination, 
-                merge(CIS, subset(CIS_COMPO, select = c(CodeCIS, Code)), by = "CodeCIS"), 
-                length)
-knitr::kable(res[head(order(res$Code, decreasing = TRUE), 10),], row.names = FALSE)
-```
+##### En R pur
 
 ```{r}
-# En SQL
-library(sqldf)
-res = sqldf("
-SELECT CIS.CodeCIS, CIS.Denomination, COUNT(*) AS NbComposants
+rep2a = aggregate(Code ~ CodeCIS + Denomination + Designation, 
+                merge(CIS, 
+                      subset(CIS_COMPO, select = c(CodeCIS, Code, Designation)), 
+                      by = "CodeCIS"), 
+                length)
+knitr::kable(rep2a[head(order(rep2a$Code, decreasing = TRUE), 10),], 
+             row.names = FALSE)
+```
+
+##### En SQL
+
+```{r}
+rep2a = sqldf("
+SELECT CIS.CodeCIS, CIS.Denomination, CIS_COMPO.Designation,
+        COUNT(*) AS NbComposants
     FROM CIS INNER JOIN CIS_COMPO ON CIS.CodeCIS = CIS_COMPO.CodeCIS
-    GROUP BY CIS.CodeCIS
+    GROUP BY CIS.CodeCIS, CIS_COMPO.Designation
     ORDER BY COUNT(*) DESC
     LIMIT 10;
       ")
-res
+rep2a
 ```
 
 
@@ -359,7 +365,7 @@ temp = merge(CIS_GENER,
                    subset(CIS_CIP, select = c(CodeCIS, Taux, Prix)), 
                    by = "CodeCIS"), 
              by = "CodeCIS")
-res = merge(
+rep3 = merge(
     merge(
         setNames(aggregate(CodeCIS ~ TypeGenerique, temp, length), 
                  c("Type", "Nombre")),
@@ -371,7 +377,7 @@ res = merge(
              c("Type", "Taux moyen")),
     all = TRUE
 )    
-knitr::kable(res, digits = 2)
+knitr::kable(rep3, digits = 2)
 ```
 
 
@@ -380,17 +386,48 @@ knitr::kable(res, digits = 2)
 Quelles sont les voies d'administration possibles ? Et combien de médicaments sont concernés pour chaque voie ?
 
 ```{r}
-voies = unique(unlist(strsplit(CIS$VoiesAdm, ";")))
-temp = data.frame(CodeCIS = CIS$CodeCIS,
-                  matrix(FALSE, nrow(CIS), length(voies)))
-names(temp)[-1] = voies
-for (i in 1:nrow(CIS)) {
-    temp[i,-1] = (voies %in% unlist(strsplit(CIS$VoiesAdm[i], ";")))
+rep4 = data.frame(
+    Voies = unique(unlist(lapply(CIS$VoiesAdm, strsplit, ";"))),
+    NbMedicaments = 0
+)
+for (v in CIS$VoiesAdm) {
+    rep4$NbMedicaments = rep4$NbMedicaments + rep4$Voies %in% unlist(strsplit(v, ";"))
 }
+knitr::kable(rep4[order(rep4$NbMedicaments, decreasing = TRUE),], row.names = FALSE)
 ```
 
 
 #### SMR insuffisant
 
 Quels sont les médicaments dont le service médical rendu (ou **SMR**) est jugé insuffisant ? Indiquez leur taux de remboursement et leur prix, en les classant par prix décroissant.
+
+```{r}
+temp = subset(
+    merge(CIS, CIS_CIP, by = "CodeCIS"),
+    subset = CodeCIS %in% unique(subset(CIS_HAS_SMR, 
+                                        ValeurSMR == "Insuffisant")$CodeCIS)
+)
+rep5 = subset(temp[order(temp$Prix, decreasing = T),], 
+              select = c(CodeCIS, Denomination, Taux, Prix))
+knitr::kable(rep5, row.names = FALSE)
+```
+
+Et en regardant que le nom du médicament (début de la dénomination en majuscule) :
+
+```{r}
+rep5b = transform(rep5,
+                  Nom = sapply(Denomination, function (nom) {
+                      res = gregexpr("[A-Z. ]*[A-Z.]+", nom)[[1]]
+                      return(substr(nom, res, attr(res, "match.length")))
+                      }, USE.NAMES = FALSE)
+)
+rep5c = merge(
+    setNames(aggregate(CodeCIS ~ Nom, rep5b, length),
+             c("Nom", "Nombre")),
+    setNames(aggregate(Prix ~ Nom, rep5b, mean),
+             c("Nom", "Prix"))
+)
+knitr::kable(rep5c[order(rep5c$Prix, decreasing = TRUE),], 
+             row.names = FALSE, digits = 2)
+```
 
