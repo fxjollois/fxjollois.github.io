@@ -1,0 +1,15 @@
+"NoEmp";"Nom";"prenom";"Fonction";"TitreCourtoisie";"DateNaissance";"DateEmbauche";"Adresse";"Ville";"Region";"Codepostal";"Pays";"TelDom";"Extension";"RendCompteA"
+1;"Davolio";"Nancy";"Représentant(e)";"Mlle";8/12/1948 00:00:00;1/5/1992 00:00:00;"507 - 20th Ave. E.
+Apt. 2A";"Seattle";"WA";"98122";"Etats-Unis";"(206) 555-9857";"5467";2
+2;"Fuller";"Andrew";"Vice-Président";"Dr.";19/2/1952 00:00:00;14/8/1992 00:00:00;"908 W. Capital Way";"Tacoma";"WA";"98401";"Etats-Unis";"(206) 555-9482";"3457";
+3;"Leverling";"Janet";"Représentant(e)";"Mlle";30/8/1963 00:00:00;1/4/1992 00:00:00;"722 Moss Bay Blvd.";"Kirkland";"WA";"98033";"Etats-Unis";"(206) 555-3412";"3355";2
+4;"Peacock";"Margaret";"Représentant(e)";"Mme";19/9/1937 00:00:00;3/5/1993 00:00:00;"4110 Old Redmond Rd.";"Redmond";"WA";"98052";"Etats-Unis";"(206) 555-8122";"5176";2
+5;"Buchanan";"Steven";"Chef des ventes";"M.";4/3/1955 00:00:00;17/10/1993 00:00:00;"14 Garrett Hill";"London";;"SW1 8JR";"Royaume-Uni";"(71) 555-4848";"3453";2
+6;"Suyama";"Michael";"Représentant(e)";"M.";2/7/1963 00:00:00;17/10/1993 00:00:00;"Coventry House
+Miner Rd.";"London";;"EC2 7JR";"Royaume-Uni";"(71) 555-7773";"428";7
+7;"Emery";"Patrick";"Chef des ventes";"M.";29/5/1960 00:00:00;2/1/1994 00:00:00;"Edgeham Hollow
+Winchester Way";"London";;"RG1 9SP";"Royaume-Uni";"(71) 555-5598";"465";5
+8;"Callahan";"Laura";"Assistante commerciale";"Mlle";9/1/1958 00:00:00;5/3/1994 00:00:00;"4726 - 11th Ave. N.E.";"Seattle";"WA";"98105";"Etats-Unis";"(206) 555-1189";"2344";2
+9;"Dodsworth";"Anne";"Représentant(e)";"Mlle";27/1/1966 00:00:00;15/11/1994 00:00:00;"7 Houndstooth Rd.";"London";;"WG2 7LT";"Royaume-Uni";"(71) 555-4444";"452";5
+10;"Suyama";"Jordan";"Représentant(e)";"M.";2/7/1963 00:00:00;21/10/1993 00:00:00;"Coventry House
+Miner Rd.";"London";;"EC2 7JR";"Royaume-Uni";"(71) 555-7773";"428";7

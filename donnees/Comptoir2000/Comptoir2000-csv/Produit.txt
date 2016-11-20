@@ -1,0 +1,85 @@
+"Refprod";"Nomprod";"NoFour";"CodeCateg";"QteParUnit";"PrixUnit";"UnitesStock";"UnitesCom";"NiveauReap";"Indisponible"
+1;"Chai";1;1;"10 boîtes x 20 sacs";90.00;39;0;10;0
+2;"Chang";1;1;"24 bouteilles (1 litre)";95.00;17;40;25;0
+3;"Aniseed Syrup";1;2;"12 bouteilles (550 ml)";50.00;13;70;25;0
+4;"Chef Anton's Cajun Seasoning";2;2;"48 pots (6 onces)";110.00;53;0;0;0
+5;"Chef Anton's Gumbo Mix";2;2;"36 boîtes";106.75;0;0;0;1
+6;"Grandma's Boysenberry Spread";3;2;"12 pots (8 onces)";125.00;120;0;25;0
+7;"Uncle Bob's Organic Dried Pears";3;7;"12 cartons (1 kg)";150.00;15;0;10;0
+8;"Northwoods Cranberry Sauce";3;2;"12 pots (12 onces)";200.00;6;0;0;0
+9;"Mishi Kobe Niku";4;6;"18 cartons (500 g)";485.00;29;0;0;1
+10;"Ikura";4;8;"12 pots (200 g)";155.00;31;0;0;0
+11;"Queso Cabrales";5;4;"1 carton (1 kg)";105.00;22;30;30;0
+12;"Queso Manchego La Pastora";5;4;"10 cartons (500 g)";190.00;86;0;0;0
+13;"Konbu";6;8;"1 boîtes (2 kg)";30.00;24;0;5;0
+14;"Tofu";6;7;"40 cartons (100 g)";116.25;35;0;0;0
+15;"Genen Shouyu";6;2;"24 bouteilles (250 ml)";77.50;39;0;5;0
+16;"Pavlova";7;3;"32 boîtes (500 g)";87.25;29;0;10;0
+17;"Alice Mutton";7;6;"20 boîtes (1 kg)";195.00;0;0;0;1
+18;"Carnarvon Tigers";7;8;"1 carton (16 kg)";312.50;42;0;0;0
+19;"Teatime Chocolate Biscuits";8;3;"10 boîtes x 12 pièces";46.00;25;0;5;0
+20;"Sir Rodney's Marmalade";8;3;"30 boîtes";405.00;40;0;0;0
+21;"Sir Rodney's Scones";8;3;"24 cartons x 4 pièces";50.00;3;40;5;0
+22;"Gustaf's Knäckebröd";9;5;"24 cartons (500 g)";105.00;104;0;25;0
+23;"Tunnbröd";9;5;"12 cartons (250 g)";45.00;61;0;25;0
+24;"Guaraná Fantástica";10;1;"12 canettes (355 ml)";22.50;20;0;0;1
+25;"NuNuCa Nuß-Nougat-Creme";11;3;"20 verres (450 g)";70.00;76;0;30;0
+26;"Gumbär Gummibärchen";11;3;"100 sacs (250 g)";156.15;15;0;0;0
+27;"Schoggi Schokolade";11;3;"100 pièces (100 g)";219.50;49;0;30;0
+28;"Rössle Sauerkraut";12;7;"25 canettes (825 g)";228.00;26;0;0;1
+29;"Thüringer Rostbratwurst";12;6;"50 sacs x 30 saucisses";618.95;0;0;0;1
+30;"Nord-Ost Matjeshering";13;8;"10 verres (200 g)";129.45;10;0;15;0
+31;"Gorgonzola Telino";14;4;"12 cartons (100 g)";62.50;0;70;20;0
+32;"Mascarpone Fabioli";14;4;"24 cartons (200 g)";160.00;9;40;25;0
+33;"Geitost";15;4;"1 carton (500 g)";12.50;112;0;20;0
+34;"Sasquatch Ale";16;1;"24 bouteilles (70 cl)";70.00;111;0;15;0
+35;"Steeleye Stout";16;1;"24 bouteilles (1 litre)";90.00;20;0;15;0
+36;"Inlagd Sill";17;8;"24 pots (250 g)";95.00;112;0;20;0
+37;"Gravad lax";17;8;"12 cartons (500 g)";130.00;11;50;25;0
+38;"Côte de Blaye";18;1;"12 bouteilles (75 cl)";1317.50;17;0;15;0
+39;"Chartreuse verte";18;1;"1 bouteille (750 cc)";90.00;69;0;5;0
+40;"Boston Crab Meat";19;8;"24 boîtes (4 onces)";92.00;123;0;30;0
+41;"Jack's New England Clam Chowder";19;8;"12 canettes (330 ml)";48.25;85;0;10;0
+42;"Singaporean Hokkien Fried Mee";20;5;"32 cartons (1 kg)";70.00;26;0;0;1
+43;"Ipoh Coffee";20;1;"16 boîtes (500 g)";230.00;17;10;25;0
+44;"Gula Malacca";20;2;"20 cartons (2 kg)";97.25;27;0;15;0
+45;"Røgede sild";21;8;"1 carton (1kg)";47.50;5;70;15;0
+46;"Spegesild";21;8;"4 boîtes (250 g)";60.00;95;0;0;0
+47;"Zaanse koeken";22;3;"10 boîtes (4 onces)";47.50;36;0;0;0
+48;"Chocolade";22;3;"10 cartons";63.75;15;70;25;0
+49;"Maxilaku";23;3;"24 cartons (50 g)";100.00;10;60;15;0
+50;"Valkoinen suklaa";23;3;"12 plaquettes (100 g)";81.25;65;0;30;0
+51;"Manjimup Dried Apples";24;7;"50 cartons (300 g)";265.00;20;0;10;0
+52;"Filo Mix";24;5;"16 boîtes (2 kg)";35.00;38;0;25;0
+53;"Perth Pasties";24;6;"48 pièces";164.00;0;0;0;1
+54;"Tourtière";25;6;"16 tartes";37.25;21;0;10;0
+55;"Pâté chinois";25;6;"24 boîtes x 2 tartes";120.00;115;0;20;0
+56;"Gnocchi di nonna Alice";26;5;"24 cartons (250 g)";190.00;21;10;30;0
+57;"Ravioli Angelo";26;5;"24 cartons (250 g)";97.50;36;0;20;0
+58;"Escargots de Bourgogne";27;8;"24 pièces";66.25;62;0;20;0
+59;"Raclette Courdavault";28;4;"1 carton (5 kg)";275.00;79;0;0;0
+60;"Camembert Pierrot";28;4;"15 unités (300 g)";170.00;19;0;0;0
+61;"Sirop d'érable";29;2;"24 bouteilles (500 ml)";142.50;113;0;25;0
+62;"Tarte au sucre";29;3;"48 tartes";246.50;17;0;0;0
+63;"Vegie-spread";7;2;"15 pots (625 g)";219.50;24;0;5;0
+64;"Wimmers gute Semmelknödel";12;5;"20 sacs x 4 pièces";166.25;22;80;30;0
+65;"Louisiana Fiery Hot Pepper Sauce";2;2;"32 bouteilles (8 onces)";105.25;76;0;0;0
+66;"Louisiana Hot Spiced Okra";2;2;"24 pots (8 onces)";85.00;4;100;20;0
+67;"Laughing Lumberjack Lager";16;1;"24 bouteilles (12 onces)";70.00;52;0;10;0
+68;"Scottish Longbreads";8;3;"10 sacs x 8 pièces";62.50;6;10;15;0
+69;"Gudbrandsdalsost";15;4;"1 carton (10 kg)";180.00;26;0;15;0
+70;"Outback Lager";7;1;"24 bouteilles (355 ml)";75.00;15;10;30;0
+71;"Fløtemysost";15;4;"10 cartons (500 g)";107.50;26;0;0;0
+72;"Mozzarella di Giovanni";14;4;"24 cartons (200 g)";174.00;14;0;0;0
+73;"Röd Kaviar";17;8;"24 pots (150 g)";75.00;101;0;5;0
+74;"Longlife Tofu";4;7;"1 carton (5 kg)";50.00;4;20;5;0
+75;"Rhönbräu Klosterbier";12;1;"24 bouteilles (0,5 litre)";38.75;125;0;25;0
+76;"Lakkalikööri";23;1;"1 bouteille (500 ml)";90.00;57;0;20;0
+77;"Original Frankfurter grüne Soße";12;2;"12 boîtes";65.00;32;0;15;0
+78;"Mozzarella di Giovanni";14;4;"10 cartons (200 g)";90.00;50;0;5;0
+79;"Röd Kaviar";17;8;"10 pots (150 g)";40.00;150;0;0;0
+80;"Calvados";18;1;"1 bouteille (750 cc)";150.00;50;20;10;0
+81;"Pavé d'Isygny";30;4;"15 unités (300 g)";250.00;30;10;0;0
+82;"Calvados de Mutrecy";30;1;"1 bouteille (750 cc)";145.00;30;0;10;0
+83;"Poiré";30;1;"12 bouteilles (75 cl)";300.00;40;5;10;0
+84;"Sablés d'Asnelles";30;3;"4 boîtes (500 g)";325.50;50;0;0;0

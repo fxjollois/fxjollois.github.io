@@ -1040,7 +1040,7 @@ names(CIS_InfoImportantes) = c(
 <li>Durée moyenne de leur mise sur le marché (en nombre de jours - idem que le taux)</li>
 </ul>
 <pre class="r"><code>CIS_active = subset(CIS, StatutAMM == &quot;Autorisation active&quot;)
-CIS_surv = subset(CIS, Surveillance == &quot;Oui&quot;)
+CIS_surv = subset(CIS_active, Surveillance == &quot;Oui&quot;)
 CIS_CIP_active = merge(CIS_active, CIS_CIP, by = &quot;CodeCIS&quot;)
 rep1 = data.frame(
     statistique = c(&quot;Nombre de médicaments&quot;,
@@ -1077,7 +1077,7 @@ knitr::kable(rep1)</code></pre>
 </tr>
 <tr class="odd">
 <td align="left">Nombre de médicaments avec surveillance renforcée</td>
-<td align="left">379</td>
+<td align="left">351</td>
 </tr>
 <tr class="even">
 <td align="left">Taux moyen de remboursement (autorisation active)</td>
@@ -1277,18 +1277,14 @@ knitr::kable(rep3, digits = 2)</code></pre>
 <div id="voies-administration" class="section level4">
 <h4>Voies administration</h4>
 <p>Quelles sont les voies d’administration possibles ? Et combien de médicaments sont concernés pour chaque voie ?</p>
-<pre class="r"><code>rep4 = data.frame(
-    Voies = unique(unlist(lapply(CIS$VoiesAdm, strsplit, &quot;;&quot;))),
-    NbMedicaments = 0
-)
-for (v in CIS$VoiesAdm) {
-    rep4$NbMedicaments = rep4$NbMedicaments + rep4$Voies %in% unlist(strsplit(v, &quot;;&quot;))
-}
+<pre class="r"><code>rep4 = setNames(data.frame(
+    table(unlist(strsplit(CIS$VoiesAdm, &quot;;&quot;)))
+), c(&quot;Voie&quot;, &quot;NbMedicaments&quot;))
 knitr::kable(rep4[order(rep4$NbMedicaments, decreasing = TRUE),], row.names = FALSE)</code></pre>
 <table>
 <thead>
 <tr class="header">
-<th align="left">Voies</th>
+<th align="left">Voie</th>
 <th align="right">NbMedicaments</th>
 </tr>
 </thead>
@@ -1354,11 +1350,11 @@ knitr::kable(rep4[order(rep4$NbMedicaments, decreasing = TRUE),], row.names = FA
 <td align="right">67</td>
 </tr>
 <tr class="even">
-<td align="left">vaginale</td>
+<td align="left">intrathécale</td>
 <td align="right">66</td>
 </tr>
 <tr class="odd">
-<td align="left">intrathécale</td>
+<td align="left">vaginale</td>
 <td align="right">66</td>
 </tr>
 <tr class="even">
@@ -1402,11 +1398,11 @@ knitr::kable(rep4[order(rep4$NbMedicaments, decreasing = TRUE),], row.names = FA
 <td align="right">12</td>
 </tr>
 <tr class="even">
-<td align="left">intraventriculaire cérébrale</td>
+<td align="left">intra-utérine</td>
 <td align="right">11</td>
 </tr>
 <tr class="odd">
-<td align="left">intra-utérine</td>
+<td align="left">intraventriculaire cérébrale</td>
 <td align="right">11</td>
 </tr>
 <tr class="even">
@@ -1418,11 +1414,11 @@ knitr::kable(rep4[order(rep4$NbMedicaments, decreasing = TRUE),], row.names = FA
 <td align="right">8</td>
 </tr>
 <tr class="even">
-<td align="left">voie parentérale autre</td>
+<td align="left">endosinusale</td>
 <td align="right">7</td>
 </tr>
 <tr class="odd">
-<td align="left">endosinusale</td>
+<td align="left">voie parentérale autre</td>
 <td align="right">7</td>
 </tr>
 <tr class="even">
@@ -1438,31 +1434,31 @@ knitr::kable(rep4[order(rep4$NbMedicaments, decreasing = TRUE),], row.names = FA
 <td align="right">6</td>
 </tr>
 <tr class="odd">
+<td align="left">endotrachéobronchique</td>
+<td align="right">5</td>
+</tr>
+<tr class="even">
+<td align="left">gastro-entérale</td>
+<td align="right">5</td>
+</tr>
+<tr class="odd">
 <td align="left">hémofiltration</td>
 <td align="right">5</td>
 </tr>
 <tr class="even">
-<td align="left">endotrachéobronchique</td>
-<td align="right">5</td>
+<td align="left">buccogingivale</td>
+<td align="right">4</td>
 </tr>
 <tr class="odd">
-<td align="left">gastro-entérale</td>
-<td align="right">5</td>
+<td align="left">épilésionnelle</td>
+<td align="right">4</td>
 </tr>
 <tr class="even">
 <td align="left">intracoronaire</td>
 <td align="right">4</td>
 </tr>
 <tr class="odd">
-<td align="left">buccogingivale</td>
-<td align="right">4</td>
-</tr>
-<tr class="even">
-<td align="left">épilésionnelle</td>
-<td align="right">4</td>
-</tr>
-<tr class="odd">
-<td align="left">périoculaire</td>
+<td align="left">intra-murale</td>
 <td align="right">3</td>
 </tr>
 <tr class="even">
@@ -1470,55 +1466,15 @@ knitr::kable(rep4[order(rep4$NbMedicaments, decreasing = TRUE),], row.names = FA
 <td align="right">3</td>
 </tr>
 <tr class="odd">
-<td align="left">intra-murale</td>
+<td align="left">périoculaire</td>
 <td align="right">3</td>
 </tr>
 <tr class="even">
-<td align="left">intra-osseuse</td>
-<td align="right">2</td>
-</tr>
-<tr class="odd">
-<td align="left">intraséreuse</td>
-<td align="right">2</td>
-</tr>
-<tr class="even">
-<td align="left">intra-camérulaire</td>
-<td align="right">2</td>
-</tr>
-<tr class="odd">
-<td align="left">oropharyngée</td>
-<td align="right">2</td>
-</tr>
-<tr class="even">
-<td align="left">intrapleurale</td>
-<td align="right">2</td>
-</tr>
-<tr class="odd">
-<td align="left">péri-aréolaire</td>
-<td align="right">2</td>
-</tr>
-<tr class="even">
-<td align="left">péritumorale</td>
-<td align="right">2</td>
-</tr>
-<tr class="odd">
-<td align="left">péribulbaire</td>
-<td align="right">2</td>
-</tr>
-<tr class="even">
-<td align="left">implantation</td>
-<td align="right">2</td>
-</tr>
-<tr class="odd">
-<td align="left">périosseuse</td>
-<td align="right">2</td>
-</tr>
-<tr class="even">
-<td align="left">intra-oculaire</td>
-<td align="right">2</td>
-</tr>
-<tr class="odd">
 <td align="left">gastrique</td>
+<td align="right">2</td>
+</tr>
+<tr class="odd">
+<td align="left">implantation</td>
 <td align="right">2</td>
 </tr>
 <tr class="even">
@@ -1526,7 +1482,47 @@ knitr::kable(rep4[order(rep4$NbMedicaments, decreasing = TRUE),], row.names = FA
 <td align="right">2</td>
 </tr>
 <tr class="odd">
-<td align="left">intratumorale</td>
+<td align="left">intra-camérulaire</td>
+<td align="right">2</td>
+</tr>
+<tr class="even">
+<td align="left">intra-oculaire</td>
+<td align="right">2</td>
+</tr>
+<tr class="odd">
+<td align="left">intra-osseuse</td>
+<td align="right">2</td>
+</tr>
+<tr class="even">
+<td align="left">intrapleurale</td>
+<td align="right">2</td>
+</tr>
+<tr class="odd">
+<td align="left">intraséreuse</td>
+<td align="right">2</td>
+</tr>
+<tr class="even">
+<td align="left">oropharyngée</td>
+<td align="right">2</td>
+</tr>
+<tr class="odd">
+<td align="left">péri-aréolaire</td>
+<td align="right">2</td>
+</tr>
+<tr class="even">
+<td align="left">péribulbaire</td>
+<td align="right">2</td>
+</tr>
+<tr class="odd">
+<td align="left">périosseuse</td>
+<td align="right">2</td>
+</tr>
+<tr class="even">
+<td align="left">péritumorale</td>
+<td align="right">2</td>
+</tr>
+<tr class="odd">
+<td align="left">endocervicale</td>
 <td align="right">1</td>
 </tr>
 <tr class="even">
@@ -1534,27 +1530,27 @@ knitr::kable(rep4[order(rep4$NbMedicaments, decreasing = TRUE),], row.names = FA
 <td align="right">1</td>
 </tr>
 <tr class="odd">
-<td align="left">intradurale</td>
-<td align="right">1</td>
-</tr>
-<tr class="even">
-<td align="left">intralymphatique</td>
-<td align="right">1</td>
-</tr>
-<tr class="odd">
-<td align="left">sous-muqueuse</td>
-<td align="right">1</td>
-</tr>
-<tr class="even">
 <td align="left">intracisternale</td>
 <td align="right">1</td>
 </tr>
+<tr class="even">
+<td align="left">intradurale</td>
+<td align="right">1</td>
+</tr>
 <tr class="odd">
-<td align="left">endocervicale</td>
+<td align="left">intralymphatique</td>
 <td align="right">1</td>
 </tr>
 <tr class="even">
 <td align="left">intrapéricardiaque</td>
+<td align="right">1</td>
+</tr>
+<tr class="odd">
+<td align="left">intratumorale</td>
+<td align="right">1</td>
+</tr>
+<tr class="even">
+<td align="left">sous-muqueuse</td>
 <td align="right">1</td>
 </tr>
 </tbody>
@@ -1564,7 +1560,7 @@ knitr::kable(rep4[order(rep4$NbMedicaments, decreasing = TRUE),], row.names = FA
 <h4>SMR insuffisant</h4>
 <p>Quels sont les médicaments dont le service médical rendu (ou <strong>SMR</strong>) est jugé insuffisant ? Indiquez leur taux de remboursement et leur prix, en les classant par prix décroissant.</p>
 <pre class="r"><code>temp = subset(
-    merge(CIS, CIS_CIP, by = &quot;CodeCIS&quot;),
+    merge(CIS_active, CIS_CIP, by = &quot;CodeCIS&quot;),
     subset = CodeCIS %in% unique(subset(CIS_HAS_SMR, 
                                         ValeurSMR == &quot;Insuffisant&quot;)$CodeCIS)
 )
@@ -2812,530 +2808,518 @@ knitr::kable(rep5, row.names = FALSE)</code></pre>
 <td align="right">14.67</td>
 </tr>
 <tr class="even">
-<td align="right">69099668</td>
-<td align="left">NAFTIDROFURYL MYLAN GENERIQUES 200 mg, comprimé pelliculé</td>
-<td align="right">15</td>
-<td align="right">14.67</td>
-</tr>
-<tr class="odd">
 <td align="right">69516026</td>
 <td align="left">ASCABIOL 10 %, émulsion pour application cutanée</td>
 <td align="right">65</td>
 <td align="right">14.62</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="right">66840375</td>
 <td align="left">MONOZECLAR 500 mg, comprimé pelliculé à libération modifiée</td>
 <td align="right">65</td>
 <td align="right">13.81</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="right">67997205</td>
 <td align="left">ZECLAR 500 mg, comprimé pelliculé</td>
 <td align="right">65</td>
 <td align="right">13.81</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="right">63521785</td>
 <td align="left">MORPHINE (CHLORHYDRATE) RENAUDIN 10 mg/ml, solution injectable</td>
 <td align="right">65</td>
 <td align="right">13.74</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="right">67535280</td>
 <td align="left">ROVAMYCINE 3 MILLIONS U I, comprimé pelliculé</td>
 <td align="right">65</td>
 <td align="right">13.67</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="right">69670693</td>
 <td align="left">TELEBRIX 30 MEGLUMINE (300 mg l/mL), solution injectable</td>
 <td align="right">65</td>
 <td align="right">13.46</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="right">64635578</td>
 <td align="left">CLARITHROMYCINE BIPHAR 500 mg, comprimé pelliculé</td>
 <td align="right">65</td>
 <td align="right">13.44</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="right">65740799</td>
 <td align="left">ZITHROMAX 250 mg, comprimé pelliculé</td>
 <td align="right">65</td>
 <td align="right">13.00</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="right">67633746</td>
 <td align="left">MOSIL 800 mg, poudre pour suspension buvable en sachet-dose</td>
 <td align="right">65</td>
 <td align="right">13.00</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="right">69693507</td>
 <td align="left">FINASTERIDE ARROW LAB 5 mg, comprimé pelliculé</td>
 <td align="right">30</td>
 <td align="right">12.92</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="right">66089989</td>
 <td align="left">ORAMORPH 20 mg/1 ml, solution buvable</td>
 <td align="right">65</td>
 <td align="right">12.57</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="right">67287098</td>
 <td align="left">ZITHROMAX 40 mg/ml ENFANTS, poudre pour suspension buvable</td>
 <td align="right">65</td>
 <td align="right">12.53</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="right">64565845</td>
 <td align="left">ALDACTONE 25 mg, comprimé sécable</td>
 <td align="right">65</td>
 <td align="right">12.32</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="right">60212424</td>
 <td align="left">JOSACINE 1000 mg, comprimé dispersible</td>
 <td align="right">65</td>
 <td align="right">12.18</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="right">64877364</td>
 <td align="left">JOSACINE 500 mg, comprimé pelliculé</td>
 <td align="right">65</td>
 <td align="right">12.18</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="right">60385682</td>
 <td align="left">DANTRIUM 100 mg, gélule</td>
 <td align="right">30</td>
 <td align="right">11.92</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="right">66477066</td>
 <td align="left">MOXIFLOXACINE KRKA 400 mg, comprimé pelliculé</td>
 <td align="right">65</td>
 <td align="right">11.84</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="right">62673263</td>
 <td align="left">SPIRONOLACTONE PFIZER 75 mg, comprimé</td>
 <td align="right">65</td>
 <td align="right">11.75</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="right">68492540</td>
 <td align="left">ALDACTONE 75 mg, comprimé sécable</td>
 <td align="right">65</td>
 <td align="right">11.75</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="right">67439271</td>
 <td align="left">MATRIFEN 12 microgrammes/heure, dispositif transdermique</td>
 <td align="right">65</td>
 <td align="right">11.53</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="right">68108025</td>
 <td align="left">DUROGESIC 12 microgrammes/heure, dispositif transdermique</td>
 <td align="right">65</td>
 <td align="right">11.53</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="right">68492540</td>
 <td align="left">ALDACTONE 75 mg, comprimé sécable</td>
 <td align="right">65</td>
 <td align="right">11.42</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="right">68330257</td>
 <td align="left">LAROXYL 50 mg/2 ml, solution injectable</td>
 <td align="right">65</td>
 <td align="right">11.32</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="right">64086275</td>
 <td align="left">TAMIFLU 6 mg/ml, poudre pour suspension buvable</td>
 <td align="right">30</td>
 <td align="right">11.31</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="right">68183914</td>
 <td align="left">TAMIFLU 30 mg, gélule</td>
 <td align="right">30</td>
 <td align="right">11.31</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="right">68673220</td>
 <td align="left">TIAPRIDAL 5 mg/goutte, solution buvable en gouttes</td>
 <td align="right">30</td>
 <td align="right">11.14</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="right">66729097</td>
 <td align="left">PARLODEL 10 mg, gélule</td>
 <td align="right">65</td>
 <td align="right">11.01</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="right">61200108</td>
 <td align="left">OXYCONTIN LP 10 mg, comprimé pelliculé à libération prolongée</td>
 <td align="right">65</td>
 <td align="right">10.84</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="right">66470506</td>
 <td align="left">ALFATIL LP 500 mg, comprimé pelliculé à libération prolongée</td>
 <td align="right">65</td>
 <td align="right">10.57</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="right">68995424</td>
 <td align="left">HAXIFAL 500 mg, comprimé effervescent</td>
 <td align="right">65</td>
 <td align="right">10.57</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="right">64683217</td>
 <td align="left">ARIXTRA 2,5 mg/0,5 ml, solution injectable en seringue pré-remplie</td>
 <td align="right">65</td>
 <td align="right">10.53</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="right">66484819</td>
 <td align="left">OFLOCET 200 mg, comprimé pelliculé sécable</td>
 <td align="right">65</td>
 <td align="right">10.41</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="right">68270924</td>
 <td align="left">OFLOXACINE ARROW 200 mg, comprimé pelliculé sécable</td>
 <td align="right">65</td>
 <td align="right">10.41</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="right">62597239</td>
 <td align="left">SILKIS 3 microgrammes/g, pommade</td>
 <td align="right">30</td>
 <td align="right">10.40</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="right">65109314</td>
 <td align="left">AZANTAC 150 mg, comprimé pelliculé</td>
 <td align="right">15</td>
 <td align="right">10.22</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="right">65504674</td>
 <td align="left">APURONE, comprimé</td>
 <td align="right">65</td>
 <td align="right">10.20</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="right">62227453</td>
 <td align="left">TAKETIAM 200 mg, comprimé pelliculé</td>
 <td align="right">65</td>
 <td align="right">10.04</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="right">62565070</td>
 <td align="left">RISPERDALORO 1 mg, comprimé orodispersible</td>
 <td align="right">65</td>
 <td align="right">9.91</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="right">61068069</td>
 <td align="left">ZINNAT 125 mg/5 ml ENFANTS ET NOURRISSONS, granulés pour suspension buvable en flacon</td>
 <td align="right">65</td>
 <td align="right">9.87</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="right">62996512</td>
 <td align="left">CALCITONINE SANDOZ 50 U.I./1 ml, solution injectable</td>
 <td align="right">15</td>
 <td align="right">9.79</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="right">63752728</td>
 <td align="left">CALCITONINE PHARMY II 50 UI/1 ml, solution injectable</td>
 <td align="right">15</td>
 <td align="right">9.79</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="right">64577819</td>
 <td align="left">MIACALCIC 50 U.I./1 ml, solution injectable ou pour perfusion</td>
 <td align="right">15</td>
 <td align="right">9.79</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="right">60061171</td>
 <td align="left">TETRALYSAL 150 mg, gélule</td>
 <td align="right">65</td>
 <td align="right">9.75</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="right">60891060</td>
 <td align="left">TETRALYSAL 300 mg, gélule</td>
 <td align="right">65</td>
 <td align="right">9.75</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="right">61541821</td>
 <td align="left">AZANTAC 150 mg, comprimé effervescent</td>
 <td align="right">15</td>
 <td align="right">9.68</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="right">61923059</td>
 <td align="left">ORELOX ENFANTS ET NOURRISSONS 40 mg/5 ml, granulés pour suspension buvable</td>
 <td align="right">65</td>
 <td align="right">9.66</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="right">64010594</td>
 <td align="left">KINUREA-H, solution injectable</td>
 <td align="right">30</td>
 <td align="right">9.62</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="right">60629186</td>
 <td align="left">OXYNORM 20 mg, gélule</td>
 <td align="right">65</td>
 <td align="right">9.61</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="right">61115864</td>
 <td align="left">OXYNORMORO 20 mg, comprimé orodispersible</td>
 <td align="right">65</td>
 <td align="right">9.61</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="right">60961427</td>
 <td align="left">BRICANYL TURBUHALER 500 microgrammes/dose, poudre pour inhalation</td>
 <td align="right">65</td>
 <td align="right">9.49</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="right">64635578</td>
 <td align="left">CLARITHROMYCINE BIPHAR 500 mg, comprimé pelliculé</td>
 <td align="right">65</td>
 <td align="right">9.46</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="right">69837295</td>
 <td align="left">CLARITHROMYCINE MYLAN PHARMA 500 mg, comprimé pelliculé à libération modifiée</td>
 <td align="right">65</td>
 <td align="right">9.46</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="right">61177182</td>
 <td align="left">AZANTAC 300 mg, comprimé pelliculé</td>
 <td align="right">15</td>
 <td align="right">9.34</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="right">65393957</td>
 <td align="left">RULID 150 mg, comprimé enrobé</td>
 <td align="right">65</td>
 <td align="right">9.33</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="right">69325697</td>
 <td align="left">CLARAMID 150 mg, comprimé pelliculé</td>
 <td align="right">65</td>
 <td align="right">9.33</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="right">65490025</td>
 <td align="left">MORPHINE (CHLORHYDRATE) COOPER 10 mg/ml, solution injectable</td>
 <td align="right">65</td>
 <td align="right">9.30</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="right">68540070</td>
 <td align="left">MORPHINE (CHLORHYDRATE) AGUETTANT 20 mg/ml, solution injectable</td>
 <td align="right">65</td>
 <td align="right">9.30</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="right">63832373</td>
 <td align="left">SETOFILM 4 mg, film orodispersible</td>
 <td align="right">65</td>
 <td align="right">9.28</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="right">60935279</td>
 <td align="left">PROZAC 20 mg, comprimé dispersible sécable</td>
 <td align="right">65</td>
 <td align="right">9.17</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="right">66907450</td>
 <td align="left">OROKEN ENFANTS 100 mg/5 ml, poudre pour suspension buvable en flacon</td>
 <td align="right">65</td>
 <td align="right">9.14</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="right">67393849</td>
 <td align="left">OROKEN 200 mg, comprimé pelliculé</td>
 <td align="right">65</td>
 <td align="right">9.11</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="right">62597926</td>
 <td align="left">ALTEIS 10 mg, comprimé pelliculé</td>
 <td align="right">65</td>
 <td align="right">9.08</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="right">68573412</td>
 <td align="left">OLMETEC 10 mg, comprimé pelliculé</td>
 <td align="right">65</td>
 <td align="right">9.08</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="right">66826009</td>
 <td align="left">EGERY, microgranules gastro-résistants en gélule</td>
 <td align="right">65</td>
 <td align="right">9.03</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="right">65528337</td>
 <td align="left">ORELOX 100 mg, comprimé pelliculé</td>
 <td align="right">65</td>
 <td align="right">9.00</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="right">60762795</td>
 <td align="left">MORPHINE (CHLORHYDRATE) AGUETTANT 10 mg/ml, solution injectable</td>
 <td align="right">65</td>
 <td align="right">8.98</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="right">65490025</td>
 <td align="left">MORPHINE (CHLORHYDRATE) COOPER 10 mg/ml, solution injectable</td>
 <td align="right">65</td>
 <td align="right">8.98</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="right">67553944</td>
 <td align="left">MORPHINE (CHLORHYDRATE) LAVOISIER 10 mg/ml, solution injectable</td>
 <td align="right">65</td>
 <td align="right">8.98</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="right">60549391</td>
 <td align="left">TEMGESIC 0,2 mg, comprimé sublingual</td>
 <td align="right">65</td>
 <td align="right">8.94</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="right">64212005</td>
 <td align="left">ROVAMYCINE 1 500 000 UI, comprimé pelliculé</td>
 <td align="right">65</td>
 <td align="right">8.92</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="right">69627877</td>
 <td align="left">ORDIPHA 500 mg, comprimé dispersible sécable</td>
 <td align="right">65</td>
 <td align="right">8.91</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="right">63222377</td>
 <td align="left">MONOFLOCET 200 mg, comprimé pelliculé</td>
 <td align="right">65</td>
 <td align="right">8.87</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="right">66293778</td>
 <td align="left">AZANTAC 300 mg, comprimé effervescent</td>
 <td align="right">15</td>
 <td align="right">8.86</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="right">62765886</td>
 <td align="left">ALFATIL L.P. 375 mg, comprimé pelliculé à libération prolongée</td>
 <td align="right">65</td>
 <td align="right">8.84</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="right">67559559</td>
 <td align="left">JOSACINE 500 mg/5 ml, granulés pour suspension buvable</td>
 <td align="right">65</td>
 <td align="right">8.77</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="right">62458677</td>
 <td align="left">CLARAMID ENFANTS 100 mg, comprimé pelliculé</td>
 <td align="right">65</td>
 <td align="right">8.67</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="right">60005856</td>
 <td align="left">FAMOTIDINE EG 20 mg, comprimé pelliculé</td>
 <td align="right">15</td>
 <td align="right">8.50</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="right">62737673</td>
 <td align="left">FAMOTIDINE MYLAN 40 mg, comprimé pelliculé</td>
 <td align="right">15</td>
 <td align="right">8.50</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="right">67557907</td>
 <td align="left">FAMOTIDINE EG 40 mg, comprimé pelliculé</td>
 <td align="right">15</td>
 <td align="right">8.50</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="right">68572075</td>
 <td align="left">FAMOTIDINE MYLAN 20 mg, comprimé pelliculé</td>
 <td align="right">15</td>
 <td align="right">8.50</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="right">69505147</td>
 <td align="left">RISPERDAL 1 mg/ml, solution buvable</td>
 <td align="right">65</td>
 <td align="right">8.50</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="right">66799334</td>
 <td align="left">MOSCONTIN 30 mg, comprimé enrobé à libération prolongée</td>
 <td align="right">65</td>
 <td align="right">8.37</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="right">67535280</td>
 <td align="left">ROVAMYCINE 3 MILLIONS U I, comprimé pelliculé</td>
 <td align="right">65</td>
 <td align="right">8.36</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="right">66477066</td>
 <td align="left">MOXIFLOXACINE KRKA 400 mg, comprimé pelliculé</td>
 <td align="right">65</td>
 <td align="right">8.31</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="right">62200673</td>
 <td align="left">RANITIDINE MYLAN 150 mg, comprimé pelliculé</td>
 <td align="right">15</td>
 <td align="right">8.19</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="right">63193751</td>
 <td align="left">RANITIDINE TEVA 150 mg, comprimé pelliculé</td>
-<td align="right">15</td>
-<td align="right">8.19</td>
-</tr>
-<tr class="odd">
-<td align="right">63715459</td>
-<td align="left">RANITIDINE SANDOZ 150 mg, comprimé pelliculé</td>
 <td align="right">15</td>
 <td align="right">8.19</td>
 </tr>
@@ -3448,26 +3432,14 @@ knitr::kable(rep5, row.names = FALSE)</code></pre>
 <td align="right">7.75</td>
 </tr>
 <tr class="even">
-<td align="right">63834602</td>
-<td align="left">RANITIDINE QUALIMED 150 mg, comprimé effervescent</td>
-<td align="right">15</td>
-<td align="right">7.75</td>
-</tr>
-<tr class="odd">
 <td align="right">64940633</td>
 <td align="left">RANITIDINE ZENTIVA 150 mg, comprimé effervescent</td>
 <td align="right">15</td>
 <td align="right">7.75</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="right">67516508</td>
 <td align="left">RANITIDINE ARROW 150 mg, comprimé effervescent</td>
-<td align="right">15</td>
-<td align="right">7.75</td>
-</tr>
-<tr class="odd">
-<td align="right">67897596</td>
-<td align="left">RANITIDINE RATIOPHARM 150 mg, comprimé effervescent</td>
 <td align="right">15</td>
 <td align="right">7.75</td>
 </tr>
@@ -3514,56 +3486,44 @@ knitr::kable(rep5, row.names = FALSE)</code></pre>
 <td align="right">7.49</td>
 </tr>
 <tr class="odd">
-<td align="right">63434654</td>
-<td align="left">RANITIDINE SANDOZ 300 mg, comprimé pelliculé</td>
-<td align="right">15</td>
-<td align="right">7.47</td>
-</tr>
-<tr class="even">
 <td align="right">64695995</td>
 <td align="left">RANITIDINE TEVA 300 mg, comprimé pelliculé</td>
 <td align="right">15</td>
 <td align="right">7.47</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="right">66333404</td>
 <td align="left">RANITIDINE EG 300 mg, comprimé pelliculé</td>
 <td align="right">15</td>
 <td align="right">7.47</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="right">67872002</td>
 <td align="left">RANITIDINE MYLAN 300 mg, comprimé pelliculé</td>
 <td align="right">15</td>
 <td align="right">7.47</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="right">69382100</td>
 <td align="left">RANITIDINE BIOGARAN 300 mg, comprimé pelliculé</td>
 <td align="right">15</td>
 <td align="right">7.47</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="right">62059468</td>
 <td align="left">ZITHROMAX MONODOSE 250 mg, comprimé pelliculé</td>
 <td align="right">65</td>
 <td align="right">7.34</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="right">60009616</td>
 <td align="left">RANITIDINE TEVA 300 mg, comprimé effervescent</td>
 <td align="right">15</td>
 <td align="right">7.07</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="right">60476630</td>
 <td align="left">RANITIDINE ARROW 300 mg, comprimé effervescent</td>
-<td align="right">15</td>
-<td align="right">7.07</td>
-</tr>
-<tr class="odd">
-<td align="right">60813713</td>
-<td align="left">RANITIDINE RATIOPHARM 300 mg, comprimé effervescent</td>
 <td align="right">15</td>
 <td align="right">7.07</td>
 </tr>
@@ -3586,161 +3546,149 @@ knitr::kable(rep5, row.names = FALSE)</code></pre>
 <td align="right">7.07</td>
 </tr>
 <tr class="odd">
-<td align="right">65878177</td>
-<td align="left">RANITIDINE QUALIMED 300 mg, comprimé effervescent</td>
-<td align="right">15</td>
-<td align="right">7.07</td>
-</tr>
-<tr class="even">
 <td align="right">69194575</td>
 <td align="left">RANIPLEX 300 mg, comprimé effervescent</td>
 <td align="right">15</td>
 <td align="right">7.07</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="right">69619243</td>
 <td align="left">RANITIDINE MYLAN 300 mg, comprimé effervescent</td>
 <td align="right">15</td>
 <td align="right">7.07</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="right">69737836</td>
 <td align="left">RANITIDINE BIOGARAN 300 mg, comprimé effervescent</td>
 <td align="right">15</td>
 <td align="right">7.07</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="right">67101782</td>
 <td align="left">XEROQUEL LP 50 mg, comprimé à libération prolongée</td>
 <td align="right">65</td>
 <td align="right">7.06</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="right">60424555</td>
 <td align="left">RULID 100 mg, comprimé pelliculé</td>
 <td align="right">65</td>
 <td align="right">6.97</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="right">61780814</td>
 <td align="left">MYNOCINE 50 mg, gélule</td>
 <td align="right">65</td>
 <td align="right">6.97</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="right">63671347</td>
 <td align="left">ZECLAR 250 mg, comprimé pelliculé</td>
 <td align="right">65</td>
 <td align="right">6.93</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="right">66840375</td>
 <td align="left">MONOZECLAR 500 mg, comprimé pelliculé à libération modifiée</td>
 <td align="right">65</td>
 <td align="right">6.93</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="right">63907395</td>
 <td align="left">PROGESTERONE RETARD PHARLON 500 mg/2 ml, solution injectable IM en ampoule</td>
 <td align="right">30</td>
 <td align="right">6.90</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="right">64483490</td>
 <td align="left">BIRODOGYL, comprimé pelliculé</td>
 <td align="right">65</td>
 <td align="right">6.86</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="right">69634836</td>
 <td align="left">ZINNAT 250 mg, comprimé pelliculé</td>
 <td align="right">65</td>
 <td align="right">6.72</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="right">68802989</td>
 <td align="left">ERYTHROCINE 1000 mg, granulés pour solution buvable en sachet-dose</td>
 <td align="right">65</td>
 <td align="right">6.64</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="right">69706972</td>
 <td align="left">ALFATIL 250 mg, gélule</td>
 <td align="right">65</td>
 <td align="right">6.64</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="right">66218551</td>
 <td align="left">MOSIL 400 mg, comprimé pelliculé</td>
 <td align="right">65</td>
 <td align="right">6.61</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="right">69829455</td>
 <td align="left">CHRONO-INDOCID 75 mg, gélule</td>
 <td align="right">65</td>
 <td align="right">6.61</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="right">61722191</td>
 <td align="left">DOXY 100 mg, comprimé pelliculé</td>
 <td align="right">65</td>
 <td align="right">6.52</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="right">67164569</td>
 <td align="left">DOXYCYCLINE ARROW 100 mg, comprimé pelliculé</td>
 <td align="right">65</td>
 <td align="right">6.52</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="right">61673424</td>
 <td align="left">UTROGESTAN 100 mg, capsule molle orale ou vaginale</td>
 <td align="right">65</td>
 <td align="right">6.41</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="right">63157698</td>
 <td align="left">UTROGESTAN 200 mg, capsule molle orale ou vaginale</td>
 <td align="right">65</td>
 <td align="right">6.41</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="right">66299813</td>
 <td align="left">DEBRIDAT 200 mg, comprimé pelliculé</td>
 <td align="right">15</td>
 <td align="right">6.41</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="right">69584073</td>
 <td align="left">SMECTA 3 g ORANGE-VANILLE, poudre pour suspension buvable en sachet</td>
 <td align="right">30</td>
 <td align="right">6.39</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="right">66448374</td>
 <td align="left">ERYTHROCINE 500 mg, comprimé pelliculé</td>
 <td align="right">65</td>
 <td align="right">6.34</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="right">68217804</td>
 <td align="left">TOLEXINE 100 mg, microgranules en comprimé</td>
 <td align="right">65</td>
 <td align="right">6.30</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="right">68411271</td>
 <td align="left">CEBUTID LP 200 mg, gélule à libération prolongée</td>
 <td align="right">65</td>
 <td align="right">6.28</td>
 </tr>
-<tr class="even">
-<td align="right">62311321</td>
-<td align="left">ZECLAR 50 mg/ml, granulés pour suspension buvable</td>
-<td align="right">65</td>
-<td align="right">6.24</td>
-</tr>
 <tr class="odd">
 <td align="right">62311321</td>
 <td align="left">ZECLAR 50 mg/ml, granulés pour suspension buvable</td>
@@ -3748,8 +3696,8 @@ knitr::kable(rep5, row.names = FALSE)</code></pre>
 <td align="right">6.24</td>
 </tr>
 <tr class="even">
-<td align="right">67409634</td>
-<td align="left">CLARITHROMYCINE BIPHAR 50 mg/ml, granulés pour suspension buvable</td>
+<td align="right">62311321</td>
+<td align="left">ZECLAR 50 mg/ml, granulés pour suspension buvable</td>
 <td align="right">65</td>
 <td align="right">6.24</td>
 </tr>
@@ -3760,101 +3708,101 @@ knitr::kable(rep5, row.names = FALSE)</code></pre>
 <td align="right">6.24</td>
 </tr>
 <tr class="even">
+<td align="right">67409634</td>
+<td align="left">CLARITHROMYCINE BIPHAR 50 mg/ml, granulés pour suspension buvable</td>
+<td align="right">65</td>
+<td align="right">6.24</td>
+</tr>
+<tr class="odd">
 <td align="right">60929447</td>
 <td align="left">MYNOCINE 100 mg, gélule</td>
 <td align="right">65</td>
 <td align="right">6.13</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="right">62184888</td>
 <td align="left">LARGACTIL 25 mg/5 ml, solution injectable en ampoule</td>
 <td align="right">65</td>
 <td align="right">6.10</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="right">61454213</td>
 <td align="left">MORPHINE (SULFATE) LAVOISIER 50 mg/ml, solution injectable</td>
 <td align="right">65</td>
 <td align="right">6.01</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="right">62820286</td>
 <td align="left">ACTISKENAN 30 mg, gélule</td>
 <td align="right">65</td>
 <td align="right">5.87</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="right">64141483</td>
 <td align="left">PARLODEL 5 mg, gélule</td>
 <td align="right">65</td>
 <td align="right">5.85</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="right">66877523</td>
 <td align="left">ARTOTEC 75 mg/0,2 mg, comprimé gastro-résistant</td>
 <td align="right">15</td>
 <td align="right">5.79</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="right">62582326</td>
 <td align="left">DEPO PRODASONE 500 mg, suspension injectable</td>
 <td align="right">100</td>
 <td align="right">5.78</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="right">66845027</td>
 <td align="left">DICETEL 100 mg, comprimé pelliculé</td>
 <td align="right">15</td>
 <td align="right">5.76</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="right">65898475</td>
 <td align="left">FELDENE 20 mg, suppositoire</td>
 <td align="right">15</td>
 <td align="right">5.74</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="right">68490105</td>
 <td align="left">OXYCONTIN L.P. 5 mg, comprimé pelliculé à libération prolongée</td>
 <td align="right">65</td>
 <td align="right">5.74</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="right">65708972</td>
 <td align="left">BRICANYL L.P. 5 mg, comprimé à libération prolongée</td>
 <td align="right">30</td>
 <td align="right">5.68</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="right">68613433</td>
 <td align="left">ZINNAT 750 mg, poudre et solvant pour suspension injectable (I.M.)</td>
 <td align="right">65</td>
 <td align="right">5.55</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="right">66179664</td>
 <td align="left">RODOGYL, comprimé pelliculé</td>
 <td align="right">65</td>
 <td align="right">5.52</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="right">67807645</td>
 <td align="left">DANTRIUM 25 mg, gélule</td>
 <td align="right">30</td>
 <td align="right">5.52</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="right">65217119</td>
 <td align="left">MOBIC 15 mg, comprimé sécable</td>
 <td align="right">65</td>
 <td align="right">5.50</td>
 </tr>
-<tr class="odd">
-<td align="right">62901197</td>
-<td align="left">ZECLAR 25 mg/ml, granulés pour suspension buvable</td>
-<td align="right">65</td>
-<td align="right">5.45</td>
-</tr>
 <tr class="even">
 <td align="right">62901197</td>
 <td align="left">ZECLAR 25 mg/ml, granulés pour suspension buvable</td>
@@ -3862,8 +3810,8 @@ knitr::kable(rep5, row.names = FALSE)</code></pre>
 <td align="right">5.45</td>
 </tr>
 <tr class="odd">
-<td align="right">65133607</td>
-<td align="left">CLARITHROMYCINE BIPHAR 25 mg/ml, granulés pour suspension buvable</td>
+<td align="right">62901197</td>
+<td align="left">ZECLAR 25 mg/ml, granulés pour suspension buvable</td>
 <td align="right">65</td>
 <td align="right">5.45</td>
 </tr>
@@ -3874,262 +3822,262 @@ knitr::kable(rep5, row.names = FALSE)</code></pre>
 <td align="right">5.45</td>
 </tr>
 <tr class="odd">
+<td align="right">65133607</td>
+<td align="left">CLARITHROMYCINE BIPHAR 25 mg/ml, granulés pour suspension buvable</td>
+<td align="right">65</td>
+<td align="right">5.45</td>
+</tr>
+<tr class="even">
 <td align="right">68901510</td>
 <td align="left">DEBRIDAT, granulés pour suspension buvable en sachet</td>
 <td align="right">15</td>
 <td align="right">5.45</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="right">61673399</td>
 <td align="left">CYCLADOL 20 mg, comprimé effervescent</td>
 <td align="right">30</td>
 <td align="right">5.38</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="right">62163538</td>
 <td align="left">CYCLADOL 20 mg, comprimé sécable</td>
 <td align="right">30</td>
 <td align="right">5.38</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="right">66113600</td>
 <td align="left">JOSACINE 250 mg/5 ml, granulés pour suspension buvable</td>
 <td align="right">65</td>
 <td align="right">5.38</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="right">60602431</td>
 <td align="left">KEAL 2 g, suspension buvable en sachet</td>
 <td align="right">15</td>
 <td align="right">5.33</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="right">61923059</td>
 <td align="left">ORELOX ENFANTS ET NOURRISSONS 40 mg/5 ml, granulés pour suspension buvable</td>
 <td align="right">65</td>
 <td align="right">5.33</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="right">61068069</td>
 <td align="left">ZINNAT 125 mg/5 ml ENFANTS ET NOURRISSONS, granulés pour suspension buvable en flacon</td>
 <td align="right">65</td>
 <td align="right">5.28</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="right">62744269</td>
 <td align="left">ZINNAT 125 mg ENFANTS ET NOURRISSONS, granulés pour suspension buvable en sachet-dose</td>
 <td align="right">65</td>
 <td align="right">5.28</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="right">60705552</td>
 <td align="left">OROKEN NOURRISSONS 40 mg/5 ml, poudre pour suspension buvable en flacon</td>
 <td align="right">65</td>
 <td align="right">5.23</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="right">60536159</td>
 <td align="left">TRIMEBUTINE TEVA 200 mg, comprimé</td>
 <td align="right">15</td>
 <td align="right">5.21</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="right">61542706</td>
 <td align="left">TRIMEBUTINE EVOLUGEN 200 mg, comprimé</td>
 <td align="right">15</td>
 <td align="right">5.21</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="right">61653585</td>
 <td align="left">TRIMEBUTINE TEVA SANTE 200 mg, comprimé pelliculé</td>
 <td align="right">15</td>
 <td align="right">5.21</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="right">61924474</td>
 <td align="left">TRIMEBUTINE RANBAXY 200 mg, comprimé</td>
 <td align="right">15</td>
 <td align="right">5.21</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="right">62526007</td>
 <td align="left">TRIMEBUTINE ZYDUS 200 mg, comprimé</td>
 <td align="right">15</td>
 <td align="right">5.21</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="right">62555820</td>
 <td align="left">TRIMEBUTINE SANDOZ 200 mg, comprimé pelliculé</td>
 <td align="right">15</td>
 <td align="right">5.21</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="right">62941131</td>
 <td align="left">TRIMEBUTINE ISOMED 200 mg, comprimé</td>
 <td align="right">15</td>
 <td align="right">5.21</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="right">63526743</td>
 <td align="left">TRIMEBUTINE GERDA 200 mg, comprimé</td>
 <td align="right">65</td>
 <td align="right">5.21</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="right">63683463</td>
 <td align="left">TRIMEBUTINE EG 200 mg, comprimé</td>
 <td align="right">15</td>
 <td align="right">5.21</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="right">64929277</td>
 <td align="left">TRIMEBUTINE ALMUS 200 mg, comprimé</td>
 <td align="right">15</td>
 <td align="right">5.21</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="right">65239699</td>
 <td align="left">TRIMEBUTINE ZENTIVA 200 mg, comprimé</td>
 <td align="right">15</td>
 <td align="right">5.21</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="right">65960119</td>
 <td align="left">TRIMEBUTINE MYLAN 200 mg, comprimé pelliculé</td>
 <td align="right">15</td>
 <td align="right">5.21</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="right">66596686</td>
 <td align="left">TRIMEBUTINE PFIZER 200 mg, comprimé pelliculé</td>
 <td align="right">15</td>
 <td align="right">5.21</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="right">66670503</td>
 <td align="left">TRIMEBUTINE BIOGARAN 200 mg, comprimé</td>
 <td align="right">15</td>
 <td align="right">5.21</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="right">66690146</td>
 <td align="left">TRIMEBUTINE ACTAVIS 200 mg, comprimé</td>
 <td align="right">15</td>
 <td align="right">5.21</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="right">68816348</td>
 <td align="left">TRIMEBUTINE CRISTERS 200 mg, comprimé</td>
 <td align="right">15</td>
 <td align="right">5.21</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="right">69814229</td>
 <td align="left">TRIMEBUTINE ARROW 200 mg, comprimé</td>
 <td align="right">15</td>
 <td align="right">5.21</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="right">61956187</td>
 <td align="left">PROZAC 20 mg/5 ml, solution buvable en flacon</td>
 <td align="right">65</td>
 <td align="right">4.97</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="right">60670489</td>
 <td align="left">SELEXID 200 mg, comprimé pelliculé</td>
 <td align="right">65</td>
 <td align="right">4.93</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="right">61067266</td>
 <td align="left">GONADOTROPHINE CHORIONIQUE ENDO 5000 U.I./1 ml, poudre et solvant pour solution injectable</td>
 <td align="right">65</td>
 <td align="right">4.88</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="right">68969066</td>
 <td align="left">LAROXYL 40 mg/ml, solution buvable</td>
 <td align="right">65</td>
 <td align="right">4.84</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="right">66826009</td>
 <td align="left">EGERY, microgranules gastro-résistants en gélule</td>
 <td align="right">65</td>
 <td align="right">4.83</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="right">68658161</td>
 <td align="left">RULID 50 mg, comprimé sécable pour suspension buvable</td>
 <td align="right">65</td>
 <td align="right">4.81</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="right">64064987</td>
 <td align="left">KEFORAL 1 g, comprimé pelliculé</td>
 <td align="right">65</td>
 <td align="right">4.74</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="right">68479137</td>
 <td align="left">CLARITHROMYCINE BIPHAR 250 mg, comprimé pelliculé</td>
 <td align="right">65</td>
 <td align="right">4.74</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="right">69837295</td>
 <td align="left">CLARITHROMYCINE MYLAN PHARMA 500 mg, comprimé pelliculé à libération modifiée</td>
 <td align="right">65</td>
 <td align="right">4.74</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="right">63992335</td>
 <td align="left">CEFUROXIME ZENTIVA 250 mg, comprimé pelliculé</td>
 <td align="right">65</td>
 <td align="right">4.69</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="right">62816804</td>
 <td align="left">LARGACTIL 100 mg, comprimé pelliculé sécable</td>
 <td align="right">65</td>
 <td align="right">4.68</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="right">63871440</td>
 <td align="left">ORACEFAL 500 mg, gélule</td>
 <td align="right">65</td>
 <td align="right">4.68</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="right">67013510</td>
 <td align="left">MESTINON 60 mg, comprimé enrobé</td>
 <td align="right">65</td>
 <td align="right">4.68</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="right">64639548</td>
 <td align="left">MEDROL 16 mg, comprimé sécable</td>
 <td align="right">65</td>
 <td align="right">4.67</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="right">65821685</td>
 <td align="left">OXYNORMORO 10 mg, comprimé orodispersible</td>
 <td align="right">65</td>
 <td align="right">4.65</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="right">68127381</td>
 <td align="left">OXYNORM 10 mg, gélule</td>
 <td align="right">65</td>
 <td align="right">4.65</td>
-</tr>
-<tr class="odd">
-<td align="right">61644013</td>
-<td align="left">MEBEVERINE BIOGARAN 200 mg, gélule</td>
-<td align="right">15</td>
-<td align="right">4.64</td>
 </tr>
 <tr class="even">
 <td align="right">63225081</td>
@@ -4288,148 +4236,136 @@ knitr::kable(rep5, row.names = FALSE)</code></pre>
 <td align="right">4.18</td>
 </tr>
 <tr class="even">
-<td align="right">68661887</td>
-<td align="left">AMOXICILLINE TEVA 1000 mg, poudre pour suspension buvable en sachet</td>
-<td align="right">65</td>
-<td align="right">4.15</td>
-</tr>
-<tr class="odd">
 <td align="right">68928009</td>
 <td align="left">KEAL 1 g, suspension buvable en sachet</td>
 <td align="right">15</td>
 <td align="right">4.11</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="right">69428971</td>
 <td align="left">KEAL 1 g, comprimé sécable</td>
 <td align="right">15</td>
 <td align="right">4.11</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="right">60782552</td>
 <td align="left">CALSYN 100 UI/1 ml, solution injectable</td>
 <td align="right">15</td>
 <td align="right">3.97</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="right">69235748</td>
 <td align="left">ACTISKENAN 20 mg, gélule</td>
 <td align="right">65</td>
 <td align="right">3.81</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="right">68446571</td>
 <td align="left">KEFORAL 500 mg, comprimé pelliculé</td>
 <td align="right">65</td>
 <td align="right">3.78</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="right">67061569</td>
 <td align="left">DOXY 50 mg, comprimé pelliculé</td>
 <td align="right">65</td>
 <td align="right">3.76</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="right">62178757</td>
 <td align="left">EFFEDERM, solution pour application cutanée</td>
 <td align="right">30</td>
 <td align="right">3.74</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="right">62899127</td>
 <td align="left">KENACORT RETARD 80 mg/2 ml, suspension injectable</td>
 <td align="right">65</td>
 <td align="right">3.73</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="right">63369053</td>
 <td align="left">PARLODEL 2,5 mg, comprimé sécable</td>
 <td align="right">65</td>
 <td align="right">3.58</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="right">66300735</td>
 <td align="left">CARTREX 100 mg, comprimé pelliculé</td>
 <td align="right">65</td>
 <td align="right">3.58</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="right">60246750</td>
 <td align="left">DEBRIDAT 100 mg, comprimé pelliculé</td>
 <td align="right">15</td>
 <td align="right">3.54</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="right">66155948</td>
 <td align="left">TROPHIGIL, gélule vaginale</td>
 <td align="right">30</td>
 <td align="right">3.50</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="right">66828412</td>
 <td align="left">MOSCONTIN 10 mg, comprimé enrobé à libération prolongée</td>
 <td align="right">65</td>
 <td align="right">3.42</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="right">68142440</td>
 <td align="left">INDOCID 100 mg, suppositoire</td>
 <td align="right">30</td>
 <td align="right">3.41</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="right">69990693</td>
 <td align="left">DEPO-PRODASONE 250 mg/5 ml, suspension injectable</td>
 <td align="right">65</td>
 <td align="right">3.41</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="right">65892928</td>
 <td align="left">LAROXYL 25 mg, comprimé pelliculé</td>
 <td align="right">65</td>
 <td align="right">3.36</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="right">69584073</td>
 <td align="left">SMECTA 3 g ORANGE-VANILLE, poudre pour suspension buvable en sachet</td>
 <td align="right">30</td>
 <td align="right">3.33</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="right">62082004</td>
 <td align="left">JOSACINE 125 mg/5 ml, granulés pour suspension buvable</td>
 <td align="right">65</td>
 <td align="right">3.29</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="right">64172183</td>
 <td align="left">DICETEL 50 mg, comprimé pelliculé</td>
 <td align="right">15</td>
 <td align="right">3.26</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="right">61227030</td>
 <td align="left">SKENAN L.P. 10 mg, microgranules à libération prolongée en gélule</td>
 <td align="right">65</td>
 <td align="right">3.24</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="right">62431527</td>
 <td align="left">VOLTARENE 50 mg, comprimé enrobé gastro-résistant</td>
 <td align="right">65</td>
 <td align="right">3.23</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="right">68217804</td>
 <td align="left">TOLEXINE 100 mg, microgranules en comprimé</td>
 <td align="right">65</td>
 <td align="right">3.22</td>
-</tr>
-<tr class="odd">
-<td align="right">60098376</td>
-<td align="left">TRIMEBUTINE (MALEATE) RPG 100 mg, comprimé pelliculé</td>
-<td align="right">15</td>
-<td align="right">3.20</td>
 </tr>
 <tr class="even">
 <td align="right">60508697</td>
@@ -4528,92 +4464,80 @@ knitr::kable(rep5, row.names = FALSE)</code></pre>
 <td align="right">3.20</td>
 </tr>
 <tr class="even">
-<td align="right">69021139</td>
-<td align="left">TRIMEBUTINE RATIO 100 mg, comprimé pelliculé</td>
-<td align="right">15</td>
-<td align="right">3.20</td>
-</tr>
-<tr class="odd">
 <td align="right">69125020</td>
 <td align="left">TRIMEBUTINE MYLAN CONSEIL 100 mg, comprimé</td>
 <td align="right">15</td>
 <td align="right">3.20</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="right">63283736</td>
 <td align="left">EUPHON, sirop</td>
 <td align="right">30</td>
 <td align="right">3.13</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="right">67487622</td>
 <td align="left">FLORGYNAL, gélule vaginale</td>
 <td align="right">30</td>
 <td align="right">3.13</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="right">69403879</td>
 <td align="left">IMMUNOGLOBULINE EQUINE TETANIQUE PASTEUR 1500 UI/ml, solution injectable en seringue préremplie</td>
 <td align="right">65</td>
 <td align="right">3.09</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="right">61621776</td>
 <td align="left">NAFTILUX 200 mg, gélule</td>
 <td align="right">15</td>
 <td align="right">3.06</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="right">61386381</td>
 <td align="left">KEFORAL 250 mg/5 ml, poudre pour suspension buvable en flacon</td>
 <td align="right">65</td>
 <td align="right">3.05</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="right">63836158</td>
 <td align="left">TOLEXINE 50 mg, microgranules en comprimé</td>
 <td align="right">65</td>
 <td align="right">3.05</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="right">60674103</td>
 <td align="left">COLTRAMYL 4 mg, comprimé</td>
 <td align="right">15</td>
 <td align="right">3.03</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="right">61457558</td>
 <td align="left">SPIRONOLACTONE PFIZER 50 mg, comprimé sécable</td>
 <td align="right">65</td>
 <td align="right">3.00</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="right">63478736</td>
 <td align="left">SPIRONOLACTONE MICROFINE RATIOPHARM 50 mg, comprimé sécable</td>
 <td align="right">65</td>
 <td align="right">3.00</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="right">67533094</td>
 <td align="left">SPIROCTAN 50 mg, gélule</td>
 <td align="right">65</td>
 <td align="right">3.00</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="right">60730064</td>
 <td align="left">NAFTIDROFURYL MYLAN 200 mg, comprimé pelliculé</td>
 <td align="right">15</td>
 <td align="right">2.99</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="right">67461225</td>
 <td align="left">NAFTIDROFURYL RANBAXY 200 mg, comprimé pelliculé</td>
-<td align="right">15</td>
-<td align="right">2.99</td>
-</tr>
-<tr class="even">
-<td align="right">69099668</td>
-<td align="left">NAFTIDROFURYL MYLAN GENERIQUES 200 mg, comprimé pelliculé</td>
 <td align="right">15</td>
 <td align="right">2.99</td>
 </tr>
@@ -4720,32 +4644,20 @@ knitr::kable(rep5, row.names = FALSE)</code></pre>
 <td align="right">2.60</td>
 </tr>
 <tr class="even">
-<td align="right">62099434</td>
-<td align="left">PIRACETAM QUALIMED 20 %, solution buvable</td>
-<td align="right">15</td>
-<td align="right">2.60</td>
-</tr>
-<tr class="odd">
 <td align="right">62393891</td>
 <td align="left">PIRACETAM ARROW 20 %, solution buvable</td>
 <td align="right">15</td>
 <td align="right">2.60</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="right">62885889</td>
 <td align="left">ARGININE VEYRON, solution buvable en ampoule</td>
 <td align="right">65</td>
 <td align="right">2.60</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="right">63426508</td>
 <td align="left">NOOTROPYL 20 %, solution buvable</td>
-<td align="right">15</td>
-<td align="right">2.60</td>
-</tr>
-<tr class="even">
-<td align="right">63456031</td>
-<td align="left">PIRACETAM TEVA 20 %, solution buvable</td>
 <td align="right">15</td>
 <td align="right">2.60</td>
 </tr>
@@ -4753,18 +4665,6 @@ knitr::kable(rep5, row.names = FALSE)</code></pre>
 <td align="right">63679194</td>
 <td align="left">MOTILIUM 10 mg, comprimé pelliculé</td>
 <td align="right">30</td>
-<td align="right">2.60</td>
-</tr>
-<tr class="even">
-<td align="right">67370590</td>
-<td align="left">PIRACETAM MYLAN 20 %, solution buvable</td>
-<td align="right">15</td>
-<td align="right">2.60</td>
-</tr>
-<tr class="odd">
-<td align="right">68603880</td>
-<td align="left">PIRACETAM SANDOZ 20 POUR CENT, solution buvable</td>
-<td align="right">15</td>
 <td align="right">2.60</td>
 </tr>
 <tr class="even">
@@ -4840,18 +4740,6 @@ knitr::kable(rep5, row.names = FALSE)</code></pre>
 <td align="right">2.50</td>
 </tr>
 <tr class="even">
-<td align="right">61570367</td>
-<td align="left">CHLORHYDRATE DE MEBEVERINE MYLAN 200 mg, gélule</td>
-<td align="right">15</td>
-<td align="right">2.49</td>
-</tr>
-<tr class="odd">
-<td align="right">61644013</td>
-<td align="left">MEBEVERINE BIOGARAN 200 mg, gélule</td>
-<td align="right">15</td>
-<td align="right">2.49</td>
-</tr>
-<tr class="even">
 <td align="right">61896847</td>
 <td align="left">MEBEVERINE ZENTIVA 200 mg, comprimé sécable</td>
 <td align="right">15</td>
@@ -4870,64 +4758,52 @@ knitr::kable(rep5, row.names = FALSE)</code></pre>
 <td align="right">2.49</td>
 </tr>
 <tr class="odd">
-<td align="right">68808650</td>
-<td align="left">COLOPRIV 200 mg, gélule</td>
-<td align="right">15</td>
-<td align="right">2.49</td>
-</tr>
-<tr class="even">
 <td align="right">62600742</td>
 <td align="left">BRICANYL 0,5 mg/1 ml, solution injectable en ampoule</td>
 <td align="right">65</td>
 <td align="right">2.46</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="right">65371633</td>
 <td align="left">ERY NOURRISSONS 125 mg, granulés en sachet</td>
 <td align="right">65</td>
 <td align="right">2.44</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="right">65676987</td>
 <td align="left">LARGACTIL 25 mg, comprimé pelliculé sécable</td>
 <td align="right">65</td>
 <td align="right">2.44</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="right">66303560</td>
 <td align="left">DI-HYDAN 100 mg, comprimé sécable</td>
 <td align="right">65</td>
 <td align="right">2.37</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="right">60988157</td>
 <td align="left">MEDROL 4 mg, comprimé sécable</td>
 <td align="right">65</td>
 <td align="right">2.33</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="right">65539814</td>
 <td align="left">PARLODEL 2,5 mg inhibition de la lactation, comprimé sécable</td>
 <td align="right">65</td>
 <td align="right">2.32</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="right">63907395</td>
 <td align="left">PROGESTERONE RETARD PHARLON 500 mg/2 ml, solution injectable IM en ampoule</td>
 <td align="right">30</td>
 <td align="right">2.27</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="right">60907447</td>
 <td align="left">SEVREDOL 10 mg, comprimé pelliculé sécable</td>
 <td align="right">65</td>
 <td align="right">2.26</td>
-</tr>
-<tr class="even">
-<td align="right">65873792</td>
-<td align="left">PROXALYOC 20 mg, lyophilisat oral</td>
-<td align="right">30</td>
-<td align="right">2.20</td>
 </tr>
 <tr class="odd">
 <td align="right">67214342</td>
@@ -5068,68 +4944,56 @@ knitr::kable(rep5, row.names = FALSE)</code></pre>
 <td align="right">1.88</td>
 </tr>
 <tr class="even">
-<td align="right">68661887</td>
-<td align="left">AMOXICILLINE TEVA 1000 mg, poudre pour suspension buvable en sachet</td>
-<td align="right">65</td>
-<td align="right">1.88</td>
-</tr>
-<tr class="odd">
 <td align="right">60588704</td>
 <td align="left">DEBRIDAT ENFANT ET NOURRISSON 4,8 mg/ml, granulé pour suspension buvable en flacon</td>
 <td align="right">15</td>
 <td align="right">1.87</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="right">63010787</td>
 <td align="left">NEO-CODION ADULTES, sirop</td>
 <td align="right">30</td>
 <td align="right">1.87</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="right">63855240</td>
 <td align="left">VOLTARENE EMULGEL 1 %, gel</td>
 <td align="right">30</td>
 <td align="right">1.87</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="right">63755329</td>
 <td align="left">ANTARENE CODEINE 200 mg/30 mg, comprimé pelliculé</td>
 <td align="right">65</td>
 <td align="right">1.86</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="right">63881961</td>
 <td align="left">ANTARENE CODEINE 400 mg/60 mg, comprimé pelliculé</td>
 <td align="right">65</td>
 <td align="right">1.86</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="right">64539416</td>
 <td align="left">CLAMOXYL 1 g, comprimé dispersible</td>
 <td align="right">65</td>
 <td align="right">1.84</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="right">64882258</td>
 <td align="left">AMOXICILLINE ARROW 1 g, comprimé pelliculé dispersible</td>
 <td align="right">65</td>
 <td align="right">1.84</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="right">65067139</td>
 <td align="left">NAFTIDROFURYL MYLAN 100 mg, gélule</td>
 <td align="right">15</td>
 <td align="right">1.83</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="right">65182102</td>
 <td align="left">FELDENE 20 mg/1 ml, solution injectable en ampoule (IM)</td>
-<td align="right">15</td>
-<td align="right">1.83</td>
-</tr>
-<tr class="even">
-<td align="right">69195392</td>
-<td align="left">NAFTIDROFURYL MYLAN GENERIQUES 100 mg, gélule</td>
 <td align="right">15</td>
 <td align="right">1.83</td>
 </tr>
@@ -5176,395 +5040,359 @@ knitr::kable(rep5, row.names = FALSE)</code></pre>
 <td align="right">1.80</td>
 </tr>
 <tr class="even">
-<td align="right">66456848</td>
-<td align="left">DOMPERIDONE RATIOPHARM 10 mg, comprimé orodispersible</td>
-<td align="right">30</td>
-<td align="right">1.80</td>
-</tr>
-<tr class="odd">
 <td align="right">69139269</td>
 <td align="left">DOMPERIDONE MYLAN 10 mg, comprimé orodispersible</td>
 <td align="right">30</td>
 <td align="right">1.80</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="right">69916757</td>
 <td align="left">DOMPERIDONE SANDOZ 10 mg, comprimé orodispersible</td>
 <td align="right">30</td>
 <td align="right">1.80</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="right">64904434</td>
 <td align="left">VOLTARENDOLO 12,5 mg, comprimé enrobé</td>
 <td align="right">65</td>
 <td align="right">1.76</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="right">67950198</td>
 <td align="left">DERMORELLE 200 mg, capsule molle</td>
 <td align="right">65</td>
 <td align="right">1.74</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="right">62607530</td>
 <td align="left">CLAMOXYL 500 mg/5 ml, poudre pour suspension buvable</td>
 <td align="right">65</td>
 <td align="right">1.73</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="right">62417470</td>
 <td align="left">ACTISKENAN 5 mg, gélule</td>
 <td align="right">65</td>
 <td align="right">1.71</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="right">63283736</td>
 <td align="left">EUPHON, sirop</td>
 <td align="right">30</td>
 <td align="right">1.69</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="right">64205726</td>
 <td align="left">SALBUMOL 0,5 mg/1 ml, solution injectable</td>
 <td align="right">30</td>
 <td align="right">1.69</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="right">61722191</td>
 <td align="left">DOXY 100 mg, comprimé pelliculé</td>
 <td align="right">65</td>
 <td align="right">1.66</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="right">65203952</td>
 <td align="left">DOXYCYCLINE BIOGARAN 100 mg, comprimé pelliculé sécable</td>
 <td align="right">65</td>
 <td align="right">1.66</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="right">67164569</td>
 <td align="left">DOXYCYCLINE ARROW 100 mg, comprimé pelliculé</td>
 <td align="right">65</td>
 <td align="right">1.66</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="right">60904643</td>
 <td align="left">CODOLIPRANE 500 mg/30 mg, comprimé</td>
 <td align="right">65</td>
 <td align="right">1.59</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="right">61109911</td>
 <td align="left">DAFALGAN CODEINE, comprimé effervescent sécable</td>
 <td align="right">65</td>
 <td align="right">1.59</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="right">61943097</td>
 <td align="left">PARACETAMOL CODEINE TEVA 500 mg/30 mg, comprimé effervescent sécable</td>
 <td align="right">65</td>
 <td align="right">1.59</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="right">62351650</td>
 <td align="left">CODOLIPRANE 500 mg/30 mg, comprimé effervescent sécable</td>
 <td align="right">65</td>
 <td align="right">1.59</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="right">62541023</td>
 <td align="left">PARACETAMOL CODEINE EG 500 mg/30 mg, comprimé effervescent sécable</td>
 <td align="right">65</td>
 <td align="right">1.59</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="right">64226827</td>
 <td align="left">CLARADOL CODEINE 500 mg/20 mg, comprimé</td>
 <td align="right">65</td>
 <td align="right">1.59</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="right">64406362</td>
 <td align="left">CODOLIPRANE ADULTES 400 mg/20 mg, comprimé sécable</td>
 <td align="right">65</td>
 <td align="right">1.59</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="right">65322262</td>
 <td align="left">ALGISEDAL, comprimé</td>
 <td align="right">65</td>
 <td align="right">1.59</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="right">66003374</td>
 <td align="left">DAFALGAN CODEINE, comprimé pelliculé</td>
 <td align="right">65</td>
 <td align="right">1.59</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="right">68457482</td>
 <td align="left">LINDILANE 400 mg/25 mg, comprimé</td>
 <td align="right">65</td>
 <td align="right">1.59</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="right">69355295</td>
 <td align="left">PARACETAMOL CODEINE BIOGARAN 500 mg/30 mg, comprimé effervescent sécable</td>
 <td align="right">65</td>
 <td align="right">1.59</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="right">69549916</td>
 <td align="left">PARACETAMOL CODEINE MYLAN 500 mg/30 mg, comprimé effervescent sécable</td>
 <td align="right">65</td>
 <td align="right">1.59</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="right">69722236</td>
 <td align="left">KLIPAL CODEINE 600 mg/50 mg, comprimé</td>
 <td align="right">65</td>
 <td align="right">1.59</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="right">63284005</td>
 <td align="left">MEBEVERINE ZENTIVA 100 mg, gélule</td>
 <td align="right">15</td>
 <td align="right">1.58</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="right">67480229</td>
 <td align="left">ORACEFAL 125 mg/ 5 ml, poudre pour suspension buvable</td>
 <td align="right">65</td>
 <td align="right">1.55</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="right">64447761</td>
 <td align="left">DILATRANE 100 mg, gélule à libération prolongée</td>
 <td align="right">30</td>
 <td align="right">1.54</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="right">63169145</td>
 <td align="left">RANITIDINE MYLAN 75 mg, comprimé effervescent</td>
 <td align="right">15</td>
 <td align="right">1.53</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="right">63245447</td>
 <td align="left">RANITIDINE TEVA 75 mg, comprimé effervescent</td>
 <td align="right">15</td>
 <td align="right">1.53</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="right">63836158</td>
 <td align="left">TOLEXINE 50 mg, microgranules en comprimé</td>
 <td align="right">65</td>
 <td align="right">1.52</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="right">62110311</td>
 <td align="left">KLIPAL CODEINE 300 mg/25 mg, comprimé</td>
 <td align="right">65</td>
 <td align="right">1.50</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="right">68550890</td>
 <td align="left">EDUCTYL ADULTES, suppositoire effervescent</td>
 <td align="right">30</td>
 <td align="right">1.50</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="right">68828471</td>
 <td align="left">EDUCTYL ENFANTS, suppositoire effervescent</td>
 <td align="right">30</td>
 <td align="right">1.50</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="right">64970338</td>
 <td align="left">SPASFON LYOC 160 mg, lyophilisat oral</td>
 <td align="right">15</td>
 <td align="right">1.47</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="right">65215068</td>
 <td align="left">VOLTARENE 25 mg, comprimé gastro-résistant</td>
 <td align="right">65</td>
 <td align="right">1.47</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="right">69437098</td>
 <td align="left">NORMACOL LAVEMENT ADULTES, solution rectale, récipient unidose</td>
 <td align="right">65</td>
 <td align="right">1.44</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="right">66082724</td>
 <td align="left">AMOXICILLINE ARROW 500 mg, gélule</td>
 <td align="right">65</td>
 <td align="right">1.42</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="right">66916798</td>
 <td align="left">AMOXICILLINE ARROW LAB 500 mg, gélule</td>
 <td align="right">65</td>
 <td align="right">1.42</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="right">67707794</td>
 <td align="left">CLAMOXYL 500 mg, gélule</td>
 <td align="right">65</td>
 <td align="right">1.42</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="right">67001351</td>
 <td align="left">VOLTARENE ENFANT, suppositoire</td>
 <td align="right">30</td>
 <td align="right">1.38</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="right">67140810</td>
 <td align="left">CLAMOXYL 250 mg/ 5 ml, poudre pour suspension buvable</td>
 <td align="right">65</td>
 <td align="right">1.38</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="right">67410412</td>
 <td align="left">THERALENE 4 POUR CENT, solution buvable en gouttes</td>
 <td align="right">15</td>
 <td align="right">1.38</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="right">62944693</td>
 <td align="left">SPASFON LYOC 80 mg, lyophilisat oral</td>
 <td align="right">15</td>
 <td align="right">1.33</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="right">66105571</td>
 <td align="left">PHLOROGLUCINOL ARROW 80 mg, comprimé orodispersible</td>
 <td align="right">15</td>
 <td align="right">1.33</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="right">63339576</td>
 <td align="left">CLARELUX 500 microgrammes/g, crème</td>
 <td align="right">65</td>
 <td align="right">1.24</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="right">64396480</td>
 <td align="left">NORMACOL LAVEMENT ENFANTS, solution rectale, récipient unidose</td>
 <td align="right">65</td>
 <td align="right">1.21</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="right">66801066</td>
 <td align="left">THERALENE 5 mg, comprimé pelliculé sécable</td>
 <td align="right">15</td>
 <td align="right">1.21</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="right">64539416</td>
 <td align="left">CLAMOXYL 1 g, comprimé dispersible</td>
 <td align="right">65</td>
 <td align="right">1.19</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="right">68957644</td>
 <td align="left">DILATRANE 50 mg, gélule à libération prolongée</td>
 <td align="right">30</td>
 <td align="right">1.18</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="right">62660134</td>
 <td align="left">STEDIRIL, comprimé enrobé</td>
 <td align="right">65</td>
 <td align="right">1.14</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="right">61155773</td>
 <td align="left">CLAMOXYL 125 mg/5 ml, poudre pour suspension buvable</td>
 <td align="right">65</td>
 <td align="right">1.08</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="right">62116435</td>
 <td align="left">CLAMOXYL 1 g, poudre et solvant pour solution injectable (I.M.)</td>
 <td align="right">65</td>
 <td align="right">1.07</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="right">68948346</td>
 <td align="left">VOLTARENE 75 mg/3 ml, solution injectable</td>
 <td align="right">30</td>
 <td align="right">0.94</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="right">60007280</td>
 <td align="left">SAFLUTAN 15 microgrammes/ml, collyre en solution en récipient unidose</td>
 <td align="right">NA</td>
 <td align="right">NA</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="right">60021216</td>
 <td align="left">PERSANTINE 75 mg, comprimé enrobé</td>
 <td align="right">NA</td>
 <td align="right">NA</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="right">60047143</td>
 <td align="left">VECTARION, lyophilisat et solution pour préparation injectable</td>
 <td align="right">NA</td>
 <td align="right">NA</td>
 </tr>
-<tr class="odd">
-<td align="right">60049991</td>
-<td align="left">TAMIK, capsule</td>
-<td align="right">NA</td>
-<td align="right">NA</td>
-</tr>
 <tr class="even">
-<td align="right">60060450</td>
-<td align="left">ESBERIVEN, crème</td>
-<td align="right">NA</td>
-<td align="right">NA</td>
-</tr>
-<tr class="odd">
 <td align="right">60061171</td>
 <td align="left">TETRALYSAL 150 mg, gélule</td>
 <td align="right">NA</td>
 <td align="right">NA</td>
 </tr>
-<tr class="even">
-<td align="right">60072310</td>
-<td align="left">GESTODENE/ETHINYLESTRADIOL ARROW 75 microgrammes/20 microgrammes, comprimé enrobé</td>
-<td align="right">NA</td>
-<td align="right">NA</td>
-</tr>
 <tr class="odd">
-<td align="right">60072310</td>
-<td align="left">GESTODENE/ETHINYLESTRADIOL ARROW 75 microgrammes/20 microgrammes, comprimé enrobé</td>
-<td align="right">NA</td>
-<td align="right">NA</td>
-</tr>
-<tr class="even">
 <td align="right">60085578</td>
 <td align="left">PEFLACINE MONODOSE 400 mg, comprimé enrobé</td>
 <td align="right">NA</td>
 <td align="right">NA</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="right">60111101</td>
 <td align="left">MAGNESIUM/VITAMINE B6 MYLAN 48 mg/5 mg, comprimé pelliculé</td>
 <td align="right">NA</td>
 <td align="right">NA</td>
 </tr>
-<tr class="even">
-<td align="right">60122980</td>
-<td align="left">HEPT A MYL 30,5 POUR CENT, solution buvable en flacon</td>
-<td align="right">NA</td>
-<td align="right">NA</td>
-</tr>
 <tr class="odd">
 <td align="right">60122980</td>
 <td align="left">HEPT A MYL 30,5 POUR CENT, solution buvable en flacon</td>
@@ -5572,17 +5400,17 @@ knitr::kable(rep5, row.names = FALSE)</code></pre>
 <td align="right">NA</td>
 </tr>
 <tr class="even">
+<td align="right">60122980</td>
+<td align="left">HEPT A MYL 30,5 POUR CENT, solution buvable en flacon</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+</tr>
+<tr class="odd">
 <td align="right">60127671</td>
 <td align="left">PEPSANE, capsule</td>
 <td align="right">NA</td>
 <td align="right">NA</td>
 </tr>
-<tr class="odd">
-<td align="right">60209645</td>
-<td align="left">OXYNORM 10 mg/ml, solution injectable</td>
-<td align="right">NA</td>
-<td align="right">NA</td>
-</tr>
 <tr class="even">
 <td align="right">60209645</td>
 <td align="left">OXYNORM 10 mg/ml, solution injectable</td>
@@ -5596,35 +5424,23 @@ knitr::kable(rep5, row.names = FALSE)</code></pre>
 <td align="right">NA</td>
 </tr>
 <tr class="even">
+<td align="right">60209645</td>
+<td align="left">OXYNORM 10 mg/ml, solution injectable</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+</tr>
+<tr class="odd">
 <td align="right">60240181</td>
 <td align="left">UVIMAG B6, solution buvable</td>
 <td align="right">NA</td>
 <td align="right">NA</td>
 </tr>
-<tr class="odd">
-<td align="right">60250930</td>
-<td align="left">MEBEVERINE TEVA 200 mg, gélule</td>
-<td align="right">NA</td>
-<td align="right">NA</td>
-</tr>
 <tr class="even">
-<td align="right">60250930</td>
-<td align="left">MEBEVERINE TEVA 200 mg, gélule</td>
-<td align="right">NA</td>
-<td align="right">NA</td>
-</tr>
-<tr class="odd">
 <td align="right">60269037</td>
 <td align="left">VASTAREL 20 mg, comprimé pelliculé</td>
 <td align="right">NA</td>
 <td align="right">NA</td>
 </tr>
-<tr class="even">
-<td align="right">60287373</td>
-<td align="left">TANAKAN 40 mg, comprimé enrobé</td>
-<td align="right">NA</td>
-<td align="right">NA</td>
-</tr>
 <tr class="odd">
 <td align="right">60287373</td>
 <td align="left">TANAKAN 40 mg, comprimé enrobé</td>
@@ -5632,17 +5448,17 @@ knitr::kable(rep5, row.names = FALSE)</code></pre>
 <td align="right">NA</td>
 </tr>
 <tr class="even">
+<td align="right">60287373</td>
+<td align="left">TANAKAN 40 mg, comprimé enrobé</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+</tr>
+<tr class="odd">
 <td align="right">60301200</td>
 <td align="left">CUROSURF 120 mg/1,5 ml, suspension pour instillation endotrachéobronchique</td>
 <td align="right">NA</td>
 <td align="right">NA</td>
 </tr>
-<tr class="odd">
-<td align="right">60329185</td>
-<td align="left">ROHYPNOL 1 mg, comprimé pelliculé sécable</td>
-<td align="right">NA</td>
-<td align="right">NA</td>
-</tr>
 <tr class="even">
 <td align="right">60329185</td>
 <td align="left">ROHYPNOL 1 mg, comprimé pelliculé sécable</td>
@@ -5650,14 +5466,14 @@ knitr::kable(rep5, row.names = FALSE)</code></pre>
 <td align="right">NA</td>
 </tr>
 <tr class="odd">
+<td align="right">60329185</td>
+<td align="left">ROHYPNOL 1 mg, comprimé pelliculé sécable</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+</tr>
+<tr class="even">
 <td align="right">60329609</td>
 <td align="left">SALICAIRINE, solution buvable, flacon compte-gouttes</td>
-<td align="right">NA</td>
-<td align="right">NA</td>
-</tr>
-<tr class="even">
-<td align="right">60331229</td>
-<td align="left">VASCOCITROL, solution buvable en ampoule</td>
 <td align="right">NA</td>
 <td align="right">NA</td>
 </tr>
@@ -5692,18 +5508,6 @@ knitr::kable(rep5, row.names = FALSE)</code></pre>
 <td align="right">NA</td>
 </tr>
 <tr class="even">
-<td align="right">60379569</td>
-<td align="left">NEXEN 100 mg, comprimé</td>
-<td align="right">NA</td>
-<td align="right">NA</td>
-</tr>
-<tr class="odd">
-<td align="right">60379569</td>
-<td align="left">NEXEN 100 mg, comprimé</td>
-<td align="right">NA</td>
-<td align="right">NA</td>
-</tr>
-<tr class="even">
 <td align="right">60385433</td>
 <td align="left">TAXOTERE 20 mg/1 ml, solution à diluer pour perfusion</td>
 <td align="right">NA</td>
@@ -5728,18 +5532,6 @@ knitr::kable(rep5, row.names = FALSE)</code></pre>
 <td align="right">NA</td>
 </tr>
 <tr class="even">
-<td align="right">60413174</td>
-<td align="left">MYOLASTAN 50 mg, comprimé pelliculé sécable</td>
-<td align="right">NA</td>
-<td align="right">NA</td>
-</tr>
-<tr class="odd">
-<td align="right">60413174</td>
-<td align="left">MYOLASTAN 50 mg, comprimé pelliculé sécable</td>
-<td align="right">NA</td>
-<td align="right">NA</td>
-</tr>
-<tr class="even">
 <td align="right">60453083</td>
 <td align="left">ATEPADENE 30 mg, gélule</td>
 <td align="right">NA</td>
@@ -5766,36 +5558,12 @@ knitr::kable(rep5, row.names = FALSE)</code></pre>
 <tr class="even">
 <td align="right">60491130</td>
 <td align="left">DAFLON 500 mg, comprimé pelliculé</td>
-<td align="right">NA</td>
-<td align="right">NA</td>
-</tr>
-<tr class="odd">
-<td align="right">60505701</td>
-<td align="left">EQUANIL 400 mg, comprimé enrobé sécable</td>
-<td align="right">NA</td>
-<td align="right">NA</td>
-</tr>
-<tr class="even">
-<td align="right">60505701</td>
-<td align="left">EQUANIL 400 mg, comprimé enrobé sécable</td>
 <td align="right">NA</td>
 <td align="right">NA</td>
 </tr>
 <tr class="odd">
 <td align="right">60509781</td>
 <td align="left">TAXOTERE 160 mg/8 ml, solution à diluer pour perfusion</td>
-<td align="right">NA</td>
-<td align="right">NA</td>
-</tr>
-<tr class="even">
-<td align="right">60520742</td>
-<td align="left">TETRAZEPAM ZENTIVA 50 mg, comprimé pelliculé sécable</td>
-<td align="right">NA</td>
-<td align="right">NA</td>
-</tr>
-<tr class="odd">
-<td align="right">60529809</td>
-<td align="left">HYDERGINE 1 mg/ml, solution buvable en gouttes</td>
 <td align="right">NA</td>
 <td align="right">NA</td>
 </tr>
@@ -5814,18 +5582,6 @@ knitr::kable(rep5, row.names = FALSE)</code></pre>
 <tr class="even">
 <td align="right">60558682</td>
 <td align="left">PANFUREX 200 mg, gélule</td>
-<td align="right">NA</td>
-<td align="right">NA</td>
-</tr>
-<tr class="odd">
-<td align="right">60562182</td>
-<td align="left">FONLIPOL 400 mg, comprimé</td>
-<td align="right">NA</td>
-<td align="right">NA</td>
-</tr>
-<tr class="even">
-<td align="right">60562182</td>
-<td align="left">FONLIPOL 400 mg, comprimé</td>
 <td align="right">NA</td>
 <td align="right">NA</td>
 </tr>
@@ -5980,86 +5736,62 @@ knitr::kable(rep5, row.names = FALSE)</code></pre>
 <td align="right">NA</td>
 </tr>
 <tr class="even">
-<td align="right">61139203</td>
-<td align="left">BIPERIDYSFLASH 20 mg, comprimé orodispersible</td>
-<td align="right">NA</td>
-<td align="right">NA</td>
-</tr>
-<tr class="odd">
 <td align="right">61144524</td>
 <td align="left">AMPECYCLAL 300 mg, gélule</td>
 <td align="right">NA</td>
 <td align="right">NA</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="right">61165034</td>
 <td align="left">TITANOREINE A LA LIDOCAINE 2 POUR CENT, crème</td>
 <td align="right">NA</td>
 <td align="right">NA</td>
 </tr>
-<tr class="odd">
-<td align="right">61179863</td>
-<td align="left">ISKEDYL FORT, comprimé</td>
-<td align="right">NA</td>
-<td align="right">NA</td>
-</tr>
 <tr class="even">
-<td align="right">61179863</td>
-<td align="left">ISKEDYL FORT, comprimé</td>
-<td align="right">NA</td>
-<td align="right">NA</td>
-</tr>
-<tr class="odd">
 <td align="right">61195604</td>
 <td align="left">RASILEZ 300 mg, comprimé pelliculé</td>
 <td align="right">NA</td>
 <td align="right">NA</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="right">61214830</td>
 <td align="left">NALBUPHINE RENAUDIN 20 mg/2 ml, solution injectable</td>
 <td align="right">NA</td>
 <td align="right">NA</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="right">61231445</td>
 <td align="left">CYCLO 3, crème</td>
 <td align="right">NA</td>
 <td align="right">NA</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="right">61270455</td>
 <td align="left">MATRIFEN 50 microgrammes/heure, dispositif transdermique</td>
 <td align="right">NA</td>
 <td align="right">NA</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="right">61276045</td>
 <td align="left">HERCEPTIN 150 mg, poudre pour solution à diluer pour perfusion</td>
 <td align="right">NA</td>
 <td align="right">NA</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="right">61279874</td>
 <td align="left">COLPOSEPTINE, comprimé gynécologique</td>
 <td align="right">NA</td>
 <td align="right">NA</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="right">61280428</td>
 <td align="left">RASILEZ 150 mg, comprimé pelliculé</td>
 <td align="right">NA</td>
 <td align="right">NA</td>
 </tr>
-<tr class="even">
-<td align="right">61286317</td>
-<td align="left">NICERGOLINE MYLAN 10 mg, gélule</td>
-<td align="right">NA</td>
-<td align="right">NA</td>
-</tr>
 <tr class="odd">
-<td align="right">61286317</td>
-<td align="left">NICERGOLINE MYLAN 10 mg, gélule</td>
+<td align="right">61294680</td>
+<td align="left">MELIANE, comprimé enrobé</td>
 <td align="right">NA</td>
 <td align="right">NA</td>
 </tr>
@@ -6070,20 +5802,8 @@ knitr::kable(rep5, row.names = FALSE)</code></pre>
 <td align="right">NA</td>
 </tr>
 <tr class="odd">
-<td align="right">61294680</td>
-<td align="left">MELIANE, comprimé enrobé</td>
-<td align="right">NA</td>
-<td align="right">NA</td>
-</tr>
-<tr class="even">
 <td align="right">61298230</td>
 <td align="left">JETREA 0,5 mg/0,2 ml, solution à diluer injectable</td>
-<td align="right">NA</td>
-<td align="right">NA</td>
-</tr>
-<tr class="odd">
-<td align="right">61321177</td>
-<td align="left">TETRAZEPAM CRISTERS 50 mg, comprimé pelliculé sécable</td>
 <td align="right">NA</td>
 <td align="right">NA</td>
 </tr>
@@ -6138,18 +5858,6 @@ knitr::kable(rep5, row.names = FALSE)</code></pre>
 <tr class="even">
 <td align="right">61442104</td>
 <td align="left">TRIPLIXAM 10 mg/2,5 mg/10 mg, comprimé pelliculé</td>
-<td align="right">NA</td>
-<td align="right">NA</td>
-</tr>
-<tr class="odd">
-<td align="right">61464015</td>
-<td align="left">VITALOGINK 40 mg/ml, solution buvable</td>
-<td align="right">NA</td>
-<td align="right">NA</td>
-</tr>
-<tr class="even">
-<td align="right">61464015</td>
-<td align="left">VITALOGINK 40 mg/ml, solution buvable</td>
 <td align="right">NA</td>
 <td align="right">NA</td>
 </tr>
@@ -6232,18 +5940,6 @@ knitr::kable(rep5, row.names = FALSE)</code></pre>
 <td align="right">NA</td>
 </tr>
 <tr class="even">
-<td align="right">61792268</td>
-<td align="left">DIDRONEL 200 mg, comprimé</td>
-<td align="right">NA</td>
-<td align="right">NA</td>
-</tr>
-<tr class="odd">
-<td align="right">61826304</td>
-<td align="left">SERMION 5 mg, gélule</td>
-<td align="right">NA</td>
-<td align="right">NA</td>
-</tr>
-<tr class="even">
 <td align="right">61866277</td>
 <td align="left">PERCUTALGINE, solution pour application cutanée</td>
 <td align="right">NA</td>
@@ -6292,44 +5988,20 @@ knitr::kable(rep5, row.names = FALSE)</code></pre>
 <td align="right">NA</td>
 </tr>
 <tr class="even">
-<td align="right">61957677</td>
-<td align="left">TRIMETAZIDINE QUALIMED 20 mg/ml, solution buvable en gouttes</td>
-<td align="right">NA</td>
-<td align="right">NA</td>
-</tr>
-<tr class="odd">
 <td align="right">61972227</td>
 <td align="left">PANFUREX 4 %, suspension buvable</td>
 <td align="right">NA</td>
 <td align="right">NA</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="right">61973350</td>
 <td align="left">DIFICLIR 200 mg, comprimé pelliculé</td>
 <td align="right">NA</td>
 <td align="right">NA</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="right">61989408</td>
 <td align="left">GLYCO-THYMOLINE 55, solution buccale</td>
-<td align="right">NA</td>
-<td align="right">NA</td>
-</tr>
-<tr class="even">
-<td align="right">62000313</td>
-<td align="left">IKARAN L.P. 5 mg, comprimé à libération prolongée</td>
-<td align="right">NA</td>
-<td align="right">NA</td>
-</tr>
-<tr class="odd">
-<td align="right">62055039</td>
-<td align="left">GINKOR FORT, poudre pour solution buvable en sachet</td>
-<td align="right">NA</td>
-<td align="right">NA</td>
-</tr>
-<tr class="even">
-<td align="right">62058327</td>
-<td align="left">DIHYDROERGOTAMINE AMDIPHARM 2 mg/ml, solution buvable</td>
 <td align="right">NA</td>
 <td align="right">NA</td>
 </tr>
@@ -6352,32 +6024,20 @@ knitr::kable(rep5, row.names = FALSE)</code></pre>
 <td align="right">NA</td>
 </tr>
 <tr class="even">
-<td align="right">62135777</td>
-<td align="left">ETIDRONATE SANDOZ 400 mg, comprimé</td>
-<td align="right">NA</td>
-<td align="right">NA</td>
-</tr>
-<tr class="odd">
 <td align="right">62174933</td>
 <td align="left">ART 50 mg, gélule</td>
 <td align="right">NA</td>
 <td align="right">NA</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="right">62198667</td>
 <td align="left">TRIMEBUTINE ARROW 100 mg, comprimé</td>
 <td align="right">NA</td>
 <td align="right">NA</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="right">62249357</td>
 <td align="left">RHINOFLUIMUCIL, solution pour pulvérisation nasale</td>
-<td align="right">NA</td>
-<td align="right">NA</td>
-</tr>
-<tr class="even">
-<td align="right">62254571</td>
-<td align="left">TETRAZEPAM TEVA 50 mg, comprimé pelliculé sécable</td>
 <td align="right">NA</td>
 <td align="right">NA</td>
 </tr>
@@ -6478,8 +6138,8 @@ knitr::kable(rep5, row.names = FALSE)</code></pre>
 <td align="right">NA</td>
 </tr>
 <tr class="odd">
-<td align="right">62547923</td>
-<td align="left">PIRACETAM QUALIMED 400 mg, comprimé pelliculé</td>
+<td align="right">62553246</td>
+<td align="left">ULTIBRO BREEZHALER 85 microgrammes/43 microgrammes, poudre pour inhalation en gélule</td>
 <td align="right">NA</td>
 <td align="right">NA</td>
 </tr>
@@ -6490,8 +6150,8 @@ knitr::kable(rep5, row.names = FALSE)</code></pre>
 <td align="right">NA</td>
 </tr>
 <tr class="odd">
-<td align="right">62553246</td>
-<td align="left">ULTIBRO BREEZHALER 85 microgrammes/43 microgrammes, poudre pour inhalation en gélule</td>
+<td align="right">62611660</td>
+<td align="left">VASTAREL 35 mg, comprimé pelliculé à libération modifiée</td>
 <td align="right">NA</td>
 <td align="right">NA</td>
 </tr>
@@ -6502,18 +6162,6 @@ knitr::kable(rep5, row.names = FALSE)</code></pre>
 <td align="right">NA</td>
 </tr>
 <tr class="odd">
-<td align="right">62611660</td>
-<td align="left">VASTAREL 35 mg, comprimé pelliculé à libération modifiée</td>
-<td align="right">NA</td>
-<td align="right">NA</td>
-</tr>
-<tr class="even">
-<td align="right">62617720</td>
-<td align="left">TELEBRIX 35 (350 mg l/mL), solution injectable</td>
-<td align="right">NA</td>
-<td align="right">NA</td>
-</tr>
-<tr class="odd">
 <td align="right">62617720</td>
 <td align="left">TELEBRIX 35 (350 mg l/mL), solution injectable</td>
 <td align="right">NA</td>
@@ -6532,8 +6180,8 @@ knitr::kable(rep5, row.names = FALSE)</code></pre>
 <td align="right">NA</td>
 </tr>
 <tr class="even">
-<td align="right">62626477</td>
-<td align="left">DIOSMINE TEVA CONSEIL 300 mg, comprimé pelliculé</td>
+<td align="right">62617720</td>
+<td align="left">TELEBRIX 35 (350 mg l/mL), solution injectable</td>
 <td align="right">NA</td>
 <td align="right">NA</td>
 </tr>
@@ -6544,29 +6192,17 @@ knitr::kable(rep5, row.names = FALSE)</code></pre>
 <td align="right">NA</td>
 </tr>
 <tr class="even">
-<td align="right">62656381</td>
-<td align="left">ISKEDYL, comprimé</td>
+<td align="right">62626477</td>
+<td align="left">DIOSMINE TEVA CONSEIL 300 mg, comprimé pelliculé</td>
 <td align="right">NA</td>
 <td align="right">NA</td>
 </tr>
 <tr class="odd">
-<td align="right">62659655</td>
-<td align="left">MAGNESIUM/VITAMINE B6 QUALIMED 48 mg/5 mg, comprimé pelliculé</td>
-<td align="right">NA</td>
-<td align="right">NA</td>
-</tr>
-<tr class="even">
 <td align="right">62695427</td>
 <td align="left">CETORNAN 10 g, poudre pour solution buvable et solution entérale</td>
 <td align="right">NA</td>
 <td align="right">NA</td>
 </tr>
-<tr class="odd">
-<td align="right">62704335</td>
-<td align="left">NOOTROPYL 800 mg, comprimé pelliculé</td>
-<td align="right">NA</td>
-<td align="right">NA</td>
-</tr>
 <tr class="even">
 <td align="right">62704335</td>
 <td align="left">NOOTROPYL 800 mg, comprimé pelliculé</td>
@@ -6574,26 +6210,14 @@ knitr::kable(rep5, row.names = FALSE)</code></pre>
 <td align="right">NA</td>
 </tr>
 <tr class="odd">
+<td align="right">62704335</td>
+<td align="left">NOOTROPYL 800 mg, comprimé pelliculé</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+</tr>
+<tr class="even">
 <td align="right">62712079</td>
 <td align="left">HERCEPTIN 600 mg/5 ml, solution injectable</td>
-<td align="right">NA</td>
-<td align="right">NA</td>
-</tr>
-<tr class="even">
-<td align="right">62739838</td>
-<td align="left">GESTODENE/ETHINYLESTRADIOL RANBAXY 75 microgrammes/20 microgrammes, comprimé enrobé</td>
-<td align="right">NA</td>
-<td align="right">NA</td>
-</tr>
-<tr class="odd">
-<td align="right">62831681</td>
-<td align="left">MEPRONIZINE, comprimé enrobé sécable</td>
-<td align="right">NA</td>
-<td align="right">NA</td>
-</tr>
-<tr class="even">
-<td align="right">62831681</td>
-<td align="left">MEPRONIZINE, comprimé enrobé sécable</td>
 <td align="right">NA</td>
 <td align="right">NA</td>
 </tr>
@@ -6610,23 +6234,11 @@ knitr::kable(rep5, row.names = FALSE)</code></pre>
 <td align="right">NA</td>
 </tr>
 <tr class="odd">
-<td align="right">62906867</td>
-<td align="left">TETRAZEPAM ZYDUS 50 mg, comprimé enrobé sécable</td>
-<td align="right">NA</td>
-<td align="right">NA</td>
-</tr>
-<tr class="even">
 <td align="right">62976723</td>
 <td align="left">HEXAQUINE, comprimé enrobé</td>
 <td align="right">NA</td>
 <td align="right">NA</td>
 </tr>
-<tr class="odd">
-<td align="right">63019971</td>
-<td align="left">VASOBRAL, solution buvable en flacon</td>
-<td align="right">NA</td>
-<td align="right">NA</td>
-</tr>
 <tr class="even">
 <td align="right">63036376</td>
 <td align="left">CYCLO 3 FORT, gélule</td>
@@ -6646,32 +6258,8 @@ knitr::kable(rep5, row.names = FALSE)</code></pre>
 <td align="right">NA</td>
 </tr>
 <tr class="odd">
-<td align="right">63042991</td>
-<td align="left">MEPROBAMATE RICHARD 200 mg, comprimé</td>
-<td align="right">NA</td>
-<td align="right">NA</td>
-</tr>
-<tr class="even">
-<td align="right">63094828</td>
-<td align="left">CILEST, comprimé</td>
-<td align="right">NA</td>
-<td align="right">NA</td>
-</tr>
-<tr class="odd">
-<td align="right">63094828</td>
-<td align="left">CILEST, comprimé</td>
-<td align="right">NA</td>
-<td align="right">NA</td>
-</tr>
-<tr class="even">
 <td align="right">63158259</td>
 <td align="left">VINCARUTINE, gélule</td>
-<td align="right">NA</td>
-<td align="right">NA</td>
-</tr>
-<tr class="odd">
-<td align="right">63167525</td>
-<td align="left">INTRINSA 300 microgrammes/24 heures, dispositif transdermique</td>
 <td align="right">NA</td>
 <td align="right">NA</td>
 </tr>
@@ -6682,29 +6270,17 @@ knitr::kable(rep5, row.names = FALSE)</code></pre>
 <td align="right">NA</td>
 </tr>
 <tr class="odd">
-<td align="right">63193801</td>
-<td align="left">DIDRONEL 400 mg, comprimé</td>
-<td align="right">NA</td>
-<td align="right">NA</td>
-</tr>
-<tr class="even">
 <td align="right">63198531</td>
 <td align="left">RHINATHIOL EXPECTORANT CARBOCISTEINE 2 % ENFANTS, sirop</td>
 <td align="right">NA</td>
 <td align="right">NA</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="right">63232204</td>
 <td align="left">MEGAMYLASE 3000 U.CEIP, comprimé enrobé</td>
 <td align="right">NA</td>
 <td align="right">NA</td>
 </tr>
-<tr class="even">
-<td align="right">63271335</td>
-<td align="left">GINKGO BIOGARAN 40 mg, comprimé pelliculé</td>
-<td align="right">NA</td>
-<td align="right">NA</td>
-</tr>
 <tr class="odd">
 <td align="right">63271335</td>
 <td align="left">GINKGO BIOGARAN 40 mg, comprimé pelliculé</td>
@@ -6712,14 +6288,14 @@ knitr::kable(rep5, row.names = FALSE)</code></pre>
 <td align="right">NA</td>
 </tr>
 <tr class="even">
+<td align="right">63271335</td>
+<td align="left">GINKGO BIOGARAN 40 mg, comprimé pelliculé</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+</tr>
+<tr class="odd">
 <td align="right">63284005</td>
 <td align="left">MEBEVERINE ZENTIVA 100 mg, gélule</td>
-<td align="right">NA</td>
-<td align="right">NA</td>
-</tr>
-<tr class="odd">
-<td align="right">63313859</td>
-<td align="left">BRONCHORECTINE AU CITRAL NOURRISSONS, suppositoire</td>
 <td align="right">NA</td>
 <td align="right">NA</td>
 </tr>
@@ -6742,18 +6318,6 @@ knitr::kable(rep5, row.names = FALSE)</code></pre>
 <td align="right">NA</td>
 </tr>
 <tr class="odd">
-<td align="right">63510504</td>
-<td align="left">TORENTAL LP 400 mg, comprimé enrobé à libération prolongée</td>
-<td align="right">NA</td>
-<td align="right">NA</td>
-</tr>
-<tr class="even">
-<td align="right">63510504</td>
-<td align="left">TORENTAL LP 400 mg, comprimé enrobé à libération prolongée</td>
-<td align="right">NA</td>
-<td align="right">NA</td>
-</tr>
-<tr class="odd">
 <td align="right">63521785</td>
 <td align="left">MORPHINE (CHLORHYDRATE) RENAUDIN 10 mg/ml, solution injectable</td>
 <td align="right">NA</td>
@@ -6772,41 +6336,29 @@ knitr::kable(rep5, row.names = FALSE)</code></pre>
 <td align="right">NA</td>
 </tr>
 <tr class="even">
-<td align="right">63527749</td>
-<td align="left">TETRAZEPAM SANDOZ 50 mg, comprimé pelliculé sécable</td>
-<td align="right">NA</td>
-<td align="right">NA</td>
-</tr>
-<tr class="odd">
 <td align="right">63552179</td>
 <td align="left">MAGNESIUM OLIGOSOL, solution buvable en ampoule</td>
 <td align="right">NA</td>
 <td align="right">NA</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="right">63564053</td>
 <td align="left">PLAVIX 75 mg, comprimé pelliculé</td>
 <td align="right">NA</td>
 <td align="right">NA</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="right">63565237</td>
 <td align="left">RHINAMIDE, solution pour pulvérisation nasale</td>
 <td align="right">NA</td>
 <td align="right">NA</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="right">63587479</td>
 <td align="left">PIRACETAM RPG 800 mg, comprimé pelliculé sécable</td>
 <td align="right">NA</td>
 <td align="right">NA</td>
 </tr>
-<tr class="odd">
-<td align="right">63591253</td>
-<td align="left">GESTODENE/ETHINYLESTRADIOL TEVA 75 microgrammes / 20 microgrammes, comprimé enrobé</td>
-<td align="right">NA</td>
-<td align="right">NA</td>
-</tr>
 <tr class="even">
 <td align="right">63591253</td>
 <td align="left">GESTODENE/ETHINYLESTRADIOL TEVA 75 microgrammes / 20 microgrammes, comprimé enrobé</td>
@@ -6814,17 +6366,17 @@ knitr::kable(rep5, row.names = FALSE)</code></pre>
 <td align="right">NA</td>
 </tr>
 <tr class="odd">
+<td align="right">63591253</td>
+<td align="left">GESTODENE/ETHINYLESTRADIOL TEVA 75 microgrammes / 20 microgrammes, comprimé enrobé</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+</tr>
+<tr class="even">
 <td align="right">63593585</td>
 <td align="left">RASILEZ HCT 300 mg/12,5 mg, comprimé pelliculé</td>
 <td align="right">NA</td>
 <td align="right">NA</td>
 </tr>
-<tr class="even">
-<td align="right">63615576</td>
-<td align="left">MINESSE 60 microgrammes/15 microgrammes, comprimé pelliculé</td>
-<td align="right">NA</td>
-<td align="right">NA</td>
-</tr>
 <tr class="odd">
 <td align="right">63615576</td>
 <td align="left">MINESSE 60 microgrammes/15 microgrammes, comprimé pelliculé</td>
@@ -6832,17 +6384,17 @@ knitr::kable(rep5, row.names = FALSE)</code></pre>
 <td align="right">NA</td>
 </tr>
 <tr class="even">
+<td align="right">63615576</td>
+<td align="left">MINESSE 60 microgrammes/15 microgrammes, comprimé pelliculé</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+</tr>
+<tr class="odd">
 <td align="right">63619119</td>
 <td align="left">DICYNONE 250 mg, comprimé</td>
 <td align="right">NA</td>
 <td align="right">NA</td>
 </tr>
-<tr class="odd">
-<td align="right">63665312</td>
-<td align="left">EVICEL, solution pour colle</td>
-<td align="right">NA</td>
-<td align="right">NA</td>
-</tr>
 <tr class="even">
 <td align="right">63665312</td>
 <td align="left">EVICEL, solution pour colle</td>
@@ -6856,23 +6408,23 @@ knitr::kable(rep5, row.names = FALSE)</code></pre>
 <td align="right">NA</td>
 </tr>
 <tr class="even">
+<td align="right">63665312</td>
+<td align="left">EVICEL, solution pour colle</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+</tr>
+<tr class="odd">
 <td align="right">63672043</td>
 <td align="left">OZOTHINE ENFANTS 30 mg, suppositoire</td>
 <td align="right">NA</td>
 <td align="right">NA</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="right">63696425</td>
 <td align="left">DETURGYLONE, poudre et solvant pour solution pour pulvérisation nasale</td>
 <td align="right">NA</td>
 <td align="right">NA</td>
 </tr>
-<tr class="even">
-<td align="right">63736058</td>
-<td align="left">KETUM 2,5 POUR CENT, gel</td>
-<td align="right">NA</td>
-<td align="right">NA</td>
-</tr>
 <tr class="odd">
 <td align="right">63736058</td>
 <td align="left">KETUM 2,5 POUR CENT, gel</td>
@@ -6880,23 +6432,23 @@ knitr::kable(rep5, row.names = FALSE)</code></pre>
 <td align="right">NA</td>
 </tr>
 <tr class="even">
+<td align="right">63736058</td>
+<td align="left">KETUM 2,5 POUR CENT, gel</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+</tr>
+<tr class="odd">
 <td align="right">63787825</td>
 <td align="left">SOMATULINE L.P. 120 mg, solution injectable à libération prolongée en seringue préremplie</td>
 <td align="right">100</td>
 <td align="right">NA</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="right">63802533</td>
 <td align="left">TITANOREINE, crème</td>
 <td align="right">NA</td>
 <td align="right">NA</td>
 </tr>
-<tr class="even">
-<td align="right">63803884</td>
-<td align="left">VOTRIENT 400 mg, comprimé pelliculé</td>
-<td align="right">100</td>
-<td align="right">NA</td>
-</tr>
 <tr class="odd">
 <td align="right">63803884</td>
 <td align="left">VOTRIENT 400 mg, comprimé pelliculé</td>
@@ -6904,23 +6456,23 @@ knitr::kable(rep5, row.names = FALSE)</code></pre>
 <td align="right">NA</td>
 </tr>
 <tr class="even">
+<td align="right">63803884</td>
+<td align="left">VOTRIENT 400 mg, comprimé pelliculé</td>
+<td align="right">100</td>
+<td align="right">NA</td>
+</tr>
+<tr class="odd">
 <td align="right">63804559</td>
 <td align="left">MUXOL 30 mg, comprimé</td>
 <td align="right">NA</td>
 <td align="right">NA</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="right">63832373</td>
 <td align="left">SETOFILM 4 mg, film orodispersible</td>
 <td align="right">NA</td>
 <td align="right">NA</td>
 </tr>
-<tr class="even">
-<td align="right">63848228</td>
-<td align="left">CYRAMZA 10 mg/ml, solution à diluer pour perfusion</td>
-<td align="right">NA</td>
-<td align="right">NA</td>
-</tr>
 <tr class="odd">
 <td align="right">63848228</td>
 <td align="left">CYRAMZA 10 mg/ml, solution à diluer pour perfusion</td>
@@ -6928,17 +6480,17 @@ knitr::kable(rep5, row.names = FALSE)</code></pre>
 <td align="right">NA</td>
 </tr>
 <tr class="even">
+<td align="right">63848228</td>
+<td align="left">CYRAMZA 10 mg/ml, solution à diluer pour perfusion</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+</tr>
+<tr class="odd">
 <td align="right">63871159</td>
 <td align="left">SOMATULINE L.P. 90 mg, solution injectable à libération prolongée en seringue préremplie</td>
 <td align="right">100</td>
 <td align="right">NA</td>
 </tr>
-<tr class="odd">
-<td align="right">63894193</td>
-<td align="left">GESTODENE/ETHINYLESTRADIOL SANDOZ 75 microgrammes/30 microgrammes, comprimé enrobé</td>
-<td align="right">NA</td>
-<td align="right">NA</td>
-</tr>
 <tr class="even">
 <td align="right">63894193</td>
 <td align="left">GESTODENE/ETHINYLESTRADIOL SANDOZ 75 microgrammes/30 microgrammes, comprimé enrobé</td>
@@ -6946,59 +6498,59 @@ knitr::kable(rep5, row.names = FALSE)</code></pre>
 <td align="right">NA</td>
 </tr>
 <tr class="odd">
+<td align="right">63894193</td>
+<td align="left">GESTODENE/ETHINYLESTRADIOL SANDOZ 75 microgrammes/30 microgrammes, comprimé enrobé</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+</tr>
+<tr class="even">
 <td align="right">63945271</td>
 <td align="left">EXFORGE HCT 5 mg/160 mg/25 mg, comprimé pelliculé</td>
 <td align="right">NA</td>
 <td align="right">NA</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="right">64032854</td>
 <td align="left">VEINOBIASE, comprimé effervescent</td>
 <td align="right">NA</td>
 <td align="right">NA</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="right">64081901</td>
 <td align="left">DOXIUM 250 mg, comprimé</td>
 <td align="right">NA</td>
 <td align="right">NA</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="right">64108234</td>
 <td align="left">RHINUREFLEX, comprimé pelliculé</td>
 <td align="right">NA</td>
 <td align="right">NA</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="right">64182868</td>
 <td align="left">SPASMAG, gélule</td>
 <td align="right">NA</td>
 <td align="right">NA</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="right">64186998</td>
 <td align="left">OZOTHINE A LA DIPROPHYLLINE, comprimé enrobé</td>
 <td align="right">NA</td>
 <td align="right">NA</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="right">64223756</td>
 <td align="left">COQUELUSEDAL ENFANTS, suppositoire</td>
 <td align="right">NA</td>
 <td align="right">NA</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="right">64228123</td>
 <td align="left">CIRKAN A LA PREDNACINOLONE, suppositoire</td>
 <td align="right">NA</td>
 <td align="right">NA</td>
 </tr>
-<tr class="odd">
-<td align="right">64268630</td>
-<td align="left">GESTODENE/ETHINYLESTRADIOL EG 75 microgrammes/30 microgrammes, comprimé enrobé</td>
-<td align="right">NA</td>
-<td align="right">NA</td>
-</tr>
 <tr class="even">
 <td align="right">64268630</td>
 <td align="left">GESTODENE/ETHINYLESTRADIOL EG 75 microgrammes/30 microgrammes, comprimé enrobé</td>
@@ -7006,14 +6558,14 @@ knitr::kable(rep5, row.names = FALSE)</code></pre>
 <td align="right">NA</td>
 </tr>
 <tr class="odd">
+<td align="right">64268630</td>
+<td align="left">GESTODENE/ETHINYLESTRADIOL EG 75 microgrammes/30 microgrammes, comprimé enrobé</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+</tr>
+<tr class="even">
 <td align="right">64296341</td>
 <td align="left">XEROQUEL LP 400 mg, comprimé à libération prolongée</td>
-<td align="right">NA</td>
-<td align="right">NA</td>
-</tr>
-<tr class="even">
-<td align="right">64300747</td>
-<td align="left">ALLOCHRYSINE 25 mg, solution injectable IM</td>
 <td align="right">NA</td>
 <td align="right">NA</td>
 </tr>
@@ -7036,23 +6588,11 @@ knitr::kable(rep5, row.names = FALSE)</code></pre>
 <td align="right">NA</td>
 </tr>
 <tr class="even">
-<td align="right">64346335</td>
-<td align="left">PANOS 50 mg, comprimé pelliculé sécable</td>
-<td align="right">NA</td>
-<td align="right">NA</td>
-</tr>
-<tr class="odd">
 <td align="right">64347049</td>
 <td align="left">PIPRAM FORT 400 mg, comprimé enrobé</td>
 <td align="right">NA</td>
 <td align="right">NA</td>
 </tr>
-<tr class="even">
-<td align="right">64392350</td>
-<td align="left">FERRISAT 50 mg/ml, solution injectable ou pour perfusion</td>
-<td align="right">NA</td>
-<td align="right">NA</td>
-</tr>
 <tr class="odd">
 <td align="right">64392350</td>
 <td align="left">FERRISAT 50 mg/ml, solution injectable ou pour perfusion</td>
@@ -7066,35 +6606,23 @@ knitr::kable(rep5, row.names = FALSE)</code></pre>
 <td align="right">NA</td>
 </tr>
 <tr class="odd">
+<td align="right">64392350</td>
+<td align="left">FERRISAT 50 mg/ml, solution injectable ou pour perfusion</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+</tr>
+<tr class="even">
 <td align="right">64406362</td>
 <td align="left">CODOLIPRANE ADULTES 400 mg/20 mg, comprimé sécable</td>
 <td align="right">NA</td>
 <td align="right">NA</td>
 </tr>
-<tr class="even">
-<td align="right">64407934</td>
-<td align="left">NICERGOLINE BIOGARAN 10 mg, gélule</td>
-<td align="right">NA</td>
-<td align="right">NA</td>
-</tr>
 <tr class="odd">
-<td align="right">64407934</td>
-<td align="left">NICERGOLINE BIOGARAN 10 mg, gélule</td>
-<td align="right">NA</td>
-<td align="right">NA</td>
-</tr>
-<tr class="even">
 <td align="right">64427730</td>
 <td align="left">CYCLO 3 FORT, solution buvable en ampoules</td>
 <td align="right">NA</td>
 <td align="right">NA</td>
 </tr>
-<tr class="odd">
-<td align="right">64439241</td>
-<td align="left">AZANTAC 75 mg, comprimé effervescent</td>
-<td align="right">NA</td>
-<td align="right">NA</td>
-</tr>
 <tr class="even">
 <td align="right">64439241</td>
 <td align="left">AZANTAC 75 mg, comprimé effervescent</td>
@@ -7102,35 +6630,35 @@ knitr::kable(rep5, row.names = FALSE)</code></pre>
 <td align="right">NA</td>
 </tr>
 <tr class="odd">
+<td align="right">64439241</td>
+<td align="left">AZANTAC 75 mg, comprimé effervescent</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+</tr>
+<tr class="even">
 <td align="right">64447081</td>
 <td align="left">CUROSURF 240 mg/3 ml, suspension pour instillation endotrachéobronchique</td>
 <td align="right">NA</td>
 <td align="right">NA</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="right">64490264</td>
 <td align="left">EFFORTIL 5 mg, comprimé</td>
 <td align="right">NA</td>
 <td align="right">NA</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="right">64494476</td>
 <td align="left">SANDOSTATINE L.P. 10 mg, poudre et solvant en seringue préremplie pour suspension injectable (IM) à libération prolongée</td>
 <td align="right">100</td>
 <td align="right">NA</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="right">64542736</td>
 <td align="left">REMICADE 100 mg, poudre pour solution à diluer pour perfusion</td>
 <td align="right">NA</td>
 <td align="right">NA</td>
 </tr>
-<tr class="odd">
-<td align="right">64547046</td>
-<td align="left">BETADINE 10 POUR CENT, solution vaginale</td>
-<td align="right">NA</td>
-<td align="right">NA</td>
-</tr>
 <tr class="even">
 <td align="right">64547046</td>
 <td align="left">BETADINE 10 POUR CENT, solution vaginale</td>
@@ -7138,59 +6666,47 @@ knitr::kable(rep5, row.names = FALSE)</code></pre>
 <td align="right">NA</td>
 </tr>
 <tr class="odd">
+<td align="right">64547046</td>
+<td align="left">BETADINE 10 POUR CENT, solution vaginale</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+</tr>
+<tr class="even">
 <td align="right">64565845</td>
 <td align="left">ALDACTONE 25 mg, comprimé sécable</td>
 <td align="right">NA</td>
 <td align="right">NA</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="right">64617605</td>
 <td align="left">EXFORGE HCT 10 mg/160 mg/12,5 mg, comprimé pelliculé</td>
 <td align="right">NA</td>
 <td align="right">NA</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="right">64634871</td>
 <td align="left">NALBUPHINE SERB 20 mg/2 ml, solution injectable</td>
 <td align="right">NA</td>
 <td align="right">NA</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="right">64639548</td>
 <td align="left">MEDROL 16 mg, comprimé sécable</td>
 <td align="right">NA</td>
 <td align="right">NA</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="right">64683217</td>
 <td align="left">ARIXTRA 2,5 mg/0,5 ml, solution injectable en seringue pré-remplie</td>
 <td align="right">NA</td>
 <td align="right">NA</td>
 </tr>
-<tr class="even">
-<td align="right">64688292</td>
-<td align="left">IKARAN, solution buvable en gouttes</td>
-<td align="right">NA</td>
-<td align="right">NA</td>
-</tr>
 <tr class="odd">
-<td align="right">64691331</td>
-<td align="left">NEXEN 100 mg, granulé pour solution buvable en sachet</td>
-<td align="right">NA</td>
-<td align="right">NA</td>
-</tr>
-<tr class="even">
 <td align="right">64718579</td>
 <td align="left">LOMUDAL, solution pour nébulisation</td>
 <td align="right">NA</td>
 <td align="right">NA</td>
 </tr>
-<tr class="odd">
-<td align="right">64728712</td>
-<td align="left">ABUFENE 400 mg, comprimé</td>
-<td align="right">NA</td>
-<td align="right">NA</td>
-</tr>
 <tr class="even">
 <td align="right">64728712</td>
 <td align="left">ABUFENE 400 mg, comprimé</td>
@@ -7198,8 +6714,8 @@ knitr::kable(rep5, row.names = FALSE)</code></pre>
 <td align="right">NA</td>
 </tr>
 <tr class="odd">
-<td align="right">64736417</td>
-<td align="left">ALLOCHRYSINE 100 mg, solution injectable IM</td>
+<td align="right">64728712</td>
+<td align="left">ABUFENE 400 mg, comprimé</td>
 <td align="right">NA</td>
 <td align="right">NA</td>
 </tr>
@@ -7254,18 +6770,6 @@ knitr::kable(rep5, row.names = FALSE)</code></pre>
 <tr class="even">
 <td align="right">64986431</td>
 <td align="left">PNEUMOREL 0,2 POUR CENT, sirop</td>
-<td align="right">NA</td>
-<td align="right">NA</td>
-</tr>
-<tr class="odd">
-<td align="right">65032362</td>
-<td align="left">GIVALEX, collutoire</td>
-<td align="right">NA</td>
-<td align="right">NA</td>
-</tr>
-<tr class="even">
-<td align="right">65045032</td>
-<td align="left">TROXERUTINE ARROW 3,5 g, poudre pour solution buvable en sachet-dose</td>
 <td align="right">NA</td>
 <td align="right">NA</td>
 </tr>
@@ -7426,29 +6930,17 @@ knitr::kable(rep5, row.names = FALSE)</code></pre>
 <td align="right">NA</td>
 </tr>
 <tr class="odd">
-<td align="right">65339742</td>
-<td align="left">RHEOBRAL, gélule</td>
-<td align="right">NA</td>
-<td align="right">NA</td>
-</tr>
-<tr class="even">
 <td align="right">65353585</td>
 <td align="left">FARLUTAL 500 mg, comprimé</td>
 <td align="right">NA</td>
 <td align="right">NA</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="right">65369123</td>
 <td align="left">EXFORGE HCT 5 mg/160 mg/12,5 mg, comprimé pelliculé</td>
 <td align="right">NA</td>
 <td align="right">NA</td>
 </tr>
-<tr class="even">
-<td align="right">65375101</td>
-<td align="left">GESTODENE/ETHINYLESTRADIOL ZENTIVA 75 microgrammes/20 microgrammes, comprimé enrobé</td>
-<td align="right">NA</td>
-<td align="right">NA</td>
-</tr>
 <tr class="odd">
 <td align="right">65375101</td>
 <td align="left">GESTODENE/ETHINYLESTRADIOL ZENTIVA 75 microgrammes/20 microgrammes, comprimé enrobé</td>
@@ -7456,8 +6948,8 @@ knitr::kable(rep5, row.names = FALSE)</code></pre>
 <td align="right">NA</td>
 </tr>
 <tr class="even">
-<td align="right">65408195</td>
-<td align="left">IASOFLU 2,0 GBq/ml, solution injectable</td>
+<td align="right">65375101</td>
+<td align="left">GESTODENE/ETHINYLESTRADIOL ZENTIVA 75 microgrammes/20 microgrammes, comprimé enrobé</td>
 <td align="right">NA</td>
 <td align="right">NA</td>
 </tr>
@@ -7468,38 +6960,14 @@ knitr::kable(rep5, row.names = FALSE)</code></pre>
 <td align="right">NA</td>
 </tr>
 <tr class="even">
+<td align="right">65408195</td>
+<td align="left">IASOFLU 2,0 GBq/ml, solution injectable</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+</tr>
+<tr class="odd">
 <td align="right">65424751</td>
 <td align="left">ZINFORO 600 mg, poudre pour solution à diluer pour perfusion</td>
-<td align="right">NA</td>
-<td align="right">NA</td>
-</tr>
-<tr class="odd">
-<td align="right">65469223</td>
-<td align="left">NICERGOLINE EG 5 mg, gélule</td>
-<td align="right">NA</td>
-<td align="right">NA</td>
-</tr>
-<tr class="even">
-<td align="right">65474658</td>
-<td align="left">DIOSMINE ARROW 300 mg, comprimé pelliculé</td>
-<td align="right">NA</td>
-<td align="right">NA</td>
-</tr>
-<tr class="odd">
-<td align="right">65474658</td>
-<td align="left">DIOSMINE ARROW 300 mg, comprimé pelliculé</td>
-<td align="right">NA</td>
-<td align="right">NA</td>
-</tr>
-<tr class="even">
-<td align="right">65481446</td>
-<td align="left">GESTODENE/ETHINYLESTRADIOL ACTAVIS 75 microgrammes/30 microgrammes, comprimé enrobé</td>
-<td align="right">NA</td>
-<td align="right">NA</td>
-</tr>
-<tr class="odd">
-<td align="right">65481446</td>
-<td align="left">GESTODENE/ETHINYLESTRADIOL ACTAVIS 75 microgrammes/30 microgrammes, comprimé enrobé</td>
 <td align="right">NA</td>
 <td align="right">NA</td>
 </tr>
@@ -7582,23 +7050,11 @@ knitr::kable(rep5, row.names = FALSE)</code></pre>
 <td align="right">NA</td>
 </tr>
 <tr class="odd">
-<td align="right">65599932</td>
-<td align="left">PENTOXIFYLLINE RATIOPHARM LP 400 mg, comprimé pelliculé à libération prolongée</td>
-<td align="right">NA</td>
-<td align="right">NA</td>
-</tr>
-<tr class="even">
 <td align="right">65618140</td>
 <td align="left">PROTELOS 2 g, granulés pour suspension buvable</td>
 <td align="right">NA</td>
 <td align="right">NA</td>
 </tr>
-<tr class="odd">
-<td align="right">65633530</td>
-<td align="left">DESOGESTREL/ETHINYLESTRADIOL ZENTIVA 150 microgrammes/30 microgrammes, comprimé</td>
-<td align="right">NA</td>
-<td align="right">NA</td>
-</tr>
 <tr class="even">
 <td align="right">65633530</td>
 <td align="left">DESOGESTREL/ETHINYLESTRADIOL ZENTIVA 150 microgrammes/30 microgrammes, comprimé</td>
@@ -7606,23 +7062,23 @@ knitr::kable(rep5, row.names = FALSE)</code></pre>
 <td align="right">NA</td>
 </tr>
 <tr class="odd">
+<td align="right">65633530</td>
+<td align="left">DESOGESTREL/ETHINYLESTRADIOL ZENTIVA 150 microgrammes/30 microgrammes, comprimé</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+</tr>
+<tr class="even">
 <td align="right">65638538</td>
 <td align="left">CERVOXAN 60 mg, gélule</td>
 <td align="right">NA</td>
 <td align="right">NA</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="right">65660157</td>
 <td align="left">PRAXINOR, comprimé pelliculé</td>
 <td align="right">NA</td>
 <td align="right">NA</td>
 </tr>
-<tr class="odd">
-<td align="right">65715632</td>
-<td align="left">XENICAL 120 mg, gélule</td>
-<td align="right">NA</td>
-<td align="right">NA</td>
-</tr>
 <tr class="even">
 <td align="right">65715632</td>
 <td align="left">XENICAL 120 mg, gélule</td>
@@ -7642,17 +7098,17 @@ knitr::kable(rep5, row.names = FALSE)</code></pre>
 <td align="right">NA</td>
 </tr>
 <tr class="odd">
+<td align="right">65715632</td>
+<td align="left">XENICAL 120 mg, gélule</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+</tr>
+<tr class="even">
 <td align="right">65718817</td>
 <td align="left">MUCOMYST 200 mg/5 ml, poudre pour suspension buvable</td>
 <td align="right">NA</td>
 <td align="right">NA</td>
 </tr>
-<tr class="even">
-<td align="right">65745006</td>
-<td align="left">GESTODENE/ETHINYLESTRADIOL BIOGARAN 75 microgrammes/30 microgrammes, comprimé enrobé</td>
-<td align="right">NA</td>
-<td align="right">NA</td>
-</tr>
 <tr class="odd">
 <td align="right">65745006</td>
 <td align="left">GESTODENE/ETHINYLESTRADIOL BIOGARAN 75 microgrammes/30 microgrammes, comprimé enrobé</td>
@@ -7660,59 +7116,35 @@ knitr::kable(rep5, row.names = FALSE)</code></pre>
 <td align="right">NA</td>
 </tr>
 <tr class="even">
+<td align="right">65745006</td>
+<td align="left">GESTODENE/ETHINYLESTRADIOL BIOGARAN 75 microgrammes/30 microgrammes, comprimé enrobé</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+</tr>
+<tr class="odd">
 <td align="right">65794188</td>
 <td align="left">OZOTHINE A LA DIPROPHYLLINE ENFANTS, suppositoire</td>
 <td align="right">NA</td>
 <td align="right">NA</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="right">65795354</td>
 <td align="left">PENTOXIFYLLINE TEVA L.P. 400 mg, comprimé pelliculé à libération prolongée</td>
 <td align="right">NA</td>
 <td align="right">NA</td>
 </tr>
-<tr class="even">
-<td align="right">65803541</td>
-<td align="left">GESTODENE ETHINYLESTRADIOL ARROW 60 microgrammes/15 microgrammes, comprimé pelliculé</td>
-<td align="right">NA</td>
-<td align="right">NA</td>
-</tr>
 <tr class="odd">
-<td align="right">65803541</td>
-<td align="left">GESTODENE ETHINYLESTRADIOL ARROW 60 microgrammes/15 microgrammes, comprimé pelliculé</td>
-<td align="right">NA</td>
-<td align="right">NA</td>
-</tr>
-<tr class="even">
-<td align="right">65824012</td>
-<td align="left">VECTARION 50 mg, comprimé pelliculé sécable</td>
-<td align="right">NA</td>
-<td align="right">NA</td>
-</tr>
-<tr class="odd">
-<td align="right">65824012</td>
-<td align="left">VECTARION 50 mg, comprimé pelliculé sécable</td>
-<td align="right">NA</td>
-<td align="right">NA</td>
-</tr>
-<tr class="even">
 <td align="right">65849791</td>
 <td align="left">GOMENOLEO 5 POUR CENT, solution pour application locale en ampoule</td>
 <td align="right">NA</td>
 <td align="right">NA</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="right">65864619</td>
 <td align="left">NUCALA 100 mg, poudre pour solution injectable</td>
 <td align="right">NA</td>
 <td align="right">NA</td>
 </tr>
-<tr class="even">
-<td align="right">65878330</td>
-<td align="left">TRI MINULET, comprimé enrobé</td>
-<td align="right">NA</td>
-<td align="right">NA</td>
-</tr>
 <tr class="odd">
 <td align="right">65878330</td>
 <td align="left">TRI MINULET, comprimé enrobé</td>
@@ -7732,8 +7164,8 @@ knitr::kable(rep5, row.names = FALSE)</code></pre>
 <td align="right">NA</td>
 </tr>
 <tr class="even">
-<td align="right">65884187</td>
-<td align="left">IASOCHOLINE 1 GBq/mL, solution injectable</td>
+<td align="right">65878330</td>
+<td align="left">TRI MINULET, comprimé enrobé</td>
 <td align="right">NA</td>
 <td align="right">NA</td>
 </tr>
@@ -7744,41 +7176,41 @@ knitr::kable(rep5, row.names = FALSE)</code></pre>
 <td align="right">NA</td>
 </tr>
 <tr class="even">
+<td align="right">65884187</td>
+<td align="left">IASOCHOLINE 1 GBq/mL, solution injectable</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+</tr>
+<tr class="odd">
 <td align="right">65884582</td>
 <td align="left">ADREVIEW [123I], solution injectable</td>
 <td align="right">NA</td>
 <td align="right">NA</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="right">65892928</td>
 <td align="left">LAROXYL 25 mg, comprimé pelliculé</td>
 <td align="right">NA</td>
 <td align="right">NA</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="right">65899602</td>
 <td align="left">LIKOZAM 1 mg/ml, suspension buvable</td>
 <td align="right">NA</td>
 <td align="right">NA</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="right">65902500</td>
 <td align="left">PENTOFLUX LP 400 mg, comprimé enrobé à libération prolongée</td>
 <td align="right">NA</td>
 <td align="right">NA</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="right">65940127</td>
 <td align="left">GLUCOVANCE 500 mg/5 mg, comprimé pelliculé</td>
 <td align="right">NA</td>
 <td align="right">NA</td>
 </tr>
-<tr class="odd">
-<td align="right">65946443</td>
-<td align="left">GESTODENE/ETHINYLESTRADIOL SANDOZ 75 microgrammes/20 microgrammes, comprimé enrobé</td>
-<td align="right">NA</td>
-<td align="right">NA</td>
-</tr>
 <tr class="even">
 <td align="right">65946443</td>
 <td align="left">GESTODENE/ETHINYLESTRADIOL SANDOZ 75 microgrammes/20 microgrammes, comprimé enrobé</td>
@@ -7786,17 +7218,17 @@ knitr::kable(rep5, row.names = FALSE)</code></pre>
 <td align="right">NA</td>
 </tr>
 <tr class="odd">
+<td align="right">65946443</td>
+<td align="left">GESTODENE/ETHINYLESTRADIOL SANDOZ 75 microgrammes/20 microgrammes, comprimé enrobé</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+</tr>
+<tr class="even">
 <td align="right">65955652</td>
 <td align="left">SPASMAG, ampoules buvables</td>
 <td align="right">NA</td>
 <td align="right">NA</td>
 </tr>
-<tr class="even">
-<td align="right">66003374</td>
-<td align="left">DAFALGAN CODEINE, comprimé pelliculé</td>
-<td align="right">NA</td>
-<td align="right">NA</td>
-</tr>
 <tr class="odd">
 <td align="right">66003374</td>
 <td align="left">DAFALGAN CODEINE, comprimé pelliculé</td>
@@ -7804,23 +7236,23 @@ knitr::kable(rep5, row.names = FALSE)</code></pre>
 <td align="right">NA</td>
 </tr>
 <tr class="even">
+<td align="right">66003374</td>
+<td align="left">DAFALGAN CODEINE, comprimé pelliculé</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+</tr>
+<tr class="odd">
 <td align="right">66009288</td>
 <td align="left">VONCENTO 500 UI FVIII/1200 UI FVW (5 ml de solvant), poudre et solvant pour solution injectable/perfusion</td>
 <td align="right">NA</td>
 <td align="right">NA</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="right">66019460</td>
 <td align="left">DIOSMINE ZENTIVA CONSEIL 600 mg, comprimé pelliculé</td>
 <td align="right">NA</td>
 <td align="right">NA</td>
 </tr>
-<tr class="even">
-<td align="right">66029390</td>
-<td align="left">TANAKAN 40 mg/ml, solution buvable</td>
-<td align="right">NA</td>
-<td align="right">NA</td>
-</tr>
 <tr class="odd">
 <td align="right">66029390</td>
 <td align="left">TANAKAN 40 mg/ml, solution buvable</td>
@@ -7828,8 +7260,8 @@ knitr::kable(rep5, row.names = FALSE)</code></pre>
 <td align="right">NA</td>
 </tr>
 <tr class="even">
-<td align="right">66043002</td>
-<td align="left">GINKOR FORT, gélule</td>
+<td align="right">66029390</td>
+<td align="left">TANAKAN 40 mg/ml, solution buvable</td>
 <td align="right">NA</td>
 <td align="right">NA</td>
 </tr>
@@ -7840,17 +7272,17 @@ knitr::kable(rep5, row.names = FALSE)</code></pre>
 <td align="right">NA</td>
 </tr>
 <tr class="even">
+<td align="right">66043002</td>
+<td align="left">GINKOR FORT, gélule</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+</tr>
+<tr class="odd">
 <td align="right">66082724</td>
 <td align="left">AMOXICILLINE ARROW 500 mg, gélule</td>
 <td align="right">NA</td>
 <td align="right">NA</td>
 </tr>
-<tr class="odd">
-<td align="right">66105571</td>
-<td align="left">PHLOROGLUCINOL ARROW 80 mg, comprimé orodispersible</td>
-<td align="right">NA</td>
-<td align="right">NA</td>
-</tr>
 <tr class="even">
 <td align="right">66105571</td>
 <td align="left">PHLOROGLUCINOL ARROW 80 mg, comprimé orodispersible</td>
@@ -7858,8 +7290,8 @@ knitr::kable(rep5, row.names = FALSE)</code></pre>
 <td align="right">NA</td>
 </tr>
 <tr class="odd">
-<td align="right">66129309</td>
-<td align="left">VITALOGINK 40 mg, comprimé pelliculé</td>
+<td align="right">66105571</td>
+<td align="left">PHLOROGLUCINOL ARROW 80 mg, comprimé orodispersible</td>
 <td align="right">NA</td>
 <td align="right">NA</td>
 </tr>
@@ -7870,20 +7302,20 @@ knitr::kable(rep5, row.names = FALSE)</code></pre>
 <td align="right">NA</td>
 </tr>
 <tr class="odd">
+<td align="right">66129309</td>
+<td align="left">VITALOGINK 40 mg, comprimé pelliculé</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+</tr>
+<tr class="even">
 <td align="right">66138991</td>
 <td align="left">OPO VEINOGENE, solution buvable</td>
 <td align="right">NA</td>
 <td align="right">NA</td>
 </tr>
-<tr class="even">
-<td align="right">66209709</td>
-<td align="left">SERMION 10 mg, gélule</td>
-<td align="right">NA</td>
-<td align="right">NA</td>
-</tr>
 <tr class="odd">
-<td align="right">66209709</td>
-<td align="left">SERMION 10 mg, gélule</td>
+<td align="right">66221405</td>
+<td align="left">DIOSMECTITE MYLAN 3 g, poudre pour suspension buvable en sachet</td>
 <td align="right">NA</td>
 <td align="right">NA</td>
 </tr>
@@ -7894,38 +7326,26 @@ knitr::kable(rep5, row.names = FALSE)</code></pre>
 <td align="right">NA</td>
 </tr>
 <tr class="odd">
-<td align="right">66221405</td>
-<td align="left">DIOSMECTITE MYLAN 3 g, poudre pour suspension buvable en sachet</td>
-<td align="right">NA</td>
-<td align="right">NA</td>
-</tr>
-<tr class="even">
 <td align="right">66268312</td>
 <td align="left">OXYNORM 50 mg/ml, solution injectable</td>
 <td align="right">NA</td>
 <td align="right">NA</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="right">66298750</td>
 <td align="left">CLIMAXOL, solution buvable en flacon</td>
 <td align="right">NA</td>
 <td align="right">NA</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="right">66315349</td>
 <td align="left">PENTOXIFYLLINE BIOGARAN LP 400 mg, comprimé pelliculé à libération prolongée</td>
 <td align="right">NA</td>
 <td align="right">NA</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="right">66320218</td>
 <td align="left">ENTYVIO 300 mg, poudre pour solution à diluer pour perfusion</td>
-<td align="right">NA</td>
-<td align="right">NA</td>
-</tr>
-<tr class="even">
-<td align="right">66321302</td>
-<td align="left">TETRAZEPAM RPG 50 mg, comprimé pelliculé sécable</td>
 <td align="right">NA</td>
 <td align="right">NA</td>
 </tr>
@@ -7936,65 +7356,41 @@ knitr::kable(rep5, row.names = FALSE)</code></pre>
 <td align="right">NA</td>
 </tr>
 <tr class="even">
-<td align="right">66390775</td>
-<td align="left">GESTODENE/ETHINYLESTRADIOL ARROW 75 microgrammes/30 microgrammes, comprimé enrobé</td>
-<td align="right">NA</td>
-<td align="right">NA</td>
-</tr>
-<tr class="odd">
-<td align="right">66390775</td>
-<td align="left">GESTODENE/ETHINYLESTRADIOL ARROW 75 microgrammes/30 microgrammes, comprimé enrobé</td>
-<td align="right">NA</td>
-<td align="right">NA</td>
-</tr>
-<tr class="even">
 <td align="right">66396810</td>
 <td align="left">ROTATEQ, solution buvable. Vaccin Rotavirus (vivant, oral)</td>
 <td align="right">NA</td>
 <td align="right">NA</td>
 </tr>
 <tr class="odd">
-<td align="right">66425888</td>
-<td align="left">NICERGOLINE MYLAN 5 mg, gélule</td>
-<td align="right">NA</td>
-<td align="right">NA</td>
-</tr>
-<tr class="even">
 <td align="right">66426709</td>
 <td align="left">CHONDROSULF 400 mg, granulé pour solution buvable en sachet</td>
 <td align="right">NA</td>
 <td align="right">NA</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="right">66429235</td>
 <td align="left">XEROQUEL LP 300 mg, comprimé à libération prolongée</td>
 <td align="right">NA</td>
 <td align="right">NA</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="right">66484819</td>
 <td align="left">OFLOCET 200 mg, comprimé pelliculé sécable</td>
 <td align="right">NA</td>
 <td align="right">NA</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="right">66487256</td>
 <td align="left">BRONCHORECTINE AU CITRAL ADULTES, suppositoire</td>
 <td align="right">NA</td>
 <td align="right">NA</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="right">66498352</td>
 <td align="left">NaF MetaTrace 2000 MBq/mL, solution injectable</td>
 <td align="right">NA</td>
 <td align="right">NA</td>
 </tr>
-<tr class="odd">
-<td align="right">66507470</td>
-<td align="left">BRONCHOKOD ADULTES, sirop</td>
-<td align="right">NA</td>
-<td align="right">NA</td>
-</tr>
 <tr class="even">
 <td align="right">66507470</td>
 <td align="left">BRONCHOKOD ADULTES, sirop</td>
@@ -8002,56 +7398,44 @@ knitr::kable(rep5, row.names = FALSE)</code></pre>
 <td align="right">NA</td>
 </tr>
 <tr class="odd">
+<td align="right">66507470</td>
+<td align="left">BRONCHOKOD ADULTES, sirop</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+</tr>
+<tr class="even">
 <td align="right">66516206</td>
 <td align="left">GABACET, solution buvable en ampoule</td>
 <td align="right">NA</td>
 <td align="right">NA</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="right">66537773</td>
 <td align="left">MATRIFEN 100 microgrammes/heure, dispositif transdermique</td>
 <td align="right">NA</td>
 <td align="right">NA</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="right">66590904</td>
 <td align="left">MORPHINE (CHLORHYDRATE) LAVOISIER 20 mg/ml, solution injectable</td>
 <td align="right">NA</td>
 <td align="right">NA</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="right">66633017</td>
 <td align="left">HUILE GOMENOLEE 2 POUR CENT, solution pour instillation nasale</td>
 <td align="right">NA</td>
 <td align="right">NA</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="right">66643919</td>
 <td align="left">TRIPLIXAM 10 mg/2,5 mg/5 mg, comprimé pelliculé</td>
 <td align="right">NA</td>
 <td align="right">NA</td>
 </tr>
-<tr class="even">
-<td align="right">66652658</td>
-<td align="left">GESTODENE/ETHINYLESTRADIOL RANBAXY 75 microgrammes/30 microgrammes, comprimé enrobé</td>
-<td align="right">NA</td>
-<td align="right">NA</td>
-</tr>
 <tr class="odd">
-<td align="right">66658999</td>
-<td align="left">TETRAZEPAM EG 50 mg, comprimé pelliculé sécable</td>
-<td align="right">NA</td>
-<td align="right">NA</td>
-</tr>
-<tr class="even">
 <td align="right">66659617</td>
 <td align="left">ESBERIVEN FORT, solution buvable en ampoule</td>
-<td align="right">NA</td>
-<td align="right">NA</td>
-</tr>
-<tr class="odd">
-<td align="right">66662549</td>
-<td align="left">NICERGOLINE BIOGARAN 5 mg, gélule</td>
 <td align="right">NA</td>
 <td align="right">NA</td>
 </tr>
@@ -8122,18 +7506,6 @@ knitr::kable(rep5, row.names = FALSE)</code></pre>
 <td align="right">NA</td>
 </tr>
 <tr class="odd">
-<td align="right">66842401</td>
-<td align="left">NICERGOLINE TEVA 10 mg, gélule</td>
-<td align="right">NA</td>
-<td align="right">NA</td>
-</tr>
-<tr class="even">
-<td align="right">66842401</td>
-<td align="left">NICERGOLINE TEVA 10 mg, gélule</td>
-<td align="right">NA</td>
-<td align="right">NA</td>
-</tr>
-<tr class="odd">
 <td align="right">66855092</td>
 <td align="left">MORPHINE (CHLORHYDRATE) RENAUDIN 20 mg/ml, solution injectable</td>
 <td align="right">NA</td>
@@ -8164,18 +7536,6 @@ knitr::kable(rep5, row.names = FALSE)</code></pre>
 <td align="right">NA</td>
 </tr>
 <tr class="even">
-<td align="right">66868061</td>
-<td align="left">NICERGOLINE EG 10 mg, gélule</td>
-<td align="right">NA</td>
-<td align="right">NA</td>
-</tr>
-<tr class="odd">
-<td align="right">66868061</td>
-<td align="left">NICERGOLINE EG 10 mg, gélule</td>
-<td align="right">NA</td>
-<td align="right">NA</td>
-</tr>
-<tr class="even">
 <td align="right">66916798</td>
 <td align="left">AMOXICILLINE ARROW LAB 500 mg, gélule</td>
 <td align="right">NA</td>
@@ -8194,38 +7554,26 @@ knitr::kable(rep5, row.names = FALSE)</code></pre>
 <td align="right">NA</td>
 </tr>
 <tr class="odd">
-<td align="right">66992917</td>
-<td align="left">PIRACETAM MYLAN 400 mg, comprimé pelliculé</td>
-<td align="right">NA</td>
-<td align="right">NA</td>
-</tr>
-<tr class="even">
 <td align="right">67029888</td>
 <td align="left">SETOFILM 8 mg, film orodispersible</td>
 <td align="right">NA</td>
 <td align="right">NA</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="right">67041627</td>
 <td align="left">SOLMUCOL 200 mg, granulés pour solution buvable en sachet-dose</td>
 <td align="right">NA</td>
 <td align="right">NA</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="right">67051009</td>
 <td align="left">PETHIDINE RENAUDIN 50 mg/ml, solution injectable en ampoule</td>
 <td align="right">NA</td>
 <td align="right">NA</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="right">67101782</td>
 <td align="left">XEROQUEL LP 50 mg, comprimé à libération prolongée</td>
-<td align="right">NA</td>
-<td align="right">NA</td>
-</tr>
-<tr class="even">
-<td align="right">67115910</td>
-<td align="left">TETRAZEPAM RATIOPHARM 50 mg, comprimé enrobé sécable</td>
 <td align="right">NA</td>
 <td align="right">NA</td>
 </tr>
@@ -8278,23 +7626,11 @@ knitr::kable(rep5, row.names = FALSE)</code></pre>
 <td align="right">NA</td>
 </tr>
 <tr class="odd">
-<td align="right">67152392</td>
-<td align="left">NIMESULIDE TEVA 100 mg, comprimé</td>
-<td align="right">NA</td>
-<td align="right">NA</td>
-</tr>
-<tr class="even">
 <td align="right">67164505</td>
 <td align="left">GUETHURAL 300 mg, comprimé pelliculé</td>
 <td align="right">NA</td>
 <td align="right">NA</td>
 </tr>
-<tr class="odd">
-<td align="right">67173618</td>
-<td align="left">INTRALIPIDE 20 POUR CENT, émulsion pour perfusion</td>
-<td align="right">NA</td>
-<td align="right">NA</td>
-</tr>
 <tr class="even">
 <td align="right">67173618</td>
 <td align="left">INTRALIPIDE 20 POUR CENT, émulsion pour perfusion</td>
@@ -8344,8 +7680,8 @@ knitr::kable(rep5, row.names = FALSE)</code></pre>
 <td align="right">NA</td>
 </tr>
 <tr class="even">
-<td align="right">67202735</td>
-<td align="left">VITAMINE B1 B6 BAYER, comprimé pelliculé</td>
+<td align="right">67173618</td>
+<td align="left">INTRALIPIDE 20 POUR CENT, émulsion pour perfusion</td>
 <td align="right">NA</td>
 <td align="right">NA</td>
 </tr>
@@ -8362,20 +7698,20 @@ knitr::kable(rep5, row.names = FALSE)</code></pre>
 <td align="right">NA</td>
 </tr>
 <tr class="odd">
+<td align="right">67202735</td>
+<td align="left">VITAMINE B1 B6 BAYER, comprimé pelliculé</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+</tr>
+<tr class="even">
 <td align="right">67212035</td>
 <td align="left">LUMIRELAX 500 mg, comprimé</td>
 <td align="right">NA</td>
 <td align="right">NA</td>
 </tr>
-<tr class="even">
-<td align="right">67226298</td>
-<td align="left">BIPERIDYS 20 mg, comprimé pelliculé sécable</td>
-<td align="right">NA</td>
-<td align="right">NA</td>
-</tr>
 <tr class="odd">
-<td align="right">67226298</td>
-<td align="left">BIPERIDYS 20 mg, comprimé pelliculé sécable</td>
+<td align="right">67255976</td>
+<td align="left">OCTAGAM 100 mg/ml, solution pour perfusion</td>
 <td align="right">NA</td>
 <td align="right">NA</td>
 </tr>
@@ -8398,20 +7734,8 @@ knitr::kable(rep5, row.names = FALSE)</code></pre>
 <td align="right">NA</td>
 </tr>
 <tr class="odd">
-<td align="right">67255976</td>
-<td align="left">OCTAGAM 100 mg/ml, solution pour perfusion</td>
-<td align="right">NA</td>
-<td align="right">NA</td>
-</tr>
-<tr class="even">
 <td align="right">67276995</td>
 <td align="left">ADARTREL 2 mg, comprimé pelliculé</td>
-<td align="right">NA</td>
-<td align="right">NA</td>
-</tr>
-<tr class="odd">
-<td align="right">67286434</td>
-<td align="left">NICERGOLINE TEVA 5 mg, gélule</td>
 <td align="right">NA</td>
 <td align="right">NA</td>
 </tr>
@@ -8518,23 +7842,11 @@ knitr::kable(rep5, row.names = FALSE)</code></pre>
 <td align="right">NA</td>
 </tr>
 <tr class="odd">
-<td align="right">67572072</td>
-<td align="left">TETRAZEPAM MYLAN 50 mg, comprimé pelliculé sécable</td>
-<td align="right">NA</td>
-<td align="right">NA</td>
-</tr>
-<tr class="even">
 <td align="right">67582262</td>
 <td align="left">REMSIMA 100 mg, poudre pour solution à diluer pour solution pour perfusion</td>
 <td align="right">NA</td>
 <td align="right">NA</td>
 </tr>
-<tr class="odd">
-<td align="right">67642478</td>
-<td align="left">ZINNAT 500 mg, comprimé pelliculé</td>
-<td align="right">NA</td>
-<td align="right">NA</td>
-</tr>
 <tr class="even">
 <td align="right">67661635</td>
 <td align="left">MEGAMYLASE 200 U.CEIP/ml, sirop</td>
@@ -8548,23 +7860,11 @@ knitr::kable(rep5, row.names = FALSE)</code></pre>
 <td align="right">NA</td>
 </tr>
 <tr class="even">
-<td align="right">67688493</td>
-<td align="left">BUTAZOLIDINE 100 mg, comprimé enrobé</td>
-<td align="right">NA</td>
-<td align="right">NA</td>
-</tr>
-<tr class="odd">
 <td align="right">67757295</td>
 <td align="left">MUCOMYST 200 mg, poudre pour solution buvable en sachet</td>
 <td align="right">NA</td>
 <td align="right">NA</td>
 </tr>
-<tr class="even">
-<td align="right">67780949</td>
-<td align="left">DESOBEL 150 microgrammes/30 microgrammes, comprimé</td>
-<td align="right">NA</td>
-<td align="right">NA</td>
-</tr>
 <tr class="odd">
 <td align="right">67780949</td>
 <td align="left">DESOBEL 150 microgrammes/30 microgrammes, comprimé</td>
@@ -8572,14 +7872,14 @@ knitr::kable(rep5, row.names = FALSE)</code></pre>
 <td align="right">NA</td>
 </tr>
 <tr class="even">
+<td align="right">67780949</td>
+<td align="left">DESOBEL 150 microgrammes/30 microgrammes, comprimé</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+</tr>
+<tr class="odd">
 <td align="right">67783870</td>
 <td align="left">CEFUROXIME BGR 500 mg, comprimé pelliculé</td>
-<td align="right">NA</td>
-<td align="right">NA</td>
-</tr>
-<tr class="odd">
-<td align="right">67816929</td>
-<td align="left">NALBUPHINE AGUETTANT 20 mg/2 ml, solution injectable</td>
 <td align="right">NA</td>
 <td align="right">NA</td>
 </tr>
@@ -8596,59 +7896,47 @@ knitr::kable(rep5, row.names = FALSE)</code></pre>
 <td align="right">NA</td>
 </tr>
 <tr class="even">
-<td align="right">67878560</td>
-<td align="left">TETRAZEPAM ARROW 50 mg, comprimé pelliculé sécable</td>
-<td align="right">NA</td>
-<td align="right">NA</td>
-</tr>
-<tr class="odd">
 <td align="right">67890598</td>
 <td align="left">TIAPRIDAL 100 mg, comprimé sécable</td>
 <td align="right">NA</td>
 <td align="right">NA</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="right">67940065</td>
 <td align="left">RADIOSELECTAN URINAIRE 30 POUR CENT (146 mg d’iode/ml), solution injectable</td>
 <td align="right">NA</td>
 <td align="right">NA</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="right">68024470</td>
 <td align="left">PIRACETAM ZYDUS 800 mg, comprimé pelliculé sécable</td>
 <td align="right">NA</td>
 <td align="right">NA</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="right">68056361</td>
 <td align="left">TRAMISAL, solution buvable</td>
 <td align="right">NA</td>
 <td align="right">NA</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="right">68056596</td>
 <td align="left">CELESTAMINE, comprimé</td>
 <td align="right">NA</td>
 <td align="right">NA</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="right">68079933</td>
 <td align="left">MINIPRESS 1 mg, comprimé sécable</td>
 <td align="right">NA</td>
 <td align="right">NA</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="right">68105513</td>
 <td align="left">HUILE GOMENOLEE 5 POUR CENT, solution pour instillation nasale</td>
 <td align="right">NA</td>
 <td align="right">NA</td>
 </tr>
-<tr class="even">
-<td align="right">68139704</td>
-<td align="left">TRONOTHANE 1 POUR CENT, gel pour application locale</td>
-<td align="right">NA</td>
-<td align="right">NA</td>
-</tr>
 <tr class="odd">
 <td align="right">68139704</td>
 <td align="left">TRONOTHANE 1 POUR CENT, gel pour application locale</td>
@@ -8656,23 +7944,23 @@ knitr::kable(rep5, row.names = FALSE)</code></pre>
 <td align="right">NA</td>
 </tr>
 <tr class="even">
+<td align="right">68139704</td>
+<td align="left">TRONOTHANE 1 POUR CENT, gel pour application locale</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+</tr>
+<tr class="odd">
 <td align="right">68156358</td>
 <td align="left">PENTOXIFYLLINE EG LP 400 mg, comprimé pelliculé à libération prolongée</td>
 <td align="right">NA</td>
 <td align="right">NA</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="right">68182666</td>
 <td align="left">OSSOPAN 600 mg, comprimé pelliculé</td>
 <td align="right">NA</td>
 <td align="right">NA</td>
 </tr>
-<tr class="even">
-<td align="right">68188295</td>
-<td align="left">GESTODENE/ETHINYLESTRADIOL MYLAN 75 microgrammes/20 microgrammes, comprimé enrobé</td>
-<td align="right">NA</td>
-<td align="right">NA</td>
-</tr>
 <tr class="odd">
 <td align="right">68188295</td>
 <td align="left">GESTODENE/ETHINYLESTRADIOL MYLAN 75 microgrammes/20 microgrammes, comprimé enrobé</td>
@@ -8680,32 +7968,20 @@ knitr::kable(rep5, row.names = FALSE)</code></pre>
 <td align="right">NA</td>
 </tr>
 <tr class="even">
+<td align="right">68188295</td>
+<td align="left">GESTODENE/ETHINYLESTRADIOL MYLAN 75 microgrammes/20 microgrammes, comprimé enrobé</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+</tr>
+<tr class="odd">
 <td align="right">68188982</td>
 <td align="left">ADENYL 60 mg, comprimé</td>
 <td align="right">NA</td>
 <td align="right">NA</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="right">68208043</td>
 <td align="left">CLIMASTON 0,5 mg/2,5 mg, comprimé pelliculé</td>
-<td align="right">NA</td>
-<td align="right">NA</td>
-</tr>
-<tr class="even">
-<td align="right">68231483</td>
-<td align="left">VISCERALGINE 50 mg, comprimé pelliculé</td>
-<td align="right">NA</td>
-<td align="right">NA</td>
-</tr>
-<tr class="odd">
-<td align="right">68248657</td>
-<td align="left">GESTODENE/ETHINYLESTRADIOL ACTAVIS 75 microgrammes/20 microgrammes, comprimé enrobé</td>
-<td align="right">NA</td>
-<td align="right">NA</td>
-</tr>
-<tr class="even">
-<td align="right">68248657</td>
-<td align="left">GESTODENE/ETHINYLESTRADIOL ACTAVIS 75 microgrammes/20 microgrammes, comprimé enrobé</td>
 <td align="right">NA</td>
 <td align="right">NA</td>
 </tr>
@@ -8740,8 +8016,8 @@ knitr::kable(rep5, row.names = FALSE)</code></pre>
 <td align="right">NA</td>
 </tr>
 <tr class="even">
-<td align="right">68315682</td>
-<td align="left">SEGLOR 5 mg, gélule</td>
+<td align="right">68364341</td>
+<td align="left">DESOGESTREL/ETHINYLESTRADIOL ZENTIVA 150 microgrammes/20 microgrammes, comprimé</td>
 <td align="right">NA</td>
 <td align="right">NA</td>
 </tr>
@@ -8752,8 +8028,8 @@ knitr::kable(rep5, row.names = FALSE)</code></pre>
 <td align="right">NA</td>
 </tr>
 <tr class="even">
-<td align="right">68364341</td>
-<td align="left">DESOGESTREL/ETHINYLESTRADIOL ZENTIVA 150 microgrammes/20 microgrammes, comprimé</td>
+<td align="right">68395073</td>
+<td align="left">ESBERIVEN FORT, comprimé enrobé</td>
 <td align="right">NA</td>
 <td align="right">NA</td>
 </tr>
@@ -8764,8 +8040,8 @@ knitr::kable(rep5, row.names = FALSE)</code></pre>
 <td align="right">NA</td>
 </tr>
 <tr class="even">
-<td align="right">68395073</td>
-<td align="left">ESBERIVEN FORT, comprimé enrobé</td>
+<td align="right">68419617</td>
+<td align="left">BONVIVA 150 mg, comprimé pelliculé</td>
 <td align="right">NA</td>
 <td align="right">NA</td>
 </tr>
@@ -8776,26 +8052,14 @@ knitr::kable(rep5, row.names = FALSE)</code></pre>
 <td align="right">NA</td>
 </tr>
 <tr class="even">
-<td align="right">68419617</td>
-<td align="left">BONVIVA 150 mg, comprimé pelliculé</td>
-<td align="right">NA</td>
-<td align="right">NA</td>
-</tr>
-<tr class="odd">
 <td align="right">68427304</td>
 <td align="left">DOMPERIDONE ARROW 10 mg, comprimé pelliculé</td>
 <td align="right">NA</td>
 <td align="right">NA</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="right">68435468</td>
 <td align="left">OXYCODONE AGUETTANT 50 mg/mL, solution injectable</td>
-<td align="right">NA</td>
-<td align="right">NA</td>
-</tr>
-<tr class="odd">
-<td align="right">68465792</td>
-<td align="left">DESERNIL 1,65 mg, comprimé</td>
 <td align="right">NA</td>
 <td align="right">NA</td>
 </tr>
@@ -8974,18 +8238,6 @@ knitr::kable(rep5, row.names = FALSE)</code></pre>
 <td align="right">NA</td>
 </tr>
 <tr class="odd">
-<td align="right">69000020</td>
-<td align="left">CYCLEANE 30 microgrammes, comprimé</td>
-<td align="right">NA</td>
-<td align="right">NA</td>
-</tr>
-<tr class="even">
-<td align="right">69000020</td>
-<td align="left">CYCLEANE 30 microgrammes, comprimé</td>
-<td align="right">NA</td>
-<td align="right">NA</td>
-</tr>
-<tr class="odd">
 <td align="right">69091027</td>
 <td align="left">TAVANIC 5 mg/ml, solution pour perfusion</td>
 <td align="right">NA</td>
@@ -9034,8 +8286,8 @@ knitr::kable(rep5, row.names = FALSE)</code></pre>
 <td align="right">NA</td>
 </tr>
 <tr class="odd">
-<td align="right">69226350</td>
-<td align="left">TRIMETAZIDINE QUALIMED 20 mg, comprimé pelliculé</td>
+<td align="right">69232606</td>
+<td align="left">PERCUTALGINE, gel</td>
 <td align="right">NA</td>
 <td align="right">NA</td>
 </tr>
@@ -9046,50 +8298,26 @@ knitr::kable(rep5, row.names = FALSE)</code></pre>
 <td align="right">NA</td>
 </tr>
 <tr class="odd">
-<td align="right">69232606</td>
-<td align="left">PERCUTALGINE, gel</td>
-<td align="right">NA</td>
-<td align="right">NA</td>
-</tr>
-<tr class="even">
 <td align="right">69242326</td>
 <td align="left">OZOTHINE A LA DIPROPHYLLINE ADULTES, suppositoire</td>
 <td align="right">NA</td>
 <td align="right">NA</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="right">69248521</td>
 <td align="left">OMACOR 1000 mg, capsule molle</td>
 <td align="right">NA</td>
 <td align="right">NA</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="right">69253041</td>
 <td align="left">MINIPRESS 5 mg, comprimé sécable</td>
 <td align="right">NA</td>
 <td align="right">NA</td>
 </tr>
-<tr class="odd">
-<td align="right">69260395</td>
-<td align="left">TETRAZEPAM BIOGARAN 50 mg, comprimé pelliculé sécable</td>
-<td align="right">NA</td>
-<td align="right">NA</td>
-</tr>
 <tr class="even">
-<td align="right">69279627</td>
-<td align="left">BRONCHODERMINE NOURRISSONS, suppositoire</td>
-<td align="right">NA</td>
-<td align="right">NA</td>
-</tr>
-<tr class="odd">
 <td align="right">69345098</td>
 <td align="left">DERINOX, solution pour pulvérisation nasale</td>
-<td align="right">NA</td>
-<td align="right">NA</td>
-</tr>
-<tr class="even">
-<td align="right">69372120</td>
-<td align="left">ALLOCHRYSINE 50 mg, solution injectable IM</td>
 <td align="right">NA</td>
 <td align="right">NA</td>
 </tr>
@@ -9178,38 +8406,14 @@ knitr::kable(rep5, row.names = FALSE)</code></pre>
 <td align="right">NA</td>
 </tr>
 <tr class="odd">
-<td align="right">69501953</td>
-<td align="left">HYDERGINE 4,5 mg DOSE QUOTIDIENNE UNIQUE, comprimé</td>
-<td align="right">NA</td>
-<td align="right">NA</td>
-</tr>
-<tr class="even">
 <td align="right">69548508</td>
 <td align="left">STIVARGA 40 mg, comprimé pelliculé</td>
 <td align="right">100</td>
 <td align="right">NA</td>
 </tr>
-<tr class="odd">
-<td align="right">69554906</td>
-<td align="left">DIHYDROERGOTAMINE AMDIPHARM 3 mg, comprimé</td>
-<td align="right">NA</td>
-<td align="right">NA</td>
-</tr>
 <tr class="even">
-<td align="right">69557311</td>
-<td align="left">NIMESULIDE EG 100 mg, comprimé</td>
-<td align="right">NA</td>
-<td align="right">NA</td>
-</tr>
-<tr class="odd">
 <td align="right">69570312</td>
 <td align="left">MABELIO 500 mg, poudre pour solution à diluer pour solution pour perfusion</td>
-<td align="right">NA</td>
-<td align="right">NA</td>
-</tr>
-<tr class="even">
-<td align="right">69579578</td>
-<td align="left">PENTOXIFYLLINE QUALIMED LP 400 mg, comprimé pelliculé à libération prolongée</td>
 <td align="right">NA</td>
 <td align="right">NA</td>
 </tr>
@@ -9238,32 +8442,8 @@ knitr::kable(rep5, row.names = FALSE)</code></pre>
 <td align="right">NA</td>
 </tr>
 <tr class="odd">
-<td align="right">69612359</td>
-<td align="left">VASOBRAL, comprimé sécable</td>
-<td align="right">NA</td>
-<td align="right">NA</td>
-</tr>
-<tr class="even">
-<td align="right">69612359</td>
-<td align="left">VASOBRAL, comprimé sécable</td>
-<td align="right">NA</td>
-<td align="right">NA</td>
-</tr>
-<tr class="odd">
 <td align="right">69638788</td>
 <td align="left">NEO-CODION NOURRISSONS, sirop</td>
-<td align="right">NA</td>
-<td align="right">NA</td>
-</tr>
-<tr class="even">
-<td align="right">69639025</td>
-<td align="left">EQUANIL 250 mg, comprimé enrobé</td>
-<td align="right">NA</td>
-<td align="right">NA</td>
-</tr>
-<tr class="odd">
-<td align="right">69639025</td>
-<td align="left">EQUANIL 250 mg, comprimé enrobé</td>
 <td align="right">NA</td>
 <td align="right">NA</td>
 </tr>
@@ -9346,29 +8526,17 @@ knitr::kable(rep5, row.names = FALSE)</code></pre>
 <td align="right">NA</td>
 </tr>
 <tr class="odd">
-<td align="right">69865145</td>
-<td align="left">PIRACETAM QUALIMED 800 mg, comprimé pelliculé</td>
-<td align="right">NA</td>
-<td align="right">NA</td>
-</tr>
-<tr class="even">
 <td align="right">69869122</td>
 <td align="left">SANDOSTATINE L.P. 20 mg, poudre et solvant en seringue préremplie pour suspension injectable (IM) à libération prolongée</td>
 <td align="right">100</td>
 <td align="right">NA</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="right">69880873</td>
 <td align="left">TRIPLIXAM 5 mg/1,25 mg/10 mg, comprimé pelliculé</td>
 <td align="right">NA</td>
 <td align="right">NA</td>
 </tr>
-<tr class="even">
-<td align="right">69931588</td>
-<td align="left">BIAFINE, émulsion pour application cutanée</td>
-<td align="right">NA</td>
-<td align="right">NA</td>
-</tr>
 <tr class="odd">
 <td align="right">69931588</td>
 <td align="left">BIAFINE, émulsion pour application cutanée</td>
@@ -9376,18 +8544,24 @@ knitr::kable(rep5, row.names = FALSE)</code></pre>
 <td align="right">NA</td>
 </tr>
 <tr class="even">
+<td align="right">69931588</td>
+<td align="left">BIAFINE, émulsion pour application cutanée</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+</tr>
+<tr class="odd">
 <td align="right">69982928</td>
 <td align="left">ADARTREL 0,50 mg, comprimé pelliculé</td>
 <td align="right">NA</td>
 <td align="right">NA</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="right">69987156</td>
 <td align="left">MIBITEC, poudre pour solution injectable. Trousse pour préparation radiopharmaceutique</td>
 <td align="right">NA</td>
 <td align="right">NA</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="right">69987156</td>
 <td align="left">MIBITEC, poudre pour solution injectable. Trousse pour préparation radiopharmaceutique</td>
 <td align="right">NA</td>
@@ -10010,27 +9184,17 @@ knitr::kable(rep5c[order(rep5c$Prix, decreasing = TRUE),],
 <td align="right">7.62</td>
 </tr>
 <tr class="odd">
-<td align="left">RANITIDINE SANDOZ</td>
-<td align="right">4</td>
-<td align="right">7.62</td>
-</tr>
-<tr class="even">
 <td align="left">ORELOX ENFANTS ET NOURRISSONS</td>
 <td align="right">2</td>
 <td align="right">7.50</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">RANIPLEX</td>
 <td align="right">2</td>
 <td align="right">7.41</td>
 </tr>
-<tr class="even">
-<td align="left">RANITIDINE QUALIMED</td>
-<td align="right">2</td>
-<td align="right">7.41</td>
-</tr>
 <tr class="odd">
-<td align="left">RANITIDINE RATIOPHARM</td>
+<td align="left">RANITIDINE SANDOZ</td>
 <td align="right">2</td>
 <td align="right">7.41</td>
 </tr>
@@ -10110,304 +9274,294 @@ knitr::kable(rep5c[order(rep5c$Prix, decreasing = TRUE),],
 <td align="right">6.50</td>
 </tr>
 <tr class="odd">
-<td align="left">NAFTIDROFURYL MYLAN GENERIQUES</td>
-<td align="right">3</td>
-<td align="right">6.50</td>
-</tr>
-<tr class="even">
 <td align="left">CEBUTID LP</td>
 <td align="right">1</td>
 <td align="right">6.28</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">ZINNAT</td>
-<td align="right">7</td>
+<td align="right">6</td>
 <td align="right">6.15</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">VOLTARENE LP</td>
 <td align="right">2</td>
 <td align="right">6.06</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">RANITIDINE ARROW</td>
 <td align="right">3</td>
 <td align="right">5.90</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">RANITIDINE MYLAN</td>
 <td align="right">6</td>
 <td align="right">5.81</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">RANITIDINE TEVA</td>
 <td align="right">6</td>
 <td align="right">5.81</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">DEPO PRODASONE</td>
 <td align="right">1</td>
 <td align="right">5.78</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">TIAPRIDAL</td>
 <td align="right">4</td>
 <td align="right">5.77</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">OXYCONTIN L.P.</td>
 <td align="right">1</td>
 <td align="right">5.74</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">PARLODEL</td>
 <td align="right">4</td>
 <td align="right">5.69</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">OXYNORM</td>
 <td align="right">8</td>
 <td align="right">5.59</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">OXYNORMORO</td>
 <td align="right">3</td>
 <td align="right">5.59</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">RODOGYL</td>
 <td align="right">1</td>
 <td align="right">5.52</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">LAROXYL</td>
 <td align="right">5</td>
 <td align="right">5.50</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">CYCLADOL</td>
 <td align="right">2</td>
 <td align="right">5.38</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">ERYTHROCINE</td>
 <td align="right">3</td>
 <td align="right">5.27</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">MYNOCINE</td>
 <td align="right">3</td>
 <td align="right">5.25</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">OROKEN NOURRISSONS</td>
 <td align="right">1</td>
 <td align="right">5.23</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">METHOTREXATE BIODIM</td>
 <td align="right">2</td>
 <td align="right">5.22</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">TRIMEBUTINE ALMUS</td>
 <td align="right">1</td>
 <td align="right">5.21</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">TRIMEBUTINE CRISTERS</td>
 <td align="right">1</td>
 <td align="right">5.21</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">TRIMEBUTINE EVOLUGEN</td>
 <td align="right">1</td>
 <td align="right">5.21</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">TRIMEBUTINE GERDA</td>
 <td align="right">1</td>
 <td align="right">5.21</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">TRIMEBUTINE RANBAXY</td>
 <td align="right">1</td>
 <td align="right">5.21</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">TRIMEBUTINE TEVA SANTE</td>
 <td align="right">1</td>
 <td align="right">5.21</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">VIBRAMYCINE N</td>
 <td align="right">2</td>
 <td align="right">4.95</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">SELEXID</td>
 <td align="right">1</td>
 <td align="right">4.93</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">SMECTA</td>
 <td align="right">3</td>
 <td align="right">4.86</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">GONADOTROPHINE CHORIONIQUE ENDO</td>
 <td align="right">3</td>
 <td align="right">4.75</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">CEFUROXIME ZENTIVA</td>
 <td align="right">1</td>
 <td align="right">4.69</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">MESTINON</td>
 <td align="right">1</td>
 <td align="right">4.68</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">DERMORELLE</td>
 <td align="right">2</td>
 <td align="right">4.66</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">ALFATIL</td>
 <td align="right">3</td>
 <td align="right">4.64</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">DEBRIDAT</td>
 <td align="right">4</td>
 <td align="right">4.59</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">PROGESTERONE RETARD PHARLON</td>
 <td align="right">2</td>
 <td align="right">4.58</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">KEAL</td>
 <td align="right">3</td>
 <td align="right">4.52</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">DICETEL</td>
 <td align="right">2</td>
 <td align="right">4.51</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">DEXEF</td>
 <td align="right">1</td>
 <td align="right">4.46</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">MANTADIX</td>
 <td align="right">1</td>
 <td align="right">4.43</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">UNACIM INJECTABLE</td>
 <td align="right">1</td>
 <td align="right">4.22</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">BRICANYL L.P.</td>
 <td align="right">2</td>
 <td align="right">4.21</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">TRIMEBUTINE ACTAVIS</td>
 <td align="right">2</td>
 <td align="right">4.21</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">TRIMEBUTINE ARROW</td>
 <td align="right">3</td>
 <td align="right">4.21</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">TRIMEBUTINE BIOGARAN</td>
 <td align="right">2</td>
 <td align="right">4.21</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">TRIMEBUTINE EG</td>
 <td align="right">2</td>
 <td align="right">4.21</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">TRIMEBUTINE ISOMED</td>
 <td align="right">2</td>
 <td align="right">4.21</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">TRIMEBUTINE MYLAN</td>
 <td align="right">2</td>
 <td align="right">4.21</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">TRIMEBUTINE PFIZER</td>
 <td align="right">2</td>
 <td align="right">4.21</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">TRIMEBUTINE SANDOZ</td>
 <td align="right">2</td>
 <td align="right">4.21</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">TRIMEBUTINE TEVA</td>
 <td align="right">2</td>
 <td align="right">4.21</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">TRIMEBUTINE ZENTIVA</td>
 <td align="right">2</td>
 <td align="right">4.21</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">TRIMEBUTINE ZYDUS</td>
 <td align="right">2</td>
 <td align="right">4.21</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">AZANTAC INJECTABLE</td>
 <td align="right">1</td>
 <td align="right">4.19</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">LARGACTIL</td>
 <td align="right">5</td>
 <td align="right">4.00</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">KEFORAL</td>
 <td align="right">3</td>
 <td align="right">3.86</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">DOXYCYCLINE ARROW</td>
 <td align="right">3</td>
 <td align="right">3.79</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">SPIROCTAN</td>
 <td align="right">2</td>
 <td align="right">3.61</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">CARTREX</td>
 <td align="right">1</td>
 <td align="right">3.58</td>
-</tr>
-<tr class="even">
-<td align="left">MEBEVERINE BIOGARAN</td>
-<td align="right">2</td>
-<td align="right">3.56</td>
 </tr>
 <tr class="odd">
 <td align="left">MOBIC</td>
@@ -10460,23 +9614,13 @@ knitr::kable(rep5c[order(rep5c$Prix, decreasing = TRUE),],
 <td align="right">3.20</td>
 </tr>
 <tr class="odd">
-<td align="left">TRIMEBUTINE</td>
-<td align="right">1</td>
-<td align="right">3.20</td>
-</tr>
-<tr class="even">
 <td align="left">TRIMEBUTINE ARROW GENERIQUES</td>
 <td align="right">2</td>
 <td align="right">3.20</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">TRIMEBUTINE MYLAN CONSEIL</td>
 <td align="right">2</td>
-<td align="right">3.20</td>
-</tr>
-<tr class="even">
-<td align="left">TRIMEBUTINE RATIO</td>
-<td align="right">1</td>
 <td align="right">3.20</td>
 </tr>
 <tr class="odd">
@@ -10510,152 +9654,112 @@ knitr::kable(rep5c[order(rep5c$Prix, decreasing = TRUE),],
 <td align="right">3.03</td>
 </tr>
 <tr class="odd">
-<td align="left">AMOXICILLINE TEVA</td>
-<td align="right">2</td>
-<td align="right">3.02</td>
-</tr>
-<tr class="even">
 <td align="left">SPIRONOLACTONE MICROFINE RATIOPHARM</td>
 <td align="right">1</td>
 <td align="right">3.00</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">EFFEDERM</td>
 <td align="right">2</td>
 <td align="right">2.96</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">FELDENE</td>
 <td align="right">4</td>
 <td align="right">2.95</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">HYDROCORTANCYL</td>
 <td align="right">1</td>
 <td align="right">2.82</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">KENACORT RETARD</td>
 <td align="right">2</td>
 <td align="right">2.81</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">FLECTOR</td>
 <td align="right">1</td>
 <td align="right">2.74</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">TARDYFERON B</td>
 <td align="right">1</td>
 <td align="right">2.68</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">NOOTROPYL</td>
 <td align="right">4</td>
 <td align="right">2.60</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">PIRACETAM ARROW</td>
 <td align="right">2</td>
 <td align="right">2.60</td>
 </tr>
-<tr class="odd">
-<td align="left">PIRACETAM MYLAN</td>
-<td align="right">3</td>
-<td align="right">2.60</td>
-</tr>
 <tr class="even">
-<td align="left">PIRACETAM QUALIMED</td>
-<td align="right">3</td>
-<td align="right">2.60</td>
-</tr>
-<tr class="odd">
-<td align="left">PIRACETAM SANDOZ</td>
-<td align="right">1</td>
-<td align="right">2.60</td>
-</tr>
-<tr class="even">
-<td align="left">PIRACETAM TEVA</td>
-<td align="right">2</td>
-<td align="right">2.60</td>
-</tr>
-<tr class="odd">
 <td align="left">CEBUTID</td>
 <td align="right">2</td>
 <td align="right">2.55</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">TOCO</td>
 <td align="right">1</td>
 <td align="right">2.54</td>
 </tr>
-<tr class="odd">
-<td align="left">CHLORHYDRATE DE MEBEVERINE MYLAN</td>
-<td align="right">1</td>
-<td align="right">2.49</td>
-</tr>
 <tr class="even">
-<td align="left">COLOPRIV</td>
-<td align="right">1</td>
-<td align="right">2.49</td>
-</tr>
-<tr class="odd">
 <td align="left">MEBEVERINE EG</td>
 <td align="right">1</td>
 <td align="right">2.49</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">MEBEVERINE ZYDUS</td>
 <td align="right">1</td>
 <td align="right">2.49</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">AMOXICILLINE ARROW</td>
 <td align="right">5</td>
 <td align="right">2.48</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">ERY NOURRISSONS</td>
 <td align="right">1</td>
 <td align="right">2.44</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">DOXYCYCLINE BIOGARAN</td>
 <td align="right">2</td>
 <td align="right">2.43</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">EUPHON</td>
 <td align="right">2</td>
 <td align="right">2.41</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">DI</td>
 <td align="right">1</td>
 <td align="right">2.37</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">VOLTARENE EMULGEL</td>
 <td align="right">2</td>
 <td align="right">2.34</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">MOTILIUM</td>
 <td align="right">2</td>
 <td align="right">2.29</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">PERIDYS</td>
 <td align="right">2</td>
 <td align="right">2.29</td>
 </tr>
-<tr class="odd">
-<td align="left">FELDENE DISPERSIBLE</td>
-<td align="right">1</td>
-<td align="right">2.20</td>
-</tr>
 <tr class="even">
-<td align="left">PROXALYOC</td>
+<td align="left">FELDENE DISPERSIBLE</td>
 <td align="right">1</td>
 <td align="right">2.20</td>
 </tr>
@@ -10745,141 +9849,136 @@ knitr::kable(rep5c[order(rep5c$Prix, decreasing = TRUE),],
 <td align="right">1.80</td>
 </tr>
 <tr class="even">
-<td align="left">DOMPERIDONE RATIOPHARM</td>
-<td align="right">1</td>
-<td align="right">1.80</td>
-</tr>
-<tr class="odd">
 <td align="left">DOMPERIDONE SANDOZ</td>
 <td align="right">1</td>
 <td align="right">1.80</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">DOMPERIDONE TEVA</td>
 <td align="right">1</td>
 <td align="right">1.80</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">DOMPERIDONE ZENTIVA</td>
 <td align="right">1</td>
 <td align="right">1.80</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">VOLTARENDOLO</td>
 <td align="right">1</td>
 <td align="right">1.76</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">CLAMOXYL</td>
 <td align="right">9</td>
 <td align="right">1.75</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">SALBUMOL</td>
 <td align="right">1</td>
 <td align="right">1.69</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">ALGISEDAL</td>
 <td align="right">1</td>
 <td align="right">1.59</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">CLARADOL CODEINE</td>
 <td align="right">1</td>
 <td align="right">1.59</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">CODOLIPRANE</td>
 <td align="right">3</td>
 <td align="right">1.59</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">CODOLIPRANE ADULTES</td>
 <td align="right">2</td>
 <td align="right">1.59</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">DAFALGAN CODEINE</td>
 <td align="right">6</td>
 <td align="right">1.59</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">LINDILANE</td>
 <td align="right">1</td>
 <td align="right">1.59</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">PARACETAMOL CODEINE BIOGARAN</td>
 <td align="right">1</td>
 <td align="right">1.59</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">PARACETAMOL CODEINE EG</td>
 <td align="right">1</td>
 <td align="right">1.59</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">PARACETAMOL CODEINE MYLAN</td>
 <td align="right">1</td>
 <td align="right">1.59</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">PARACETAMOL CODEINE TEVA</td>
 <td align="right">1</td>
 <td align="right">1.59</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">KLIPAL CODEINE</td>
 <td align="right">3</td>
 <td align="right">1.54</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">EDUCTYL ADULTES</td>
 <td align="right">1</td>
 <td align="right">1.50</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">EDUCTYL ENFANTS</td>
 <td align="right">1</td>
 <td align="right">1.50</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">NORMACOL LAVEMENT ADULTES</td>
 <td align="right">1</td>
 <td align="right">1.44</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">AMOXICILLINE ARROW LAB</td>
 <td align="right">2</td>
 <td align="right">1.42</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">SPASFON LYOC</td>
 <td align="right">2</td>
 <td align="right">1.40</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">VOLTARENE ENFANT</td>
 <td align="right">1</td>
 <td align="right">1.38</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">PHLOROGLUCINOL ARROW</td>
 <td align="right">3</td>
 <td align="right">1.33</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">THERALENE</td>
 <td align="right">3</td>
 <td align="right">1.29</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">CLARELUX</td>
 <td align="right">1</td>
 <td align="right">1.24</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">NORMACOL LAVEMENT ENFANTS</td>
 <td align="right">1</td>
 <td align="right">1.21</td>

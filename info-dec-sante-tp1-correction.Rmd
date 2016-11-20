@@ -301,7 +301,7 @@ On veut les informations suivantes dans une table à deux colonnes (`statistique
 
 ```{r}
 CIS_active = subset(CIS, StatutAMM == "Autorisation active")
-CIS_surv = subset(CIS, Surveillance == "Oui")
+CIS_surv = subset(CIS_active, Surveillance == "Oui")
 CIS_CIP_active = merge(CIS_active, CIS_CIP, by = "CodeCIS")
 rep1 = data.frame(
     statistique = c("Nombre de médicaments",
@@ -386,13 +386,9 @@ knitr::kable(rep3, digits = 2)
 Quelles sont les voies d'administration possibles ? Et combien de médicaments sont concernés pour chaque voie ?
 
 ```{r}
-rep4 = data.frame(
-    Voies = unique(unlist(lapply(CIS$VoiesAdm, strsplit, ";"))),
-    NbMedicaments = 0
-)
-for (v in CIS$VoiesAdm) {
-    rep4$NbMedicaments = rep4$NbMedicaments + rep4$Voies %in% unlist(strsplit(v, ";"))
-}
+rep4 = setNames(data.frame(
+    table(unlist(strsplit(CIS$VoiesAdm, ";")))
+), c("Voie", "NbMedicaments"))
 knitr::kable(rep4[order(rep4$NbMedicaments, decreasing = TRUE),], row.names = FALSE)
 ```
 
@@ -403,7 +399,7 @@ Quels sont les médicaments dont le service médical rendu (ou **SMR**) est jug�
 
 ```{r}
 temp = subset(
-    merge(CIS, CIS_CIP, by = "CodeCIS"),
+    merge(CIS_active, CIS_CIP, by = "CodeCIS"),
     subset = CodeCIS %in% unique(subset(CIS_HAS_SMR, 
                                         ValeurSMR == "Insuffisant")$CodeCIS)
 )
