@@ -317,6 +317,23 @@ SELECT am, COUNT(DISTINCT carb)
 ## 1  0                    4
 ## 2  1                    5</code></pre>
 <p>Pour information, si on veut avoir une table triée, il faut utiliser la fonction <code>order()</code> dont voici un exemple de fonctionnement.</p>
+<pre class="r"><code># Création d&#39;un vecteur
+a = c(5, 1, 4, 3)
+# Afficahge de celui-ci
+a</code></pre>
+<pre><code>## [1] 5 1 4 3</code></pre>
+<pre class="r"><code># Tri de ce vecteur (ordre par défaut = décroissant)
+sort(a)</code></pre>
+<pre><code>## [1] 1 3 4 5</code></pre>
+<pre class="r"><code># Tri de ce vecteur par ordre décroissant
+sort(a, decreasing = TRUE)</code></pre>
+<pre><code>## [1] 5 4 3 1</code></pre>
+<pre class="r"><code># Indices des valeurs triées dans l&#39;ordre croissant par défaut
+order(a)</code></pre>
+<pre><code>## [1] 2 4 3 1</code></pre>
+<pre class="r"><code># Indices des valeurs triées dans l&#39;ordre décroissant
+order(a, decreasing = TRUE)</code></pre>
+<pre><code>## [1] 1 3 4 2</code></pre>
 <p>Nous calculons ici, dans <code>mtcars</code>, la consommation moyenne pour chaque modalité de <code>gear</code>.</p>
 <pre class="r"><code>tab = aggregate(mpg ~ gear, mtcars, mean)
 pander::pander(tab)</code></pre>

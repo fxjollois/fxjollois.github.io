@@ -57,6 +57,22 @@ SELECT am, COUNT(DISTINCT carb)
 
 Pour information, si on veut avoir une table triée, il faut utiliser la fonction `order()` dont voici un exemple de fonctionnement.
 
+```{r}
+# Création d'un vecteur
+a = c(5, 1, 4, 3)
+# Afficahge de celui-ci
+a
+# Tri de ce vecteur (ordre par défaut = décroissant)
+sort(a)
+# Tri de ce vecteur par ordre décroissant
+sort(a, decreasing = TRUE)
+# Indices des valeurs triées dans l'ordre croissant par défaut
+order(a)
+# Indices des valeurs triées dans l'ordre décroissant
+order(a, decreasing = TRUE)
+```
+
+
 Nous calculons ici, dans `mtcars`, la consommation moyenne pour chaque modalité de `gear`.
 
 ```{r}

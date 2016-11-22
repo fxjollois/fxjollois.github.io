@@ -16,7 +16,7 @@ em {
 Vous trouverez le logiciel **Tableau Public** dans la liste des programmes, dans la
 partie *Outils Math et Stat*. Vous devriez avoir l'écran suivant.
 
-![Ecran d'ouverture de Tableau Public](reportingtp1/00-ouverture-tableau.png)
+![Ecran d'ouverture de Tableau Public](reporting/tp1/00-ouverture-tableau.png)
 
 
 ## Importation des données
@@ -26,7 +26,7 @@ pour commencer à travailler (ou ouvrir un projet précédemment créé). Nous a
 ici les résultats de l'enquête national effectuée 2,5 ans après l'obtention du DUT auprès 
 des étudiants diplômés en 2011 (cette enquête est faite tous les ans pour information). 
 Nous n'avons à disposition que les étudiants de l'IUT Paris Descartes . Vous trouverez le 
-fichier Excel [ici](reporting-tp1/Enquete_DUT-2011-Paris.xlsx).
+fichier Excel [ici](reporting/tp1/Enquete_DUT-2011-Paris.xlsx).
 
 Lorsque vous avez choisi votre fichier Excel, vous devriez voir apparaître l'écran suivant.
 
