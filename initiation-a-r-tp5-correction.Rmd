@@ -1,0 +1,164 @@
+---
+title: TP5 - Récapitulatif - *correction*
+subtitle: Initiation a `R` - STID 1ère année
+---
+
+```{r setup, include=FALSE}
+knitr::opts_knit$set(root.dir = "donnees/Comptoir2000/Comptoir2000-csv/")
+```
+
+Créer un document `html` en `R markdown`, contenant les éléments suivants. Vous devez faire un chapitre (avec titre de niveau 2 donc), pour chaque item de la liste suivante. N'hésitez pas à faire des sous-partie pour chaque sous-item. Vous devez utiliser le langage `R`, et pas de `SQL`.
+
+## Importation
+
+Importer les données dans `R`, à l'aide de `read.table()`
+
+```{r import}
+Categorie = read.table("Categorie.txt",
+                       header = T, sep = ";", quote = '"', encoding = "UTF-8")
+Client = read.table("Client.txt",
+                       header = T, sep = ";", quote = '"', encoding = "UTF-8")
+Commande = read.table("Commande.txt",
+                       header = T, sep = ";", quote = '"', encoding = "UTF-8")
+DetailCommande = read.table("DetailCommande.txt",
+                       header = T, sep = ";", quote = '"', encoding = "UTF-8")
+Employe = read.table("Employe.txt",
+                       header = T, sep = ";", quote = '"', encoding = "UTF-8")
+Fournisseur = read.table("Fournisseur.txt",
+                       header = T, sep = ";", quote = '"', encoding = "UTF-8")
+Messager = read.table("Messager.txt",
+                       header = T, sep = ";", quote = '"', encoding = "UTF-8")
+Produit = read.table("Produit.txt",
+                       header = T, sep = ";", quote = '"', encoding = "UTF-8")
+```
+
+---
+
+## Employés 
+
+### Lister les employés (nom et prénom) situés au `"Royaume-Uni"`
+
+Ici, nous utilisons la fonction `subset()` qui permet de faire :
+
+- une restriction aux employés du Royaume-Uni (avec `subset =`)
+- une projection sur le nom et le prénom (avec `select = `)
+
+```{r}
+A = subset(Employe, subset = Pays == "Royaume-Uni", select = c(Nom, prenom))
+knitr::kable(A, row.names = FALSE, caption = "Employés du Royaume-Uni")
+```
+
+### Lister les différentes fonctions occupées par les employés
+
+La première étape ici est de créer une table avec uniquement la colone `Fonction`. Ensuite, grâce à la fonction `unique()`, nous supprimons les doublons.
+
+```{r}
+B1 = subset(Employe, select = Fonction)
+B2 = unique(B1)
+knitr::kable(B2, row.names = FALSE, caption = "Fonctions existantes")
+```
+
+### Indiquer le nombre d'employés par pays
+
+Après avoir dénombrer les employés par pays avec un calcul d'agrégat, réalisé via la fonction `aggregate()`, nous renommons les colonnes du résultat pour que le tableau fourni soit correct.
+
+```{r}
+C1 = aggregate(NoEmp ~ Pays, Employe, length)
+C2 = setNames(C1, c("Pays", "Effectif"))
+knitr::kable(C2, row.names = FALSE, caption = "Répartition des employés par pays")
+```
+
+---
+
+## Produits
+
+### Lister le nombre de produits par pays des fournisseurs
+
+Dans cette demande, nous devons regrouper des informations de `Produit` (dénombrement) avec des informations de `Fournisseur` (pays). Nou devons donc faire une jointure (avec `merge()`), puis faire le calcul d'agrégat et un renommage.
+
+```{r}
+D1 = merge(Produit, Fournisseur)
+D2 = aggregate(Refprod ~ Pays, D1, length)
+D3 = setNames(D2, c("Pays", "Effectif"))
+knitr::kable(D3, row.names = FALSE, caption = "Répartition des produits par pays")
+```
+
+On peut aussi vouloir trier le résultat par ordre décroissant de nombre de produits.
+
+```{r}
+D4 = D3[order(D3$Effectif, decreasing = TRUE),]
+knitr::kable(D4, row.names = FALSE, caption = "Répartition triée")
+```
+
+### Lister le nombre de produits par catégorie
+
+Cette demande est similaire à la précédente. Par contre, vues les questions qui suivent, nous allons réutiliser le résultat de la jointure de `Produit` et `Categorie`. 
+```{r}
+E = merge(Produit, Categorie)
+E1a = aggregate(Refprod ~ NomCateg, E, length)
+E1b = setNames(E1a, c("Catégorie", "Effectif"))
+knitr::kable(E1a, row.names = FALSE, caption = "Répartition des produits par catégorie")
+```
+
+### Ajouter le prix moyen, le prix minimum (`min`) et le prix maximum (`max`)
+
+Il faut ici créer les trois autres table, pour chaque agrégat à calculer, puis faire la jointure entre les 4 tables ainsi obtenues (avec la précédente).
+
+```{r}
+E2a = aggregate(PrixUnit ~ NomCateg, E, mean)
+E2b = setNames(E2a, c("Catégorie", "Prix moyen"))
+E3a = aggregate(PrixUnit ~ NomCateg, E, min)
+E3b = setNames(E3a, c("Catégorie", "Prix minimum"))
+E4a = aggregate(PrixUnit ~ NomCateg, E, max)
+E4b = setNames(E4a, c("Catégorie", "Prix maximum"))
+Efinal = merge(merge(merge(E1b, E2b), E3b), E4b)
+knitr::kable(Efinal, row.names = FALSE, caption = "Résumé des produits par catégorie", digits = 2)
+```
+
+## Créer une table `MontantCommande` qui contient, pour chaque commande, les informations suivantes 
+
+- Numéro de commande
+- Montant total de la commande 
+- Frais de port 
+- Montant total des produits
+- Nombre de produits différents dans la commande
+
+Pour cette demande, il faut en premier lieu calculer le faire coût de chaque produit, stocké dans une nouvelle variable. Puis, on réalise les calculs d'agrégats (nombre et somme) à partir de la table `DetailCommade`. Ensuite, on joint `Commande` et les deux tables créées (avec un renommage des variables de celles-ci précédemment). Enfin, on ne garde que quelques informations et on calcule le montant final.
+
+```{r}
+F1 = transform(DetailCommande, coutProduit = PrixUnit * Qte * (1 - Remise.))
+F2a = aggregate(Refprod ~ Nocom, F1, length) 
+F2b = setNames(F2a, c("NoCom", "NbProduits"))
+F3a = aggregate(coutProduit ~ Nocom, F1, sum)
+F3b = setNames(F3a, c("NoCom", "MtProduits"))
+F4 = merge(merge(Commande, F2b), F3b)
+F5 = subset(F4, select = c(NoCom, Port, MtProduits, NbProduits))
+MontantCommande = transform(F5, MtCommande = Port + MtProduits)
+knitr::kable(head(MontantCommande), row.names = FALSE, caption = "Premières lignes de la table `MontantCommande`", digits = 2)
+```
+
+
+## Calculer le montant total des commandes de chaque client
+
+Après avoir fait la jointure entre `Commande` et la nouvelle table `MontantCommande`, on fait la somme des montants des commandes pour chaque client. Ensuite, on regroupe avec `Clinet` pour récupérer le nom de la société. Enfin, puisqu'on affiche un chiffre d'affaires par client, on fait un tri décroissant sur le montant total des commandes.
+
+```{r}
+G1 = merge(Commande, MontantCommande)
+G2 = aggregate(MtCommande ~ CodeCli, G1, sum)
+G3 = setNames(G2, c("CodeCli", "MontantCommandes"))
+G4 = merge(Client, G3)
+G5 = subset(G4, select = c(Societe, MontantCommandes))
+G6 = G5[order(G5$MontantCommandes, decreasing = TRUE),]
+knitr::kable(G6, row.names = FALSE, caption = "Chiffre d'affaires de chaque client")
+```
+
+## Calculer le montant total des commandes pour chaque pays des clients
+
+On réutilise ici la table créée précédemment, résultante de la jointure entre `Client` et celle où l'on a calculer pour chaque client la somme des montants des commandes. On fait donc ensuite un aggrégat par pays, que l'on trie pour affichage.
+
+```{r}
+H1 = aggregate(MontantCommandes ~ Pays, G4, sum)
+H2 = H1[order(H1$MontantCommandes, decreasing = TRUE),]
+knitr::kable(H2, row.names = FALSE, caption = "Chiffre d'affaires par pays")
+```
+

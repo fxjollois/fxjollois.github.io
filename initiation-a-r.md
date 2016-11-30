@@ -13,4 +13,5 @@ title: Initiation à R
 4. [TP4 - Document automatique](initiation-a-r-tp4.html)
     - correction : [html](initiation-a-r-tp4-correction.html) et [Rmd](initiation-a-r-tp4-correction.Rmd)
 5. [TP5 - récapitulatif](initiation-a-r-tp5.html)
+    - correction : [html](initiation-a-r-tp5-correction.html) et [Rmd](initiation-a-r-tp5-correction.Rmd)
 6. TP6 - noté

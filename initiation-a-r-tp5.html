@@ -246,191 +246,77 @@ $(document).ready(function () {
 <h2>Quelques rappels et informations</h2>
 <p>Il est possible de faire l’équivalent d’un <code>COUNT(*)</code> avec la commande <code>aggregate()</code> en utilisant la fonction <code>length</code>. Voici un exemple, dans <code>mtcars</code>, pour calculer le nombre de voitures pour chaque modalité de <code>am</code>. Dans ce cas, la variable à gauche du tilde (<code>~</code>) n’a pas d’importance mais il est nécessaire de la mettre.</p>
 <pre class="r"><code>tab = aggregate(mpg ~ am, mtcars, length)
-pander::pander(tab)</code></pre>
-<table style="width:14%;">
-<colgroup>
-<col width="6%" />
-<col width="6%" />
-</colgroup>
-<thead>
-<tr class="header">
-<th align="center">am</th>
-<th align="center">mpg</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td align="center">0</td>
-<td align="center">19</td>
-</tr>
-<tr class="even">
-<td align="center">1</td>
-<td align="center">13</td>
-</tr>
-</tbody>
-</table>
+tab</code></pre>
+<pre><code>  am mpg
+1  0  19
+2  1  13</code></pre>
 <p>Voici le même résultat en <code>SQL</code>.</p>
 <pre class="r"><code>sqldf(&quot;
 SELECT am, COUNT(*)
     FROM mtcars
     GROUP BY am
       &quot;)</code></pre>
-<pre><code>## Loading required package: tcltk</code></pre>
-<pre><code>##   am COUNT(*)
-## 1  0       19
-## 2  1       13</code></pre>
+<pre><code>Loading required package: tcltk</code></pre>
+<pre><code>  am COUNT(*)
+1  0       19
+2  1       13</code></pre>
 <p>Pour réaliser l’équivalent d’un <code>COUNT(DISTINCT var)</code>, il est nécessaire d’utiliser une fonction personnalisée. Voici la définition de cette fonction et un exemple d’utilisation.</p>
 <pre class="r"><code>length_distinct &lt;- function(x) {
     return (length(unique(x)))
 }
 tab = aggregate(carb ~ am, mtcars, length_distinct)
-pander::pander(tab)</code></pre>
-<table style="width:15%;">
-<colgroup>
-<col width="6%" />
-<col width="8%" />
-</colgroup>
-<thead>
-<tr class="header">
-<th align="center">am</th>
-<th align="center">carb</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td align="center">0</td>
-<td align="center">4</td>
-</tr>
-<tr class="even">
-<td align="center">1</td>
-<td align="center">5</td>
-</tr>
-</tbody>
-</table>
+tab</code></pre>
+<pre><code>  am carb
+1  0    4
+2  1    5</code></pre>
 <p>Et en <code>SQL</code></p>
 <pre class="r"><code>sqldf(&quot;
 SELECT am, COUNT(DISTINCT carb)
     FROM mtcars
     GROUP BY am
 &quot;)</code></pre>
-<pre><code>##   am COUNT(DISTINCT carb)
-## 1  0                    4
-## 2  1                    5</code></pre>
+<pre><code>  am COUNT(DISTINCT carb)
+1  0                    4
+2  1                    5</code></pre>
 <p>Pour information, si on veut avoir une table triée, il faut utiliser la fonction <code>order()</code> dont voici un exemple de fonctionnement.</p>
 <pre class="r"><code># Création d&#39;un vecteur
 a = c(5, 1, 4, 3)
-# Afficahge de celui-ci
+# Affichage de celui-ci
 a</code></pre>
-<pre><code>## [1] 5 1 4 3</code></pre>
-<pre class="r"><code># Tri de ce vecteur (ordre par défaut = décroissant)
+<pre><code>[1] 5 1 4 3</code></pre>
+<pre class="r"><code># Tri de ce vecteur (ordre par défaut = croissant)
 sort(a)</code></pre>
-<pre><code>## [1] 1 3 4 5</code></pre>
+<pre><code>[1] 1 3 4 5</code></pre>
 <pre class="r"><code># Tri de ce vecteur par ordre décroissant
 sort(a, decreasing = TRUE)</code></pre>
-<pre><code>## [1] 5 4 3 1</code></pre>
+<pre><code>[1] 5 4 3 1</code></pre>
 <pre class="r"><code># Indices des valeurs triées dans l&#39;ordre croissant par défaut
 order(a)</code></pre>
-<pre><code>## [1] 2 4 3 1</code></pre>
+<pre><code>[1] 2 4 3 1</code></pre>
 <pre class="r"><code># Indices des valeurs triées dans l&#39;ordre décroissant
 order(a, decreasing = TRUE)</code></pre>
-<pre><code>## [1] 1 3 4 2</code></pre>
+<pre><code>[1] 1 3 4 2</code></pre>
 <p>Nous calculons ici, dans <code>mtcars</code>, la consommation moyenne pour chaque modalité de <code>gear</code>.</p>
 <pre class="r"><code>tab = aggregate(mpg ~ gear, mtcars, mean)
-pander::pander(tab)</code></pre>
-<table style="width:19%;">
-<colgroup>
-<col width="9%" />
-<col width="9%" />
-</colgroup>
-<thead>
-<tr class="header">
-<th align="center">gear</th>
-<th align="center">mpg</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td align="center">3</td>
-<td align="center">16.11</td>
-</tr>
-<tr class="even">
-<td align="center">4</td>
-<td align="center">24.53</td>
-</tr>
-<tr class="odd">
-<td align="center">5</td>
-<td align="center">21.38</td>
-</tr>
-</tbody>
-</table>
+tab</code></pre>
+<pre><code>  gear      mpg
+1    3 16.10667
+2    4 24.53333
+3    5 21.38000</code></pre>
 <p>Nous pouvons obenir cette table triée sur la consommation (variable <code>mpg</code>). L’ordre par défaut est bien évidemment l’ordre croissant.</p>
 <pre class="r"><code>tab_tri = tab[order(tab$mpg),]
-pander::pander(tab_tri)</code></pre>
-<table style="width:31%;">
-<colgroup>
-<col width="11%" />
-<col width="9%" />
-<col width="9%" />
-</colgroup>
-<thead>
-<tr class="header">
-<th align="left"> </th>
-<th align="center">gear</th>
-<th align="center">mpg</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td align="left"><strong>1</strong></td>
-<td align="center">3</td>
-<td align="center">16.11</td>
-</tr>
-<tr class="even">
-<td align="left"><strong>3</strong></td>
-<td align="center">5</td>
-<td align="center">21.38</td>
-</tr>
-<tr class="odd">
-<td align="left"><strong>2</strong></td>
-<td align="center">4</td>
-<td align="center">24.53</td>
-</tr>
-</tbody>
-</table>
+tab_tri</code></pre>
+<pre><code>  gear      mpg
+1    3 16.10667
+3    5 21.38000
+2    4 24.53333</code></pre>
 <p>Il est possible d’avoir l’ordre décroissant avec l’option <code>decreasing = TRUE</code>. Et on peut limiter les décimales dans la fonction <code>kable()</code> avec l’option <code>digits = 2</code>.</p>
 <pre class="r"><code>tab_tri2 = tab[order(tab$mpg, decreasing = TRUE),]
-pander::pander(tab_tri2)</code></pre>
-<table style="width:31%;">
-<colgroup>
-<col width="11%" />
-<col width="9%" />
-<col width="9%" />
-</colgroup>
-<thead>
-<tr class="header">
-<th align="left"> </th>
-<th align="center">gear</th>
-<th align="center">mpg</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td align="left"><strong>2</strong></td>
-<td align="center">4</td>
-<td align="center">24.53</td>
-</tr>
-<tr class="even">
-<td align="left"><strong>3</strong></td>
-<td align="center">5</td>
-<td align="center">21.38</td>
-</tr>
-<tr class="odd">
-<td align="left"><strong>1</strong></td>
-<td align="center">3</td>
-<td align="center">16.11</td>
-</tr>
-</tbody>
-</table>
+tab_tri2</code></pre>
+<pre><code>  gear      mpg
+2    4 24.53333
+3    5 21.38000
+1    3 16.10667</code></pre>
 </div>
 <div id="exercice" class="section level2">
 <h2>Exercice</h2>

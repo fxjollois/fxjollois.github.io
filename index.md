@@ -9,12 +9,12 @@ entre l'informatique et la statistique. J'enseigne dans le département
 [STID](http://www.stid-paris.fr/) de l'[IUT Paris Descartes](http://www.iut.parisdescartes.fr). 
 J'effectue ma recherche dans l'équipe Fouille de données du [LIPADE](http://www.lipade.fr), dans l'équipe [MLDS](http://www.math-info.univ-paris5.fr/~nadifmoh/Accueil.html#).
 
-Pour votre information, ce site étant encore en construction, certains liens ne sont pas 
+Pour votre information, ce site étant encore en construction, certains liens peuvent ne pas être
 accessibles, et certaines pages sont encore en cours de réalisation.
 
 ## Informations sur le contenu du site
 
-- Dans la partie [Enseignement](enseignement.html), vous trouverez un ensemble de documents 
+- Dans la partie **Enseignement**, vous trouverez un ensemble de documents 
 de cours :
 des études de cas plus ou moins liées à mes cours.
 - Dans la partie [Recherche](recherche.html), vous trouverez mes thématiques de recherche, 

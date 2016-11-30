@@ -4,6 +4,7 @@ subtitle: Initiation a `R` - STID 1ère année
 ---
 
 ```{r, include=FALSE}
+knitr::opts_chunk$set(comment = "")
 library(sqldf)
 ```
 
@@ -21,7 +22,7 @@ Il est possible de faire l'équivalent d'un `COUNT(*)` avec la commande `aggrega
 
 ```{r}
 tab = aggregate(mpg ~ am, mtcars, length)
-pander::pander(tab)
+tab
 ```
 
 Voici le même résultat en `SQL`.
@@ -42,7 +43,7 @@ length_distinct <- function(x) {
     return (length(unique(x)))
 }
 tab = aggregate(carb ~ am, mtcars, length_distinct)
-pander::pander(tab)
+tab
 ```
 
 Et en `SQL`
@@ -60,9 +61,9 @@ Pour information, si on veut avoir une table triée, il faut utiliser la fonctio
 ```{r}
 # Création d'un vecteur
 a = c(5, 1, 4, 3)
-# Afficahge de celui-ci
+# Affichage de celui-ci
 a
-# Tri de ce vecteur (ordre par défaut = décroissant)
+# Tri de ce vecteur (ordre par défaut = croissant)
 sort(a)
 # Tri de ce vecteur par ordre décroissant
 sort(a, decreasing = TRUE)
@@ -77,21 +78,21 @@ Nous calculons ici, dans `mtcars`, la consommation moyenne pour chaque modalité
 
 ```{r}
 tab = aggregate(mpg ~ gear, mtcars, mean)
-pander::pander(tab)
+tab
 ```
 
 Nous pouvons obenir cette table triée sur la consommation (variable `mpg`). L'ordre par défaut est bien évidemment l'ordre croissant.
 
 ```{r}
 tab_tri = tab[order(tab$mpg),]
-pander::pander(tab_tri)
+tab_tri
 ```
 
 Il est possible d'avoir l'ordre décroissant avec l'option `decreasing = TRUE`. Et on peut limiter les décimales dans la fonction `kable()` avec l'option `digits = 2`.
 
 ```{r}
 tab_tri2 = tab[order(tab$mpg, decreasing = TRUE),]
-pander::pander(tab_tri2)
+tab_tri2
 ```
 
 
@@ -116,13 +117,3 @@ Créer un document `html` en `R markdown`, contenant les éléments suivants. Vo
     - Nombre de produits différents dans la commande
 1. Calculer le montant total des commandes de chaque client
 1. Calculer le montant total des commandes pour chaque pays des clients
-
-
-```{r, echo=FALSE, eval=FALSE}
-for (f in liste) {
-    n = sub(".txt", "", f)
-    t = read.table(paste(rep, f, sep = ""), sep = ";", header = T)
-    assign(n, t)
-}
-```
-
