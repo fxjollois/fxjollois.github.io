@@ -1,0 +1,121 @@
+---
+title: Visualisation de données - *correction* `qplot`
+subtitle: Programmation statistique avec `R` - STID 2ème année
+---
+
+```{r}
+library(ggplot2)
+library(reshape2) # pour les données tips
+```
+
+Nous répondons aux questions suivantes avec la fonction `qplot()`
+
+## Iris
+
+Dans les données `iris`, représenter les boîtes à moustaches des 4 variables pour les trois espèces.
+
+```{r}
+m = melt(iris)
+qplot(Species, value, data = m, facets = variable ~ ., geom = "boxplot")
+```
+
+
+## Tips
+
+### Dans les données `tips` du package `reshape2`, représenter `total_bill` en fonction de `sex` et `smoker`.
+
+```{r}
+qplot(sex, total_bill, data = tips, facets = ~ smoker, geom = "boxplot")
+```
+
+```{r}
+t = aggregate(total_bill ~ sex + smoker, tips, mean)
+qplot(sex, smoker, data = t, fill = total_bill, geom = "bin2d")
+```
+
+### Toujours dans `tips`, représenter `total_bill` et `tip`, en fonction de `sex` de 2 façons
+
+```{r}
+qplot(total_bill, tip, data = tips, color = sex)
+```
+
+```{r}
+qplot(total_bill, tip, data = tips, color = sex, facets = ~ sex)
+```
+
+```{r}
+qplot(cut(total_bill, 3), tip, data = tips, color = sex, facets = ~ sex, geom = "boxplot")
+```
+
+
+### Idem avec `smoker` en plus
+
+```{r}
+qplot(total_bill, tip, data = tips, 
+      color = sex, shape = smoker, 
+      facets = smoker ~ sex)
+```
+
+```{r}
+qplot(cut(total_bill, 3), tip, data = tips, 
+      color = sex, geom = "boxplot", 
+      facets = smoker ~ sex)
+```
+
+### Comment répondre aux questions suivantes :
+
+#### Les pourboires (`tip`) dépendent-ils du montant (`total_bill`)
+
+```{r}
+qplot(total_bill, tip, data = tips, geom = c("smooth", "point"))
+```
+
+#### Et des jours de la semaine (`day`) ?
+
+```{r}
+qplot(day, tip, data = tips, geom = c("boxplot", "jitter"))
+```
+
+#### Et du nombre de convives (`size`) ?
+
+```{r}
+qplot(factor(size), tip, data = tips, geom = c("boxplot", "jitter"))
+```
+
+#### Croiser `tip` en fonction de `total_bill` et `size`
+
+```{r}
+qplot(total_bill, size, data = tips, size = tip, color = tip)
+```
+
+```{r}
+t1 = transform(tips, total_bill.f = cut(total_bill, 5), size.f = cut(size, 5))
+t2 = aggregate(tip ~ total_bill.f + size.f, t1, median)
+qplot(total_bill.f, size.f, data = t2, 
+      fill = tip,
+      geom = "bin2d")
+```
+
+## Anscombe
+
+*bonus* : à partir des données `anscombe`, refaire le graphique suivant
+
+```{r}
+ans1 = transform(setNames(subset(anscombe, select = c(x1, y1)), c("x", "y")), ex = 1)
+ans2 = transform(setNames(subset(anscombe, select = c(x2, y2)), c("x", "y")), ex = 2)
+ans3 = transform(setNames(subset(anscombe, select = c(x3, y3)), c("x", "y")), ex = 3)
+ans4 = transform(setNames(subset(anscombe, select = c(x4, y4)), c("x", "y")), ex = 4)
+ans = rbind(ans1, ans2, ans3, ans4)
+qplot(x, y, data = ans, facets = ~ ex, geom = "point")
+```
+
+Avec un peu de programmation (pour information)
+
+```{r}
+ans.bis = lapply(1:4, function (ex) {
+    return(transform(setNames(anscombe[,paste(c("x", "y"), ex, sep = "")], c("x", "y")), ex = ex))
+})
+ans.ter = Reduce(function (a, b) { return (rbind(a, b))}, ans.bis)
+qplot(x, y, data = ans.ter, facets = ~ ex, geom = "point")
+```
+

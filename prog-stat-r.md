@@ -11,8 +11,7 @@ title: Programmation statistique avec R
 4. [TP4 : interrogation de données *à la SQL*](prog-stat-r-tp4.html)
 	- [correction](prog-stat-r-tp4-correction.html)
 4. [TP5 : document automatique](prog-stat-r-tp5.html)
-	- [correction (Rmd)](__specifique/prog-stat-r-tp5-correction.Rmd)
-	- [correction (html)](__specifique/prog-stat-r-tp5-correction.html)
+	- correction : [Rmd](__specifique/prog-stat-r-tp5-correction.Rmd) et  [html](__specifique/prog-stat-r-tp5-correction.html)
 1. TP6 noté
     - [sujet 1](prog-stat-r-tp6note.html) 
         - [correction (Rmd)](__specifique/prog-stat-r-tp6note-correction.Rmd)
@@ -21,4 +20,7 @@ title: Programmation statistique avec R
         - [correction (Rmd)](__specifique/prog-stat-r-tp6note-correction-bis.Rmd)
         - [correction (html)](__specifique/prog-stat-r-tp6note-correction-bis.html)
 1. [TP7 : reporting](prog-stat-r-tp7.html)
+	- correction : [Rmd](__specifique/prog-stat-r-tp7-correction.Rmd) et  [html](__specifique/prog-stat-r-tp7-correction.html)
 1. [TP8 : visualisation de données](prog-stat-r-tp8.html)
+	- [correction `qplot`](prog-stat-r-tp8-correction-qplot.html)
+	- [correction `ggplot`](prog-stat-r-tp8-correction-ggplot.html)

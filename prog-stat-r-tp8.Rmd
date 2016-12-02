@@ -378,25 +378,22 @@ Vous devez faire les questions suivantes avec la fonction `qplot()` puis avec la
 1. Toujours dans `tips`, représenter `total_bill` et `tip`, en fonction de `sex` de 2 façons
 1. Idem avec `smoker` en plus
 1. Comment répondre aux questions suivantes :
-   a. Les pourboires (`tip`) dépendent ils du montant (`total_bill`)
-   b. Et des jours de la semaine (`day`) ?
-   c. Et du nombre de convives (`party`) ?
-   d. Croiser `tip` en fonction de `total_bill` et `party`
+    1. Les pourboires (`tip`) dépendent ils du montant (`total_bill`)
+    1. Et des jours de la semaine (`day`) ?
+    1. Et du nombre de convives (`size`) ?
+    1. Croiser `tip` en fonction de `total_bill` et `size`
 1.  *bonus* : à partir des données `anscombe`, refaire le graphique suivant
 
 ```{r anscombe-ggplot, echo=FALSE}
-ans = transform(
-    melt(transform(anscombe, id = 1:nrow(anscombe)), id.vars = "id"),
-    axe = substr(as.character(variable), 1, 1),
-    num = as.numeric(substr(as.character(variable), 2, 2))
+ans = rbind(
+    transform(setNames(subset(anscombe, select = c(x1, y1)), c("x", "y")), ex = 1),
+    transform(setNames(subset(anscombe, select = c(x2, y2)), c("x", "y")), ex = 2),
+    transform(setNames(subset(anscombe, select = c(x3, y3)), c("x", "y")), ex = 3),
+    transform(setNames(subset(anscombe, select = c(x4, y4)), c("x", "y")), ex = 4)
 )
-ans$facetX = ans$num %% 2 == 0
-ans$facetY = ans$num <= 2
-ansX = subset(ans, subset = axe == "x")
-ansY = subset(ans, subset = axe == "y")
-ansXY = merge(ansX, ansY, by = c("id", "num"))
-ggplot(ansXY, aes(value.x, value.y)) + geom_point() + 
-    facet_grid(facetY.x ~ facetX.x) + 
-    geom_smooth(method = "lm", se = FALSE, fullrange = T)
+ggplot(ans, aes(x, y)) +
+    geom_point() +
+    geom_smooth(method = "lm", fullrange = T, se = FALSE) +
+    facet_wrap(~ ex)
 ```
 

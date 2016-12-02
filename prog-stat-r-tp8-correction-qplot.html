@@ -11,7 +11,7 @@
 
 
 
-<title>Programmation statistique avec R</title>
+<title>Visualisation de données - correction qplot</title>
 
 <script src="libs/jquery-1.11.3/jquery.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -225,51 +225,100 @@ $(document).ready(function () {
 
 
 
-<h1 class="title toc-ignore">Programmation statistique avec R</h1>
+<h1 class="title toc-ignore">Visualisation de données - <em>correction</em> <code>qplot</code></h1>
+<h3 class="subtitle"><em>Programmation statistique avec <code>R</code> - STID 2ème année</em></h3>
 
 </div>
 
 
-<div id="cours-de-2eme-annee" class="section level2">
-<h2>Cours de 2ème année</h2>
-<ol style="list-style-type: decimal">
-<li>TP1 : prise en main du logiciel (cf répertoire COMMUN)</li>
-<li>TP2 : matrices et <code>data.frames</code> (cf répertoire COMMUN)</li>
-<li><a href="prog-stat-r-tp3.html">TP3 : importation de données</a>
-<ul>
-<li><a href="prog-stat-r-tp3-correction.html">correction</a></li>
-</ul></li>
-<li><a href="prog-stat-r-tp4.html">TP4 : interrogation de données <em>à la SQL</em></a>
-<ul>
-<li><a href="prog-stat-r-tp4-correction.html">correction</a></li>
-</ul></li>
-<li><a href="prog-stat-r-tp5.html">TP5 : document automatique</a>
-<ul>
-<li>correction : <a href="__specifique/prog-stat-r-tp5-correction.Rmd">Rmd</a> et <a href="__specifique/prog-stat-r-tp5-correction.html">html</a></li>
-</ul></li>
-<li>TP6 noté
-<ul>
-<li><a href="prog-stat-r-tp6note.html">sujet 1</a>
-<ul>
-<li><a href="__specifique/prog-stat-r-tp6note-correction.Rmd">correction (Rmd)</a></li>
-<li><a href="__specifique/prog-stat-r-tp6note-correction.html">correction (html)</a></li>
-</ul></li>
-<li><a href="prog-stat-r-tp6note-bis.html">sujet 2</a>
-<ul>
-<li><a href="__specifique/prog-stat-r-tp6note-correction-bis.Rmd">correction (Rmd)</a></li>
-<li><a href="__specifique/prog-stat-r-tp6note-correction-bis.html">correction (html)</a></li>
-</ul></li>
-</ul></li>
-<li><a href="prog-stat-r-tp7.html">TP7 : reporting</a>
-<ul>
-<li>correction : <a href="__specifique/prog-stat-r-tp7-correction.Rmd">Rmd</a> et <a href="__specifique/prog-stat-r-tp7-correction.html">html</a></li>
-</ul></li>
-<li><a href="prog-stat-r-tp8.html">TP8 : visualisation de données</a>
-<ul>
-<li><a href="prog-stat-r-tp8-correction-qplot.html">correction <code>qplot</code></a></li>
-<li><a href="prog-stat-r-tp8-correction-ggplot.html">correction <code>ggplot</code></a></li>
-</ul></li>
-</ol>
+<pre class="r"><code>library(ggplot2)
+library(reshape2) # pour les données tips</code></pre>
+<p>Nous répondons aux questions suivantes avec la fonction <code>qplot()</code></p>
+<div id="iris" class="section level2">
+<h2>Iris</h2>
+<p>Dans les données <code>iris</code>, représenter les boîtes à moustaches des 4 variables pour les trois espèces.</p>
+<pre class="r"><code>m = melt(iris)</code></pre>
+<pre><code>## Using Species as id variables</code></pre>
+<pre class="r"><code>qplot(Species, value, data = m, facets = variable ~ ., geom = &quot;boxplot&quot;)</code></pre>
+<p><img src="prog-stat-r-tp8-correction-qplot_files/figure-html/unnamed-chunk-2-1.png" width="672" /></p>
+</div>
+<div id="tips" class="section level2">
+<h2>Tips</h2>
+<div id="dans-les-donnees-tips-du-package-reshape2-representer-total_bill-en-fonction-de-sex-et-smoker." class="section level3">
+<h3>Dans les données <code>tips</code> du package <code>reshape2</code>, représenter <code>total_bill</code> en fonction de <code>sex</code> et <code>smoker</code>.</h3>
+<pre class="r"><code>qplot(sex, total_bill, data = tips, facets = ~ smoker, geom = &quot;boxplot&quot;)</code></pre>
+<p><img src="prog-stat-r-tp8-correction-qplot_files/figure-html/unnamed-chunk-3-1.png" width="672" /></p>
+<pre class="r"><code>t = aggregate(total_bill ~ sex + smoker, tips, mean)
+qplot(sex, smoker, data = t, fill = total_bill, geom = &quot;bin2d&quot;)</code></pre>
+<p><img src="prog-stat-r-tp8-correction-qplot_files/figure-html/unnamed-chunk-4-1.png" width="672" /></p>
+</div>
+<div id="toujours-dans-tips-representer-total_bill-et-tip-en-fonction-de-sex-de-2-facons" class="section level3">
+<h3>Toujours dans <code>tips</code>, représenter <code>total_bill</code> et <code>tip</code>, en fonction de <code>sex</code> de 2 façons</h3>
+<pre class="r"><code>qplot(total_bill, tip, data = tips, color = sex)</code></pre>
+<p><img src="prog-stat-r-tp8-correction-qplot_files/figure-html/unnamed-chunk-5-1.png" width="672" /></p>
+<pre class="r"><code>qplot(total_bill, tip, data = tips, color = sex, facets = ~ sex)</code></pre>
+<p><img src="prog-stat-r-tp8-correction-qplot_files/figure-html/unnamed-chunk-6-1.png" width="672" /></p>
+<pre class="r"><code>qplot(cut(total_bill, 3), tip, data = tips, color = sex, facets = ~ sex, geom = &quot;boxplot&quot;)</code></pre>
+<p><img src="prog-stat-r-tp8-correction-qplot_files/figure-html/unnamed-chunk-7-1.png" width="672" /></p>
+</div>
+<div id="idem-avec-smoker-en-plus" class="section level3">
+<h3>Idem avec <code>smoker</code> en plus</h3>
+<pre class="r"><code>qplot(total_bill, tip, data = tips, 
+      color = sex, shape = smoker, 
+      facets = smoker ~ sex)</code></pre>
+<p><img src="prog-stat-r-tp8-correction-qplot_files/figure-html/unnamed-chunk-8-1.png" width="672" /></p>
+<pre class="r"><code>qplot(cut(total_bill, 3), tip, data = tips, 
+      color = sex, geom = &quot;boxplot&quot;, 
+      facets = smoker ~ sex)</code></pre>
+<p><img src="prog-stat-r-tp8-correction-qplot_files/figure-html/unnamed-chunk-9-1.png" width="672" /></p>
+</div>
+<div id="comment-repondre-aux-questions-suivantes" class="section level3">
+<h3>Comment répondre aux questions suivantes :</h3>
+<div id="les-pourboires-tip-dependent-ils-du-montant-total_bill" class="section level4">
+<h4>Les pourboires (<code>tip</code>) dépendent-ils du montant (<code>total_bill</code>)</h4>
+<pre class="r"><code>qplot(total_bill, tip, data = tips, geom = c(&quot;smooth&quot;, &quot;point&quot;))</code></pre>
+<p><img src="prog-stat-r-tp8-correction-qplot_files/figure-html/unnamed-chunk-10-1.png" width="672" /></p>
+</div>
+<div id="et-des-jours-de-la-semaine-day" class="section level4">
+<h4>Et des jours de la semaine (<code>day</code>) ?</h4>
+<pre class="r"><code>qplot(day, tip, data = tips, geom = c(&quot;boxplot&quot;, &quot;jitter&quot;))</code></pre>
+<p><img src="prog-stat-r-tp8-correction-qplot_files/figure-html/unnamed-chunk-11-1.png" width="672" /></p>
+</div>
+<div id="et-du-nombre-de-convives-size" class="section level4">
+<h4>Et du nombre de convives (<code>size</code>) ?</h4>
+<pre class="r"><code>qplot(factor(size), tip, data = tips, geom = c(&quot;boxplot&quot;, &quot;jitter&quot;))</code></pre>
+<p><img src="prog-stat-r-tp8-correction-qplot_files/figure-html/unnamed-chunk-12-1.png" width="672" /></p>
+</div>
+<div id="croiser-tip-en-fonction-de-total_bill-et-size" class="section level4">
+<h4>Croiser <code>tip</code> en fonction de <code>total_bill</code> et <code>size</code></h4>
+<pre class="r"><code>qplot(total_bill, size, data = tips, size = tip, color = tip)</code></pre>
+<p><img src="prog-stat-r-tp8-correction-qplot_files/figure-html/unnamed-chunk-13-1.png" width="672" /></p>
+<pre class="r"><code>t1 = transform(tips, total_bill.f = cut(total_bill, 5), size.f = cut(size, 5))
+t2 = aggregate(tip ~ total_bill.f + size.f, t1, median)
+qplot(total_bill.f, size.f, data = t2, 
+      fill = tip,
+      geom = &quot;bin2d&quot;)</code></pre>
+<p><img src="prog-stat-r-tp8-correction-qplot_files/figure-html/unnamed-chunk-14-1.png" width="672" /></p>
+</div>
+</div>
+</div>
+<div id="anscombe" class="section level2">
+<h2>Anscombe</h2>
+<p><em>bonus</em> : à partir des données <code>anscombe</code>, refaire le graphique suivant</p>
+<pre class="r"><code>ans1 = transform(setNames(subset(anscombe, select = c(x1, y1)), c(&quot;x&quot;, &quot;y&quot;)), ex = 1)
+ans2 = transform(setNames(subset(anscombe, select = c(x2, y2)), c(&quot;x&quot;, &quot;y&quot;)), ex = 2)
+ans3 = transform(setNames(subset(anscombe, select = c(x3, y3)), c(&quot;x&quot;, &quot;y&quot;)), ex = 3)
+ans4 = transform(setNames(subset(anscombe, select = c(x4, y4)), c(&quot;x&quot;, &quot;y&quot;)), ex = 4)
+ans = rbind(ans1, ans2, ans3, ans4)
+qplot(x, y, data = ans, facets = ~ ex, geom = &quot;point&quot;)</code></pre>
+<p><img src="prog-stat-r-tp8-correction-qplot_files/figure-html/unnamed-chunk-15-1.png" width="672" /></p>
+<p>Avec un peu de programmation (pour information)</p>
+<pre class="r"><code>ans.bis = lapply(1:4, function (ex) {
+    return(transform(setNames(anscombe[,paste(c(&quot;x&quot;, &quot;y&quot;), ex, sep = &quot;&quot;)], c(&quot;x&quot;, &quot;y&quot;)), ex = ex))
+})
+ans.ter = Reduce(function (a, b) { return (rbind(a, b))}, ans.bis)
+qplot(x, y, data = ans.ter, facets = ~ ex, geom = &quot;point&quot;)</code></pre>
+<p><img src="prog-stat-r-tp8-correction-qplot_files/figure-html/unnamed-chunk-16-1.png" width="672" /></p>
 </div>
 
 </div>
