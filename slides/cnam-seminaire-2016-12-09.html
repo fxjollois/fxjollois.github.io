@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Co-clustering de données fonctionnelles</title>
+
+  <meta charset="utf-8">
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  <meta name="generator" content="pandoc" />
+
+
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+
+  <link rel="stylesheet" media="all" href="libs/ioslides-13.5.1/fonts/fonts.css">
+
+  <link rel="stylesheet" media="all" href="libs/ioslides-13.5.1/theme/css/default.css">
+  <link rel="stylesheet" media="only screen and (max-device-width: 480px)" href="libs/ioslides-13.5.1/theme/css/phone.css">
+
+  <base target="_blank">
+
+  <script type="text/javascript">
+    var SLIDE_CONFIG = {
+      // Slide settings
+      settings: {
+                title: 'Co-clustering de données fonctionnelles',
+                        subtitle: 'Application à des données de consommation électrique',
+                useBuilds: true,
+        usePrettify: true,
+        enableSlideAreas: true,
+        enableTouch: true,
+                      },
+
+      // Author information
+      presenters: [
+            {
+        name:  'FX Jollois' ,
+        company: '',
+        gplus: '',
+        twitter: '',
+        www: '',
+        github: ''
+      },
+            ]
+    };
+  </script>
+
+  <style type="text/css">
+
+    b, strong {
+      font-weight: bold;
+    }
+
+    em {
+      font-style: italic;
+    }
+
+    slides > slide {
+      -webkit-transition: all 0.4s ease-in-out;
+      -moz-transition: all 0.4s ease-in-out;
+      -o-transition: all 0.4s ease-in-out;
+      transition: all 0.4s ease-in-out;
+    }
+
+    .auto-fadein {
+      -webkit-transition: opacity 0.6s ease-in;
+      -webkit-transition-delay: 0.4s;
+      -moz-transition: opacity 0.6s ease-in 0.4s;
+      -o-transition: opacity 0.6s ease-in 0.4s;
+      transition: opacity 0.6s ease-in 0.4s;
+      opacity: 0;
+    }
+
+  </style>
+
+
+  <style>
+  slide img {
+  	max-width: 100%;
+  }
+  </style>
+</head>
+
+<body style="opacity: 0">
+
+<slides class="layout-widescreen">
+
+  <slide class="title-slide segue nobackground">
+        <!-- The content of this hgroup is replaced programmatically through the slide_config.json. -->
+    <hgroup class="auto-fadein">
+      <h1 data-config-title><!-- populated from slide_config.json --></h1>
+      <h2 data-config-subtitle><!-- populated from slide_config.json --></h2>
+      <p data-config-presenter><!-- populated from slide_config.json --></p>
+            <p style="margin-top: 6px; margin-left: -2px;">CNAM - Décembre 2016</p>
+          </hgroup>
+  </slide>
+
+<slide class=''><hgroup><h2>Plan</h2></hgroup><article  id="plan">
+
+<ol>
+<li>Contexte</li>
+</ol>
+
+</article></slide><slide class=''><hgroup><h2>Données</h2></hgroup><article  id="donnees">
+
+<p><strong>Données</strong> : séries temporelles, pour plusieurs individus et plusieurs unités temporelles (jours, semaine, mois, &#8230;), avec plusieurs mesures par unités.</p>
+
+</article></slide><slide class=''><hgroup><h2>But 1</h2></hgroup><article  id="but-1">
+
+<p>Trouver une partition optimale en lignes (sur les individus) et en colonnes (sur les unités de temps)</p>
+
+</article></slide><slide class=''><hgroup><h2>But 2</h2></hgroup><article  id="but-2">
+
+<p>Décrire la partition obtenue en terme de courbe moyenne pour mieux comprendre les différences entre les classes</p>
+
+</article></slide><slide class=''><hgroup><h2>Comment faire ?</h2></hgroup><article  id="comment-faire">
+
+<h3>Première idée : en 2 étapes</h3>
+
+<ol>
+<li>Partition en ligne des individus sur les séries complètes</li>
+<li>Découpage des séries résumées sur toutes les classes</li>
+</ol>
+
+<p><em>Problème</em> : on laisse de côté des détails potentiellement intéressants</p>
+
+<h3>Deuxième idée :</h3>
+
+<p>Classification simple des \(n\) * \(d\) séries</p>
+
+<p><em>Problème</em> : rien n&#39;assure que les classes soient cohérentes en terme d&#39;individus ou d&#39;unités de temps</p>
+
+</article></slide><slide class=''><hgroup><h2>Tout en une fois</h2></hgroup><article  id="tout-en-une-fois">
+
+<p>Utiliser la classification croisée (ou <em>co-clustering</em>) pour rechercher les deux partitions en même temps</p>
+
+<ul>
+<li><em>Latent Block Model</em> <span class="cite">(Govaert and Nadif 2013)</span> comme cadre global</li>
+<li><em>SEM-Gibbs</em> <span class="cite">(Govaert, Keribin, and Celeux 2010)</span> pour l&#39;estimation des paramètres</li>
+</ul>
+
+</article></slide><slide class=''><hgroup><h2>Transformation en amont</h2></hgroup><article  id="transformation-en-amont">
+
+<p>Notons \(\mathbf{X}\) l&#39;ensemble à partitionner</p>
+
+<p>\[
+\mathbf{X} = \{x_{ij}(t)\}_{t \in [0, T]} \text{ avec } i=1,\ldots,n \text{ et } j=1,\ldots,p
+\] Chaque courbe \(x_{ij}(t)\) peut être exprimée comme une combinaison linéaire de fonctions de bases \(\{\phi\}_h\) (avec \(h=1,\ldots,m\))</p>
+
+<p>\[
+x_{ij}(t) = \sum_{h=1}^m a_{ijh} \phi_h(t)
+\]</p>
+
+<p>On a ainsi \(\mathbf{a}_{ij} = (a_{ijh})\) les coefficients de \(x_{ij}\). Nous nous baserons sur cette représentation dans la suite du travail.</p>
+
+</article></slide><slide class=''><hgroup><h2>Latent Block Model pour données fonctionnelles</h2></hgroup><article  id="latent-block-model-pour-donnees-fonctionnelles">
+
+<p>Dans le cadre des données fonctionnelles, le modèle peut s&#39;écrire ainsi :</p>
+
+<p>\[
+\text{p}(\mathbf{\alpha};\theta) = \sum_{z \in Z} \sum_{w \in W} \text{p}(\mathbf{z};\theta) \text{p}(\mathbf{w};\theta)\text{p}(\mathbf{a}|\mathbf{z},\mathbf{w};\theta)
+\]</p>
+
+</article></slide><slide class=''><hgroup><h2>Algorithme <em>SEM-Gibbs</em></h2></hgroup><article  id="algorithme-sem-gibbs">
+
+<p>A partir de paramètres initiaux et d&#39;une partition en colonnes initiale, il faut répéter les étapes suivantes un nombre d&#39;itérations prédéfinis.</p>
+
+<ul>
+<li>Etape <strong>SE</strong> : exécuter un petit nombre de fois les étapes suivantes
+
+<ul>
+<li>générer la partition en lignes, conditionnellement à la partition en colonnes</li>
+<li>générer la partition en colonnes, conditionnellement à la parition en lignes</li>
+</ul></li>
+<li>Etape <em>M</em>
+
+<ul>
+<li>calculer les paramètres du modèles, conditionnellement aux partitions en lignes et en colonnes</li>
+</ul></li>
+</ul>
+
+<p>Les partitions finales sont obtenues avec la méthode du <em>MAP</em> (<em>maximum a posteriori</em> - on affecte l&#39;objet à la classe à laquelle il a le plus de chance d&#39;appartenir).</p>
+
+</article></slide><slide class=''><hgroup><h2>Choix du modèle</h2></hgroup><article  id="choix-du-modele">
+
+<p>ICL-BIC</p>
+
+<p>\[
+\text{ICL-BIC}(K, L) = \log \text{p}(\mathbf{x}, \hat{\mathbf{v}},\hat{\mathbf{w}}; \hat{\theta}) - \frac{K - 1}{2} \log n - \frac{L - 1}{2} \log p - \frac{K L \nu}{2} \log (np)
+\]</p>
+
+<p>Avec \(\nu = md + d + 1\) nombre de paramètres continues par bloc et</p>
+
+<p>\[
+\log \text{p}(\mathbf{x}, \hat{\mathbf{v}},\hat{\mathbf{w}}; \hat{\theta}) = \prod_{ik} \hat{z}_{ik} \log \alpha_k + \prod_{j\ell} \hat{w}_{j\ell} \log \beta_\ell +
+\sum_{ijk\ell} \hat{z}_{ik} \hat{w}_{j\ell} \log \text{p}(\mathbf{a}_{ij} ;
+\hat{\theta}_{k\ell})
+\]</p>
+
+<p>The value of K, L leading to the highest ICL-BIC have to be selected</p>
+
+</article></slide><slide class=''><hgroup><h2>References</h2></hgroup><article  id="references" class="unnumbered">
+
+<div id="refs" class="references">
+<div id="ref-govnad2013">
+<p>Govaert, and Nadif. 2013. <em>Co-Clustering</em>.</p></div>
+
+<div id="ref-govkercel2010">
+<p>Govaert, Keribin, and Celeux. 2010. “Estimation d’un Modèle à Blocs Latents Par L&#39;algorithme <em>SEM</em>.” <em>42èmes Journées de Statistique</em>.</p></div></div></article></slide>
+
+
+  <slide class="backdrop"></slide>
+
+</slides>
+
+<script src="libs/ioslides-13.5.1/js/modernizr.custom.45394.js"></script>
+<script src="libs/ioslides-13.5.1/js/prettify/prettify.js"></script>
+<script src="libs/ioslides-13.5.1/js/prettify/lang-r.js"></script>
+<script src="libs/ioslides-13.5.1/js/prettify/lang-yaml.js"></script>
+<script src="libs/ioslides-13.5.1/js/hammer.js"></script>
+<script src="libs/ioslides-13.5.1/js/slide-controller.js"></script>
+<script src="libs/ioslides-13.5.1/js/slide-deck.js"></script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+<!-- map slide visiblity events into shiny -->
+<script>
+  (function() {
+    if (window.jQuery) {
+       window.jQuery(document).on('slideleave', function(e) {
+         window.jQuery(e.target).trigger('hidden');
+      });
+       window.jQuery(document).on('slideenter', function(e) {
+         window.jQuery(e.target).trigger('shown');
+      });
+    }
+  })();
+</script>
+
+</body>
+</html>

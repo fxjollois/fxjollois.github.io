@@ -1,0 +1,165 @@
+---
+title: "Co-clustering de données fonctionnelles"
+subtitle: "Application à des données de consommation électrique"
+author: "FX Jollois"
+date: "CNAM - Décembre 2016"
+output:
+    ioslides_presentation:
+        widescreen: yes
+references:
+- id: govnad2013
+  title: Co-Clustering
+  author:
+  - family: Govaert
+  - family: Nadif
+  type: book
+  issued:
+    year: 2013
+- id: govkercel2010
+  title: Estimation d’un modèle à blocs latents par l'algorithme *SEM*
+  author:
+  - family: Govaert
+  - family: Keribin
+  - family: Celeux
+  type: article
+  container-title: 42èmes Journées de Statistique
+  issued: 2010
+---
+
+```{r, include=FALSE}
+# Librairies
+library(ggplot2)
+library(reshape2)
+
+# options des chunks
+knitr::opts_chunk$set(echo = FALSE, eval = FALSE,
+                      fig.align = 'center')
+
+# Dpnnées
+load("cnam-seminaire-2016-12-09.RData")
+
+Xm = setNames(melt(X), c("lig", "col", "temps", "val"))
+Xm = transform(merge(merge(Xm, data.frame(lig = 1:10, Z = Z)), 
+                     data.frame(col = 1:10, W = W)), 
+               ligZ = paste(Z, lig, sep = ":"),
+               colW = paste(W, col, sep = ":"),
+               ZW = paste(Z, W, "-"))
+```
+
+## Plan
+
+1. Contexte
+
+## Données
+
+**Données** : séries temporelles, pour plusieurs individus et plusieurs unités temporelles (jours, semaine, mois, ...), avec plusieurs mesures par unités.
+
+```{r}
+ggplot(Xm, aes(temps, val)) + geom_line() + 
+  facet_grid(lig ~ col) +
+  theme_void()
+```
+
+## But 1
+
+Trouver une partition optimale en lignes (sur les individus) et en colonnes (sur les unités de temps)
+
+```{r}
+Xmm = Xm
+Xmm$ligF = factor(Xmm$lig, levels = unlist(lapply(1:max(Z), function (k) return(which(Z == k)))))
+Xmm$colF = factor(Xmm$col, levels = unlist(lapply(1:max(W), function (l) return(which(W == l)))))
+ggplot(Xmm, aes(temps, val, col = ZW)) + geom_line() + 
+  facet_grid(ligF ~ colF) +
+  theme_void()
+```
+
+## But 2
+
+Décrire la partition obtenue en terme de courbe moyenne pour mieux comprendre les différences entre les classes
+
+```{r}
+Xres = aggregate(val ~ ZW + W + Z + temps, Xm, mean)
+ggplot(Xres, aes(temps, val, col = ZW)) + geom_line() +
+    facet_grid(Z ~ W) +
+    theme_void()
+```
+
+## Comment faire ?
+
+### Première idée : en 2 étapes
+
+1. Partition en ligne des individus sur les séries complètes
+2. Découpage des séries résumées sur toutes les classes
+
+*Problème* : on laisse de côté des détails potentiellement intéressants
+
+### Deuxième idée : 
+
+Classification simple des $n$ * $d$ séries
+
+*Problème* : rien n'assure que les classes soient cohérentes en terme d'individus ou d'unités de temps
+
+## Tout en une fois
+
+Utiliser la classification croisée (ou *co-clustering*) pour rechercher les deux partitions en même temps
+
+- *Latent Block Model* [@govnad2013] comme cadre global
+- *SEM-Gibbs* [@govkercel2010] pour l'estimation des paramètres
+
+## Transformation en amont
+
+Notons $\mathbf{X}$ l'ensemble à partitionner
+
+$$
+\mathbf{X} = \{x_{ij}(t)\}_{t \in [0, T]} \text{ avec } i=1,\ldots,n \text{ et } j=1,\ldots,p
+$$
+Chaque courbe $x_{ij}(t)$ peut être exprimée comme une combinaison linéaire de fonctions de bases $\{\phi\}_h$ (avec $h=1,\ldots,m$)
+
+$$
+x_{ij}(t) = \sum_{h=1}^m a_{ijh} \phi_h(t)
+$$
+
+On a ainsi $\mathbf{a}_{ij} = (a_{ijh})$ les coefficients de $x_{ij}$. Nous nous baserons sur cette représentation dans la suite du travail.
+
+## Latent Block Model pour données fonctionnelles
+
+Dans le cadre des données fonctionnelles, le modèle peut s'écrire ainsi :
+
+$$
+\text{p}(\mathbf{\alpha};\theta) = \sum_{z \in Z} \sum_{w \in W} \text{p}(\mathbf{z};\theta) \text{p}(\mathbf{w};\theta)\text{p}(\mathbf{a}|\mathbf{z},\mathbf{w};\theta)
+$$
+
+## Algorithme *SEM-Gibbs*
+
+A partir de paramètres initiaux et d'une partition en colonnes initiale, il faut répéter les étapes suivantes un nombre d'itérations prédéfinis.
+
+- Etape **SE** : exécuter un petit nombre de fois les étapes suivantes
+    - générer la partition en lignes, conditionnellement à la partition en colonnes
+    - générer la partition en colonnes, conditionnellement à la parition en lignes
+- Etape *M*
+    - calculer les paramètres du modèles, conditionnellement aux partitions en lignes et en colonnes
+    
+Les partitions finales sont obtenues avec la méthode du *MAP* (*maximum a posteriori* - on affecte l'objet à la classe à laquelle il a le plus de chance d'appartenir).
+
+## Choix du modèle
+
+ICL-BIC
+
+$$
+\text{ICL-BIC}(K, L) = \log \text{p}(\mathbf{x}, \hat{\mathbf{v}},\hat{\mathbf{w}}; \hat{\theta}) - \frac{K - 1}{2} \log n - \frac{L - 1}{2} \log p - \frac{K L \nu}{2} \log (np)
+$$
+
+Avec $\nu = md + d + 1$ nombre de paramètres continues par bloc et
+
+$$
+\log \text{p}(\mathbf{x}, \hat{\mathbf{v}},\hat{\mathbf{w}}; \hat{\theta}) = \prod_{ik} \hat{z}_{ik} \log \alpha_k + \prod_{j\ell} \hat{w}_{j\ell} \log \beta_\ell +
+\sum_{ijk\ell} \hat{z}_{ik} \hat{w}_{j\ell} \log \text{p}(\mathbf{a}_{ij} ;
+\hat{\theta}_{k\ell})
+$$
+
+
+The value of K, L leading to the highest ICL-BIC have to be selected
+
+## References
+
+
