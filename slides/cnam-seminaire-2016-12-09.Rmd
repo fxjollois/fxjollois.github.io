@@ -30,9 +30,10 @@ references:
 # Librairies
 library(ggplot2)
 library(reshape2)
+library(Rmixmod)
 
 # options des chunks
-knitr::opts_chunk$set(echo = FALSE, eval = FALSE,
+knitr::opts_chunk$set(echo = FALSE, eval = TRUE,
                       fig.align = 'center')
 
 # Dpnnées
@@ -49,6 +50,15 @@ Xm = transform(merge(merge(Xm, data.frame(lig = 1:10, Z = Z)),
 ## Plan
 
 1. Contexte
+1. Classification ?
+    1. Introduction
+    1. Modèle de mélange simple
+    1. Algorithmes classiques
+1. Dans notre cas ?
+    1. *Latent Block Model*
+    1. Algorithme *SEM-Gibbs*
+    1. Choix du modèle
+1. Application sur des données EDF
 
 ## Données
 
@@ -84,7 +94,146 @@ ggplot(Xres, aes(temps, val, col = ZW)) + geom_line() +
     theme_void()
 ```
 
-## Comment faire ?
+## Classification
+
+- Réduction d'un nuage de points d’un espace quelconque en un ensemble de représentants moins nombreux
+- Représentation simplifiée des données initiales : Méthode de réduction des données
+- Applications nombreuses
+- Deux grandes familles de classification : 
+    - par partitionnement
+    - par hiérarchie
+
+*Notation* : Soit $x$ une matrice de données $n \times d$ définie par $x = {x^j_i ; i \in I; j \in J}$, où $I$ est un ensemble de $n$ objets (lignes, observations, instances, individus) et $J$ est un ensemble de $d$ variables (colonnes, attributs).
+
+## Partition
+
+**Définition** : Une partition de $I$ en $s$ classes ($s$ est supposé connu) est un ensemble de parties non vides $z_1,\dots,z_s$ vérifiant :
+
+- $\forall k, k' = 1,\ldots,s , k \neq k', z_k \cap z_{k'} = \emptyset$, 
+- $\cup^s_{k = 1} z_k = I$
+
+- Nombre de partitions possibles très important
+    - 1701 partitions possibles de 8 objets répartis en 4 classes
+- Meilleure partition : problème très complexe
+- Partition optimale localement
+
+> On se place ici dans le cadre de partitions dites non-recouvrantes : un individu appartient à une et une seule classe
+
+## Partitionnement 
+
+- Classification directe
+- Algorithme typique
+    1. Initialisation : $s$ points tirés au hasard pour les centres de gravité de chaque classe,
+    2. Affectation : On affecte les points à la classe la plus proche,
+    3. Représentation : On recalcule les nouveaux centres de gravité,
+    4. On répète les étapes d’affectation et de représentation jusqu’à la convergence de l’algorithme (i. e. plus de changement de le partition).
+- Résultats dépendant de l'initialisation
+- Nombre de classes devant être connu
+- Complexité linéaire
+
+## Modèles de mélange
+
+- Distribution de probabilité : mélange de $s$ distributions associées aux classes
+- Cas d’une variable continue, avec deux classes présentes
+
+```{r ex-modele, fig.width = 8, fig.height = 4}
+x = data.frame(x = c(rnorm(n = 100, mean = 2, sd = 1), rnorm(n = 100, mean = 6, sd = 2)))
+m = mixmodCluster(x, 2)
+par(mar = c(2, 2, 2, 0) + 0.1)
+histCluster(m["bestResult"], x, variables = 1)
+rm(x, m)
+```
+
+## Densité de probabilité
+
+- Tableau de données $x$ considéré comme échantillon $(x_1, \ldots,x_n)$ i.i.d. de taille $n$ d’une variable aléatoire avec la densité $\varphi(x,\theta)$ définie par :
+\[
+    \varphi(x_i;\theta) = \sum_{k=1}^s p_k \varphi_k (x_i;\alpha_k)
+\]
+- $\varphi_k(x_i, \alpha_k)$ : densité de probabilité de la classe $k$
+- $p_k$ : probabilité qu’un élément de l’échantillon suive la loi $\varphi_k$ (proportions du mélange)
+    - $\forall k=1,\ldots,n, p_k \in ]0,1[$
+    - $\sum_{k=1}^s p_k = 1$
+- $\theta = (p_1, \ldots ,p_s; \alpha_1, \ldots ,\alpha_s)$ : paramètre du modèle de mélange
+
+## Vraissemblance
+
+- Problème statistique : estimer les proportions des composants ( les $(p_k)$) et les paramètres (les $(\alpha_k)$)
+- Utilisation de la log-vraisemblance :
+\[
+    L(x_1,\ldots,x_n;\theta) = \sum_{i=1}^n \log \left( \sum_{k=1}^s p_k \varphi_k (x_i;\alpha_k) \right)
+\]
+- Pour la classification, chaque $x_i$ appartiendra à une classe $k$, tel que $z_{ik} = 1$ (et 0 sinon)
+- Log-vraissemblance complétée (ou classifiante) :
+\[
+    L_c(x_1,\ldots,x_n; z, \theta) = \sum_{i=1}^n \sum_{k=1}^s z_{ik} \log\left( p_k \varphi_k (x_i;\alpha_k) \right)
+\]
+
+## Trois approches
+
+- Approche **Estimation**
+    - Estimation des paramètres du mélange
+    - Déduction de la partition, avec la méthode du maximum a posteriori *MAP*
+    - Maximisation de la log-vraisemblance $L(x; \theta)$
+    - Utilisation de l'algorithme **EM**
+- Approche **Classification**
+    - Estimation conjointe des paramètres et de la partition
+    - Maximisation de la log-vraisemblance classifiante $L_C(x; z, \theta)$
+    - Utilisation de l'algorithme **CEM**
+- Approche **Stochastique**
+    - Tirage aléatoire de la partition 
+    - Utilisation de l'algorithme **SEM**
+
+## Algorithme *EM*
+
+- **EM** : *Estimation-Maximisation*
+- Algorithme :
+    1. Déterminer une situation initiale
+    2. **Estimation** des probabilités a posteriori
+    \[
+        t_{ik} = \frac{p_k \varphi_k (x_i;\alpha_k)}{\sum_{\ell=1}^s p_\ell \varphi_\ell (x_i;\alpha_\ell)}
+    \]
+    3. **Maximisation** : calcul des paramètres du mélange
+    \[
+        \begin{aligned}
+            p_k &= \frac{\sum_{i=1}^n t_{ik}}{n} \\
+            \alpha_k &= \mbox{dépendant du modèle}
+        \end{aligned}
+    \]
+    4. Itérer les étapes 2 et 3, jusqu'à la convergence (évolution très faible de $L$)
+
+## Algorithme *CEM*
+
+- **CEM** : *Classification EM*
+- Ajout d'une étape de classification dans **EM**
+    1. Déterminer une situation initiale
+    2. **Estimation** des probabilités a posteriori $t_{ik}$ (identique)
+    3. **Classification** des individus avec la méthode du *MAP*
+    \[
+        z_k = \{ i | t_{ik} = max_{\ell=1,\ldots,s} t_{i\ell} \}
+    \]
+    4. **Maximisation** : calcul des paramètres du mélange
+    \[
+        \begin{aligned}
+            p_k &= \frac{Card(z_k)}{n} \\
+            \alpha_k &= \mbox{dépendant du modèle}
+        \end{aligned}
+    \]
+    5. Itérer les étapes 2 à 4, jusqu'à la convergence (évolution très faible de $L_c$)
+
+## Compléments 
+
+- Résultats dépendant fortement de l'initialisation
+    - Lancement avec des initialisations différentes
+    - Récupération de la meilleure solution, selon $L$ (ou $L_c$)
+    - Initialisation de **EM** avec la meilleure solution de **CEM** (ou autre)
+- **SEM** : 
+    - modification de l'étape de classification dans **CEM**
+    - **Stochastique** : affectation stochastique de la partition à partir des probabilités a posteriori
+    
+> Il est possible d'utiliser un modèle de mélange dans le cadre de la classification simultanée des lignes et des colonnes 
+
+## Comment faire dans notre cas ?
 
 ### Première idée : en 2 étapes
 
@@ -105,6 +254,7 @@ Utiliser la classification croisée (ou *co-clustering*) pour rechercher les deu
 
 - *Latent Block Model* [@govnad2013] comme cadre global
 - *SEM-Gibbs* [@govkercel2010] pour l'estimation des paramètres
+- Passage dans une base de fonctions 
 
 ## Transformation en amont
 
@@ -121,7 +271,7 @@ $$
 
 On a ainsi $\mathbf{a}_{ij} = (a_{ijh})$ les coefficients de $x_{ij}$. Nous nous baserons sur cette représentation dans la suite du travail.
 
-## Latent Block Model pour données fonctionnelles
+## *Latent Block Model* pour données fonctionnelles
 
 Dans le cadre des données fonctionnelles, le modèle peut s'écrire ainsi :
 
@@ -136,10 +286,18 @@ A partir de paramètres initiaux et d'une partition en colonnes initiale, il fau
 - Etape **SE** : exécuter un petit nombre de fois les étapes suivantes
     - générer la partition en lignes, conditionnellement à la partition en colonnes
     - générer la partition en colonnes, conditionnellement à la parition en lignes
-- Etape *M*
+- Etape **M**
     - calculer les paramètres du modèles, conditionnellement aux partitions en lignes et en colonnes
     
 Les partitions finales sont obtenues avec la méthode du *MAP* (*maximum a posteriori* - on affecte l'objet à la classe à laquelle il a le plus de chance d'appartenir).
+
+## Etape *SE*
+
+
+
+## Etape *M*
+
+
 
 ## Choix du modèle
 

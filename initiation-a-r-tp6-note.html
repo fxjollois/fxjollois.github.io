@@ -11,7 +11,7 @@
 
 
 
-<title>Programmation statistique avec R</title>
+<title>TP6 - évauation</title>
 
 <script src="libs/jquery-1.11.3/jquery.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -225,52 +225,39 @@ $(document).ready(function () {
 
 
 
-<h1 class="title toc-ignore">Programmation statistique avec R</h1>
+<h1 class="title toc-ignore">TP6 - évauation</h1>
+<h3 class="subtitle"><em>Initiation a <code>R</code> - STID 1ère année</em></h3>
 
 </div>
 
 
-<div id="cours-de-2eme-annee" class="section level2">
-<h2>Cours de 2ème année</h2>
+<div id="donnees" class="section level2">
+<h2>Données</h2>
+<p>Nous allons utilisé une base de données stockée en fichier <code>&quot;.csv&quot;</code>, dont voici les liens. Attention, ces fichiers sont encodés en <code>&quot;UTF-8&quot;</code>.</p>
+<ul>
+<li><a href="donnees/ca/csv/ca.csv">ca.csv</a></li>
+<li><a href="donnees/ca/csv/groupe.csv">groupe.csv</a></li>
+<li><a href="donnees/ca/csv/mois.csv">mois.csv</a></li>
+<li><a href="donnees/ca/csv/provenance.csv">provenance.csv</a></li>
+</ul>
+<p>Le schéma de cette base de données est le suivant. Dans celui-ci, vous pouvez voir que les clés de chaque table autre que <code>ca</code> est associé à un attribut de celle-ci avec le nom de la table en premier suivi par <code>no</code>. Cela indique, par exemple, que l’attribut <code>mois_no</code> de <code>ca</code> correspond à l’attribut <code>no</code> de <code>mois</code>.</p>
+<p><img src="initiation-a-r-tp6-note_files/figure-html/unnamed-chunk-3-1.png" width="672" /></p>
+</div>
+<div id="exercice" class="section level2">
+<h2>Exercice</h2>
+<p>Créer un document <code>html</code> en <code>R markdown</code>, contenant les éléments suivants. Vous devez faire un chapitre (avec titre de niveau 2 donc), pour chaque item de la liste suivante. N’hésitez pas à faire des sous-partie pour chaque sous-item. Vous devez utiliser uniquement le langage <code>R</code>. Le code doit être visible dans votre document <code>html</code>, et vous devez décrire votre travail et les difficultés éventuelles dans le texte.</p>
 <ol style="list-style-type: decimal">
-<li>TP1 : prise en main du logiciel (cf répertoire COMMUN)</li>
-<li>TP2 : matrices et <code>data.frames</code> (cf répertoire COMMUN)</li>
-<li><a href="prog-stat-r-tp3.html">TP3 : importation de données</a>
+<li>Importer les données, et créer une nouvelle table <code>ca_tout</code>, résultant de la jointure de toutes les tables. C’est cette table que vous utiliserez par la suite. (<em>6 points</em>)</li>
+<li>Indiquer, dans des phrases, les éléments suivants (<em>4 points</em>)
 <ul>
-<li><a href="prog-stat-r-tp3-correction.html">correction</a></li>
+<li>le chiffre d’affaires total sur l’ensemble de la période ;</li>
+<li>le chiffre d’affaires pour 2003 ;</li>
+<li>le chiffre d’affaires pour 2004 ;</li>
+<li>la pourcentage d’évolution entre les deux années.</li>
 </ul></li>
-<li><a href="prog-stat-r-tp4.html">TP4 : interrogation de données <em>à la SQL</em></a>
-<ul>
-<li><a href="prog-stat-r-tp4-correction.html">correction</a></li>
-</ul></li>
-<li><a href="prog-stat-r-tp5.html">TP5 : document automatique</a>
-<ul>
-<li>correction : <a href="__specifique/prog-stat-r-tp5-correction.Rmd">Rmd</a> et <a href="__specifique/prog-stat-r-tp5-correction.html">html</a></li>
-</ul></li>
-<li>TP6 noté
-<ul>
-<li><a href="prog-stat-r-tp6note.html">sujet 1</a>
-<ul>
-<li><a href="__specifique/prog-stat-r-tp6note-correction.Rmd">correction (Rmd)</a></li>
-<li><a href="__specifique/prog-stat-r-tp6note-correction.html">correction (html)</a></li>
-</ul></li>
-<li><a href="prog-stat-r-tp6note-bis.html">sujet 2</a>
-<ul>
-<li><a href="__specifique/prog-stat-r-tp6note-correction-bis.Rmd">correction (Rmd)</a></li>
-<li><a href="__specifique/prog-stat-r-tp6note-correction-bis.html">correction (html)</a></li>
-</ul></li>
-</ul></li>
-<li><a href="prog-stat-r-tp7.html">TP7 : reporting</a>
-<ul>
-<li>correction : <a href="__specifique/prog-stat-r-tp7-correction.Rmd">Rmd</a> et <a href="__specifique/prog-stat-r-tp7-correction.html">html</a></li>
-</ul></li>
-<li><a href="prog-stat-r-tp8.html">TP8 : visualisation de données</a>
-<ul>
-<li><a href="prog-stat-r-tp8-correction-qplot.html">correction <code>qplot</code></a></li>
-<li><a href="prog-stat-r-tp8-correction-ggplot.html">correction <code>ggplot</code></a></li>
-</ul></li>
-<li><a href="prog-stat-r-tp9.html">TP9 : fonctions</a></li>
-<li><a href="prog-stat-r-tp10.html">TP10 : application web</a></li>
+<li>Créer un tableau indiquant le chiffre d’affaires par mois (de janvier à décembre donc), en faisant attention à l’ordre (cf l’attribut <code>mois_numero</code>). (<em>3 points</em>)</li>
+<li>Créer un tableau indiquant le chiffre d’affaires par provenance. Celui-ci devra être trié dans l’ordre décroissant du chiffre d’affaires. (<em>3 points</em>)</li>
+<li>Créer un tableau indiquant, par mois d’exercice, le chiffre d’affaires de chaque année. Le tableau aura donc 3 colonnes : <code>mois</code> (dans l’ordre), <code>2003</code> et <code>2004</code>. (<em>4 points</em>)</li>
 </ol>
 </div>
 

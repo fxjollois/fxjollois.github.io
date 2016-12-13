@@ -1,0 +1,49 @@
+---
+title: TP6 - évauation
+subtitle: Initiation a `R` - STID 1ère année
+---
+
+```{r, include=FALSE}
+knitr::opts_chunk$set(comment = "", echo = FALSE)
+library(diagram)
+```
+
+## Données
+
+Nous allons utilisé une base de données stockée en fichier `".csv"`, dont voici les liens. Attention, ces fichiers sont encodés en `"UTF-8"`.
+
+```{r, results='asis'}
+nul = lapply(dir(path = "donnees/ca/csv/", pattern = "*.csv"),
+             function(f) { cat("- [", f, "](donnees/ca/csv/", f, ")\n", sep = "")})
+```
+
+Le schéma de cette base de données est le suivant. Dans celui-ci, vous pouvez voir que les clés de chaque table autre que `ca` est associé à un attribut de celle-ci avec le nom de la table en premier suivi par `no`. Cela indique, par exemple, que l'attribut `mois_no` de `ca` correspond à l'attribut `no` de `mois`.
+
+```{r}
+par(mar = c(0, 0, 2, 0) + .1)
+M <- matrix(nrow = 4, ncol = 4, byrow = TRUE, data = 0)
+M[,3] = c("mois_no", "groupe_no", 0, "prov_no")
+plotmat(M, 
+        pos = c(2, 1, 1), 
+        name = c("Mois", "Groupe", "CA", "Provenance"),
+        lwd = 1, box.lwd = 2, # cex.csv = 0.8, 
+        box.size = 0.1, box.type = "square", box.prop = 0.5,
+        main = "Modèle de la base")
+```
+
+
+## Exercice
+
+Créer un document `html` en `R markdown`, contenant les éléments suivants. Vous devez faire un chapitre (avec titre de niveau 2 donc), pour chaque item de la liste suivante. N'hésitez pas à faire des sous-partie pour chaque sous-item. Vous devez utiliser uniquement le langage `R`. Le code doit être visible dans votre document `html`, et vous devez décrire votre travail et les difficultés éventuelles dans le texte. 
+
+1. Importer les données, et créer une nouvelle table `ca_tout`, résultant de la jointure de toutes les tables. C'est cette table que vous utiliserez par la suite. (*6 points*)
+1. Indiquer, dans des phrases, les éléments suivants (*4 points*) 
+    - le chiffre d'affaires total sur l'ensemble de la période ;
+    - le chiffre d'affaires pour 2003 ;
+    - le chiffre d'affaires pour 2004 ;
+    - la pourcentage d'évolution entre les deux années.
+1. Créer un tableau indiquant le chiffre d'affaires par mois (de janvier à décembre donc), en faisant attention à l'ordre (cf l'attribut `mois_numero`). (*3 points*)
+1. Créer un tableau indiquant le chiffre d'affaires par provenance. Celui-ci devra être trié dans l'ordre décroissant du chiffre d'affaires. (*3 points*)
+1. Créer un tableau indiquant, par mois d'exercice, le chiffre d'affaires de chaque année. Le tableau aura donc 3 colonnes : `mois` (dans l'ordre), `2003` et `2004`. (*4 points*)
+
+

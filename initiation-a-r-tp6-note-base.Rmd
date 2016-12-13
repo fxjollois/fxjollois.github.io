@@ -1,0 +1,47 @@
+---
+title: "TP6 - base de travail"
+author: "FX Jollois"
+date: "15/12/2016"
+output: html_document
+---
+
+## Importation
+
+Indiquer les choix faits dans les paramètres des fonctions utilisées.
+
+```{r}
+# Mettre le code ici
+```
+
+## Résumé
+
+Mettre ici dans une phrase les informations demandées. Par exemple, *"le CA est de `?? calcul ??`."
+
+
+## Mois
+
+Petit commentaire sur le tableau éventuellement, ou au moins sur sa création
+
+```{r}
+# Mettre le code ici
+```
+
+
+## Provenance
+
+Petit commentaire sur le tableau éventuellement, ou au moins sur sa création
+
+```{r}
+# Mettre le code ici
+```
+
+
+## Mois par année
+
+Petit commentaire sur le tableau éventuellement, ou au moins sur sa création
+
+```{r}
+# Mettre le code ici
+```
+
+
