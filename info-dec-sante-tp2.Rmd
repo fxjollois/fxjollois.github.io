@@ -541,12 +541,12 @@ Au final, nous obtenons donc le [tableau de bord](__specifique/prog-stat-r-tp7-e
 
 ### Publication
 
-Pour inforation, pour publier un tableau de bord ainsi créé, il faut juste placer le document `.Rmd`, ainsi que les données si besoin, sur un serveur dédié ayant l'application `shiny server` dessus. C'est une opération simple, mais que souvent seul le service informatique pourra effectué.
+Pour information, pour publier un tableau de bord ainsi créé, il faut juste placer le document `.Rmd`, ainsi que les données si besoin, sur un serveur dédié ayant l'application `shiny server` dessus. C'est une opération simple, mais que souvent seul le service informatique pourra effectué.
 
 Vous pouvez voir un exemple avec [ce lien](http://193.51.82.116:3838/demo/prog-stat-r-tp7/).
 
 ## Exercice
 
-1. Mettre dans un tableau de bord les différents tableaux obtenus dans le TP1
-1. 
+Mettre dans un tableau de bord les différents tableaux obtenus dans le TP1
+
 

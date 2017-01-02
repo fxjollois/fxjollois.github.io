@@ -8,3 +8,4 @@ Dans ce cours, intitulé **Informatique Décisionnelle**, nous allons aborder l'
 - [TP1 : Base de données Médicaments](info-dec-sante-tp1.html)
     - [correction](info-dec-sante-tp1-correction.html)
 - [TP2 : Reporting](info-dec-sante-tp2.html) (sur les données du TP1)
+- [TP3 : NoSQL](info-dec-sante-tp3.html) 

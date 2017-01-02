@@ -11,7 +11,7 @@
 
 
 
-<title>Informatique Décisionnelle</title>
+<title>Base de données Médicaments - passage en NoSQL</title>
 
 <script src="libs/jquery-1.11.3/jquery.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -225,21 +225,46 @@ $(document).ready(function () {
 
 
 
-<h1 class="title toc-ignore">Informatique Décisionnelle</h1>
-<h3 class="subtitle"><em>LP MDS Santé</em></h3>
+<h1 class="title toc-ignore">Base de données Médicaments - passage en <em>NoSQL</em></h1>
+<h3 class="subtitle"><em>Informatique Décisionnelle - LP MDS Santé</em></h3>
 
 </div>
 
 
-<p>Dans ce cours, intitulé <strong>Informatique Décisionnelle</strong>, nous allons aborder l’utilisation de <code>R</code> sur des données ouvertes en Santé. Ce sera l’occasion d’approfondir les connaissances de <code>R</code> et d’utiliser des formats nouveaux de données.</p>
-<ul>
-<li><a href="info-dec-sante-tp1.html">TP1 : Base de données Médicaments</a>
-<ul>
-<li><a href="info-dec-sante-tp1-correction.html">correction</a></li>
-</ul></li>
-<li><a href="info-dec-sante-tp2.html">TP2 : Reporting</a> (sur les données du TP1)</li>
-<li><a href="info-dec-sante-tp3.html">TP3 : NoSQL</a></li>
-</ul>
+<blockquote>
+<p>Le document qui suit est fourni pour information. Merci de <strong>ne pas exécuter</strong> ces commandes sur le serveur !</p>
+</blockquote>
+<p>Ce code permet de passer des données importées sous <code>R</code> (voir le code <a href="info-dec-sante-tp1-correction.html">ici</a>) au format NoSQL dans <em>MongoDB</em>.</p>
+<p>On se connecte déjà à la base de données. Pour information, si la base de données ou la collection n’existe pas, elles sont automatiquement créées.</p>
+<pre class="r"><code>library(mongolite)
+bd = mongo(url = &quot;mongodb://193.51.82.104:2231&quot;,
+           db = &quot;medicaments&quot;,
+           collection = &quot;import20161109&quot;)</code></pre>
+<p>Ensuite, le code qui suit permet de créer une liste contenant les informations pour chaque médicament de la table <code>CIS</code>. On y ajoute les informations des tables <code>CIS_COMPO</code>, <code>CIS_CIP</code>, <code>CIS_CPD</code>, <code>CIS_GENER</code>, <code>CIS_HAS_SMR</code> et <code>CIS_HAS_ASMR</code>.</p>
+<pre class="r"><code>#bd$drop()
+data = list()
+for (i in 1:nrow(CIS)) {
+    temp = as.list(CIS[i,])
+    attr(temp, &quot;labels&quot;) = NULL
+    attr(temp, &quot;info&quot;) = NULL
+    compo = subset(CIS_COMPO, CodeCIS == temp$CodeCIS, select = -CodeCIS)
+    if (length(compo) &gt; 0) temp$Composition = compo
+    cip = subset(CIS_CIP, CodeCIS == temp$CodeCIS, select = -CodeCIS)
+    if (length(cip) &gt; 0) temp$CIP = cip
+    cpd = subset(CIS_CPD, CodeCIS == temp$CodeCIS, select = -CodeCIS)
+    if (length(cpd) &gt; 0) temp$CPD = cpd
+    gener = subset(CIS_GENER, CodeCIS == temp$CodeCIS, select = -CodeCIS)
+    if (length(gener) &gt; 0) temp$GENER = gener
+    smr = subset(CIS_HAS_SMR, CodeCIS == temp$CodeCIS, select = -CodeCIS)
+    if (length(smr) &gt; 0) temp$SMR = smr
+    asmr = subset(CIS_HAS_ASMR, CodeCIS == temp$CodeCIS, select = -CodeCIS)
+    if (length(asmr) &gt; 0) temp$ASMR = asmr
+    data[[i]] = temp
+}
+df &lt;- fromJSON(toJSON(data, auto_unbox = T))
+bd$insert(df[1:5000,])
+bd$insert(df[5001:10000,])
+bd$insert(df[10001:nrow(df),])</code></pre>
 
 </div>
 <div class="footer">
