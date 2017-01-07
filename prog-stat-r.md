@@ -25,5 +25,6 @@ title: Programmation statistique avec R
 	- [correction `qplot`](prog-stat-r-tp8-correction-qplot.html)
 	- [correction `ggplot`](prog-stat-r-tp8-correction-ggplot.html)
 1. [TP9 : fonctions](prog-stat-r-tp9.html)
+	- [correction](prog-stat-r-tp9-correction.html)
 1. [TP10 : application web](prog-stat-r-tp10.html)
 

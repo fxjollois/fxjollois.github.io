@@ -1,0 +1,171 @@
+---
+title: Fonctions
+subtitle: Programmation statistique avec `R` - STID 2ème année
+---
+
+
+## Exercices
+
+### sur les fonctions
+
+#### 1. Créer une fonction `affichePays()` qui prend en paramètre un nom de pays et un continent, et qui l'affiche sur une ligne :
+
+    `pays (continent)`
+
+```{r}
+affichePays <- function (pays, continent) {
+    cat(pays, " (", continent, ")\n", sep = "")
+}
+affichePays("France", "Europe")
+```
+
+
+#### 2. Ajouter un paramètre à cette fonction, qui sera l'année d'indépendance (avec la valeur `NA` par défaut) =
+    - si l'année est `NA`, alors on affichera
+    
+    `pays (continent)`
+    
+    - sinon, on affichera :
+    
+    `pays (continent - indépendance en XXXX)`
+
+```{r}
+affichePays <- function (pays, continent, indep = NA) {
+    cat(pays, " (", continent, sep = "")
+    if (!is.na(indep)) {
+        cat(" - indépendant en", indep)
+    }
+    cat(")\n", sep = "")
+}
+affichePays("France", "Europe")
+affichePays("France", "Europe", 843)
+affichePays("France", "Europe", NA)
+```
+
+#### 3. Créer une fonction avec les caractéristiques suivantes :
+    - Paramètres :
+        - une valeur (population d'un pays)
+        - un vecteur de valeur (population de plusieurs villes)
+    - Retour :
+        - la ration entre la somme des valeurs du vecteur et la première valeur
+    - Par exemple :
+        - `f(10, c(1, 2, 3))` renverra `.6`
+
+```{r}
+ratio <- function (pop.pays, pop.villes) {
+    # on ajoute des contrôles pour s'assurer que l'on passe bien des nombres
+    if (!is.numeric(pop.pays) | !is.numeric(pop.villes)) {
+        return (NULL)
+    }
+    return(sum(pop.villes, na.rm = TRUE) / pop.pays)
+}
+ratio(10, c(1, 2, 3))
+ratio("10", c(1, 2, 3))
+ratio(10, c(1, 2, NA))
+ratio(10, c(1, 2, "a"))
+```
+
+
+### `world`
+
+A partir des données présentes dans le fichier [`world-liste.RData`](donnees/World/world-liste.Rdata), répondre aux questions suivantes. Ces données concernent les pays dans le monde (à la fin du siècle dernier), et sont représentées sous forme de liste dans l'objet `Country.liste`.
+
+```{r}
+load("donnees/World/world-liste.Rdata")
+```
+
+#### 1. Donner le nombre de pays représentés
+
+```{r}
+length(Country.liste)
+```
+
+
+#### 2. Calculer la population mondiale
+
+Plusieurs possibilités :
+
+- Décomposition en 2 étapes :
+```{r}
+p = sapply(Country.liste, function(e) {
+    return(e$Population)
+})
+sum(as.numeric(p))
+```
+- Idem avec `Reduce` sur `p` :
+```{r}
+Reduce(function(a, b) { return (a+b)}, p, numeric(1))
+```
+- En une étape :
+```{r}
+sum(as.numeric(sapply(Country.liste, function (p) return(p$Population))))
+```
+- Idem avec `Reduce` directement sur `Country.liste` :
+```{r}
+res = Reduce(
+    function (a, b) {
+        a$Population = a$Population + b$Population
+        return(a)
+    },
+    Country.liste,
+    list(Population = numeric(1))
+)
+res
+```
+- Idem mais sans initialisation :
+```{r}
+res = Reduce(
+    function (a, b) {
+        a$Population = as.numeric(a$Population) + b$Population
+        return(a)
+    },
+    Country.liste
+)
+res$Population
+```
+
+#### 3. Utiliser la fonction `affichePays()` créée précédemment dans une fonction anonyme, pour afficher les informations des pays (un pays par ligne)
+
+```{r}
+invisible(
+    lapply(
+        Country.liste, 
+        function(p) { 
+            affichePays(p$Name, p$Continent, p$IndepYear) 
+        }
+    )
+)
+```
+
+#### 4. Utiliser la fonction de calcul de ratio de la population pour savoir pour chaque pays le ratio entre la population des villes de celui-ci et la population du pays
+
+Idéalement, créer une nouvelle liste qui ajoute cette information aux autres, pour chaque pays
+
+```{r}
+Country.new = lapply(
+    Country.liste,
+    function(e) {
+        e$Ratio = ratio(e$Population, e$City$Population)
+        return(e)
+    }
+)
+```
+
+
+#### 5. Identifier quels pays ont un ratio supérieur à `1` avec la nouvelle liste créée
+
+```{r}
+res = Filter(
+    function(e) {
+        if (is.null(e$Ratio)) {
+            return (FALSE)
+        }
+        return (e$Ratio > 1)
+    },
+    Country.new
+)
+sapply(res, function(e) return (e$Name))
+```
+
+
+
