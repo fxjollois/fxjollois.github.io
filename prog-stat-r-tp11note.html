@@ -11,7 +11,7 @@
 
 
 
-<title>FX Jollois</title>
+<title>TP 11 noté</title>
 
 <script src="libs/jquery-1.11.3/jquery.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -223,29 +223,106 @@ $(document).ready(function () {
 
 
 
-<h1 class="title toc-ignore">FX Jollois</h1>
+<h1 class="title toc-ignore">TP 11 noté</h1>
+<h3 class="subtitle"><em>Programmation statistique avec <code>R</code> - STID 2ème année</em></h3>
 
 </div>
 
 
-<div id="presentation" class="section level2">
-<h2>Présentation</h2>
-<p>Enseignant-chercheur en informatique, mon domaine de compétence se situe à la frontière entre l’informatique et la statistique. J’enseigne dans le département <a href="http://www.stid-paris.fr/">STID</a> de l’<a href="http://www.iut.parisdescartes.fr">IUT Paris Descartes</a>. J’effectue ma recherche dans l’équipe Fouille de données du <a href="http://www.lipade.fr">LIPADE</a>, dans l’équipe <a href="http://www.math-info.univ-paris5.fr/~nadifmoh/Accueil.html#">MLDS</a>.</p>
-<p>Pour votre information, ce site étant encore en construction, certains liens peuvent ne pas être accessibles, et certaines pages sont encore en cours de réalisation.</p>
+<div id="donnees" class="section level2">
+<h2>Données</h2>
+<p>Dans ce TP, nous allons utiliser les données synthétiques de la production scientifique mondiale de 1996 à 2014 (<a href="donnees/scimagojr-1996-2014.csv">lien vers le fichier</a> - source : <a href="http://www.scimagojr.com/help.php">SCImago Journal &amp; Country Rank</a>)</p>
+<p>Ce fichier comporte les variables suivantes :</p>
+<table style="width:100%;">
+<colgroup>
+<col width="28%" />
+<col width="71%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Attribut</th>
+<th>Signification</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>Year</code></td>
+<td>année</td>
+</tr>
+<tr class="even">
+<td><code>Rank</code></td>
+<td>rang du pays en terme de production (par rapport au nombre de documents) pour l’année indiquée</td>
+</tr>
+<tr class="odd">
+<td><code>Country</code></td>
+<td>pays</td>
+</tr>
+<tr class="even">
+<td><code>Documents</code></td>
+<td>nombre de documents produits</td>
+</tr>
+<tr class="odd">
+<td><code>Citable.documents</code></td>
+<td>nombre de documents citables (articles, reviews et conférences)</td>
+</tr>
+<tr class="even">
+<td><code>Citations</code></td>
+<td>nombre de citations de documents produits</td>
+</tr>
+<tr class="odd">
+<td><code>Self.Citations</code></td>
+<td>nombre de citations dans un document du même pays</td>
+</tr>
+<tr class="even">
+<td><code>Citations.per.Document</code></td>
+<td>nombre moyen de citations</td>
+</tr>
+<tr class="odd">
+<td><code>H.index</code></td>
+<td>nombre <span class="math inline">\(h\)</span> d’articles ayant eu au moins <span class="math inline">\(h\)</span> citations (pour plus d’information : <a href="https://fr.wikipedia.org/wiki/Indice_h">h-index sur Wikipedia</a>)</td>
+</tr>
+</tbody>
+</table>
 </div>
-<div id="informations-sur-le-contenu-du-site" class="section level2">
-<h2>Informations sur le contenu du site</h2>
+<div id="travail" class="section level2">
+<h2>Travail</h2>
+<p>Vous devez créer une application web avec les contraintes suivantes :</p>
 <ul>
-<li>Dans la partie <strong>Enseignement</strong>, vous trouverez un ensemble de documents de cours : des études de cas plus ou moins liées à mes cours.</li>
-<li>Dans la partie <a href="recherche.html">Recherche</a>, vous trouverez mes thématiques de recherche, ainsi que mes <a href="publications.html">publications</a>.</li>
-</ul>
-</div>
-<div id="quelques-liens-interessants" class="section level2">
-<h2>Quelques liens intéressants</h2>
+<li>Importation des données texte, via <code>read.table()</code>
 <ul>
-<li><a href="https://sites.google.com/site/groupeecais/">ECAIS</a> : groupe de travail de l’IUT Paris Descartes, regroupant des informaticiens et des statisticiens ;</li>
-<li><a href="http://www.stid-france.fr/">STID-France</a> : ensemble des départements STID de France ;</li>
-<li><a href="http://methodes-et-logiciels.sfds.asso.fr/">Groupe Méthodes &amp; Logiciels</a> : séminaires d’échanges sur différentes thématiques autour de la statistique, intégrant des aspects méthodologiques et pratiques.</li>
+<li>attention au séparateur de décimales et à la présence d’apostrophes <code>'</code></li>
+</ul></li>
+<li>Réalisation d’une fonction, permettant le calcul de l’évolution du nombre de documents par pays en base 100 (à partir d’une base 100 en 1996, on peut voir l’évolution du nombre de documents, pour mieux comparer les pays entre eux)
+<ul>
+<li>en paramètre : un vecteur contenant le nombre de documents par pays sur la période</li>
+<li>en retour : un vecteur de ces valeurs en base 100 sur la première valeur</li>
+</ul></li>
+<li>Réalisation d’onglets, avec le contenu suivant :
+<ol style="list-style-type: decimal">
+<li>Vue globale :
+<ul>
+<li>Graphique affichant l’évolution du nombre de documents pour l’ensemble des pays, entre 1996 et 2004</li>
+<li>Top 10 des pays ayant produits le plus de documents sur la période</li>
+</ul></li>
+<li>Vue par pays :
+<ul>
+<li>à gauche, choix du pays</li>
+<li>à droite :
+<ul>
+<li>évolution en base 100 du nombre de documents, sur la période</li>
+<li>évolution du rang du pays, sur la période (idéalement avec une échelle inversée sur l’axe des abcisses)</li>
+</ul></li>
+</ul></li>
+<li>Vue par année :
+<ul>
+<li>à gauche, choix de l’année et choix de la taille du top (10 par défaut - avec un <em>slider</em>)</li>
+<li>à droite, tableau des pays les plus productifs en nombre de documents (Pays, Nombre de documents, Citations, <span class="math inline">\(h\)</span>-index)</li>
+</ul></li>
+<li>Vue par rangs :
+<ul>
+<li>évolution du rang des pays sur la période, limité au rang 1 à 10, avec une couleur par pays (un pays pouvant n’apparaître qu’une seule année)</li>
+</ul></li>
+</ol></li>
 </ul>
 </div>
 

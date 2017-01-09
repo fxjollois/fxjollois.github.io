@@ -1,0 +1,48 @@
+---
+title: TP 11 noté
+subtitle: Programmation statistique avec `R` - STID 2ème année
+---
+
+## Données
+
+Dans ce TP, nous allons utiliser les données synthétiques de la production scientifique mondiale de 1996 à 2014 ([lien vers le fichier](donnees/scimagojr-1996-2014.csv) - source : [SCImago Journal & Country Rank](http://www.scimagojr.com/help.php))
+
+Ce fichier comporte les variables suivantes :
+
+Attribut | Signification
+-------------------------|---------------------------------------------------------------
+`Year`                   | année
+`Rank`                   | rang du pays en terme de production (par rapport au nombre de documents) pour l’année indiquée
+`Country`                | pays
+`Documents`              | nombre de documents produits
+`Citable.documents`      | nombre de documents citables (articles, reviews et conférences)
+`Citations`              | nombre de citations de documents produits
+`Self.Citations`         | nombre de citations dans un document du même pays
+`Citations.per.Document` | nombre moyen de citations
+`H.index`                | nombre $h$ d’articles ayant eu au moins $h$ citations (pour plus d’information : [h-index sur Wikipedia](https://fr.wikipedia.org/wiki/Indice_h))
+
+## Travail
+
+Vous devez créer une application web avec les contraintes suivantes :
+
+- Importation des données texte, via `read.table()`
+    - attention au séparateur de décimales et à la présence d'apostrophes `'`
+- Réalisation d'une fonction, permettant le calcul de l'évolution du nombre de documents par pays en base 100 (à partir d'une base 100 en 1996, on peut voir l'évolution du nombre de documents, pour mieux comparer les pays entre eux)
+    - en paramètre : un vecteur contenant le nombre de documents par pays sur la période
+    - en retour : un vecteur de ces valeurs en base 100 sur la première valeur
+- Réalisation d'onglets, avec le contenu suivant :
+    1. Vue globale :
+        - Graphique affichant l'évolution du nombre de documents pour l'ensemble des pays, entre 1996 et 2004
+        - Top 10 des pays ayant produits le plus de documents sur la période
+    2. Vue par pays :
+        - à gauche, choix du pays
+        - à droite :
+            - évolution en base 100 du nombre de documents, sur la période
+            - évolution du rang du pays, sur la période (idéalement avec une échelle inversée sur l'axe des abcisses)
+    3. Vue par année :
+        - à gauche, choix de l'année et choix de la taille du top (10 par défaut - avec un *slider*)
+        - à droite, tableau des pays les plus productifs en nombre de documents (Pays, Nombre de documents, Citations, $h$-index)
+    4. Vue par rangs :
+        - évolution du rang des pays sur la période, limité au rang 1 à 10, avec une couleur par pays (un pays pouvant n'apparaître qu'une seule année)
+    
+        

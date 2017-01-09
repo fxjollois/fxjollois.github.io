@@ -25,7 +25,7 @@ ainsi que mes [publications](publications.html).
 - [ECAIS](https://sites.google.com/site/groupeecais/) : groupe de travail de l'IUT Paris
 Descartes, regroupant des informaticiens et des statisticiens ;
 - [STID-France](http://www.stid-france.fr/) : ensemble des départements STID de France ;
-- [Groupe Méthodes & Logiciels](http://www.sfds.asso.fr/323-Rendez_vous_SFdS_Methodes_et_Logiciels) :
+- [Groupe Méthodes & Logiciels](http://methodes-et-logiciels.sfds.asso.fr/) :
 séminaires d'échanges sur différentes thématiques autour de la statistique, intégrant des
 aspects méthodologiques et pratiques.
 
