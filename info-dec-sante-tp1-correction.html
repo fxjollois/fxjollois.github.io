@@ -19,6 +19,9 @@
 <script src="libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
 <script src="libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
 <script src="libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<script src="libs/navigation-1.1/tabsets.js"></script>
+<link href="libs/highlightjs-1.1/default.css" rel="stylesheet" />
+<script src="libs/highlightjs-1.1/highlight.js"></script>
 <!--
     Font Awesome
 -->
@@ -64,10 +67,6 @@
 </style>
 
 <style type="text/css">code{white-space: pre;}</style>
-<link rel="stylesheet"
-      href="libs/highlight/default.css"
-      type="text/css" />
-<script src="libs/highlight/highlight.js"></script>
 <style type="text/css">
   pre:not([class]) {
     background-color: white;
@@ -143,7 +142,6 @@ button.code-folding-btn:focus {
 <div class="container-fluid main-container">
 
 <!-- tabsets -->
-<script src="libs/navigation-1.1/tabsets.js"></script>
 <script>
 $(document).ready(function () {
   window.buildTabsets("TOC");
@@ -187,7 +185,8 @@ $(document).ready(function () {
             <li class="dropdown-header">LP MDS Santé</li>
             <li><a href="info-dec-sante.html">Informatique décisionnelle</a></li>
             <li class="dropdown-header">DU Analyste Big Data</li>
-            <li><a href="initiation-r-et-rmongodb.html">Initiation à R et MongoDB</a></li>
+            <li><a href="initiation-r-du.html">Initiation à R</a></li>
+            <li><a href="connexion-r-mongodb.html">Connexion entre R et MongoDB</a></li>
             <li class="dropdown-header">DU Dataviz</li>
             <li><a href="visualisation-donnees.html">Visualisation de données - R</a></li>
             <li><a href="visualisation-donnees-d3.html">Visualisation de données - D3</a></li>
@@ -1190,29 +1189,31 @@ SELECT CIS.CodeCIS, CIS.Denomination, CIS_COMPO.Designation,
     LIMIT 10;
       &quot;)</code></pre>
 <pre><code>## Loading required package: tcltk</code></pre>
+<pre><code>## Warning: Quoted identifiers should have class SQL, use DBI::SQL() if the
+## caller performs the quoting.</code></pre>
 <pre class="r"><code>rep2a</code></pre>
-<pre><code>##     CodeCIS                                                 Denomination
-## 1  68599161                 ELEVIT VITAMINE B9, comprim\xe9 pellicul\xe9
-## 2  62217480   REANUTRIFLEX OMEGA G 144/N 8/E, \xe9mulsion pour perfusion
-## 3  69040082 MEDNUTRIFLEX OMEGA G 120/N 5,4/E, \xe9mulsion pour perfusion
-## 4  66809426                   NP2 ENFANTS AP-HP, solution pour perfusion
-## 5  62427265                    SMOFKABIVEN E, \xe9mulsion pour perfusion
-## 6  68170913                  TOTAMINE CONCENTRE, solution pour perfusion
-## 7  60208447              NP100 PREMATURES AP-HP, solution pour perfusion
-## 8  61684869                   PERIOLIMEL N4E, \xe9mulsion pour perfusion
-## 9  62201138                       OLIMEL N7E, \xe9mulsion pour perfusion
-## 10 64875819                    NUMETAH G19%E, \xe9mulsion pour perfusion
-##                                            Designation NbComposants
-## 1                                          comprim\xe9           37
-## 2                                          \xe9mulsion           31
-## 3                                          \xe9mulsion           31
-## 4                                             solution           29
-## 5  compartiment 1 : solution d&#39;AA et d&#39;\xe9lectrolytes           28
-## 6                                             solution           28
-## 7                                             solution           27
-## 8                                          \xe9mulsion           27
-## 9                                          \xe9mulsion           27
-## 10                   compartiment des acides amin\xe9s           27</code></pre>
+<pre><code>##     CodeCIS                                              Denomination
+## 1  68599161                    ELEVIT VITAMINE B9, comprimé pelliculé
+## 2  62217480   REANUTRIFLEX OMEGA G 144/N 8/E, émulsion pour perfusion
+## 3  69040082 MEDNUTRIFLEX OMEGA G 120/N 5,4/E, émulsion pour perfusion
+## 4  66809426                NP2 ENFANTS AP-HP, solution pour perfusion
+## 5  62427265                    SMOFKABIVEN E, émulsion pour perfusion
+## 6  68170913               TOTAMINE CONCENTRE, solution pour perfusion
+## 7  60208447           NP100 PREMATURES AP-HP, solution pour perfusion
+## 8  61684869                   PERIOLIMEL N4E, émulsion pour perfusion
+## 9  62201138                       OLIMEL N7E, émulsion pour perfusion
+## 10 64875819                    NUMETAH G19%E, émulsion pour perfusion
+##                                         Designation NbComposants
+## 1                                          comprimé           37
+## 2                                          émulsion           31
+## 3                                          émulsion           31
+## 4                                          solution           29
+## 5  compartiment 1 : solution d&#39;AA et d&#39;électrolytes           28
+## 6                                          solution           28
+## 7                                          solution           27
+## 8                                          émulsion           27
+## 9                                          émulsion           27
+## 10                   compartiment des acides aminés           27</code></pre>
 </div>
 </div>
 <div id="type-de-generique" class="section level4">
@@ -10005,8 +10006,11 @@ knitr::kable(rep5c[order(rep5c$Prix, decreasing = TRUE),],
 <script>
 
 // add bootstrap table styles to pandoc tables
-$(document).ready(function () {
+function bootstrapStylePandocTables() {
   $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
 });
 
 

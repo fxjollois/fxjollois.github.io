@@ -19,6 +19,9 @@
 <script src="libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
 <script src="libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
 <script src="libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<script src="libs/navigation-1.1/tabsets.js"></script>
+<link href="libs/highlightjs-1.1/default.css" rel="stylesheet" />
+<script src="libs/highlightjs-1.1/highlight.js"></script>
 <!--
     Font Awesome
 -->
@@ -64,10 +67,6 @@
 </style>
 
 <style type="text/css">code{white-space: pre;}</style>
-<link rel="stylesheet"
-      href="libs/highlight/default.css"
-      type="text/css" />
-<script src="libs/highlight/highlight.js"></script>
 <style type="text/css">
   pre:not([class]) {
     background-color: white;
@@ -143,7 +142,6 @@ button.code-folding-btn:focus {
 <div class="container-fluid main-container">
 
 <!-- tabsets -->
-<script src="libs/navigation-1.1/tabsets.js"></script>
 <script>
 $(document).ready(function () {
   window.buildTabsets("TOC");
@@ -187,7 +185,8 @@ $(document).ready(function () {
             <li class="dropdown-header">LP MDS Santé</li>
             <li><a href="info-dec-sante.html">Informatique décisionnelle</a></li>
             <li class="dropdown-header">DU Analyste Big Data</li>
-            <li><a href="initiation-r-et-rmongodb.html">Initiation à R et MongoDB</a></li>
+            <li><a href="initiation-r-du.html">Initiation à R</a></li>
+            <li><a href="connexion-r-mongodb.html">Connexion entre R et MongoDB</a></li>
             <li class="dropdown-header">DU Dataviz</li>
             <li><a href="visualisation-donnees.html">Visualisation de données - R</a></li>
             <li><a href="visualisation-donnees-d3.html">Visualisation de données - D3</a></li>
@@ -237,7 +236,7 @@ $(document).ready(function () {
 <table>
 <thead>
 <tr class="header">
-<th></th>
+<th align="left"></th>
 <th align="right">mpg</th>
 <th align="right">cyl</th>
 <th align="right">disp</th>
@@ -253,7 +252,7 @@ $(document).ready(function () {
 </thead>
 <tbody>
 <tr class="odd">
-<td>Mazda RX4</td>
+<td align="left">Mazda RX4</td>
 <td align="right">21.0</td>
 <td align="right">6</td>
 <td align="right">160.0</td>
@@ -267,7 +266,7 @@ $(document).ready(function () {
 <td align="right">4</td>
 </tr>
 <tr class="even">
-<td>Mazda RX4 Wag</td>
+<td align="left">Mazda RX4 Wag</td>
 <td align="right">21.0</td>
 <td align="right">6</td>
 <td align="right">160.0</td>
@@ -281,7 +280,7 @@ $(document).ready(function () {
 <td align="right">4</td>
 </tr>
 <tr class="odd">
-<td>Datsun 710</td>
+<td align="left">Datsun 710</td>
 <td align="right">22.8</td>
 <td align="right">4</td>
 <td align="right">108.0</td>
@@ -295,7 +294,7 @@ $(document).ready(function () {
 <td align="right">1</td>
 </tr>
 <tr class="even">
-<td>Hornet 4 Drive</td>
+<td align="left">Hornet 4 Drive</td>
 <td align="right">21.4</td>
 <td align="right">6</td>
 <td align="right">258.0</td>
@@ -309,7 +308,7 @@ $(document).ready(function () {
 <td align="right">1</td>
 </tr>
 <tr class="odd">
-<td>Hornet Sportabout</td>
+<td align="left">Hornet Sportabout</td>
 <td align="right">18.7</td>
 <td align="right">8</td>
 <td align="right">360.0</td>
@@ -323,7 +322,7 @@ $(document).ready(function () {
 <td align="right">2</td>
 </tr>
 <tr class="even">
-<td>Valiant</td>
+<td align="left">Valiant</td>
 <td align="right">18.1</td>
 <td align="right">6</td>
 <td align="right">225.0</td>
@@ -337,7 +336,7 @@ $(document).ready(function () {
 <td align="right">1</td>
 </tr>
 <tr class="odd">
-<td>Duster 360</td>
+<td align="left">Duster 360</td>
 <td align="right">14.3</td>
 <td align="right">8</td>
 <td align="right">360.0</td>
@@ -351,7 +350,7 @@ $(document).ready(function () {
 <td align="right">4</td>
 </tr>
 <tr class="even">
-<td>Merc 240D</td>
+<td align="left">Merc 240D</td>
 <td align="right">24.4</td>
 <td align="right">4</td>
 <td align="right">146.7</td>
@@ -365,7 +364,7 @@ $(document).ready(function () {
 <td align="right">2</td>
 </tr>
 <tr class="odd">
-<td>Merc 230</td>
+<td align="left">Merc 230</td>
 <td align="right">22.8</td>
 <td align="right">4</td>
 <td align="right">140.8</td>
@@ -379,7 +378,7 @@ $(document).ready(function () {
 <td align="right">2</td>
 </tr>
 <tr class="even">
-<td>Merc 280</td>
+<td align="left">Merc 280</td>
 <td align="right">19.2</td>
 <td align="right">6</td>
 <td align="right">167.6</td>
@@ -393,7 +392,7 @@ $(document).ready(function () {
 <td align="right">4</td>
 </tr>
 <tr class="odd">
-<td>Merc 280C</td>
+<td align="left">Merc 280C</td>
 <td align="right">17.8</td>
 <td align="right">6</td>
 <td align="right">167.6</td>
@@ -407,7 +406,7 @@ $(document).ready(function () {
 <td align="right">4</td>
 </tr>
 <tr class="even">
-<td>Merc 450SE</td>
+<td align="left">Merc 450SE</td>
 <td align="right">16.4</td>
 <td align="right">8</td>
 <td align="right">275.8</td>
@@ -421,7 +420,7 @@ $(document).ready(function () {
 <td align="right">3</td>
 </tr>
 <tr class="odd">
-<td>Merc 450SL</td>
+<td align="left">Merc 450SL</td>
 <td align="right">17.3</td>
 <td align="right">8</td>
 <td align="right">275.8</td>
@@ -435,7 +434,7 @@ $(document).ready(function () {
 <td align="right">3</td>
 </tr>
 <tr class="even">
-<td>Merc 450SLC</td>
+<td align="left">Merc 450SLC</td>
 <td align="right">15.2</td>
 <td align="right">8</td>
 <td align="right">275.8</td>
@@ -449,7 +448,7 @@ $(document).ready(function () {
 <td align="right">3</td>
 </tr>
 <tr class="odd">
-<td>Cadillac Fleetwood</td>
+<td align="left">Cadillac Fleetwood</td>
 <td align="right">10.4</td>
 <td align="right">8</td>
 <td align="right">472.0</td>
@@ -463,7 +462,7 @@ $(document).ready(function () {
 <td align="right">4</td>
 </tr>
 <tr class="even">
-<td>Lincoln Continental</td>
+<td align="left">Lincoln Continental</td>
 <td align="right">10.4</td>
 <td align="right">8</td>
 <td align="right">460.0</td>
@@ -477,7 +476,7 @@ $(document).ready(function () {
 <td align="right">4</td>
 </tr>
 <tr class="odd">
-<td>Chrysler Imperial</td>
+<td align="left">Chrysler Imperial</td>
 <td align="right">14.7</td>
 <td align="right">8</td>
 <td align="right">440.0</td>
@@ -491,7 +490,7 @@ $(document).ready(function () {
 <td align="right">4</td>
 </tr>
 <tr class="even">
-<td>Fiat 128</td>
+<td align="left">Fiat 128</td>
 <td align="right">32.4</td>
 <td align="right">4</td>
 <td align="right">78.7</td>
@@ -505,7 +504,7 @@ $(document).ready(function () {
 <td align="right">1</td>
 </tr>
 <tr class="odd">
-<td>Honda Civic</td>
+<td align="left">Honda Civic</td>
 <td align="right">30.4</td>
 <td align="right">4</td>
 <td align="right">75.7</td>
@@ -519,7 +518,7 @@ $(document).ready(function () {
 <td align="right">2</td>
 </tr>
 <tr class="even">
-<td>Toyota Corolla</td>
+<td align="left">Toyota Corolla</td>
 <td align="right">33.9</td>
 <td align="right">4</td>
 <td align="right">71.1</td>
@@ -533,7 +532,7 @@ $(document).ready(function () {
 <td align="right">1</td>
 </tr>
 <tr class="odd">
-<td>Toyota Corona</td>
+<td align="left">Toyota Corona</td>
 <td align="right">21.5</td>
 <td align="right">4</td>
 <td align="right">120.1</td>
@@ -547,7 +546,7 @@ $(document).ready(function () {
 <td align="right">1</td>
 </tr>
 <tr class="even">
-<td>Dodge Challenger</td>
+<td align="left">Dodge Challenger</td>
 <td align="right">15.5</td>
 <td align="right">8</td>
 <td align="right">318.0</td>
@@ -561,7 +560,7 @@ $(document).ready(function () {
 <td align="right">2</td>
 </tr>
 <tr class="odd">
-<td>AMC Javelin</td>
+<td align="left">AMC Javelin</td>
 <td align="right">15.2</td>
 <td align="right">8</td>
 <td align="right">304.0</td>
@@ -575,7 +574,7 @@ $(document).ready(function () {
 <td align="right">2</td>
 </tr>
 <tr class="even">
-<td>Camaro Z28</td>
+<td align="left">Camaro Z28</td>
 <td align="right">13.3</td>
 <td align="right">8</td>
 <td align="right">350.0</td>
@@ -589,7 +588,7 @@ $(document).ready(function () {
 <td align="right">4</td>
 </tr>
 <tr class="odd">
-<td>Pontiac Firebird</td>
+<td align="left">Pontiac Firebird</td>
 <td align="right">19.2</td>
 <td align="right">8</td>
 <td align="right">400.0</td>
@@ -603,7 +602,7 @@ $(document).ready(function () {
 <td align="right">2</td>
 </tr>
 <tr class="even">
-<td>Fiat X1-9</td>
+<td align="left">Fiat X1-9</td>
 <td align="right">27.3</td>
 <td align="right">4</td>
 <td align="right">79.0</td>
@@ -617,7 +616,7 @@ $(document).ready(function () {
 <td align="right">1</td>
 </tr>
 <tr class="odd">
-<td>Porsche 914-2</td>
+<td align="left">Porsche 914-2</td>
 <td align="right">26.0</td>
 <td align="right">4</td>
 <td align="right">120.3</td>
@@ -631,7 +630,7 @@ $(document).ready(function () {
 <td align="right">2</td>
 </tr>
 <tr class="even">
-<td>Lotus Europa</td>
+<td align="left">Lotus Europa</td>
 <td align="right">30.4</td>
 <td align="right">4</td>
 <td align="right">95.1</td>
@@ -645,7 +644,7 @@ $(document).ready(function () {
 <td align="right">2</td>
 </tr>
 <tr class="odd">
-<td>Ford Pantera L</td>
+<td align="left">Ford Pantera L</td>
 <td align="right">15.8</td>
 <td align="right">8</td>
 <td align="right">351.0</td>
@@ -659,7 +658,7 @@ $(document).ready(function () {
 <td align="right">4</td>
 </tr>
 <tr class="even">
-<td>Ferrari Dino</td>
+<td align="left">Ferrari Dino</td>
 <td align="right">19.7</td>
 <td align="right">6</td>
 <td align="right">145.0</td>
@@ -673,7 +672,7 @@ $(document).ready(function () {
 <td align="right">6</td>
 </tr>
 <tr class="odd">
-<td>Maserati Bora</td>
+<td align="left">Maserati Bora</td>
 <td align="right">15.0</td>
 <td align="right">8</td>
 <td align="right">301.0</td>
@@ -687,7 +686,7 @@ $(document).ready(function () {
 <td align="right">8</td>
 </tr>
 <tr class="even">
-<td>Volvo 142E</td>
+<td align="left">Volvo 142E</td>
 <td align="right">21.4</td>
 <td align="right">4</td>
 <td align="right">121.0</td>
@@ -789,8 +788,11 @@ Distribution de la consommation (en Miles(US)/Galon) pour les voitures à transm
 <script>
 
 // add bootstrap table styles to pandoc tables
-$(document).ready(function () {
+function bootstrapStylePandocTables() {
   $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
 });
 
 

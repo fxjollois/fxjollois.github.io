@@ -23,7 +23,10 @@
 <script src="libs/jqueryui-1.11.4/jquery-ui.min.js"></script>
 <link href="libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
 <script src="libs/tocify-1.9.1/jquery.tocify.js"></script>
-<script src="libs/htmlwidgets-0.7/htmlwidgets.js"></script>
+<script src="libs/navigation-1.1/tabsets.js"></script>
+<link href="libs/highlightjs-1.1/default.css" rel="stylesheet" />
+<script src="libs/highlightjs-1.1/highlight.js"></script>
+<script src="libs/htmlwidgets-0.8/htmlwidgets.js"></script>
 <link href="libs/leaflet-0.7.3/leaflet.css" rel="stylesheet" />
 <script src="libs/leaflet-0.7.3/leaflet.js"></script>
 <link href="libs/leafletfix-1.0.0/leafletfix.css" rel="stylesheet" />
@@ -77,10 +80,6 @@
 </style>
 
 <style type="text/css">code{white-space: pre;}</style>
-<link rel="stylesheet"
-      href="libs/highlight/default.css"
-      type="text/css" />
-<script src="libs/highlight/highlight.js"></script>
 <style type="text/css">
   pre:not([class]) {
     background-color: white;
@@ -156,7 +155,6 @@ button.code-folding-btn:focus {
 <div class="container-fluid main-container">
 
 <!-- tabsets -->
-<script src="libs/navigation-1.1/tabsets.js"></script>
 <script>
 $(document).ready(function () {
   window.buildTabsets("TOC");
@@ -182,7 +180,7 @@ $(document).ready(function ()  {
       theme: "bootstrap3",
       context: '.toc-content',
       hashGenerator: function (text) {
-        return text.replace(/[.\/?&!#<>]/g, '').replace(/\s/g, '_').toLowerCase();
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_').toLowerCase();
       },
       ignoreSelector: ".toc-ignore",
       scrollTo: 0
@@ -241,8 +239,9 @@ div.tocify {
 }
 
 .tocify-subheader .tocify-item {
-  font-size: 0.9em;
-  padding-left: 5px;
+  font-size: 0.90em;
+  padding-left: 25px;
+  text-indent: 0;
 }
 
 .tocify .list-group-item {
@@ -294,7 +293,8 @@ div.tocify {
             <li class="dropdown-header">LP MDS Santé</li>
             <li><a href="info-dec-sante.html">Informatique décisionnelle</a></li>
             <li class="dropdown-header">DU Analyste Big Data</li>
-            <li><a href="initiation-r-et-rmongodb.html">Initiation à R et MongoDB</a></li>
+            <li><a href="initiation-r-du.html">Initiation à R</a></li>
+            <li><a href="connexion-r-mongodb.html">Connexion entre R et MongoDB</a></li>
             <li class="dropdown-header">DU Dataviz</li>
             <li><a href="visualisation-donnees.html">Visualisation de données - R</a></li>
             <li><a href="visualisation-donnees-d3.html">Visualisation de données - D3</a></li>
@@ -599,9 +599,9 @@ text(outliers_mpg$hp, outliers_mpg$mpg, row.names(outliers_mpg), pos = 4, cex = 
 <div id="var-qualitative---var-qualitative" class="section level4">
 <h4>Var qualitative - Var qualitative</h4>
 <p>Dans ce cas, la fonction <code>qplot</code> est plutôt utilisé pour réaliser des diagrammes en barres.</p>
-<pre class="r"><code>qplot(factor(am), facets = 1 ~ cyl, data = mtcars, geom = &quot;bar&quot;)</code></pre>
+<pre class="r"><code>qplot(factor(am), facets = ~ cyl, data = mtcars, geom = &quot;bar&quot;)</code></pre>
 <p><img src="visualisation-donnees_files/figure-html/qplot-quali-quali-1.png" width="672" style="display: block; margin: auto;" /></p>
-<pre class="r"><code>qplot(factor(am), facets = 1 ~ cyl, fill = factor(am), data = mtcars, geom = &quot;bar&quot;)</code></pre>
+<pre class="r"><code>qplot(factor(am), facets = ~ cyl, fill = factor(am), data = mtcars, geom = &quot;bar&quot;)</code></pre>
 <p><img src="visualisation-donnees_files/figure-html/qplot-quali-quali-2.png" width="672" style="display: block; margin: auto;" /></p>
 <pre class="r"><code>qplot(factor(am), fill = factor(cyl), data = mtcars, geom = &quot;bar&quot;)</code></pre>
 <p><img src="visualisation-donnees_files/figure-html/qplot-quali-quali-3.png" width="672" style="display: block; margin: auto;" /></p>
@@ -769,7 +769,7 @@ ggplot() + geom_histogram(data = mtcars, aes(x = mpg))</code></pre>
 <div id="var-qualitative---var-qualitative-1" class="section level4">
 <h4>Var qualitative - Var qualitative</h4>
 <p>La création d’un diagramme en barres pour deux variables qualitatives est assez simple. Par contre, pour la version empilée, c’est le paramètre <code>position = &quot;fill&quot;</code> qui permet de le faire sans autre calcul, les fonctions suivantes n’étant la que pour avoir un graphique plus clair.</p>
-<pre class="r"><code>ggplot(mtcars, aes(factor(am))) + geom_bar() + facet_grid(1 ~ cyl)</code></pre>
+<pre class="r"><code>ggplot(mtcars, aes(factor(am))) + geom_bar() + facet_grid( ~ cyl)</code></pre>
 <p><img src="visualisation-donnees_files/figure-html/ggplot-quali-quali-1.png" width="672" style="display: block; margin: auto;" /></p>
 <pre class="r"><code>ggplot(mtcars, aes(factor(am), fill = factor(cyl))) + geom_bar() </code></pre>
 <p><img src="visualisation-donnees_files/figure-html/ggplot-quali-quali-2.png" width="672" style="display: block; margin: auto;" /></p>
@@ -871,7 +871,7 @@ m</code></pre>
 <li>la seconde pour afficher ces tuiles (avec <code>ggmap()</code>), ce qui créé un objet</li>
 </ul>
 <pre class="r"><code>m = get_map(&quot;Paris,France&quot;)
-ggmap(m)</code></pre>
+ggmap(m) </code></pre>
 <p><img src="visualisation-donnees_files/figure-html/-ggmap-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>La fonction <code>qmplot()</code> permet de rendre invisible l’étape de récupération des tuiles, et est l’équivalent de <code>qplot</code> par rapport à <code>ggmap()</code>.</p>
 <pre class="r"><code>qmplot(x, y, data = ozone, color = median)</code></pre>
@@ -908,7 +908,7 @@ for (i in 1:4) {
 <div id="avec-ggplot" class="section level4">
 <h4>Avec <code>ggplot</code></h4>
 <pre class="r"><code>ggplot(melt(iris, id.vars = &quot;Species&quot;), aes(Species, value)) + 
-    geom_boxplot() + facet_grid(1 ~ variable)</code></pre>
+    geom_boxplot() + facet_grid( ~ variable)</code></pre>
 <p><img src="visualisation-donnees_files/figure-html/iris-boxplot-ggplot-1.png" width="672" style="display: block; margin: auto;" /></p>
 </div>
 </div>
@@ -1104,8 +1104,11 @@ ggplot(airbnb.neigh.for, aes(long, lat, group=group)) +
 <script>
 
 // add bootstrap table styles to pandoc tables
-$(document).ready(function () {
+function bootstrapStylePandocTables() {
   $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
 });
 
 

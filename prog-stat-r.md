@@ -27,4 +27,5 @@ title: Programmation statistique avec R
 1. [TP9 : fonctions](prog-stat-r-tp9.html)
 	- [correction](prog-stat-r-tp9-correction.html)
 1. [TP10 : application web](prog-stat-r-tp10.html)
+    - correction : fichier [`ui.R`](__specifique/prog-stat-r-tp10/ui.R) et fichier [`server.R`](__specifique/prog-stat-r-tp10/server.R)
 

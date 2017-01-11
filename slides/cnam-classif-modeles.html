@@ -14,11 +14,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
 
-  <link rel="stylesheet" media="all" href="libs/ioslides-13.5.1/fonts/fonts.css">
-
-  <link rel="stylesheet" media="all" href="libs/ioslides-13.5.1/theme/css/default.css">
-  <link rel="stylesheet" media="only screen and (max-device-width: 480px)" href="libs/ioslides-13.5.1/theme/css/phone.css">
-
   <base target="_blank">
 
   <script type="text/javascript">
@@ -45,6 +40,22 @@
             ]
     };
   </script>
+
+  <style>
+  slide img {
+  	max-width: 100%;
+  }
+  </style>
+  <link href="libs/ioslides-13.5.1/fonts/fonts.css" rel="stylesheet" />
+  <link href="libs/ioslides-13.5.1/theme/css/default.css" rel="stylesheet" />
+  <link href="libs/ioslides-13.5.1/theme/css/phone.css" rel="stylesheet" />
+  <script src="libs/ioslides-13.5.1/js/modernizr.custom.45394.js"></script>
+  <script src="libs/ioslides-13.5.1/js/prettify/prettify.js"></script>
+  <script src="libs/ioslides-13.5.1/js/prettify/lang-r.js"></script>
+  <script src="libs/ioslides-13.5.1/js/prettify/lang-yaml.js"></script>
+  <script src="libs/ioslides-13.5.1/js/hammer.js"></script>
+  <script src="libs/ioslides-13.5.1/js/slide-controller.js"></script>
+  <script src="libs/ioslides-13.5.1/js/slide-deck.js"></script>
 
   <style type="text/css">
 
@@ -75,11 +86,6 @@
   </style>
 
 
-  <style>
-  slide img {
-  	max-width: 100%;
-  }
-  </style>
 </head>
 
 <body style="opacity: 0">
@@ -645,23 +651,23 @@ summary(faithful.mclust)</pre>
 ## Gaussian finite mixture model fitted by EM algorithm 
 ## ----------------------------------------------------
 ## 
-## Mclust EEE (ellipsoidal, equal volume, shape and orientation) model with 3 components:
+## Mclust VEV (ellipsoidal, equal shape) model with 4 components:
 ## 
 ##  log.likelihood   n df       BIC       ICL
-##       -1126.361 272 11 -2314.386 -2360.865
+##       -1047.959 272 33 -2280.909 -2302.185
 ## 
 ## Clustering table:
-##   1   2   3 
-## 130  97  45</pre>
+##  1  2  3  4 
+## 86 63 34 89</pre>
 
 </article></slide><slide class=''><hgroup><h2>Old Faithful Geyser - BIC</h2></hgroup><article  id="old-faithful-geyser---bic">
 
 <pre class = 'prettyprint lang-r'>summary(faithful.mclust$BIC)</pre>
 
 <pre >## Best BIC values:
-##              EEE,3        EEE,4        VVE,2
-## BIC      -2314.386 -2320.207047 -2320.432965
-## BIC diff     0.000    -5.820699    -6.046616</pre>
+##              VEV,4        EVE,3       VEV,3
+## BIC      -2280.909 -2286.713263 -2352.17517
+## BIC diff     0.000    -5.804148   -71.26606</pre>
 
 </article></slide><slide class=''><hgroup><h2>Old Faithful Geyser - BIC</h2></hgroup><article  id="old-faithful-geyser---bic-1">
 
@@ -691,156 +697,156 @@ summary(faithful.mclust)</pre>
 </tr>
 <tr class="odd">
 <td align="left">s=1</td>
-<td align="right">-4025</td>
-<td align="right">-4025</td>
-<td align="right">-3056</td>
-<td align="right">-3056</td>
-<td align="right">-3056</td>
-<td align="right">-3056</td>
-<td align="right">-2608</td>
-<td align="right">-2608</td>
-<td align="right">-2608</td>
-<td align="right">-2608</td>
-<td align="right">-2608</td>
-<td align="right">-2608</td>
-<td align="right">-2608</td>
-<td align="right">-2608</td>
+<td align="right">-5706</td>
+<td align="right">-5706</td>
+<td align="right">-3674</td>
+<td align="right">-3674</td>
+<td align="right">-3674</td>
+<td align="right">-3674</td>
+<td align="right">-3141</td>
+<td align="right">-3141</td>
+<td align="right">-3141</td>
+<td align="right">-3141</td>
+<td align="right">-3141</td>
+<td align="right">-3141</td>
+<td align="right">-3141</td>
+<td align="right">-3141</td>
 </tr>
 <tr class="even">
 <td align="left">s=2</td>
-<td align="right">-3453</td>
-<td align="right">-3458</td>
-<td align="right">-2355</td>
-<td align="right">-2351</td>
-<td align="right">-2353</td>
-<td align="right">-2346</td>
-<td align="right">-2325</td>
-<td align="right">-2324</td>
-<td align="right">-2323</td>
-<td align="right">-2320</td>
-<td align="right">-2329</td>
-<td align="right">-2325</td>
-<td align="right">-2328</td>
-<td align="right">-2322</td>
+<td align="right">-4679</td>
+<td align="right">-4684</td>
+<td align="right">-2948</td>
+<td align="right">-2865</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+<td align="right">-2744</td>
+<td align="right">-2616</td>
+<td align="right">-2718</td>
+<td align="right">NA</td>
+<td align="right">-2637</td>
+<td align="right">-2443</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
 </tr>
 <tr class="odd">
 <td align="left">s=3</td>
-<td align="right">-3378</td>
-<td align="right">-3337</td>
-<td align="right">-2323</td>
-<td align="right">-2333</td>
-<td align="right">-2332</td>
-<td align="right">-2342</td>
-<td align="right">-2314</td>
-<td align="right">-2323</td>
-<td align="right">-2322</td>
-<td align="right">-2332</td>
-<td align="right">-2339</td>
-<td align="right">-2329</td>
-<td align="right">-2336</td>
-<td align="right">-2334</td>
+<td align="right">-4485</td>
+<td align="right">-4415</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+<td align="right">-2287</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+<td align="right">-2553</td>
+<td align="right">-2352</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
 </tr>
 <tr class="even">
 <td align="left">s=4</td>
-<td align="right">-3230</td>
-<td align="right">-3246</td>
-<td align="right">-2324</td>
-<td align="right">-2332</td>
-<td align="right">-2335</td>
-<td align="right">-2343</td>
-<td align="right">-2320</td>
-<td align="right">-2340</td>
-<td align="right">-2333</td>
-<td align="right">-2355</td>
-<td align="right">-2337</td>
-<td align="right">-2342</td>
-<td align="right">-2345</td>
-<td align="right">-2359</td>
+<td align="right">-4199</td>
+<td align="right">-4208</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+<td align="right">-2281</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
 </tr>
 <tr class="odd">
 <td align="left">s=5</td>
-<td align="right">-3149</td>
-<td align="right">-3128</td>
-<td align="right">-2338</td>
-<td align="right">-2348</td>
-<td align="right">-2356</td>
-<td align="right">-2374</td>
-<td align="right">-2337</td>
-<td align="right">-2354</td>
-<td align="right">-2353</td>
-<td align="right">-2376</td>
-<td align="right">-2356</td>
-<td align="right">-2366</td>
-<td align="right">-2374</td>
-<td align="right">-2385</td>
+<td align="right">-4039</td>
+<td align="right">-4010</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
 </tr>
 <tr class="even">
 <td align="left">s=6</td>
-<td align="right">-3081</td>
-<td align="right">-3068</td>
-<td align="right">-2338</td>
-<td align="right">-2363</td>
-<td align="right">-2358</td>
-<td align="right">-2373</td>
-<td align="right">-2347</td>
-<td align="right">-2369</td>
-<td align="right">-2364</td>
-<td align="right">-2392</td>
-<td align="right">-2372</td>
-<td align="right">-2387</td>
-<td align="right">-2387</td>
-<td align="right">-2399</td>
+<td align="right">-3903</td>
+<td align="right">-3869</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
 </tr>
 <tr class="odd">
 <td align="left">s=7</td>
-<td align="right">-2990</td>
-<td align="right">-2998</td>
-<td align="right">-2356</td>
-<td align="right">-2370</td>
-<td align="right">-2376</td>
-<td align="right">-2393</td>
-<td align="right">-2361</td>
-<td align="right">-2381</td>
-<td align="right">-2375</td>
-<td align="right">-2399</td>
-<td align="right">-2393</td>
-<td align="right">-2384</td>
-<td align="right">-2414</td>
-<td align="right">-2426</td>
+<td align="right">-3742</td>
+<td align="right">-3723</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
 </tr>
 <tr class="even">
 <td align="left">s=8</td>
-<td align="right">-2978</td>
-<td align="right">-2992</td>
-<td align="right">-2372</td>
-<td align="right">NA</td>
-<td align="right">-2396</td>
-<td align="right">NA</td>
-<td align="right">-2377</td>
-<td align="right">-2401</td>
+<td align="right">-3641</td>
+<td align="right">-3623</td>
 <td align="right">NA</td>
 <td align="right">NA</td>
-<td align="right">-2386</td>
-<td align="right">-2405</td>
-<td align="right">-2435</td>
-<td align="right">-2435</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
 </tr>
 <tr class="odd">
 <td align="left">s=9</td>
-<td align="right">-2900</td>
-<td align="right">-2921</td>
-<td align="right">-2389</td>
-<td align="right">NA</td>
-<td align="right">-2399</td>
-<td align="right">NA</td>
-<td align="right">-2394</td>
-<td align="right">-2404</td>
+<td align="right">-3591</td>
+<td align="right">-3600</td>
 <td align="right">NA</td>
 <td align="right">NA</td>
-<td align="right">-2418</td>
-<td align="right">-2428</td>
-<td align="right">-2431</td>
-<td align="right">-2447</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
 </tr>
 </table>
 
@@ -866,9 +872,9 @@ summary(faithful.mclust)</pre>
 summary(faithful.mclustICL)</pre>
 
 <pre >## Best ICL values:
-##              VVE,2       VVV,2        VEE,2
-## ICL      -2320.763 -2322.69508 -2323.395969
-## ICL diff     0.000    -1.93217    -2.633054</pre>
+##              EVE,3        VEV,4       VEV,3
+## ICL      -2300.802 -2302.184742 -2366.01042
+## ICL diff     0.000    -1.382245   -65.20793</pre>
 
 </article></slide><slide class=''><hgroup><h2>Old Faithful Geyser - et ICL ?</h2></hgroup><article  id="old-faithful-geyser---et-icl-1">
 
@@ -894,32 +900,25 @@ summary(iris.mixmod)</pre>
 ## * Number of samples    =  150 
 ## * Problem dimension    =  4 
 ## **************************************************************
-## *       Number of cluster =  3 
-## *              Model Type =  Gaussian_p_Lk_Dk_A_Dk 
-## *               Criterion =  BIC(553.4048)
+## *       Number of cluster =  2 
+## *              Model Type =  Gaussian_pk_Lk_Dk_A_Dk 
+## *               Criterion =  BIC(561.7285)
 ## *              Parameters =  list by cluster
 ## *                  Cluster  1 : 
-##                          Proportion =  0.3333 
-##                               Means =  5.0060 3.4280 1.4620 0.2460 
-##                           Variances = |     0.1328     0.1089     0.0192     0.0116 |
-##                                       |     0.1089     0.1545     0.0120     0.0100 |
-##                                       |     0.0192     0.0120     0.0283     0.0058 |
-##                                       |     0.0116     0.0100     0.0058     0.0107 |
+##                          Proportion =  0.6667 
+##                               Means =  6.2620 2.8720 4.9060 1.6760 
+##                           Variances = |     0.4000     0.1087     0.3994     0.1437 |
+##                                       |     0.1087     0.1093     0.1239     0.0728 |
+##                                       |     0.3994     0.1239     0.6109     0.2574 |
+##                                       |     0.1437     0.0728     0.2574     0.1681 |
 ## *                  Cluster  2 : 
 ##                          Proportion =  0.3333 
-##                               Means =  6.5515 2.9509 5.4907 1.9903 
-##                           Variances = |     0.4282     0.1079     0.3310     0.0630 |
-##                                       |     0.1079     0.1155     0.0880     0.0607 |
-##                                       |     0.3310     0.0880     0.3586     0.0832 |
-##                                       |     0.0630     0.0607     0.0832     0.0847 |
-## *                  Cluster  3 : 
-##                          Proportion =  0.3333 
-##                               Means =  5.9176 2.7781 4.2104 1.3021 
-##                           Variances = |     0.2273     0.0761     0.1486     0.0440 |
-##                                       |     0.0761     0.0807     0.0744     0.0347 |
-##                                       |     0.1486     0.0744     0.1691     0.0510 |
-##                                       |     0.0440     0.0347     0.0510     0.0342 |
-## *          Log-likelihood =  -186.5110 
+##                               Means =  5.0060 3.4280 1.4620 0.2460 
+##                           Variances = |     0.1507     0.1308     0.0208     0.0131 |
+##                                       |     0.1308     0.1760     0.0160     0.0122 |
+##                                       |     0.0208     0.0160     0.0281     0.0060 |
+##                                       |     0.0131     0.0122     0.0060     0.0104 |
+## *          Log-likelihood =  -215.7260 
 ## **************************************************************</pre>
 
 </article></slide><slide class=''><hgroup><h2>Iris - Evolution du critère</h2></hgroup><article  id="iris---evolution-du-critere">
@@ -959,53 +958,74 @@ summary(iris.mixmodICL)</pre>
 ## * Number of samples    =  150 
 ## * Problem dimension    =  4 
 ## **************************************************************
-## *       Number of cluster =  6 
+## *       Number of cluster =  9 
 ## *              Model Type =  Gaussian_p_Lk_Ck 
-## *               Criterion =  ICL(-1246.7276)
+## *               Criterion =  ICL(-1045.0899)
 ## *              Parameters =  list by cluster
 ## *                  Cluster  1 : 
-##                          Proportion =  0.1667 
-##                               Means =  6.4225 2.9206 5.4534 1.9751 
-##                           Variances = |     0.4059     0.1990     0.2920     0.0531 |
-##                                       |     0.1990     0.1645     0.1956     0.0705 |
-##                                       |     0.2920     0.1956     0.2829     0.0861 |
-##                                       |     0.0531     0.0705     0.0861     0.0801 |
+##                          Proportion =  0.1111 
+##                               Means =  5.0939 3.5469 1.4940 0.3463 
+##                           Variances = |     0.0714     0.1037     0.0075     0.0071 |
+##                                       |     0.1037     0.2182     0.0186    -0.0031 |
+##                                       |     0.0075     0.0186     0.0247     0.0083 |
+##                                       |     0.0071    -0.0031     0.0083     0.0159 |
 ## *                  Cluster  2 : 
-##                          Proportion =  0.1667 
-##                               Means =  6.2306 3.0556 4.9694 1.8823 
-##                           Variances = |     0.1950     0.0296     0.1637     0.1430 |
-##                                       |     0.0296     0.0316     0.0638     0.0584 |
-##                                       |     0.1637     0.0638     0.2309     0.1923 |
-##                                       |     0.1430     0.0584     0.1923     0.1778 |
+##                          Proportion =  0.1111 
+##                               Means =  6.7200 3.2051 5.7492 2.2085 
+##                           Variances = |     0.2678     0.1042     0.1666    -0.0463 |
+##                                       |     0.1042     0.0931     0.0840     0.0159 |
+##                                       |     0.1666     0.0840     0.1418    -0.0104 |
+##                                       |    -0.0463     0.0159    -0.0104     0.0576 |
 ## *                  Cluster  3 : 
-##                          Proportion =  0.1667 
-##                               Means =  6.5670 2.8160 5.3413 1.6575 
-##                           Variances = |     0.6051     0.0206     0.6587     0.2474 |
-##                                       |     0.0206     0.0257    -0.0123     0.0032 |
-##                                       |     0.6587    -0.0123     0.8091     0.2695 |
-##                                       |     0.2474     0.0032     0.2695     0.1229 |
-## *                  Cluster  4 : 
-##                          Proportion =  0.1667 
-##                               Means =  5.9545 2.7358 4.1097 1.2789 
-##                           Variances = |     0.3478     0.1421     0.2543     0.0739 |
-##                                       |     0.1421     0.1205     0.1161     0.0542 |
-##                                       |     0.2543     0.1161     0.2291     0.0724 |
-##                                       |     0.0739     0.0542     0.0724     0.0340 |
-## *                  Cluster  5 : 
-##                          Proportion =  0.1667 
-##                               Means =  5.0524 3.4952 1.4857 0.3095 
-##                           Variances = |     0.1187     0.1202     0.0322     0.0190 |
-##                                       |     0.1202     0.2014     0.0318     0.0143 |
-##                                       |     0.0322     0.0318     0.0298     0.0116 |
-##                                       |     0.0190     0.0143     0.0116     0.0190 |
-## *                  Cluster  6 : 
-##                          Proportion =  0.1667 
+##                          Proportion =  0.1111 
 ##                               Means =  4.9724 3.3793 1.4448 0.2000 
-##                           Variances = |     0.1213     0.0767     0.0030    -0.0000 |
+##                           Variances = |     0.1213     0.0767     0.0030     0.0000 |
 ##                                       |     0.0767     0.0913    -0.0053     0.0000 |
 ##                                       |     0.0030    -0.0053     0.0287    -0.0000 |
-##                                       |    -0.0000     0.0000    -0.0000     0.0000 |
-## *          Log-likelihood =  855.5592 
+##                                       |     0.0000     0.0000    -0.0000     0.0000 |
+## *                  Cluster  4 : 
+##                          Proportion =  0.1111 
+##                               Means =  6.1124 2.9006 4.8120 1.7361 
+##                           Variances = |     0.2270     0.0616     0.0027    -0.0468 |
+##                                       |     0.0616     0.0759    -0.0245    -0.0293 |
+##                                       |     0.0027    -0.0245     0.0421     0.0270 |
+##                                       |    -0.0468    -0.0293     0.0270     0.0320 |
+## *                  Cluster  5 : 
+##                          Proportion =  0.1111 
+##                               Means =  5.7987 2.4049 4.3528 1.3827 
+##                           Variances = |     0.5708     0.0398     0.7373     0.2424 |
+##                                       |     0.0398     0.0357     0.0623     0.0303 |
+##                                       |     0.7373     0.0623     1.0380     0.3394 |
+##                                       |     0.2424     0.0303     0.3394     0.1199 |
+## *                  Cluster  6 : 
+##                          Proportion =  0.1111 
+##                               Means =  6.8007 2.9615 5.6448 1.9606 
+##                           Variances = |     0.3167     0.0016     0.2400     0.0745 |
+##                                       |     0.0016     0.0208    -0.0261     0.0206 |
+##                                       |     0.2400    -0.0261     0.2721     0.0082 |
+##                                       |     0.0745     0.0206     0.0082     0.0544 |
+## *                  Cluster  7 : 
+##                          Proportion =  0.1111 
+##                               Means =  6.2151 2.9218 4.4978 1.3335 
+##                           Variances = |     0.1705     0.0178     0.0648     0.0305 |
+##                                       |     0.0178     0.0151    -0.0014     0.0084 |
+##                                       |     0.0648    -0.0014     0.0771     0.0229 |
+##                                       |     0.0305     0.0084     0.0229     0.0155 |
+## *                  Cluster  8 : 
+##                          Proportion =  0.1111 
+##                               Means =  5.7151 2.7089 4.0527 1.2538 
+##                           Variances = |     0.0391    -0.0041    -0.0041     0.0000 |
+##                                       |    -0.0041     0.0525     0.0322     0.0370 |
+##                                       |    -0.0041     0.0322     0.0939     0.0392 |
+##                                       |     0.0000     0.0370     0.0392     0.0311 |
+## *                  Cluster  9 : 
+##                          Proportion =  0.1111 
+##                               Means =  4.9462 3.3631 1.4645 0.2154 
+##                           Variances = |     0.2238     0.1429     0.0920     0.0355 |
+##                                       |     0.1429     0.1341     0.0618     0.0417 |
+##                                       |     0.0920     0.0618     0.0423     0.0170 |
+##                                       |     0.0355     0.0417     0.0170     0.0145 |
+## *          Log-likelihood =  851.9136 
 ## **************************************************************</pre>
 
 </article></slide><slide class=''><hgroup><h2>Iris - Comparaison EM et CEM</h2></hgroup><article  id="iris---comparaison-em-et-cem">
@@ -1592,17 +1612,9 @@ summary(birds.mixmod)</pre>
 ## **************************************************************
 ## *       Number of cluster =  2 
 ## *              Model Type =  Binary_p_Ej 
-## *               Criterion =  BIC(485.2674)
+## *               Criterion =  BIC(485.2675)
 ## *              Parameters =  list by cluster
 ## *                  Cluster  1 : 
-##                          Proportion =  0.5000 
-##                              Center =  1.0000 2.0000 2.0000 1.0000 1.0000 
-##                             Scatter = |     0.4681     0.4681 |
-##                                       |     0.0851     0.2554     0.0851     0.0851 |
-##                                       |     0.0075     0.0301     0.0075     0.0075     0.0075 |
-##                                       |     0.2479     0.0620     0.0620     0.0620     0.0620 |
-##                                       |     0.0751     0.0376     0.0376 |
-## *                  Cluster  2 : 
 ##                          Proportion =  0.5000 
 ##                              Center =  2.0000 3.0000 1.0000 1.0000 1.0000 
 ##                             Scatter = |     0.4681     0.4681 |
@@ -1610,7 +1622,15 @@ summary(birds.mixmod)</pre>
 ##                                       |     0.0301     0.0075     0.0075     0.0075     0.0075 |
 ##                                       |     0.2479     0.0620     0.0620     0.0620     0.0620 |
 ##                                       |     0.0751     0.0376     0.0376 |
-## *          Log-likelihood =  -232.0484 
+## *                  Cluster  2 : 
+##                          Proportion =  0.5000 
+##                              Center =  1.0000 2.0000 2.0000 1.0000 1.0000 
+##                             Scatter = |     0.4681     0.4681 |
+##                                       |     0.0851     0.2554     0.0851     0.0851 |
+##                                       |     0.0075     0.0301     0.0075     0.0075     0.0075 |
+##                                       |     0.2479     0.0620     0.0620     0.0620     0.0620 |
+##                                       |     0.0751     0.0376     0.0376 |
+## *          Log-likelihood =  -232.0485 
 ## **************************************************************</pre>
 
 </article></slide><slide class=''><hgroup><h2>Birds - Représentation via MCA</h2></hgroup><article  id="birds---representation-via-mca">
@@ -1647,14 +1667,6 @@ summary(birds.mixmod)</pre>
   <slide class="backdrop"></slide>
 
 </slides>
-
-<script src="libs/ioslides-13.5.1/js/modernizr.custom.45394.js"></script>
-<script src="libs/ioslides-13.5.1/js/prettify/prettify.js"></script>
-<script src="libs/ioslides-13.5.1/js/prettify/lang-r.js"></script>
-<script src="libs/ioslides-13.5.1/js/prettify/lang-yaml.js"></script>
-<script src="libs/ioslides-13.5.1/js/hammer.js"></script>
-<script src="libs/ioslides-13.5.1/js/slide-controller.js"></script>
-<script src="libs/ioslides-13.5.1/js/slide-deck.js"></script>
 
 <!-- dynamically load mathjax for compatibility with self-contained -->
 <script>

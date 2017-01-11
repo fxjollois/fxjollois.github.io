@@ -19,6 +19,9 @@
 <script src="libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
 <script src="libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
 <script src="libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<script src="libs/navigation-1.1/tabsets.js"></script>
+<link href="libs/highlightjs-1.1/default.css" rel="stylesheet" />
+<script src="libs/highlightjs-1.1/highlight.js"></script>
 <!--
     Font Awesome
 -->
@@ -64,10 +67,6 @@
 </style>
 
 <style type="text/css">code{white-space: pre;}</style>
-<link rel="stylesheet"
-      href="libs/highlight/default.css"
-      type="text/css" />
-<script src="libs/highlight/highlight.js"></script>
 <style type="text/css">
   pre:not([class]) {
     background-color: white;
@@ -143,7 +142,6 @@ button.code-folding-btn:focus {
 <div class="container-fluid main-container">
 
 <!-- tabsets -->
-<script src="libs/navigation-1.1/tabsets.js"></script>
 <script>
 $(document).ready(function () {
   window.buildTabsets("TOC");
@@ -187,7 +185,8 @@ $(document).ready(function () {
             <li class="dropdown-header">LP MDS Santé</li>
             <li><a href="info-dec-sante.html">Informatique décisionnelle</a></li>
             <li class="dropdown-header">DU Analyste Big Data</li>
-            <li><a href="initiation-r-et-rmongodb.html">Initiation à R et MongoDB</a></li>
+            <li><a href="initiation-r-du.html">Initiation à R</a></li>
+            <li><a href="connexion-r-mongodb.html">Connexion entre R et MongoDB</a></li>
             <li class="dropdown-header">DU Dataviz</li>
             <li><a href="visualisation-donnees.html">Visualisation de données - R</a></li>
             <li><a href="visualisation-donnees-d3.html">Visualisation de données - D3</a></li>
@@ -240,9 +239,15 @@ $(document).ready(function () {
 <ul>
 <li><a href="reporting-tp1.html">TP1</a></li>
 <li><a href="reporting-tp2.html">TP2</a></li>
-<li><a href="reporting-tp3.html">TP3</a></li>
-<li>TP4 noté, voir sur Moodle</li>
-<li><a href="reporting-tp5.html">TP5</a></li>
+<li><a href="reporting-tp3.html">TP3</a>
+<ul>
+<li><a href="reporting/Reporting-TP3.twbx">correction TP3</a></li>
+</ul></li>
+<li>TP4 noté, voir sur Moodle (<em>annulé</em>)</li>
+<li><a href="reporting-tp5.html">TP5</a>
+<ul>
+<li><a href="reporting/Reporting-TP5.twbx">correction TP5</a></li>
+</ul></li>
 <li>TP6 noté, voir sur Moodle</li>
 </ul>
 </div>
@@ -276,8 +281,11 @@ $(document).ready(function () {
 <script>
 
 // add bootstrap table styles to pandoc tables
-$(document).ready(function () {
+function bootstrapStylePandocTables() {
   $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
 });
 
 

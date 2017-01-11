@@ -11,7 +11,7 @@
 
 <meta name="author" content="FX Jollois" />
 
-<meta name="date" content="2016-11-09" />
+<meta name="date" content="2017-01-11" />
 
 <title>Données disponibles sous R</title>
 
@@ -24,7 +24,10 @@
 <script src="libs/jqueryui-1.11.4/jquery-ui.min.js"></script>
 <link href="libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
 <script src="libs/tocify-1.9.1/jquery.tocify.js"></script>
-<script src="libs/htmlwidgets-0.7/htmlwidgets.js"></script>
+<script src="libs/navigation-1.1/tabsets.js"></script>
+<link href="libs/highlightjs-1.1/default.css" rel="stylesheet" />
+<script src="libs/highlightjs-1.1/highlight.js"></script>
+<script src="libs/htmlwidgets-0.8/htmlwidgets.js"></script>
 <script src="libs/datatables-binding-0.2/datatables.js"></script>
 <link href="libs/dt-core-1.10.12/css/jquery.dataTables.min.css" rel="stylesheet" />
 <link href="libs/dt-core-1.10.12/css/jquery.dataTables.extra.css" rel="stylesheet" />
@@ -74,10 +77,6 @@
 </style>
 
 <style type="text/css">code{white-space: pre;}</style>
-<link rel="stylesheet"
-      href="libs/highlight/default.css"
-      type="text/css" />
-<script src="libs/highlight/highlight.js"></script>
 <style type="text/css">
   pre:not([class]) {
     background-color: white;
@@ -153,7 +152,6 @@ button.code-folding-btn:focus {
 <div class="container-fluid main-container">
 
 <!-- tabsets -->
-<script src="libs/navigation-1.1/tabsets.js"></script>
 <script>
 $(document).ready(function () {
   window.buildTabsets("TOC");
@@ -179,7 +177,7 @@ $(document).ready(function ()  {
       theme: "bootstrap3",
       context: '.toc-content',
       hashGenerator: function (text) {
-        return text.replace(/[.\/?&!#<>]/g, '').replace(/\s/g, '_').toLowerCase();
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_').toLowerCase();
       },
       ignoreSelector: ".toc-ignore",
       scrollTo: 0
@@ -238,8 +236,9 @@ div.tocify {
 }
 
 .tocify-subheader .tocify-item {
-  font-size: 0.9em;
-  padding-left: 5px;
+  font-size: 0.90em;
+  padding-left: 25px;
+  text-indent: 0;
 }
 
 .tocify .list-group-item {
@@ -291,7 +290,8 @@ div.tocify {
             <li class="dropdown-header">LP MDS Santé</li>
             <li><a href="info-dec-sante.html">Informatique décisionnelle</a></li>
             <li class="dropdown-header">DU Analyste Big Data</li>
-            <li><a href="initiation-r-et-rmongodb.html">Initiation à R et MongoDB</a></li>
+            <li><a href="initiation-r-du.html">Initiation à R</a></li>
+            <li><a href="connexion-r-mongodb.html">Connexion entre R et MongoDB</a></li>
             <li class="dropdown-header">DU Dataviz</li>
             <li><a href="visualisation-donnees.html">Visualisation de données - R</a></li>
             <li><a href="visualisation-donnees-d3.html">Visualisation de données - D3</a></li>
@@ -331,7 +331,7 @@ div.tocify {
 
 <h1 class="title toc-ignore">Données disponibles sous R</h1>
 <h4 class="author"><em>FX Jollois</em></h4>
-<h4 class="date"><em>2016-11-09</em></h4>
+<h4 class="date"><em>2017-01-11</em></h4>
 
 </div>
 
@@ -428,8 +428,11 @@ div.tocify {
 <script>
 
 // add bootstrap table styles to pandoc tables
-$(document).ready(function () {
+function bootstrapStylePandocTables() {
   $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
 });
 
 
