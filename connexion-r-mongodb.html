@@ -19,6 +19,9 @@
 <script src="libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
 <script src="libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
 <script src="libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<script src="libs/jqueryui-1.11.4/jquery-ui.min.js"></script>
+<link href="libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
+<script src="libs/tocify-1.9.1/jquery.tocify.js"></script>
 <script src="libs/navigation-1.1/tabsets.js"></script>
 <link href="libs/highlightjs-1.1/default.css" rel="stylesheet" />
 <script src="libs/highlightjs-1.1/highlight.js"></script>
@@ -153,6 +156,101 @@ $(document).ready(function () {
 
 
 
+<script>
+$(document).ready(function ()  {
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_').toLowerCase();
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = true;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
+
+<style type="text/css">
+
+#TOC {
+  margin: 25px 0px 20px 0px;
+}
+@media (max-width: 768px) {
+#TOC {
+  position: relative;
+  width: 100%;
+}
+}
+
+
+.toc-content {
+  padding-left: 30px;
+  padding-right: 40px;
+}
+
+div.main-container {
+  max-width: 1200px;
+}
+
+div.tocify {
+  width: 20%;
+  max-width: 260px;
+  max-height: 85%;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  div.tocify {
+    width: 25%;
+  }
+}
+
+@media (max-width: 767px) {
+  div.tocify {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+.tocify ul, .tocify li {
+  line-height: 20px;
+}
+
+.tocify-subheader .tocify-item {
+  font-size: 0.90em;
+  padding-left: 25px;
+  text-indent: 0;
+}
+
+.tocify .list-group-item {
+  border-radius: 0px;
+}
+
+
+</style>
+
+<!-- setup 3col/9col grid for toc_float and main content  -->
+<div class="row-fluid">
+<div class="col-xs-12 col-sm-4 col-md-3">
+<div id="TOC" class="tocify">
+</div>
+</div>
+
+<div class="toc-content col-xs-12 col-sm-8 col-md-9">
+
+
 
 <div class="navbar navbar-default navbar-fixed-top">
   <div class="container">
@@ -230,172 +328,480 @@ $(document).ready(function () {
 </div>
 
 
-<p>Dans ce document est l’utilisation du package <code>rmongodb</code> et <code>mongolite</code> permettant la connection à une base de données <a href="">MongoDB</a>.</p>
-<div id="r-et-mongodb" class="section level2">
-<h2><code>R</code> et MongoDB</h2>
-<p>Les résultats des commandes suivantes ne sont pas présentés dans ce document car le serveur MongoDB n’est accessible que depuis l’IUT.</p>
-<div id="connexion" class="section level3">
-<h3>Connexion</h3>
-<p>Pour interroger MongoDB dans <code>R</code>, il faut créer une connexion entre les deux. Ici, je créé une connexion au serveur local sur ma machine. A l’IUT, l’adresse du serveur MongoDB est : <code>172.19.32.10</code>.</p>
-<pre class="r"><code>library(rmongodb)
-conn = mongo.create(host = &quot;127.0.0.1&quot;)
-mongo.is.connected(conn)</code></pre>
+<p>Dans ce document est l’utilisation du package <a href="https://cran.r-project.org/web/packages/mongolite/vignettes/intro.html"><code>mongolite</code></a> permettant la connection à une base de données <a href="https://www.mongodb.com/fr">MongoDB</a>.</p>
+<div id="connexion" class="section level2">
+<h2>Connexion</h2>
+<p>Pour interroger MongoDB dans <code>R</code>, il faut créer une connexion entre les deux. Ici, je créé une connexion à un serveur distant (situé dans les locaux de l’Université rue des St-Pères). A l’IUT, l’adresse du serveur local MongoDB est : <code>172.19.32.10</code>.</p>
+<pre class="r"><code>library(mongolite)
+conSportifs = mongo(collection = &quot;Sportifs&quot;, db = &quot;gym&quot;, url = &quot;mongodb://193.51.82.104:2231&quot;)
+conGymnases = mongo(collection = &quot;Gymnases&quot;, db = &quot;gym&quot;, url = &quot;mongodb://193.51.82.104:2231&quot;)</code></pre>
+<p>L’objet ainsi créé contient un ensemble de fonctions permettant l’accès aux données de MongoDB.</p>
 </div>
-<div id="recuperation-dinformations-simples" class="section level3">
-<h3>Récupération d’informations simples</h3>
+<div id="recuperation-dinformations-simples" class="section level2">
+<h2>Récupération d’informations simples</h2>
 <p>Une fois cette connexion créée, il est possible de regarder quelles sont les bases de données contenues, ainsi que les collections présentes dans ces BD. .</p>
-<pre class="r"><code>mongo.get.databases(conn)
-mongo.get.database.collections(conn, &quot;gym&quot;)
-# Nombre d&#39;enregistrement de la collection Sportifs de la BD gym
-mongo.count(conn, &quot;gym.Sportifs&quot;)</code></pre>
-<div id="premier-enregistrement-dune-collection" class="section level4">
-<h4>Premier enregistrement d’une collection</h4>
-<p>Dans Mongo, il n’y a pas de schéma pour une base de données, ni même pour une collection. Un moyen de s’approprier les données est donc de regarder le premier élément. C’est pourquoi il existe la fonction <code>mongo.findOne()</code>.</p>
+<pre class="r"><code># Nombre d&#39;enregistrement de la collection Sportifs de la BD gym
+conSportifs$count()</code></pre>
+<pre><code>## [1] 150</code></pre>
+<div id="premier-enregistrement-dune-collection" class="section level3">
+<h3>Premier enregistrement d’une collection</h3>
+<p>Dans Mongo, il n’y a pas de schéma pour une base de données, ni même pour une collection. Un moyen de s’approprier les données est donc de regarder le premier élément. C’est pourquoi il existe la fonction <code>find()</code> avec le paramètre <code>limit</code>. Cette fonction transforme le résultat en <code>data.frame</code>, ce qui n’est pas forcément désiré. Il existe donc la fonction <code>iterate()</code>, qui renvoie un curseur dans lequel il est possible de naviguer avec la fonction <code>one()</code> (renvoie les éléments un par un) ou la fonction <code>batch()</code> (renvoie tous les éléments en une liste).</p>
 <pre class="r"><code># Premier enregistrement de la collection Sportifs de la BD gym
-mongo.findOne(conn, &quot;gym.Sportifs&quot;)
-# Idem mais converti en liste
-mongo.bson.to.list(mongo.findOne(conn, &quot;gym.Sportifs&quot;))</code></pre>
-<p>sur cet enregistrement, on peut vouloir avoir accès aux données directement. Une première façon de faire est de garder l’enregistrement au format <code>bson</code>.</p>
-<pre class="r"><code>enr1 = mongo.findOne(conn, &quot;gym.Sportifs&quot;)
-mongo.bson.value(enr1, &quot;Nom&quot;)
-mongo.bson.value(enr1, &quot;Sports&quot;)</code></pre>
-<p>Une autre façon de transformer le <code>bson</code> en <code>list</code> comme précédemment, et de manipuler la liste.</p>
-<pre class="r"><code>l1 = mongo.bson.to.list(enr1)
-l1$Nom
-l1$Sports</code></pre>
+conSportifs$find(limit = 1)</code></pre>
+<pre><code>## 
+ Found 1 records...
+ Imported 1 records. Simplifying into dataframe...</code></pre>
+<pre><code>##   IdSportif      Nom    Prenom Sexe Age                  Sports.Jouer
+## 1         1 BOUTAHAR Abderahim    m  30 Volley ball, Tennis, Football
+##                    Sports.Arbitrer
+## 1 Basket ball, Volley ball, Hockey
+##                                          Sports.Entrainer
+## 1 Basket ball, Volley ball, Hand ball, Hockey, Badmington</code></pre>
+<pre class="r"><code># Idem mais conservé en liste
+conSportifs$iterate(limit = 1)$one()</code></pre>
+<pre><code>## $IdSportif
+## [1] 1
+## 
+## $Nom
+## [1] &quot;BOUTAHAR&quot;
+## 
+## $Prenom
+## [1] &quot;Abderahim&quot;
+## 
+## $Sexe
+## [1] &quot;m&quot;
+## 
+## $Age
+## [1] 30
+## 
+## $Sports
+## $Sports$Jouer
+## $Sports$Jouer[[1]]
+## [1] &quot;Volley ball&quot;
+## 
+## $Sports$Jouer[[2]]
+## [1] &quot;Tennis&quot;
+## 
+## $Sports$Jouer[[3]]
+## [1] &quot;Football&quot;
+## 
+## 
+## $Sports$Arbitrer
+## $Sports$Arbitrer[[1]]
+## [1] &quot;Basket ball&quot;
+## 
+## $Sports$Arbitrer[[2]]
+## [1] &quot;Volley ball&quot;
+## 
+## $Sports$Arbitrer[[3]]
+## [1] &quot;Hockey&quot;
+## 
+## 
+## $Sports$Entrainer
+## $Sports$Entrainer[[1]]
+## [1] &quot;Basket ball&quot;
+## 
+## $Sports$Entrainer[[2]]
+## [1] &quot;Volley ball&quot;
+## 
+## $Sports$Entrainer[[3]]
+## [1] &quot;Hand ball&quot;
+## 
+## $Sports$Entrainer[[4]]
+## [1] &quot;Hockey&quot;
+## 
+## $Sports$Entrainer[[5]]
+## [1] &quot;Badmington&quot;</code></pre>
+<pre class="r"><code>conSportifs$iterate(limit = 1)$batch()</code></pre>
+<pre><code>## [[1]]
+## [[1]]$IdSportif
+## [1] 1
+## 
+## [[1]]$Nom
+## [1] &quot;BOUTAHAR&quot;
+## 
+## [[1]]$Prenom
+## [1] &quot;Abderahim&quot;
+## 
+## [[1]]$Sexe
+## [1] &quot;m&quot;
+## 
+## [[1]]$Age
+## [1] 30
+## 
+## [[1]]$Sports
+## [[1]]$Sports$Jouer
+## [[1]]$Sports$Jouer[[1]]
+## [1] &quot;Volley ball&quot;
+## 
+## [[1]]$Sports$Jouer[[2]]
+## [1] &quot;Tennis&quot;
+## 
+## [[1]]$Sports$Jouer[[3]]
+## [1] &quot;Football&quot;
+## 
+## 
+## [[1]]$Sports$Arbitrer
+## [[1]]$Sports$Arbitrer[[1]]
+## [1] &quot;Basket ball&quot;
+## 
+## [[1]]$Sports$Arbitrer[[2]]
+## [1] &quot;Volley ball&quot;
+## 
+## [[1]]$Sports$Arbitrer[[3]]
+## [1] &quot;Hockey&quot;
+## 
+## 
+## [[1]]$Sports$Entrainer
+## [[1]]$Sports$Entrainer[[1]]
+## [1] &quot;Basket ball&quot;
+## 
+## [[1]]$Sports$Entrainer[[2]]
+## [1] &quot;Volley ball&quot;
+## 
+## [[1]]$Sports$Entrainer[[3]]
+## [1] &quot;Hand ball&quot;
+## 
+## [[1]]$Sports$Entrainer[[4]]
+## [1] &quot;Hockey&quot;
+## 
+## [[1]]$Sports$Entrainer[[5]]
+## [1] &quot;Badmington&quot;</code></pre>
+<pre class="r"><code>conSportifs$iterate(limit = 1)$page()</code></pre>
+<pre><code>##   IdSportif      Nom    Prenom Sexe Age                  Sports.Jouer
+## 1         1 BOUTAHAR Abderahim    m  30 Volley ball, Tennis, Football
+##                    Sports.Arbitrer
+## 1 Basket ball, Volley ball, Hockey
+##                                          Sports.Entrainer
+## 1 Basket ball, Volley ball, Hand ball, Hockey, Badmington</code></pre>
+<p>Sur cet enregistrement, on peut vouloir avoir accès aux données directement. Voici comment faire avec soit le retour de <code>find()</code>, soit le retour de <code>iterate()</code></p>
+<pre class="r"><code># Avec find(limit = 1)
+enr1 = conSportifs$find(limit = 1)</code></pre>
+<pre><code>## 
+ Found 1 records...
+ Imported 1 records. Simplifying into dataframe...</code></pre>
+<pre class="r"><code>enr1$Nom</code></pre>
+<pre><code>## [1] &quot;BOUTAHAR&quot;</code></pre>
+<pre class="r"><code>enr1$Sports</code></pre>
+<pre><code>##                           Jouer                         Arbitrer
+## 1 Volley ball, Tennis, Football Basket ball, Volley ball, Hockey
+##                                                 Entrainer
+## 1 Basket ball, Volley ball, Hand ball, Hockey, Badmington</code></pre>
+<pre class="r"><code># Avec iterate(limit = 1)$one()
+enr1bis = conSportifs$iterate(limit = 1)$one()
+enr1bis$Nom</code></pre>
+<pre><code>## [1] &quot;BOUTAHAR&quot;</code></pre>
+<pre class="r"><code>enr1bis$Sports</code></pre>
+<pre><code>## $Jouer
+## $Jouer[[1]]
+## [1] &quot;Volley ball&quot;
+## 
+## $Jouer[[2]]
+## [1] &quot;Tennis&quot;
+## 
+## $Jouer[[3]]
+## [1] &quot;Football&quot;
+## 
+## 
+## $Arbitrer
+## $Arbitrer[[1]]
+## [1] &quot;Basket ball&quot;
+## 
+## $Arbitrer[[2]]
+## [1] &quot;Volley ball&quot;
+## 
+## $Arbitrer[[3]]
+## [1] &quot;Hockey&quot;
+## 
+## 
+## $Entrainer
+## $Entrainer[[1]]
+## [1] &quot;Basket ball&quot;
+## 
+## $Entrainer[[2]]
+## [1] &quot;Volley ball&quot;
+## 
+## $Entrainer[[3]]
+## [1] &quot;Hand ball&quot;
+## 
+## $Entrainer[[4]]
+## [1] &quot;Hockey&quot;
+## 
+## $Entrainer[[5]]
+## [1] &quot;Badmington&quot;</code></pre>
 </div>
-<div id="valeurs-distinctes-dun-element-dune-collection" class="section level4">
-<h4>Valeurs distinctes d’un élément d’une collection</h4>
+<div id="valeurs-distinctes-dun-element-dune-collection" class="section level3">
+<h3>Valeurs distinctes d’un élément d’une collection</h3>
 <p>Puisqu’on n’a pas de schéma, on peut aussi vouloir avoir la liste des valeurs prises par un élément particulier.</p>
 <pre class="r"><code># Liste des valeurs prises par l&#39;élement Sexe dans tous les enregistrements de gym.Sportifs
-mongo.distinct(conn, &quot;gym.Sportifs&quot;, &quot;Sexe&quot;)</code></pre>
+conSportifs$distinct(&quot;Sexe&quot;)</code></pre>
 </div>
 </div>
-<div id="interrogation-de-donnees" class="section level3">
-<h3>Interrogation de données</h3>
+<div id="interrogation-de-donnees" class="section level2">
+<h2>Interrogation de données</h2>
 <p>On fait référence ici aussi à l’interrogation de type <code>SQL</code>, mais dans un environnement NoSQL (sans schéma explicite, sans stricte égalité de schéma entre les enregistrements, sans jointure).</p>
-<div id="restriction-et-projection" class="section level4">
-<h4>Restriction et projection</h4>
-<p>La fonction <code>mongo.find()</code> permet de renvoyer tous les enregistements par défaut. Il faut donc la manipuler prudemment si on en a beaucoup. Par contre, elle renvoie un <code>mongo.cursor</code> qu’il faut parcourir pour afficher les résultats.</p>
-<pre class="r"><code>curs = mongo.find(conn, &quot;gym.Sportifs&quot;)
-while (mongo.cursor.next(curs))
-  print(mongo.cursor.value(curs))</code></pre>
-<p>Pour effectuer une restriction, on utilise le paramètre <code>query</code> de la fonction <code>mongo.find()</code>. Cette requête doit être une chaîne de caractère, et dans le même format que dans le langage <code>JS</code> de la console Mongo.</p>
-<pre class="r"><code>curs = mongo.find(conn, &quot;gym.Sportifs&quot;, query = &#39;{ &quot;Nom&quot;: &quot;BOUTAHAR&quot; }&#39;)
-while (mongo.cursor.next(curs))
-  print(mongo.cursor.value(curs))</code></pre>
-<p>La projection se fait avec le paramètre <code>fields</code>, recevant une chaîne de caractère, au format du langage console de Mongo.</p>
-<pre class="r"><code>curs = mongo.find(conn, &quot;gym.Sportifs&quot;, fields = &#39;{ &quot;Nom&quot;: 1, &quot;_id&quot;: 0 }&#39;)
-while (mongo.cursor.next(curs))
-  print(mongo.cursor.value(curs))</code></pre>
+<div id="restriction-et-projection" class="section level3">
+<h3>Restriction et projection</h3>
+<p>La fonction <code>find()</code> permet de renvoyer tous les enregistements par défaut. Il faut donc la manipuler prudemment si on en a beaucoup. Il est possible d’indiquer dans celle-ci les restrictions et/ou projections que l’on souhaite faire.</p>
+<p>Pour effectuer une restriction, on utilise le paramètre <code>query</code> de la fonction <code>find()</code>. Cette requête doit être une chaîne de caractère, et dans le même format que dans le langage <code>JS</code> de la console Mongo.</p>
+<pre class="r"><code>conSportifs$find(query = &#39;{&quot;Sexe&quot;: &quot;m&quot;}&#39;)</code></pre>
+<pre><code>## 
+ Found 1 records...
+ Imported 1 records. Simplifying into dataframe...</code></pre>
+<pre><code>##   IdSportif      Nom    Prenom Sexe Age                  Sports.Jouer
+## 1         1 BOUTAHAR Abderahim    m  30 Volley ball, Tennis, Football
+##                    Sports.Arbitrer
+## 1 Basket ball, Volley ball, Hockey
+##                                          Sports.Entrainer
+## 1 Basket ball, Volley ball, Hand ball, Hockey, Badmington</code></pre>
+<pre class="r"><code>conSportifs$find(query = &#39;{&quot;Sexe&quot;: &quot;F&quot;, &quot;Age&quot;: { &quot;$lte&quot;: 22 }}&#39;)</code></pre>
+<pre><code>## 
+ Found 4 records...
+ Imported 4 records. Simplifying into dataframe...</code></pre>
+<pre><code>##   IdSportif      Nom   Prenom Sexe Age IdSportifConseiller
+## 1         5    COMES   Sylvie    F  22                   1
+## 2        29  ROUSSEL   Nadège    F  22                   5
+## 3        41 DELOVINA    Elina    F  22                   7
+## 4       114   MICHEL Danielle    F  22                   5
+##                                      Sports.Jouer Sports.Arbitrer
+## 1 Basket ball, Volley ball, Badmington, Ping pong       Ping pong
+## 2   Volley ball, Hand ball, Badmington, Ping pong       Ping pong
+## 3                              Tennis, Badmington            &lt;NA&gt;
+## 4                   Hand ball, Tennis, Badmington            &lt;NA&gt;
+##   Sports.Entrainer
+## 1             &lt;NA&gt;
+## 2        Ping pong
+## 3             &lt;NA&gt;
+## 4             &lt;NA&gt;</code></pre>
+<p>La projection se fait avec le paramètre <code>fields</code>, recevant une chaîne de caractère, au format du langage console de Mongo. Ici, on n’affiche que les premières lignes du résultat.</p>
+<pre class="r"><code>head(conSportifs$find(fields = &#39;{&quot;_id&quot;: 0, &quot;Nom&quot;: 1}&#39;))</code></pre>
+<pre><code>## 
+ Found 150 records...
+ Imported 150 records. Simplifying into dataframe...</code></pre>
+<pre><code>##        Nom
+## 1 BOUTAHAR
+## 2 KERVADEC
+## 3      HUE
+## 4 DORLEANS
+## 5    COMES
+## 6  RETALDI</code></pre>
 <p>Il est bien évidemment possible de combiner ces deux paramètres pour faire les deux opérations.</p>
-<pre class="r"><code>curs = mongo.find(conn, &quot;gym.Sportifs&quot;, 
-                  query = &#39;{ &quot;Sexe&quot;: &quot;F&quot;}&#39;,
-                  fields = &#39;{ &quot;Nom&quot;: 1, &quot;_id&quot;: 0 }&#39;)
-while (mongo.cursor.next(curs))
-  print(mongo.cursor.value(curs))</code></pre>
+<pre class="r"><code>conSportifs$find(query = &#39;{&quot;Sexe&quot;: &quot;F&quot;, &quot;Age&quot;: { &quot;$lte&quot;: 22 }}&#39;,
+                 fields = &#39;{&quot;_id&quot;: 0, &quot;Nom&quot;: 1, &quot;Prenom&quot;: 1, &quot;Age&quot;: 1, &quot;Sexe&quot;: 1}&#39;)</code></pre>
+<pre><code>## 
+ Found 4 records...
+ Imported 4 records. Simplifying into dataframe...</code></pre>
+<pre><code>##        Nom   Prenom Sexe Age
+## 1    COMES   Sylvie    F  22
+## 2  ROUSSEL   Nadège    F  22
+## 3 DELOVINA    Elina    F  22
+## 4   MICHEL Danielle    F  22</code></pre>
+<p>On peut ajouter un tri sur le résultat.</p>
+<pre class="r"><code>conSportifs$find(query = &#39;{&quot;Sexe&quot;: &quot;F&quot;, &quot;Age&quot;: { &quot;$lte&quot;: 23 }}&#39;,
+                 fields = &#39;{&quot;_id&quot;: 0, &quot;Nom&quot;: 1, &quot;Prenom&quot;: 1, &quot;Age&quot;: 1, &quot;Sexe&quot;: 1}&#39;,
+                 sort = &#39;{&quot;Age&quot;: -1, &quot;Nom&quot;: 1}&#39;)</code></pre>
+<pre><code>## 
+ Found 10 records...
+ Imported 10 records. Simplifying into dataframe...</code></pre>
+<pre><code>##         Nom     Prenom Sexe Age
+## 1   ANTUNES     Gaêlle    F  23
+## 2   CLERICE  Stéphanie    F  23
+## 3     HEDDI      Zohra    F  23
+## 4   LEJEUNE   Sylvaine    F  23
+## 5   MATHIEU     Denise    F  23
+## 6    MICHEL Frédérique    F  23
+## 7     COMES     Sylvie    F  22
+## 8  DELOVINA      Elina    F  22
+## 9    MICHEL   Danielle    F  22
+## 10  ROUSSEL     Nadège    F  22</code></pre>
 </div>
-<div id="agregat" class="section level4">
-<h4>Agrégat</h4>
-<p>Les agrégats sont effectués avec la fonction <code>mongo.aggregation()</code>, dans laquelle on définit un <code>pipeline</code> sous forme de <code>list</code>, avec une syntaxe proche de celle de Mongo. Les variables de regroupement sont celles indiquées dans le <code>_id</code> de l’élement <code>$group</code>. Si la valeur est <code>null</code>, il regroupe tous les enregistrements.</p>
-<pre class="r"><code>mongo.aggregation(
-  conn, 
-  &quot;gym.Sportifs&quot;,
-  pipeline = list(&#39;{ 
-                    &quot;$group&quot;: { 
-                      &quot;_id&quot;: &quot;null&quot;, 
-                      &quot;AgeMoyen&quot;: { &quot;$avg&quot;: &quot;$Age&quot; }, 
-                      &quot;Nb&quot;: { &quot;$sum&quot;: 1 } 
-                    } 
-                  }&#39;)
-)</code></pre>
+<div id="traitement-par-document" class="section level3">
+<h3>Traitement par document</h3>
+<p>Comme indiqué précédemment, la fonction <code>iterate()</code> permet de traiter les documents un par un dans <code>R</code>. Dans ce cas, soit on utilise le curseur que l’on vide avec la fonction <code>one()</code>, jusqu’à ce qu’il retourne la valeur <code>NULL</code>.</p>
+<pre class="r"><code>it = conGymnases$iterate()
+while (!is.null(doc &lt;- it$one())) {
+    cat(doc$NomGymnase, doc$Ville, doc$Surface, sep = &quot;, &quot;)
+    cat(&quot;: &quot;, length(doc$Seances), &quot; séances\n&quot;, sep = &quot;&quot;)
+}</code></pre>
+<pre><code>## PAUL ELUARD, STAINS, 200: 20 séances
+## ARAGON, MONTMORENCY, 450: 1 séances
+## SAINT EXUPERY, PIERREFITTE, 400: 3 séances
+## PAUL ELUARD, SARCELLES, 500: 2 séances
+## BRASSENS, SARCELLES, 620: 2 séances
+## VERLAINE, STAINS, 400: 2 séances
+## JULES FERRY, PIERREFITTE, 360: 0 séances
+## PREVERT, MONTMORENCY, 420: 5 séances
+## CAMUS, SARCELLES, 620: 1 séances
+## RIMBAUD, STAINS, 400: 3 séances
+## LAMARTINE, PIERREFITTE, 300: 0 séances
+## MOZART, MONTMORENCY, 480: 1 séances
+## RAVEL, STAINS, 200: 3 séances
+## CHOPIN, MONTMORENCY, 500: 2 séances
+## BREL, PIERREFITTE, 400: 1 séances
+## SAMOURAI, SARCELLES, 600: 6 séances
+## GARCIA LORCA, STAINS, 400: 6 séances
+## PABLO NERUDA, PIERREFITTE, 450: 4 séances
+## COCTEAU, MONTMORENCY, 500: 1 séances
+## LUMIERES, SARCELLES, 400: 1 séances
+## SIMON, STAINS, 400: 3 séances
+## BARBARA, SAINT DENIS, 500: 1 séances
+## ARAGON, SAINT DENIS, 520: 0 séances
+## BELFEGOR, SAINT DENIS, 450: 2 séances
+## DOLTO, VILLETANEUSE, 620: 1 séances
+## MERMOZ, VILLETANEUSE, 600: 0 séances
+## PASCAL, VILLETANEUSE, 350: 3 séances
+## BLAISE PASCAL, GARGES, 400: 8 séances</code></pre>
+<p>Soit on utilise la fonction <code>batch()</code> pour récupérer tous les éléments dans une liste.</p>
+<pre class="r"><code>sapply(conGymnases$iterate()$batch(),
+       function (e) {
+           return(c(Nom = e$NomGymnase, Ville = e$Ville,
+                    NbSeances = length(e$Seances)))
+       })</code></pre>
+<pre><code>##           [,1]          [,2]          [,3]            [,4]         
+## Nom       &quot;PAUL ELUARD&quot; &quot;ARAGON&quot;      &quot;SAINT EXUPERY&quot; &quot;PAUL ELUARD&quot;
+## Ville     &quot;STAINS&quot;      &quot;MONTMORENCY&quot; &quot;PIERREFITTE&quot;   &quot;SARCELLES&quot;  
+## NbSeances &quot;20&quot;          &quot;1&quot;           &quot;3&quot;             &quot;2&quot;          
+##           [,5]        [,6]       [,7]          [,8]          [,9]       
+## Nom       &quot;BRASSENS&quot;  &quot;VERLAINE&quot; &quot;JULES FERRY&quot; &quot;PREVERT&quot;     &quot;CAMUS&quot;    
+## Ville     &quot;SARCELLES&quot; &quot;STAINS&quot;   &quot;PIERREFITTE&quot; &quot;MONTMORENCY&quot; &quot;SARCELLES&quot;
+## NbSeances &quot;2&quot;         &quot;2&quot;        &quot;0&quot;           &quot;5&quot;           &quot;1&quot;        
+##           [,10]     [,11]         [,12]         [,13]    [,14]        
+## Nom       &quot;RIMBAUD&quot; &quot;LAMARTINE&quot;   &quot;MOZART&quot;      &quot;RAVEL&quot;  &quot;CHOPIN&quot;     
+## Ville     &quot;STAINS&quot;  &quot;PIERREFITTE&quot; &quot;MONTMORENCY&quot; &quot;STAINS&quot; &quot;MONTMORENCY&quot;
+## NbSeances &quot;3&quot;       &quot;0&quot;           &quot;1&quot;           &quot;3&quot;      &quot;2&quot;          
+##           [,15]         [,16]       [,17]          [,18]         
+## Nom       &quot;BREL&quot;        &quot;SAMOURAI&quot;  &quot;GARCIA LORCA&quot; &quot;PABLO NERUDA&quot;
+## Ville     &quot;PIERREFITTE&quot; &quot;SARCELLES&quot; &quot;STAINS&quot;       &quot;PIERREFITTE&quot; 
+## NbSeances &quot;1&quot;           &quot;6&quot;         &quot;6&quot;            &quot;4&quot;           
+##           [,19]         [,20]       [,21]    [,22]         [,23]        
+## Nom       &quot;COCTEAU&quot;     &quot;LUMIERES&quot;  &quot;SIMON&quot;  &quot;BARBARA&quot;     &quot;ARAGON&quot;     
+## Ville     &quot;MONTMORENCY&quot; &quot;SARCELLES&quot; &quot;STAINS&quot; &quot;SAINT DENIS&quot; &quot;SAINT DENIS&quot;
+## NbSeances &quot;1&quot;           &quot;1&quot;         &quot;3&quot;      &quot;1&quot;           &quot;0&quot;          
+##           [,24]         [,25]          [,26]          [,27]         
+## Nom       &quot;BELFEGOR&quot;    &quot;DOLTO&quot;        &quot;MERMOZ&quot;       &quot;PASCAL&quot;      
+## Ville     &quot;SAINT DENIS&quot; &quot;VILLETANEUSE&quot; &quot;VILLETANEUSE&quot; &quot;VILLETANEUSE&quot;
+## NbSeances &quot;2&quot;           &quot;1&quot;            &quot;0&quot;            &quot;3&quot;           
+##           [,28]          
+## Nom       &quot;BLAISE PASCAL&quot;
+## Ville     &quot;GARGES&quot;       
+## NbSeances &quot;8&quot;</code></pre>
+</div>
+<div id="agregat" class="section level3">
+<h3>Agrégat</h3>
+<p>Les agrégats sont effectués avec la fonction <code>aggregate()</code>, dans laquelle on définit un <code>pipeline</code> sous forme de <code>list</code>, avec une syntaxe proche de celle de Mongo. Les variables de regroupement sont celles indiquées dans le <code>_id</code> de l’élement <code>$group</code>. Si la valeur est <code>null</code>, il regroupe tous les enregistrements.</p>
+<pre class="r"><code>conSportifs$aggregate(&#39;[{&quot;$group&quot;: { &quot;_id&quot;: &quot;null&quot;, &quot;AgeMoyen&quot;: { &quot;$avg&quot;: &quot;$Age&quot; }, &quot;Nb&quot;: { &quot;$sum&quot;: 1 } } }]&#39;)</code></pre>
+<pre><code>## 
+ Found 1 records...
+ Imported 1 records. Simplifying into dataframe...</code></pre>
+<pre><code>##    _id AgeMoyen  Nb
+## 1 null 27.34667 150</code></pre>
 <p>Par contre, si on indique une variable (ici <code>Sexe</code> par exemple), il fait le regroupement par modalité, classiquement.</p>
-<pre class="r"><code>mongo.aggregation(
-  conn, 
-  &quot;gym.Sportifs&quot;,
-  pipeline = list(&#39;{ 
-                    &quot;$group&quot;: { 
-                      &quot;_id&quot;: &quot;$Sexe&quot;, 
-                      &quot;AgeMoyen&quot;: { &quot;$avg&quot;: &quot;$Age&quot; }, 
-                      &quot;Nb&quot;: { &quot;$sum&quot;: 1 } 
-                    } 
-                  }&#39;)
-)</code></pre>
+<pre class="r"><code>conSportifs$aggregate(&#39;[{&quot;$group&quot;: { &quot;_id&quot;: &quot;$Sexe&quot;, &quot;AgeMoyen&quot;: { &quot;$avg&quot;: &quot;$Age&quot; }, &quot;Nb&quot;: { &quot;$sum&quot;: 1 } } }]&#39;)</code></pre>
 <p>On remarque ici qu’il y a la modalité <code>m</code> et la modalité <code>M</code>. Pour mettre en majuscule, on peut le définir directement dans la définition de <code>_id</code>.</p>
-<pre class="r"><code>mongo.aggregation(
-  conn, 
-  &quot;gym.Sportifs&quot;,
-  pipeline = list(&#39;{ 
-                    &quot;$group&quot;: { 
-                      &quot;_id&quot;: { &quot;$toUpper&quot; : &quot;$Sexe&quot; }, 
-                      &quot;AgeMoyen&quot;: { &quot;$avg&quot;: &quot;$Age&quot; }, 
-                      &quot;Nb&quot;: { &quot;$sum&quot;: 1 } 
-                    } 
-                  }&#39;)
-)</code></pre>
+<pre class="r"><code>conSportifs$aggregate(&#39;[{&quot;$group&quot;: { &quot;_id&quot;: { &quot;$toUpper&quot; : &quot;$Sexe&quot; }, &quot;AgeMoyen&quot;: { &quot;$avg&quot;: &quot;$Age&quot; }, &quot;Nb&quot;: { &quot;$sum&quot;: 1 } } }]&#39;)</code></pre>
 </div>
-<div id="calcul" class="section level4">
-<h4>Calcul</h4>
+<div id="calcul" class="section level3">
+<h3>Calcul</h3>
 <p>Pour créer des nouveaux éléments dans un enregistrement, il est nécessaire d’utiliser la fonction d’aggrégation, avec <code>$project</code>.</p>
-<pre class="r"><code>mongo.aggregation(
-  conn,
-  &quot;gym.Sportifs&quot;,
-  pipeline = list(&#39;{
+<pre class="r"><code>conSportifs$aggregate(&#39;[{
                     &quot;$project&quot;: {
                       &quot;_id&quot;: 0,
                       &quot;Nom&quot;: 1,
                       &quot;Prenom&quot;: { &quot;$toLower&quot;: &quot;$Prenom&quot; },
                       &quot;Sexe&quot;: { &quot;$toUpper&quot;: &quot;$Sexe&quot; }
                     }
-                  }&#39;)
+                  }]&#39;
 )</code></pre>
 </div>
-<div id="recherche-complexe" class="section level4">
-<h4>Recherche complexe</h4>
+<div id="recherche-complexe" class="section level3">
+<h3>Recherche complexe</h3>
 <p>Cette commande d’agrégation sert aussi à faire des recherches compexes dans les sous-éléments présents dans les enregistrements.</p>
 <p>Par exemple, dans la collection <code>Gymnases</code>, nous avons la liste des séances avec les jours et les sports. Si on cherche les jours et les gymnases où il y a des séances de <code>Hand ball</code>, la recherche simple comme suit ne suffit pas. On obtient bien les informations voulues, mais on a aussi les séances des gymnases pour les autres sports.</p>
-<pre class="r"><code>curs = mongo.find(
-  conn,
-  &quot;gym.Gymnases&quot;,
+<pre class="r"><code>conGymnases$iterate(
   query = &#39;{ &quot;Seances.Libelle&quot;: &quot;Hand ball&quot; }&#39;,
   fields = &#39;{ 
     &quot;_id&quot;: 0, &quot;NomGymnase&quot;: 1, &quot;Ville&quot;: 1, &quot;Seances.Jour&quot;: 1, &quot;Seances.Libelle&quot;: 1 
   }&#39;
-)
-while (mongo.cursor.next(curs))
-  print(mongo.cursor.value(curs))</code></pre>
+)$batch()</code></pre>
 <p>Pour résoudre ce problème, nous allons utilisons la fonction d’aggrégation, avec la commande <code>$unwind</code>. Celle-ci permet de séparer les éléments du tableau passé en paramètre. Ici, d’un enregistrement par gymnase, on passe à un enregistrement par gymnase et par séance.</p>
-<pre class="r"><code>mongo.aggregation(
-  conn,
-  &quot;gym.Gymnases&quot;,
-  pipeline = list(
-    &#39;{ &quot;$unwind&quot;: &quot;$Seances&quot; }&#39;
-  )
-)</code></pre>
+<pre class="r"><code>head(conGymnases$aggregate(&#39;[{ &quot;$unwind&quot;: &quot;$Seances&quot; }]&#39;))</code></pre>
+<pre><code>## 
+ Found 82 records...
+ Imported 82 records. Simplifying into dataframe...</code></pre>
+<pre><code>##                        _id IdGymnase  NomGymnase           Adresse  Ville
+## 1 566eec69662b388eba464299         1 PAUL ELUARD 2 rue des pépines STAINS
+## 2 566eec69662b388eba464299         1 PAUL ELUARD 2 rue des pépines STAINS
+## 3 566eec69662b388eba464299         1 PAUL ELUARD 2 rue des pépines STAINS
+## 4 566eec69662b388eba464299         1 PAUL ELUARD 2 rue des pépines STAINS
+## 5 566eec69662b388eba464299         1 PAUL ELUARD 2 rue des pépines STAINS
+## 6 566eec69662b388eba464299         1 PAUL ELUARD 2 rue des pépines STAINS
+##   Surface Seances.IdSportifEntraineur Seances.Jour Seances.Horaire
+## 1     200                         149       Samedi             9.0
+## 2     200                           1        Lundi             9.0
+## 3     200                           1        Lundi            10.0
+## 4     200                           1        Lundi            11.3
+## 5     200                           1        Lundi            14.0
+## 6     200                           1        lundi            17.3
+##   Seances.Duree Seances.Libelle
+## 1            60     Basket ball
+## 2            60       Hand ball
+## 3            60       Hand ball
+## 4            60       Hand ball
+## 5            90       Hand ball
+## 6           120       Hand ball</code></pre>
 <p>Dans le <code>pipeline</code>, on peut aussi ajouter des restrictions, avec la commande <code>$match</code>. On peut mettre celui-ci avant et/ou après le <code>$unwind</code>. Et choisir les éléments retournés avec <code>$project</code>. Pour répondre à la question <em>jours et gymnases où il y a des séances de <code>Hand ball</code></em>, on peut faire ainsi :</p>
-<pre class="r"><code>mongo.aggregation(
-  conn,
-  &quot;gym.Gymnases&quot;,
-  pipeline = list(
-    &#39;{ &quot;$match&quot;: { &quot;Seances&quot;: { &quot;$elemMatch&quot;: { &quot;Libelle&quot;: &quot;Hand ball&quot; } } } }&#39;,
-    &#39;{ &quot;$unwind&quot;: &quot;$Seances&quot; }&#39;,
-    &#39;{ &quot;$match&quot;: { &quot;Seances.Libelle&quot;: &quot;Hand ball&quot;} }&#39;,
-    &#39;{ 
+<pre class="r"><code>conGymnases$aggregate(&#39;[
+    { &quot;$match&quot;: { &quot;Seances&quot;: { &quot;$elemMatch&quot;: { &quot;Libelle&quot;: &quot;Hand ball&quot; } } } },
+    { &quot;$unwind&quot;: &quot;$Seances&quot; },
+    { &quot;$match&quot;: { &quot;Seances.Libelle&quot;: &quot;Hand ball&quot;} },
+    { 
       &quot;$group&quot;: { 
         &quot;_id&quot;: &quot;$NomGymnase&quot;, 
         &quot;Jours&quot; : { &quot;$addToSet&quot;: { &quot;$toLower&quot;: &quot;$Seances.Jour&quot; } } ,
         &quot;Sports&quot; : { &quot;$addToSet&quot;: &quot;$Seances.Libelle&quot; }
       } 
-    }&#39;
-  )
+    }]&#39;
 )</code></pre>
 </div>
 </div>
-<div id="deconnexion" class="section level3">
-<h3>Déconnexion</h3>
-<p>Comme pour toute connexion, il faut déconnecter pour être propre.</p>
-<pre class="r"><code>mongo.disconnect(conn)</code></pre>
-</div>
+<div id="map-reduce" class="section level2">
+<h2>Map-Reduce</h2>
+<p>L’algorithme <em>Map-Reduce</em> est un paradigme important dans le NoSQL, qui se décompose en deux étapes :</p>
+<ul>
+<li><strong>Map</strong> : Sur chaque document, on va émettre un ou plusieurs messages de type <code>(clé, valeur)</code></li>
+<li><strong>Reduce</strong> : Pour chaque <code>clé</code>, on va réduire les <code>valeurs</code> émises en une seule. Les fonctions doivent être écrites en <code>JavaScript</code>.</li>
+</ul>
+<p>Dans un cas simple, tel que celui ci-dessous, on émet un message par document.</p>
+<pre class="r"><code>conGymnases$mapreduce(
+    map = &#39;function(){ emit(this.Ville, this.Surface) }&#39;,
+    reduce = &#39;function(cle, valeurs) { return Array.sum(valeurs) / valeurs.length }&#39;
+)</code></pre>
+<pre><code>##            _id    value
+## 1       GARGES 400.0000
+## 2  MONTMORENCY 470.0000
+## 3  PIERREFITTE 382.0000
+## 4  SAINT DENIS 490.0000
+## 5    SARCELLES 548.0000
+## 6       STAINS 333.3333
+## 7 VILLETANEUSE 523.3333</code></pre>
+<p>Mais il est aussi possible d’émettre plusieurs messages par documents.</p>
+<pre class="r"><code>conGymnases$mapreduce(
+    &#39;function(){
+        if (this.Seances) {
+            for (s = 0; s &lt; this.Seances.length; s++) {
+                emit(this.Seances[s].Libelle, 1)
+            }
+        }
+    }&#39;,
+    &#39;function(lib, nb) {
+        return Array.sum(nb)
+    }&#39;
+)</code></pre>
+<pre><code>##           _id value
+## 1 Basket ball     7
+## 2   Hand ball    20
+## 3      Hockey    27
+## 4 Volley ball    28</code></pre>
 </div>
 
 </div>
@@ -408,6 +814,8 @@ while (mongo.cursor.next(curs))
 </script>
 
 
+</div>
+</div>
 
 </div>
 

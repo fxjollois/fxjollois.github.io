@@ -328,7 +328,7 @@ div.tocify {
 </div>
 
 
-<p>Dans ce document est présenté les concepts principaux du logiciel <code>R</code> (éléments de langage, données manipulées, manipulation de données, …).</p>
+<p>Dans ce document sont présentés les concepts principaux du logiciel <code>R</code> (éléments de langage, données manipulées, manipulation de données, …).</p>
 <div id="donnees-et-elements-de-langage" class="section level2">
 <h2>Données et éléments de langage</h2>
 <div id="types-de-donnees" class="section level3">
@@ -437,6 +437,40 @@ print(a)</code></pre>
 <pre><code>##  [1] 21.0 21.0 22.8 21.4 18.7 18.1 14.3 24.4 22.8 19.2 17.8 16.4 17.3 15.2
 ## [15] 10.4 10.4 14.7 32.4 30.4 33.9 21.5 15.5 15.2 13.3 19.2 27.3 26.0 30.4
 ## [29] 15.8 19.7 15.0 21.4</code></pre>
+<pre class="r"><code>mtcars[1] # en mode data.frame</code></pre>
+<pre><code>##                      mpg
+## Mazda RX4           21.0
+## Mazda RX4 Wag       21.0
+## Datsun 710          22.8
+## Hornet 4 Drive      21.4
+## Hornet Sportabout   18.7
+## Valiant             18.1
+## Duster 360          14.3
+## Merc 240D           24.4
+## Merc 230            22.8
+## Merc 280            19.2
+## Merc 280C           17.8
+## Merc 450SE          16.4
+## Merc 450SL          17.3
+## Merc 450SLC         15.2
+## Cadillac Fleetwood  10.4
+## Lincoln Continental 10.4
+## Chrysler Imperial   14.7
+## Fiat 128            32.4
+## Honda Civic         30.4
+## Toyota Corolla      33.9
+## Toyota Corona       21.5
+## Dodge Challenger    15.5
+## AMC Javelin         15.2
+## Camaro Z28          13.3
+## Pontiac Firebird    19.2
+## Fiat X1-9           27.3
+## Porsche 914-2       26.0
+## Lotus Europa        30.4
+## Ford Pantera L      15.8
+## Ferrari Dino        19.7
+## Maserati Bora       15.0
+## Volvo 142E          21.4</code></pre>
 </div>
 <div id="valeur-a-la-cellule-11" class="section level4">
 <h4>Valeur à la cellule (1,1)</h4>
@@ -513,6 +547,15 @@ seq(1, 5, length = 10)</code></pre>
 <pre class="r"><code># séquence avec définition du pas
 seq(0, 1, by = 0.1)</code></pre>
 <pre><code>##  [1] 0.0 0.1 0.2 0.3 0.4 0.5 0.6 0.7 0.8 0.9 1.0</code></pre>
+<pre class="r"><code># répétition d&#39;une valeur
+rep(1, 5)</code></pre>
+<pre><code>## [1] 1 1 1 1 1</code></pre>
+<pre class="r"><code># répétition d&#39;un vecteur
+rep(1:2, 5)</code></pre>
+<pre><code>##  [1] 1 2 1 2 1 2 1 2 1 2</code></pre>
+<pre class="r"><code># répétition d&#39;un vecteur, 2ème version
+rep(1:2, each = 5)</code></pre>
+<pre><code>##  [1] 1 1 1 1 1 2 2 2 2 2</code></pre>
 <pre class="r"><code># matrice
 matrix(1:10, 2, 5)</code></pre>
 <pre><code>##      [,1] [,2] [,3] [,4] [,5]
@@ -525,32 +568,6 @@ print(m)</code></pre>
 <pre><code>##      [,1] [,2] [,3] [,4] [,5]
 ## [1,]    1    3    5    7    9
 ## [2,]    2    4    6    8   10</code></pre>
-</div>
-<div id="creation-dune-liste" class="section level4">
-<h4>Création d’une liste</h4>
-<pre class="r"><code>l = list()
-class(l)</code></pre>
-<pre><code>## [1] &quot;list&quot;</code></pre>
-<pre class="r"><code>l[[1]] = 1
-l[[2]] = &quot;a&quot;
-l$trois = 1:3
-l[[4]] = m
-print(l)</code></pre>
-<pre><code>## [[1]]
-## [1] 1
-## 
-## [[2]]
-## [1] &quot;a&quot;
-## 
-## $trois
-## [1] 1 2 3
-## 
-## [[4]]
-##      [,1] [,2] [,3] [,4] [,5]
-## [1,]    1    3    5    7    9
-## [2,]    2    4    6    8   10</code></pre>
-<pre class="r"><code>length(l)</code></pre>
-<pre><code>## [1] 4</code></pre>
 </div>
 <div id="fonction-sur-les-lignes-ou-les-colonnes-dune-matrice" class="section level4">
 <h4>Fonction sur les lignes ou les colonnes d’une matrice</h4>
@@ -586,22 +603,6 @@ apply(mtcars[,c(&quot;mpg&quot;, &quot;disp&quot;, &quot;hp&quot;, &quot;drat&qu
 ## 4 26.66364 105.1364  82.63636 4.070909 2.285727 19.13727
 ## 6 19.74286 183.3143 122.28571 3.585714 3.117143 17.97714
 ## 8 15.10000 353.1000 209.21429 3.229286 3.999214 16.77214</code></pre>
-</div>
-<div id="fonction-sur-chaque-element-dune-liste" class="section level4">
-<h4>Fonction sur chaque élément d’une liste</h4>
-<p>Application d’une fonction (ici <code>class()</code>) sur chaque élément de la liste. Si l’élément passé en paramètre est un <code>data.frame</code>, c’est sur chaque colonne. Et si c’est un <code>vector</code> ou une <code>matrix</code>, ce sera sur chaque valeur.</p>
-<pre class="r"><code>lapply(l, class)</code></pre>
-<pre><code>## [[1]]
-## [1] &quot;numeric&quot;
-## 
-## [[2]]
-## [1] &quot;character&quot;
-## 
-## $trois
-## [1] &quot;integer&quot;
-## 
-## [[4]]
-## [1] &quot;matrix&quot;</code></pre>
 </div>
 </div>
 </div>
@@ -751,10 +752,8 @@ SELECT cyl, AVG(mpg), AVG(disp), AVG(hp), AVG(drat), AVG(wt), AVG(qsec)
 ## 3   8 15.10000  353.1000 209.21429  3.229286 3.999214  16.77214</code></pre>
 </div>
 </div>
-<div id="quelques-statistiques" class="section level2">
-<h2>Quelques statistiques</h2>
-<div id="descriptives" class="section level3">
-<h3>Descriptives</h3>
+<div id="quelques-statistiques-descriptives" class="section level2">
+<h2>Quelques statistiques descriptives</h2>
 <p>La fonction <code>summary()</code> calcule des statistiques basiques sur un vecteur, celles-ci étant dépendantes du type du vecteur. Si elle est appliquée sur un <code>data.frame</code>, elle s’applique sur chaque variable.</p>
 <pre class="r"><code>summary(mtcars)</code></pre>
 <pre><code>##       mpg             cyl             disp             hp       
@@ -787,8 +786,8 @@ SELECT cyl, AVG(mpg), AVG(disp), AVG(hp), AVG(drat), AVG(wt), AVG(qsec)
 <pre class="r"><code>summary(as.factor(mtcars$cyl))</code></pre>
 <pre><code>##  4  6  8 
 ## 11  7 14</code></pre>
-<div id="univarie" class="section level4">
-<h4>Univarié</h4>
+<div id="univarie" class="section level3">
+<h3>Univarié</h3>
 <p>On peut accéder aux fonctions de calculs des statistiques descriptives directement. Pour les variables quantitatives, nous allons utiliser comme exemple <code>mpg</code> qui représente la consommation.</p>
 <pre class="r"><code>mean(mtcars$mpg)</code></pre>
 <pre><code>## [1] 20.09062</code></pre>
@@ -817,16 +816,16 @@ SELECT cyl, AVG(mpg), AVG(disp), AVG(hp), AVG(drat), AVG(wt), AVG(qsec)
 ## 10.400 14.340 30.090 33.435</code></pre>
 <p>Il existe tout un ensemble de fonctions graphiques, dont voici quelques exemples.</p>
 <pre class="r"><code>hist(mtcars$mpg)</code></pre>
-<p><img src="initiation-r-du_files/figure-html/unnamed-chunk-25-1.png" width="672" /></p>
+<p><img src="initiation-r-du_files/figure-html/unnamed-chunk-23-1.png" width="672" /></p>
 <pre class="r"><code>hist(mtcars$mpg, breaks = 20)</code></pre>
-<p><img src="initiation-r-du_files/figure-html/unnamed-chunk-25-2.png" width="672" /></p>
+<p><img src="initiation-r-du_files/figure-html/unnamed-chunk-23-2.png" width="672" /></p>
 <pre class="r"><code>hist(mtcars$mpg, breaks = c(10, 15, 18, 20, 22, 25, 35))</code></pre>
-<p><img src="initiation-r-du_files/figure-html/unnamed-chunk-25-3.png" width="672" /></p>
+<p><img src="initiation-r-du_files/figure-html/unnamed-chunk-23-3.png" width="672" /></p>
 <pre class="r"><code>boxplot(mtcars$mpg)</code></pre>
-<p><img src="initiation-r-du_files/figure-html/unnamed-chunk-25-4.png" width="672" /></p>
+<p><img src="initiation-r-du_files/figure-html/unnamed-chunk-23-4.png" width="672" /></p>
 <pre class="r"><code>qqnorm(mtcars$mpg)
 qqline(mtcars$mpg)</code></pre>
-<p><img src="initiation-r-du_files/figure-html/unnamed-chunk-25-5.png" width="672" /></p>
+<p><img src="initiation-r-du_files/figure-html/unnamed-chunk-23-5.png" width="672" /></p>
 <p>Pour les variables qualitatives, nous allons utiliser la variable <code>cyl</code> qui représente le nombre de cylindre. Celle-ci étant codée numériquement, toutes les fonctions vues précédemment pour s’appliquer (mais n’avoir aucun sens).</p>
 <pre class="r"><code>table(mtcars$cyl)</code></pre>
 <pre><code>## 
@@ -837,23 +836,23 @@ qqline(mtcars$mpg)</code></pre>
 ##       4       6       8 
 ## 0.34375 0.21875 0.43750</code></pre>
 <pre class="r"><code>barplot(table(mtcars$cyl))</code></pre>
-<p><img src="initiation-r-du_files/figure-html/unnamed-chunk-26-1.png" width="672" /></p>
+<p><img src="initiation-r-du_files/figure-html/unnamed-chunk-24-1.png" width="672" /></p>
 <pre class="r"><code>pie(table(mtcars$cyl))</code></pre>
-<p><img src="initiation-r-du_files/figure-html/unnamed-chunk-26-2.png" width="672" /></p>
+<p><img src="initiation-r-du_files/figure-html/unnamed-chunk-24-2.png" width="672" /></p>
 </div>
-<div id="bivarie" class="section level4">
-<h4>Bivarié</h4>
-<div id="quanti---quanti" class="section level5">
-<h5>Quanti - Quanti</h5>
+<div id="bivarie" class="section level3">
+<h3>Bivarié</h3>
+<div id="quanti---quanti" class="section level4">
+<h4>Quanti - Quanti</h4>
 <p>Dans ce cadre, on peut bien évidemment calculer les statistiques usuelles (covariance, corrélation) et le nuage de points.</p>
 <pre class="r"><code>cov(mtcars$mpg, mtcars$wt)</code></pre>
 <pre><code>## [1] -5.116685</code></pre>
 <pre class="r"><code>cor(mtcars$mpg, mtcars$wt)</code></pre>
 <pre><code>## [1] -0.8676594</code></pre>
 <pre class="r"><code>plot(mtcars$mpg, mtcars$wt)</code></pre>
-<p><img src="initiation-r-du_files/figure-html/unnamed-chunk-27-1.png" width="672" /></p>
+<p><img src="initiation-r-du_files/figure-html/unnamed-chunk-25-1.png" width="672" /></p>
 <pre class="r"><code>plot(mtcars$mpg ~ mtcars$wt)</code></pre>
-<p><img src="initiation-r-du_files/figure-html/unnamed-chunk-27-2.png" width="672" /></p>
+<p><img src="initiation-r-du_files/figure-html/unnamed-chunk-25-2.png" width="672" /></p>
 <p>On peut aller plus loin en faisant un modéle linéaire simple.</p>
 <pre class="r"><code>m = lm(mpg ~ wt, data = mtcars)
 m</code></pre>
@@ -884,13 +883,13 @@ m</code></pre>
 ## Multiple R-squared:  0.7528, Adjusted R-squared:  0.7446 
 ## F-statistic: 91.38 on 1 and 30 DF,  p-value: 1.294e-10</code></pre>
 <pre class="r"><code>plot(m)</code></pre>
-<p><img src="initiation-r-du_files/figure-html/unnamed-chunk-28-1.png" width="672" /><img src="initiation-r-du_files/figure-html/unnamed-chunk-28-2.png" width="672" /><img src="initiation-r-du_files/figure-html/unnamed-chunk-28-3.png" width="672" /><img src="initiation-r-du_files/figure-html/unnamed-chunk-28-4.png" width="672" /></p>
+<p><img src="initiation-r-du_files/figure-html/unnamed-chunk-26-1.png" width="672" /><img src="initiation-r-du_files/figure-html/unnamed-chunk-26-2.png" width="672" /><img src="initiation-r-du_files/figure-html/unnamed-chunk-26-3.png" width="672" /><img src="initiation-r-du_files/figure-html/unnamed-chunk-26-4.png" width="672" /></p>
 <pre class="r"><code>plot(mpg ~ wt, data = mtcars)
 abline(m, col = &quot;red&quot;)</code></pre>
-<p><img src="initiation-r-du_files/figure-html/unnamed-chunk-28-5.png" width="672" /></p>
+<p><img src="initiation-r-du_files/figure-html/unnamed-chunk-26-5.png" width="672" /></p>
 </div>
-<div id="quali---quali" class="section level5">
-<h5>Quali - Quali</h5>
+<div id="quali---quali" class="section level4">
+<h4>Quali - Quali</h4>
 <p>Ici, on calcule bien évidemment la talbe de contingence, mais aussi les fréquences totales et marginales (en lignes et en colonnes).</p>
 <pre class="r"><code>t &lt;- table(mtcars$cyl, mtcars$am)
 print(t)</code></pre>
@@ -918,20 +917,20 @@ print(t)</code></pre>
 ##   6 0.2105263 0.2307692
 ##   8 0.6315789 0.1538462</code></pre>
 <pre class="r"><code>mosaicplot(t) </code></pre>
-<p><img src="initiation-r-du_files/figure-html/unnamed-chunk-29-1.png" width="672" /></p>
+<p><img src="initiation-r-du_files/figure-html/unnamed-chunk-27-1.png" width="672" /></p>
 <pre class="r"><code>assocplot(t)</code></pre>
-<p><img src="initiation-r-du_files/figure-html/unnamed-chunk-29-2.png" width="672" /></p>
+<p><img src="initiation-r-du_files/figure-html/unnamed-chunk-27-2.png" width="672" /></p>
 <pre class="r"><code>barplot(t)</code></pre>
-<p><img src="initiation-r-du_files/figure-html/unnamed-chunk-29-3.png" width="672" /></p>
+<p><img src="initiation-r-du_files/figure-html/unnamed-chunk-27-3.png" width="672" /></p>
 <pre class="r"><code>barplot(prop.table(t, margin = 2))</code></pre>
-<p><img src="initiation-r-du_files/figure-html/unnamed-chunk-29-4.png" width="672" /></p>
+<p><img src="initiation-r-du_files/figure-html/unnamed-chunk-27-4.png" width="672" /></p>
 <pre class="r"><code>barplot(t, beside = T)</code></pre>
-<p><img src="initiation-r-du_files/figure-html/unnamed-chunk-29-5.png" width="672" /></p>
+<p><img src="initiation-r-du_files/figure-html/unnamed-chunk-27-5.png" width="672" /></p>
 <pre class="r"><code>barplot(prop.table(t, margin = 2), beside = T)</code></pre>
-<p><img src="initiation-r-du_files/figure-html/unnamed-chunk-29-6.png" width="672" /></p>
+<p><img src="initiation-r-du_files/figure-html/unnamed-chunk-27-6.png" width="672" /></p>
 </div>
-<div id="quali---quanti" class="section level5">
-<h5>Quali - Quanti</h5>
+<div id="quali---quanti" class="section level4">
+<h4>Quali - Quanti</h4>
 <p>En plus d’obtenir les statistiques par modalité de la variable qualitative, on peut représenter les boîtes à moustaches.</p>
 <pre class="r"><code>tapply(mtcars$mpg, mtcars$cyl, mean)</code></pre>
 <pre><code>##        4        6        8 
@@ -949,15 +948,266 @@ print(t)</code></pre>
 ##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
 ##   10.40   14.40   15.20   15.10   16.25   19.20</code></pre>
 <pre class="r"><code>boxplot(mpg ~ cyl, data = mtcars)</code></pre>
-<p><img src="initiation-r-du_files/figure-html/unnamed-chunk-30-1.png" width="672" /></p>
+<p><img src="initiation-r-du_files/figure-html/unnamed-chunk-28-1.png" width="672" /></p>
 <pre class="r"><code>par(mfrow = c(3, 1), mar = c(2, 2, 2, 0) + 0.1)
 for (c in c(4, 6, 8)) {
   hist(mtcars$mpg[mtcars$cyl == c], xlim = range(mtcars$mpg), main = c)
 }</code></pre>
-<p><img src="initiation-r-du_files/figure-html/unnamed-chunk-30-2.png" width="672" /></p>
+<p><img src="initiation-r-du_files/figure-html/unnamed-chunk-28-2.png" width="672" /></p>
 </div>
 </div>
 </div>
+<div id="manipulation-de-listes" class="section level2">
+<h2>Manipulation de listes</h2>
+<p>Il existe un type <code>list</code> en <code>R</code>, permettant de représenter un ensemble d’objets complexes, éventuellement avec des schémas différents et pouvant contenir eux-mêmes toutes sortes d’objets (<code>vector</code>, <code>matrix</code>, <code>data.frame</code>, <code>list</code>, …).</p>
+<pre class="r"><code>l = list(a = &quot;chaîne&quot;, 
+         b = 12, 
+         c = 1:10, 
+         d = head(mtcars), 
+         e = list(x = 1:10, y = log(1:10)))
+length(l)</code></pre>
+<pre><code>## [1] 5</code></pre>
+<pre class="r"><code>names(l)</code></pre>
+<pre><code>## [1] &quot;a&quot; &quot;b&quot; &quot;c&quot; &quot;d&quot; &quot;e&quot;</code></pre>
+<pre class="r"><code>l[1]</code></pre>
+<pre><code>## $a
+## [1] &quot;chaîne&quot;</code></pre>
+<pre class="r"><code>l[[1]]</code></pre>
+<pre><code>## [1] &quot;chaîne&quot;</code></pre>
+<pre class="r"><code>l$a</code></pre>
+<pre><code>## [1] &quot;chaîne&quot;</code></pre>
+<pre class="r"><code>l[1:2]</code></pre>
+<pre><code>## $a
+## [1] &quot;chaîne&quot;
+## 
+## $b
+## [1] 12</code></pre>
+<pre class="r"><code>l[c(&quot;a&quot;, &quot;c&quot;)]</code></pre>
+<pre><code>## $a
+## [1] &quot;chaîne&quot;
+## 
+## $c
+##  [1]  1  2  3  4  5  6  7  8  9 10</code></pre>
+<pre class="r"><code>l[sapply(l, length) == 1]</code></pre>
+<pre><code>## $a
+## [1] &quot;chaîne&quot;
+## 
+## $b
+## [1] 12</code></pre>
+<div id="lapply-et-autres" class="section level3">
+<h3><code>lapply</code> et autres</h3>
+<p>La fonction <code>lapply()</code> permet d’exécuter une fonction (passée en deuxième paramètre) à chaque élément d’une liste (passée en premier paramètre), ou un vecteur. Il existe aussi les fonctions <code>sapply()</code> et <code>vapply()</code>, qui sont similaires mais qui cherchent à simplifier le résultat (la deuxième permet de spécifier le nom des retours de la fonctions, si ceux-ci sont multiples).</p>
+<pre class="r"><code>lapply(l, class)</code></pre>
+<pre><code>## $a
+## [1] &quot;character&quot;
+## 
+## $b
+## [1] &quot;numeric&quot;
+## 
+## $c
+## [1] &quot;integer&quot;
+## 
+## $d
+## [1] &quot;data.frame&quot;
+## 
+## $e
+## [1] &quot;list&quot;</code></pre>
+<pre class="r"><code>sapply(l, class)</code></pre>
+<pre><code>##            a            b            c            d            e 
+##  &quot;character&quot;    &quot;numeric&quot;    &quot;integer&quot; &quot;data.frame&quot;       &quot;list&quot;</code></pre>
+</div>
+<div id="fonction-particuliere" class="section level3">
+<h3>Fonction particulière</h3>
+<p>On a parfois (voire souvent) besoin d’utiliser une fonction spécifique dans les fonctions comme <code>lapply()</code>. On peut soit la définir avant et l’utiliser comme une autre.</p>
+<pre class="r"><code>infoElement &lt;- function(e) {
+    return(c(classe = class(e), longueur = length(e)))
+}
+lapply(l, infoElement)</code></pre>
+<pre><code>## $a
+##      classe    longueur 
+## &quot;character&quot;         &quot;1&quot; 
+## 
+## $b
+##    classe  longueur 
+## &quot;numeric&quot;       &quot;1&quot; 
+## 
+## $c
+##    classe  longueur 
+## &quot;integer&quot;      &quot;10&quot; 
+## 
+## $d
+##       classe     longueur 
+## &quot;data.frame&quot;         &quot;11&quot; 
+## 
+## $e
+##   classe longueur 
+##   &quot;list&quot;      &quot;2&quot;</code></pre>
+<pre class="r"><code>sapply(l, infoElement)</code></pre>
+<pre><code>##          a           b         c         d            e     
+## classe   &quot;character&quot; &quot;numeric&quot; &quot;integer&quot; &quot;data.frame&quot; &quot;list&quot;
+## longueur &quot;1&quot;         &quot;1&quot;       &quot;10&quot;      &quot;11&quot;         &quot;2&quot;</code></pre>
+<pre class="r"><code>vapply(l, infoElement, c(CLASSE = &quot;&quot;, LONG = &quot;&quot;))</code></pre>
+<pre><code>##        a           b         c         d            e     
+## CLASSE &quot;character&quot; &quot;numeric&quot; &quot;integer&quot; &quot;data.frame&quot; &quot;list&quot;
+## LONG   &quot;1&quot;         &quot;1&quot;       &quot;10&quot;      &quot;11&quot;         &quot;2&quot;</code></pre>
+</div>
+<div id="fonction-anonyme" class="section level3">
+<h3>Fonction anonyme</h3>
+<p>Mais puisqu’on ne l’utilise généralement que dans cette fonction, il est possible de la déclarer directement dans la fonction <code>lapply()</code>. On parle alors de <em>fonction anonyme</em> (comme en <em>JavaScript</em> par exemple).</p>
+<pre class="r"><code>sapply(l, function(e) {
+    return(c(classe = class(e), longueur = length(e)))
+})</code></pre>
+<pre><code>##          a           b         c         d            e     
+## classe   &quot;character&quot; &quot;numeric&quot; &quot;integer&quot; &quot;data.frame&quot; &quot;list&quot;
+## longueur &quot;1&quot;         &quot;1&quot;       &quot;10&quot;      &quot;11&quot;         &quot;2&quot;</code></pre>
+</div>
+<div id="fonctionnement-invisible" class="section level3">
+<h3>Fonctionnement <em>invisible</em></h3>
+<p>On a parfois besoin d’appliquer une fonction qui ne retourne rien à une liste, par exemple pour afficher l’élément ou une partie de celui-ci. Dans l’exemple ci-dessous, on remarque que le code affiche bien chaque élément, mais renvoie aussi une liste contenant les éléments (qui est donc identique à la liste passée en paramètre). Ce comportement est dû au fait que la fonction ne renvoie pas de résultat.</p>
+<pre class="r"><code>lapply(l, function (e) { print(e); })</code></pre>
+<pre><code>## [1] &quot;chaîne&quot;
+## [1] 12
+##  [1]  1  2  3  4  5  6  7  8  9 10
+##                    mpg cyl disp  hp drat    wt  qsec vs am gear carb
+## Mazda RX4         21.0   6  160 110 3.90 2.620 16.46  0  1    4    4
+## Mazda RX4 Wag     21.0   6  160 110 3.90 2.875 17.02  0  1    4    4
+## Datsun 710        22.8   4  108  93 3.85 2.320 18.61  1  1    4    1
+## Hornet 4 Drive    21.4   6  258 110 3.08 3.215 19.44  1  0    3    1
+## Hornet Sportabout 18.7   8  360 175 3.15 3.440 17.02  0  0    3    2
+## Valiant           18.1   6  225 105 2.76 3.460 20.22  1  0    3    1
+## $x
+##  [1]  1  2  3  4  5  6  7  8  9 10
+## 
+## $y
+##  [1] 0.0000000 0.6931472 1.0986123 1.3862944 1.6094379 1.7917595 1.9459101
+##  [8] 2.0794415 2.1972246 2.3025851</code></pre>
+<pre><code>## $a
+## [1] &quot;chaîne&quot;
+## 
+## $b
+## [1] 12
+## 
+## $c
+##  [1]  1  2  3  4  5  6  7  8  9 10
+## 
+## $d
+##                    mpg cyl disp  hp drat    wt  qsec vs am gear carb
+## Mazda RX4         21.0   6  160 110 3.90 2.620 16.46  0  1    4    4
+## Mazda RX4 Wag     21.0   6  160 110 3.90 2.875 17.02  0  1    4    4
+## Datsun 710        22.8   4  108  93 3.85 2.320 18.61  1  1    4    1
+## Hornet 4 Drive    21.4   6  258 110 3.08 3.215 19.44  1  0    3    1
+## Hornet Sportabout 18.7   8  360 175 3.15 3.440 17.02  0  0    3    2
+## Valiant           18.1   6  225 105 2.76 3.460 20.22  1  0    3    1
+## 
+## $e
+## $e$x
+##  [1]  1  2  3  4  5  6  7  8  9 10
+## 
+## $e$y
+##  [1] 0.0000000 0.6931472 1.0986123 1.3862944 1.6094379 1.7917595 1.9459101
+##  [8] 2.0794415 2.1972246 2.3025851</code></pre>
+<p>Dans ce type de cas, si on veut éviter ce comportement, on peut utiliser la fonction <code>invisibile()</code>. Ceci va rendre invisible l’exécution du code et on ne verra donc pas la liste retournée par <code>lapply()</code>.</p>
+<pre class="r"><code>invisible(lapply(l, function (e) { print(e); }))</code></pre>
+<pre><code>## [1] &quot;chaîne&quot;
+## [1] 12
+##  [1]  1  2  3  4  5  6  7  8  9 10
+##                    mpg cyl disp  hp drat    wt  qsec vs am gear carb
+## Mazda RX4         21.0   6  160 110 3.90 2.620 16.46  0  1    4    4
+## Mazda RX4 Wag     21.0   6  160 110 3.90 2.875 17.02  0  1    4    4
+## Datsun 710        22.8   4  108  93 3.85 2.320 18.61  1  1    4    1
+## Hornet 4 Drive    21.4   6  258 110 3.08 3.215 19.44  1  0    3    1
+## Hornet Sportabout 18.7   8  360 175 3.15 3.440 17.02  0  0    3    2
+## Valiant           18.1   6  225 105 2.76 3.460 20.22  1  0    3    1
+## $x
+##  [1]  1  2  3  4  5  6  7  8  9 10
+## 
+## $y
+##  [1] 0.0000000 0.6931472 1.0986123 1.3862944 1.6094379 1.7917595 1.9459101
+##  [8] 2.0794415 2.1972246 2.3025851</code></pre>
+</div>
+<div id="fonctions-autres" class="section level3">
+<h3>Fonctions autres</h3>
+<div id="recherche" class="section level4">
+<h4>Recherche</h4>
+<p>Il est possible de faire une recherche dans une liste (ou un vecteur) avec les fonctions <code>Find()</code> et <code>Position()</code>. Celles-ci renvoient le premier élément trouvé (ou le dernier car il est possible de partir de la droite). La fonction passée en premier paramètre doit renvoyer les valeurs <code>TRUE</code> ou <code>FALSE</code>.</p>
+<p>On cherche par exemple ici le premier (ou dernier) élément de type <code>vector</code> dans la liste précédemment créée.</p>
+<pre class="r"><code>Find(is.vector, l)</code></pre>
+<pre><code>## [1] &quot;chaîne&quot;</code></pre>
+<pre class="r"><code>Find(is.vector, l, right = TRUE)</code></pre>
+<pre><code>## $x
+##  [1]  1  2  3  4  5  6  7  8  9 10
+## 
+## $y
+##  [1] 0.0000000 0.6931472 1.0986123 1.3862944 1.6094379 1.7917595 1.9459101
+##  [8] 2.0794415 2.1972246 2.3025851</code></pre>
+<pre class="r"><code>Position(is.vector, l)</code></pre>
+<pre><code>## [1] 1</code></pre>
+<pre class="r"><code>Position(is.vector, l, right = TRUE)</code></pre>
+<pre><code>## [1] 5</code></pre>
+</div>
+<div id="filtre" class="section level4">
+<h4>Filtre</h4>
+<p>Pour récupérer tous les éléments d’une liste respectant une condition (grâce à la fonction passée en paramètre donc), on dispose de la fonction <code>Filter()</code>. Nous récupérons ici tous les éléments de la liste qui sont de type <code>vector</code>.</p>
+<pre class="r"><code>Filter(is.vector, l)</code></pre>
+<pre><code>## $a
+## [1] &quot;chaîne&quot;
+## 
+## $b
+## [1] 12
+## 
+## $c
+##  [1]  1  2  3  4  5  6  7  8  9 10
+## 
+## $e
+## $e$x
+##  [1]  1  2  3  4  5  6  7  8  9 10
+## 
+## $e$y
+##  [1] 0.0000000 0.6931472 1.0986123 1.3862944 1.6094379 1.7917595 1.9459101
+##  [8] 2.0794415 2.1972246 2.3025851</code></pre>
+</div>
+<div id="reduction" class="section level4">
+<h4>Réduction</h4>
+<p>On peut opérer une opération de réduction d’une liste à l’aide d’une fonction binaire (à deux paramètres donc).</p>
+<pre class="r"><code>Reduce(function(a, b) return(a + b), 1:5, 0)</code></pre>
+<pre><code>## [1] 15</code></pre>
+<p>Pour fonctionner correctement, la fonction doit retourner un objet utilisable dans la fonction. Dans l’exemple ci-dessous, nous transformons <code>mtcars</code> en une liste de 32 éléments, chacune étant une liste nommée des caractéristiques de la voiture (avec en plus le nom de celle-ci).</p>
+<pre class="r"><code>mt = lapply(1:nrow(mtcars), function(i) {
+        return(c(nom = rownames(mtcars)[i], as.list(mtcars[i,])))
+    })
+unlist(mt[[1]]) # unlist() utilisé pour améliorer l&#39;affichage </code></pre>
+<pre><code>##         nom         mpg         cyl        disp          hp        drat 
+## &quot;Mazda RX4&quot;        &quot;21&quot;         &quot;6&quot;       &quot;160&quot;       &quot;110&quot;       &quot;3.9&quot; 
+##          wt        qsec          vs          am        gear        carb 
+##      &quot;2.62&quot;     &quot;16.46&quot;         &quot;0&quot;         &quot;1&quot;         &quot;4&quot;         &quot;4&quot;</code></pre>
+<p>Imaginons qu’on souhaite faire la somme des consommations, il nous faut créer une liste initiale avec la valeur <code>0</code> pour l’élément <code>mpg</code>. Ensuite, on additionne les deux valeurs qu’on stocke dans <code>a</code> (qui aura pour première valeur <code>init</code>) et on retourne celle-ci.</p>
+<pre class="r"><code>init = list(mpg = 0)
+Reduce(function(a, b) { a$mpg = a$mpg + b$mpg; return(a)}, mt, init)</code></pre>
+<pre><code>## $mpg
+## [1] 642.9</code></pre>
+</div>
+</div>
+</div>
+<div id="a-faire" class="section level2">
+<h2>A faire</h2>
+<p>A partir des données présentes dans le fichier <a href="donnees/World/world-liste.Rdata"><code>world-liste.RData</code></a>, répondre aux questions suivantes. Ces données concernent les pays dans le monde (à la fin du siècle dernier), et sont représentées sous forme de liste dans l’objet <code>Country.liste</code>.</p>
+<ol style="list-style-type: decimal">
+<li>Donner le nombre de pays représentés</li>
+<li>Trouver les informations concernant la <code>France</code></li>
+<li>Lister les pays du continent <code>Antartica</code></li>
+<li>Calculer la population mondiale</li>
+<li>Afficher quelques informations pour chaque pays (un pays par ligne) :
+<ul>
+<li>si l’année d’indépendance (<code>IndepYear</code>) est <code>NA</code>, alors on affichera</li>
+</ul>
+<p><code>pays (continent)</code></p>
+<ul>
+<li>sinon, on affichera :</li>
+</ul>
+<code>pays (continent - indépendance en XXXX)</code></li>
+<li>Créer une nouvelle liste avec le de ratio de la population des villes du pays (voir <code>City</code>) sur la population du pays (<code>Population</code>)</li>
+<li><p>Identifier (donner leur nom) les pays ayant un ratio supérieur à <code>1</code> avec la nouvelle liste créée</p></li>
+</ol>
 </div>
 
 </div>
