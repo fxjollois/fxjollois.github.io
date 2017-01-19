@@ -1,0 +1,5 @@
+---
+title: "Choice of the number of clusters"
+---
+
+- NbClust

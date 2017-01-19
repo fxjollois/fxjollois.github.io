@@ -1,0 +1,6 @@
+---
+title: "Using mixture models"
+---
+
+- mclust
+- Rmixmod

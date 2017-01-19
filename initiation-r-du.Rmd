@@ -323,7 +323,7 @@ abline(m, col = "red")
 
 #### Quali - Quali
 
-Ici, on calcule bien évidemment la talbe de contingence, mais aussi les fréquences totales et marginales (en lignes et en colonnes).
+Ici, on calcule bien évidemment la table de contingence, mais aussi les fréquences totales et marginales (en lignes et en colonnes).
 
 ```{r}
 t <- table(mtcars$cyl, mtcars$am)
@@ -476,7 +476,7 @@ A partir des données présentes dans le fichier [`world-liste.RData`](donnees/W
 
 1. Donner le nombre de pays représentés
 1. Trouver les informations concernant la `France`
-1. Lister les pays du continent `Antartica`
+1. Lister les pays du continent `Antarctica`
 1. Calculer la population mondiale
 1. Afficher quelques informations pour chaque pays (un pays par ligne) :
     - si l'année d'indépendance (`IndepYear`) est `NA`, alors on affichera
