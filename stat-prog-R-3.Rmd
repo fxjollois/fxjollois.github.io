@@ -1,5 +1,6 @@
 ---
 title: "Choice of the number of clusters"
+subtitle: Statistical Programming using `R`
 ---
 
 - NbClust

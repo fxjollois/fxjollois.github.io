@@ -1,5 +1,6 @@
 ---
 title: "Interactive analysis"
+subtitle: Statistical Programming using `R`
 ---
 
 - shiny
