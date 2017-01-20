@@ -708,5 +708,7 @@ for (i in 0:9) {
          xlim = c(-5, 4), ylim = c(-5, 5), main = i)
 }
 ```
-1. We conclude here that we surely need to clusters data separatly for each number, to detect if there are different ways to write a number (and how).
+
+
+> We conclude here that we surely need to clusters data separatly for each number, to detect if there are different ways to write a number (and how).
 
