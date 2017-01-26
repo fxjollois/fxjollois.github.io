@@ -20,6 +20,8 @@ des études de cas plus ou moins liées à mes cours.
 - Dans la partie [Recherche](recherche.html), vous trouverez mes thématiques de recherche, 
 ainsi que mes [publications](publications.html).
 
+- [**Statistical Programming using `R`**](stat-prog-R.html), *Amirkabir University*
+
 ## Quelques liens intéressants 
 
 - [ECAIS](https://sites.google.com/site/groupeecais/) : groupe de travail de l'IUT Paris

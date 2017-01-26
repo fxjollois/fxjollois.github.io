@@ -291,6 +291,8 @@ div.tocify {
             <li role="separator" class="divider"></li>
             <li class="dropdown-header">Master</li>
             <li><a href="slides/cnam-classif-modeles.html">Classification et Modèles de mélange</a></li>
+            <li class="dropdown-header">Iran</li>
+            <li><a href="stat-prog-R.html.html">Statistical Programming using R</a></li>
           </ul>
         </li>
         <li class="dropdown">
@@ -371,7 +373,7 @@ a + 2</code></pre>
 ## [1] 16
 ## [1] 25</code></pre>
 <pre class="r"><code>sample(1:10)</code></pre>
-<pre><code>##  [1]  5  7  3  4  6  9  1  2  8 10</code></pre>
+<pre><code>##  [1] 10  5  7  3  8  6  9  4  1  2</code></pre>
 <pre class="r"><code>paste(&quot;good&quot;, &quot;morning&quot;)</code></pre>
 <pre><code>## [1] &quot;good morning&quot;</code></pre>
 <pre class="r"><code>paste(&quot;good&quot;, &quot;morning&quot;, sep = &quot;-&quot;)</code></pre>
@@ -563,188 +565,190 @@ head(dh)</code></pre>
 <pre class="r"><code>iris = head(iris[sample(seq(nrow(iris))),], 20)</code></pre>
 <p>Get one column from a <code>data.frame</code></p>
 <pre class="r"><code>iris$Sepal.Length</code></pre>
-<pre><code>##  [1] 6.3 6.4 6.8 6.9 5.5 5.9 6.3 5.5 5.9 4.9 6.4 5.4 6.8 5.6 6.7 5.6 4.7
-## [18] 5.8 6.2 4.9</code></pre>
+<pre><code>##  [1] 5.7 4.9 5.4 5.1 6.3 5.8 6.3 6.8 4.5 6.1 5.1 6.4 6.4 6.2 6.7 5.5 6.3
+## [18] 7.2 7.7 5.6</code></pre>
 <pre class="r"><code>iris[,1]</code></pre>
-<pre><code>##  [1] 6.3 6.4 6.8 6.9 5.5 5.9 6.3 5.5 5.9 4.9 6.4 5.4 6.8 5.6 6.7 5.6 4.7
-## [18] 5.8 6.2 4.9</code></pre>
+<pre><code>##  [1] 5.7 4.9 5.4 5.1 6.3 5.8 6.3 6.8 4.5 6.1 5.1 6.4 6.4 6.2 6.7 5.5 6.3
+## [18] 7.2 7.7 5.6</code></pre>
 <pre class="r"><code>iris[,&quot;Sepal.Length&quot;]</code></pre>
-<pre><code>##  [1] 6.3 6.4 6.8 6.9 5.5 5.9 6.3 5.5 5.9 4.9 6.4 5.4 6.8 5.6 6.7 5.6 4.7
-## [18] 5.8 6.2 4.9</code></pre>
+<pre><code>##  [1] 5.7 4.9 5.4 5.1 6.3 5.8 6.3 6.8 4.5 6.1 5.1 6.4 6.4 6.2 6.7 5.5 6.3
+## [18] 7.2 7.7 5.6</code></pre>
 <pre class="r"><code>iris[1]</code></pre>
 <pre><code>##     Sepal.Length
-## 57           6.3
-## 138          6.4
-## 113          6.8
-## 53           6.9
-## 91           5.5
-## 150          5.9
+## 96           5.7
+## 35           4.9
+## 32           5.4
+## 20           5.1
 ## 124          6.3
-## 34           5.5
-## 71           5.9
-## 58           4.9
-## 75           6.4
-## 21           5.4
-## 77           6.8
-## 122          5.6
-## 146          6.7
-## 89           5.6
-## 3            4.7
-## 143          5.8
-## 69           6.2
-## 107          4.9</code></pre>
+## 83           5.8
+## 57           6.3
+## 144          6.8
+## 42           4.5
+## 135          6.1
+## 24           5.1
+## 116          6.4
+## 52           6.4
+## 98           6.2
+## 87           6.7
+## 90           5.5
+## 147          6.3
+## 110          7.2
+## 136          7.7
+## 70           5.6</code></pre>
 <pre class="r"><code>iris[&quot;Sepal.Length&quot;]</code></pre>
 <pre><code>##     Sepal.Length
-## 57           6.3
-## 138          6.4
-## 113          6.8
-## 53           6.9
-## 91           5.5
-## 150          5.9
+## 96           5.7
+## 35           4.9
+## 32           5.4
+## 20           5.1
 ## 124          6.3
-## 34           5.5
-## 71           5.9
-## 58           4.9
-## 75           6.4
-## 21           5.4
-## 77           6.8
-## 122          5.6
-## 146          6.7
-## 89           5.6
-## 3            4.7
-## 143          5.8
-## 69           6.2
-## 107          4.9</code></pre>
+## 83           5.8
+## 57           6.3
+## 144          6.8
+## 42           4.5
+## 135          6.1
+## 24           5.1
+## 116          6.4
+## 52           6.4
+## 98           6.2
+## 87           6.7
+## 90           5.5
+## 147          6.3
+## 110          7.2
+## 136          7.7
+## 70           5.6</code></pre>
 <p>Get more than one column</p>
 <pre class="r"><code>iris[,c(1,3)]</code></pre>
 <pre><code>##     Sepal.Length Petal.Length
-## 57           6.3          4.7
-## 138          6.4          5.5
-## 113          6.8          5.5
-## 53           6.9          4.9
-## 91           5.5          4.4
-## 150          5.9          5.1
+## 96           5.7          4.2
+## 35           4.9          1.5
+## 32           5.4          1.5
+## 20           5.1          1.5
 ## 124          6.3          4.9
-## 34           5.5          1.4
-## 71           5.9          4.8
-## 58           4.9          3.3
-## 75           6.4          4.3
-## 21           5.4          1.7
-## 77           6.8          4.8
-## 122          5.6          4.9
-## 146          6.7          5.2
-## 89           5.6          4.1
-## 3            4.7          1.3
-## 143          5.8          5.1
-## 69           6.2          4.5
-## 107          4.9          4.5</code></pre>
+## 83           5.8          3.9
+## 57           6.3          4.7
+## 144          6.8          5.9
+## 42           4.5          1.3
+## 135          6.1          5.6
+## 24           5.1          1.7
+## 116          6.4          5.3
+## 52           6.4          4.5
+## 98           6.2          4.3
+## 87           6.7          4.7
+## 90           5.5          4.0
+## 147          6.3          5.0
+## 110          7.2          6.1
+## 136          7.7          6.1
+## 70           5.6          3.9</code></pre>
 <pre class="r"><code>iris[,c(&quot;Sepal.Length&quot;, &quot;Petal.Length&quot;)]</code></pre>
 <pre><code>##     Sepal.Length Petal.Length
-## 57           6.3          4.7
-## 138          6.4          5.5
-## 113          6.8          5.5
-## 53           6.9          4.9
-## 91           5.5          4.4
-## 150          5.9          5.1
+## 96           5.7          4.2
+## 35           4.9          1.5
+## 32           5.4          1.5
+## 20           5.1          1.5
 ## 124          6.3          4.9
-## 34           5.5          1.4
-## 71           5.9          4.8
-## 58           4.9          3.3
-## 75           6.4          4.3
-## 21           5.4          1.7
-## 77           6.8          4.8
-## 122          5.6          4.9
-## 146          6.7          5.2
-## 89           5.6          4.1
-## 3            4.7          1.3
-## 143          5.8          5.1
-## 69           6.2          4.5
-## 107          4.9          4.5</code></pre>
+## 83           5.8          3.9
+## 57           6.3          4.7
+## 144          6.8          5.9
+## 42           4.5          1.3
+## 135          6.1          5.6
+## 24           5.1          1.7
+## 116          6.4          5.3
+## 52           6.4          4.5
+## 98           6.2          4.3
+## 87           6.7          4.7
+## 90           5.5          4.0
+## 147          6.3          5.0
+## 110          7.2          6.1
+## 136          7.7          6.1
+## 70           5.6          3.9</code></pre>
 <pre class="r"><code>iris[c(1,3)]</code></pre>
 <pre><code>##     Sepal.Length Petal.Length
-## 57           6.3          4.7
-## 138          6.4          5.5
-## 113          6.8          5.5
-## 53           6.9          4.9
-## 91           5.5          4.4
-## 150          5.9          5.1
+## 96           5.7          4.2
+## 35           4.9          1.5
+## 32           5.4          1.5
+## 20           5.1          1.5
 ## 124          6.3          4.9
-## 34           5.5          1.4
-## 71           5.9          4.8
-## 58           4.9          3.3
-## 75           6.4          4.3
-## 21           5.4          1.7
-## 77           6.8          4.8
-## 122          5.6          4.9
-## 146          6.7          5.2
-## 89           5.6          4.1
-## 3            4.7          1.3
-## 143          5.8          5.1
-## 69           6.2          4.5
-## 107          4.9          4.5</code></pre>
+## 83           5.8          3.9
+## 57           6.3          4.7
+## 144          6.8          5.9
+## 42           4.5          1.3
+## 135          6.1          5.6
+## 24           5.1          1.7
+## 116          6.4          5.3
+## 52           6.4          4.5
+## 98           6.2          4.3
+## 87           6.7          4.7
+## 90           5.5          4.0
+## 147          6.3          5.0
+## 110          7.2          6.1
+## 136          7.7          6.1
+## 70           5.6          3.9</code></pre>
 <pre class="r"><code>iris[c(&quot;Sepal.Length&quot;, &quot;Petal.Length&quot;)]</code></pre>
 <pre><code>##     Sepal.Length Petal.Length
-## 57           6.3          4.7
-## 138          6.4          5.5
-## 113          6.8          5.5
-## 53           6.9          4.9
-## 91           5.5          4.4
-## 150          5.9          5.1
+## 96           5.7          4.2
+## 35           4.9          1.5
+## 32           5.4          1.5
+## 20           5.1          1.5
 ## 124          6.3          4.9
-## 34           5.5          1.4
-## 71           5.9          4.8
-## 58           4.9          3.3
-## 75           6.4          4.3
-## 21           5.4          1.7
-## 77           6.8          4.8
-## 122          5.6          4.9
-## 146          6.7          5.2
-## 89           5.6          4.1
-## 3            4.7          1.3
-## 143          5.8          5.1
-## 69           6.2          4.5
-## 107          4.9          4.5</code></pre>
+## 83           5.8          3.9
+## 57           6.3          4.7
+## 144          6.8          5.9
+## 42           4.5          1.3
+## 135          6.1          5.6
+## 24           5.1          1.7
+## 116          6.4          5.3
+## 52           6.4          4.5
+## 98           6.2          4.3
+## 87           6.7          4.7
+## 90           5.5          4.0
+## 147          6.3          5.0
+## 110          7.2          6.1
+## 136          7.7          6.1
+## 70           5.6          3.9</code></pre>
 <pre class="r"><code>iris[-c(2, 4, 5)]</code></pre>
 <pre><code>##     Sepal.Length Petal.Length
-## 57           6.3          4.7
-## 138          6.4          5.5
-## 113          6.8          5.5
-## 53           6.9          4.9
-## 91           5.5          4.4
-## 150          5.9          5.1
+## 96           5.7          4.2
+## 35           4.9          1.5
+## 32           5.4          1.5
+## 20           5.1          1.5
 ## 124          6.3          4.9
-## 34           5.5          1.4
-## 71           5.9          4.8
-## 58           4.9          3.3
-## 75           6.4          4.3
-## 21           5.4          1.7
-## 77           6.8          4.8
-## 122          5.6          4.9
-## 146          6.7          5.2
-## 89           5.6          4.1
-## 3            4.7          1.3
-## 143          5.8          5.1
-## 69           6.2          4.5
-## 107          4.9          4.5</code></pre>
+## 83           5.8          3.9
+## 57           6.3          4.7
+## 144          6.8          5.9
+## 42           4.5          1.3
+## 135          6.1          5.6
+## 24           5.1          1.7
+## 116          6.4          5.3
+## 52           6.4          4.5
+## 98           6.2          4.3
+## 87           6.7          4.7
+## 90           5.5          4.0
+## 147          6.3          5.0
+## 110          7.2          6.1
+## 136          7.7          6.1
+## 70           5.6          3.9</code></pre>
 <p>Get one row from a <code>data.frame</code></p>
 <pre class="r"><code>iris[1,]</code></pre>
 <pre><code>##    Sepal.Length Sepal.Width Petal.Length Petal.Width    Species
-## 57          6.3         3.3          4.7         1.6 versicolor</code></pre>
+## 96          5.7           3          4.2         1.2 versicolor</code></pre>
 <pre class="r"><code>iris[c(1,3),]</code></pre>
-<pre><code>##     Sepal.Length Sepal.Width Petal.Length Petal.Width    Species
-## 57           6.3         3.3          4.7         1.6 versicolor
-## 113          6.8         3.0          5.5         2.1  virginica</code></pre>
+<pre><code>##    Sepal.Length Sepal.Width Petal.Length Petal.Width    Species
+## 96          5.7         3.0          4.2         1.2 versicolor
+## 32          5.4         3.4          1.5         0.4     setosa</code></pre>
 <pre class="r"><code>iris[iris$Sepal.Length &gt; 6,]</code></pre>
 <pre><code>##     Sepal.Length Sepal.Width Petal.Length Petal.Width    Species
-## 57           6.3         3.3          4.7         1.6 versicolor
-## 138          6.4         3.1          5.5         1.8  virginica
-## 113          6.8         3.0          5.5         2.1  virginica
-## 53           6.9         3.1          4.9         1.5 versicolor
 ## 124          6.3         2.7          4.9         1.8  virginica
-## 75           6.4         2.9          4.3         1.3 versicolor
-## 77           6.8         2.8          4.8         1.4 versicolor
-## 146          6.7         3.0          5.2         2.3  virginica
-## 69           6.2         2.2          4.5         1.5 versicolor</code></pre>
+## 57           6.3         3.3          4.7         1.6 versicolor
+## 144          6.8         3.2          5.9         2.3  virginica
+## 135          6.1         2.6          5.6         1.4  virginica
+## 116          6.4         3.2          5.3         2.3  virginica
+## 52           6.4         3.2          4.5         1.5 versicolor
+## 98           6.2         2.9          4.3         1.3 versicolor
+## 87           6.7         3.1          4.7         1.5 versicolor
+## 147          6.3         2.5          5.0         1.9  virginica
+## 110          7.2         3.6          6.1         2.5  virginica
+## 136          7.7         3.0          6.1         2.3  virginica</code></pre>
 <p>Data types</p>
 <pre class="r"><code>class(names(iris))</code></pre>
 <pre><code>## [1] &quot;character&quot;</code></pre>
@@ -753,39 +757,39 @@ head(dh)</code></pre>
 <pre class="r"><code>class(iris$Species)</code></pre>
 <pre><code>## [1] &quot;factor&quot;</code></pre>
 <pre class="r"><code>head(iris$Species)</code></pre>
-<pre><code>## [1] versicolor virginica  virginica  versicolor versicolor virginica 
+<pre><code>## [1] versicolor setosa     setosa     setosa     virginica  versicolor
 ## Levels: setosa versicolor virginica</code></pre>
 <p>Group two <code>data.frame</code> together</p>
 <pre class="r"><code>cbind(iris[,1], iris[,4:5])</code></pre>
 <pre><code>##     iris[, 1] Petal.Width    Species
-## 57        6.3         1.6 versicolor
-## 138       6.4         1.8  virginica
-## 113       6.8         2.1  virginica
-## 53        6.9         1.5 versicolor
-## 91        5.5         1.2 versicolor
-## 150       5.9         1.8  virginica
+## 96        5.7         1.2 versicolor
+## 35        4.9         0.2     setosa
+## 32        5.4         0.4     setosa
+## 20        5.1         0.3     setosa
 ## 124       6.3         1.8  virginica
-## 34        5.5         0.2     setosa
-## 71        5.9         1.8 versicolor
-## 58        4.9         1.0 versicolor
-## 75        6.4         1.3 versicolor
-## 21        5.4         0.2     setosa
-## 77        6.8         1.4 versicolor
-## 122       5.6         2.0  virginica
-## 146       6.7         2.3  virginica
-## 89        5.6         1.3 versicolor
-## 3         4.7         0.2     setosa
-## 143       5.8         1.9  virginica
-## 69        6.2         1.5 versicolor
-## 107       4.9         1.7  virginica</code></pre>
+## 83        5.8         1.2 versicolor
+## 57        6.3         1.6 versicolor
+## 144       6.8         2.3  virginica
+## 42        4.5         0.3     setosa
+## 135       6.1         1.4  virginica
+## 24        5.1         0.5     setosa
+## 116       6.4         2.3  virginica
+## 52        6.4         1.5 versicolor
+## 98        6.2         1.3 versicolor
+## 87        6.7         1.5 versicolor
+## 90        5.5         1.3 versicolor
+## 147       6.3         1.9  virginica
+## 110       7.2         2.5  virginica
+## 136       7.7         2.3  virginica
+## 70        5.6         1.1 versicolor</code></pre>
 <pre class="r"><code>rbind(iris[1:3,], iris[8:10,])</code></pre>
 <pre><code>##     Sepal.Length Sepal.Width Petal.Length Petal.Width    Species
-## 57           6.3         3.3          4.7         1.6 versicolor
-## 138          6.4         3.1          5.5         1.8  virginica
-## 113          6.8         3.0          5.5         2.1  virginica
-## 34           5.5         4.2          1.4         0.2     setosa
-## 71           5.9         3.2          4.8         1.8 versicolor
-## 58           4.9         2.4          3.3         1.0 versicolor</code></pre>
+## 96           5.7         3.0          4.2         1.2 versicolor
+## 35           4.9         3.1          1.5         0.2     setosa
+## 32           5.4         3.4          1.5         0.4     setosa
+## 144          6.8         3.2          5.9         2.3  virginica
+## 42           4.5         2.3          1.3         0.3     setosa
+## 135          6.1         2.6          5.6         1.4  virginica</code></pre>
 </div>
 <div id="univariate-statistics" class="section level3">
 <h3>Univariate statistics</h3>
@@ -2057,17 +2061,17 @@ ggplot(eig) +
 <li><a href="donnees/pendigits.tra">pendigits.tra</a></li>
 <li><a href="donnees/pendigits.tes">pendigits.tes</a></li>
 </ul>
-<p>Data description can be found <a href="http://archive.ics.uci.edu/ml/datasets/Pen-Based+Recognition+of+Handwritten+Digits">here</a>: each line represent a draw of a number between 0 and 9, with 8 points (<span class="math inline">\((x,y)\)</span> coordinates for each point) and the number drawn.</p>
+<p>Data description can be found <a href="http://archive.ics.uci.edu/ml/datasets/Pen-Based+Recognition+of+Handwritten+Digits">here</a>: each line represent a draw of a digit between 0 and 9, with 8 points (<span class="math inline">\((x,y)\)</span> coordinates for each point) and the number drawn.</p>
 <ol style="list-style-type: decimal">
 <li>Import the two files, and group them into one <code>data.frame</code>
 <ul>
 <li><code>data.frame</code> dimensions: 10992 rows and 17 columns</li>
-<li>column names: X1, Y1, X2, Y2, X3, Y3, X4, Y4, X5, Y5, X6, Y6, X7, Y7, X8, Y8, number</li>
+<li>column names: X1, Y1, X2, Y2, X3, Y3, X4, Y4, X5, Y5, X6, Y6, X7, Y7, X8, Y8, digit</li>
 </ul></li>
 <li>Describe (quickly) all attributes
 <ul>
 <li>one by one first</li>
-<li>coordinates with respect to <code>number</code></li>
+<li>coordinates with respect to <code>digit</code></li>
 </ul></li>
 <li>Represent the first <code>&quot;0&quot;</code> drawn as following <img src="stat-prog-R-1_files/figure-html/unnamed-chunk-52-1.png" width="672" /></li>
 <li>Use the preceding code to create a function, with
@@ -2088,12 +2092,12 @@ ggplot(eig) +
 </ul></li>
 </ul></li>
 <li>Use the function to represent, in one graph, each first drawn for each number <img src="stat-prog-R-1_files/figure-html/unnamed-chunk-54-1.png" width="672" /></li>
-<li>Compute the mean drawn for each number and represent it, with each drawn in (grey) light gray <img src="stat-prog-R-1_files/figure-html/unnamed-chunk-55-1.png" width="672" /></li>
-<li>Perform a <em>PCA</em> on the data, and represent the first plan, with a specific color for each number <img src="stat-prog-R-1_files/figure-html/unnamed-chunk-56-1.png" width="672" /></li>
-<li>Represent each number projections on a specific plot <img src="stat-prog-R-1_files/figure-html/unnamed-chunk-57-1.png" width="672" /></li>
+<li>Compute the mean drawn for each number and represent it, with each drawn in (very) light gray <img src="stat-prog-R-1_files/figure-html/unnamed-chunk-55-1.png" width="672" /></li>
+<li>Perform a <em>PCA</em> on the data, and represent the first plan, with a specific color for each number <img src="stat-prog-R-1_files/figure-html/unnamed-chunk-56-1.png" width="672" /><img src="stat-prog-R-1_files/figure-html/unnamed-chunk-56-2.png" width="672" /></li>
+<li>Represent each number projections on a specific plot <img src="stat-prog-R-1_files/figure-html/unnamed-chunk-57-1.png" width="672" /><img src="stat-prog-R-1_files/figure-html/unnamed-chunk-57-2.png" width="672" /></li>
 </ol>
 <blockquote>
-<p>We conclude here that we surely need to clusters data separatly for each number, to detect if there are different ways to write a number (and how).</p>
+<p>We conclude here that we surely need to clusters data separatly for each digit, to detect if there really are different ways to write a digit (and how).</p>
 </blockquote>
 </div>
 

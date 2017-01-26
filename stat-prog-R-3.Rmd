@@ -1,6 +1,72 @@
 ---
-title: "Choice of the number of clusters"
+title: Direct Clustering
 subtitle: Statistical Programming using `R`
+output:
+  html_document:
+    toc: true
+    toc_float: true
+    toc_depth: 4
 ---
 
-- NbClust
+
+```{r}
+library(reshape2)
+library(ggplot2)
+library(FactoMineR)
+```
+
+## $k$-means
+
+We use the `kmeans()` function, in the package `stats` (already installed and loaded in each `R` session).
+
+### Default use 
+
+Example with `iris` data and `3` clusters
+
+```{r}
+res = kmeans(iris[-5], 3)
+res
+names(res)
+table(res$cluster)
+res$size
+res$centers
+res$totss # I
+res$tot.withinss # W
+res$betweenss # B
+```
+
+
+### Advanced use
+
+With multiple randoms initialization, and on a standardized dataset
+
+```{r}
+res.mult = kmeans(scale(iris[-5]), 3, nstart = 30, iter.max = 20)
+res.mult
+```
+
+With defind starting points (here, the means of each specie)
+
+```{r}
+m = aggregate(. ~ Species, iris, mean)
+res.init = kmeans(iris[-5], m[-1])
+res.init
+```
+
+
+### Clusters validation and representation
+
+```{r}
+table(iris$Species, res.init$cluster)
+pairs(iris[-5], col = rainbow(3)[res.init$cluster], pch = 19)
+dres = data.frame(iris[-5], cluster = factor(res.init$cluster))
+dres.melt = melt(dres, id.vars = "cluster")
+ggplot(dres.melt, aes(cluster, value, fill = cluster)) + 
+    geom_boxplot() + 
+    facet_wrap(~ variable, scales = "free")
+pca = PCA(iris, quali.sup = 5, graph = FALSE)
+res.pca = data.frame(pca$ind$coord, cluster = factor(res.init$cluster))
+ggplot(res.pca, aes(Dim.1, Dim.2, color = cluster)) + 
+    geom_point() +
+    stat_ellipse()
+```

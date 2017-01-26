@@ -4,7 +4,6 @@ subtitle: Statistical Programming using `R`
 output:
   html_document:
     toc: true
-#    theme: united
     toc_float: true
     toc_depth: 4
 ---
@@ -595,13 +594,13 @@ Download the two following files :
 - [pendigits.tra](donnees/pendigits.tra)
 - [pendigits.tes](donnees/pendigits.tes)
 
-Data description can be found [here](http://archive.ics.uci.edu/ml/datasets/Pen-Based+Recognition+of+Handwritten+Digits): each line represent a draw of a number between 0 and 9, with 8 points ($(x,y)$ coordinates for each point) and the number drawn.
+Data description can be found [here](http://archive.ics.uci.edu/ml/datasets/Pen-Based+Recognition+of+Handwritten+Digits): each line represent a draw of a digit between 0 and 9, with 8 points ($(x,y)$ coordinates for each point) and the number drawn.
 
 ```{r, echo = FALSE}
 pen.tra = read.table("donnees/pendigits.tra", sep = ",")
 pen.tes = read.table("donnees/pendigits.tes", sep = ",")
 pen = rbind(pen.tra, pen.tes)
-names(pen) = c(paste0(c("X", "Y"), rep(1:8, each = 2)), "number")
+names(pen) = c(paste0(c("X", "Y"), rep(1:8, each = 2)), "digit")
 ```
 
 1. Import the two files, and group them into one `data.frame`
@@ -609,10 +608,10 @@ names(pen) = c(paste0(c("X", "Y"), rep(1:8, each = 2)), "number")
     - column names: `r names(pen)`
 1. Describe (quickly) all attributes
     - one by one first
-    - coordinates with respect to `number`
+    - coordinates with respect to `digit`
 1. Represent the first `"0"` drawn as following
 ```{r, echo = FALSE}
-first.0 = subset(pen, number == 0)[1,]
+first.0 = subset(pen, digit == 0)[1,]
 x = unlist(first.0[seq(1,15, by = 2)])
 y = unlist(first.0[seq(2,16, by = 2)])
 par(mar = c(0, 0, 0, 0) + .1)
@@ -668,22 +667,22 @@ drawn(first.0)
 drawn(first.0, n = 0)
 drawn(first.0, point = TRUE)
 drawn(first.0)
-first.1 = subset(pen, number == 1)[1,]
+first.1 = subset(pen, digit == 1)[1,]
 drawn(first.1, add = TRUE, col = "red")
 ```
 1. Use the function to represent, in one graph, each first drawn for each number
 ```{r, echo = FALSE}
 par(mfrow = c(2, 5))
 for (i in 0:9) {
-    s = subset(pen, number == i)[1,]
+    s = subset(pen, digit == i)[1,]
     drawn(s[-16], s[17])
 }
 ```
-1. Compute the mean drawn for each number and represent it, with each drawn in (grey) light gray
+1. Compute the mean drawn for each number and represent it, with each drawn in (very) light gray
 ```{r, echo = FALSE}
 par(mfrow = c(2, 5))
 for (i in 0:9) {
-    s = subset(pen, number == i)
+    s = subset(pen, digit == i)
     mean = apply(s[-17], 2, median)
     drawn(s[1,1:16], col = "gray90")
     for (j in 2:nrow(s)) drawn(s[j,1:16], col = "gray90", add = TRUE)
@@ -693,22 +692,28 @@ for (i in 0:9) {
 1. Perform a *PCA* on the data, and represent the first plan, with a specific color for each number
 ```{r, echo = FALSE}
 res = PCA(pen, quali.sup = 17, graph = FALSE)
-plot(res$ind$coord, pch = 19, cex = .5, col = rainbow(10)[pen$number + 1],
+plot(res$ind$coord, pch = 19, cex = .5, col = rainbow(10)[pen$digit + 1],
      xlim = c(-5, 4), ylim = c(-5, 5))
 legend("bottom", legend = 0:9, col = rainbow(10), pch = 19, ncol = 10,
        bty = "n", cex = .75)
+res2 = data.frame(res$ind$coord, digit = factor(pen$digit))
+ggplot(res2, aes(Dim.1, Dim.2, color = digit)) + geom_point()
 ```
 1. Represent each number projections on a specific plot
 ```{r, echo = FALSE}
 par(mfrow = c(2, 5))
 for (i in 0:9) {
-    s = res$ind$coord[pen$number == i,]
+    s = res$ind$coord[pen$digit == i,]
     par(mar = c(2, 2, 2, 0) + .1)
     plot(s, pch = 19, cex = .5, col = rainbow(10)[i + 1],
          xlim = c(-5, 4), ylim = c(-5, 5), main = i)
 }
+ggplot(res2, aes(Dim.1, Dim.2, color = digit)) +
+    geom_point() +
+    facet_wrap(~ digit) +
+    guides(color = FALSE)
 ```
 
 
-> We conclude here that we surely need to clusters data separatly for each number, to detect if there are different ways to write a number (and how).
+> We conclude here that we surely need to clusters data separatly for each digit, to detect if there really are different ways to write a digit (and how).
 
