@@ -1,5 +1,5 @@
 ---
-title: pendigits data - first analysis
+title: "`pendigits` data - first analysis"
 subtitle: Statistical Programming using `R`
 ---
 
