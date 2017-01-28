@@ -3,9 +3,9 @@ title: "Introduction to Data Analysis & Data Visualization"
 subtitle: Statistical Programming using `R`
 output:
   html_document:
-    toc: true
-    toc_float: true
+    toc: yes
     toc_depth: 4
+    toc_float: yes
 ---
 
 ```{r, include = FALSE}
