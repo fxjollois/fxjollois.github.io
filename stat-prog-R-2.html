@@ -381,7 +381,7 @@ h</code></pre>
 <h4>Identify clusters</h4>
 <p>To identify interactively clusters, we can use the <code>identify()</code> function</p>
 <pre class="r"><code>plot(h)
-zz.int = identity(h)
+zz.int = identify(h)
 zz.int
 sapply(zz.int, length)
 z.int = Reduce(function(a, b) return(a + (b * (max(a) + 1))), 
