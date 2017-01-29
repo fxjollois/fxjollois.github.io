@@ -292,7 +292,7 @@ div.tocify {
             <li class="dropdown-header">Master</li>
             <li><a href="slides/cnam-classif-modeles.html">Classification et Modèles de mélange</a></li>
             <li class="dropdown-header">Iran</li>
-            <li><a href="stat-prog-R.html.html">Statistical Programming using R</a></li>
+            <li><a href="stat-prog-R.html">Statistical Programming using R</a></li>
           </ul>
         </li>
         <li class="dropdown">
@@ -425,10 +425,11 @@ table(zward2)</code></pre>
 </div>
 <div id="package-cluster" class="section level3">
 <h3>Package <code>cluster</code></h3>
+<p>This package is already installed with <code>R</code>.</p>
 <pre class="r"><code>library(cluster)</code></pre>
 <div id="agglomerative-nesting" class="section level4">
 <h4>Agglomerative nesting</h4>
-<p><code>agnes()</code> function compute a hierarchical clustering directly from <code>data.frame</code></p>
+<p><code>agnes()</code> function compute a hierarchical clustering directly from <code>data.frame</code> (see <code>?agnes</code> for more details).</p>
 <pre class="r"><code>hagnes = agnes(iris[-5]) # euclidean metric and average method by default
 hagnes</code></pre>
 <pre><code>## Call:     agnes(x = iris[-5]) 
@@ -461,7 +462,7 @@ table(zagnes, zward)</code></pre>
 </div>
 <div id="divisive-clustering" class="section level4">
 <h4>Divisive clustering</h4>
-<p>For descedant clustering, we can use <code>diana()</code> function on a <code>data.frame</code></p>
+<p>For descedant clustering, we can use <code>diana()</code> function on a <code>data.frame</code> (see <code>?diana</code> for more details).</p>
 <pre class="r"><code>ddiana = diana(iris[-5]) # euclidean metric
 plot(ddiana)</code></pre>
 <p><img src="stat-prog-R-2_files/figure-html/unnamed-chunk-10-1.png" width="672" /><img src="stat-prog-R-2_files/figure-html/unnamed-chunk-10-2.png" width="672" /></p>
@@ -597,7 +598,7 @@ ggplot(res.pca, aes(Dim.1, Dim.2, color = cluster)) +
 </div>
 <div id="some-work" class="section level2">
 <h2>Some work</h2>
-<p>From the previous <code>pendigits</code> data, we conclude there are possibly different ways to write each digit Use hierarchical clustering to find, for each digit, a number of types of writing, and represent them.</p>
+<p>From the previous <code>pendigits</code> data, we conclude there are possibly different ways to write each digit. Use hierarchical clustering to find, for each digit, a number of types of writing, and represent them.</p>
 </div>
 
 </div>

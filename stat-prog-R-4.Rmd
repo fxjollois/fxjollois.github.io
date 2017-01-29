@@ -3,5 +3,132 @@ title: "Using mixture models"
 subtitle: Statistical Programming using `R`
 ---
 
-- mclust
-- Rmixmod
+For mixture models clustering, we use the following packages:
+
+```{r, message=FALSE}
+library(mclust)
+library(Rmixmod)
+
+# We also need  
+library(ggplot2)
+```
+
+## Package `mclust`
+
+In this package, the function `mclustBIC()` computes the $EM$ algorithm for many values of number of clusters (with `G` parameter, between 1 and 9 by default) and models (with `modelNames` parameter, all available models by default). It uses $BIC$ criterion to choose the best model.
+
+```{r}
+mBIC = mclustBIC(iris[-5])
+summary(mBIC)
+plot(mBIC)
+```
+
+Now, we apply `Mclust()` function to get the results of the best model.
+
+```{r}
+mBIC1 = Mclust(iris[-5], x = mBIC)
+summary(mBIC1, parameters = TRUE)
+table(mBIC1$classification)
+t(mBIC1$parameters$mean)
+plot(mBIC1, what = "classification")
+table(iris$Species, mBIC1$classification)
+```
+
+If you prefer use the $ICL$ criterion, you can apply the `mclustICL()` function.
+
+```{r}
+mICL = mclustICL(iris[-5])
+summary(mICL)
+plot(mICL)
+```
+
+Now, we apply `Mclust()` function to get the results of the best model. But, we have to indicate *manually* the number of clusters and the model to use in the `Mclust()` function.
+
+```{r}
+testICL = mICL == max(mICL)
+rownames(testICL)[rowSums(testICL) > 0]
+colnames(testICL)[colSums(testICL) > 0]
+
+mICL1 = Mclust(iris[-5], 
+               G = rownames(testICL)[rowSums(testICL) > 0],
+               modelNames = colnames(testICL)[colSums(testICL) > 0])
+summary(mICL1, parameters = TRUE)
+table(mICL1$classification)
+t(mICL1$parameters$mean)
+plot(mICL1, what = "classification")
+table(iris$Species, mICL1$classification)
+```
+
+
+## Package `Rmixmod`
+
+In this package, the function `mixmodCluster()` apply the $EM$ algorithm (initialized by $smallEM$), with many values of number of clusters (with `nbCluster`parameter, without default value) and models (with `models` parameter, `"Gaussian_pk_Lk_C"` by default). It uses by default the $BIC$ criterion.
+
+```{r}
+mixmodBIC = mixmodCluster(iris[-5], 1:9)
+mixmodBIC
+summary(mixmodBIC)
+plot(mixmodBIC)
+hist(mixmodBIC)
+```
+
+
+If you want to use $ICL$ criterion, or event $NEC$, you have to specify it with the `criterion` parameter.
+
+```{r}
+mixmodICL = mixmodCluster(iris[-5], 1:9, criterion = "ICL")
+mixmodICL
+summary(mixmodICL)
+plot(mixmodICL)
+hist(mixmodICL)
+```
+
+If you want to test more models, you can use the `mixmodGaussianModel()` function to list them.
+
+```{r}
+mixmodGaussianModel()
+mixmodGaussianModel(family = "general")
+mixmodGaussianModel(family = "spherical", 
+                    free.proportions = FALSE)
+```
+
+```{r}
+mixmodAll = mixmodCluster(iris[-5], 1:9,
+                          criterion = c("BIC", "ICL", "NEC"),
+                          models = mixmodGaussianModel(),
+                          strategy = mixmodStrategy(algo = "EM",
+                                                    initMethod = "random",
+                                                    nbTry = 20))
+
+
+temp = sapply(attr(mixmodAll, "results"), function(mod) {
+    K = attr(mod, "nbCluster")
+    BIC = attr(mod, "criterionValue")[1]
+    ICL = attr(mod, "criterionValue")[2]
+    NEC = attr(mod, "criterionValue")[3]
+    model = attr(mod, "model")
+    return (c(K = K, model = model, BIC = BIC, ICL = ICL, NEC = NEC))
+})
+mixmodCriterion = transform(data.frame(t(temp), stringsAsFactors = FALSE),
+                            BIC = as.numeric(BIC),
+                            ICL = as.numeric(ICL),
+                            NEC = as.numeric(ICL))
+
+ggplot(mixmodCriterion, aes(K, model, fill = BIC)) + geom_bin2d()
+ggplot(mixmodCriterion, aes(K, BIC, color = model)) + 
+    stat_summary(aes(group = model), fun.y = mean, geom = "line")
+ggplot(mixmodCriterion, aes(K, model, fill = ICL)) + geom_bin2d()
+ggplot(mixmodCriterion, aes(K, ICL, color = model)) + 
+    stat_summary(aes(group = model), fun.y = mean, geom = "line")
+ggplot(mixmodCriterion, aes(K, model, fill = NEC)) + geom_bin2d()
+ggplot(mixmodCriterion, aes(K, NEC, color = model)) + 
+    stat_summary(aes(group = model), fun.y = mean, geom = "line")
+```
+
+
+## Some work
+
+Finally, we want to use these methods to search a good number of clusters for each digit in the `pendigits` data.
+
+
+

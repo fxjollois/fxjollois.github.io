@@ -91,13 +91,15 @@ identical(zward, zward2)
 
 ### Package `cluster`
 
+This package is already installed with `R`.
+
 ```{r}
 library(cluster)
 ```
 
 #### Agglomerative nesting
 
-`agnes()` function compute a hierarchical clustering directly from `data.frame`
+`agnes()` function compute a hierarchical clustering directly from `data.frame` (see `?agnes` for more details).
 
 ```{r}
 hagnes = agnes(iris[-5]) # euclidean metric and average method by default
@@ -109,7 +111,7 @@ table(zagnes, zward)
 
 #### Divisive clustering
 
-For descedant clustering, we can use `diana()` function on a `data.frame`
+For descedant clustering, we can use `diana()` function on a `data.frame` (see `?diana` for more details).
 
 ```{r}
 ddiana = diana(iris[-5]) # euclidean metric
@@ -195,12 +197,5 @@ ggplot(res.pca, aes(Dim.1, Dim.2, color = cluster)) +
 
 ## Some work
 
-```{r, echo = FALSE}
-pen.tra = read.table("donnees/pendigits.tra", sep = ",")
-pen.tes = read.table("donnees/pendigits.tes", sep = ",")
-pen = rbind(pen.tra, pen.tes)
-names(pen) = c(paste0(c("X", "Y"), rep(1:8, each = 2)), "number")
-```
-
-From the previous `pendigits` data, we conclude there are possibly different ways to write each digit Use hierarchical clustering to find, for each digit, a number of types of writing, and represent them.
+From the previous `pendigits` data, we conclude there are possibly different ways to write each digit. Use hierarchical clustering to find, for each digit, a number of types of writing, and represent them.
 
