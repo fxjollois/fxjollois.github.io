@@ -12,6 +12,7 @@ This course is an introduction to **statstical programming** using the `R` langu
 1. [Direct Clustering](stat-prog-R-3.html)
     - [Direct clustering on `pendigits` data](stat-prog-R-3-work.html)
 1. [Using mixture models](stat-prog-R-4.html)
+    - [Mixture models on `pendigits` data](stat-prog-R-4-work.html)
 1. [Interactive analysis](stat-prog-R-5.html)
 
 Some interesting links:
