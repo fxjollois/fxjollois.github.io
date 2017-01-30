@@ -240,6 +240,8 @@ library(Rmixmod)
 library(ggplot2)</code></pre>
 <div id="package-mclust" class="section level2">
 <h2>Package <code>mclust</code></h2>
+<div id="direct-clustering" class="section level3">
+<h3>Direct clustering</h3>
 <p>In this package, the function <code>mclustBIC()</code> computes the <span class="math inline">\(EM\)</span> algorithm for many values of number of clusters (with <code>G</code> parameter, between 1 and 9 by default) and models (with <code>modelNames</code> parameter, all available models by default). It uses <span class="math inline">\(BIC\)</span> criterion to choose the best model.</p>
 <pre class="r"><code>mBIC = mclustBIC(iris[-5])
 summary(mBIC)</code></pre>
@@ -299,12 +301,35 @@ summary(mBIC1, parameters = TRUE)</code></pre>
 ## [2,]     6.261996    2.871999     4.905993   1.6759972</code></pre>
 <pre class="r"><code>plot(mBIC1, what = &quot;classification&quot;)</code></pre>
 <p><img src="stat-prog-R-4_files/figure-html/unnamed-chunk-3-1.png" width="672" /></p>
+<pre class="r"><code>plot(mBIC1, what = &quot;uncertainty&quot;)</code></pre>
+<p><img src="stat-prog-R-4_files/figure-html/unnamed-chunk-3-2.png" width="672" /></p>
+<pre class="r"><code>plot(mBIC1, what = &quot;density&quot;)</code></pre>
+<p><img src="stat-prog-R-4_files/figure-html/unnamed-chunk-3-3.png" width="672" /></p>
 <pre class="r"><code>table(iris$Species, mBIC1$classification)</code></pre>
 <pre><code>##             
 ##               1  2
 ##   setosa     50  0
 ##   versicolor  0 50
 ##   virginica   0 50</code></pre>
+<p>We see that the same model with 3 clusters is the second choice.</p>
+<pre class="r"><code>mBIC2 = Mclust(iris[-5], G = 3, modelNames = &quot;VEV&quot;)
+table(mBIC2$classification)</code></pre>
+<pre><code>## 
+##  1  2  3 
+## 50 45 55</code></pre>
+<pre class="r"><code>t(mBIC2$parameters$mean)</code></pre>
+<pre><code>##      Sepal.Length Sepal.Width Petal.Length Petal.Width
+## [1,]     5.006000    3.428000     1.462000    0.246000
+## [2,]     5.914717    2.777559     4.203528    1.298712
+## [3,]     6.546545    2.949380     5.481568    1.985130</code></pre>
+<pre class="r"><code>plot(mBIC2, what = &quot;classification&quot;)</code></pre>
+<p><img src="stat-prog-R-4_files/figure-html/unnamed-chunk-4-1.png" width="672" /></p>
+<pre class="r"><code>table(iris$Species, mBIC2$classification)</code></pre>
+<pre><code>##             
+##               1  2  3
+##   setosa     50  0  0
+##   versicolor  0 45  5
+##   virginica   0  0 50</code></pre>
 <p>If you prefer use the <span class="math inline">\(ICL\)</span> criterion, you can apply the <code>mclustICL()</code> function.</p>
 <pre class="r"><code>mICL = mclustICL(iris[-5])
 summary(mICL)</code></pre>
@@ -313,16 +338,11 @@ summary(mICL)</code></pre>
 ## ICL      -561.7289 -566.45770 -574.01910
 ## ICL diff    0.0000   -4.72882  -12.29022</code></pre>
 <pre class="r"><code>plot(mICL)</code></pre>
-<p><img src="stat-prog-R-4_files/figure-html/unnamed-chunk-4-1.png" width="672" /></p>
+<p><img src="stat-prog-R-4_files/figure-html/unnamed-chunk-5-1.png" width="672" /></p>
 <p>Now, we apply <code>Mclust()</code> function to get the results of the best model. But, we have to indicate <em>manually</em> the number of clusters and the model to use in the <code>Mclust()</code> function.</p>
-<pre class="r"><code>testICL = mICL == max(mICL)
-rownames(testICL)[rowSums(testICL) &gt; 0]</code></pre>
-<pre><code>## [1] &quot;2&quot;</code></pre>
-<pre class="r"><code>colnames(testICL)[colSums(testICL) &gt; 0]</code></pre>
-<pre><code>## [1] &quot;VEV&quot;</code></pre>
 <pre class="r"><code>mICL1 = Mclust(iris[-5], 
-               G = rownames(testICL)[rowSums(testICL) &gt; 0],
-               modelNames = colnames(testICL)[colSums(testICL) &gt; 0])
+               G = 2,
+               modelNames = &quot;VEV&quot;)
 summary(mICL1, parameters = TRUE)</code></pre>
 <pre><code>## ----------------------------------------------------
 ## Gaussian finite mixture model fitted by EM algorithm 
@@ -370,13 +390,73 @@ summary(mICL1, parameters = TRUE)</code></pre>
 ## [1,]     5.006002    3.428005     1.462001   0.2459998
 ## [2,]     6.261996    2.871999     4.905993   1.6759972</code></pre>
 <pre class="r"><code>plot(mICL1, what = &quot;classification&quot;)</code></pre>
-<p><img src="stat-prog-R-4_files/figure-html/unnamed-chunk-5-1.png" width="672" /></p>
+<p><img src="stat-prog-R-4_files/figure-html/unnamed-chunk-6-1.png" width="672" /></p>
 <pre class="r"><code>table(iris$Species, mICL1$classification)</code></pre>
 <pre><code>##             
 ##               1  2
 ##   setosa     50  0
 ##   versicolor  0 50
 ##   virginica   0 50</code></pre>
+<p>We can also compute some other criteria, such as <span class="math inline">\(AIC\)</span> and <span class="math inline">\(AIC3\)</span>.</p>
+<pre class="r"><code>G = attr(mBIC, &quot;G&quot;)
+modelNames = attr(mBIC, &quot;modelNames&quot;)
+d = attr(mBIC, &quot;d&quot;)
+criterion = data.frame(G = rep(G, length(modelNames)),
+                       model = rep(modelNames, each = length(G)),
+                       AIC = NA,
+                       AIC3 = NA,
+                       stringsAsFactors = FALSE)
+for (i in 1:nrow(criterion)) {
+    m = Mclust(iris[-5], G = criterion$G[i], 
+               modelNames = criterion$model[i])
+    p = nMclustParams(criterion$model[i], d, criterion$G[i])
+    criterion[i, &quot;AIC&quot;] = -2 * m$loglik + 2 * p
+    criterion[i, &quot;AIC3&quot;] = -2 * m$loglik + 3 * p
+}
+head(criterion[order(criterion$AIC),], 3)</code></pre>
+<pre><code>##     G model      AIC     AIC3
+## 124 7   VVV 415.4447 519.4447
+## 107 8   VEV 429.1328 527.1328
+## 126 9   VVV 432.4844 566.4844</code></pre>
+<pre class="r"><code>ggplot(criterion, aes(factor(G), AIC, color = model)) +
+    geom_line() </code></pre>
+<pre><code>## geom_path: Each group consists of only one observation. Do you need to
+## adjust the group aesthetic?</code></pre>
+<p><img src="stat-prog-R-4_files/figure-html/unnamed-chunk-7-1.png" width="672" /></p>
+<pre class="r"><code>head(criterion[order(criterion$AIC3),], 3)</code></pre>
+<pre><code>##     G model      AIC     AIC3
+## 102 3   VEV 448.1473 486.1473
+## 120 3   VVV 448.3719 492.3719
+## 103 4   VEV 453.3948 503.3948</code></pre>
+<pre class="r"><code>ggplot(criterion, aes(factor(G), AIC3, color = model)) +
+    geom_line()</code></pre>
+<pre><code>## geom_path: Each group consists of only one observation. Do you need to
+## adjust the group aesthetic?</code></pre>
+<p><img src="stat-prog-R-4_files/figure-html/unnamed-chunk-7-2.png" width="672" /></p>
+</div>
+<div id="hierarchical-clustering" class="section level3">
+<h3>Hierarchical clustering</h3>
+<p>This package also contains the <code>hc()</code> function, computing a model-based hierarchical clustering. You have to specify the model to use.</p>
+<pre class="r"><code>hm = hc(iris[-5], &quot;VVV&quot;)
+hm2 = hclass(hm, 2)
+clPairs(iris[-5], cl = hm2)</code></pre>
+<p><img src="stat-prog-R-4_files/figure-html/unnamed-chunk-8-1.png" width="672" /></p>
+<pre class="r"><code>table(iris$Species, hm2)</code></pre>
+<pre><code>##             hm2
+##               1  2
+##   setosa     50  0
+##   versicolor  0 50
+##   virginica   0 50</code></pre>
+<pre class="r"><code>hm3 = hclass(hm, 3)
+clPairs(iris[-5], cl = hm3)</code></pre>
+<p><img src="stat-prog-R-4_files/figure-html/unnamed-chunk-8-2.png" width="672" /></p>
+<pre class="r"><code>table(iris$Species, hm3)</code></pre>
+<pre><code>##             hm3
+##               1  2  3
+##   setosa     50  0  0
+##   versicolor  0 50  0
+##   virginica   0 14 36</code></pre>
+</div>
 </div>
 <div id="package-rmixmod" class="section level2">
 <h2>Package <code>Rmixmod</code></h2>
@@ -427,37 +507,37 @@ mixmodBIC</code></pre>
 ## ****************************************
 ## * nbCluster   =  4 
 ## * model name  =  Gaussian_pk_Lk_C 
-## * criterion   =  BIC(593.8636)
-## * likelihood  =  -216.7616 
+## * criterion   =  BIC(602.9129)
+## * likelihood  =  -221.2863 
 ## ****************************************
 ## *** Cluster 1 
-## * proportion =  0.3360 
-## * means      =  5.9439 2.7564 4.2706 1.3245 
-## * variances  = |     0.2353     0.1031     0.1259     0.0481 |
-##                |     0.1031     0.1314     0.0495     0.0282 |
-##                |     0.1259     0.0495     0.1472     0.0508 |
-##                |     0.0481     0.0282     0.0508     0.0352 |
+## * proportion =  0.3097 
+## * means      =  5.9261 2.7664 4.2192 1.3037 
+## * variances  = |     0.2044     0.0697     0.1261     0.0337 |
+##                |     0.0697     0.0909     0.0491     0.0265 |
+##                |     0.1261     0.0491     0.1413     0.0354 |
+##                |     0.0337     0.0265     0.0354     0.0320 |
 ## *** Cluster 2 
-## * proportion =  0.0998 
-## * means      =  7.0928 2.9688 6.0559 1.8731 
-## * variances  = |     0.2957     0.1296     0.1582     0.0604 |
-##                |     0.1296     0.1652     0.0622     0.0354 |
-##                |     0.1582     0.0622     0.1851     0.0638 |
-##                |     0.0604     0.0354     0.0638     0.0443 |
+## * proportion =  0.1332 
+## * means      =  5.2650 3.7543 1.4469 0.2521 
+## * variances  = |     0.1224     0.0418     0.0755     0.0202 |
+##                |     0.0418     0.0545     0.0294     0.0159 |
+##                |     0.0755     0.0294     0.0846     0.0212 |
+##                |     0.0202     0.0159     0.0212     0.0192 |
 ## *** Cluster 3 
-## * proportion =  0.2309 
-## * means      =  6.3659 2.9984 5.3337 2.1023 
-## * variances  = |     0.2504     0.1098     0.1340     0.0511 |
-##                |     0.1098     0.1399     0.0527     0.0300 |
-##                |     0.1340     0.0527     0.1567     0.0540 |
-##                |     0.0511     0.0300     0.0540     0.0375 |
+## * proportion =  0.2001 
+## * means      =  4.8336 3.2108 1.4721 0.2420 
+## * variances  = |     0.1083     0.0370     0.0669     0.0179 |
+##                |     0.0370     0.0482     0.0260     0.0140 |
+##                |     0.0669     0.0260     0.0749     0.0188 |
+##                |     0.0179     0.0140     0.0188     0.0170 |
 ## *** Cluster 4 
-## * proportion =  0.3333 
-## * means      =  5.0060 3.4280 1.4620 0.2460 
-## * variances  = |     0.1543     0.0676     0.0826     0.0315 |
-##                |     0.0676     0.0862     0.0325     0.0185 |
-##                |     0.0826     0.0325     0.0966     0.0333 |
-##                |     0.0315     0.0185     0.0333     0.0231 |
+## * proportion =  0.3570 
+## * means      =  6.5535 2.9636 5.5019 1.9990 
+## * variances  = |     0.3859     0.1317     0.2381     0.0636 |
+##                |     0.1317     0.1717     0.0926     0.0500 |
+##                |     0.2381     0.0926     0.2668     0.0669 |
+##                |     0.0636     0.0500     0.0669     0.0604 |
 ## ****************************************</code></pre>
 <pre class="r"><code>summary(mixmodBIC)</code></pre>
 <pre><code>## **************************************************************
@@ -466,43 +546,43 @@ mixmodBIC</code></pre>
 ## **************************************************************
 ## *       Number of cluster =  4 
 ## *              Model Type =  Gaussian_pk_Lk_C 
-## *               Criterion =  BIC(593.8636)
+## *               Criterion =  BIC(602.9129)
 ## *              Parameters =  list by cluster
 ## *                  Cluster  1 : 
-##                          Proportion =  0.3360 
-##                               Means =  5.9439 2.7564 4.2706 1.3245 
-##                           Variances = |     0.2353     0.1031     0.1259     0.0481 |
-##                                       |     0.1031     0.1314     0.0495     0.0282 |
-##                                       |     0.1259     0.0495     0.1472     0.0508 |
-##                                       |     0.0481     0.0282     0.0508     0.0352 |
+##                          Proportion =  0.3097 
+##                               Means =  5.9261 2.7664 4.2192 1.3037 
+##                           Variances = |     0.2044     0.0697     0.1261     0.0337 |
+##                                       |     0.0697     0.0909     0.0491     0.0265 |
+##                                       |     0.1261     0.0491     0.1413     0.0354 |
+##                                       |     0.0337     0.0265     0.0354     0.0320 |
 ## *                  Cluster  2 : 
-##                          Proportion =  0.0998 
-##                               Means =  7.0928 2.9688 6.0559 1.8731 
-##                           Variances = |     0.2957     0.1296     0.1582     0.0604 |
-##                                       |     0.1296     0.1652     0.0622     0.0354 |
-##                                       |     0.1582     0.0622     0.1851     0.0638 |
-##                                       |     0.0604     0.0354     0.0638     0.0443 |
+##                          Proportion =  0.1332 
+##                               Means =  5.2650 3.7543 1.4469 0.2521 
+##                           Variances = |     0.1224     0.0418     0.0755     0.0202 |
+##                                       |     0.0418     0.0545     0.0294     0.0159 |
+##                                       |     0.0755     0.0294     0.0846     0.0212 |
+##                                       |     0.0202     0.0159     0.0212     0.0192 |
 ## *                  Cluster  3 : 
-##                          Proportion =  0.2309 
-##                               Means =  6.3659 2.9984 5.3337 2.1023 
-##                           Variances = |     0.2504     0.1098     0.1340     0.0511 |
-##                                       |     0.1098     0.1399     0.0527     0.0300 |
-##                                       |     0.1340     0.0527     0.1567     0.0540 |
-##                                       |     0.0511     0.0300     0.0540     0.0375 |
+##                          Proportion =  0.2001 
+##                               Means =  4.8336 3.2108 1.4721 0.2420 
+##                           Variances = |     0.1083     0.0370     0.0669     0.0179 |
+##                                       |     0.0370     0.0482     0.0260     0.0140 |
+##                                       |     0.0669     0.0260     0.0749     0.0188 |
+##                                       |     0.0179     0.0140     0.0188     0.0170 |
 ## *                  Cluster  4 : 
-##                          Proportion =  0.3333 
-##                               Means =  5.0060 3.4280 1.4620 0.2460 
-##                           Variances = |     0.1543     0.0676     0.0826     0.0315 |
-##                                       |     0.0676     0.0862     0.0325     0.0185 |
-##                                       |     0.0826     0.0325     0.0966     0.0333 |
-##                                       |     0.0315     0.0185     0.0333     0.0231 |
-## *          Log-likelihood =  -216.7616 
+##                          Proportion =  0.3570 
+##                               Means =  6.5535 2.9636 5.5019 1.9990 
+##                           Variances = |     0.3859     0.1317     0.2381     0.0636 |
+##                                       |     0.1317     0.1717     0.0926     0.0500 |
+##                                       |     0.2381     0.0926     0.2668     0.0669 |
+##                                       |     0.0636     0.0500     0.0669     0.0604 |
+## *          Log-likelihood =  -221.2863 
 ## **************************************************************</code></pre>
 <pre class="r"><code>plot(mixmodBIC)</code></pre>
-<p><img src="stat-prog-R-4_files/figure-html/unnamed-chunk-6-1.png" width="672" /></p>
+<p><img src="stat-prog-R-4_files/figure-html/unnamed-chunk-9-1.png" width="672" /></p>
 <pre class="r"><code>hist(mixmodBIC)</code></pre>
-<p><img src="stat-prog-R-4_files/figure-html/unnamed-chunk-6-2.png" width="672" /></p>
-<p>If you want to use <span class="math inline">\(ICL\)</span> criterion, or event <span class="math inline">\(NEC\)</span>, you have to specify it with the <code>criterion</code> parameter.</p>
+<p><img src="stat-prog-R-4_files/figure-html/unnamed-chunk-9-2.png" width="672" /></p>
+<p>If you want to use <span class="math inline">\(ICL\)</span> criterion, or even <span class="math inline">\(NEC\)</span>, you have to specify it with the <code>criterion</code> parameter.</p>
 <pre class="r"><code>mixmodICL = mixmodCluster(iris[-5], 1:9, criterion = &quot;ICL&quot;)
 mixmodICL</code></pre>
 <pre><code>## ****************************************
@@ -547,69 +627,83 @@ mixmodICL</code></pre>
 ## *** BEST MODEL OUTPUT:
 ## *** According to the ICL criterion
 ## ****************************************
-## * nbCluster   =  3 
+## * nbCluster   =  4 
 ## * model name  =  Gaussian_pk_Lk_C 
-## * criterion   =  ICL(620.0596)
-## * likelihood  =  -237.5606 
+## * criterion   =  ICL(612.7570)
+## * likelihood  =  -216.7617 
 ## ****************************************
 ## *** Cluster 1 
-## * proportion =  0.3540 
-## * means      =  6.5541 2.9741 5.5061 2.0035 
-## * variances  = |     0.4056     0.1675     0.2323     0.0624 |
-##                |     0.1675     0.2142     0.0799     0.0458 |
-##                |     0.2323     0.0799     0.2618     0.0651 |
-##                |     0.0624     0.0458     0.0651     0.0567 |
+## * proportion =  0.0998 
+## * means      =  7.0930 2.9688 6.0560 1.8732 
+## * variances  = |     0.2958     0.1297     0.1582     0.0604 |
+##                |     0.1297     0.1653     0.0622     0.0354 |
+##                |     0.1582     0.0622     0.1851     0.0638 |
+##                |     0.0604     0.0354     0.0638     0.0443 |
 ## *** Cluster 2 
+## * proportion =  0.3360 
+## * means      =  5.9439 2.7564 4.2706 1.3245 
+## * variances  = |     0.2352     0.1031     0.1258     0.0481 |
+##                |     0.1031     0.1315     0.0495     0.0282 |
+##                |     0.1258     0.0495     0.1472     0.0508 |
+##                |     0.0481     0.0282     0.0508     0.0353 |
+## *** Cluster 3 
 ## * proportion =  0.3333 
 ## * means      =  5.0060 3.4280 1.4620 0.2460 
-## * variances  = |     0.1550     0.0640     0.0888     0.0238 |
-##                |     0.0640     0.0819     0.0305     0.0175 |
-##                |     0.0888     0.0305     0.1000     0.0249 |
-##                |     0.0238     0.0175     0.0249     0.0217 |
-## *** Cluster 3 
-## * proportion =  0.3127 
-## * means      =  5.9313 2.7564 4.2267 1.3053 
-## * variances  = |     0.2153     0.0889     0.1233     0.0331 |
-##                |     0.0889     0.1137     0.0424     0.0243 |
-##                |     0.1233     0.0424     0.1390     0.0346 |
-##                |     0.0331     0.0243     0.0346     0.0301 |
+## * variances  = |     0.1543     0.0676     0.0825     0.0315 |
+##                |     0.0676     0.0862     0.0324     0.0185 |
+##                |     0.0825     0.0324     0.0965     0.0333 |
+##                |     0.0315     0.0185     0.0333     0.0231 |
+## *** Cluster 4 
+## * proportion =  0.2309 
+## * means      =  6.3657 2.9984 5.3336 2.1023 
+## * variances  = |     0.2503     0.1098     0.1339     0.0511 |
+##                |     0.1098     0.1399     0.0527     0.0300 |
+##                |     0.1339     0.0527     0.1567     0.0540 |
+##                |     0.0511     0.0300     0.0540     0.0375 |
 ## ****************************************</code></pre>
 <pre class="r"><code>summary(mixmodICL)</code></pre>
 <pre><code>## **************************************************************
 ## * Number of samples    =  150 
 ## * Problem dimension    =  4 
 ## **************************************************************
-## *       Number of cluster =  3 
+## *       Number of cluster =  4 
 ## *              Model Type =  Gaussian_pk_Lk_C 
-## *               Criterion =  ICL(620.0596)
+## *               Criterion =  ICL(612.7570)
 ## *              Parameters =  list by cluster
 ## *                  Cluster  1 : 
-##                          Proportion =  0.3540 
-##                               Means =  6.5541 2.9741 5.5061 2.0035 
-##                           Variances = |     0.4056     0.1675     0.2323     0.0624 |
-##                                       |     0.1675     0.2142     0.0799     0.0458 |
-##                                       |     0.2323     0.0799     0.2618     0.0651 |
-##                                       |     0.0624     0.0458     0.0651     0.0567 |
+##                          Proportion =  0.0998 
+##                               Means =  7.0930 2.9688 6.0560 1.8732 
+##                           Variances = |     0.2958     0.1297     0.1582     0.0604 |
+##                                       |     0.1297     0.1653     0.0622     0.0354 |
+##                                       |     0.1582     0.0622     0.1851     0.0638 |
+##                                       |     0.0604     0.0354     0.0638     0.0443 |
 ## *                  Cluster  2 : 
+##                          Proportion =  0.3360 
+##                               Means =  5.9439 2.7564 4.2706 1.3245 
+##                           Variances = |     0.2352     0.1031     0.1258     0.0481 |
+##                                       |     0.1031     0.1315     0.0495     0.0282 |
+##                                       |     0.1258     0.0495     0.1472     0.0508 |
+##                                       |     0.0481     0.0282     0.0508     0.0353 |
+## *                  Cluster  3 : 
 ##                          Proportion =  0.3333 
 ##                               Means =  5.0060 3.4280 1.4620 0.2460 
-##                           Variances = |     0.1550     0.0640     0.0888     0.0238 |
-##                                       |     0.0640     0.0819     0.0305     0.0175 |
-##                                       |     0.0888     0.0305     0.1000     0.0249 |
-##                                       |     0.0238     0.0175     0.0249     0.0217 |
-## *                  Cluster  3 : 
-##                          Proportion =  0.3127 
-##                               Means =  5.9313 2.7564 4.2267 1.3053 
-##                           Variances = |     0.2153     0.0889     0.1233     0.0331 |
-##                                       |     0.0889     0.1137     0.0424     0.0243 |
-##                                       |     0.1233     0.0424     0.1390     0.0346 |
-##                                       |     0.0331     0.0243     0.0346     0.0301 |
-## *          Log-likelihood =  -237.5606 
+##                           Variances = |     0.1543     0.0676     0.0825     0.0315 |
+##                                       |     0.0676     0.0862     0.0324     0.0185 |
+##                                       |     0.0825     0.0324     0.0965     0.0333 |
+##                                       |     0.0315     0.0185     0.0333     0.0231 |
+## *                  Cluster  4 : 
+##                          Proportion =  0.2309 
+##                               Means =  6.3657 2.9984 5.3336 2.1023 
+##                           Variances = |     0.2503     0.1098     0.1339     0.0511 |
+##                                       |     0.1098     0.1399     0.0527     0.0300 |
+##                                       |     0.1339     0.0527     0.1567     0.0540 |
+##                                       |     0.0511     0.0300     0.0540     0.0375 |
+## *          Log-likelihood =  -216.7617 
 ## **************************************************************</code></pre>
 <pre class="r"><code>plot(mixmodICL)</code></pre>
-<p><img src="stat-prog-R-4_files/figure-html/unnamed-chunk-7-1.png" width="672" /></p>
+<p><img src="stat-prog-R-4_files/figure-html/unnamed-chunk-10-1.png" width="672" /></p>
 <pre class="r"><code>hist(mixmodICL)</code></pre>
-<p><img src="stat-prog-R-4_files/figure-html/unnamed-chunk-7-2.png" width="672" /></p>
+<p><img src="stat-prog-R-4_files/figure-html/unnamed-chunk-10-2.png" width="672" /></p>
 <p>If you want to test more models, you can use the <code>mixmodGaussianModel()</code> function to list them.</p>
 <pre class="r"><code>mixmodGaussianModel()</code></pre>
 <pre><code>## ****************************************
@@ -630,13 +724,14 @@ mixmodICL</code></pre>
 ## * list =  Gaussian_p_L_I Gaussian_p_Lk_I 
 ## * This list includes only models with equal proportions.
 ## ****************************************</code></pre>
-<pre class="r"><code>mixmodAll = mixmodCluster(iris[-5], 1:9,
-                          criterion = c(&quot;BIC&quot;, &quot;ICL&quot;, &quot;NEC&quot;),
-                          models = mixmodGaussianModel(),
-                          strategy = mixmodStrategy(algo = &quot;EM&quot;,
-                                                    initMethod = &quot;random&quot;,
-                                                    nbTry = 20))
-
+<p>Then, we test all the gaussian models. We also change the initialization strategy. By default, <code>mixmodCluster()</code> use a <span class="math inline">\(smallEM\)</span>, from 50 random starts. We decide here to test <span class="math inline">\(EM\)</span> with 20 random initialization.</p>
+<pre class="r"><code>mixmodAll = mixmodCluster(
+    iris[-5], 1:9,
+    criterion = c(&quot;BIC&quot;, &quot;ICL&quot;, &quot;NEC&quot;),
+    models = mixmodGaussianModel(),
+    strategy = mixmodStrategy(algo = &quot;EM&quot;,
+                              initMethod = &quot;random&quot;,
+                              nbTry = 20))
 
 temp = sapply(attr(mixmodAll, &quot;results&quot;), function(mod) {
     K = attr(mod, &quot;nbCluster&quot;)
@@ -646,26 +741,27 @@ temp = sapply(attr(mixmodAll, &quot;results&quot;), function(mod) {
     model = attr(mod, &quot;model&quot;)
     return (c(K = K, model = model, BIC = BIC, ICL = ICL, NEC = NEC))
 })
-mixmodCriterion = transform(data.frame(t(temp), stringsAsFactors = FALSE),
-                            BIC = as.numeric(BIC),
-                            ICL = as.numeric(ICL),
-                            NEC = as.numeric(ICL))
+mixmodCriterion = transform(
+    data.frame(t(temp), stringsAsFactors = FALSE),
+    BIC = as.numeric(BIC),
+    ICL = as.numeric(ICL),
+    NEC = as.numeric(ICL))
 
 ggplot(mixmodCriterion, aes(K, model, fill = BIC)) + geom_bin2d()</code></pre>
-<p><img src="stat-prog-R-4_files/figure-html/unnamed-chunk-9-1.png" width="672" /></p>
+<p><img src="stat-prog-R-4_files/figure-html/unnamed-chunk-12-1.png" width="672" /></p>
 <pre class="r"><code>ggplot(mixmodCriterion, aes(K, BIC, color = model)) + 
     stat_summary(aes(group = model), fun.y = mean, geom = &quot;line&quot;)</code></pre>
-<p><img src="stat-prog-R-4_files/figure-html/unnamed-chunk-9-2.png" width="672" /></p>
+<p><img src="stat-prog-R-4_files/figure-html/unnamed-chunk-12-2.png" width="672" /></p>
 <pre class="r"><code>ggplot(mixmodCriterion, aes(K, model, fill = ICL)) + geom_bin2d()</code></pre>
-<p><img src="stat-prog-R-4_files/figure-html/unnamed-chunk-9-3.png" width="672" /></p>
+<p><img src="stat-prog-R-4_files/figure-html/unnamed-chunk-12-3.png" width="672" /></p>
 <pre class="r"><code>ggplot(mixmodCriterion, aes(K, ICL, color = model)) + 
     stat_summary(aes(group = model), fun.y = mean, geom = &quot;line&quot;)</code></pre>
-<p><img src="stat-prog-R-4_files/figure-html/unnamed-chunk-9-4.png" width="672" /></p>
+<p><img src="stat-prog-R-4_files/figure-html/unnamed-chunk-12-4.png" width="672" /></p>
 <pre class="r"><code>ggplot(mixmodCriterion, aes(K, model, fill = NEC)) + geom_bin2d()</code></pre>
-<p><img src="stat-prog-R-4_files/figure-html/unnamed-chunk-9-5.png" width="672" /></p>
+<p><img src="stat-prog-R-4_files/figure-html/unnamed-chunk-12-5.png" width="672" /></p>
 <pre class="r"><code>ggplot(mixmodCriterion, aes(K, NEC, color = model)) + 
     stat_summary(aes(group = model), fun.y = mean, geom = &quot;line&quot;)</code></pre>
-<p><img src="stat-prog-R-4_files/figure-html/unnamed-chunk-9-6.png" width="672" /></p>
+<p><img src="stat-prog-R-4_files/figure-html/unnamed-chunk-12-6.png" width="672" /></p>
 </div>
 <div id="some-work" class="section level2">
 <h2>Some work</h2>
