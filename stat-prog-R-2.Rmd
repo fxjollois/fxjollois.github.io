@@ -47,7 +47,7 @@ To identify interactively clusters, we can use the `identify()` function
 
 ```{r, eval = FALSE}
 plot(h)
-zz.int = identity(h)
+zz.int = identify(h)
 zz.int
 sapply(zz.int, length)
 z.int = Reduce(function(a, b) return(a + (b * (max(a) + 1))), 
