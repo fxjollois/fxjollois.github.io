@@ -3,7 +3,7 @@ title: Statistical Programming using `R`
 subtitle: Iran
 ---
 
-This course is an introduction to **statstical programming** using the `R` language.
+This course is an introduction to **statistical programming** using the `R` language.
 
 1. [Introduction to Data Analysis & Data Visualization](stat-prog-R-1.html)
     - [Detailed application on `pendigits` data](stat-prog-R-1-work.html)

@@ -40,6 +40,13 @@ The app includes 4 panels: the description of data and one for each method (HAC,
             - Plot of the average digit
             - PCA projection
 
+You can run directly this application with:
+
+```{r, eval=FALSE, echo=TRUE}
+runUrl("http://fxjollois.github.io/stat-prog-R/pendigits.zip")
+```
+
+
 Here are the two files for this application:
 
 ```{r}

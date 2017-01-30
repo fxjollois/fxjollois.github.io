@@ -58,6 +58,13 @@ The funtion `shinyUI()` define the **UI** section of an application. In this, we
 
 The function `shinyServer()` permits us to define a function taking `input` and `output` parameters defined in `ui.R`, to explain how **outputs** are created from data and **inputs**.
 
+If you want to run directly the application, write the following code into `R` console.
+
+```{r, eval=FALSE, echo=TRUE}
+runUrl("http://fxjollois.github.io/stat-prog-R/web-application-1.zip")
+```
+
+
 ### Adding plot and table
 
 We add in the preceding application a plot and a table, without any interaction at this moment. So, we have to define the outputs in `ui.R`, with functions names `plotOutput()` for any plot, and `tableOutput()` for tables. These functions must have a parameter, which is the name of the output. 
@@ -74,6 +81,12 @@ And in the `server.R`, we compute *PCA* on the data before the definition of the
 ```{r}
 inclure("stat-prog-R/web-application-2/ui.R")
 inclure("stat-prog-R/web-application-2/server.R")
+```
+
+If you want to run directly the application, write the following code into `R` console.
+
+```{r, eval=FALSE, echo=TRUE}
+runUrl("http://fxjollois.github.io/stat-prog-R/web-application-2.zip")
 ```
 
 ### Adding some interaction
@@ -98,6 +111,12 @@ inclure("stat-prog-R/web-application-3/ui.R")
 inclure("stat-prog-R/web-application-3/server.R")
 ```
 
+If you want to run directly the application, write the following code into `R` console.
+
+```{r, eval=FALSE, echo=TRUE}
+runUrl("http://fxjollois.github.io/stat-prog-R/web-application-3.zip")
+```
+
 ### Add updates and dependencies
 
 At the end, we add in our application three upgrades:
@@ -117,6 +136,12 @@ We add some controls in the outputs to avoid error during the execution of the a
 ```{r}
 inclure("stat-prog-R/web-application-4/ui.R")
 inclure("stat-prog-R/web-application-4/server.R")
+```
+
+If you want to run directly the application, write the following code into `R` console.
+
+```{r, eval=FALSE, echo=TRUE}
+runUrl("http://fxjollois.github.io/stat-prog-R/web-application-4.zip")
 ```
 
 ### User interface
