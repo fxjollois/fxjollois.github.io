@@ -89,11 +89,13 @@ for (i in 1:nrow(criterion)) {
     criterion[i, "AIC3"] = -2 * m$loglik + 3 * p
 }
 head(criterion[order(criterion$AIC),], 3)
-ggplot(criterion, aes(factor(G), AIC, color = model)) +
-    geom_line() 
+ggplot(criterion, aes(G, AIC, color = model)) +
+    geom_line() +
+    scale_x_discrete(limits = G)
 head(criterion[order(criterion$AIC3),], 3)
-ggplot(criterion, aes(factor(G), AIC3, color = model)) +
-    geom_line()
+ggplot(criterion, aes(G, AIC3, color = model)) +
+    geom_line() +
+    scale_x_discrete(limits = G)
 ```
 
 

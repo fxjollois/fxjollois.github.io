@@ -18,9 +18,11 @@ shinyServer(function(input, output, session) {
     
     observe({
         dimX = input$dimX
-        dimY = which(!(1:nDim == dimX))[1]
-        updateRadioButtons(session, "dimY",
-                           selected = dimY)
+        if (input$dimY == dimX) {
+            dimY = which(!(1:nDim == dimX))[1]
+            updateRadioButtons(session, "dimY",
+                               selected = dimY)
+        }
     })
     
     output$tab <- renderTable({
