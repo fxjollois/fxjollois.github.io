@@ -14,6 +14,7 @@ This course is an introduction to **statstical programming** using the `R` langu
 1. [Using mixture models](stat-prog-R-4.html)
     - [Mixture models on `pendigits` data](stat-prog-R-4-work.html)
 1. [Interactive analysis](stat-prog-R-5.html)
+    - [Webapp for `pendigits` data](stat-prog-R-5-work.html)
 
 Some interesting links:
 

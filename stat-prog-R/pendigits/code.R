@@ -73,7 +73,7 @@ mclust = lapply(0:9, function(dig) {
     sub = subset(pen, digit == dig, -digit)
     res = lapply(1:10, function(G) {
         m = Mclust(data = sub, G = G)
-        p = nMclustParams(m$modelName, d, G)
+        p = nMclustParams(m$modelName, m$d, G)
         m$ICL = icl(m)
         m$AIC = -2 * m$loglik + 2 * p
         m$AIC3 = -2 * m$loglik + 3 * p
