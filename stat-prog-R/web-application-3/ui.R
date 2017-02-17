@@ -11,7 +11,8 @@ shinyUI(fluidPage(
           radioButtons("dimY", "Y", choices = 1:4, inline = TRUE)
       ),
       mainPanel(
-          helpText("Mean values of attributes for each species"),
+          # helpText("Mean values of attributes for each species"),
+          textOutput("text"),
           tableOutput("tab"),
           helpText("PCA first factorial map for individuals"),
           plotOutput("graph")

@@ -278,6 +278,7 @@ div.tocify {
             <li><a href="exploitation-donnees.html">Exploitation de données</a></li>
             <li><a href="initiation-a-r.html">Initiation à R</a></li>
             <li><a href="reporting.html">Reporting</a></li>
+            <li><a href="complements-r.html">Compléments sur R</a></li>
             <li class="dropdown-header">DUT 2ème année</li>
             <li><a href="prog-stat-r.html">Programmation statistique avec R</a></li>
             <li class="dropdown-header">LP MDS Santé</li>
@@ -292,7 +293,7 @@ div.tocify {
             <li class="dropdown-header">Master</li>
             <li><a href="slides/cnam-classif-modeles.html">Classification et Modèles de mélange</a></li>
             <li class="dropdown-header">Iran</li>
-            <li><a href="stat-prog-R.html.html">Statistical Programming using R</a></li>
+            <li><a href="stat-prog-R.html">Statistical Programming using R</a></li>
           </ul>
         </li>
         <li class="dropdown">
@@ -373,7 +374,7 @@ a + 2</code></pre>
 ## [1] 16
 ## [1] 25</code></pre>
 <pre class="r"><code>sample(1:10)</code></pre>
-<pre><code>##  [1]  5  6  1 10  3  9  4  7  2  8</code></pre>
+<pre><code>##  [1]  4  3  5  1  9  6 10  2  8  7</code></pre>
 <pre class="r"><code>paste(&quot;good&quot;, &quot;morning&quot;)</code></pre>
 <pre><code>## [1] &quot;good morning&quot;</code></pre>
 <pre class="r"><code>paste(&quot;good&quot;, &quot;morning&quot;, sep = &quot;-&quot;)</code></pre>
@@ -565,189 +566,191 @@ head(dh)</code></pre>
 <pre class="r"><code>iris = head(iris[sample(seq(nrow(iris))),], 20)</code></pre>
 <p>Get one column from a <code>data.frame</code></p>
 <pre class="r"><code>iris$Sepal.Length</code></pre>
-<pre><code>##  [1] 4.8 6.6 6.5 5.4 6.2 6.1 6.1 5.4 5.7 4.9 6.8 5.0 4.9 7.7 6.1 7.7 4.5
-## [18] 6.8 5.6 5.1</code></pre>
+<pre><code>##  [1] 5.0 7.9 4.5 6.6 6.4 6.2 4.7 6.4 5.8 6.7 6.6 5.1 6.4 7.1 4.9 5.1 6.3
+## [18] 7.7 6.3 5.5</code></pre>
 <pre class="r"><code>iris[,1]</code></pre>
-<pre><code>##  [1] 4.8 6.6 6.5 5.4 6.2 6.1 6.1 5.4 5.7 4.9 6.8 5.0 4.9 7.7 6.1 7.7 4.5
-## [18] 6.8 5.6 5.1</code></pre>
+<pre><code>##  [1] 5.0 7.9 4.5 6.6 6.4 6.2 4.7 6.4 5.8 6.7 6.6 5.1 6.4 7.1 4.9 5.1 6.3
+## [18] 7.7 6.3 5.5</code></pre>
 <pre class="r"><code>iris[,&quot;Sepal.Length&quot;]</code></pre>
-<pre><code>##  [1] 4.8 6.6 6.5 5.4 6.2 6.1 6.1 5.4 5.7 4.9 6.8 5.0 4.9 7.7 6.1 7.7 4.5
-## [18] 6.8 5.6 5.1</code></pre>
+<pre><code>##  [1] 5.0 7.9 4.5 6.6 6.4 6.2 4.7 6.4 5.8 6.7 6.6 5.1 6.4 7.1 4.9 5.1 6.3
+## [18] 7.7 6.3 5.5</code></pre>
 <pre class="r"><code>iris[1]</code></pre>
 <pre><code>##     Sepal.Length
-## 12           4.8
-## 59           6.6
-## 55           6.5
-## 6            5.4
-## 127          6.2
-## 128          6.1
-## 72           6.1
-## 85           5.4
-## 16           5.7
-## 2            4.9
-## 77           6.8
-## 26           5.0
-## 38           4.9
-## 123          7.7
-## 92           6.1
-## 118          7.7
+## 94           5.0
+## 132          7.9
 ## 42           4.5
-## 113          6.8
-## 70           5.6
-## 45           5.1</code></pre>
+## 59           6.6
+## 112          6.4
+## 98           6.2
+## 30           4.7
+## 52           6.4
+## 143          5.8
+## 145          6.7
+## 76           6.6
+## 99           5.1
+## 75           6.4
+## 103          7.1
+## 58           4.9
+## 24           5.1
+## 104          6.3
+## 118          7.7
+## 73           6.3
+## 37           5.5</code></pre>
 <pre class="r"><code>iris[&quot;Sepal.Length&quot;]</code></pre>
 <pre><code>##     Sepal.Length
-## 12           4.8
-## 59           6.6
-## 55           6.5
-## 6            5.4
-## 127          6.2
-## 128          6.1
-## 72           6.1
-## 85           5.4
-## 16           5.7
-## 2            4.9
-## 77           6.8
-## 26           5.0
-## 38           4.9
-## 123          7.7
-## 92           6.1
-## 118          7.7
+## 94           5.0
+## 132          7.9
 ## 42           4.5
-## 113          6.8
-## 70           5.6
-## 45           5.1</code></pre>
+## 59           6.6
+## 112          6.4
+## 98           6.2
+## 30           4.7
+## 52           6.4
+## 143          5.8
+## 145          6.7
+## 76           6.6
+## 99           5.1
+## 75           6.4
+## 103          7.1
+## 58           4.9
+## 24           5.1
+## 104          6.3
+## 118          7.7
+## 73           6.3
+## 37           5.5</code></pre>
 <p>Get more than one column</p>
 <pre class="r"><code>iris[,c(1,3)]</code></pre>
 <pre><code>##     Sepal.Length Petal.Length
-## 12           4.8          1.6
-## 59           6.6          4.6
-## 55           6.5          4.6
-## 6            5.4          1.7
-## 127          6.2          4.8
-## 128          6.1          4.9
-## 72           6.1          4.0
-## 85           5.4          4.5
-## 16           5.7          1.5
-## 2            4.9          1.4
-## 77           6.8          4.8
-## 26           5.0          1.6
-## 38           4.9          1.4
-## 123          7.7          6.7
-## 92           6.1          4.6
-## 118          7.7          6.7
+## 94           5.0          3.3
+## 132          7.9          6.4
 ## 42           4.5          1.3
-## 113          6.8          5.5
-## 70           5.6          3.9
-## 45           5.1          1.9</code></pre>
+## 59           6.6          4.6
+## 112          6.4          5.3
+## 98           6.2          4.3
+## 30           4.7          1.6
+## 52           6.4          4.5
+## 143          5.8          5.1
+## 145          6.7          5.7
+## 76           6.6          4.4
+## 99           5.1          3.0
+## 75           6.4          4.3
+## 103          7.1          5.9
+## 58           4.9          3.3
+## 24           5.1          1.7
+## 104          6.3          5.6
+## 118          7.7          6.7
+## 73           6.3          4.9
+## 37           5.5          1.3</code></pre>
 <pre class="r"><code>iris[,c(&quot;Sepal.Length&quot;, &quot;Petal.Length&quot;)]</code></pre>
 <pre><code>##     Sepal.Length Petal.Length
-## 12           4.8          1.6
-## 59           6.6          4.6
-## 55           6.5          4.6
-## 6            5.4          1.7
-## 127          6.2          4.8
-## 128          6.1          4.9
-## 72           6.1          4.0
-## 85           5.4          4.5
-## 16           5.7          1.5
-## 2            4.9          1.4
-## 77           6.8          4.8
-## 26           5.0          1.6
-## 38           4.9          1.4
-## 123          7.7          6.7
-## 92           6.1          4.6
-## 118          7.7          6.7
+## 94           5.0          3.3
+## 132          7.9          6.4
 ## 42           4.5          1.3
-## 113          6.8          5.5
-## 70           5.6          3.9
-## 45           5.1          1.9</code></pre>
+## 59           6.6          4.6
+## 112          6.4          5.3
+## 98           6.2          4.3
+## 30           4.7          1.6
+## 52           6.4          4.5
+## 143          5.8          5.1
+## 145          6.7          5.7
+## 76           6.6          4.4
+## 99           5.1          3.0
+## 75           6.4          4.3
+## 103          7.1          5.9
+## 58           4.9          3.3
+## 24           5.1          1.7
+## 104          6.3          5.6
+## 118          7.7          6.7
+## 73           6.3          4.9
+## 37           5.5          1.3</code></pre>
 <pre class="r"><code>iris[c(1,3)]</code></pre>
 <pre><code>##     Sepal.Length Petal.Length
-## 12           4.8          1.6
-## 59           6.6          4.6
-## 55           6.5          4.6
-## 6            5.4          1.7
-## 127          6.2          4.8
-## 128          6.1          4.9
-## 72           6.1          4.0
-## 85           5.4          4.5
-## 16           5.7          1.5
-## 2            4.9          1.4
-## 77           6.8          4.8
-## 26           5.0          1.6
-## 38           4.9          1.4
-## 123          7.7          6.7
-## 92           6.1          4.6
-## 118          7.7          6.7
+## 94           5.0          3.3
+## 132          7.9          6.4
 ## 42           4.5          1.3
-## 113          6.8          5.5
-## 70           5.6          3.9
-## 45           5.1          1.9</code></pre>
+## 59           6.6          4.6
+## 112          6.4          5.3
+## 98           6.2          4.3
+## 30           4.7          1.6
+## 52           6.4          4.5
+## 143          5.8          5.1
+## 145          6.7          5.7
+## 76           6.6          4.4
+## 99           5.1          3.0
+## 75           6.4          4.3
+## 103          7.1          5.9
+## 58           4.9          3.3
+## 24           5.1          1.7
+## 104          6.3          5.6
+## 118          7.7          6.7
+## 73           6.3          4.9
+## 37           5.5          1.3</code></pre>
 <pre class="r"><code>iris[c(&quot;Sepal.Length&quot;, &quot;Petal.Length&quot;)]</code></pre>
 <pre><code>##     Sepal.Length Petal.Length
-## 12           4.8          1.6
-## 59           6.6          4.6
-## 55           6.5          4.6
-## 6            5.4          1.7
-## 127          6.2          4.8
-## 128          6.1          4.9
-## 72           6.1          4.0
-## 85           5.4          4.5
-## 16           5.7          1.5
-## 2            4.9          1.4
-## 77           6.8          4.8
-## 26           5.0          1.6
-## 38           4.9          1.4
-## 123          7.7          6.7
-## 92           6.1          4.6
-## 118          7.7          6.7
+## 94           5.0          3.3
+## 132          7.9          6.4
 ## 42           4.5          1.3
-## 113          6.8          5.5
-## 70           5.6          3.9
-## 45           5.1          1.9</code></pre>
+## 59           6.6          4.6
+## 112          6.4          5.3
+## 98           6.2          4.3
+## 30           4.7          1.6
+## 52           6.4          4.5
+## 143          5.8          5.1
+## 145          6.7          5.7
+## 76           6.6          4.4
+## 99           5.1          3.0
+## 75           6.4          4.3
+## 103          7.1          5.9
+## 58           4.9          3.3
+## 24           5.1          1.7
+## 104          6.3          5.6
+## 118          7.7          6.7
+## 73           6.3          4.9
+## 37           5.5          1.3</code></pre>
 <pre class="r"><code>iris[-c(2, 4, 5)]</code></pre>
 <pre><code>##     Sepal.Length Petal.Length
-## 12           4.8          1.6
-## 59           6.6          4.6
-## 55           6.5          4.6
-## 6            5.4          1.7
-## 127          6.2          4.8
-## 128          6.1          4.9
-## 72           6.1          4.0
-## 85           5.4          4.5
-## 16           5.7          1.5
-## 2            4.9          1.4
-## 77           6.8          4.8
-## 26           5.0          1.6
-## 38           4.9          1.4
-## 123          7.7          6.7
-## 92           6.1          4.6
-## 118          7.7          6.7
+## 94           5.0          3.3
+## 132          7.9          6.4
 ## 42           4.5          1.3
-## 113          6.8          5.5
-## 70           5.6          3.9
-## 45           5.1          1.9</code></pre>
+## 59           6.6          4.6
+## 112          6.4          5.3
+## 98           6.2          4.3
+## 30           4.7          1.6
+## 52           6.4          4.5
+## 143          5.8          5.1
+## 145          6.7          5.7
+## 76           6.6          4.4
+## 99           5.1          3.0
+## 75           6.4          4.3
+## 103          7.1          5.9
+## 58           4.9          3.3
+## 24           5.1          1.7
+## 104          6.3          5.6
+## 118          7.7          6.7
+## 73           6.3          4.9
+## 37           5.5          1.3</code></pre>
 <p>Get one row from a <code>data.frame</code></p>
 <pre class="r"><code>iris[1,]</code></pre>
-<pre><code>##    Sepal.Length Sepal.Width Petal.Length Petal.Width Species
-## 12          4.8         3.4          1.6         0.2  setosa</code></pre>
+<pre><code>##    Sepal.Length Sepal.Width Petal.Length Petal.Width    Species
+## 94            5         2.3          3.3           1 versicolor</code></pre>
 <pre class="r"><code>iris[c(1,3),]</code></pre>
 <pre><code>##    Sepal.Length Sepal.Width Petal.Length Petal.Width    Species
-## 12          4.8         3.4          1.6         0.2     setosa
-## 55          6.5         2.8          4.6         1.5 versicolor</code></pre>
+## 94          5.0         2.3          3.3         1.0 versicolor
+## 42          4.5         2.3          1.3         0.3     setosa</code></pre>
 <pre class="r"><code>iris[iris$Sepal.Length &gt; 6,]</code></pre>
 <pre><code>##     Sepal.Length Sepal.Width Petal.Length Petal.Width    Species
+## 132          7.9         3.8          6.4         2.0  virginica
 ## 59           6.6         2.9          4.6         1.3 versicolor
-## 55           6.5         2.8          4.6         1.5 versicolor
-## 127          6.2         2.8          4.8         1.8  virginica
-## 128          6.1         3.0          4.9         1.8  virginica
-## 72           6.1         2.8          4.0         1.3 versicolor
-## 77           6.8         2.8          4.8         1.4 versicolor
-## 123          7.7         2.8          6.7         2.0  virginica
-## 92           6.1         3.0          4.6         1.4 versicolor
+## 112          6.4         2.7          5.3         1.9  virginica
+## 98           6.2         2.9          4.3         1.3 versicolor
+## 52           6.4         3.2          4.5         1.5 versicolor
+## 145          6.7         3.3          5.7         2.5  virginica
+## 76           6.6         3.0          4.4         1.4 versicolor
+## 75           6.4         2.9          4.3         1.3 versicolor
+## 103          7.1         3.0          5.9         2.1  virginica
+## 104          6.3         2.9          5.6         1.8  virginica
 ## 118          7.7         3.8          6.7         2.2  virginica
-## 113          6.8         3.0          5.5         2.1  virginica</code></pre>
+## 73           6.3         2.5          4.9         1.5 versicolor</code></pre>
 <p>Data types</p>
 <pre class="r"><code>class(names(iris))</code></pre>
 <pre><code>## [1] &quot;character&quot;</code></pre>
@@ -756,39 +759,39 @@ head(dh)</code></pre>
 <pre class="r"><code>class(iris$Species)</code></pre>
 <pre><code>## [1] &quot;factor&quot;</code></pre>
 <pre class="r"><code>head(iris$Species)</code></pre>
-<pre><code>## [1] setosa     versicolor versicolor setosa     virginica  virginica 
+<pre><code>## [1] versicolor virginica  setosa     versicolor virginica  versicolor
 ## Levels: setosa versicolor virginica</code></pre>
 <p>Group two <code>data.frame</code> together</p>
 <pre class="r"><code>cbind(iris[,1], iris[,4:5])</code></pre>
 <pre><code>##     iris[, 1] Petal.Width    Species
-## 12        4.8         0.2     setosa
-## 59        6.6         1.3 versicolor
-## 55        6.5         1.5 versicolor
-## 6         5.4         0.4     setosa
-## 127       6.2         1.8  virginica
-## 128       6.1         1.8  virginica
-## 72        6.1         1.3 versicolor
-## 85        5.4         1.5 versicolor
-## 16        5.7         0.4     setosa
-## 2         4.9         0.2     setosa
-## 77        6.8         1.4 versicolor
-## 26        5.0         0.2     setosa
-## 38        4.9         0.1     setosa
-## 123       7.7         2.0  virginica
-## 92        6.1         1.4 versicolor
-## 118       7.7         2.2  virginica
+## 94        5.0         1.0 versicolor
+## 132       7.9         2.0  virginica
 ## 42        4.5         0.3     setosa
-## 113       6.8         2.1  virginica
-## 70        5.6         1.1 versicolor
-## 45        5.1         0.4     setosa</code></pre>
+## 59        6.6         1.3 versicolor
+## 112       6.4         1.9  virginica
+## 98        6.2         1.3 versicolor
+## 30        4.7         0.2     setosa
+## 52        6.4         1.5 versicolor
+## 143       5.8         1.9  virginica
+## 145       6.7         2.5  virginica
+## 76        6.6         1.4 versicolor
+## 99        5.1         1.1 versicolor
+## 75        6.4         1.3 versicolor
+## 103       7.1         2.1  virginica
+## 58        4.9         1.0 versicolor
+## 24        5.1         0.5     setosa
+## 104       6.3         1.8  virginica
+## 118       7.7         2.2  virginica
+## 73        6.3         1.5 versicolor
+## 37        5.5         0.2     setosa</code></pre>
 <pre class="r"><code>rbind(iris[1:3,], iris[8:10,])</code></pre>
-<pre><code>##    Sepal.Length Sepal.Width Petal.Length Petal.Width    Species
-## 12          4.8         3.4          1.6         0.2     setosa
-## 59          6.6         2.9          4.6         1.3 versicolor
-## 55          6.5         2.8          4.6         1.5 versicolor
-## 85          5.4         3.0          4.5         1.5 versicolor
-## 16          5.7         4.4          1.5         0.4     setosa
-## 2           4.9         3.0          1.4         0.2     setosa</code></pre>
+<pre><code>##     Sepal.Length Sepal.Width Petal.Length Petal.Width    Species
+## 94           5.0         2.3          3.3         1.0 versicolor
+## 132          7.9         3.8          6.4         2.0  virginica
+## 42           4.5         2.3          1.3         0.3     setosa
+## 52           6.4         3.2          4.5         1.5 versicolor
+## 143          5.8         2.7          5.1         1.9  virginica
+## 145          6.7         3.3          5.7         2.5  virginica</code></pre>
 </div>
 <div id="univariate-statistics" class="section level3">
 <h3>Univariate statistics</h3>
@@ -1896,9 +1899,8 @@ ggplot(iris, aes(Sepal.Length.ord)) +
 <h3>library <code>FactoMineR</code></h3>
 <p>For data analysis, such as <em>Principle Components Analysis</em> (<strong>PCA</strong>)</p>
 <pre class="r"><code>library(FactoMineR)</code></pre>
-<pre class="r"><code>pca = PCA(iris, quali.sup = c(5, 6)) # since we add Sepal.Length.ord to iris data</code></pre>
-<p><img src="stat-prog-R-1_files/figure-html/unnamed-chunk-50-1.png" width="672" /><img src="stat-prog-R-1_files/figure-html/unnamed-chunk-50-2.png" width="672" /></p>
-<pre class="r"><code>summary(pca)</code></pre>
+<pre class="r"><code>pca = PCA(iris, quali.sup = c(5, 6)) # since we add Sepal.Length.ord to iris data
+summary(pca)</code></pre>
 <pre><code>## 
 ## Call:
 ## PCA(X = iris, quali.sup = c(5, 6)) 
@@ -2034,23 +2036,18 @@ ggplot(iris, aes(Sepal.Length.ord)) +
 ## comp 2 0.91403047             22.8507618                          95.81321
 ## comp 3 0.14675688              3.6689219                          99.48213
 ## comp 4 0.02071484              0.5178709                         100.00000</code></pre>
-<pre class="r"><code>plot(pca$eig[,3], type = &quot;b&quot;)</code></pre>
-<p><img src="stat-prog-R-1_files/figure-html/unnamed-chunk-50-3.png" width="672" /></p>
-<pre class="r"><code>eig = data.frame(comp = rownames(pca$eig),
+<pre class="r"><code>plot(pca$eig[,3], type = &quot;b&quot;)
+eig = data.frame(comp = rownames(pca$eig),
                  setNames(pca$eig, c(&quot;eigenvalue&quot;, &quot;percent&quot;, &quot;cum.percent&quot;)))
 ggplot(eig) +
     geom_bar(aes(comp, percent), stat = &quot;identity&quot;) +
     stat_summary(aes(comp, cum.percent, group = 1), 
-                 fun.y = sum, geom = &quot;line&quot;)</code></pre>
-<p><img src="stat-prog-R-1_files/figure-html/unnamed-chunk-50-4.png" width="672" /></p>
-<pre class="r"><code>plotellipses(pca)</code></pre>
-<p><img src="stat-prog-R-1_files/figure-html/unnamed-chunk-50-5.png" width="672" /></p>
-<pre class="r"><code>plot(pca, choix = &quot;ind&quot;, habillage = 5, invisible = &quot;quali&quot;, label = &quot;none&quot;)</code></pre>
-<p><img src="stat-prog-R-1_files/figure-html/unnamed-chunk-50-6.png" width="672" /></p>
-<pre class="r"><code>ggplot(cbind(iris, pca$ind$coord), aes(Dim.1, Dim.2, col = Species)) +
+                 fun.y = sum, geom = &quot;line&quot;)
+plotellipses(pca)
+plot(pca, choix = &quot;ind&quot;, habillage = 5, invisible = &quot;quali&quot;, label = &quot;none&quot;)
+ggplot(cbind(iris, pca$ind$coord), aes(Dim.1, Dim.2, col = Species)) +
     geom_point() +
     stat_ellipse()</code></pre>
-<p><img src="stat-prog-R-1_files/figure-html/unnamed-chunk-50-7.png" width="672" /></p>
 </div>
 </div>
 <div id="some-work" class="section level2">

@@ -1,0 +1,265 @@
+---
+title: Reporting
+subtitle: Compléments sur R - STID 1ère année
+---
+
+Dans ce TP, nous allons voir comment utiliser la librairie [`flexdashboard`](http://rmarkdown.rstudio.com/flexdashboard) (basée entre autres sur `rmarkdown`) pour générer des tableaux de bords automatisés. Nous allons voir ici quelques éléments de base, vous trouverez beaucoup d'autres informations sur le site indiqué.
+
+## Fichiers `.RData`
+
+Plutôt que de devoir importer plusieurs fois des données, il est possible d'utiliser le format de données `.RData`, qui permet de sauvegarder tout ou partie de l'environnement de travail. Pour cela, nous allons utiliser les fonctions `save()` et `save.image()`  pour sauvegarder, et la fonction `load()` pour charger les variables sauvegardées.
+
+### Sauvegarde de variable(s)
+
+En premier lieu, il est possible de sauvegarder uniquement une variable créée dans un fichier `.RData`. Ci-dessous, nous créons l'objet `a`, qui est une chaîne simple, puis nous la sauvegardons dans le fichier `a.RData`. Enfin, nous la supprimons (et l'affichons pour bien voir qu'elle n'existe plus).
+
+```{r, error=TRUE}
+a = "test de RData"
+print(a)
+save(a, file = "a.RData")
+rm(a)
+print(a)
+```
+
+L'intérêt est donc que la variable `a` est dans le fichier `.RData`, qu'il est possible de charger dans `R` comme suit.
+
+```{r}
+load("a.RData")
+print(a)
+```
+
+Pour sauvegarder plusieurs variables, il faut juste les lister dans la fonction `save()`.
+
+```{r, error=TRUE}
+b = "deuxième test de RData"
+c = 123456789
+save(b, c, file = "bc.RData")
+rm(b, c)
+print(b, c)
+```
+
+Et on les charge de la même façon.
+
+```{r}
+load("bc.RData")
+print(b)
+print(c)
+```
+
+### Sauvegarde de l'environnement
+
+Quand on lance la fonction `ls()`, on liste l'ensemble des objets créés dans l'environnement de travail. La fonction `save.image()` va tous les sauvegarder dans un même fichier `.RData`.
+
+```{r}
+ls()
+save.image("env.RData")
+```
+
+Ensuite, nous allons nettoyer l'environnement de travail, en supprimant tous les objets (1ère ligne ci-dessous). Ainsi, en listant les variables avec `ls()`, on s'aperçoit qu'il n'y a plus rien.
+
+```{r}
+rm(list = ls()) # Pour tout supprimer de l'environnement
+ls()
+```
+
+Enfin, toujours avec la fonction `load()`, on charge les variables présentes dans le fichier, qu'on retrouve bien en faisant un `ls()`.
+
+```{r}
+load("env.RData")
+ls()
+```
+
+### Données utilisées
+
+Nous allons donc utiliser les données du *data-mart* utilisé dans le TP6, contenues dans le fichier [`ca.RData`](donnees/ca/ca.RData). Pour ce faire, nous allons utiliser la commande `load()`. Nous vérifions ensuite qu'on a bien toutes les données voulues (en ayant supprimé en premier les objets existants).
+
+```{r}
+rm(list = ls())
+load("donnees/ca/ca.RData")
+ls()
+```
+
+## Package `flexdashboard`
+
+```{r setup, include=FALSE}
+rm(list = ls())
+knitr::opts_chunk$set(eval=FALSE)
+```
+
+### Installation
+
+Vous devez d'abord installer le package via la commande `install.packages()`. Pour rappel, voici les étapes à suivre (non exécutées dans ce document).
+
+```{r}
+.libPaths("z:/Rlib")    # ou un autre chemin en fonction de vos choix précédents
+install.packages("flexdashboard")
+library(flexdashboard)
+```
+
+### Création d'un premier document
+
+Une fois que vous avez chargé la librairie, il est possible de créer un document de base de type `flexdashboard` en suivant les étapes suivantes :
+
+1. Cliquer la création d'un nouveau document (![img + RStudio](icon_Rstudio_plus.jpg))
+1. Choisir **R markdown...**
+1. Choisir ensuite **From Template** et sélection **Flex Dashboard**
+
+Vous devez obtenir un document commençant par 
+
+```{r}
+---
+title: "Untitled"
+output: 
+  flexdashboard::flex_dashboard:
+    orientation: columns
+    vertical_layout: fill
+---
+
+...
+```
+
+En cliquant sur **Knit**, vous devez obtenir le [document suivant](__specifique/prog-stat-r-tp7-etape1.html). Vous remarquerez qu'il y a de la place pour mettre des graphiques et/ou des tableaux. Nous allons agrémenter ce tableau de bord à l'aide de graphiques et de pastilles d'informations.
+
+#### Modification du titre
+
+En premier lieu, il faut changer le titre du reporting, en mettant par exemple `"Evolution CA"`.
+
+#### Importation de données
+
+Nous allons commencer par importer les données dans ce tableau de bord, grâce au code ci-dessus. Ceci permettra donc de ne pas avoir d'étapes de chargement des fichiers texte et de jointures, pouvant prendre du temps et inutiles puisque les données n'évoluent pas en temps réel.
+
+Vous devez donc introduire le code suivant dans le premier *chunck* (en dessous du chargement de la librairie `flexdashboard`), nommé `setup` et ayant l'option `include=FALSE`. Ceci permettra donc d'avoir les données à disposition, mais que le code ne s'affiche pas dans le document final.
+
+```{r}
+load("donnees/ca/ca.RData")
+```
+
+#### Premier graphique
+
+Pour le premier graphique (`Chart A`), nous allons représenter l'évolution du chiffre d'affaires sur la période 2003-2004, mois par mois. Dans la partie `### Chart A`, nous allons d'abord modifier le titre en `"Evolution mois par mois"`, par exemple (au lieu de `"Chart A"` donc). Ensuite, il faut mettre le code suivant dans le *chunck* correspondant.
+
+```{r, fig.align="center"}
+d = setNames(aggregate(ca / 1000000 ~ mois_no, ca_tout, sum), c("mois", "ca"))
+par(mar = c(4, 4, 0, 0) + .1)
+plot(ca ~ mois, d, type = "b",
+     xlab = "Mois", ylab = "Chiffre d'affaires (M€)")
+abline(h = mean(d$ca), lty = 3, col = "gray50")
+```
+
+Une fois que vous compilez votre document, vous devez obtenir la [page suivante](__specifique/prog-stat-r-tp7-etape2.html). 
+
+#### Deuxième graphique
+
+Dans la fenêtre en haut à gauche (`Chart B`), nous allons placer un tableau, indiquant le chiffre d'affaires pour 2003 et pour 2004, mois par mois. Pour cela, nous allons d'abord renommer le titre en `"Comparaison mois par mois (en k€)"`. Puis nous allons mettre le code suivant dans le *chunk* correspondant.
+
+```{r}
+d = aggregate(cbind(ca2003, ca2004, evolution) / 1000 ~ mois + mois_numero, 
+              ca_evol, sum)
+d = subset(d, select = -mois_numero)
+names(d) = c("Mois", "2003", "2004", "Evolution")
+knitr::kable(d, digits = 0)
+```
+
+Une fois exécuté, vous obtenez le [document suivant](__specifique/prog-stat-r-tp7-etape3.html). Il est possible de naviguer dans le tableau avec la souris pour voir les mois caché.
+
+#### Troisième graphique
+
+Nous allons utiliser ici ce qu'on pourrait appeler une *pastille*, avec la fonction `valueBox()` du package `flewdashboard`. Celle-ci prend en paramètre une valeur à afficher (numérique ou textuelle), une icône, et éventuellement une couleur. Elle affichera aussi le titre (de niveau 3, `###`) mis avant le *chunk* la contenant. 
+
+Il faut tout d'abord remplacer le titre par `"Augmentation entre 2003 et 2004"`. Ensuite, on va placer le code suivant dans le *chunk*.
+
+```{r}
+d = aggregate(ca ~ annee, ca_tout, sum)
+v = paste(round((d$ca[2] / d$ca[1] - 1) * 100, 2), "%")
+valueBox(v, icon = "fa-arrow-circle-up", color = "green")
+```
+
+Vous devriez avoir cette [page](__specifique/prog-stat-r-tp7-etape4.html) une fois le document `Rmd` compilé.
+
+#### Plusieurs onglets
+
+Il est possible de créer un système d'onglet pour avoir plusieurs pages dans le reporting. Pour cela, vous devez d'abord créer un titre de niveau 1 (`#`) pour la première page (en la nommant par exemple `"Synthèse"`). Ce titre doit être placé avant la ligne `Column...`.
+
+Vous devriez avoir [cette page](__specifique/prog-stat-r-tp7-etape5.html) comme résultat.
+
+Créer un deuxième onglet, nommé `"Détail"`, dans lequel nous allons mettre deux tables : une pour les départements et une pour les provenances. Voici les codes des deux *chunks* pour créer ces tableaux.
+
+```{r}
+evol.dpt = aggregate(cbind(ca2003, ca2004, evolution) / 1000 ~ departement, 
+                     ca_evol, sum)
+names(evol.dpt) = c("Département", "2003", "2004", "Evolution")
+knitr::kable(evol.dpt, digits = 0)
+```
+
+```{r}
+evol.prov = aggregate(cbind(ca2003, ca2004, evolution) / 1000 ~ provenance, 
+                      ca_evol, sum)
+names(evol.prov) = c("Provenance", "2003", "2004", "Evolution")
+knitr::kable(evol.prov, digits = 0)
+```
+
+Une fois compilé, vous devriez avoir le [tableau de bord](__specifique/prog-stat-r-tp7-etape6.html) suivant.
+
+### Modification de l'orientation
+
+Dans la première page, nous avions disposer les différents éléments par colonnes (un élément dans la première et deux dans la deuxième). Il est possible de modifier cela pour une page spécifique. Dans la deuxième, à la suite du titre et sur la même ligne, il est possible d'ajouter `{data-orientation=rows}`. 
+
+Ainsi, le tableau devient [celui-ci](__specifique/prog-stat-r-tp7-etape7.html).
+
+Nous allons maintenant utiliser une jauge, avec la fonction `gauge()` du package `flexdashboard`. Celle-ci prend au minimum en paramètre une valeur, un minimum et un maximum.
+
+Et pour avoir des graphiques prenant toute la page en bas, il faut réaliser deux étapes :
+
+- Insérer un titre de niveau 2 avant les deux *chunks* créés
+- Insérer un nouveau titre de niveau 2 puis les *chunk* contenant le code pour les graphiques
+
+##### Nombre de département en hausse
+```{r}
+gauge(sum(evol.dpt$Evolution > 0), 0, nrow(evol.dpt))
+```
+
+##### Département avec la plus grosse évolution
+```{r}
+valueBox(evol.dpt$Département[which.max(evol.dpt$Evolution)], icon = "fa-level-up")
+```
+
+##### Nombre de provenance en hausse
+```{r}
+gauge(sum(evol.prov$Evolution > 0), 0, nrow(evol.prov))
+```
+
+##### Provenance avec la plus grosse évolution
+```{r}
+valueBox(evol.prov$Provenance[which.max(evol.prov$Evolution)], icon = "fa-level-up")
+```
+
+Au final, nous obtenons donc le [tableau de bord](__specifique/prog-stat-r-tp7-etape8.html) suivant.
+
+
+### Publication
+
+Pour inforation, pour publier un tableau de bord ainsi créé, il faut juste placer le document `.Rmd`, ainsi que les données si besoin, sur un serveur dédié ayant l'application `shiny server` dessus. C'est une opération simple, mais que souvent seul le service informatique pourra effectué.
+
+Vous pouvez voir un exemple avec [ce lien](http://193.51.82.116:3838/demo/prog-stat-r-tp7/).
+
+## Exercice
+
+Créer un troisième onglet, nommé **Performance**, ayant les informations suivantes :
+
+- trois lignes, chacune pour respectivement les départements, les provenances et les mois
+- chaque ligne avec 3 informations
+    - une `valueBox()` du meilleur
+    - une `gauge()`, représentant la partie du CA représenté par le meilleur obtenu ci-dessus
+    - un *top 3* 
+        - vous pouvez utiliser la librairie `sqldf` pour réaliser les requêtes, ou utiliser la fonction `order()` 
+        - on ne veut pas le numéro des lignes dans le résultat
+- chaque ligne doit avoir une hauteur de 200 px. Pour cela, il faut ajouter le paramètre `data-height` à la suite de la déclaration de la nouvelle ligne
+    - vous pouvez regarder les déclarations de colonnes créées automatique dans le premier onglet (cf `Column 1...`)
+
+Vous devriez avoir le [résultat suivant](__specifique/prog-stat-r-tp7-correction.html)
+
+
+
+
+
+

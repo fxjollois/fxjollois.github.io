@@ -4,6 +4,10 @@ pca = PCA(iris, quali.sup = 5, graph = FALSE)
 
 shinyServer(function(input, output) {
 
+    output$text <- renderText({
+        paste(input$stat, "values of attributes for each species")
+    })
+    
     output$tab <- renderTable({
         aggregate(. ~ Species, iris, function(x) {
             switch(input$stat,
