@@ -367,7 +367,7 @@ $b
 </div>
 <div id="lapply-et-autres" class="section level3">
 <h3><code>lapply</code> et autres</h3>
-<p>La fonction <code>lapply()</code> permet d’exécuter une fonction (passée en deuxième paramètre) à chaque élément d’une liste (passée en premier paramètre), ou un vecteur. Il existe aussi les fonctions <code>sapply()</code> et <code>vapply()</code>, qui sont similaires mais qui cherchent à simplifier le résultat (la deuxième permet de spécifier le nom des retours de la fonctions, si ceux-ci sont multiples).</p>
+<p>La fonction <code>lapply()</code> permet d’exécuter une fonction (passée en deuxième paramètre) à chaque élément d’une liste (passée en premier paramètre), ou un vecteur. Il existe aussi la fonction <code>sapply()</code>, qui est similaire mais qui cherche à simplifier le résultat.</p>
 <pre class="r"><code>lapply(l, class)</code></pre>
 <pre><code>$a
 [1] &quot;character&quot;
@@ -417,10 +417,6 @@ $e
 <pre><code>         a           b         c         d            e     
 classe   &quot;character&quot; &quot;numeric&quot; &quot;integer&quot; &quot;data.frame&quot; &quot;list&quot;
 longueur &quot;1&quot;         &quot;1&quot;       &quot;10&quot;      &quot;11&quot;         &quot;2&quot;   </code></pre>
-<pre class="r"><code>vapply(l, infoElement, c(CLASSE = &quot;&quot;, LONG = &quot;&quot;))</code></pre>
-<pre><code>       a           b         c         d            e     
-CLASSE &quot;character&quot; &quot;numeric&quot; &quot;integer&quot; &quot;data.frame&quot; &quot;list&quot;
-LONG   &quot;1&quot;         &quot;1&quot;       &quot;10&quot;      &quot;11&quot;         &quot;2&quot;   </code></pre>
 </div>
 <div id="fonction-anonyme" class="section level3">
 <h3>Fonction anonyme</h3>
@@ -477,7 +473,7 @@ $e$x
 $e$y
  [1] 0.0000000 0.6931472 1.0986123 1.3862944 1.6094379 1.7917595 1.9459101
  [8] 2.0794415 2.1972246 2.3025851</code></pre>
-<p>Dans ce type de cas, si on veut éviter ce comportement, on peut utiliser la fonction <code>invisibile()</code>. Ceci va rendre invisible l’exécution du code et on ne verra donc pas la liste retournée par <code>lapply()</code>.</p>
+<p>Dans ce type de cas, si on veut éviter ce comportement, on peut utiliser la fonction <code>invisible()</code>. Ceci va rendre invisible l’exécution du code et on ne verra donc pas la liste retournée par <code>lapply()</code>.</p>
 <pre class="r"><code>invisible(lapply(l, function (e) { print(e); }))</code></pre>
 <pre><code>[1] &quot;chaîne&quot;
 [1] 12
@@ -498,59 +494,84 @@ $y
 </div>
 <div id="fonctions-autres" class="section level3">
 <h3>Fonctions autres</h3>
+<p>Nous utilisons ici une liste de valeurs entre 0 et 9, définie ci-après.</p>
+<pre class="r"><code>liste = c(0, 5, 9, 1, 2, 4, 6, 7, 3)</code></pre>
 <div id="recherche" class="section level4">
 <h4>Recherche</h4>
 <p>Il est possible de faire une recherche dans une liste (ou un vecteur) avec les fonctions <code>Find()</code> et <code>Position()</code>. Celles-ci renvoient le premier élément trouvé (ou le dernier car il est possible de partir de la droite). La fonction passée en premier paramètre doit renvoyer les valeurs <code>TRUE</code> ou <code>FALSE</code>.</p>
-<p>On cherche par exemple ici le premier (ou dernier) élément de type <code>vector</code> dans la liste précédemment créée.</p>
-<pre class="r"><code>Find(is.vector, l)</code></pre>
-<pre><code>[1] &quot;chaîne&quot;</code></pre>
-<pre class="r"><code>Find(is.vector, l, right = TRUE)</code></pre>
-<pre><code>$x
- [1]  1  2  3  4  5  6  7  8  9 10
-
-$y
- [1] 0.0000000 0.6931472 1.0986123 1.3862944 1.6094379 1.7917595 1.9459101
- [8] 2.0794415 2.1972246 2.3025851</code></pre>
-<pre class="r"><code>Position(is.vector, l)</code></pre>
-<pre><code>[1] 1</code></pre>
-<pre class="r"><code>Position(is.vector, l, right = TRUE)</code></pre>
-<pre><code>[1] 5</code></pre>
+<p>On cherche par exemple ici le premier (ou dernier) élément strictement supérieur à 6 dans la liste précédemment créée.</p>
+<pre class="r"><code>Find(function(e) return(e &gt; 6), liste)</code></pre>
+<pre><code>[1] 9</code></pre>
+<pre class="r"><code>Find(function(e) return(e &gt; 6), liste, right = T)</code></pre>
+<pre><code>[1] 7</code></pre>
+<pre class="r"><code>Position(function(e) return(e &gt; 6), liste)</code></pre>
+<pre><code>[1] 3</code></pre>
+<pre class="r"><code>Position(function(e) return(e &gt; 6), liste, right = T)</code></pre>
+<pre><code>[1] 8</code></pre>
 </div>
 <div id="filtre" class="section level4">
 <h4>Filtre</h4>
-<p>Pour récupérer tous les éléments d’une liste respectant une condition (grâce à la fonction passée en paramètre donc), on dispose de la fonction <code>Filter()</code>. Nous récupérons ici tous les éléments de la liste qui sont de type <code>vector</code>.</p>
-<pre class="r"><code>Filter(is.vector, l)</code></pre>
-<pre><code>$a
-[1] &quot;chaîne&quot;
-
-$b
-[1] 12
-
-$c
- [1]  1  2  3  4  5  6  7  8  9 10
-
-$e
-$e$x
- [1]  1  2  3  4  5  6  7  8  9 10
-
-$e$y
- [1] 0.0000000 0.6931472 1.0986123 1.3862944 1.6094379 1.7917595 1.9459101
- [8] 2.0794415 2.1972246 2.3025851</code></pre>
+<p>Pour récupérer tous les éléments d’une liste respectant une condition (grâce à la fonction passée en paramètre donc), on dispose de la fonction <code>Filter()</code>. Nous récupérons ici tous les éléments de la liste qui sont strictement supérieurs à 6.</p>
+<pre class="r"><code>Filter(function(e) return(e &gt; 6), liste)</code></pre>
+<pre><code>[1] 9 7</code></pre>
 </div>
 <div id="reduction" class="section level4">
 <h4>Réduction</h4>
 <p>On peut opérer une opération de réduction d’une liste à l’aide d’une fonction binaire (à deux paramètres donc).</p>
-<pre class="r"><code>Reduce(function(a, b) return(a + b), 1:5, 0)</code></pre>
-<pre><code>[1] 15</code></pre>
-<p>Pour fonctionner correctement, la fonction doit retourner un objet utilisable dans la fonction. Dans l’exemple ci-dessous, nous transformons <code>mtcars</code> en une liste de 32 éléments, chacune étant une liste nommée des caractéristiques de la voiture (avec en plus le nom de celle-ci).</p>
+<pre class="r"><code>Reduce(function(a, b) {
+  cat(&quot;a =&quot;, a, &quot;\t b =&quot;, b, &quot;\t a + b =&quot;, a + b, &quot;\n&quot;)
+  return(a + b)
+  }, liste)</code></pre>
+<pre><code>a = 0    b = 5   a + b = 5 
+a = 5    b = 9   a + b = 14 
+a = 14   b = 1   a + b = 15 
+a = 15   b = 2   a + b = 17 
+a = 17   b = 4   a + b = 21 
+a = 21   b = 6   a + b = 27 
+a = 27   b = 7   a + b = 34 
+a = 34   b = 3   a + b = 37 </code></pre>
+<pre><code>[1] 37</code></pre>
+<p><strong>Attention</strong> : Pour fonctionner correctement, la fonction doit retourner un objet utilisable dans la fonction.</p>
+<p>Dans l’exemple ci-dessous, nous transformons <code>mtcars</code> en une liste de 32 éléments, chacune étant une liste nommée des caractéristiques de la voiture (avec en plus le nom de celle-ci).</p>
 <pre class="r"><code>mt = lapply(1:nrow(mtcars), function(i) {
         return(c(nom = rownames(mtcars)[i], as.list(mtcars[i,])))
     })
-unlist(mt[[1]]) # unlist() utilisé pour améliorer l&#39;affichage </code></pre>
-<pre><code>        nom         mpg         cyl        disp          hp        drat 
-&quot;Mazda RX4&quot;        &quot;21&quot;         &quot;6&quot;       &quot;160&quot;       &quot;110&quot;       &quot;3.9&quot; 
-         wt        qsec          vs          am        gear        carb 
-     &quot;2.62&quot;     &quot;16.46&quot;         &quot;0&quot;         &quot;1&quot;         &quot;4&quot;         &quot;4&quot; </code></pre>
+mt[[1]]</code></pre>
+<pre><code>$nom
+[1] &quot;Mazda RX4&quot;
+
+$mpg
+[1] 21
+
+$cyl
+[1] 6
+
+$disp
+[1] 160
+
+$hp
+[1] 110
+
+$drat
+[1] 3.9
+
+$wt
+[1] 2.62
+
+$qsec
+[1] 16.46
+
+$vs
+[1] 0
+
+$am
+[1] 1
+
+$gear
+[1] 4
+
+$carb
+[1] 4</code></pre>
 <p>Imaginons qu’on souhaite faire la somme des consommations, il nous faut créer une liste initiale avec la valeur <code>0</code> pour l’élément <code>mpg</code>. Ensuite, on additionne les deux valeurs qu’on stocke dans <code>a</code> (qui aura pour première valeur <code>init</code>) et on retourne celle-ci.</p>
 <pre class="r"><code>init = list(mpg = 0)
 Reduce(function(a, b) { a$mpg = a$mpg + b$mpg; return(a)}, mt, init)</code></pre>
@@ -584,7 +605,7 @@ Reduce(function(a, b) { a$mpg = a$mpg + b$mpg; return(a)}, mt, init)</code></pre
 </ul></li>
 <li>Retour :
 <ul>
-<li>le ratio entre la somme des valeurs du vecteur (des populations des villes) et la première valeur (population d'un pays)</li>
+<li>le ratio entre la somme des valeurs du vecteur (des populations des villes) et la première valeur (population d’un pays)</li>
 </ul></li>
 <li>Par exemple :
 <ul>
