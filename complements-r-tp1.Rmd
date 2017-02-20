@@ -259,7 +259,7 @@ Reduce(function(a, b) { a$mpg = a$mpg + b$mpg; return(a)}, mt, init)
         - une valeur (population d'un pays)
         - un vecteur de valeur (population de plusieurs villes)
     - Retour :
-        - la ration entre la somme des valeurs du vecteur et la première valeur
+        - le ratio entre la somme des valeurs du vecteur (des populations des villes) et la première valeur (population d'un pays)
     - Par exemple :
         - `f(10, c(1, 2, 3))` renverra `.6`
 
