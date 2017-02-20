@@ -144,13 +144,12 @@ l[sapply(l, length) == 1]
 
 ### `lapply` et autres
 
-La fonction `lapply()` permet d'exécuter une fonction (passée en deuxième paramètre) à chaque élément d'une liste (passée en premier paramètre), ou un vecteur. Il existe aussi les fonctions `sapply()` et `vapply()`, qui sont similaires mais qui cherchent à simplifier le résultat (la deuxième permet de spécifier le nom des retours de la fonctions, si ceux-ci sont multiples). 
+La fonction `lapply()` permet d'exécuter une fonction (passée en deuxième paramètre) à chaque élément d'une liste (passée en premier paramètre), ou un vecteur. Il existe aussi la fonction `sapply()`, qui est similaire mais qui cherche à simplifier le résultat. 
 
 ```{r}
 lapply(l, class)
 sapply(l, class)
 ```
-
 
 ### Fonction particulière
 
@@ -162,7 +161,6 @@ infoElement <- function(e) {
 }
 lapply(l, infoElement)
 sapply(l, infoElement)
-vapply(l, infoElement, c(CLASSE = "", LONG = ""))
 ```
 
 ### Fonction anonyme
@@ -183,7 +181,7 @@ On a parfois besoin d'appliquer une fonction qui ne retourne rien à une liste, 
 lapply(l, function (e) { print(e); })
 ```
 
-Dans ce type de cas, si on veut éviter ce comportement, on peut utiliser la fonction `invisibile()`. Ceci va rendre invisible l'exécution du code et on ne verra donc pas la liste retournée par `lapply()`.
+Dans ce type de cas, si on veut éviter ce comportement, on peut utiliser la fonction `invisible()`. Ceci va rendre invisible l'exécution du code et on ne verra donc pas la liste retournée par `lapply()`.
 
 ```{r}
 invisible(lapply(l, function (e) { print(e); }))
@@ -192,41 +190,53 @@ invisible(lapply(l, function (e) { print(e); }))
 
 ### Fonctions autres
 
+Nous utilisons ici une liste de valeurs entre 0 et 9, définie ci-après.
+
+```{r}
+liste = c(0, 5, 9, 1, 2, 4, 6, 7, 3)
+```
+
 #### Recherche
 
 Il est possible de faire une recherche dans une liste (ou un vecteur) avec les fonctions `Find()` et `Position()`. Celles-ci renvoient le premier élément trouvé (ou le dernier car il est possible de partir de la droite). La fonction passée en premier paramètre doit renvoyer les valeurs `TRUE` ou `FALSE`.
 
-On cherche par exemple ici le premier (ou dernier) élément de type `vector` dans la liste précédemment créée. 
+On cherche par exemple ici le premier (ou dernier) élément strictement supérieur à 6 dans la liste précédemment créée. 
 
 ```{r}
-Find(is.vector, l)
-Find(is.vector, l, right = TRUE)
-Position(is.vector, l)
-Position(is.vector, l, right = TRUE)
+Find(function(e) return(e > 6), liste)
+Find(function(e) return(e > 6), liste, right = T)
+Position(function(e) return(e > 6), liste)
+Position(function(e) return(e > 6), liste, right = T)
 ```
 
 #### Filtre
 
-Pour récupérer tous les éléments d'une liste respectant une condition (grâce à la fonction passée en paramètre donc), on dispose de la fonction `Filter()`. Nous récupérons ici tous les éléments de la liste qui sont de type `vector`.
+Pour récupérer tous les éléments d'une liste respectant une condition (grâce à la fonction passée en paramètre donc), on dispose de la fonction `Filter()`. Nous récupérons ici tous les éléments de la liste qui sont strictement supérieurs à 6.
 
 ```{r}
-Filter(is.vector, l)
+Filter(function(e) return(e > 6), liste)
 ```
 
 #### Réduction
 
 On peut opérer une opération de réduction d'une liste à l'aide d'une fonction binaire (à deux paramètres donc). 
+
 ```{r}
-Reduce(function(a, b) return(a + b), 1:5, 0)
+Reduce(function(a, b) {
+  cat("a =", a, "\t b =", b, "\t a + b =", a + b, "\n")
+  return(a + b)
+  }, liste)
 ```
 
-Pour fonctionner correctement, la fonction doit retourner un objet utilisable dans la fonction. Dans l'exemple ci-dessous, nous transformons `mtcars` en une liste de `r nrow(mtcars)` éléments, chacune étant une liste nommée des caractéristiques de la voiture (avec en plus le nom de celle-ci).
+**Attention** : Pour fonctionner correctement, la fonction doit retourner un objet utilisable dans la fonction.
+
+Dans l'exemple ci-dessous, nous transformons `mtcars` en une liste de `r nrow(mtcars)` éléments, chacune étant une liste nommée des caractéristiques de la voiture (avec en plus le nom de celle-ci).
 
 ```{r}
 mt = lapply(1:nrow(mtcars), function(i) {
         return(c(nom = rownames(mtcars)[i], as.list(mtcars[i,])))
     })
-unlist(mt[[1]]) # unlist() utilisé pour améliorer l'affichage 
+mt[[1]]
 ```
 
 Imaginons qu'on souhaite faire la somme des consommations, il nous faut créer une liste initiale avec la valeur `0` pour l'élément `mpg`. Ensuite, on additionne les deux valeurs qu'on stocke dans `a` (qui aura pour première valeur `init`) et on retourne celle-ci.
