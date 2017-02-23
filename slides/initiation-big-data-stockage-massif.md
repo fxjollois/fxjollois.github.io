@@ -31,7 +31,7 @@ utilisés dans des environnements *Big Data*.
 
 A l'heure actuelle, les BD classiquement utilisées sont les BD relationnelles :
 
-- ensemble structuré d'informations (*structure explicite*):
+- ensemble structuré d'informations (*structure explicite*) :
 	- tables décrites par des attributs
 	- reliées entre elles par des relations 
 - stockage persistant
@@ -41,6 +41,8 @@ Celles-ci sont gérées dans un SGBD permettant :
 - l'accès aux fichiers sur le disque
 - la création, la suppression, l'insertion, la modification et la recherche de valeurs (via **SQL**)
 - la sécurisation et la gestion des accès concurrents
+
+## Retour sur les BD relationnelles (suite)
 
 Utilisées dans quasiment toutes les applications, elles ont pour avantages :
 
@@ -62,28 +64,33 @@ Mais un **nouveau contexte** est apparu :
 Il a donc fallu développer de nouveaux outils avec les caractéristiques suivantes :
 
 - Distribution des données pour résister à la montée en charge
-- Gestion des données non structurées, complexes et hétérogènes (sans déclaration préalable 
-du format des données - *structure implicite*)
+- Gestion des données non structurées, complexes et hétérogènes (sans déclaration préalable du format des données - *structure implicite*)
 
 ## Premiers éléments pour la passage à l'échelle
 
 On distingue deux grands types de passage à l'échelle
 
-- *Vertical scaling* (ou *scaling up*) : on augmente la capacité de l'unique serveur
-- *Horizontal scaling* (ou *scaling out*) : on ajoute des petits serveurs
+**Vertical scaling** (ou *scaling up*)
 
-La première coûtant rapidement très chère, la deuxième solution est celle privilégiée, 
-selon deux possibilités :
+- on augmente la capacité de l'unique serveur
+
+**Horizontal scaling** (ou *scaling out*)
+
+- on ajoute des petits serveurs
+
+## Passage à l'échelle
+
+La première coûtant rapidement très chère, la deuxième solution est celle privilégiée, selon deux possibilités :
 
 - Paradigme *Maître/Esclave*
 	- Ecritures par le maître, lecture par les esclaves
-	- Réplication directe des écritures aux esclaves (donc lecture éventuellement fausse car
-	avant fin de la réplication)
+	- Réplication directe des écritures aux esclaves (donc lecture éventuellement fausse car avant fin de la réplication)
 	- temps de réplication pouvant être très long
 - *Partitionnement* 
 	- Répartition des données dans les différents noeuds
-	- Pas transparent : la répartition doit être connue des applications
+	- Pas transparent : la répartition doit potentiellement être connue des applications
 	- Problème sur les contraintes d'intégrité à prévoir
+
 
 ## Quelques autres possibilités
 
@@ -114,6 +121,8 @@ On parle maintenant de systèmes **NoSQL** (pour *Not Only SQL*)
 	- **I**solation
 	- **D**urability
 
+## Bases de données NoSQL (suite)
+
 Pourquoi on en (re)parle
 
 - Explosion des réseaux sociaux
@@ -128,39 +137,35 @@ Il existe trois propriétés essentielles d'un système :
 
 - **Consistency** (cohérence) : les données sont cohérentes entre tous les noeuds
 - **Availability** (disponibilité) : les données sont disponibles à n'importe quel moment
-- **Partition Tolerance** (resistance au partitionnement) : le système continue de fonctionner
-même si un des noeuds est inopérant
+- **Partition Tolerance** (resistance au partitionnement) : le système continue de fonctionner même si un des noeuds est inopérant
 
 **Problème** : Aucun système distribué ne peut respecter ces trois propriétés.
 
+## Théorème CAP (suite)
+
 On a donc le choix entre :
 
-- un système C + A : un problème sur un des noeuds fait stopper le système (les SGBDR classiques sont plutôt dans cette catégorie)
-- un système C + P : les données ne sont pas forcément disponibles au moment de la requête
-- un système A + P : les données renvoyées ne sont pas toujours cohérentes
+- **C + A** : un problème sur un des noeuds fait stopper le système (les SGBDR classiques sont plutôt dans cette catégorie)
+- **C + P** : les données ne sont pas forcément disponibles au moment de la requête
+- **A + P** : les données renvoyées ne sont pas toujours cohérentes
 
 ## Conséquence du passage à l'échelle
 
 - Le passage à l'échelle implique (presque obligatoirement) le *partitionnement* des données
 - Il faut donc faire le choix entre *cohérence* et *disponibilité*
-- Dans pratiquement tous les systèmes, la disponibilité est préférée, et donc la cohérence 
-stricte est abandonnée (d'où le non-respect de *ACID*)
+- Dans pratiquement tous les systèmes, la disponibilité est préférée, et donc la cohérence stricte est abandonnée (d'où le non-respect de *ACID*)
 - Heureusement, une réponse existe : **BASE** :
-	- **Basically Available** : il y aura une réponse à toute requête, même si c'est
-	du genre *failure* ou *inconsistent data*
+	- **Basically Available** : il y aura une réponse à toute requête, même si c'est du genre *failure* ou *inconsistent data*
 	- **Soft State** : le système n'est pas consistent à tout instant 
-	- **Eventually consistent** : le système deviendra finalement consistent, lorsqu'il ne 
-	recevra plus d'entrées
+	- **Eventually consistent** : le système deviendra finalement consistent, lorsqu'il ne recevra plus d'entrées
 
 Tous les systèmes actuels des géants du web sont dans cette configuration **BASE** 
 
 ## Typologie NoSQL
 
-Il existe quatre principaux types de bases de données dites NoSQL 
-(voir [ce site web](http://nosql-database.org/), d'autres existent mais nous n'en parlerons pas ici).
+Il existe quatre principaux types de bases de données dites NoSQL (voir [ce site web](http://nosql-database.org/), d'autres existent mais nous n'en parlerons pas ici).
 
-Scofield a proposé un comparatif de ceux-ci sur quelques critères (avec les SGBDR classiques
-en plus).
+Scofield a proposé un comparatif de ceux-ci sur quelques critères (avec les SGBDR classiques en plus).
 
 Data Model | Performance | Scalability | Flexibility | Complexity | Functionality
 -|-|-|-|-|-
@@ -196,6 +201,9 @@ Exemples :
 - `update(key, value)` : on met à jour la valeur correspondant à la clé
 - `delete(key)` : on supprime la valeur correspondant à la clé
 
+
+## Key-Value Store (suite)
+
 **Pour** :
 
 - Interface de requêtage très simple et souvent accessible facilement, par n'importe quel langage
@@ -224,11 +232,13 @@ Exemples :
 
 ## Document-Oriented Store (suite)
 
-Un document est composé de champs associés à des valeurs (entier, numérique, chaîne, liste,
-tableau), dans un format type JSON ou XML
+Un document est composé de champs associés à des valeurs (entier, numérique, chaîne, liste, tableau), dans un format type JSON ou XML
 
-Grande hétérogénéité permise entre les documents, puisque la structure de ceux-ci n'est 
-jamais pré-supposée.
+Grande hétérogénéité permise entre les documents, puisque la structure de ceux-ci n'est jamais pré-supposée
+
+Pas de prototypage ou de modélisation des données en amont nécessaires
+
+## Document-Oriented Store (suite)
 
 **Pour**
 
@@ -260,12 +270,13 @@ Exemples :
 ## Column-Oriented Store (suite)
 
 Il existe deux sous-types de ce genre de système :
-A. stockage des colonnes sans compression et de manière séparée
-B. regroupement de plusieurs colonnes dans des familles de colonnes
 
-Bien qu'ils soient étiqueté dans le même groupe pour les BD NoSQL, ces deux types ne
-répondent pas aux mêmes besoins et il est important de savoir ce qu'on veut faire pour
-choisir entre les deux
+- Stockage des colonnes sans compression et de manière séparée
+- Regroupement de plusieurs colonnes dans des familles de colonnes
+
+Bien qu'ils soient étiquetés dans le même groupe pour les BD NoSQL, ces deux types ne répondent pas aux mêmes besoins et il est important de savoir ce qu'on veut faire pour choisir entre les deux
+
+## Column-Oriented Store (suite)
 
 **Pour**
 
@@ -287,7 +298,7 @@ Principe :
 - 2 composants principaux :
 	- Base de stockage des objets (chaque objet est un noeud du graphe)
 	- Description des relations entre objets (avec possiblement des propriétés)
-- Capacité à manipuler des objets complexes, ayant des relations non-triviales et/ou variables
+- Capacité à manipuler des relations non-triviales et/ou variables
 
 Exemples :
 
@@ -297,8 +308,7 @@ Exemples :
 
 ## Graph Database (suite)
 
-Typiquement adapté aux traitements des problématiques de type réseaux sociaux ou de cartographie, 
-et donc beaucoup plus rapide qu'un SGBDR dans un tel cadre
+Typiquement adapté aux traitements des problématiques de type réseaux sociaux ou de cartographie, et donc beaucoup plus rapide qu'un SGBDR dans un tel cadre
 
 Particulièrement adapté à ce qu'on appelle le *Web sémantique* et les moteurs de recommandation
 
@@ -314,20 +324,16 @@ Particulièrement adapté à ce qu'on appelle le *Web sémantique* et les moteur
 
 ## Lequel prendre ?
 
-- Faire un tour sur [db-engines.com](http://db-engines.com/en/) pour voir les BD existantes 
-et les tendances du moment
+- Faire un tour sur [db-engines.com](http://db-engines.com/en/) pour voir les BD existantes et les tendances du moment
 - Benchmarking possible avec [YCSB](http://labs.yahoo.com/news/yahoo-cloud-serving-benchmark/)
-	- *Yahoo! Cloud Serving Benchmark*
-	- Code disponible sur [GitHub](https://github.com/brianfrankcooper/YCSB/)
-- Il y a un très bon [comparatif](http://www.altoros.com/vendor_independent_comparison_of_nosql_databases.html) 
-fait par un cabinet indépendant 
+	- *Yahoo! Cloud Serving Benchmark* (code disponible sur [GitHub](https://github.com/brianfrankcooper/YCSB/))
+- Il y a un très bon [comparatif](http://www.altoros.com/vendor_independent_comparison_of_nosql_databases.html) fait par un cabinet indépendant 
 	- rapport disponible sur demande
 	- basé sur *YCSB*
 - Test possible à faible coût avec [Amazon Web Service](http://aws.amazon.com/) 
 - Réfléchir à l'utilisation à venir et surtout
 	- Quelles requêtes je vais avoir besoin de faire ?
-	- Quelles performances je veux avoir en lecture ?
-	- Quelles performances je veux avoir en écriture ?
+	- Quelles performances je veux avoir en lecture ? en écriture ?
 - Ne pas forcément rejeter les BD relationnelles sans avoir peser le pour et le contre
 
 ## Utilisations principales par type de BD
@@ -341,6 +347,9 @@ fait par un cabinet indépendant
 	- optimisation de recherche (eBay)
 	- BI (Adobe)
 	- Analyse d'audience
+
+## Utilisations principales par type de BD (suite)
+
 - *Document Store*
 	- Enregistrement dʼévénements
 	- Systèmes de gestion de contenu (CMS)

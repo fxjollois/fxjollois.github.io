@@ -133,7 +133,7 @@
 <p>A l&#39;heure actuelle, les BD classiquement utilisées sont les BD relationnelles :</p>
 
 <ul>
-<li>ensemble structuré d&#39;informations (<em>structure explicite</em>):
+<li>ensemble structuré d&#39;informations (<em>structure explicite</em>) :
 
 <ul>
 <li>tables décrites par des attributs</li>
@@ -149,6 +149,8 @@
 <li>la création, la suppression, l&#39;insertion, la modification et la recherche de valeurs (via <strong>SQL</strong>)</li>
 <li>la sécurisation et la gestion des accès concurrents</li>
 </ul>
+
+</article></slide><slide class=''><hgroup><h2>Retour sur les BD relationnelles (suite)</h2></hgroup><article  id="retour-sur-les-bd-relationnelles-suite">
 
 <p>Utilisées dans quasiment toutes les applications, elles ont pour avantages :</p>
 
@@ -188,10 +190,19 @@
 
 <p>On distingue deux grands types de passage à l&#39;échelle</p>
 
+<p><strong>Vertical scaling</strong> (ou <em>scaling up</em>)</p>
+
 <ul>
-<li><em>Vertical scaling</em> (ou <em>scaling up</em>) : on augmente la capacité de l&#39;unique serveur</li>
-<li><em>Horizontal scaling</em> (ou <em>scaling out</em>) : on ajoute des petits serveurs</li>
+<li>on augmente la capacité de l&#39;unique serveur</li>
 </ul>
+
+<p><strong>Horizontal scaling</strong> (ou <em>scaling out</em>)</p>
+
+<ul>
+<li>on ajoute des petits serveurs</li>
+</ul>
+
+</article></slide><slide class=''><hgroup><h2>Passage à l&#39;échelle</h2></hgroup><article  id="passage-a-lechelle">
 
 <p>La première coûtant rapidement très chère, la deuxième solution est celle privilégiée, selon deux possibilités :</p>
 
@@ -207,7 +218,7 @@
 
 <ul>
 <li>Répartition des données dans les différents noeuds</li>
-<li>Pas transparent : la répartition doit être connue des applications</li>
+<li>Pas transparent : la répartition doit potentiellement être connue des applications</li>
 <li>Problème sur les contraintes d&#39;intégrité à prévoir</li>
 </ul></li>
 </ul>
@@ -263,6 +274,8 @@
 </ul></li>
 </ul>
 
+</article></slide><slide class=''><hgroup><h2>Bases de données NoSQL (suite)</h2></hgroup><article  id="bases-de-donnees-nosql-suite">
+
 <p>Pourquoi on en (re)parle</p>
 
 <ul>
@@ -285,12 +298,14 @@
 
 <p><strong>Problème</strong> : Aucun système distribué ne peut respecter ces trois propriétés.</p>
 
+</article></slide><slide class=''><hgroup><h2>Théorème CAP (suite)</h2></hgroup><article  id="theoreme-cap-suite">
+
 <p>On a donc le choix entre :</p>
 
 <ul>
-<li>un système C + A : un problème sur un des noeuds fait stopper le système (les SGBDR classiques sont plutôt dans cette catégorie)</li>
-<li>un système C + P : les données ne sont pas forcément disponibles au moment de la requête</li>
-<li>un système A + P : les données renvoyées ne sont pas toujours cohérentes</li>
+<li><strong>C + A</strong> : un problème sur un des noeuds fait stopper le système (les SGBDR classiques sont plutôt dans cette catégorie)</li>
+<li><strong>C + P</strong> : les données ne sont pas forcément disponibles au moment de la requête</li>
+<li><strong>A + P</strong> : les données renvoyées ne sont pas toujours cohérentes</li>
 </ul>
 
 </article></slide><slide class=''><hgroup><h2>Conséquence du passage à l&#39;échelle</h2></hgroup><article  id="consequence-du-passage-a-lechelle">
@@ -399,6 +414,8 @@
 <li><code>delete(key)</code> : on supprime la valeur correspondant à la clé</li>
 </ul>
 
+</article></slide><slide class=''><hgroup><h2>Key-Value Store (suite)</h2></hgroup><article  id="key-value-store-suite-1">
+
 <p><strong>Pour</strong> :</p>
 
 <ul>
@@ -437,7 +454,11 @@
 
 <p>Un document est composé de champs associés à des valeurs (entier, numérique, chaîne, liste, tableau), dans un format type JSON ou XML</p>
 
-<p>Grande hétérogénéité permise entre les documents, puisque la structure de ceux-ci n&#39;est jamais pré-supposée.</p>
+<p>Grande hétérogénéité permise entre les documents, puisque la structure de ceux-ci n&#39;est jamais pré-supposée</p>
+
+<p>Pas de prototypage ou de modélisation des données en amont nécessaires</p>
+
+</article></slide><slide class=''><hgroup><h2>Document-Oriented Store (suite)</h2></hgroup><article  id="document-oriented-store-suite-1">
 
 <p><strong>Pour</strong></p>
 
@@ -475,9 +496,16 @@
 
 </article></slide><slide class=''><hgroup><h2>Column-Oriented Store (suite)</h2></hgroup><article  id="column-oriented-store-suite">
 
-<p>Il existe deux sous-types de ce genre de système : A. stockage des colonnes sans compression et de manière séparée B. regroupement de plusieurs colonnes dans des familles de colonnes</p>
+<p>Il existe deux sous-types de ce genre de système :</p>
 
-<p>Bien qu&#39;ils soient étiqueté dans le même groupe pour les BD NoSQL, ces deux types ne répondent pas aux mêmes besoins et il est important de savoir ce qu&#39;on veut faire pour choisir entre les deux</p>
+<ul>
+<li>Stockage des colonnes sans compression et de manière séparée</li>
+<li>Regroupement de plusieurs colonnes dans des familles de colonnes</li>
+</ul>
+
+<p>Bien qu&#39;ils soient étiquetés dans le même groupe pour les BD NoSQL, ces deux types ne répondent pas aux mêmes besoins et il est important de savoir ce qu&#39;on veut faire pour choisir entre les deux</p>
+
+</article></slide><slide class=''><hgroup><h2>Column-Oriented Store (suite)</h2></hgroup><article  id="column-oriented-store-suite-1">
 
 <p><strong>Pour</strong></p>
 
@@ -507,7 +535,7 @@
 <li>Base de stockage des objets (chaque objet est un noeud du graphe)</li>
 <li>Description des relations entre objets (avec possiblement des propriétés)</li>
 </ul></li>
-<li>Capacité à manipuler des objets complexes, ayant des relations non-triviales et/ou variables</li>
+<li>Capacité à manipuler des relations non-triviales et/ou variables</li>
 </ul>
 
 <p>Exemples :</p>
@@ -545,8 +573,7 @@
 <li>Benchmarking possible avec <a href='http://labs.yahoo.com/news/yahoo-cloud-serving-benchmark/' title=''>YCSB</a>
 
 <ul>
-<li><em>Yahoo! Cloud Serving Benchmark</em></li>
-<li>Code disponible sur <a href='https://github.com/brianfrankcooper/YCSB/' title=''>GitHub</a></li>
+<li><em>Yahoo! Cloud Serving Benchmark</em> (code disponible sur <a href='https://github.com/brianfrankcooper/YCSB/' title=''>GitHub</a>)</li>
 </ul></li>
 <li>Il y a un très bon <a href='http://www.altoros.com/vendor_independent_comparison_of_nosql_databases.html' title=''>comparatif</a> fait par un cabinet indépendant
 
@@ -559,8 +586,7 @@
 
 <ul>
 <li>Quelles requêtes je vais avoir besoin de faire ?</li>
-<li>Quelles performances je veux avoir en lecture ?</li>
-<li>Quelles performances je veux avoir en écriture ?</li>
+<li>Quelles performances je veux avoir en lecture ? en écriture ?</li>
 </ul></li>
 <li>Ne pas forcément rejeter les BD relationnelles sans avoir peser le pour et le contre</li>
 </ul>
@@ -583,6 +609,11 @@
 <li>BI (Adobe)</li>
 <li>Analyse d&#39;audience</li>
 </ul></li>
+</ul>
+
+</article></slide><slide class=''><hgroup><h2>Utilisations principales par type de BD (suite)</h2></hgroup><article  id="utilisations-principales-par-type-de-bd-suite">
+
+<ul>
 <li><em>Document Store</em>
 
 <ul>

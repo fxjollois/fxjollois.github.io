@@ -1,6 +1,5 @@
 ---
 title: Interrogation de données
-author: FX Jollois
 date: du NoSQL avec MongoDB
 ---
 
