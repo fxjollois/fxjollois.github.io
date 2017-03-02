@@ -1,5 +1,5 @@
 ---
-title: Fonctions
+title: Fonctions et listes
 subtitle: Compléments sur `R` - STID 1ère année
 ---
 

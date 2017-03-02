@@ -11,7 +11,7 @@
 
 
 
-<title>Compléments sur R</title>
+<title>TP4 - pandas sous Python</title>
 
 <script src="libs/jquery-1.11.3/jquery.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -228,26 +228,61 @@ $(document).ready(function () {
 
 
 
-<h1 class="title toc-ignore">Compléments sur <code>R</code></h1>
+<h1 class="title toc-ignore">TP4 - <code>pandas</code> sous <code>Python</code></h1>
+<h3 class="subtitle"><em>Analyse de Données Massives - Master 1ère année</em></h3>
 
 </div>
 
 
-<div id="cours-de-1ere-annee-2eme-semestre" class="section level2">
-<h2>Cours de 1ère année, 2ème semestre</h2>
-<div id="stats-sur-r" class="section level3">
-<h3>Stats sur R</h3>
-<ol style="list-style-type: decimal">
-<li><a href="complements-r-tp1.html">TP1 - Fonctions</a>
-<ul>
-<li><a href="complements-r-tp1-correction.html">correction</a></li>
-</ul></li>
-<li><a href="complements-r-tp2.html">TP2 - Visualisation de données</a></li>
-<li><a href="complements-r-tp3.html">TP3 - Reporting</a></li>
-</ol>
+<p>Nous allons utiliser dans ce TP le module pandas permettant l’analyse de données avec Python. La première instruction est de charger le module.</p>
+<pre class="python"><code>import pandas</code></pre>
+<div id="donnees" class="section level2">
+<h2>Données</h2>
+<p>Nous allons travailler sur les données <a href="donnees/Iris.txt">Iris</a>, contenant les informations de 150 iris, de 3 espèces différentes, décrits par la longueur et la largeur de leur sépale et de leur pétale. Voici comment lire ces données dans <code>python</code> avec <code>read_csv()</code> de <code>pandas</code>.</p>
+<pre class="python"><code>iris = pandas.read_csv(&quot;donnees/Iris.txt&quot;, header = 0, sep = &quot;;&quot;, quotechar = &quot;&#39;&quot;)</code></pre>
+<p>Sur ces données, il est bien évidemment possible de voir quelques informations classiques.</p>
+<pre class="python"><code>type(iris)
+iris.shape
+iris.count()
+iris.info()
+list(iris.columns)
+list(iris)</code></pre>
 </div>
-<div id="application-web" class="section level3">
-<h3>Application web</h3>
+<div id="statistices-descriptives-univariees" class="section level2">
+<h2>Statistices descriptives univariées</h2>
+<p>La fonction <code>describe()</code> permet de décrire toutes les variables quantitatives d’un jeu de données directement.</p>
+<pre class="python"><code>iris.describe()</code></pre>
+<p>Dans la suite, nous allons voir comment décrire les variables de notre jeu de données.</p>
+<div id="quantitative" class="section level3">
+<h3>Quantitative</h3>
+<p>Puisque les noms de variables contiennents des <code>&quot;.&quot;</code>, il est nécessaire de sélectionner celles-ci via les crochets <code>[]</code>, plutôt que par un point <code>.</code>.</p>
+<p>Les fonctions ci-dessous permettent de décrire une variable quantitative (ici <code>&quot;Sepal.Length&quot;</code>).</p>
+<pre class="python"><code>iris[&quot;Sepal.Length&quot;].describe()
+iris[&quot;Sepal.Length&quot;].mean()
+iris[&quot;Sepal.Length&quot;].std()
+iris[&quot;Sepal.Length&quot;].var()
+iris[&quot;Sepal.Length&quot;].min()
+iris[&quot;Sepal.Length&quot;].max()
+iris[&quot;Sepal.Length&quot;].median()
+iris[&quot;Sepal.Length&quot;].quantile([.01, .1, .9, .99])</code></pre>
+<p>Pour représenter graphiquement cette variable, <code>pandas</code> met à disposition (via le module <code>matplotlib</code> utilisé par <code>pandas</code>) des fonctions graphiques.</p>
+<p>Pour réaliser un histogramme, nous utilisons la fonction <code>hist()</code>. Celle-ci peut prendre des options. La fonction <code>plot()</code> avec le paramètre <code>kind</code> avec la valeur <code>&quot;hist&quot;</code> revient au même résultat.</p>
+<pre class="python"><code>iris.plot.hist()
+iris[&quot;Sepal.Length&quot;].hist()
+iris[&quot;Sepal.Length&quot;].hist(bins = 20)
+iris[&quot;Sepal.Length&quot;].plot(kind = &quot;hist&quot;)
+iris[&quot;Sepal.Length&quot;].plot(kind = &quot;hist&quot;, normed = True)
+iris[&quot;Sepal.Length&quot;].plot(kind = &quot;kde&quot;)</code></pre>
+<p>Pour avoir la densité et l’histogramme sur le même graphique, il est nécessaire de compiler les deux lignes suivantes <strong>ensemble</strong>.</p>
+<pre class="python"><code>iris[&quot;Sepal.Length&quot;].plot(kind = &quot;hist&quot;, normed = True, color = &quot;lightgrey&quot;)
+iris[&quot;Sepal.Length&quot;].plot(kind = &quot;kde&quot;)</code></pre>
+<p>Enfin, pour les boîtes à moustaches, il faut passer par le <code>DataFrame</code> pour l’afficher, et choisir une variable spécifiquement éventuellement.</p>
+<pre class="python"><code>iris.boxplot()
+iris.boxplot(column = &quot;Sepal.Length&quot;)
+iris.boxplot(column = &quot;Sepal.Length&quot;, grid = False)</code></pre>
+</div>
+<div id="qualitative" class="section level3">
+<h3>Qualitative</h3>
 </div>
 </div>
 

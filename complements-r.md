@@ -7,6 +7,7 @@ title: Compléments sur `R`
 ### Stats sur R
 
 1. [TP1 - Fonctions](complements-r-tp1.html)
+    - [correction](complements-r-tp1-correction.html)
 1. [TP2 - Visualisation de données](complements-r-tp2.html)
 1. [TP3 - Reporting](complements-r-tp3.html)
 

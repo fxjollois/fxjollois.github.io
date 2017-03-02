@@ -1,0 +1,92 @@
+---
+title: TP4 - `pandas` sous `Python`
+subtitle: Analyse de Données Massives - Master 1ère année
+---
+
+```{r, include=FALSE}
+knitr::opts_chunk$set(eval = FALSE)
+```
+
+
+Nous allons utiliser dans ce TP le module pandas permettant l'analyse de données avec Python. La première instruction est de charger le module.
+
+```{python}
+import pandas
+```
+
+## Données
+
+Nous allons travailler sur les données [Iris](donnees/Iris.txt), contenant les informations de 150 iris, de 3 espèces différentes, décrits par la longueur et la largeur de leur sépale et de leur pétale. Voici comment lire ces données dans `python` avec `read_csv()` de `pandas`.
+
+```{python}
+iris = pandas.read_csv("donnees/Iris.txt", header = 0, sep = ";", quotechar = "'")
+```
+
+Sur ces données, il est bien évidemment possible de voir quelques informations classiques.
+
+```{python}
+type(iris)
+iris.shape
+iris.count()
+iris.info()
+list(iris.columns)
+list(iris)
+```
+
+## Statistices descriptives univariées
+
+La fonction `describe()` permet de décrire toutes les variables quantitatives d'un jeu de données directement.
+
+```{python}
+iris.describe()
+```
+
+Dans la suite, nous allons voir comment décrire les variables de notre jeu de données. 
+
+### Quantitative
+
+Puisque les noms de variables contiennents des `"."`, il est nécessaire de sélectionner celles-ci via les crochets `[]`, plutôt que par un point `.`.
+
+Les fonctions ci-dessous permettent de décrire une variable quantitative (ici `"Sepal.Length"`).
+
+```{python}
+iris["Sepal.Length"].describe()
+iris["Sepal.Length"].mean()
+iris["Sepal.Length"].std()
+iris["Sepal.Length"].var()
+iris["Sepal.Length"].min()
+iris["Sepal.Length"].max()
+iris["Sepal.Length"].median()
+iris["Sepal.Length"].quantile([.01, .1, .9, .99])
+```
+
+Pour représenter graphiquement cette variable, `pandas` met à disposition (via le module `matplotlib` utilisé par `pandas`) des fonctions graphiques.
+
+Pour réaliser un histogramme, nous utilisons la fonction `hist()`. Celle-ci peut prendre des options. La fonction `plot()` avec le paramètre `kind` avec la valeur `"hist"` revient au même résultat.
+
+```{python}
+iris.plot.hist()
+iris["Sepal.Length"].hist()
+iris["Sepal.Length"].hist(bins = 20)
+iris["Sepal.Length"].plot(kind = "hist")
+iris["Sepal.Length"].plot(kind = "hist", normed = True)
+iris["Sepal.Length"].plot(kind = "kde")
+```
+
+Pour avoir la densité et l'histogramme sur le même graphique, il est nécessaire de compiler les deux lignes suivantes **ensemble**.
+
+```{python}
+iris["Sepal.Length"].plot(kind = "hist", normed = True, color = "lightgrey")
+iris["Sepal.Length"].plot(kind = "kde")
+```
+
+Enfin, pour les boîtes à moustaches, il faut passer par le `DataFrame` pour l'afficher, et choisir une variable spécifiquement éventuellement.
+
+```{python}
+iris.boxplot()
+iris.boxplot(column = "Sepal.Length")
+iris.boxplot(column = "Sepal.Length", grid = False)
+```
+
+### Qualitative
+
