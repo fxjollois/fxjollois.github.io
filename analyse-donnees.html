@@ -19,6 +19,9 @@
 <script src="libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
 <script src="libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
 <script src="libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<script src="libs/jqueryui-1.11.4/jquery-ui.min.js"></script>
+<link href="libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
+<script src="libs/tocify-1.9.1/jquery.tocify.js"></script>
 <script src="libs/navigation-1.1/tabsets.js"></script>
 <link href="libs/highlightjs-1.1/default.css" rel="stylesheet" />
 <script src="libs/highlightjs-1.1/highlight.js"></script>
@@ -153,6 +156,101 @@ $(document).ready(function () {
 
 
 
+<script>
+$(document).ready(function ()  {
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3,h4",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_').toLowerCase();
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = true;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
+
+<style type="text/css">
+
+#TOC {
+  margin: 25px 0px 20px 0px;
+}
+@media (max-width: 768px) {
+#TOC {
+  position: relative;
+  width: 100%;
+}
+}
+
+
+.toc-content {
+  padding-left: 30px;
+  padding-right: 40px;
+}
+
+div.main-container {
+  max-width: 1200px;
+}
+
+div.tocify {
+  width: 20%;
+  max-width: 260px;
+  max-height: 85%;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  div.tocify {
+    width: 25%;
+  }
+}
+
+@media (max-width: 767px) {
+  div.tocify {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+.tocify ul, .tocify li {
+  line-height: 20px;
+}
+
+.tocify-subheader .tocify-item {
+  font-size: 0.90em;
+  padding-left: 25px;
+  text-indent: 0;
+}
+
+.tocify .list-group-item {
+  border-radius: 0px;
+}
+
+
+</style>
+
+<!-- setup 3col/9col grid for toc_float and main content  -->
+<div class="row-fluid">
+<div class="col-xs-12 col-sm-4 col-md-3">
+<div id="TOC" class="tocify">
+</div>
+</div>
+
+<div class="toc-content col-xs-12 col-sm-8 col-md-9">
+
+
 
 <div class="navbar navbar-default navbar-fixed-top">
   <div class="container">
@@ -247,7 +345,7 @@ $(document).ready(function () {
 </ul></li>
 <li><strong>Cinq intervenants</strong> :
 <ul>
-<li>Servane Gey (9 Mars) et Charles Bouveyron ( Mars) : introduction aux méthodologies</li>
+<li>FX Jollois (à la place de Servane Gey - 9 Mars) et Charles Bouveyron ( Mars) : introduction aux méthodologies</li>
 <li>Antoine-Eric Sammartino (10 Mars), Rachel Verjus et Taoufik En-Najjary ( Mars) : application sur données réelles</li>
 </ul></li>
 <li><p><strong>Evaluation orale individuelle</strong> à la fin de chaque session (10 et Mars)</p></li>
@@ -259,7 +357,7 @@ $(document).ready(function () {
 <ul>
 <li><strong>Deux intervenants</strong> :
 <ul>
-<li>Servane Gey (9 Mars) <a href="mailto:Servane.Gey@parisdescartes.fr">Servane.Gey@parisdescartes.fr</a></li>
+<li>FX Jollois (à la place de Servane Gey - 9 Mars) <a href="mailto:francois-xavier.jollois@parisdescartes.fr">francois-xavier.jollois@parisdescartes.fr</a> | <a href="mailto:Servane.Gey@parisdescartes.fr">Servane.Gey@parisdescartes.fr</a></li>
 <li>Antoine-Eric Sammartino (10 Mars) <a href="mailto:antoine-eric.sammartino@laposte.net">antoine-eric.sammartino@laposte.net</a></li>
 </ul></li>
 <li><strong>Références</strong> (liste non-exhaustive) :
@@ -301,158 +399,31 @@ $(document).ready(function () {
 <h2>Tables de Données</h2>
 <div id="donnees-brutes" class="section level3">
 <h3>Données brutes</h3>
-<p>Recensement aux Etats-Unis en 2012</p>
+<p>Recensement aux Etats-Unis en 2012 (<a href="donnees/Recensement_12.csv">données</a>)</p>
 <pre class="r"><code>x = read.csv2(&quot;donnees/Recensement_12.csv&quot;, row.names = 1)
-knitr::kable(head(x, 10))</code></pre>
-<table>
-<thead>
-<tr class="header">
-<th align="right">AGE</th>
-<th align="left">SEXE</th>
-<th align="left">REGION</th>
-<th align="left">STAT_MARI</th>
-<th align="right">SAL_HOR</th>
-<th align="left">SYNDICAT</th>
-<th align="left">CATEGORIE</th>
-<th align="left">NIV_ETUDES</th>
-<th align="right">NB_PERS</th>
-<th align="right">NB_ENF</th>
-<th align="left">REV_FOYER</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td align="right">58</td>
-<td align="left">F</td>
-<td align="left">NE</td>
-<td align="left">C</td>
-<td align="right">13.25</td>
-<td align="left">non</td>
-<td align="left">Employe</td>
-<td align="left">BAC+3</td>
-<td align="right">2</td>
-<td align="right">0</td>
-<td align="left">40 - &lt; 60</td>
-</tr>
-<tr class="even">
-<td align="right">40</td>
-<td align="left">M</td>
-<td align="left">W</td>
-<td align="left">M</td>
-<td align="right">12.50</td>
-<td align="left">NA</td>
-<td align="left">Construction et Maintenance</td>
-<td align="left">Sans diplome</td>
-<td align="right">2</td>
-<td align="right">0</td>
-<td align="left">&lt; 40</td>
-</tr>
-<tr class="odd">
-<td align="right">29</td>
-<td align="left">M</td>
-<td align="left">S</td>
-<td align="left">C</td>
-<td align="right">14.00</td>
-<td align="left">NA</td>
-<td align="left">Employe</td>
-<td align="left">BAC+2</td>
-<td align="right">2</td>
-<td align="right">0</td>
-<td align="left">&gt;= 100</td>
-</tr>
-<tr class="even">
-<td align="right">59</td>
-<td align="left">M</td>
-<td align="left">NE</td>
-<td align="left">D</td>
-<td align="right">10.60</td>
-<td align="left">NA</td>
-<td align="left">Transports et Service</td>
-<td align="left">BAC</td>
-<td align="right">4</td>
-<td align="right">1</td>
-<td align="left">&lt; 40</td>
-</tr>
-<tr class="odd">
-<td align="right">51</td>
-<td align="left">M</td>
-<td align="left">W</td>
-<td align="left">M</td>
-<td align="right">13.00</td>
-<td align="left">NA</td>
-<td align="left">Transports et Service</td>
-<td align="left">Sans diplome</td>
-<td align="right">8</td>
-<td align="right">1</td>
-<td align="left">&gt;= 100</td>
-</tr>
-<tr class="even">
-<td align="right">19</td>
-<td align="left">M</td>
-<td align="left">NA</td>
-<td align="left">C</td>
-<td align="right">NA</td>
-<td align="left">non</td>
-<td align="left">NA</td>
-<td align="left">NA</td>
-<td align="right">NA</td>
-<td align="right">NA</td>
-<td align="left">NA</td>
-</tr>
-<tr class="odd">
-<td align="right">64</td>
-<td align="left">F</td>
-<td align="left">S</td>
-<td align="left">M</td>
-<td align="right">19.57</td>
-<td align="left">NA</td>
-<td align="left">Production et Agriculture</td>
-<td align="left">BAC</td>
-<td align="right">3</td>
-<td align="right">0</td>
-<td align="left">60 - &lt; 100</td>
-</tr>
-<tr class="even">
-<td align="right">23</td>
-<td align="left">F</td>
-<td align="left">NE</td>
-<td align="left">C</td>
-<td align="right">13.00</td>
-<td align="left">NA</td>
-<td align="left">Profession liberale</td>
-<td align="left">BAC+3</td>
-<td align="right">2</td>
-<td align="right">0</td>
-<td align="left">40 - &lt; 60</td>
-</tr>
-<tr class="odd">
-<td align="right">47</td>
-<td align="left">M</td>
-<td align="left">NW</td>
-<td align="left">M</td>
-<td align="right">20.10</td>
-<td align="left">oui</td>
-<td align="left">Construction et Maintenance</td>
-<td align="left">BAC</td>
-<td align="right">3</td>
-<td align="right">0</td>
-<td align="left">40 - &lt; 60</td>
-</tr>
-<tr class="even">
-<td align="right">66</td>
-<td align="left">F</td>
-<td align="left">S</td>
-<td align="left">D</td>
-<td align="right">12.50</td>
-<td align="left">non</td>
-<td align="left">Employe</td>
-<td align="left">BAC</td>
-<td align="right">1</td>
-<td align="right">0</td>
-<td align="left">&lt; 40</td>
-</tr>
-</tbody>
-</table>
+head(x, 10)</code></pre>
+<pre><code>   AGE SEXE REGION STAT_MARI SAL_HOR SYNDICAT                   CATEGORIE
+1   58    F     NE         C   13.25      non                     Employe
+2   40    M      W         M   12.50     &lt;NA&gt; Construction et Maintenance
+3   29    M      S         C   14.00     &lt;NA&gt;                     Employe
+4   59    M     NE         D   10.60     &lt;NA&gt;       Transports et Service
+5   51    M      W         M   13.00     &lt;NA&gt;       Transports et Service
+6   19    M   &lt;NA&gt;         C      NA      non                        &lt;NA&gt;
+7   64    F      S         M   19.57     &lt;NA&gt;   Production et Agriculture
+8   23    F     NE         C   13.00     &lt;NA&gt;         Profession liberale
+9   47    M     NW         M   20.10      oui Construction et Maintenance
+10  66    F      S         D   12.50      non                     Employe
+     NIV_ETUDES NB_PERS NB_ENF  REV_FOYER
+1         BAC+3       2      0  40 - &lt; 60
+2  Sans diplome       2      0       &lt; 40
+3         BAC+2       2      0     &gt;= 100
+4           BAC       4      1       &lt; 40
+5  Sans diplome       8      1     &gt;= 100
+6          &lt;NA&gt;      NA     NA       &lt;NA&gt;
+7           BAC       3      0 60 - &lt; 100
+8         BAC+3       2      0  40 - &lt; 60
+9           BAC       3      0  40 - &lt; 60
+10          BAC       1      0       &lt; 40</code></pre>
 <pre class="r"><code>str(x)</code></pre>
 <pre><code>&#39;data.frame&#39;:   599 obs. of  11 variables:
  $ AGE       : int  58 40 29 59 51 19 64 23 47 66 ...
@@ -504,7 +475,7 @@ p = 100*prop.table(table(x$NB_ENF))
 barplot(p, main = &quot;Nombre d&#39;enfants au foyer&quot;)
 p4 = 100*prop.table(table(x$REV_FOYER))
 barplot(p4[c(1,3,4,2)], main = &quot;Revenus du foyer&quot;)</code></pre>
-<p><img src="analyse-donnees_files/figure-html/unnamed-chunk-4-1.png" width="672" /></p>
+<p><img src="analyse-donnees_files/figure-html/unnamed-chunk-4-1.png" width="672" style="display: block; margin: auto;" /></p>
 </div>
 <div id="traitement-multivarie-variables-quantitatives" class="section level3">
 <h3>Traitement multivarié : variables quantitatives</h3>
@@ -518,7 +489,11 @@ barplot(p4[c(1,3,4,2)], main = &quot;Revenus du foyer&quot;)</code></pre>
 <p>où <span class="math inline">\(\bar{\bullet}\)</span> représente la moyenne et <span class="math inline">\(\sigma_{\bullet}\)</span> l’écart-type.</p>
 <p>Plus <span class="math inline">\(Cor(X,Y)\)</span> est proche de -1 ou 1, et plus les données sont distribuées suivant une droite. Le signe de <span class="math inline">\(Cor(X,Y)\)</span> traduit une relation croissante (corrélation positive), ou décroissante (corrélation négative).</p>
 <p><span class="math inline">\(X=(x_i^{(j)})\)</span> tableau (ou matrice) de données numériques brutes à <span class="math inline">\(n\)</span> lignes (individus) et p colonnes (variables).</p>
-<p><span class="math inline">\(\Sigma\)</span> matrice des variances/covariances (resp. des corrélations) : <span class="math inline">\(\Sigma_{k,j}=Cov(X^{(k)},X^{(j)})\)</span> (resp. <span class="math inline">\(\Sigma_{k,j}=Cor(X^{(k)},X^{(j)})\)</span>)</p>
+<p><span class="math inline">\(\Sigma\)</span> matrice des</p>
+<ul>
+<li>variances/covariances : <span class="math inline">\(\Sigma_{k,j}=Cov(X^{(k)},X^{(j)})\)</span></li>
+<li>corrélations : <span class="math inline">\(\Sigma_{k,j}=Cor(X^{(k)},X^{(j)})\)</span></li>
+</ul>
 <p><span class="math inline">\(\Sigma\)</span> matrice <span class="math inline">\(p\times p\)</span> symétrique (définie positive)</p>
 <p><em>Remarque</em> : <span class="math display">\[Cov(X^{k},X^{(k)})=\sigma_{X^{(k)}}^2, \ \ Cor(X^{k},X^{(k)})=\frac{\sigma_{X^{(k)}}^2}{\sigma_{X^{(k)}}^2}=1.\]</span></p>
 <p>Lecture simultanée</p>
@@ -553,223 +528,62 @@ SAL_HOR  0.24    1.00   -0.10  -0.08
 NB_PERS -0.24   -0.10    1.00   0.55
 NB_ENF  -0.15   -0.08    0.55   1.00</code></pre>
 <pre class="r"><code>pairs(x[,quanti])</code></pre>
-<p><img src="analyse-donnees_files/figure-html/unnamed-chunk-6-1.png" width="672" /></p>
+<p><img src="analyse-donnees_files/figure-html/unnamed-chunk-6-1.png" width="672" style="display: block; margin: auto;" /></p>
 </div>
 <div id="traitement-multivarie-variables-qualitatives" class="section level3">
 <h3>Traitement multivarié : variables qualitatives</h3>
-<table>
-<thead>
-<tr class="header">
-<th align="left">SEXE</th>
-<th align="left">REGION</th>
-<th align="left">REV_FOYER</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td align="left">F</td>
-<td align="left">NE</td>
-<td align="left">40 - &lt; 60</td>
-</tr>
-<tr class="even">
-<td align="left">M</td>
-<td align="left">W</td>
-<td align="left">&lt; 40</td>
-</tr>
-<tr class="odd">
-<td align="left">M</td>
-<td align="left">S</td>
-<td align="left">&gt;= 100</td>
-</tr>
-<tr class="even">
-<td align="left">M</td>
-<td align="left">NE</td>
-<td align="left">&lt; 40</td>
-</tr>
-<tr class="odd">
-<td align="left">M</td>
-<td align="left">W</td>
-<td align="left">&gt;= 100</td>
-</tr>
-<tr class="even">
-<td align="left">M</td>
-<td align="left">NA</td>
-<td align="left">NA</td>
-</tr>
-<tr class="odd">
-<td align="left">F</td>
-<td align="left">S</td>
-<td align="left">60 - &lt; 100</td>
-</tr>
-<tr class="even">
-<td align="left">F</td>
-<td align="left">NE</td>
-<td align="left">40 - &lt; 60</td>
-</tr>
-<tr class="odd">
-<td align="left">M</td>
-<td align="left">NW</td>
-<td align="left">40 - &lt; 60</td>
-</tr>
-<tr class="even">
-<td align="left">F</td>
-<td align="left">S</td>
-<td align="left">&lt; 40</td>
-</tr>
-</tbody>
-</table>
-<table>
-<thead>
-<tr class="header">
-<th align="right">SEXE:F</th>
-<th align="right">SEXE:M</th>
-<th align="right">REGION:NE</th>
-<th align="right">REGION:NW</th>
-<th align="right">REGION:S</th>
-<th align="right">REGION:W</th>
-<th align="right">REV_FOYER:&lt; 40</th>
-<th align="right">REV_FOYER:&gt;= 100</th>
-<th align="right">REV_FOYER:40 - &lt; 60</th>
-<th align="right">REV_FOYER:60 - &lt; 100</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td align="right">1</td>
-<td align="right">0</td>
-<td align="right">1</td>
-<td align="right">0</td>
-<td align="right">0</td>
-<td align="right">0</td>
-<td align="right">0</td>
-<td align="right">0</td>
-<td align="right">1</td>
-<td align="right">0</td>
-</tr>
-<tr class="even">
-<td align="right">0</td>
-<td align="right">1</td>
-<td align="right">0</td>
-<td align="right">0</td>
-<td align="right">0</td>
-<td align="right">1</td>
-<td align="right">1</td>
-<td align="right">0</td>
-<td align="right">0</td>
-<td align="right">0</td>
-</tr>
-<tr class="odd">
-<td align="right">0</td>
-<td align="right">1</td>
-<td align="right">0</td>
-<td align="right">0</td>
-<td align="right">1</td>
-<td align="right">0</td>
-<td align="right">0</td>
-<td align="right">1</td>
-<td align="right">0</td>
-<td align="right">0</td>
-</tr>
-<tr class="even">
-<td align="right">0</td>
-<td align="right">1</td>
-<td align="right">1</td>
-<td align="right">0</td>
-<td align="right">0</td>
-<td align="right">0</td>
-<td align="right">1</td>
-<td align="right">0</td>
-<td align="right">0</td>
-<td align="right">0</td>
-</tr>
-<tr class="odd">
-<td align="right">0</td>
-<td align="right">1</td>
-<td align="right">0</td>
-<td align="right">0</td>
-<td align="right">0</td>
-<td align="right">1</td>
-<td align="right">0</td>
-<td align="right">1</td>
-<td align="right">0</td>
-<td align="right">0</td>
-</tr>
-<tr class="even">
-<td align="right">0</td>
-<td align="right">1</td>
-<td align="right">NA</td>
-<td align="right">NA</td>
-<td align="right">NA</td>
-<td align="right">NA</td>
-<td align="right">NA</td>
-<td align="right">NA</td>
-<td align="right">NA</td>
-<td align="right">NA</td>
-</tr>
-<tr class="odd">
-<td align="right">1</td>
-<td align="right">0</td>
-<td align="right">0</td>
-<td align="right">0</td>
-<td align="right">1</td>
-<td align="right">0</td>
-<td align="right">0</td>
-<td align="right">0</td>
-<td align="right">0</td>
-<td align="right">1</td>
-</tr>
-<tr class="even">
-<td align="right">1</td>
-<td align="right">0</td>
-<td align="right">1</td>
-<td align="right">0</td>
-<td align="right">0</td>
-<td align="right">0</td>
-<td align="right">0</td>
-<td align="right">0</td>
-<td align="right">1</td>
-<td align="right">0</td>
-</tr>
-<tr class="odd">
-<td align="right">0</td>
-<td align="right">1</td>
-<td align="right">0</td>
-<td align="right">1</td>
-<td align="right">0</td>
-<td align="right">0</td>
-<td align="right">0</td>
-<td align="right">0</td>
-<td align="right">1</td>
-<td align="right">0</td>
-</tr>
-<tr class="even">
-<td align="right">1</td>
-<td align="right">0</td>
-<td align="right">0</td>
-<td align="right">0</td>
-<td align="right">1</td>
-<td align="right">0</td>
-<td align="right">1</td>
-<td align="right">0</td>
-<td align="right">0</td>
-<td align="right">0</td>
-</tr>
-</tbody>
-</table>
-<p>Données brutes : Tableau disjonctif complet = recodage des variables qualitatives en autant de variables binaires qu’il y a de modalités.</p>
-<p>Données groupées bivariées : tableau de contingence = distribution jointe des deux variables qualitatives <span class="math inline">\(X\)</span> et <span class="math inline">\(Y\)</span>.</p>
+<div id="donnees-brutes-1" class="section level4">
+<h4>Données brutes</h4>
+<p>Tableau disjonctif complet = recodage des variables qualitatives en autant de variables binaires qu’il y a de modalités.</p>
+<pre><code>   SEXE REGION  REV_FOYER
+1     F     NE  40 - &lt; 60
+2     M      W       &lt; 40
+3     M      S     &gt;= 100
+4     M     NE       &lt; 40
+5     M      W     &gt;= 100
+6     M   &lt;NA&gt;       &lt;NA&gt;
+7     F      S 60 - &lt; 100
+8     F     NE  40 - &lt; 60
+9     M     NW  40 - &lt; 60
+10    F      S       &lt; 40</code></pre>
+<pre><code>      SEXE:F SEXE:M REGION:NE REGION:NW REGION:S REGION:W REV_FOYER:&lt; 40
+ [1,]      1      0         1         0        0        0              0
+ [2,]      0      1         0         0        0        1              1
+ [3,]      0      1         0         0        1        0              0
+ [4,]      0      1         1         0        0        0              1
+ [5,]      0      1         0         0        0        1              0
+ [6,]      0      1        NA        NA       NA       NA             NA
+ [7,]      1      0         0         0        1        0              0
+ [8,]      1      0         1         0        0        0              0
+ [9,]      0      1         0         1        0        0              0
+[10,]      1      0         0         0        1        0              1
+      REV_FOYER:&gt;= 100 REV_FOYER:40 - &lt; 60 REV_FOYER:60 - &lt; 100
+ [1,]                0                   1                    0
+ [2,]                0                   0                    0
+ [3,]                1                   0                    0
+ [4,]                0                   0                    0
+ [5,]                1                   0                    0
+ [6,]               NA                  NA                   NA
+ [7,]                0                   0                    1
+ [8,]                0                   1                    0
+ [9,]                0                   1                    0
+[10,]                0                   0                    0</code></pre>
+</div>
+<div id="donnees-groupees-bivariees" class="section level4">
+<h4>Données groupées bivariées</h4>
+<p>Tableau de contingence = distribution jointe des deux variables qualitatives <span class="math inline">\(X\)</span> et <span class="math inline">\(Y\)</span>.</p>
 <pre class="r"><code>table(x$SEXE,x$REV_FOYER)</code></pre>
 <pre><code>   
     &lt; 40 &gt;= 100 40 - &lt; 60 60 - &lt; 100
   F   85     54        64         71
   M   83     56        58         76</code></pre>
-<p>Données groupées bivariées : profils lignes = distributions de la variable colonne <span class="math inline">\(Y\)</span> conditionnellement aux modalités de la variable ligne <span class="math inline">\(X\)</span>.</p>
+<p>Profils lignes = distributions de la variable colonne <span class="math inline">\(Y\)</span> conditionnellement aux modalités de la variable ligne <span class="math inline">\(X\)</span>.</p>
 <pre class="r"><code>100 * prop.table(table(x$SEXE,x$REV_FOYER), margin = 1)</code></pre>
 <pre><code>   
         &lt; 40   &gt;= 100 40 - &lt; 60 60 - &lt; 100
   F 31.02190 19.70803  23.35766   25.91241
   M 30.40293 20.51282  21.24542   27.83883</code></pre>
-<p>Données groupées bivariées : profils colonnes = distributions de la variable ligne <span class="math inline">\(X\)</span> conditionnellement aux modalités de la variable colonne <span class="math inline">\(Y\)</span>.</p>
+<p>Profils colonnes = distributions de la variable ligne <span class="math inline">\(X\)</span> conditionnellement aux modalités de la variable colonne <span class="math inline">\(Y\)</span>.</p>
 <pre class="r"><code>100 * prop.table(table(x$SEXE,x$REV_FOYER), margin = 2)</code></pre>
 <pre><code>   
         &lt; 40   &gt;= 100 40 - &lt; 60 60 - &lt; 100
@@ -789,158 +603,44 @@ Number of factors: 2
 Test for independence of all factors:
     Chisq = 0.5235, df = 3, p-value = 0.9137</code></pre>
 </div>
+</div>
 <div id="traitement-multivarie-variables-qualitatives-lpm" class="section level3">
 <h3>Traitement multivarié : variables qualitatives (LPM)</h3>
-<table>
-<thead>
-<tr class="header">
-<th align="left"></th>
-<th align="right">SEXE:F</th>
-<th align="right">SEXE:M</th>
-<th align="right">REGION:NE</th>
-<th align="right">REGION:NW</th>
-<th align="right">REGION:S</th>
-<th align="right">REGION:W</th>
-<th align="right">REV_FOYER:&lt; 40</th>
-<th align="right">REV_FOYER:&gt;= 100</th>
-<th align="right">REV_FOYER:40 - &lt; 60</th>
-<th align="right">REV_FOYER:60 - &lt; 100</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td align="left">SEXE:F</td>
-<td align="right">297</td>
-<td align="right">0</td>
-<td align="right">56</td>
-<td align="right">60</td>
-<td align="right">84</td>
-<td align="right">73</td>
-<td align="right">85</td>
-<td align="right">54</td>
-<td align="right">64</td>
-<td align="right">71</td>
-</tr>
-<tr class="even">
-<td align="left">SEXE:M</td>
-<td align="right">0</td>
-<td align="right">302</td>
-<td align="right">65</td>
-<td align="right">57</td>
-<td align="right">92</td>
-<td align="right">66</td>
-<td align="right">83</td>
-<td align="right">56</td>
-<td align="right">58</td>
-<td align="right">76</td>
-</tr>
-<tr class="odd">
-<td align="left">REGION:NE</td>
-<td align="right">56</td>
-<td align="right">65</td>
-<td align="right">121</td>
-<td align="right">0</td>
-<td align="right">0</td>
-<td align="right">0</td>
-<td align="right">34</td>
-<td align="right">23</td>
-<td align="right">25</td>
-<td align="right">32</td>
-</tr>
-<tr class="even">
-<td align="left">REGION:NW</td>
-<td align="right">60</td>
-<td align="right">57</td>
-<td align="right">0</td>
-<td align="right">117</td>
-<td align="right">0</td>
-<td align="right">0</td>
-<td align="right">32</td>
-<td align="right">19</td>
-<td align="right">24</td>
-<td align="right">36</td>
-</tr>
-<tr class="odd">
-<td align="left">REGION:S</td>
-<td align="right">84</td>
-<td align="right">92</td>
-<td align="right">0</td>
-<td align="right">0</td>
-<td align="right">176</td>
-<td align="right">0</td>
-<td align="right">47</td>
-<td align="right">34</td>
-<td align="right">42</td>
-<td align="right">45</td>
-</tr>
-<tr class="even">
-<td align="left">REGION:W</td>
-<td align="right">73</td>
-<td align="right">66</td>
-<td align="right">0</td>
-<td align="right">0</td>
-<td align="right">0</td>
-<td align="right">139</td>
-<td align="right">51</td>
-<td align="right">28</td>
-<td align="right">28</td>
-<td align="right">32</td>
-</tr>
-<tr class="odd">
-<td align="left">REV_FOYER:&lt; 40</td>
-<td align="right">85</td>
-<td align="right">83</td>
-<td align="right">34</td>
-<td align="right">32</td>
-<td align="right">47</td>
-<td align="right">51</td>
-<td align="right">168</td>
-<td align="right">0</td>
-<td align="right">0</td>
-<td align="right">0</td>
-</tr>
-<tr class="even">
-<td align="left">REV_FOYER:&gt;= 100</td>
-<td align="right">54</td>
-<td align="right">56</td>
-<td align="right">23</td>
-<td align="right">19</td>
-<td align="right">34</td>
-<td align="right">28</td>
-<td align="right">0</td>
-<td align="right">110</td>
-<td align="right">0</td>
-<td align="right">0</td>
-</tr>
-<tr class="odd">
-<td align="left">REV_FOYER:40 - &lt; 60</td>
-<td align="right">64</td>
-<td align="right">58</td>
-<td align="right">25</td>
-<td align="right">24</td>
-<td align="right">42</td>
-<td align="right">28</td>
-<td align="right">0</td>
-<td align="right">0</td>
-<td align="right">122</td>
-<td align="right">0</td>
-</tr>
-<tr class="even">
-<td align="left">REV_FOYER:60 - &lt; 100</td>
-<td align="right">71</td>
-<td align="right">76</td>
-<td align="right">32</td>
-<td align="right">36</td>
-<td align="right">45</td>
-<td align="right">32</td>
-<td align="right">0</td>
-<td align="right">0</td>
-<td align="right">0</td>
-<td align="right">147</td>
-</tr>
-</tbody>
-</table>
-<p>Données groupées multivariées : Table de Burt. Utile lorsqu’il s’agit de stocker une base de données (enquête, etc…) composée d’un grand nombre d’individus.</p>
+<p>Données groupées multivariées : Table de Burt.</p>
+<p>Utile lorsqu’il s’agit de stocker une base de données (enquête, etc…) composée d’un grand nombre d’individus.</p>
+<pre><code>                     SEXE:F SEXE:M REGION:NE REGION:NW REGION:S REGION:W
+SEXE:F                  297      0        56        60       84       73
+SEXE:M                    0    302        65        57       92       66
+REGION:NE                56     65       121         0        0        0
+REGION:NW                60     57         0       117        0        0
+REGION:S                 84     92         0         0      176        0
+REGION:W                 73     66         0         0        0      139
+REV_FOYER:&lt; 40           85     83        34        32       47       51
+REV_FOYER:&gt;= 100         54     56        23        19       34       28
+REV_FOYER:40 - &lt; 60      64     58        25        24       42       28
+REV_FOYER:60 - &lt; 100     71     76        32        36       45       32
+                     REV_FOYER:&lt; 40 REV_FOYER:&gt;= 100 REV_FOYER:40 - &lt; 60
+SEXE:F                           85               54                  64
+SEXE:M                           83               56                  58
+REGION:NE                        34               23                  25
+REGION:NW                        32               19                  24
+REGION:S                         47               34                  42
+REGION:W                         51               28                  28
+REV_FOYER:&lt; 40                  168                0                   0
+REV_FOYER:&gt;= 100                  0              110                   0
+REV_FOYER:40 - &lt; 60               0                0                 122
+REV_FOYER:60 - &lt; 100              0                0                   0
+                     REV_FOYER:60 - &lt; 100
+SEXE:F                                 71
+SEXE:M                                 76
+REGION:NE                              32
+REGION:NW                              36
+REGION:S                               45
+REGION:W                               32
+REV_FOYER:&lt; 40                          0
+REV_FOYER:&gt;= 100                        0
+REV_FOYER:40 - &lt; 60                     0
+REV_FOYER:60 - &lt; 100                  147</code></pre>
 </div>
 </div>
 <div id="analyse-en-composantes-principales-acp" class="section level2">
@@ -959,9 +659,11 @@ Test for independence of all factors:
 <li>la compression <span class="math inline">\(\longrightarrow\)</span> réduction du nombre de variables,</li>
 <li>le débruitage <span class="math inline">\(\longrightarrow\)</span> réduction de la variabilité.</li>
 </ul></li>
-<li><strong>Citation</strong> (<em>Lebart, Piron, Morineau</em>, Chapitre 1)<br />
-“<em>Nous cherchons en fait une technique de réduction s’appliquant de façon systématique à divers types de tableaux et conduisant à une reconstitution rapide mais approximative du tableau de départ.</em>”</li>
+<li><strong>Citation</strong> (<em>Lebart, Piron, Morineau</em>, Chapitre 1)</li>
 </ul>
+<blockquote>
+<p>“Nous cherchons en fait une technique de réduction s’appliquant de façon systématique à divers types de tableaux et conduisant à une reconstitution rapide mais approximative du tableau de départ.”</p>
+</blockquote>
 </div>
 <div id="cadre" class="section level3">
 <h3>Cadre</h3>
@@ -990,10 +692,6 @@ Test for independence of all factors:
 <h3>Exemple 1 : Représentation dans un plan</h3>
 <p>Le point de vue adopté par le photographe rend-il convenablement la forme du nuage dans l’espace ?</p>
 <div class="figure">
-<img src="analyse-donnees/Fruits.jpg" alt="Fruits" />
-<p class="caption">Fruits</p>
-</div>
-<div class="figure">
 <img src="analyse-donnees/Fruits2.jpg" alt="Fruits" />
 <p class="caption">Fruits</p>
 </div>
@@ -1001,24 +699,24 @@ Test for independence of all factors:
 </div>
 <div id="exemple-2-nuage-de-points-dans-mathbbr3" class="section level3">
 <h3>Exemple 2 : Nuage de points dans <span class="math inline">\(\mathbb{R}^3\)</span></h3>
+<p>Forme difficilement visible dans <span class="math inline">\(\mathbb{R}^3\)</span></p>
 <div class="figure">
 <img src="analyse-donnees/Notes3D.jpg" alt="Nuage 3D" />
 <p class="caption">Nuage 3D</p>
 </div>
-<p>Forme difficilement visible dans <span class="math inline">\(\mathbb{R}^3\)</span></p>
 <div id="projections-du-nuage" class="section level4">
 <h4>Projections du nuage</h4>
+<p>Projections du nuage sur les axes de coordonnées <span class="math inline">\(\Longrightarrow\)</span> 3 nuages de points dans <span class="math inline">\(\mathbb{R}^2\)</span></p>
 <div class="figure">
 <img src="analyse-donnees/Notes3D_xy.jpg" alt="Nuage 2D xy" />
 <p class="caption">Nuage 2D xy</p>
 </div>
-<p>Projections du nuage sur les axes de coordonnées <span class="math inline">\(\Longrightarrow\)</span> 3 nuages de points dans <span class="math inline">\(\mathbb{R}^2\)</span></p>
 </div>
 </div>
 <div id="exemple-3-scatterplot-sur-les-iris-de-fisher" class="section level3">
 <h3>Exemple 3 : Scatterplot sur les iris de Fisher</h3>
 <pre class="r"><code>plot(iris[,-5])</code></pre>
-<p><img src="analyse-donnees_files/figure-html/unnamed-chunk-15-1.png" width="672" /></p>
+<p><img src="analyse-donnees_files/figure-html/unnamed-chunk-15-1.png" width="672" style="display: block; margin: auto;" /></p>
 </div>
 <div id="objectifs-et-outils" class="section level3">
 <h3>Objectifs et outils</h3>
@@ -1063,33 +761,45 @@ Test for independence of all factors:
 <li>concentrant la variance du nuage de points sur les premiers axes,</li>
 <li>minimisant les déformations du nuage de points sur les premiers axes.</li>
 </ul></li>
-<li><p>Construction basée sur la <strong>diagonalisation</strong> de la matrice des variances/covariances (ACP non-normée), ou des corrélations (ACP normée).</p></li>
+<li>Construction basée sur la <strong>diagonalisation</strong> de la matrice des
+<ul>
+<li>variances/covariances (ACP non-normée)</li>
+<li>corrélations (ACP normée).</li>
+</ul></li>
 <li><p>Part de variance expliquée par chaque facteur donnée par les <strong>valeurs propres</strong> de la matrice.</p></li>
 <li><p>Nouveau repère défini par les <strong>vecteurs propres</strong> de la matrice, engendrant les facteurs.</p></li>
 </ul>
 </div>
 <div id="exemple-en-2d" class="section level3">
 <h3>Exemple en 2D</h3>
+<div id="repere-0x1x2" class="section level4">
+<h4>Repère <span class="math inline">\((0,X^{(1)},X^{(2)})\)</span></h4>
 <div class="figure">
 <img src="analyse-donnees/points_plan_init.png" alt="Repère d’origine" />
 <p class="caption">Repère d’origine</p>
 </div>
-<p>Repère <span class="math inline">\((0,X^{(1)},X^{(2)})\)</span></p>
+</div>
+<div id="repere-factoriel-gf1f2-axe-1-associe-a-la-plus-grande-valeur-propre-axe-2-associe-a-la-plus-petite." class="section level4">
+<h4>Repère factoriel <span class="math inline">\((g,F^{(1)},F^{(2)})\)</span> : axe 1 associé à la plus grande valeur propre, axe 2 associé à la plus petite.</h4>
 <div class="figure">
 <img src="analyse-donnees/points_planfact2.png" alt="Repère factoriel" />
 <p class="caption">Repère factoriel</p>
 </div>
-<p>Repère factoriel <span class="math inline">\((g,F^{(1)},F^{(2)})\)</span> : axe 1 associé à la plus grande valeur propre, axe 2 associé à la plus petite.</p>
+</div>
+<div id="rotation-du-repere" class="section level4">
+<h4>Rotation du repère…</h4>
 <div class="figure">
 <img src="analyse-donnees/points_planfact.png" alt="Repère factoriel rotation" />
 <p class="caption">Repère factoriel rotation</p>
 </div>
-<p>Rotation du repère…</p>
+</div>
+<div id="et-changement-dechelle." class="section level4">
+<h4>… et changement d’échelle.</h4>
 <div class="figure">
 <img src="analyse-donnees/points_planfact_final.png" alt="Repère factoriel échelle" />
 <p class="caption">Repère factoriel échelle</p>
 </div>
-<p>… et changement d’échelle.</p>
+</div>
 </div>
 <div id="construction-du-repere-factoriel" class="section level3">
 <h3>Construction du repère factoriel</h3>
@@ -1122,10 +832,6 @@ Test for independence of all factors:
         &amp; = &amp; Tr(\Sigma)=I_{tot} \ \ \ \ \mbox{si variances/covariances}\\
         &amp; = &amp; Tr(\Sigma)=p \ \ \ \ \ \ \ \mbox{si corrélations}\\
    \end{array}\]</span></p>
-</div>
-</div>
-<div id="lecture-et-interpretation-des-valeurs-propres-2" class="section level2">
-<h2>Lecture et interprétation des valeurs propres (2)</h2>
 <ul>
 <li><span class="math inline">\(\lambda_1\geqslant \ldots \geqslant \lambda_p\)</span> <span class="math inline">\(\Longrightarrow\)</span> <strong>variabilité</strong> du nuage de points concentrée sur les premiers facteurs.</li>
 <li><strong>Pourcentage de variance expliquée</strong> par le facteur <span class="math inline">\(F^{(k)}\)</span> : <span class="math display">\[100\times \frac{Var(F^{(k)})}{I_{tot}} = 100\times \frac{\lambda_k}{\lambda_1+\ldots+\lambda_p}\]</span></li>
@@ -1140,6 +846,7 @@ comp 2       0.91                  22.85                             95.81
 comp 3       0.15                   3.67                             99.48
 comp 4       0.02                   0.52                            100.00</code></pre>
 <p>Le <strong>premier axe</strong> factoriel explique 72.9624454% de la variance du nuage de points, le <strong>premier plan</strong> factoriel (constitué des 2 premiers axes factoriels) explique quant à lui 95.8132072 de la variance.</p>
+</div>
 <div id="contributions-et-qualites-de-representation" class="section level3">
 <h3>Contributions et qualités de représentation</h3>
 <ul>
@@ -1189,7 +896,7 @@ comp 4       0.02                   0.52                            100.00</code
 <li><p><strong>Visualisation simple</strong> permettant de se rendre compte de la forme du nuage dans des espaces de dimension 2.</p></li>
 </ul>
 <pre class="r"><code>plot(iris.pca, choix=&quot;ind&quot;)</code></pre>
-<p><img src="analyse-donnees_files/figure-html/unnamed-chunk-19-1.png" width="672" /></p>
+<p><img src="analyse-donnees_files/figure-html/unnamed-chunk-19-1.png" width="672" style="display: block; margin: auto;" /></p>
 </div>
 <div id="individus-atypiques" class="section level3">
 <h3>Individus atypiques</h3>
@@ -1203,6 +910,7 @@ comp 4       0.02                   0.52                            100.00</code
 <li>si ce nombre est élevé, les traiter comme un groupe à part entière.</li>
 </ul></li>
 </ul>
+<p><img src="analyse-donnees_files/figure-html/unnamed-chunk-20-1.png" width="672" style="display: block; margin: auto;" /></p>
 </div>
 <div id="interpretation-des-axes-factoriels-point-de-vue-des-variables" class="section level3">
 <h3>Interprétation des axes factoriels : point de vue des variables</h3>
@@ -1227,10 +935,9 @@ comp 4       0.02                   0.52                            100.00</code
 </div>
 <div id="sphere-et-cercles-des-correlations-lpm" class="section level3">
 <h3>Sphère et cercles des corrélations (LPM)</h3>
-<div class="figure">
-<img src="analyse-donnees/cercle_correlations.jpeg" alt="Sphère des corrélations" />
-<p class="caption">Sphère des corrélations</p>
-</div>
+<pre class="r"><code>plot(iris.pca, choix=&quot;var&quot;)</code></pre>
+<p><img src="analyse-donnees_files/figure-html/unnamed-chunk-21-1.png" width="672" style="display: block; margin: auto;" /></p>
+<!-- ![Sphère des corrélations](analyse-donnees/cercle_correlations.jpeg) -->
 </div>
 <div id="contributions-et-qualite-de-representation-des-variables" class="section level3">
 <h3>Contributions et qualité de représentation des variables</h3>
@@ -1242,17 +949,13 @@ comp 4       0.02                   0.52                            100.00</code
 <li><p>Une variable est <strong>bien représentée</strong> sur le cercle des corrélations si son vecteur est proche du cercle. Seules les variables bien représentées interviennent dans l’interprétation des axes.</p></li>
 </ul>
 </div>
-<div id="cercle-des-correlations-interpretation" class="section level3">
-<h3>Cercle des corrélations : interprétation</h3>
-<pre class="r"><code>plot(iris.pca, choix=&quot;var&quot;)</code></pre>
-<p><img src="analyse-donnees_files/figure-html/unnamed-chunk-21-1.png" width="672" /></p>
-</div>
 <div id="representation-simultanee" class="section level3">
 <h3>Représentation simultanée</h3>
+<p>Interprétation du cercle de corrélations, et analyse conjointe des deux nuages (individus et variables)</p>
 <pre class="r"><code>par(mfrow=c(1,2))
 plot(iris.pca, choix = &quot;ind&quot;)
 plot(iris.pca, choix = &quot;var&quot;)</code></pre>
-<p><img src="analyse-donnees_files/figure-html/unnamed-chunk-22-1.png" width="672" /></p>
+<p><img src="analyse-donnees_files/figure-html/unnamed-chunk-22-1.png" width="672" style="display: block; margin: auto;" /></p>
 </div>
 <div id="covariance-ou-correlation" class="section level3">
 <h3>Covariance ou Corrélation ?</h3>
@@ -1303,7 +1006,7 @@ plot(iris.pca$eig$eigenvalue, type = &#39;b&#39;,
 barplot(iris.pca$eig$eigenvalue,
         main=&quot;Ebouli des valeurs propres&quot;,
         names.arg=1:nrow(iris.pca$eig))</code></pre>
-<p><img src="analyse-donnees_files/figure-html/unnamed-chunk-23-1.png" width="672" /></p>
+<p><img src="analyse-donnees_files/figure-html/unnamed-chunk-23-1.png" width="672" style="display: block; margin: auto;" /></p>
 </div>
 </div>
 <div id="choix-du-nombre-de-facteurs-representation-simultanee" class="section level3">
@@ -1316,7 +1019,7 @@ barplot(iris.pca$eig$eigenvalue,
         main=&quot;Ebouli des valeurs propres&quot;,
         names.arg=1:nrow(iris.pca$eig))
 abline(h=1)</code></pre>
-<p><img src="analyse-donnees_files/figure-html/unnamed-chunk-24-1.png" width="672" /></p>
+<p><img src="analyse-donnees_files/figure-html/unnamed-chunk-24-1.png" width="672" style="display: block; margin: auto;" /></p>
 </div>
 <div id="visualisation-des-especes-sur-le-premier-plan-factoriel" class="section level3">
 <h3>Visualisation des espèces sur le premier plan factoriel</h3>
@@ -1327,7 +1030,7 @@ legend(&quot;top&quot;, legend = levels(iris$Species),
        col = rainbow(3), pch = 19, cex = 0.75,
        ncol = 3)
 plot(iris.pca, choix = &quot;var&quot;)</code></pre>
-<p><img src="analyse-donnees_files/figure-html/unnamed-chunk-25-1.png" width="672" /></p>
+<p><img src="analyse-donnees_files/figure-html/unnamed-chunk-25-1.png" width="672" style="display: block; margin: auto;" /></p>
 </div>
 <div id="tp-les-donnees-decathlon" class="section level3">
 <h3>TP : les données décathlon</h3>
@@ -1374,7 +1077,7 @@ plot(iris.pca, choix = &quot;var&quot;)</code></pre>
 </div>
 <div id="enquete-sur-les-femmes-et-le-travail-en-1974" class="section level3">
 <h3>Enquête sur les femmes et le travail en 1974</h3>
-<p>Pour 1724 femmes interrogées, tableau croisant l’image de la famille idéale et l’activité convenant le mieux à une femme dont les enfants vont à l’école.</p>
+<p>Pour 1724 femmes interrogées, tableau croisant l’image de la famille idéale et l’activité convenant le mieux à une femme dont les enfants vont à l’école. (<a href="donnees/femme_travail.csv">données</a>)</p>
 <pre class="r"><code>femmes = read.csv2(file=&quot;donnees/femme_travail.csv&quot;, 
               header=TRUE, row.names=1, sep=&quot;,&quot;)
 x = femmes[,1:3]
@@ -1439,7 +1142,7 @@ seul le mari trav.            52.67</code></pre>
 <div id="afc-sur-les-donnees-du-travail-des-femmes-en-1974" class="section level3">
 <h3>AFC sur les données du travail des femmes en 1974</h3>
 <pre class="r"><code>x.afc = CA(x)</code></pre>
-<p><img src="analyse-donnees_files/figure-html/unnamed-chunk-31-1.png" width="672" /></p>
+<p><img src="analyse-donnees_files/figure-html/unnamed-chunk-31-1.png" width="672" style="display: block; margin: auto;" /></p>
 <div id="interpretation-et-visualisation" class="section level4">
 <h4>Interprétation et visualisation</h4>
 <pre class="r"><code>x.afc$row$coord</code></pre>
@@ -1561,7 +1264,7 @@ trav..plein.temps 0.890871382 0.10912862</code></pre>
 </ul>
 <div id="enquete-sur-les-consommateurs-de-the" class="section level3">
 <h3>Enquête sur les consommateurs de thé</h3>
-<p>Enquête effectuée sur 300 consommateurs de thé concernant leurs habitudes de consommation.</p>
+<p>Enquête effectuée sur 300 consommateurs de thé concernant leurs habitudes de consommation. (<a href="donnees/the.csv">données</a>)</p>
 <pre class="r"><code>the = read.csv2(&quot;donnees/the.csv&quot;,header=TRUE)
 x = the[,-c(22,19:21, 23:36)]
 summary(x)</code></pre>
@@ -1642,16 +1345,16 @@ summary(x)</code></pre>
 <p>Nombre maximal de facteurs = <span class="math inline">\(13\times 2+3\times 3+4+6\)</span>-18 = 27</p>
 <pre class="r"><code>x.acm = MCA(x, ncp=27, graph=FALSE)
 plot(x.acm, invisible=&quot;var&quot;)</code></pre>
-<p><img src="analyse-donnees_files/figure-html/unnamed-chunk-38-1.png" width="672" /></p>
+<p><img src="analyse-donnees_files/figure-html/unnamed-chunk-38-1.png" width="672" style="display: block; margin: auto;" /></p>
 <div id="les-modalites" class="section level4">
 <h4>Les modalités</h4>
 <pre class="r"><code>plot(x.acm, invisible=&quot;ind&quot;)</code></pre>
-<p><img src="analyse-donnees_files/figure-html/unnamed-chunk-39-1.png" width="672" /></p>
+<p><img src="analyse-donnees_files/figure-html/unnamed-chunk-39-1.png" width="672" style="display: block; margin: auto;" /></p>
 </div>
 <div id="les-variables" class="section level4">
 <h4>Les variables</h4>
 <pre class="r"><code>plot(x.acm, choix=&quot;var&quot;)</code></pre>
-<p><img src="analyse-donnees_files/figure-html/unnamed-chunk-40-1.png" width="672" /></p>
+<p><img src="analyse-donnees_files/figure-html/unnamed-chunk-40-1.png" width="672" style="display: block; margin: auto;" /></p>
 </div>
 <div id="valeurs-propres-et-inertie-expliquee" class="section level4">
 <h4>Valeurs propres et inertie expliquée</h4>
@@ -1696,7 +1399,7 @@ barplot(x.acm$eig$eigenvalue,
         main=&quot;Ebouli des valeurs propres&quot;, 
         names.arg=1:nrow(x.acm$eig))
 abline(h=lambdabar)</code></pre>
-<p><img src="analyse-donnees_files/figure-html/unnamed-chunk-42-1.png" width="672" /></p>
+<p><img src="analyse-donnees_files/figure-html/unnamed-chunk-42-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p><span class="math inline">\(\Longrightarrow\)</span> 13 facteurs à retenir.</p>
 </div>
 <div id="contributions-des-modalites-aux-axes-factoriels-sommer-par-variable" class="section level4">
@@ -2079,7 +1782,7 @@ t_variable           0.00   0.00</code></pre>
 <div id="tp-les-donnees-de-fertilite" class="section level3">
 <h3>TP : les données de fertilité</h3>
 <ul>
-<li>Etude des données de fertilité chez 100 hommes volontaires</li>
+<li>Etude des données de fertilité chez 100 hommes volontaires (<a href="donnees/fertility.csv">données</a>)</li>
 <li>Charger les données dans R</li>
 </ul>
 <pre class="r"><code>fertility = read.csv2(file=&quot;donnees/fertility.csv&quot;)
@@ -2124,7 +1827,7 @@ summary(fertility)</code></pre>
 <pre class="r"><code>iris.mds = cmdscale(1-abs(cor(iris[,-5])))
 plot(iris.mds[,1], iris.mds[,2])
 text(iris.mds[,1], iris.mds[,2], labels=colnames(iris[,-5]))</code></pre>
-<p><img src="analyse-donnees_files/figure-html/unnamed-chunk-46-1.png" width="672" /></p>
+<p><img src="analyse-donnees_files/figure-html/unnamed-chunk-46-1.png" width="672" style="display: block; margin: auto;" /></p>
 </div>
 <div id="matrice-de-proximite-et-distance-euclidienne" class="section level3">
 <h3>Matrice de proximité et distance euclidienne</h3>
@@ -2161,10 +1864,10 @@ text(iris.mds[,1], iris.mds[,2], labels=colnames(iris[,-5]))</code></pre>
 <pre class="r"><code>d = dist(iris[,-5])
 iris.mds = cmdscale(d,20)
 plot(iris.mds[,1],iris.mds[,2])</code></pre>
-<p><img src="analyse-donnees_files/figure-html/unnamed-chunk-47-1.png" width="672" /></p>
+<p><img src="analyse-donnees_files/figure-html/unnamed-chunk-47-1.png" width="672" style="display: block; margin: auto;" /></p>
 <pre class="r"><code>plot(iris.mds[,1],iris.mds[,2], 
      col=rainbow(3)[iris$Species])</code></pre>
-<p><img src="analyse-donnees_files/figure-html/unnamed-chunk-48-1.png" width="672" /></p>
+<p><img src="analyse-donnees_files/figure-html/unnamed-chunk-48-1.png" width="672" style="display: block; margin: auto;" /></p>
 </div>
 <div id="exemple-mds-non-metrique" class="section level3">
 <h3>Exemple : MDS non-métrique</h3>
@@ -2179,12 +1882,12 @@ final  value 1.887041
 converged</code></pre>
 <pre class="r"><code>plot(swiss.mds$points[,1:2])
 text(swiss.mds$points[,1:2], labels=rownames(swiss))</code></pre>
-<p><img src="analyse-donnees_files/figure-html/unnamed-chunk-50-1.png" width="672" /></p>
+<p><img src="analyse-donnees_files/figure-html/unnamed-chunk-50-1.png" width="672" style="display: block; margin: auto;" /></p>
 </div>
 <div id="tp-les-villes-de-france" class="section level3">
 <h3>TP : les villes de France</h3>
 <ul>
-<li>Matrice des distances kilométriques entre 47 villes de France.</li>
+<li>Matrice des distances kilométriques entre 47 villes de France. (<a href="donnees/Distances_Inter_Villes_Matrice.csv">données</a>)</li>
 <li>Charger les données dans R</li>
 </ul>
 <pre class="r"><code>villes = read.table(
@@ -2221,6 +1924,8 @@ laba  590  830  160  940    0</code></pre>
 </script>
 
 
+</div>
+</div>
 
 </div>
 

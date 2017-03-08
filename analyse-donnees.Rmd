@@ -1,10 +1,15 @@
 ---
 title: "Analyse Exploratoire des Données Multidimensionnelles"
 subtitle: "DU Dataviz"
+output:
+    html_document:
+        toc: true
+        toc_float: true
+        toc_depth: 4
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE, comment = "")
+knitr::opts_chunk$set(echo = TRUE, comment = "", fig.align = "center")
 ```
 
 ## Présentation
@@ -16,7 +21,7 @@ knitr::opts_chunk$set(echo = TRUE, comment = "")
     + Classification automatique ( et  Mars)
     
 * **Cinq intervenants** :
-    + Servane Gey (9 Mars) et Charles Bouveyron ( Mars) : introduction aux méthodologies
+    + FX Jollois (à la place de Servane Gey - 9 Mars) et Charles Bouveyron ( Mars) : introduction aux méthodologies
     + Antoine-Eric Sammartino (10 Mars), Rachel Verjus et Taoufik En-Najjary ( Mars) : application sur données réelles
     
 * **Evaluation orale individuelle** à la fin de chaque session (10 et  Mars)
@@ -26,7 +31,7 @@ knitr::opts_chunk$set(echo = TRUE, comment = "")
 ### Coordonnées et références
 
 * **Deux intervenants** :
-    + Servane Gey (9 Mars) Servane.Gey@parisdescartes.fr
+    + FX Jollois (à la place de Servane Gey - 9 Mars) francois-xavier.jollois@parisdescartes.fr | Servane.Gey@parisdescartes.fr
     + Antoine-Eric Sammartino (10 Mars) antoine-eric.sammartino@laposte.net
     
 * **Références** (liste non-exhaustive) :
@@ -59,11 +64,11 @@ knitr::opts_chunk$set(echo = TRUE, comment = "")
 
 ### Données brutes
 
-Recensement aux Etats-Unis en 2012
+Recensement aux Etats-Unis en 2012 ([données](donnees/Recensement_12.csv))
 
 ```{r}
 x = read.csv2("donnees/Recensement_12.csv", row.names = 1)
-knitr::kable(head(x, 10))
+head(x, 10)
 ```
 
 ```{r}
@@ -108,7 +113,10 @@ Plus $Cor(X,Y)$ est proche de -1 ou 1, et plus les données sont distribuées su
 
 $X=(x_i^{(j)})$ tableau (ou matrice) de données numériques brutes à $n$ lignes (individus) et p colonnes (variables).
 
-$\Sigma$ matrice des variances/covariances (resp. des corrélations) : $\Sigma_{k,j}=Cov(X^{(k)},X^{(j)})$ (resp. $\Sigma_{k,j}=Cor(X^{(k)},X^{(j)})$)
+$\Sigma$ matrice des 
+
+- variances/covariances : $\Sigma_{k,j}=Cov(X^{(k)},X^{(j)})$
+- corrélations : $\Sigma_{k,j}=Cor(X^{(k)},X^{(j)})$
 
 $\Sigma$ matrice $p\times p$ symétrique (définie positive)
 
@@ -136,10 +144,13 @@ pairs(x[,quanti])
 
 ### Traitement multivarié : variables qualitatives 
 
+#### Données brutes 
+
+Tableau disjonctif complet = recodage des variables qualitatives en autant de variables binaires qu'il y a de modalités.
 
 ```{r, echo = FALSE}
 x1 = x[,c(2, 3, 11)]
-knitr::kable(head(x1, 10))
+head(x1, 10)
 ```
 
 ```{r, echo = FALSE}
@@ -149,25 +160,24 @@ disj <- function(f) {
     res
 }
 z1 = cbind(disj("SEXE"), disj("REGION"), disj("REV_FOYER"))
-knitr::kable(head(z1, 10))
+head(z1, 10)
 ```
 
+#### Données groupées bivariées 
 
-Données brutes : Tableau disjonctif complet = recodage des variables qualitatives en autant de variables binaires qu'il y a de modalités.
-
-Données groupées bivariées : tableau de contingence = distribution jointe des deux variables qualitatives $X$ et $Y$.
+Tableau de contingence = distribution jointe des deux variables qualitatives $X$ et $Y$.
 
 ```{r}
 table(x$SEXE,x$REV_FOYER)
 ```
 
-Données groupées bivariées : profils lignes = distributions de la variable colonne $Y$ conditionnellement aux modalités de la variable ligne $X$.
+Profils lignes = distributions de la variable colonne $Y$ conditionnellement aux modalités de la variable ligne $X$.
 
 ```{r}
 100 * prop.table(table(x$SEXE,x$REV_FOYER), margin = 1)
 ```
 
-Données groupées bivariées : profils colonnes = distributions de la variable ligne $X$ conditionnellement aux modalités de la variable colonne $Y$.
+Profils colonnes = distributions de la variable ligne $X$ conditionnellement aux modalités de la variable colonne $Y$.
 
 ```{r}
 100 * prop.table(table(x$SEXE,x$REV_FOYER), margin = 2)
@@ -186,16 +196,18 @@ summary(table(x$SEXE,x$REV_FOYER))
 
 ### Traitement multivarié : variables qualitatives (LPM)
 
+Données groupées multivariées : Table de Burt. 
+
+Utile lorsqu'il s'agit de stocker une base de données (enquête, etc...) composée d'un grand nombre d'individus.
 
 ```{r, echo = FALSE}
 z1.comp = z1
 z1.comp[is.na(z1.comp)] = 0
 b1 = t(z1.comp) %*% z1.comp
-knitr::kable(b1)
+b1
 ```
 
 
-Données groupées multivariées : Table de Burt. Utile lorsqu'il s'agit de stocker une base de données (enquête, etc...) composée d'un grand nombre d'individus.
 
 ## Analyse en Composantes Principales (ACP)
 
@@ -209,7 +221,8 @@ Données groupées multivariées : Table de Burt. Utile lorsqu'il s'agit de stoc
     + la compression $\longrightarrow$ réduction du nombre de variables,
     + le débruitage $\longrightarrow$ réduction de la variabilité.
 - **Citation** (*Lebart, Piron, Morineau*, Chapitre 1)  
-"*Nous cherchons en fait une technique de réduction s'appliquant de façon systématique à divers types de tableaux et conduisant à une reconstitution rapide mais approximative du tableau de départ.*"
+
+> "Nous cherchons en fait une technique de réduction s'appliquant de façon systématique à divers types de tableaux et conduisant à une reconstitution rapide mais approximative du tableau de départ."
 
 ### Cadre
 
@@ -229,23 +242,21 @@ head(iris[,-5])
 
 Le point de vue adopté par le photographe rend-il convenablement la forme du nuage dans l'espace ?
 
-![Fruits](analyse-donnees/fruits.jpg)
-
 ![Fruits](analyse-donnees/fruits2.jpg)
 
 HLP (Husson F., Lê S., Pagès J.)
 
 ### Exemple 2 : Nuage de points dans $\mathbb{R}^3$
 
-![Nuage 3D](analyse-donnees/Notes3D.jpg)
-
 Forme difficilement visible dans $\mathbb{R}^3$
+
+![Nuage 3D](analyse-donnees/Notes3D.jpg)
 
 #### Projections du nuage
 
-![Nuage 2D xy](analyse-donnees/Notes3D_xy.jpg)
-
 Projections du nuage sur les axes de coordonnées $\Longrightarrow$ 3 nuages de points dans $\mathbb{R}^2$
+
+![Nuage 2D xy](analyse-donnees/Notes3D_xy.jpg)
 
 ### Exemple 3 : Scatterplot sur les iris de Fisher
 
@@ -290,7 +301,9 @@ $$ \forall i\in \{1,\ldots, n\} \ k\in \{1,\ldots,q\} \ \ \ c^{(k)}_i= a_{k,0}+\
     + concentrant la variance du nuage de points sur les premiers axes,
     + minimisant les déformations du nuage de points sur les premiers axes.
 
-- Construction basée sur la **diagonalisation** de la matrice des variances/covariances (ACP non-normée), ou des corrélations (ACP normée).
+- Construction basée sur la **diagonalisation** de la matrice des 
+    - variances/covariances (ACP non-normée)
+    - corrélations (ACP normée).
 
 - Part de variance expliquée par chaque facteur donnée par les **valeurs propres** de la matrice.
 
@@ -298,21 +311,22 @@ $$ \forall i\in \{1,\ldots, n\} \ k\in \{1,\ldots,q\} \ \ \ c^{(k)}_i= a_{k,0}+\
 
 ### Exemple en 2D
 
+#### Repère $(0,X^{(1)},X^{(2)})$
+
 ![Repère d'origine](analyse-donnees/points_plan_init.png)
 
-Repère $(0,X^{(1)},X^{(2)})$
+#### Repère factoriel $(g,F^{(1)},F^{(2)})$ : axe 1 associé à la plus grande valeur propre, axe 2 associé à la plus petite. 
 
 ![Repère factoriel](analyse-donnees/points_planfact2.png)
 
-Repère factoriel $(g,F^{(1)},F^{(2)})$ : axe 1 associé à la plus grande valeur propre, axe 2 associé à la plus petite. 
+#### Rotation du repère...
 
 ![Repère factoriel rotation](analyse-donnees/points_planfact.png)
 
-Rotation du repère...
+#### ... et changement d'échelle.
 
 ![Repère factoriel échelle](analyse-donnees/points_planfact_final.png)
 
-... et changement d'échelle.
 
 ### Construction du repère factoriel
 
@@ -342,8 +356,6 @@ $$\begin{array}{ccl}
         & = & Tr(\Sigma)=p \ \ \ \ \ \ \ \mbox{si corrélations}\\
    \end{array}$$
    
-## Lecture et interprétation des valeurs propres (2) 
-
 - $\lambda_1\geqslant \ldots \geqslant \lambda_p$ $\Longrightarrow$ **variabilité** du nuage de points concentrée sur les premiers facteurs.
 - **Pourcentage de variance expliquée** par le facteur $F^{(k)}$ : 
 $$100\times \frac{Var(F^{(k)})}{I_{tot}} = 100\times \frac{\lambda_k}{\lambda_1+\ldots+\lambda_p}$$
@@ -411,7 +423,7 @@ plot(iris.pca, choix="ind")
 ```{r, echo=FALSE}
 library(kernlab)
 data(spam)
-plot(PCA(spam[,-58]), choix="ind")
+plot(PCA(spam[,-58], graph = F), choix="ind")
 ```
 
 ### Interprétation des axes factoriels : point de vue des variables
@@ -435,7 +447,12 @@ plot(PCA(spam[,-58]), choix="ind")
     
 ### Sphère et cercles des corrélations (LPM)
 
-![Sphère des corrélations](analyse-donnees/cercle_correlations.jpeg)
+```{r}
+plot(iris.pca, choix="var")
+```
+
+
+<!-- ![Sphère des corrélations](analyse-donnees/cercle_correlations.jpeg) -->
 
 ### Contributions et qualité de représentation des variables 
 
@@ -449,14 +466,9 @@ plot(PCA(spam[,-58]), choix="ind")
 
 * Une variable est **bien représentée** sur le cercle des corrélations si son vecteur est proche du cercle. Seules les variables bien représentées interviennent dans l'interprétation des axes.
 
-
-### Cercle des corrélations : interprétation 
-
-```{r}
-plot(iris.pca, choix="var")
-```
-
 ### Représentation simultanée
+
+Interprétation du cercle de corrélations, et analyse conjointe des deux nuages (individus et variables)
 
 ```{r}
 par(mfrow=c(1,2))
@@ -497,6 +509,7 @@ plot(iris.pca, choix = "var")
 #### Choix du nombre de facteurs : Ebouli des valeurs propres
 
 Garder les axes correspondant aux valeurs propres situées **avant** une chute brutale sur les valeurs des valeurs propres de $\Sigma$. Les axes correspondants aux valeurs suivantes expliquent peu de la variabilité du nuage. 
+
 ```{r}
 par(mfrow=c(1,2))
 plot(iris.pca$eig$eigenvalue, type = 'b',
@@ -570,7 +583,7 @@ data(decathlon)
     
 ### Enquête sur les femmes et le travail en 1974
 
-Pour 1724 femmes interrogées, tableau croisant l'image de la famille idéale et l'activité convenant le mieux à une femme dont les enfants vont à l'école.
+Pour 1724 femmes interrogées, tableau croisant l'image de la famille idéale et l'activité convenant le mieux à une femme dont les enfants vont à l'école. ([données](donnees/femme_travail.csv))
 
 ```{r}
 femmes = read.csv2(file="donnees/femme_travail.csv", 
@@ -720,7 +733,7 @@ Chaque modalité ligne correspond alors exactement à une modalité colonne.
     
 ### Enquête sur les consommateurs de thé
 
-Enquête effectuée sur 300 consommateurs de thé concernant leurs habitudes de consommation.
+Enquête effectuée sur 300 consommateurs de thé concernant leurs habitudes de consommation. ([données](donnees/the.csv))
 
 ```{r}
 the = read.csv2("donnees/the.csv",header=TRUE)
@@ -818,7 +831,7 @@ round(x.acm$var$cos2, digits=2)
 
 ### TP : les données de fertilité
 
-* Etude des données de fertilité chez 100 hommes volontaires 
+* Etude des données de fertilité chez 100 hommes volontaires ([données](donnees/fertility.csv))
 * Charger les données dans R
 
 ```{r}
@@ -911,7 +924,7 @@ text(swiss.mds$points[,1:2], labels=rownames(swiss))
 
 ### TP : les villes de France
 
-* Matrice des distances kilométriques entre 47 villes de France. 
+* Matrice des distances kilométriques entre 47 villes de France. ([données](donnees/Distances_Inter_Villes_Matrice.csv))
 * Charger les données dans R
 
 ```{r}
