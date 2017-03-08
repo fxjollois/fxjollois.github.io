@@ -189,6 +189,7 @@ $(document).ready(function () {
             <li><a href="initiation-r-du.html">Initiation à R</a></li>
             <li><a href="connexion-r-mongodb.html">Connexion entre R et MongoDB</a></li>
             <li class="dropdown-header">DU Dataviz</li>
+            <li><a href="analyse-donnees.html">Analyse de données</a></li>
             <li><a href="visualisation-donnees.html">Visualisation de données - R</a></li>
             <li><a href="visualisation-donnees-d3.html">Visualisation de données - D3</a></li>
             <li role="separator" class="divider"></li>
@@ -266,7 +267,7 @@ iris[&quot;Sepal.Length&quot;].max()
 iris[&quot;Sepal.Length&quot;].median()
 iris[&quot;Sepal.Length&quot;].quantile([.01, .1, .9, .99])</code></pre>
 <p>Pour représenter graphiquement cette variable, <code>pandas</code> met à disposition (via le module <code>matplotlib</code> utilisé par <code>pandas</code>) des fonctions graphiques.</p>
-<p>Pour réaliser un histogramme, nous utilisons la fonction <code>hist()</code>. Celle-ci peut prendre des options. La fonction <code>plot()</code> avec le paramètre <code>kind</code> avec la valeur <code>&quot;hist&quot;</code> revient au même résultat.</p>
+<p>Pour réaliser un <strong>histogramme</strong>, nous utilisons la fonction <code>hist()</code>. Celle-ci peut prendre des options. La fonction <code>plot()</code> avec le paramètre <code>kind</code> avec la valeur <code>&quot;hist&quot;</code> revient au même résultat.</p>
 <pre class="python"><code>iris.plot.hist()
 iris[&quot;Sepal.Length&quot;].hist()
 iris[&quot;Sepal.Length&quot;].hist(bins = 20)
@@ -276,13 +277,35 @@ iris[&quot;Sepal.Length&quot;].plot(kind = &quot;kde&quot;)</code></pre>
 <p>Pour avoir la densité et l’histogramme sur le même graphique, il est nécessaire de compiler les deux lignes suivantes <strong>ensemble</strong>.</p>
 <pre class="python"><code>iris[&quot;Sepal.Length&quot;].plot(kind = &quot;hist&quot;, normed = True, color = &quot;lightgrey&quot;)
 iris[&quot;Sepal.Length&quot;].plot(kind = &quot;kde&quot;)</code></pre>
-<p>Enfin, pour les boîtes à moustaches, il faut passer par le <code>DataFrame</code> pour l’afficher, et choisir une variable spécifiquement éventuellement.</p>
+<p>Enfin, pour les <strong>boîtes à moustaches</strong>, il faut passer par le <code>DataFrame</code> pour l’afficher, et choisir une variable spécifiquement éventuellement.</p>
 <pre class="python"><code>iris.boxplot()
 iris.boxplot(column = &quot;Sepal.Length&quot;)
-iris.boxplot(column = &quot;Sepal.Length&quot;, grid = False)</code></pre>
+iris.boxplot(column = &quot;Sepal.Length&quot;, grid = False)
+iris.boxplot(column = &quot;Sepal.Length&quot;, vert = False)</code></pre>
 </div>
 <div id="qualitative" class="section level3">
 <h3>Qualitative</h3>
+<p>Pour les variables qualitatives, il y a plusieurs façons de faire pour obtenir la table d’occurences (ou des effectifs), ainsi que la table des proportions des modalités.</p>
+<pre class="python"><code>iris.Species.describe()
+iris.Species.unique()
+iris.Species.value_counts()
+iris.Species.value_counts() / iris.Species.count()
+tab1 = iris.Species.value_counts()
+tab1
+tab1p = tab1 / tab1.sum()
+tab1p
+tab2 = pandas.crosstab(iris.Species, columns=&quot;freq&quot;)
+tab2
+tab2p = tab2 / tab2.sum()
+tab2p</code></pre>
+<p>Ensuite, pour réaliser un <strong>diagramme en barres</strong>, nous utilisons le type <code>&quot;bar&quot;</code> pour <code>plot()</code>. Les calculs de proportions précédents nous permettent d’afficher une représentation des proportions plutôt que des effectifs.</p>
+<pre class="python"><code>tab1.plot(kind = &quot;bar&quot;)
+tab2.plot(kind = &quot;bar&quot;)
+tab1p.plot(kind = &quot;bar&quot;)
+tab2p.plot(kind = &quot;bar&quot;)
+(tabp * 100).plot(kind = &quot;bar&quot;)</code></pre>
+<p>Et pour un <strong>diagramme circulaire</strong>, seul le tableau des effectifs produit par <code>value_counts()</code> nous permet de le réaliser.</p>
+<pre class="python"><code>tab1.plot(kind = &quot;pie&quot;, figsize = (6, 6))</code></pre>
 </div>
 </div>
 

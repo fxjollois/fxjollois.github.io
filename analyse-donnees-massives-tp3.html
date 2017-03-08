@@ -1,0 +1,737 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+<meta charset="utf-8">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="pandoc" />
+
+
+
+
+<title>TP3 - Introduction à Python</title>
+
+<script src="libs/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="libs/bootstrap-3.3.5/css/journal.min.css" rel="stylesheet" />
+<script src="libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<script src="libs/navigation-1.1/tabsets.js"></script>
+<link href="libs/highlightjs-1.1/default.css" rel="stylesheet" />
+<script src="libs/highlightjs-1.1/highlight.js"></script>
+<!--
+    Font Awesome
+-->
+<script src="https://use.fontawesome.com/32d8325004.js"></script>
+<link rel="stylesheet" href="libs/font-awesome-4.7.0/css/font-awesome.min.css">
+
+<!--
+    CSS perso
+-->
+<style>
+    .contenu {
+        margin-bottom: 50px;
+    }
+
+    .contact-liens {
+        text-align: center;
+    }
+    .contact-liens:hover {
+        text-decoration: none;
+    }
+    .contact-icones {
+        height: 30px;
+    }
+
+    /* Espacement pour barre du haut et pied de page */
+    #header, .section.level1 {
+        margin-top: 60px;
+        margin-bottom: 60px;
+    }
+    /* Espacement pour table des matières */
+    #TOC {
+        margin-top: 100px;
+    }
+    
+    .footer {
+        position: fixed;
+        width: 100%;
+        text-align: center;
+        bottom: 0;
+        left: 0;
+        background-color: #E6E6E6;
+    }
+</style>
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
+<script type="text/javascript">
+if (window.hljs && document.readyState && document.readyState === "complete") {
+   window.setTimeout(function() {
+      hljs.initHighlighting();
+   }, 0);
+}
+</script>
+
+
+
+<style type="text/css">
+h1 {
+  font-size: 34px;
+}
+h1.title {
+  font-size: 38px;
+}
+h2 {
+  font-size: 30px;
+}
+h3 {
+  font-size: 24px;
+}
+h4 {
+  font-size: 18px;
+}
+h5 {
+  font-size: 16px;
+}
+h6 {
+  font-size: 12px;
+}
+.table th:not([align]) {
+  text-align: left;
+}
+</style>
+
+<link rel="stylesheet" href="libs/bootstrap-journal.min.css" type="text/css" />
+
+</head>
+
+<body>
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img {
+  max-width:100%;
+  height: auto;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+</style>
+
+
+
+<div class="container-fluid main-container">
+
+<!-- tabsets -->
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+</script>
+
+<!-- code folding -->
+
+
+
+
+
+<div class="navbar navbar-default navbar-fixed-top">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-main">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">FX Jollois</a>
+    </div>
+    <div id="navbar-main" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button">Données <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+              <li><a href="accesdonnees.html">A télécharger</a></li>
+              <li><a href="donnees-integrees-r.html">Sous R</a></li>
+          </ul>
+        </li>
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button">Enseignement <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li class="dropdown-header">DUT 1ère année</li>
+            <li><a href="exploitation-donnees.html">Exploitation de données</a></li>
+            <li><a href="initiation-a-r.html">Initiation à R</a></li>
+            <li><a href="reporting.html">Reporting</a></li>
+            <li><a href="complements-r.html">Compléments sur R</a></li>
+            <li class="dropdown-header">DUT 2ème année</li>
+            <li><a href="prog-stat-r.html">Programmation statistique avec R</a></li>
+            <li class="dropdown-header">LP MDS Santé</li>
+            <li><a href="info-dec-sante.html">Informatique décisionnelle</a></li>
+            <li class="dropdown-header">DU Analyste Big Data</li>
+            <li><a href="initiation-r-du.html">Initiation à R</a></li>
+            <li><a href="connexion-r-mongodb.html">Connexion entre R et MongoDB</a></li>
+            <li class="dropdown-header">DU Dataviz</li>
+            <li><a href="analyse-donnees.html">Analyse de données</a></li>
+            <li><a href="visualisation-donnees.html">Visualisation de données - R</a></li>
+            <li><a href="visualisation-donnees-d3.html">Visualisation de données - D3</a></li>
+            <li role="separator" class="divider"></li>
+            <li class="dropdown-header">Master</li>
+            <li><a href="slides/cnam-classif-modeles.html">Classification et Modèles de mélange</a></li>
+            <li><a href="analyse-donnees-massives.html">Analyse de Données Massives</a></li>
+            <li class="dropdown-header">Iran</li>
+            <li><a href="stat-prog-R.html">Statistical Programming using R</a></li>
+          </ul>
+        </li>
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button">Recherche <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li><a href="recherche.html">Sujets</a></li>
+            <li><a href="publications.html">Publications</a></li>
+          </ul>
+        </li>
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button">Réalisations <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li><a href="realisations.html">Détail</a></li>
+            <li role="separator" class="divider"></li>
+            <li><a href="http://up5.fr/explore-data" target="_blank">explore-data</a></li>
+            <li><a href="http://fxjollois.github.io/cours-sql/" target="_blank">Appli web de cours pour SQL</a></li>
+          </ul>
+        </li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container-fluid -->
+</div>
+<div class="contenu">
+
+<div class="fluid-row" id="header">
+
+
+
+<h1 class="title toc-ignore">TP3 - Introduction à <code>Python</code></h1>
+<h3 class="subtitle"><em>Analyse de Données Massives - Master 1ère année</em></h3>
+
+</div>
+
+
+<p><a href="https://www.python.org/"><code>Python</code></a> est un langage de programmation en pleine croissance dans le domaine de la <strong>Data Science</strong> et du <strong>Big Data</strong>. Il a une syntaxe particulière pour certains aspects, avec des points communs tout de même avec de nombreux autres. Nous allons ici aborder les premiers éléments de syntaxe de ce langage.</p>
+<div id="elements-de-base" class="section level2">
+<h2>Eléments de base</h2>
+<p><code>python</code> est un langage scripté, dont l’exécution se fait dans une console. Dans celle-ci, il est donc possible d’exécuter les commandes les unes après les autres. Il est aussi possible (et recommander) d’écrire son script dans un fichier texte (souvent avec l’extension <code>.py</code>) et de l’exécuter via <code>execfile()</code>.</p>
+<p>Pour accéder à l’aide d’une fonction, il existe la fonction <code>help()</code>, prenant éventuellement en paramètre une fonction directement, ou une chaîne de caractère. Si la fonction n’a pas de paramètre, elle démarre l’aide interactive.</p>
+<div id="types-de-donnees" class="section level3">
+<h3>Types de données</h3>
+<p>Comme tous les autres langages, <code>python</code> a plusieurs types possibles pour les données. En voici quelques uns. Vous pouvez exécuter les commandes dans une console pour voir le résultat.</p>
+<pre class="python"><code>1
+type(1)
+1.234
+type(1.234)
+&quot;chaîne&quot;
+type(&quot;chaîne&quot;)
+(1, 2)
+type((1, 2))
+[1, 2]
+type([1, 2])
+{&quot;a&quot;: 1, &quot;b&quot;: &quot;deux&quot;}
+type({&quot;a&quot;: 1, &quot;b&quot;: &quot;deux&quot;})</code></pre>
+<p>Les <code>tuples</code>, <code>lists</code> et les <code>dicts</code> peuvent s’imbriquer les uns dans les autres.</p>
+<pre class="python"><code>(1, (2, 3), [4, 5], {&quot;a&quot;: 1, &quot;b&quot;: &quot;deux&quot;})
+[1, [2, 3], (4, 5), {&quot;a&quot;: 1, &quot;b&quot;: &quot;deux&quot;}]
+{&quot;a&quot;: 1, &quot;b&quot;: &quot;deux&quot;, &quot;c&quot;: (5, 6), &quot;d&quot;: [7, 8]}</code></pre>
+<p>Il existe des fonctions permettant de passer d’un type à l’autre (quand cela est possible), telles que <code>int()</code>, <code>float()</code>, <code>str()</code>, <code>tuple()</code> et <code>list()</code>.</p>
+<p>Il existe aussi des valeurs prédéfinies, telles que <code>True</code> (vrai), <code>False</code> (faux) et <code>None</code> (donnée absente).</p>
+</div>
+<div id="creation-et-suppression-de-variables" class="section level3">
+<h3>Création et suppression de variables</h3>
+<p>Il n’y a pas de mot-clé pour la définition d’une variable. Celle-ci est définie/créée lors de sa première affectation. Si elle n’existe pas mais qu’on essaie de l’utiliser, alors un message d’erreur apparaît. Il est aussi possible de la supprimer via la fonction <code>del()</code>.</p>
+<pre class="python"><code>a = 1
+print(a)
+print(b)
+del(a)
+print(a)</code></pre>
+</div>
+<div id="type-dynamique" class="section level3">
+<h3>Type dynamique</h3>
+<p>Bien que <code>python</code> soit rigoureux dans l’évaluation des expressions (il ne fait pas de <code>cast</code> automatique - i.e. changement de type des données), le type d’une variable est dit <strong>dynamique</strong>. Le type d’une variable dépend uniquement de la valeur de son affectation. Voici un exemple simple de ce phénomène.</p>
+<pre class="python"><code>a = 1
+print(a)
+type(a)
+a = &quot;deux&quot;
+print(a)
+type(a)</code></pre>
+<p>La variable <code>a</code> est passé du type <code>int</code> au type <code>str</code> sans qu’on l’explicite. Il faut donc faire attention lors de l’écriture de ses programmes.</p>
+</div>
+<div id="affichage" class="section level3">
+<h3>Affichage</h3>
+<p>Comme vu précédemment, il existe la fonction <code>print()</code> permettant d’afficher du texte et/ou le contenu des variables dans la console. Celle-ci peut prendre les paramètres <code>sep</code>, qui permet d’indiquer le ou les caractères séparant les champs (un espace <code>&quot; &quot;</code> par défaut), et <code>end</code>, qui permet d’indiquer le caractère de fin de ligne (retour à la ligne <code>&quot;\n&quot;</code> par défaut).</p>
+<pre class="python"><code>print(&quot;Bonjour&quot;)
+print(&quot;a =&quot;, a)
+print(&quot;a&quot;, a, sep = &quot;=&quot;)
+print(&quot;a=&quot;, end = &quot;&quot;)
+print(a)</code></pre>
+</div>
+<div id="operateurs" class="section level3">
+<h3>Opérateurs</h3>
+<div id="arithmetiques" class="section level4">
+<h4>Arithmétiques</h4>
+<p>Il existe bien évidemment tous les opérateurs arithmétiques classiques, tels que présentés ci-dessous.</p>
+<pre class="python"><code>5 + 2
+5 - 2
+5 * 2
+5 / 2
+5 // 2
+5 % 2
+5 ** 2</code></pre>
+</div>
+<div id="comparaisons" class="section level4">
+<h4>Comparaisons</h4>
+<p>De même pour les opérateurs de comparaisons, tous très classiques.</p>
+<pre class="python"><code>5 &gt; 2
+5 &gt;= 2
+5 &lt; 2
+5 &lt;= 2
+5 == 2
+5 != 2</code></pre>
+</div>
+<div id="booleens" class="section level4">
+<h4>Booléens</h4>
+<p>Idem aussi pour les opérateurs booléens. Il faut juste noter la fonction <code>not()</code> pour obtenir la négation booléenne.</p>
+<pre class="python"><code>True | False
+True &amp; True
+not(True)</code></pre>
+</div>
+</div>
+</div>
+<div id="elements-de-langage" class="section level2">
+<h2>Eléments de langage</h2>
+<div id="traitement-conditionnel" class="section level3">
+<h3>Traitement conditionnel</h3>
+<p>Comme dans tout langage, le traitement conditionnel se fait à partir d’un <code>if</code>. Voici un exemple très simple d’utilisation.</p>
+<pre class="python"><code>a = 3
+if (a &gt; 2):
+    print(&quot;sup&quot;)</code></pre>
+<p>Une particularité de <code>python</code> est d’utiliser l’indentation (<em>i.e.</em> le décalage à droite à l’aide d’au moins une tabulation) pour définir les opérations à réaliser dans un bloc. Si on veut faire plusieurs opérations dans le <code>if</code>, voila comment procéder par exemple.</p>
+<pre class="python"><code>if (a &gt; 2):
+    print(&quot;dans le IF&quot;)
+    print(&quot;sup&quot;)</code></pre>
+<p>Il existe aussi la possibilité d’ajouter soit un traitement alternatif simple (avec <code>else</code>), soit un traitement alternatif conditionnel lui aussi (avec <code>elif</code>).</p>
+<pre class="python"><code># Avec un else seulement
+a = 1
+if (a &gt; 2):
+    print(&quot;sup&quot;)
+else:
+    print(&quot;inf&quot;)
+
+# Avec elif en plus
+if (a &gt; 2):
+    print(&quot;sup&quot;)
+elif (a &gt; 0):
+    print(&quot;mid&quot;)
+else:
+    print(&quot;inf&quot;)</code></pre>
+<p>Il n’existe rien dans <code>python</code> pour le <code>switch/case</code>tel qu’on peut le voir par ailleurs. Mais on peut passer par un dictionnaire pour des tests d’égalité (cf plus bas pour plus d’informations sur les dictionnaires).</p>
+<pre class="python"><code>jour = {
+    0: &quot;lundi&quot;,
+    1: &quot;mardi&quot;,
+    2: &quot;mercredi&quot;,
+    3: &quot;jeudi&quot;,
+    4: &quot;vendredi&quot;,
+    5: &quot;samedi&quot;,
+    6: &quot;dimanche&quot;
+}
+jour.get(2)</code></pre>
+</div>
+<div id="traitement-iteratif" class="section level3">
+<h3>Traitement itératif</h3>
+<p>On utilise en premier la boucle <code>for</code> dans laquelle on peut utiliser la fonction <code>range()</code> pour avoir les valeurs entre <code>0</code> (par défaut) et la valeur passée en paramètre. Vous remarquerez que <code>i</code> est persistant à la boucle et garde la dernière valeur.</p>
+<pre class="python"><code>for i in range(5):
+    print(i)
+print(&quot;dernière valeur de i :&quot;, i)</code></pre>
+<p>Cette fonction <code>range()</code> peut prendre deux paramètres, et dans ce cas, génère la boucle entre les deux par pas de 1.</p>
+<pre class="python"><code>for i in range(5, 10):
+    print(i)</code></pre>
+<p>Et si l’on souhaite modifier le pas de séquence, on ajoute un troisième paramètre. Celui-ci doit être cohérent par rapport aux deux premières valeurs.</p>
+<pre class="python"><code>for i in range(10, 5, -1):
+    print(i)</code></pre>
+<p>Il est possible d’utiliser une <code>list</code> ou un <code>tuple</code> pour définir les valeurs dans lesquelles naviguer.</p>
+<pre class="python"><code>for i in [4, 1, 10]:
+    print(i)</code></pre>
+<p>Et en utilisant une chaîne de caractère, on peut naviguer dans celle-ci.</p>
+<pre class="python"><code>for l in &quot;Bonjour&quot;:
+    print(l)</code></pre>
+<p>Mais en utilisant un groupe de chaîne (<code>list</code> ou <code>tuple</code>), on travaille sur les chaînes au complet.</p>
+<pre class="python"><code>for l in (&quot;jour&quot;, &quot;soir&quot;):
+    print(&quot;Bon&quot;, l, sep = &quot;&quot;)</code></pre>
+<p>La fonction <code>enumerate()</code> permet de récupérer à la fois les indices des valeurs et les valeurs.</p>
+<pre class="python"><code>a = [3, 1, 9, 4]
+for i, x in enumerate(a):
+    print(&quot;i =&quot;, i, &quot;\tx =&quot;, x)</code></pre>
+<p>Et la fonction <code>zip()</code> permet elle de travailler sur plusieurs groupes de valeurs (ici deux listes). Notez que cette fonction limite le résultat à la taille du plus petit regroupement.</p>
+<pre class="python"><code>b = [&quot;trois&quot;, &quot;un&quot;, &quot;neuf&quot;]
+for i, j in zip(a, b):
+    print(&quot; i =&quot;, i, &quot;\tj =&quot;, j)</code></pre>
+<p>Enfin, on dispose aussi de la boucle <code>while</code> qui teste en début de boucle si une condition est toujours vérifiée. Bien évidemment, à la fin de la boucle, <code>i</code> a la première valeur à rendre la condition fausse. Ici, <code>i += 1</code> est un raccourci pour <code>i = i + 1</code>.</p>
+<pre class="python"><code>i = 0
+while i &lt; 10:
+    print(i)
+    i += 1
+print(&quot;Valeur de i :&quot;, i)</code></pre>
+</div>
+</div>
+<div id="creation-et-manipulations-dobjets" class="section level2">
+<h2>Création et manipulations d’objets</h2>
+<p>Comme indiqué, il existe différents types d’objets en <code>python</code>. Sont présentés ici des exemples de créations et de manipulations de chaînes (<code>str</code>), de <code>tuples</code>, de <code>list</code> et de dictionnaires (<code>dict</code>).</p>
+<div id="chaines" class="section level3">
+<h3>Chaînes</h3>
+<p>Une chaîne de caractère se définit à l’aide des quotes simples (<code>''</code>) ou doubles (<code>&quot;&quot;</code>). Par défaut, <code>python</code> présentera les chaînes avec des simples quotes. Mais en présence d’une apostrophe dans la chaîne, il faut la déclarer avec des doubles quotes. Il est possible de connaître la longueur de la chaîne avec la fonction <code>len()</code>.</p>
+<pre class="python"><code>&quot;bonjour&quot;
+&quot;aujourd&#39;hui&quot;
+a = &#39;bonjour&#39;
+len(a)</code></pre>
+<p>Pour extraire des sous-chaînes, on utilise l’indexation en séquence <code>python</code>, en prenant en compte que le premier caractère est en position <code>0</code>. La séquence par défaut est par pas de 1 (par exemple, <code>1:5</code> renvoie les positions <code>1</code>, <code>2</code>, <code>3</code>, <code>4</code>, <code>5</code>). Si on omet le premier ou le dernier, <code>python</code> comprend qu’on désire le début ou la fin de la chaîne. On peut ajouter un paramètre à la séquence, permettant de jouer sur le pas entre les valeurs de la séquence.</p>
+<pre class="python"><code>a[1:5]
+a[0:3]
+a[:3]
+a[3:len(a)]
+a[3:]
+a[::]
+a[::-1]
+a[::2]
+a[1:5:2]
+a[5:1:2]</code></pre>
+<p>Sur ces chaînes, on peut réaliser un certain nombre d’opérations classiques, telles que le changement de casse (<code>upper()</code> ou <code>lower()</code>), la mise en majuscule des premières lettres de chaque mot (<code>capitalize()</code>), la recherche d’une sous-chaîne (<code>find()</code> - première occurence), le remplacement d’une sous-chaîne (<code>replace()</code>), le dénombrement de sous-chaînes (<code>count()</code>) ou le découpage en sous-chaînes selon un caractère (<code>split()</code>). En voici quelques exemples.</p>
+<pre class="python"><code>a.upper()
+a.capitalize()
+a.find(&#39;j&#39;)
+a.replace(&#39;jour&#39;, &#39;soir&#39;)
+a.count(&#39;o&#39;)
+a.split(&#39;j&#39;)</code></pre>
+</div>
+<div id="tuples" class="section level3">
+<h3>Tuples</h3>
+<p>Un <code>tuple</code> en <code>python</code> est un ensemble déclaré via des <code>()</code>, composé de valeurs pas forcément de même type et éventuellement complexe, qu’il n’est pas possible de modifier. C’est en quelque sorte une constante, une fois déclarée.</p>
+<pre class="python"><code>a = (3, 1, 9, 7)
+print(a)
+a[0]
+a[0] = 5 # Pas possible : tuple == constante</code></pre>
+<p>Il est possible d’utiliser les mêmes outils d’indexation en séquence vu pour les chaînes.</p>
+</div>
+<div id="listes" class="section level3">
+<h3>Listes</h3>
+<p>Une <code>list</code> est aussi un ensemble déclarée via des <code>[]</code>, composé d’éléments pas forcément tous du même type et possiblement complexe. A la différence d’un tuple, une liste est modifiable.</p>
+<pre class="python"><code>a = [3, 1, 9, 7]
+print(a)
+len(a)
+a[0]
+a[1:3]</code></pre>
+<p>Il est possible d’utiliser les mêmes outils d’indexation en séquence vu pour les chaînes.</p>
+<p>Nous disposons sur ces listes de plusieurs fonctions tels que <code>reverse()</code> (pour inverser la liste), <code>sort()</code> (tri, avec l’option <code>reverse</code> pour le choix du tri), <code>pop()</code> (pour récupérer et supprimer le dernier élément), <code>append()</code> (pour ajouter un élément à la fin), <code>insert()</code> (pour insérer un élément dans la liste, à la position indiquée - paramètres = position suivie de la valeur), <code>remove()</code> (pour supprimer les valeurs passées en paramètre). Toutes ces fonctions modifient directement la liste sur laquelle on les applique.</p>
+<pre class="python"><code>a.reverse()
+print(a)
+a.sort()
+print(a)
+a.sort(reverse=True)
+print(a)
+a.pop()
+print(a)
+a.append(5)
+print(a)
+a.insert(0, 6)
+print(a)
+a.remove(7)
+print(a)</code></pre>
+<p>Un autre moyen d’insérer une valeur, voire plusieurs, à une liste est d’utiliser l’opérateur <code>+</code>, tel qu’indiqué ci-dessous. Celui-ci permet une concaténation des deux listes en une seule. L’opérateur <code>*</code> permet lui de répéter une liste autant de fois que désiré.</p>
+<pre class="python"><code>a + [1, 2]
+a * 2</code></pre>
+<p>On peut utiliser un mécanisme spécifique, appelé <em>list comprehension</em> (fonctionnant aussi sur les chaînes et les tuples), permettant de récupérer les valeurs (ou un calcul sur chaque valeur) pour tous les éléments de la liste (ou certains si on applique un <code>if</code>).</p>
+<pre class="python"><code>a = [3, 1, 9, 7]
+[x**2 for x in a]
+[x**2 for x in a if x &gt;= 4]</code></pre>
+<p>Par contre, il faut faire très attention au <strong>passage de référence</strong> lorsqu’on copie une liste. En effet, dans le code suivant, on copie <code>a</code> dans <code>b</code>. Et en modifiant <code>a</code>, on remarque que <code>b</code> est aussi modifié. Et l’inverse est aussi vrai.</p>
+<pre class="python"><code>a = [1, 2, 3, 4]
+print(a)
+b = a
+print(b)
+a[0] = 5
+print(a)
+print(b)
+b[1] = 9
+print(b)
+print(a)</code></pre>
+<p>Pour remédier à ce problème, on doit duppliquer la liste avec la fonction <code>copy()</code> de la liste initiale, comme ci-dessous.</p>
+<pre class="python"><code>b = a.copy()
+a[0] = -1
+print(a)
+print(b)</code></pre>
+</div>
+<div id="dictionnaires" class="section level3">
+<h3>Dictionnaires</h3>
+<p>Les <strong>dictionnaires</strong> (<code>dict</code> en <code>python</code>) sont des listes nommées (définies via des <code>{}</code>), c’est-à-dire que chaque élément a un nom (appelé aussi clé). Ces éléments ne sont pas forcément tous du même type, et peuvent aussi être complexe.</p>
+<pre class="python"><code>a = { &quot;nom&quot;: &quot;Jollois&quot;, &quot;prenom&quot;: &quot;FX&quot;, &quot;langues&quot;: [&quot;R&quot;, &quot;Python&quot;, &quot;SQL&quot;, &quot;SAS&quot;], &quot;labo&quot;: { &quot;nom&quot;: &quot;LIPADE&quot;, &quot;lieu&quot;: &quot;CUSP&quot;}}
+print(a)
+len(a)</code></pre>
+<p>Pour accéder aux éléments du dictionnaire, on peut utiliser le formalisme suivant.</p>
+<pre class="python"><code>a[&quot;nom&quot;]
+a[&quot;langues&quot;]
+a[&quot;langues&quot;][0]
+a[&quot;labo&quot;]
+a[&quot;labo&quot;][&quot;lieu&quot;]</code></pre>
+<p>Il existe aussi des fonctions utiles sur ces objets, telles que <code>get()</code> (pour récupérer la valeur d’une clé), <code>keys()</code> (pour avoir la liste des clés de l’objet), <code>values()</code> (pour avoir les valeurs des clés, dans le même ordre que listé dans <code>keys()</code>), <code>popitem()</code> (pour récupérer un dictionnaire avec le dernier item, et le supprimer du dictionnaire initiale) et <code>pop()</code> (pour récupérer la valeur de l’item passé en paramètre, et le supprimer de l’élément de départ).</p>
+<pre class="python"><code>a.get(&quot;nom&quot;)
+a.keys()
+a.values()
+a.popitem()
+print(a)
+a.pop(&quot;nom&quot;)
+print(a)</code></pre>
+<p>On peut ajouter facilement un item à un dictionnaire, en lui affectant une valeur.</p>
+<pre class="python"><code>a[&quot;type&quot;] = &quot;MCF&quot;
+print(a)</code></pre>
+<p>De même que pour les listes, il faut faire attention lors de l’affectation d’un dictionnaire à un autre. La fonction <code>copy()</code> permet donc d’obtenir une copie indépendante de l’objet initial.</p>
+<pre class="python"><code>b = a
+b[&quot;prenom&quot;] = &quot;Xavier&quot;
+print(b)
+print(a)
+
+b = a.copy()
+b[&quot;prenom&quot;] = &quot;FX&quot;
+print(b)
+print(a)</code></pre>
+<p>Le mécanisme de <em>list comprehension</em> est aussi utilisable pour créer un dictionnaire. Il faut dans ce cas indiquer deux valeus : la clé et sa valeur. Dans notre cas, la fonction <code>dict()</code> appliqué sur le résultat de la fonction <code>zip()</code> des deux listes nous permet d’avoir le même résultat.</p>
+<pre class="python"><code>fruits = [&quot;pommes&quot;, &quot;bananes&quot;, &quot;poires&quot;, &quot;oranges&quot;]
+nombres = [5, 2, 10, 4]
+{fruits[i]:nombres[i] for i in range(4)}
+dict(zip(fruits, nombres))</code></pre>
+</div>
+</div>
+<div id="fonctions" class="section level2">
+<h2>Fonctions</h2>
+<div id="definition" class="section level3">
+<h3>Définition</h3>
+<p>L’opérateur <code>def</code> permet de créer une fonction (ou une procédure qui sera juste une fonction ne renvoyant rien). L’opérateur <code>return</code> indiquant le résultat à renvoyer le cas échéant. Le premier exemple est une fonction renvoyant une valeur (approximative) de <span class="math inline">\(\pi\)</span>. Comme pour un <code>if</code>, le bloc d’instructions est défini selon l’indentation.</p>
+<pre class="python"><code>def pi():
+    res = 3.141593 ** 2
+    return res
+pi()</code></pre>
+<p>Ce deuxième exemple est une procédure affichant tout simplement <code>&quot;Bonjour&quot;</code>.</p>
+<pre class="python"><code>def afficheBonjour():
+    print(&quot;Bonjour&quot;)
+afficheBonjour()</code></pre>
+<p>Il est bien évidemment possible de passer un paramètre à une fonction, sans qu’on ait à déclarer son type. Bien sûr, un appel de la fonction sans valeur pour un paramètre défini entraîne une erreur.</p>
+<pre class="python"><code>def afficheBonjour(nom):
+    print(&quot;Bonjour&quot;, nom)
+afficheBonjour(&quot;Jollois&quot;)
+afficheBonjour()</code></pre>
+<p>Lorqu’il y a plus d’un paramètre, on peut faire un appel classique. Mais il est aussi possible de nommer explicitement les paramètres. Avec ce mécanisme, il est ainsi possible de les déclarer dans l’ordre que l’on veut. Mais si l’on nomme un paramètre, il est obligatoire de nommer les autres (erreur d’exécution sur la dernière ligne).</p>
+<pre class="python"><code>def afficheBonjour(nom, prenom):
+    print(&quot;Bonjour&quot;, prenom, nom)
+afficheBonjour(&quot;Jollois&quot;, &quot;FX&quot;)
+afficheBonjour(nom = &quot;Jollois&quot;, prenom = &quot;FX&quot;)
+afficheBonjour(prenom = &quot;FX&quot;, nom = &quot;Jollois&quot;)
+afficheBonjour(prenom = &quot;FX&quot;, &quot;Jollois&quot;)</code></pre>
+<p>Il existe la possibilité de définir une valeur par défaut à un paramètre dans une fonction. Ceci permet d’appeler la fonction sans donner de valeur pour ce paramètre (la fonction utilisera celle par défaut donc).</p>
+<pre class="python"><code>def afficheBonjour(nom, prenom = &quot;?&quot;):
+    print(&quot;Bonjour&quot;, prenom, nom)
+afficheBonjour(&quot;Jollois&quot;, &quot;FX&quot;)
+afficheBonjour(&quot;Jollois&quot;)</code></pre>
+</div>
+<div id="purete-dune-fonction" class="section level3">
+<h3>Pureté d’une fonction</h3>
+<p>Une fonction est dite <em>pure</em> si elle n’a pas d’effet de bords lors de son appel. Dans la fonction <code>f1()</code> définie ci-dessous, le paramètre <code>a</code> est local et son affectation ne change pas la valeur de la variable <code>a</code> globale. <code>f1()</code> sera donc considérée comme pure.</p>
+<pre class="python"><code>def f1(a):
+    a = [b**2 for b in a]
+    return a
+a = list(range(5))
+print(a)
+print(f1(a))
+print(a)</code></pre>
+<p>Maintenant, si nous définissons la fonction comme <code>f2()</code> ci-dessous, nous remarquons que la variable <code>a</code> globale est modifiée suite à l’appel de la fonction. <code>f2()</code> est considérée <em>impure</em>.</p>
+<pre class="python"><code>def f2(a):
+    for i in a:
+        a[i] = a[i] ** 2
+    return a
+a = list(range(5))
+print(a)
+print(f2(a))
+print(a)</code></pre>
+</div>
+<div id="gestion-des-erreurs" class="section level3">
+<h3>Gestion des erreurs</h3>
+<p>Il arrive régulièrement que l’on doive gérer les erreurs d’exécution dans une fonction. On utilise pour cela l’opérateur <code>try</code>, qui contiendra le code à exécuter normalement. Et dans le bloc <code>except</code>, on indiquera la marche à suivre en cas d’erreur lors de l’exécution du <code>try</code>. On peut définir une suite d’instruction à réaliser après la gestion de l’erreur avec un bloc <code>finally</code> (optionnel).</p>
+<p>Ci-dessous, nous définissons une fonction renvoyant la somme d’une liste ou d’un tuple. Si la somme est impossible à réaliser (par exemple, car il y a une chaîne dans la liste passée en paramètre), on affiche un message d’erreur et on renvoie la valeur <code>None</code>.</p>
+<pre class="python"><code>def somme(v):
+    try:
+        res = sum(v)
+    except:
+        print(&quot;Erreur : somme impossible !&quot;)
+        res = None
+    finally:
+        return res
+a = somme([1, 3, 5])
+print(a)
+a = somme([&quot;un&quot;, 3, 5])
+print(a)</code></pre>
+</div>
+<div id="fonctions-sur-listes" class="section level3">
+<h3>Fonctions sur Listes</h3>
+<p>Dans le cadre de l’utilisation de liste, il est nécessaire d’utiliser des fonctions particulières, dites <em>high order functions</em>. Ces dernières prennent en paramètre une fonction et une liste.</p>
+<p>Pour les exemples, nous définissons une liste de nombres.</p>
+<pre class="python"><code>a = [13, 7, 2, 9, 1, 10, 6, 3, 8]
+print(a)</code></pre>
+<div id="map" class="section level4">
+<h4><code>map()</code></h4>
+<p>La fonction <code>map()</code> permet d’appliquer une fonction sur chaque élément d’une liste (ou d’un tuple). Elle renvoie un objet de type <code>map</code> que l’on peut transformer en liste avec la fonction <code>list()</code>. Une fois celle-ci appliqué, l’objet renvoyé par <code>map()</code> est vide.</p>
+<p>Ici, nous définissons une fonction <code>carre()</code> qui renvoie le carré du paramètre passé. Et nous l’appliquons sur chaque élément de la liste <code>a</code> créé précédemment.</p>
+<pre class="python"><code>def carre(v):
+    return v ** 2
+carre(5)
+
+b = map(carre, a)
+print(list(b))</code></pre>
+</div>
+<div id="filter" class="section level4">
+<h4><code>filter()</code></h4>
+<p>L’idée de la fonction <code>filter()</code> est de filtrer les valeurs de la liste, en fonction du résultat de la fonction passée en paramètre. De même que pour <code>map()</code>, nous listons les résultats pour l’avoir sous une forme de <code>list</code>.</p>
+<p>La fonction <code>pair()</code> ci-dessous teste si la valeur passée en paramètre est divisible par 2 (donc si elle est paire). L’utlisation de la fonction <code>filter()</code> sur <code>a</code>, avec cette fonction, nous renvoie les valeurs de <code>a</code> paires.</p>
+<pre class="python"><code>def pair(v):
+    return v%2 == 0
+pair(5)
+pair(8)
+
+b = filter(pair, a)
+print(list(b))</code></pre>
+</div>
+<div id="reduce" class="section level4">
+<h4><code>reduce()</code></h4>
+<p>La dernière fonction intéressante sur les listes est <code>reduce()</code>, permettant de réduire une liste en une valeur. Elle est contenue dans le module <code>functools</code>, qu’on importe via la commande <code>import</code>.</p>
+<p>La fonction à passer en paramètre doit donc prendre deux valeurs et renvoyer une valeur de même type. Le deuxième paramètre est la liste sur laquelle appliquer la réduction. Il est aussi possible d’ajouter une valeur initiale.</p>
+<p>Cette fonction <code>reduce()</code> regroupe deux éléments de liste ensemble, puis regroupe le résultat précédent avec l’élément suivant, et ainsi de suite, jsuq’à épuisement de la liste.</p>
+<p>Voici un exemple d’utilisation de <code>reduce()</code> pour le calcul de la somme des éléments d’une liste. On définit la fonction <code>somme()</code> qui prend deux éléments et qui renvoie la somme de deux. On l’applique, via <code>reduce()</code> sur la liste. Le résultat obtenu est bien la somme sur <code>a</code>. Le deuxième appel est avec une valeur initialisée à 100.</p>
+<pre class="python"><code>def somme(v1, v2): 
+    return v1 + v2
+somme(3, 10)
+
+sum(a)
+import functools
+b = functools.reduce(somme, a)
+print(b)
+b = functools.reduce(somme, a, 100)
+print(b)</code></pre>
+</div>
+<div id="fonction-anonyme" class="section level4">
+<h4>Fonction anonyme</h4>
+<p>Dans ces appels de fonctions, il est courant de passer en paramètre une fonction simple. Dans ce cadre, il existe un mécanisme évitant la déclaration de la fonction avant. On parle de <em>fonction anonyme</em>, déclarée via l’opérateur <code>lambda</code>. Le principe est de définir la fonction lors de son passage comme paramètre. La contrainte est que cette fonction doit tenir sur une seule ligne.</p>
+<p>Dans l’exemple qui suit, nous appliquons une fonction calculant le carré d’une valeur à une liste, via la fonction <code>map()</code>.</p>
+<pre class="python"><code>b = map(lambda v: v ** 2, a)
+print(list(b))</code></pre>
+<p>Il est possible d’ajouter une condition <code>if</code> dans la fonction <code>lambda</code> avec un formalisme de type <code>valeurTrue if condition else valeurFalse</code>. Ci-après, nous calculons le carré de chaque valeur, multiplié par <code>-1</code> pour celles inférieur ou égale à 8.</p>
+<pre class="python"><code>b = map(lambda v: v **2 if v &gt; 8 else -(v ** 2), a)
+print(list(b))</code></pre>
+</div>
+</div>
+</div>
+<div id="fichiers" class="section level2">
+<h2>Fichiers</h2>
+<p>Le module <code>os</code>, importé dès le lancement de <code>python</code>, dispose de plusieurs routines dédiés à la gestion des fichiers.</p>
+<div id="repertoire-courant" class="section level3">
+<h3>Répertoire courant</h3>
+<p>Comme dans tout langage, il est possible d’accéder aux fichiers de deux façons : soit par adressage absolu (chemin complet du fichier), soit par adressage relatif (chemin par rapport à un répertoire). Pour la deuxième solution, il est donc important de connaître la notion de <strong>répertoire courant</strong> dans <code>python</code>. Celui-ci est le répertoire à partir duquel <code>python</code> va chercher les fichiers (script, de données ou autres).</p>
+<pre class="python"><code># connaître
+os.getcwd()
+
+# changer
+os.chdir(&quot;Sites/fxjollois.github.io/&quot;)
+os.getcwd()</code></pre>
+</div>
+<div id="lecture-dun-fichier" class="section level3">
+<h3>Lecture d’un fichier</h3>
+<p>La fonction <code>open()</code> permet d’ouvrir une connexion vers un fichier (en mode lecture seule par défaut). L’objet renvoyé contient une fonction de lecture de toutes les lignes en une fois (<code>readlines()</code>). Celle-ci renvoie une liste de chaînes de caractères, chaque élément représentant une ligne du fichier. Il faut bien évidemment fermer la connexion au fichier, avec la fonction <code>close()</code>.</p>
+<p>Voici comment lire les lignes du fichier <a href="donnees/Iris.txt">Iris.txt</a> en <code>python</code>.</p>
+<pre class="python"><code>fichier = open(&quot;donnees/Iris.txt&quot;)
+lignesBrutes = fichier.readlines()
+fichier.close()</code></pre>
+</div>
+</div>
+<div id="exercice" class="section level2">
+<h2>Exercice</h2>
+<p>Le fichier contient les informations de 150 iris, répartis en 3 espèces et décrits par 4 variables. Voici quelques informations sur ce fichier.</p>
+<pre class="python"><code>lignesBrutes[0:5]
+len(lignesBrutes)</code></pre>
+<ol style="list-style-type: decimal">
+<li>Télécharger le fichier et importer les lignes dans <code>python</code> comme ci-dessus</li>
+<li>A partir de la liste de chaînes obtenue, créer une liste de 151 listes. Chaque sous-liste contiendra les 5 informations présentes sur chaque ligne (séparées par des <code>&quot;;&quot;</code>). Supprimer les quotes (<code>&quot;'&quot;</code>) et le caractère de fin de ligne (<code>&quot;\n&quot;</code>).</li>
+<li>Créer une fonction permettant de transformer une chaîne en réel
+<ul>
+<li>si cette chaîne n’est pas transformable, renvoyer la telle quelle</li>
+<li>Exemple : <code>f(1.234)</code> renverra <code>1.234</code>, mais <code>f(&quot;rien&quot;)</code> renverra <code>&quot;rien&quot;</code></li>
+</ul></li>
+<li>Créer une liste de 150 dictionnaires, chaque dictionnaire sera un iris, avec des champs nommés. Les noms des variables sont sur la première ligne de la liste précédemment créée.
+<ul>
+<li>Idéalement à faire en une fois avec des * list comprehension*</li>
+</ul></li>
+<li>Calculer pour chaque iris le rapport entre la surface d’un pétale et la surface d’un sépale. La surface de chaque dépend uniquement du produit de la largeur et de la longueur. On fera donc le rapport entre les deux produits.</li>
+<li>Créer une sous-liste ne contenant que les iris <code>setosa</code>.</li>
+<li>Calculer la moyenne de chaque variable.</li>
+<li>Calculer la moyenne de chaque variable pour chaque espèce.</li>
+</ol>
+</div>
+
+</div>
+<div class="footer">
+      Site créé avec <a href="http://www.r-project.org" target="_blank"><code>R</code></a> et la 
+      librairie  <a href="http://rmarkdown.rstudio.com/" target="_blank"><code>rmarkdown</code></a>.
+</div>
+<script>
+    $("#TOC").css("margin-top", "100px");
+</script>
+
+
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

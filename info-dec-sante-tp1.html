@@ -189,6 +189,7 @@ $(document).ready(function () {
             <li><a href="initiation-r-du.html">Initiation à R</a></li>
             <li><a href="connexion-r-mongodb.html">Connexion entre R et MongoDB</a></li>
             <li class="dropdown-header">DU Dataviz</li>
+            <li><a href="analyse-donnees.html">Analyse de données</a></li>
             <li><a href="visualisation-donnees.html">Visualisation de données - R</a></li>
             <li><a href="visualisation-donnees-d3.html">Visualisation de données - D3</a></li>
             <li role="separator" class="divider"></li>
@@ -369,19 +370,19 @@ mtcars$info</code></pre>
 <p>Comme dans tous les systèmes, les dates sous <code>R</code> sont stockées sous forme d’entiers représentant un nombre de jours depuis une certaine date, sous le format <code>Date</code>. Ci-dessous, nous voyons comment récupérer la date du jour, le nombre de jour depuis l’origine, et le calcul de la date d’origine. Il y a aussi deux exemples d’affichage amélioré d’une date (la date du jour ici).</p>
 <pre class="r"><code># Date du jour
 Sys.Date()</code></pre>
-<pre><code>## [1] &quot;2017-02-23&quot;</code></pre>
+<pre><code>## [1] &quot;2017-03-08&quot;</code></pre>
 <pre class="r"><code># Entier stocké
 as.numeric(Sys.Date())</code></pre>
-<pre><code>## [1] 17220</code></pre>
+<pre><code>## [1] 17233</code></pre>
 <pre class="r"><code># Date d&#39;origine (et exemple de soustraction de jours d&#39;une date)
 Sys.Date() - as.numeric(Sys.Date())</code></pre>
 <pre><code>## [1] &quot;1970-01-01&quot;</code></pre>
 <pre class="r"><code># Affichage d&#39;une date avec un format spécifique
 format(Sys.Date(), &quot;jour : %d ou %e, mois : %m, année :  %y ou %Y&quot;)</code></pre>
-<pre><code>## [1] &quot;jour : 23 ou 23, mois : 02, année :  17 ou 2017&quot;</code></pre>
+<pre><code>## [1] &quot;jour : 08 ou  8, mois : 03, année :  17 ou 2017&quot;</code></pre>
 <pre class="r"><code># Affichage d&#39;une date dépendant de la langue locale
 format(Sys.Date(), &quot;%a %e %b ou %A %e %B&quot;)</code></pre>
-<pre><code>## [1] &quot;Jeu 23 fév ou Jeudi 23 février&quot;</code></pre>
+<pre><code>## [1] &quot;Mer  8 mar ou Mercredi  8 mars&quot;</code></pre>
 <p>Il est aussi possible de transformer une chaîne de caractère en <code>Date</code> avec la fonction <code>as.Date()</code>. Celle-ci prend en paramètre obligatoire un vecteur de chaînes (éventuellement avec une seule valeur), et de façon optionnelle le format de la date. Voici quelques exemples d’utilisations de cette fonction, avec la présentation des fonctions <code>weekdays()</code>, <code>months()</code>, <code>quarters()</code> et <code>julian()</code>.</p>
 <pre class="r"><code># Tentative de conversion d&#39;une date écrite en &quot;français&quot;
 as.Date(&quot;09/11/2016&quot;)</code></pre>
