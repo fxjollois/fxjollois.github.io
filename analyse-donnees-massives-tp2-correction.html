@@ -11,7 +11,7 @@
 
 
 
-<title>Analyse de Données Massives</title>
+<title>TP2 - MapReduce sur MongoDB - correction</title>
 
 <script src="libs/jquery-1.11.3/jquery.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -229,37 +229,111 @@ $(document).ready(function () {
 
 
 
-<h1 class="title toc-ignore">Analyse de Données Massives</h1>
+<h1 class="title toc-ignore">TP2 - MapReduce sur MongoDB - <em>correction</em></h1>
+<h3 class="subtitle"><em>Analyse de Données Massives - Master 1ère année</em></h3>
 
 </div>
 
 
-<div id="cours-de-master-1ere-annee" class="section level2">
-<h2>Cours de Master 1ère année</h2>
-<ol style="list-style-type: decimal">
-<li><a href="slides/initiation-big-data-stockage-massif.html">Introduction aux données massives</a>
+<div id="exercices" class="section level2">
+<h2>Exercices</h2>
+<p>Répondez en utilisant le paradigme <strong>Map-Reduce</strong></p>
+<div id="calculer-le-nombre-de-gymnases-pour-chaque-ville" class="section level5">
+<h5>1. Calculer le nombre de gymnases pour chaque ville</h5>
+<pre class="js"><code>db.Gymnases.mapReduce(
+    function() {
+        emit(this.Ville, 1);
+    },
+    function(cle, valeurs) {
+        return Array.sum(valeurs);
+    },
+    { out: { inline: 1 }}
+)</code></pre>
+</div>
+<div id="calculer-le-nombre-de-seances-pour-chaque-jour-de-la-semaine" class="section level5">
+<h5>2. Calculer le nombre de séances pour chaque jour de la semaine</h5>
+<pre class="js"><code>db.Gymnases.mapReduce(
+    function() {
+        if (this.Seances) {
+            for (s of this.Seances) {
+                emit(s.Jour.toLowerCase(), 1);
+            }
+        }
+    },
+    function(cle, valeurs) {
+        return Array.sum(valeurs);
+    },
+    { out: { inline: 1 }}
+)</code></pre>
+</div>
+<div id="de-meme-pour-chaque-sport" class="section level5">
+<h5>3. De même pour chaque sport</h5>
+<pre class="js"><code>db.Gymnases.mapReduce(
+    function() {
+        if (this.Seances) {
+            for (s of this.Seances) {
+                emit(s.Libelle, 1);
+            }
+        }
+    },
+    function(cle, valeurs) {
+        return Array.sum(valeurs);
+    },
+    { out: { inline: 1 }}
+)</code></pre>
+</div>
+<div id="calculer-la-superficie-moyenne-des-gymnases-pour-chaque-ville" class="section level5">
+<h5>4. Calculer la superficie moyenne des gymnases, pour chaque ville</h5>
+<p>Pour cela, vous devez calculer la somme des superficie ET la nombre de gymnase (à émettre dans un même objet et à réduire en tenant compte que ce double aspect)</p>
+<pre class="js"><code>db.Gymnases.mapReduce(
+    function() {
+        emit(this.Ville, { &quot;nb&quot;: 1, &quot;surface&quot;: this.Surface, &quot;surfMoy&quot;: this.Surface })
+    },
+    function(cle, valeurs) {
+        var nb = 0, surface = 0;
+        for (val of valeurs) {
+            nb += val.nb;
+            surface += val.surface;
+        }
+        return { &quot;nb&quot;: nb, &quot;surface&quot;: surface, &quot;surfMoy&quot;: Math.round(100 * surface / nb) / 100 }
+    },
+    { out: { inline: 1 }}
+)</code></pre>
+</div>
+<div id="calculer-pour-chaque-sport-le-nombre-de-seance-pour-chaque-jour-de-la-semaine" class="section level5">
+<h5>5. Calculer pour chaque sport, le nombre de séance pour chaque jour de la semaine</h5>
 <ul>
-<li><a href="analyse-donnees-massives-tp1.html">TP1 - Introduction à MongoDB</a>
-<ul>
-<li><a href="analyse-donnees-massives-tp1-correction.html">correction</a></li>
-</ul></li>
-</ul></li>
-<li><a href="slides/initiation-big-data-mapreduce.html">Map-Reduce</a>
-<ul>
-<li><a href="analyse-donnees-massives-tp2.html">TP2 - MapReduce sur MongoDB</a>
-<ul>
-<li><a href="analyse-donnees-massives-tp2-correction.html">correction</a></li>
-</ul></li>
-</ul></li>
-<li><a href="analyse-donnees-massives-tp3.html">TP3 - Introduction à <code>Python</code></a>
-<ul>
-<li><a href="analyse-donnees-massives-tp3-correction.html">correction</a></li>
-</ul></li>
-<li><a href="analyse-donnees-massives-tp4.html">TP4 - Statistiques sous <code>Python</code></a></li>
-<li><a href="">TP5 - Visualisation sous <code>Python</code></a></li>
-<li><a href="">TP6 - Analyse de données avec <code>Python</code></a></li>
-<li><a href="">…</a></li>
-</ol>
+<li>il faudra émettre, pour chaque sport, une valeur complexe (littéral <code>JSON</code> pour le jour)</li>
+<li>il faudra réfléchir à l’étape de réduction</li>
+</ul>
+<pre class="js"><code>db.Gymnases.mapReduce(
+    function() {
+        if (this.Seances) {
+            for (s of this.Seances) {
+                emit(s.Libelle, { [s.Jour.toLowerCase()]: 1 });
+            }
+        }
+    },
+    function(cle, valeurs) {
+        var res = valeurs.reduce(function(A, B) {
+            var r = A;
+            for (j of Object.keys(A)) {
+                if (j in B) {
+                    r[j] = A[j] + B[j];
+                }
+            }
+            for (j of Object.keys(B)) {
+                if (!(j in A)) {
+                    r[j] = B[j];
+                }
+            }
+            return r;
+        });
+        return res;
+    },
+    { out: { inline: 1 }}
+)</code></pre>
+</div>
 </div>
 
 </div>

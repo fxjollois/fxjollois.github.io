@@ -1,0 +1,119 @@
+---
+title: TP3 - Introduction à `Python` - *correction*
+subtitle: Analyse de Données Massives - Master 1ère année
+---
+
+```{r, include=FALSE}
+knitr::opts_chunk$set(eval=FALSE)
+```
+
+## Exercice
+
+Le fichier contient les informations de 150 iris, répartis en 3 espèces et décrits par 4 variables. Voici quelques informations sur ce fichier.
+
+##### 1. Télécharger le fichier et importer les lignes dans `python` comme ci-dessus
+
+```{python}
+fichier = open("Iris.txt")
+lignesBrutes = fichier.readlines()
+fichier.close()
+lignesBrutes
+```
+
+##### 2. A partir de la liste de chaînes obtenue, créer une liste de 151 listes. 
+
+Chaque sous-liste contiendra les 5 informations présentes sur chaque ligne (séparées par des `";"`). Supprimer les quotes (`"'"`) et le caractère de fin de ligne (`"\n"`).
+
+```{python}
+lignes = [l.replace("'", "").replace("\n", "").split(";") for l in lignesBrutes]
+lignes[:10]
+```
+
+##### 3. Créer une fonction permettant de transformer une chaîne en réel
+
+- si cette chaîne n'est pas transformable, renvoyer la telle quelle
+- Exemple : `f(1.234)` renverra `1.234`, mais `f("rien")` renverra `"rien"`
+
+```{python}
+def enReel(v):
+    try:
+        res = float(v)
+    except:
+        res = v
+    finally:
+        return res
+print(enReel("1.234"))
+print("setosa")
+```
+
+##### 4. Créer une liste de 150 dictionnaires, chaque dictionnaire sera un iris, avec des champs nommés. 
+
+Les noms des variables sont sur la première ligne de la liste précédemment créée.
+
+```{python}
+donnees = []
+for i, l in enumerate(lignes):
+    if i == 0:
+        var = l
+    else:
+        donnees.append({cle:enReel(val) for cle, val in zip(var, l)})
+donnees
+```
+
+Idéalement à faire en une fois avec des * list comprehension* 
+
+```{python}
+iris = [{cle:enReel(val) for cle, val in zip(lignes[0], l)} for l in lignes[1:]]
+iris
+```
+
+##### 5. Calculer pour chaque iris le rapport entre la surface d'un pétale et la surface d'un sépale. 
+
+La surface de chaque dépend uniquement du produit de la largeur et de la longueur. On fera donc le rapport entre les deux produits.
+
+```{python}
+def surface(ir):
+    ir['Petal.Surface'] = ir['Petal.Length'] * ir['Petal.Width']
+    ir['Sepal.Surface'] = ir['Sepal.Length'] * ir['Sepal.Width']
+    ir['Ratio'] = ir['Petal.Surface'] / ir['Sepal.Surface']
+    return ir
+irisSurface = list(map(surface, iris))
+irisSurface
+```
+
+```{python}
+len(irisSurface)
+```
+
+##### 6. Créer une sous-liste ne contenant que les iris `setosa`.
+
+```{python}
+irisSetosa = list(filter(lambda i: i['Species'] == 'setosa', irisSurface))
+irisSetosa
+```
+
+##### 7. Calculer la moyenne de chaque variable.
+
+```{python}
+def sommeVariable(irA, irB):
+    ir = irA.copy()
+    for var in ['Petal.Length', 'Petal.Width', 'Sepal.Length', 'Sepal.Width']:
+        ir[var] = irA[var] + irB[var]
+    return ir
+
+import functools
+irisMoyenne = functools.reduce(sommeVariable, iris)
+irisMoyenne.pop("Species")
+irisMoyenne
+```
+
+```{python}
+{cle:(round(irisMoyenne[cle] / len(iris), 2)) for cle in irisMoyenne}
+```
+
+##### 8. Calculer la moyenne de chaque variable pour chaque espèce.
+
+```{python}
+{cle:(round(irisMoyenne[cle] / len(iris), 2)) for cle in functools.reduce(sommeVariable, irisSetosa)}
+```
+

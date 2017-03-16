@@ -11,7 +11,7 @@
 
 
 
-<title>Analyse de Données Massives</title>
+<title>TP3 - Introduction à Python - correction</title>
 
 <script src="libs/jquery-1.11.3/jquery.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -229,37 +229,93 @@ $(document).ready(function () {
 
 
 
-<h1 class="title toc-ignore">Analyse de Données Massives</h1>
+<h1 class="title toc-ignore">TP3 - Introduction à <code>Python</code> - <em>correction</em></h1>
+<h3 class="subtitle"><em>Analyse de Données Massives - Master 1ère année</em></h3>
 
 </div>
 
 
-<div id="cours-de-master-1ere-annee" class="section level2">
-<h2>Cours de Master 1ère année</h2>
-<ol style="list-style-type: decimal">
-<li><a href="slides/initiation-big-data-stockage-massif.html">Introduction aux données massives</a>
+<div id="exercice" class="section level2">
+<h2>Exercice</h2>
+<p>Le fichier contient les informations de 150 iris, répartis en 3 espèces et décrits par 4 variables. Voici quelques informations sur ce fichier.</p>
+<div id="telecharger-le-fichier-et-importer-les-lignes-dans-python-comme-ci-dessus" class="section level5">
+<h5>1. Télécharger le fichier et importer les lignes dans <code>python</code> comme ci-dessus</h5>
+<pre class="python"><code>fichier = open(&quot;Iris.txt&quot;)
+lignesBrutes = fichier.readlines()
+fichier.close()
+lignesBrutes</code></pre>
+</div>
+<div id="a-partir-de-la-liste-de-chaines-obtenue-creer-une-liste-de-151-listes." class="section level5">
+<h5>2. A partir de la liste de chaînes obtenue, créer une liste de 151 listes.</h5>
+<p>Chaque sous-liste contiendra les 5 informations présentes sur chaque ligne (séparées par des <code>&quot;;&quot;</code>). Supprimer les quotes (<code>&quot;'&quot;</code>) et le caractère de fin de ligne (<code>&quot;\n&quot;</code>).</p>
+<pre class="python"><code>lignes = [l.replace(&quot;&#39;&quot;, &quot;&quot;).replace(&quot;\n&quot;, &quot;&quot;).split(&quot;;&quot;) for l in lignesBrutes]
+lignes[:10]</code></pre>
+</div>
+<div id="creer-une-fonction-permettant-de-transformer-une-chaine-en-reel" class="section level5">
+<h5>3. Créer une fonction permettant de transformer une chaîne en réel</h5>
 <ul>
-<li><a href="analyse-donnees-massives-tp1.html">TP1 - Introduction à MongoDB</a>
-<ul>
-<li><a href="analyse-donnees-massives-tp1-correction.html">correction</a></li>
-</ul></li>
-</ul></li>
-<li><a href="slides/initiation-big-data-mapreduce.html">Map-Reduce</a>
-<ul>
-<li><a href="analyse-donnees-massives-tp2.html">TP2 - MapReduce sur MongoDB</a>
-<ul>
-<li><a href="analyse-donnees-massives-tp2-correction.html">correction</a></li>
-</ul></li>
-</ul></li>
-<li><a href="analyse-donnees-massives-tp3.html">TP3 - Introduction à <code>Python</code></a>
-<ul>
-<li><a href="analyse-donnees-massives-tp3-correction.html">correction</a></li>
-</ul></li>
-<li><a href="analyse-donnees-massives-tp4.html">TP4 - Statistiques sous <code>Python</code></a></li>
-<li><a href="">TP5 - Visualisation sous <code>Python</code></a></li>
-<li><a href="">TP6 - Analyse de données avec <code>Python</code></a></li>
-<li><a href="">…</a></li>
-</ol>
+<li>si cette chaîne n’est pas transformable, renvoyer la telle quelle</li>
+<li>Exemple : <code>f(1.234)</code> renverra <code>1.234</code>, mais <code>f(&quot;rien&quot;)</code> renverra <code>&quot;rien&quot;</code></li>
+</ul>
+<pre class="python"><code>def enReel(v):
+    try:
+        res = float(v)
+    except:
+        res = v
+    finally:
+        return res
+print(enReel(&quot;1.234&quot;))
+print(&quot;setosa&quot;)</code></pre>
+</div>
+<div id="creer-une-liste-de-150-dictionnaires-chaque-dictionnaire-sera-un-iris-avec-des-champs-nommes." class="section level5">
+<h5>4. Créer une liste de 150 dictionnaires, chaque dictionnaire sera un iris, avec des champs nommés.</h5>
+<p>Les noms des variables sont sur la première ligne de la liste précédemment créée.</p>
+<pre class="python"><code>donnees = []
+for i, l in enumerate(lignes):
+    if i == 0:
+        var = l
+    else:
+        donnees.append({cle:enReel(val) for cle, val in zip(var, l)})
+donnees</code></pre>
+<p>Idéalement à faire en une fois avec des * list comprehension*</p>
+<pre class="python"><code>iris = [{cle:enReel(val) for cle, val in zip(lignes[0], l)} for l in lignes[1:]]
+iris</code></pre>
+</div>
+<div id="calculer-pour-chaque-iris-le-rapport-entre-la-surface-dun-petale-et-la-surface-dun-sepale." class="section level5">
+<h5>5. Calculer pour chaque iris le rapport entre la surface d’un pétale et la surface d’un sépale.</h5>
+<p>La surface de chaque dépend uniquement du produit de la largeur et de la longueur. On fera donc le rapport entre les deux produits.</p>
+<pre class="python"><code>def surface(ir):
+    ir[&#39;Petal.Surface&#39;] = ir[&#39;Petal.Length&#39;] * ir[&#39;Petal.Width&#39;]
+    ir[&#39;Sepal.Surface&#39;] = ir[&#39;Sepal.Length&#39;] * ir[&#39;Sepal.Width&#39;]
+    ir[&#39;Ratio&#39;] = ir[&#39;Petal.Surface&#39;] / ir[&#39;Sepal.Surface&#39;]
+    return ir
+irisSurface = list(map(surface, iris))
+irisSurface</code></pre>
+<pre class="python"><code>len(irisSurface)</code></pre>
+</div>
+<div id="creer-une-sous-liste-ne-contenant-que-les-iris-setosa." class="section level5">
+<h5>6. Créer une sous-liste ne contenant que les iris <code>setosa</code>.</h5>
+<pre class="python"><code>irisSetosa = list(filter(lambda i: i[&#39;Species&#39;] == &#39;setosa&#39;, irisSurface))
+irisSetosa</code></pre>
+</div>
+<div id="calculer-la-moyenne-de-chaque-variable." class="section level5">
+<h5>7. Calculer la moyenne de chaque variable.</h5>
+<pre class="python"><code>def sommeVariable(irA, irB):
+    ir = irA.copy()
+    for var in [&#39;Petal.Length&#39;, &#39;Petal.Width&#39;, &#39;Sepal.Length&#39;, &#39;Sepal.Width&#39;]:
+        ir[var] = irA[var] + irB[var]
+    return ir
+
+import functools
+irisMoyenne = functools.reduce(sommeVariable, iris)
+irisMoyenne.pop(&quot;Species&quot;)
+irisMoyenne</code></pre>
+<pre class="python"><code>{cle:(round(irisMoyenne[cle] / len(iris), 2)) for cle in irisMoyenne}</code></pre>
+</div>
+<div id="calculer-la-moyenne-de-chaque-variable-pour-chaque-espece." class="section level5">
+<h5>8. Calculer la moyenne de chaque variable pour chaque espèce.</h5>
+<pre class="python"><code>{cle:(round(irisMoyenne[cle] / len(iris), 2)) for cle in functools.reduce(sommeVariable, irisSetosa)}</code></pre>
+</div>
 </div>
 
 </div>
