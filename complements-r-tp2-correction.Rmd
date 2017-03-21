@@ -1,0 +1,178 @@
+---
+title: Visualisation de données - *correction*
+subtitle: Compléments sur R - STID 1ère année
+---
+
+```{r}
+library(ggplot2)
+library(scales)
+library(reshape2)
+```
+
+
+## A faire 
+
+Vous devez faire les questions suivantes avec la fonction `ggplot()`.
+
+#### 1. Dans les données `iris`, représenter les boîtes à moustaches des 4 variables pour les trois espèces.
+
+##### Un graphque par variable
+
+```{r}
+ggplot(iris, aes(Species, Sepal.Length)) + geom_boxplot()
+ggplot(iris, aes(Species, Sepal.Width)) + geom_boxplot()
+ggplot(iris, aes(Species, Petal.Length)) + geom_boxplot()
+ggplot(iris, aes(Species, Petal.Width)) + geom_boxplot()
+```
+
+##### Tous les graphiques sur la même figure
+
+```{r}
+iris.melt = melt(iris, id.vars = "Species")
+ggplot(iris.melt, aes(Species, value)) + 
+    geom_boxplot() +
+    facet_wrap(~ variable, scales = "free")
+```
+
+##### Avec un peu de personnalisation
+
+```{r}
+iris.melt = melt(iris, id.vars = "Species")
+ggplot(iris.melt, aes(Species, value, fill = Species)) + 
+    geom_boxplot() +
+    facet_wrap(~ variable, scales = "free") +
+    scale_fill_brewer(palette = "Pastel1") + 
+    theme_minimal() +
+    theme(axis.title = element_blank(),
+          panel.grid = element_blank(),
+          strip.background = element_rect(fill = "black", color = "black"),
+          strip.text = element_text(color = "white"))
+```
+
+
+#### 2. Dans les données `tips` du package `reshape2`, représenter `total_bill` en fonction de `sex` et `smoker`.
+
+```{r}
+ggplot(tips, aes(sex, total_bill, fill = sex)) + geom_boxplot() +
+    facet_grid(~ smoker, labeller = label_both)
+```
+
+#### 3. Toujours dans `tips`, représenter `total_bill` et `tip`, en fonction de `sex` de 2 façons
+
+```{r}
+ggplot(tips, aes(total_bill, tip, color = sex)) + 
+    geom_point() +
+    geom_smooth(method = "lm", se = FALSE) +
+    facet_grid(~ sex, labeller = label_both)
+```
+
+```{r}
+ggplot(tips, aes(total_bill, tip)) + 
+    geom_bin2d() +
+    facet_grid(~ sex, labeller = label_both)
+```
+
+```{r}
+ggplot(transform(tips, total_bill_cut = cut(total_bill, 5)), 
+       aes(total_bill_cut, tip, fill = total_bill_cut)) +
+    geom_boxplot() +
+    facet_grid(~ sex, labeller = label_both) +
+    theme(axis.text.x = element_text(angle = 45, vjust = .5))
+```
+
+#### 4. Idem avec `smoker` en plus
+
+```{r}
+ggplot(tips, aes(total_bill, tip, color = sex)) + 
+    geom_point() +
+    geom_smooth(method = "lm", se = FALSE) +
+    facet_grid(smoker ~ sex, labeller = label_both)
+```
+
+
+```{r}
+ggplot(transform(tips, total_bill_cut = cut(total_bill, 5)), 
+       aes(total_bill_cut, tip, fill = total_bill_cut)) +
+    geom_boxplot() +
+    facet_grid(smoker ~ sex, labeller = label_both) +
+    theme(axis.text.x = element_text(angle = 45, vjust = .5))
+```
+
+
+#### 5. Comment répondre aux questions suivantes :
+
+##### 1. Les pourboires (`tip`) dépendent ils du montant (`total_bill`)
+
+```{r}
+ggplot(tips, aes(total_bill, tip)) +
+    geom_point() +
+    geom_smooth(method = "lm")
+```
+
+##### 2. Et des jours de la semaine (`day`) ?
+
+```{r}
+ggplot(tips, aes(day, tip, fill = day)) +
+    geom_boxplot() +
+    scale_x_discrete(limits = c("Thur", "Fri", "Sat", "Sun"))
+```
+
+##### 3. Et du nombre de convives (`size`) ?
+
+```{r}
+ggplot(tips, aes(size, tip)) +
+    geom_boxplot(aes(group = size)) +
+    geom_jitter(width = .2) +
+    scale_x_continuous(breaks = 1:6) +
+    geom_smooth(method = "lm")
+```
+
+##### 4. Croiser `tip` en fonction de `total_bill` et `size`
+
+```{r}
+ggplot(tips, aes(size, total_bill, col = tip)) +
+    geom_jitter(size = 2, width = .2) +
+    scale_color_gradient2(low = "darkred", mid = "gray60", high = "darkgreen", midpoint = 3.5)
+```
+
+
+```{r}
+ggplot(tips, aes(factor(size), cut(total_bill, 6), z = tip)) +
+    stat_summary_2d(fun = mean) +
+    labs(x = "size", y = "total_bill", fill = "mean(tip)")
+```
+
+#### 6.  *bonus* : à partir des données `anscombe`, refaire le graphique suivant
+
+```{r anscombe-ggplot}
+ans = rbind(
+    transform(setNames(subset(anscombe, select = c(x1, y1)), c("x", "y")), ex = 1),
+    transform(setNames(subset(anscombe, select = c(x2, y2)), c("x", "y")), ex = 2),
+    transform(setNames(subset(anscombe, select = c(x3, y3)), c("x", "y")), ex = 3),
+    transform(setNames(subset(anscombe, select = c(x4, y4)), c("x", "y")), ex = 4)
+)
+ggplot(ans, aes(x, y)) +
+    geom_point() +
+    geom_smooth(method = "lm", fullrange = T, se = FALSE) +
+    facet_wrap(~ ex)
+```
+
+ou en une fois
+
+```{r}
+ggplot(
+    Reduce(
+        function(a, b) { return(rbind(a, b))},
+        lapply(1:4, function(i) {
+            ans = anscombe[,paste(c("x", "y"), i, sep = "")]
+            names(ans) = c("x", "y")
+            ans$i = i
+            return(ans)
+        })
+    ),
+    aes(x, y)) +
+    geom_point() +
+    geom_smooth(method = "lm", se = FALSE, fullrange = TRUE) +
+    facet_wrap(~ i)
+```
+
