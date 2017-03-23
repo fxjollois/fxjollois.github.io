@@ -12,4 +12,6 @@ title: Compléments sur `R`
     - [correction](complements-r-tp2-correction.html)
 1. [TP3 - Reporting](complements-r-tp3.html)
 
-### Application web
+### Application web avec `shiny`
+
+1. [TP4 - Première application](complement-r-tp4.html)

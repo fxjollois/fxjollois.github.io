@@ -30,4 +30,6 @@ Descartes, regroupant des informaticiens et des statisticiens ;
 - [Groupe Méthodes & Logiciels](http://methodes-et-logiciels.sfds.asso.fr/) :
 séminaires d'échanges sur différentes thématiques autour de la statistique, intégrant des
 aspects méthodologiques et pratiques.
+- [WikipediaR](https://cran.r-project.org/package=WikipediaR) : package `R` permettant d'accéder aux données de [Wikipedia](http://www.wikipedia.org/)
+
 
