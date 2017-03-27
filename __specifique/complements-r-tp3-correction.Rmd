@@ -1,0 +1,203 @@
+---
+title: "Evolution CA"
+output: 
+  flexdashboard::flex_dashboard:
+    orientation: columns
+    horizontal_layout: fill
+---
+
+```{r setup, include=FALSE}
+library(flexdashboard)
+load("../donnees/ca/ca.RData") # Attention, chemin spécifique dans mon organisation de fichiers
+colDpt = "orange"
+colPrv = "rosybrown"
+colMois = "turquoise"
+conv <- function(v) return(iconv(as.character(v), from = "UTF-8", to = "UTF-8"))
+```
+
+# Synthèse
+
+## Column {data-width=650}
+
+### Evolution mois par mois
+
+```{r}
+d = setNames(aggregate(ca / 1000000 ~ mois_no, ca_tout, sum), c("mois", "ca"))
+par(mar = c(4, 4, 0, 0) + .1)
+plot(ca ~ mois, d, type = "b",
+     xlab = "Mois", ylab = "Chiffre d'affaires (M€)")
+abline(h = mean(d$ca), lty = 3, col = "gray50")
+```
+
+## Column {data-width=350}
+
+### Comparaison mois par mois (en k€)
+
+```{r}
+d = aggregate(cbind(ca2003, ca2004, evolution) ~ mois + mois_numero,
+              ca_evol,
+              sum)
+d = subset(d, select = -mois_numero)
+names(d) = c("Mois", "2003", "2004", "Evolution")
+d$Mois = conv(d$Mois)
+knitr::kable(d, digits = 0)
+```
+
+### Augmentation entre 2003 et 2004
+
+```{r}
+d = aggregate(ca ~ annee, ca_tout, sum)
+v = paste(round((d$ca[2] / d$ca[1] - 1) * 100, 2), "%")
+valueBox(v, 
+         icon = "fa-arrow-circle-up", 
+         color = "green")
+```
+
+# Détails {data-orientation=rows}
+
+## Ligne 1
+
+### Départements
+
+```{r}
+evol.dpt = aggregate(cbind(ca2003, ca2004, evolution) / 1000 ~ departement, ca_evol, sum)
+names(evol.dpt) = c("Département", "2003", "2004", "Evolution")
+evol.dpt$Département = conv(evol.dpt$Département)
+knitr::kable(evol.dpt, digits = 0)
+```
+
+### Provenance
+
+```{r}
+evol.prov = aggregate(cbind(ca2003, ca2004, evolution) / 1000 ~ provenance, 
+                      ca_evol, sum)
+names(evol.prov) = c("Provenance", "2003", "2004", "Evolution")
+evol.prov$Provenance = conv(evol.prov$Provenance)
+knitr::kable(evol.prov, digits = 0)
+```
+
+## Ligne 2
+
+### Nombre de département en hausse
+
+```{r}
+gauge(sum(evol.dpt$Evolution > 0), 0, 
+      nrow(evol.dpt),
+      sectors = gaugeSectors(colors = colDpt))
+```
+
+### Département avec la plus grosse évolution
+
+```{r}
+valueBox(evol.dpt$Département[which.max(evol.dpt$Evolution)], 
+         icon = "fa-level-up",
+         color = colDpt)
+```
+
+### Nombre de provenance en hausse
+
+```{r}
+gauge(sum(evol.prov$Evolution > 0), 0,
+      nrow(evol.prov),
+      sectors = gaugeSectors(colors = colPrv))
+```
+
+### Provenance avec la plus grosse évolution
+
+```{r}
+valueBox(evol.prov$Provenance[which.max(evol.prov$Evolution)], 
+         icon = "fa-level-up",
+         color = colPrv)
+```
+
+
+# Performance {data-orientation=rows}
+
+## Ligne Département {data-height=200}
+
+### Meilleur département
+
+```{r}
+dpt = aggregate(ca ~ departement, ca_tout, sum)
+dpt.tri = dpt[order(dpt$ca, decreasing = TRUE),]
+dpt.tri$departement = conv(dpt.tri$departement)
+valueBox(dpt.tri$departement[1],
+         icon = "ion-podium",
+         color = colDpt)
+```
+
+### Part de `r dpt.tri$departement[1]`
+
+```{r}
+gauge(dpt.tri$ca[1], 0, sum(dpt.tri$ca),
+      sectors = gaugeSectors(colors = colDpt),
+      abbreviateDecimals = 0,
+      symbol = "€")
+```
+
+### TOP 3
+
+```{r}
+knitr::kable(head(dpt.tri, 3), row.names = FALSE)
+```
+
+
+## Ligne Provenance {data-height=200}
+
+### Meilleure provenance 
+
+```{r}
+prv = aggregate(ca ~ provenance, ca_tout, sum)
+prv.tri = prv[order(prv$ca, decreasing = TRUE),]
+prv.tri$provenance = conv(prv.tri$provenance)
+valueBox(prv.tri$provenance[1],
+         color = colPrv,
+         icon = "ion-podium")
+```
+
+### Part de `r prv.tri$provenance[1]`
+
+```{r}
+gauge(prv.tri$ca[1], 0, sum(prv.tri$ca),
+      sectors = gaugeSectors(colors = colPrv),
+      abbreviateDecimals = 0,
+      symbol = "€")
+```
+
+### TOP 3
+
+```{r}
+knitr::kable(head(prv.tri, 3), row.names = FALSE)
+```
+
+
+## Ligne Mois {data-height=200}
+
+
+### Meilleur mois
+
+```{r}
+mois = aggregate(ca ~ mois + mois_numero + annee, ca_tout, sum)
+mois.tri = mois[order(mois$ca, decreasing = TRUE),]
+mois.tri$mois = conv(mois.tri$mois)
+valueBox(paste(mois.tri$mois[1], mois.tri$annee[1]),
+         icon = "ion-podium",
+         color = colMois)
+```
+
+### Part de `r paste(mois.tri$mois[1], mois.tri$annee[1])`
+
+```{r}
+gauge(mois.tri$ca[1], 0, sum(mois.tri$ca),
+      sectors = gaugeSectors(colors = colMois),
+      abbreviateDecimals = 0,
+      symbol = "€")
+```
+
+### TOP3
+
+```{r}
+knitr::kable(head(mois.tri[-2], 3), row.names = FALSE)
+```
+
+

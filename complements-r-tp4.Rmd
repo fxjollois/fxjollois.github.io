@@ -7,11 +7,11 @@ subtitle: Compléments sur R - STID 1ère année
 knitr::opts_chunk$set(eval = FALSE)
 ```
 
-Le package [`shiny`]() permet de développer très facilement des applications web à partir de `R`. Grâce à cette librairie, et d'autres librairies `R` dédiées  comme `ggplot2` et `flexdashboard`, il est ainsi possible de générer des tableaux de bord, introduisant même des méthodes statistiques approfondies.
+Le package [`shiny`](https://shiny.rstudio.com/) permet de développer très facilement des applications web à partir de `R`. Grâce à cette librairie, et d'autres librairies `R` dédiées  comme `ggplot2` et `flexdashboard`, il est ainsi possible de générer des tableaux de bord, introduisant même des méthodes statistiques approfondies.
 
 Pour notre premier TP, nous allons utiliser le jeu de données `mtcars` présent sous R.
 
-## Application ?
+## Application
 
 Une application quelle qu'elle soit fait intervenir des notions importantes à comprendre pour la suite :
 

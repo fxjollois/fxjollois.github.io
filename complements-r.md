@@ -11,7 +11,8 @@ title: Compléments sur `R`
 1. [TP2 - Visualisation de données](complements-r-tp2.html)
     - [correction](complements-r-tp2-correction.html)
 1. [TP3 - Reporting](complements-r-tp3.html)
+    - correction [source (Rmd)](__specifique/complements-r-tp3-correction.Rmd) et [final (html)](__specifique/complements-r-tp3-correction.html)
 
 ### Application web avec `shiny`
 
-1. [TP4 - Première application](complement-r-tp4.html)
+1. [TP4 - Première application](complements-r-tp4.html)
