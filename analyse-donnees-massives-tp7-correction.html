@@ -11753,22 +11753,82 @@ div#notebook {
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h1 id="TP7---Connexion-&#224;-MongoDB-sous-Python">TP7 - Connexion &#224; MongoDB sous <code>Python</code><a class="anchor-link" href="#TP7---Connexion-&#224;-MongoDB-sous-Python">&#182;</a></h1><h4 id="Analyse-de-Donn&#233;es-Massives---Master-1&#232;re-ann&#233;e">Analyse de Donn&#233;es Massives - Master 1&#232;re ann&#233;e<a class="anchor-link" href="#Analyse-de-Donn&#233;es-Massives---Master-1&#232;re-ann&#233;e">&#182;</a></h4>
+<h1 id="TP7---Connexion-&#224;-MongoDB-sous-Python">TP7 - Connexion &#224; MongoDB sous <code>Python</code><a class="anchor-link" href="#TP7---Connexion-&#224;-MongoDB-sous-Python">&#182;</a></h1><h4 id="Analyse-de-Donn&#233;es-Massives---Master-1&#232;re-ann&#233;e">Analyse de Donn&#233;es Massives - Master 1&#232;re ann&#233;e<a class="anchor-link" href="#Analyse-de-Donn&#233;es-Massives---Master-1&#232;re-ann&#233;e">&#182;</a></h4><p>On utilise dans ce <em>notebook</em> les modules <code>pymongo</code>, <code>pandas</code> et <code>pprint</code>.</p>
+
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[83]:</div>
+<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="kn">import</span> <span class="nn">pymongo</span>
 <span class="kn">import</span> <span class="nn">pandas</span>
 <span class="kn">import</span> <span class="nn">pprint</span>
+</pre></div>
 
-<span class="n">con</span> <span class="o">=</span> <span class="n">pymongo</span><span class="o">.</span><span class="n">MongoClient</span><span class="p">()</span>
+</div>
+</div>
+</div>
 
-<span class="k">def</span> <span class="nf">affiche</span><span class="p">(</span><span class="n">res</span><span class="p">):</span>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>On créé ensuite la connexion vers <em>MongoDB</em>. Et on vérifie que la base <code>test</code> contient bien la collection <code>restaurants</code>.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[46]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">con</span> <span class="o">=</span> <span class="n">pymongo</span><span class="o">.</span><span class="n">MongoClient</span><span class="p">(</span><span class="s2">&quot;mongodb://193.51.82.104:2343/&quot;</span><span class="p">)</span>
+<span class="n">con</span><span class="o">.</span><span class="n">test</span><span class="o">.</span><span class="n">collection_names</span><span class="p">()</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area"><div class="prompt output_prompt">Out[46]:</div>
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>[&#39;restaurants&#39;]</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>On va aussi utiliser ici la fonction <code>affiche()</code> créée dans le TP pour améliorer la lisibilité de l'affichage des résultats.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[1]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">affiche</span><span class="p">(</span><span class="n">res</span><span class="p">):</span>
     <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="n">res</span><span class="p">:</span>
         <span class="n">pprint</span><span class="o">.</span><span class="n">pprint</span><span class="p">(</span><span class="n">r</span><span class="p">)</span>
 </pre></div>
@@ -11784,13 +11844,14 @@ div#notebook {
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <h2 id="Exercices">Exercices<a class="anchor-link" href="#Exercices">&#182;</a></h2><p>Nous allons utiliser la base de données <code>test</code>, dans laquelle se trouve la collection <code>restaurants</code>. Celle-ci est composée de plus de 25000 retaurants new-yorkais, avec des évaluations de ceux-ci.</p>
-<h3 id="1.-Cr&#233;er-une-connexion-vers-cette-collection">1. Cr&#233;er une connexion vers cette collection<a class="anchor-link" href="#1.-Cr&#233;er-une-connexion-vers-cette-collection">&#182;</a></h3>
+<h3 id="1.-Cr&#233;er-une-connexion-vers-cette-collection">1. Cr&#233;er une connexion vers cette collection<a class="anchor-link" href="#1.-Cr&#233;er-une-connexion-vers-cette-collection">&#182;</a></h3><p>On put simplfier l'écriture des requêtes à suivre en faisant la connexion directement avec la collection <code>restaurants</code>.</p>
+
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[84]:</div>
+<div class="prompt input_prompt">In&nbsp;[2]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">db</span> <span class="o">=</span> <span class="n">con</span><span class="o">.</span><span class="n">test</span><span class="o">.</span><span class="n">restaurants</span>
@@ -11806,13 +11867,14 @@ div#notebook {
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="2.-D&#233;terminer-le-nombre-exact-de-restaurants.">2. D&#233;terminer le nombre exact de restaurants.<a class="anchor-link" href="#2.-D&#233;terminer-le-nombre-exact-de-restaurants.">&#182;</a></h3>
+<h3 id="2.-D&#233;terminer-le-nombre-exact-de-restaurants.">2. D&#233;terminer le nombre exact de restaurants.<a class="anchor-link" href="#2.-D&#233;terminer-le-nombre-exact-de-restaurants.">&#182;</a></h3><p>Un simple dénombrement est à faire ici.</p>
+
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[85]:</div>
+<div class="prompt input_prompt">In&nbsp;[3]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">db</span><span class="o">.</span><span class="n">count</span><span class="p">()</span>
@@ -11826,7 +11888,7 @@ div#notebook {
 <div class="output">
 
 
-<div class="output_area"><div class="prompt output_prompt">Out[85]:</div>
+<div class="output_area"><div class="prompt output_prompt">Out[3]:</div>
 
 
 <div class="output_text output_subarea output_execute_result">
@@ -11844,13 +11906,14 @@ div#notebook {
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="3.-Lister-les-diff&#233;rents-quartiers-repr&#233;sent&#233;s-(borough)-ainsi-que-les-diff&#233;rents-types-de--cuisine-(cuisine).">3. Lister les diff&#233;rents quartiers repr&#233;sent&#233;s (<em>borough</em>) ainsi que les diff&#233;rents types de  cuisine (<em>cuisine</em>).<a class="anchor-link" href="#3.-Lister-les-diff&#233;rents-quartiers-repr&#233;sent&#233;s-(borough)-ainsi-que-les-diff&#233;rents-types-de--cuisine-(cuisine).">&#182;</a></h3>
+<h3 id="3.-Lister-les-diff&#233;rents-quartiers-repr&#233;sent&#233;s-(borough)-ainsi-que-les-diff&#233;rents-types-de--cuisine-(cuisine).">3. Lister les diff&#233;rents quartiers repr&#233;sent&#233;s (<em>borough</em>) ainsi que les diff&#233;rents types de  cuisine (<em>cuisine</em>).<a class="anchor-link" href="#3.-Lister-les-diff&#233;rents-quartiers-repr&#233;sent&#233;s-(borough)-ainsi-que-les-diff&#233;rents-types-de--cuisine-(cuisine).">&#182;</a></h3><p>On utilse la fonction <code>distinct()</code> ici pour lister les différentes valeurs de <code>borough</code>. On remarque que pour certains restaurants le quartier n'est pas connu.</p>
+
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[86]:</div>
+<div class="prompt input_prompt">In&nbsp;[4]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">db</span><span class="o">.</span><span class="n">distinct</span><span class="p">(</span><span class="s2">&quot;borough&quot;</span><span class="p">)</span>
@@ -11864,124 +11927,11 @@ div#notebook {
 <div class="output">
 
 
-<div class="output_area"><div class="prompt output_prompt">Out[86]:</div>
+<div class="output_area"><div class="prompt output_prompt">Out[4]:</div>
 
 
 <div class="output_text output_subarea output_execute_result">
 <pre>[&#39;Bronx&#39;, &#39;Brooklyn&#39;, &#39;Manhattan&#39;, &#39;Queens&#39;, &#39;Staten Island&#39;, &#39;Missing&#39;]</pre>
-</div>
-
-</div>
-
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[87]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">db</span><span class="o">.</span><span class="n">distinct</span><span class="p">(</span><span class="s2">&quot;cuisine&quot;</span><span class="p">)</span>
-</pre></div>
-
-</div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area"><div class="prompt output_prompt">Out[87]:</div>
-
-
-<div class="output_text output_subarea output_execute_result">
-<pre>[&#39;Bakery&#39;,
- &#39;Hamburgers&#39;,
- &#39;American &#39;,
- &#39;Irish&#39;,
- &#39;Jewish/Kosher&#39;,
- &#39;Delicatessen&#39;,
- &#39;Ice Cream, Gelato, Yogurt, Ices&#39;,
- &#39;Chinese&#39;,
- &#39;Chicken&#39;,
- &#39;Caribbean&#39;,
- &#39;Turkish&#39;,
- &#39;Donuts&#39;,
- &#39;Sandwiches/Salads/Mixed Buffet&#39;,
- &#39;Bagels/Pretzels&#39;,
- &#39;Continental&#39;,
- &#39;Pizza&#39;,
- &#39;Italian&#39;,
- &#39;Steak&#39;,
- &#39;Polish&#39;,
- &#39;Latin (Cuban, Dominican, Puerto Rican, South &amp; Central American)&#39;,
- &#39;German&#39;,
- &#39;French&#39;,
- &#39;Pizza/Italian&#39;,
- &#39;Mexican&#39;,
- &#39;Spanish&#39;,
- &#39;Café/Coffee/Tea&#39;,
- &#39;Tex-Mex&#39;,
- &#39;Pancakes/Waffles&#39;,
- &#39;Soul Food&#39;,
- &#39;Seafood&#39;,
- &#39;Hotdogs&#39;,
- &#39;Greek&#39;,
- &#39;Not Listed/Not Applicable&#39;,
- &#39;African&#39;,
- &#39;Japanese&#39;,
- &#39;Indian&#39;,
- &#39;Armenian&#39;,
- &#39;Thai&#39;,
- &#39;Chinese/Cuban&#39;,
- &#39;Mediterranean&#39;,
- &#39;Korean&#39;,
- &#39;Bottled beverages, including water, sodas, juices, etc.&#39;,
- &#39;Russian&#39;,
- &#39;Eastern European&#39;,
- &#39;Middle Eastern&#39;,
- &#39;Asian&#39;,
- &#39;Ethiopian&#39;,
- &#39;Vegetarian&#39;,
- &#39;Barbecue&#39;,
- &#39;Egyptian&#39;,
- &#39;English&#39;,
- &#39;Other&#39;,
- &#39;Sandwiches&#39;,
- &#39;Portuguese&#39;,
- &#39;Indonesian&#39;,
- &#39;Chinese/Japanese&#39;,
- &#39;Filipino&#39;,
- &#39;Juice, Smoothies, Fruit Salads&#39;,
- &#39;Brazilian&#39;,
- &#39;Afghan&#39;,
- &#39;Vietnamese/Cambodian/Malaysia&#39;,
- &#39;CafÃ©/Coffee/Tea&#39;,
- &#39;Soups &amp; Sandwiches&#39;,
- &#39;Tapas&#39;,
- &#39;Moroccan&#39;,
- &#39;Pakistani&#39;,
- &#39;Peruvian&#39;,
- &#39;Bangladeshi&#39;,
- &#39;Czech&#39;,
- &#39;Salads&#39;,
- &#39;Creole&#39;,
- &#39;Fruits/Vegetables&#39;,
- &#39;Iranian&#39;,
- &#39;Cajun&#39;,
- &#39;Scandinavian&#39;,
- &#39;Polynesian&#39;,
- &#39;Soups&#39;,
- &#39;Australian&#39;,
- &#39;Hotdogs/Pretzels&#39;,
- &#39;Southwestern&#39;,
- &#39;Nuts/Confectionary&#39;,
- &#39;Hawaiian&#39;,
- &#39;Creole/Cajun&#39;,
- &#39;Californian&#39;,
- &#39;Chilean&#39;]</pre>
 </div>
 
 </div>
@@ -11995,13 +11945,92 @@ div#notebook {
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="4.-Lister-les-noms-des-restaurants,-ainsi-que-leur-quartier,-ne-proposant-que-des-soupes-(cuisine-&#233;gale-&#224;-soups).">4. Lister les noms des restaurants, ainsi que leur quartier, ne proposant que des soupes (<em>cuisine</em> &#233;gale &#224; <em>soups</em>).<a class="anchor-link" href="#4.-Lister-les-noms-des-restaurants,-ainsi-que-leur-quartier,-ne-proposant-que-des-soupes-(cuisine-&#233;gale-&#224;-soups).">&#182;</a></h3>
+<p>Idem pour lister les (nombreux) différents types de cuisine. On stocke le résultat dans une variable pour dénombrer les styles (<code>85</code>). Et nous n'affichons que les 10 premiers pour exemple.</p>
+
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[88]:</div>
+<div class="prompt input_prompt">In&nbsp;[49]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">type_cuisine</span> <span class="o">=</span> <span class="n">db</span><span class="o">.</span><span class="n">distinct</span><span class="p">(</span><span class="s2">&quot;cuisine&quot;</span><span class="p">)</span>
+<span class="nb">len</span><span class="p">(</span><span class="n">type_cuisine</span><span class="p">)</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area"><div class="prompt output_prompt">Out[49]:</div>
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>85</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[50]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">type_cuisine</span><span class="p">[:</span><span class="mi">10</span><span class="p">]</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area"><div class="prompt output_prompt">Out[50]:</div>
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>[&#39;Bakery&#39;,
+ &#39;Hamburgers&#39;,
+ &#39;Irish&#39;,
+ &#39;American&#39;,
+ &#39;Jewish/Kosher&#39;,
+ &#39;Delicatessen&#39;,
+ &#39;Ice Cream, Gelato, Yogurt, Ices&#39;,
+ &#39;Chinese&#39;,
+ &#39;Chicken&#39;,
+ &#39;Turkish&#39;]</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="4.-Lister-les-noms-des-restaurants,-ainsi-que-leur-quartier,-ne-proposant-que-des-soupes-(cuisine-&#233;gale-&#224;-Soups).">4. Lister les noms des restaurants, ainsi que leur quartier, ne proposant que des soupes (<em>cuisine</em> &#233;gale &#224; <em>Soups</em>).<a class="anchor-link" href="#4.-Lister-les-noms-des-restaurants,-ainsi-que-leur-quartier,-ne-proposant-que-des-soupes-(cuisine-&#233;gale-&#224;-Soups).">&#182;</a></h3><p>C'est la fonction <code>find()</code> qui nous permet de récupérer ces informations (4 restaurants).</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[6]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">res</span> <span class="o">=</span> <span class="n">db</span><span class="o">.</span><span class="n">find</span><span class="p">({</span> <span class="s2">&quot;cuisine&quot;</span><span class="p">:</span> <span class="s2">&quot;Soups&quot;</span> <span class="p">},</span> <span class="p">{</span> <span class="s2">&quot;_id&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s2">&quot;borough&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">})</span>
@@ -12035,13 +12064,14 @@ div#notebook {
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="5.-Donner-les-nombre-de-restaurants-ayant-eu-au-moins-une-fois-le-grade-(dans-grades)-Z.">5. Donner les nombre de restaurants ayant eu au moins une fois le <em>grade</em> (dans <em>grades</em>) <code>Z</code>.<a class="anchor-link" href="#5.-Donner-les-nombre-de-restaurants-ayant-eu-au-moins-une-fois-le-grade-(dans-grades)-Z.">&#182;</a></h3>
+<h3 id="5.-Donner-le-nombre-de-restaurants-ayant-eu-au-moins-une-fois-le-grade-(dans-grades)-Z.">5. Donner le nombre de restaurants ayant eu au moins une fois le <em>grade</em> (dans <em>grades</em>) <code>Z</code>.<a class="anchor-link" href="#5.-Donner-le-nombre-de-restaurants-ayant-eu-au-moins-une-fois-le-grade-(dans-grades)-Z.">&#182;</a></h3><p>Pour cela, nous pouvons déjà nous retreindre aux restaurants ayant eu le <em>grade</em> <code>Z</code>, puis nous comptons la taille du résultat avec <code>count()</code>.</p>
+
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[89]:</div>
+<div class="prompt input_prompt">In&nbsp;[7]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">db</span><span class="o">.</span><span class="n">find</span><span class="p">({</span> <span class="s2">&quot;grades.grade&quot;</span><span class="p">:</span> <span class="s2">&quot;Z&quot;</span><span class="p">})</span><span class="o">.</span><span class="n">count</span><span class="p">()</span>
@@ -12055,7 +12085,7 @@ div#notebook {
 <div class="output">
 
 
-<div class="output_area"><div class="prompt output_prompt">Out[89]:</div>
+<div class="output_area"><div class="prompt output_prompt">Out[7]:</div>
 
 
 <div class="output_text output_subarea output_execute_result">
@@ -12073,13 +12103,14 @@ div#notebook {
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="6.-Calculer-le-nombre-de-restaurants-pour-chaque-quartier">6. Calculer le nombre de restaurants pour chaque quartier<a class="anchor-link" href="#6.-Calculer-le-nombre-de-restaurants-pour-chaque-quartier">&#182;</a></h3>
+<h3 id="6.-Calculer-le-nombre-de-restaurants-pour-chaque-quartier">6. Calculer le nombre de restaurants pour chaque quartier<a class="anchor-link" href="#6.-Calculer-le-nombre-de-restaurants-pour-chaque-quartier">&#182;</a></h3><p>Ici, un aggrégat basique est à faire, avec <code>aggregate()</code>. La plupart sont dans <em>Manhattan</em>, mais on remarque aussi qu'on a 51 restaurants sans quartier connu.</p>
+
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[90]:</div>
+<div class="prompt input_prompt">In&nbsp;[8]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">res</span> <span class="o">=</span> <span class="n">db</span><span class="o">.</span><span class="n">aggregate</span><span class="p">([</span> <span class="p">{</span> <span class="s2">&quot;$group&quot;</span><span class="p">:</span> <span class="p">{</span> <span class="s2">&quot;_id&quot;</span><span class="p">:</span> <span class="s2">&quot;$borough&quot;</span><span class="p">,</span> <span class="s2">&quot;nb&quot;</span><span class="p">:</span> <span class="p">{</span> <span class="s2">&quot;$sum&quot;</span><span class="p">:</span> <span class="mi">1</span> <span class="p">}</span> <span class="p">}</span> <span class="p">}</span> <span class="p">])</span>
@@ -12098,10 +12129,10 @@ div#notebook {
 <div class="output_subarea output_stream output_stdout output_text">
 <pre>{&#39;_id&#39;: &#39;Missing&#39;, &#39;nb&#39;: 51}
 {&#39;_id&#39;: &#39;Staten Island&#39;, &#39;nb&#39;: 969}
-{&#39;_id&#39;: &#39;Manhattan&#39;, &#39;nb&#39;: 10259}
+{&#39;_id&#39;: &#39;Brooklyn&#39;, &#39;nb&#39;: 6086}
 {&#39;_id&#39;: &#39;Bronx&#39;, &#39;nb&#39;: 2338}
 {&#39;_id&#39;: &#39;Queens&#39;, &#39;nb&#39;: 5656}
-{&#39;_id&#39;: &#39;Brooklyn&#39;, &#39;nb&#39;: 6086}
+{&#39;_id&#39;: &#39;Manhattan&#39;, &#39;nb&#39;: 10259}
 </pre>
 </div>
 </div>
@@ -12115,18 +12146,19 @@ div#notebook {
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="7.-Donner-les-cinq-types-de-cuisine-les-plus-pr&#233;sentes-dans-New-York-(avec-le-plus-de-restaurants-donc)">7. Donner les cinq types de cuisine les plus pr&#233;sentes dans New-York (avec le plus de restaurants donc)<a class="anchor-link" href="#7.-Donner-les-cinq-types-de-cuisine-les-plus-pr&#233;sentes-dans-New-York-(avec-le-plus-de-restaurants-donc)">&#182;</a></h3>
+<h3 id="7.-Donner-les-cinq-types-de-cuisine-les-plus-pr&#233;sentes-dans-New-York-(avec-le-plus-de-restaurants-donc)">7. Donner les cinq types de cuisine les plus pr&#233;sentes dans New-York (avec le plus de restaurants donc)<a class="anchor-link" href="#7.-Donner-les-cinq-types-de-cuisine-les-plus-pr&#233;sentes-dans-New-York-(avec-le-plus-de-restaurants-donc)">&#182;</a></h3><p>En plus d'un calcul d'aggrégat avec <code>$group</code>, on tri le résultat par ordre décroissant sur le nombre et on se limite aux 5 premières valeurs avec <code>$limit</code>.</p>
+
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[91]:</div>
+<div class="prompt input_prompt">In&nbsp;[51]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">res</span> <span class="o">=</span> <span class="n">db</span><span class="o">.</span><span class="n">aggregate</span><span class="p">([</span> 
     <span class="p">{</span> <span class="s2">&quot;$group&quot;</span><span class="p">:</span> <span class="p">{</span> <span class="s2">&quot;_id&quot;</span><span class="p">:</span> <span class="s2">&quot;$cuisine&quot;</span> <span class="p">,</span> <span class="s2">&quot;nb&quot;</span> <span class="p">:</span> <span class="p">{</span> <span class="s2">&quot;$sum&quot;</span> <span class="p">:</span> <span class="mi">1</span> <span class="p">}</span> <span class="p">}</span> <span class="p">},</span>
-    <span class="p">{</span> <span class="s2">&quot;$sort&quot;</span> <span class="p">:</span> <span class="p">{</span> <span class="s2">&quot;nb&quot;</span><span class="p">:</span> <span class="o">-</span> <span class="mi">1</span> <span class="p">}</span> <span class="p">},</span>
+    <span class="p">{</span> <span class="s2">&quot;$sort&quot;</span> <span class="p">:</span> <span class="p">{</span> <span class="s2">&quot;nb&quot;</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span> <span class="p">}</span> <span class="p">},</span>
     <span class="p">{</span> <span class="s2">&quot;$limit&quot;</span> <span class="p">:</span> <span class="mi">5</span> <span class="p">}</span>
 <span class="p">])</span>
 <span class="n">affiche</span><span class="p">(</span><span class="n">res</span><span class="p">)</span>
@@ -12142,7 +12174,7 @@ div#notebook {
 
 <div class="output_area"><div class="prompt"></div>
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>{&#39;_id&#39;: &#39;American &#39;, &#39;nb&#39;: 6183}
+<pre>{&#39;_id&#39;: &#39;American&#39;, &#39;nb&#39;: 6183}
 {&#39;_id&#39;: &#39;Chinese&#39;, &#39;nb&#39;: 2418}
 {&#39;_id&#39;: &#39;Café/Coffee/Tea&#39;, &#39;nb&#39;: 1214}
 {&#39;_id&#39;: &#39;Pizza&#39;, &#39;nb&#39;: 1163}
@@ -12160,13 +12192,14 @@ div#notebook {
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="8.-Pour-chaque-grade-possible,-donner-le-score-moyen,-minimum-et-maximum.">8. Pour chaque <em>grade</em> possible, donner le <em>score</em> moyen, minimum et maximum.<a class="anchor-link" href="#8.-Pour-chaque-grade-possible,-donner-le-score-moyen,-minimum-et-maximum.">&#182;</a></h3>
+<h3 id="8.-Pour-chaque-grade-possible,-donner-le-score-moyen,-minimum-et-maximum.">8. Pour chaque <em>grade</em> possible, donner le <em>score</em> moyen, minimum et maximum.<a class="anchor-link" href="#8.-Pour-chaque-grade-possible,-donner-le-score-moyen,-minimum-et-maximum.">&#182;</a></h3><p>Il faut d'abord dégrouper les évaluations pour chaque restaurant grâce à <code>$unwind</code>. Ensuite, c'est un calcul assez simple à réaliser.</p>
+
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[92]:</div>
+<div class="prompt input_prompt">In&nbsp;[10]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">res</span> <span class="o">=</span> <span class="n">db</span><span class="o">.</span><span class="n">aggregate</span><span class="p">([</span>
@@ -12193,11 +12226,11 @@ div#notebook {
 <div class="output_area"><div class="prompt"></div>
 <div class="output_subarea output_stream output_stdout output_text">
 <pre>{&#39;_id&#39;: &#39;P&#39;, &#39;max&#39;: 43, &#39;min&#39;: 0, &#39;moy&#39;: 5.506265664160401, &#39;nb&#39;: 1197}
-{&#39;_id&#39;: &#39;C&#39;, &#39;max&#39;: 131, &#39;min&#39;: -1, &#39;moy&#39;: 30.70079491255962, &#39;nb&#39;: 3145}
-{&#39;_id&#39;: &#39;Z&#39;, &#39;max&#39;: 71, &#39;min&#39;: -1, &#39;moy&#39;: 23.702318623784592, &#39;nb&#39;: 1337}
+{&#39;_id&#39;: &#39;A&#39;, &#39;max&#39;: 27, &#39;min&#39;: 0, &#39;moy&#39;: 9.021954029147022, &#39;nb&#39;: 74656}
 {&#39;_id&#39;: &#39;Not Yet Graded&#39;, &#39;max&#39;: 75, &#39;min&#39;: 0, &#39;moy&#39;: 15.853515625, &#39;nb&#39;: 525}
 {&#39;_id&#39;: &#39;B&#39;, &#39;max&#39;: 57, &#39;min&#39;: -1, &#39;moy&#39;: 20.002459731809886, &#39;nb&#39;: 12603}
-{&#39;_id&#39;: &#39;A&#39;, &#39;max&#39;: 27, &#39;min&#39;: 0, &#39;moy&#39;: 9.021954029147022, &#39;nb&#39;: 74656}
+{&#39;_id&#39;: &#39;Z&#39;, &#39;max&#39;: 71, &#39;min&#39;: -1, &#39;moy&#39;: 23.702318623784592, &#39;nb&#39;: 1337}
+{&#39;_id&#39;: &#39;C&#39;, &#39;max&#39;: 131, &#39;min&#39;: -1, &#39;moy&#39;: 30.70079491255962, &#39;nb&#39;: 3145}
 </pre>
 </div>
 </div>
@@ -12211,13 +12244,14 @@ div#notebook {
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="9.-Cr&#233;er-un-DataFrame-contenant-les-restaurants-en-ligne-et-en-colonne-le-score-moyen-obtenu-pour-chaque-grade-possible.-Si-un-restaurant-n'a-pas-eu-d'&#233;valuation-d'un-grade,-nous-aurons-une-valeur-absente.">9. Cr&#233;er un <code>DataFrame</code> contenant les restaurants en ligne et en colonne le score moyen obtenu pour chaque <em>grade</em> possible. Si un restaurant n'a pas eu d'&#233;valuation d'un <em>grade</em>, nous aurons une valeur absente.<a class="anchor-link" href="#9.-Cr&#233;er-un-DataFrame-contenant-les-restaurants-en-ligne-et-en-colonne-le-score-moyen-obtenu-pour-chaque-grade-possible.-Si-un-restaurant-n'a-pas-eu-d'&#233;valuation-d'un-grade,-nous-aurons-une-valeur-absente.">&#182;</a></h3>
+<h3 id="9.-Cr&#233;er-un-DataFrame-contenant-les-restaurants-en-ligne-et-en-colonne-le-score-moyen-obtenu-pour-chaque-grade-possible.-Si-un-restaurant-n'a-pas-eu-d'&#233;valuation-d'un-grade,-nous-aurons-une-valeur-absente.">9. Cr&#233;er un <code>DataFrame</code> contenant les restaurants en ligne et en colonne le score moyen obtenu pour chaque <em>grade</em> possible. Si un restaurant n'a pas eu d'&#233;valuation d'un <em>grade</em>, nous aurons une valeur absente.<a class="anchor-link" href="#9.-Cr&#233;er-un-DataFrame-contenant-les-restaurants-en-ligne-et-en-colonne-le-score-moyen-obtenu-pour-chaque-grade-possible.-Si-un-restaurant-n'a-pas-eu-d'&#233;valuation-d'un-grade,-nous-aurons-une-valeur-absente.">&#182;</a></h3><p>Si nous regardons le nombre de restaurants par nom de ceux-ci, nous remarquons qu'il y a des restaurants avec le même nom (des chaînes comme <em>Starbucks</em> ou <em>Subway</em> par exemple).</p>
+
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[93]:</div>
+<div class="prompt input_prompt">In&nbsp;[11]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">res</span> <span class="o">=</span> <span class="n">db</span><span class="o">.</span><span class="n">aggregate</span><span class="p">([</span>
@@ -12256,20 +12290,30 @@ div#notebook {
 </div>
 
 </div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Nous allons donc faire un regroupement par identifiant de restaurant (<code>restaurant_id</code>) et par <code>grade</code>, pour calculer le score moyen. Nous voyons ici les premiers résultats de l'aggrégation.</p>
+
+</div>
+</div>
+</div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[94]:</div>
+<div class="prompt input_prompt">In&nbsp;[52]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">res</span> <span class="o">=</span> <span class="n">db</span><span class="o">.</span><span class="n">aggregate</span><span class="p">([</span>
     <span class="p">{</span> <span class="s2">&quot;$unwind&quot;</span> <span class="p">:</span> <span class="s2">&quot;$grades&quot;</span><span class="p">},</span>
     <span class="p">{</span> <span class="s2">&quot;$group&quot;</span> <span class="p">:</span> <span class="p">{</span> 
-        <span class="s2">&quot;_id&quot;</span><span class="p">:</span> <span class="p">{</span> <span class="s2">&quot;num&quot;</span><span class="p">:</span> <span class="s2">&quot;$restaurant_id&quot;</span><span class="p">,</span> <span class="s2">&quot;grade&quot;</span><span class="p">:</span> <span class="s2">&quot;$grades.grade&quot;</span> <span class="p">},</span> 
+        <span class="s2">&quot;_id&quot;</span><span class="p">:</span> <span class="p">{</span> <span class="s2">&quot;restaurant_id&quot;</span><span class="p">:</span> <span class="s2">&quot;$restaurant_id&quot;</span><span class="p">,</span> <span class="s2">&quot;grade&quot;</span><span class="p">:</span> <span class="s2">&quot;$grades.grade&quot;</span> <span class="p">},</span> 
         <span class="s2">&quot;moy&quot;</span> <span class="p">:</span> <span class="p">{</span> <span class="s2">&quot;$avg&quot;</span> <span class="p">:</span> <span class="s2">&quot;$grades.score&quot;</span> <span class="p">}</span>
     <span class="p">}</span> <span class="p">}</span>
 <span class="p">])</span>
 <span class="n">l</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">res</span><span class="p">)</span>
-<span class="n">l</span><span class="p">[:</span><span class="mi">5</span><span class="p">]</span>
+<span class="n">l</span><span class="p">[:</span><span class="mi">10</span><span class="p">]</span>
 </pre></div>
 
 </div>
@@ -12280,15 +12324,24 @@ div#notebook {
 <div class="output">
 
 
-<div class="output_area"><div class="prompt output_prompt">Out[94]:</div>
+<div class="output_area"><div class="prompt output_prompt">Out[52]:</div>
 
 
 <div class="output_text output_subarea output_execute_result">
-<pre>[{&#39;_id&#39;: {&#39;grade&#39;: &#39;Not Yet Graded&#39;, &#39;num&#39;: &#39;50018736&#39;}, &#39;moy&#39;: 31.0},
- {&#39;_id&#39;: {&#39;grade&#39;: &#39;A&#39;, &#39;num&#39;: &#39;50018705&#39;}, &#39;moy&#39;: 2.0},
- {&#39;_id&#39;: {&#39;grade&#39;: &#39;Not Yet Graded&#39;, &#39;num&#39;: &#39;50018704&#39;}, &#39;moy&#39;: 34.0},
- {&#39;_id&#39;: {&#39;grade&#39;: &#39;Not Yet Graded&#39;, &#39;num&#39;: &#39;50018661&#39;}, &#39;moy&#39;: 2.0},
- {&#39;_id&#39;: {&#39;grade&#39;: &#39;Not Yet Graded&#39;, &#39;num&#39;: &#39;50018547&#39;}, &#39;moy&#39;: 29.0}]</pre>
+<pre>[{&#39;_id&#39;: {&#39;grade&#39;: &#39;Not Yet Graded&#39;, &#39;restaurant_id&#39;: &#39;50018661&#39;}, &#39;moy&#39;: 2.0},
+ {&#39;_id&#39;: {&#39;grade&#39;: &#39;Not Yet Graded&#39;, &#39;restaurant_id&#39;: &#39;50018622&#39;},
+  &#39;moy&#39;: 19.0},
+ {&#39;_id&#39;: {&#39;grade&#39;: &#39;A&#39;, &#39;restaurant_id&#39;: &#39;50018608&#39;}, &#39;moy&#39;: 12.0},
+ {&#39;_id&#39;: {&#39;grade&#39;: &#39;Not Yet Graded&#39;, &#39;restaurant_id&#39;: &#39;50018587&#39;}, &#39;moy&#39;: 2.0},
+ {&#39;_id&#39;: {&#39;grade&#39;: &#39;Not Yet Graded&#39;, &#39;restaurant_id&#39;: &#39;50018565&#39;}, &#39;moy&#39;: 0.0},
+ {&#39;_id&#39;: {&#39;grade&#39;: &#39;Not Yet Graded&#39;, &#39;restaurant_id&#39;: &#39;50018547&#39;},
+  &#39;moy&#39;: 29.0},
+ {&#39;_id&#39;: {&#39;grade&#39;: &#39;Not Yet Graded&#39;, &#39;restaurant_id&#39;: &#39;50018535&#39;},
+  &#39;moy&#39;: 47.0},
+ {&#39;_id&#39;: {&#39;grade&#39;: &#39;Not Yet Graded&#39;, &#39;restaurant_id&#39;: &#39;50018514&#39;}, &#39;moy&#39;: 9.0},
+ {&#39;_id&#39;: {&#39;grade&#39;: &#39;Not Yet Graded&#39;, &#39;restaurant_id&#39;: &#39;50018480&#39;},
+  &#39;moy&#39;: 43.0},
+ {&#39;_id&#39;: {&#39;grade&#39;: &#39;Not Yet Graded&#39;, &#39;restaurant_id&#39;: &#39;50018450&#39;}, &#39;moy&#39;: 0.0}]</pre>
 </div>
 
 </div>
@@ -12296,14 +12349,24 @@ div#notebook {
 </div>
 </div>
 
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Ensuite, on créé un <code>DataFrame</code> <em>à la main</em>, en récupérant la liste des identifiants, la liste des grades et la liste des scores moyens. Ce qui nous donne à la fin le <code>DataFrame</code> suivant.</p>
+
+</div>
+</div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[95]:</div>
+<div class="prompt input_prompt">In&nbsp;[32]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">df</span> <span class="o">=</span> <span class="n">pandas</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span>
-    <span class="s2">&quot;num&quot;</span>  <span class="p">:</span> <span class="p">[</span><span class="n">r</span><span class="p">[</span><span class="s2">&quot;_id&quot;</span><span class="p">][</span><span class="s2">&quot;num&quot;</span><span class="p">]</span> <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="n">l</span><span class="p">],</span>
+    <span class="s2">&quot;restaurant_id&quot;</span>  <span class="p">:</span> <span class="p">[</span><span class="n">r</span><span class="p">[</span><span class="s2">&quot;_id&quot;</span><span class="p">][</span><span class="s2">&quot;restaurant_id&quot;</span><span class="p">]</span> <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="n">l</span><span class="p">],</span>
     <span class="s2">&quot;grade&quot;</span><span class="p">:</span> <span class="p">[</span><span class="n">r</span><span class="p">[</span><span class="s2">&quot;_id&quot;</span><span class="p">][</span><span class="s2">&quot;grade&quot;</span><span class="p">]</span> <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="n">l</span><span class="p">],</span>
     <span class="s2">&quot;score&quot;</span><span class="p">:</span> <span class="p">[</span><span class="n">r</span><span class="p">[</span><span class="s2">&quot;moy&quot;</span><span class="p">]</span> <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="n">l</span><span class="p">]</span>
 <span class="p">})</span>
@@ -12318,7 +12381,7 @@ div#notebook {
 <div class="output">
 
 
-<div class="output_area"><div class="prompt output_prompt">Out[95]:</div>
+<div class="output_area"><div class="prompt output_prompt">Out[32]:</div>
 
 <div class="output_html rendered_html output_subarea output_execute_result">
 <div>
@@ -12327,7 +12390,7 @@ div#notebook {
     <tr style="text-align: right;">
       <th></th>
       <th>grade</th>
-      <th>num</th>
+      <th>restaurant_id</th>
       <th>score</th>
     </tr>
   </thead>
@@ -12335,32 +12398,32 @@ div#notebook {
     <tr>
       <th>0</th>
       <td>Not Yet Graded</td>
-      <td>50018736</td>
-      <td>31.0</td>
-    </tr>
-    <tr>
-      <th>1</th>
-      <td>A</td>
-      <td>50018705</td>
+      <td>50018661</td>
       <td>2.0</td>
     </tr>
     <tr>
-      <th>2</th>
+      <th>1</th>
       <td>Not Yet Graded</td>
-      <td>50018704</td>
-      <td>34.0</td>
+      <td>50018622</td>
+      <td>19.0</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>A</td>
+      <td>50018608</td>
+      <td>12.0</td>
     </tr>
     <tr>
       <th>3</th>
       <td>Not Yet Graded</td>
-      <td>50018661</td>
+      <td>50018587</td>
       <td>2.0</td>
     </tr>
     <tr>
       <th>4</th>
       <td>Not Yet Graded</td>
-      <td>50018547</td>
-      <td>29.0</td>
+      <td>50018565</td>
+      <td>0.0</td>
     </tr>
   </tbody>
 </table>
@@ -12373,12 +12436,27 @@ div#notebook {
 </div>
 
 </div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Il faut maintenant transformer ce <code>DataFrame</code> en faisant l'<em>inverse</em> de la fonction <code>melt()</code>. Pour cela, nous disposons de la fonction <code>pivot()</code> à partir du <code>DataFrame</code>. Cette fonction prend trois paramètre :</p>
+<ul>
+<li><code>index</code> : identifiant de chaque ligne (ici, l'identifiant des restaurants)</li>
+<li><code>columns</code> : noms des colonnes (ici, chaque grade) </li>
+<li><code>value</code> : valeurs des cellules (ici, score moyen pour un restaurant pour un grade)</li>
+</ul>
+
+</div>
+</div>
+</div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[96]:</div>
+<div class="prompt input_prompt">In&nbsp;[33]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">dfbis</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">pivot</span><span class="p">(</span><span class="n">index</span> <span class="o">=</span> <span class="s2">&quot;num&quot;</span><span class="p">,</span> <span class="n">columns</span> <span class="o">=</span> <span class="s2">&quot;grade&quot;</span><span class="p">,</span> <span class="n">values</span> <span class="o">=</span> <span class="s2">&quot;score&quot;</span><span class="p">)</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">dfbis</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">pivot</span><span class="p">(</span><span class="n">index</span> <span class="o">=</span> <span class="s2">&quot;restaurant_id&quot;</span><span class="p">,</span> <span class="n">columns</span> <span class="o">=</span> <span class="s2">&quot;grade&quot;</span><span class="p">,</span> <span class="n">values</span> <span class="o">=</span> <span class="s2">&quot;score&quot;</span><span class="p">)</span>
 <span class="n">dfbis</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
 </pre></div>
 
@@ -12390,7 +12468,7 @@ div#notebook {
 <div class="output">
 
 
-<div class="output_area"><div class="prompt output_prompt">Out[96]:</div>
+<div class="output_area"><div class="prompt output_prompt">Out[33]:</div>
 
 <div class="output_html rendered_html output_subarea output_execute_result">
 <div>
@@ -12406,7 +12484,7 @@ div#notebook {
       <th>Z</th>
     </tr>
     <tr>
-      <th>num</th>
+      <th>restaurant_id</th>
       <th></th>
       <th></th>
       <th></th>
@@ -12472,9 +12550,19 @@ div#notebook {
 </div>
 
 </div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Au final, nous regardons les informations de notre <code>DataFrame</code> ainsi créé. Nous remarquons que la plupart ont eu un grade <code>A</code>, et plusieurs n'ont pas encore été évalué.</p>
+
+</div>
+</div>
+</div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[97]:</div>
+<div class="prompt input_prompt">In&nbsp;[34]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">dfbis</span><span class="o">.</span><span class="n">shape</span>
@@ -12488,7 +12576,7 @@ div#notebook {
 <div class="output">
 
 
-<div class="output_area"><div class="prompt output_prompt">Out[97]:</div>
+<div class="output_area"><div class="prompt output_prompt">Out[34]:</div>
 
 
 <div class="output_text output_subarea output_execute_result">
@@ -12503,7 +12591,7 @@ div#notebook {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[98]:</div>
+<div class="prompt input_prompt">In&nbsp;[35]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">dfbis</span><span class="o">.</span><span class="n">count</span><span class="p">()</span>
@@ -12517,7 +12605,7 @@ div#notebook {
 <div class="output">
 
 
-<div class="output_area"><div class="prompt output_prompt">Out[98]:</div>
+<div class="output_area"><div class="prompt output_prompt">Out[35]:</div>
 
 
 <div class="output_text output_subarea output_execute_result">
@@ -12537,15 +12625,325 @@ dtype: int64</pre>
 </div>
 
 </div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Nous récupérons ici les informations des restaurants (nom - <code>name</code> - et quartier - <code>borough</code>) pour les ajouter à notre table précédente. Ici, nous récupérons juste les informations que l'on souhaite.</p>
+
+</div>
+</div>
+</div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
+<div class="prompt input_prompt">In&nbsp;[41]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span> 
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">infos</span> <span class="o">=</span> <span class="n">db</span><span class="o">.</span><span class="n">find</span><span class="p">({},</span> <span class="p">{</span> <span class="s2">&quot;_id&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="s2">&quot;restaurant_id&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s2">&quot;borough&quot;</span><span class="p">:</span> <span class="mi">1</span> <span class="p">})</span>
+<span class="n">infos_df</span> <span class="o">=</span> <span class="n">pandas</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">infos</span><span class="p">))</span>
+<span class="n">infos_df</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
 </pre></div>
 
 </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area"><div class="prompt output_prompt">Out[41]:</div>
+
+<div class="output_html rendered_html output_subarea output_execute_result">
+<div>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>borough</th>
+      <th>name</th>
+      <th>restaurant_id</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>Bronx</td>
+      <td>Morris Park Bake Shop</td>
+      <td>30075445</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>Brooklyn</td>
+      <td>Wendy'S</td>
+      <td>30112340</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>Manhattan</td>
+      <td>Dj Reynolds Pub And Restaurant</td>
+      <td>30191841</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>Brooklyn</td>
+      <td>Riviera Caterer</td>
+      <td>40356018</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>Queens</td>
+      <td>Tov Kosher Kitchen</td>
+      <td>40356068</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Pour réaliser une jointure, nous avons la fonction <code>join()</code> qui réalise une jointure sur les <code>index</code> des lignes par défaut. La fonction <code>set_index()</code> permet de définir cet <code>index</code> de lignes pour les informations des restaurants, avant de faire la jointure.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[43]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">final</span> <span class="o">=</span> <span class="n">dfbis</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">infos_df</span><span class="o">.</span><span class="n">set_index</span><span class="p">(</span><span class="s2">&quot;restaurant_id&quot;</span><span class="p">))</span>
+<span class="n">final</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area"><div class="prompt output_prompt">Out[43]:</div>
+
+<div class="output_html rendered_html output_subarea output_execute_result">
+<div>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>A</th>
+      <th>B</th>
+      <th>C</th>
+      <th>Not Yet Graded</th>
+      <th>P</th>
+      <th>Z</th>
+      <th>borough</th>
+      <th>name</th>
+    </tr>
+    <tr>
+      <th>restaurant_id</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>30075445</th>
+      <td>6.750000</td>
+      <td>14.0</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>Bronx</td>
+      <td>Morris Park Bake Shop</td>
+    </tr>
+    <tr>
+      <th>30112340</th>
+      <td>10.666667</td>
+      <td>23.0</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>Brooklyn</td>
+      <td>Wendy'S</td>
+    </tr>
+    <tr>
+      <th>30191841</th>
+      <td>9.250000</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>Manhattan</td>
+      <td>Dj Reynolds Pub And Restaurant</td>
+    </tr>
+    <tr>
+      <th>40356018</th>
+      <td>9.000000</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>Brooklyn</td>
+      <td>Riviera Caterer</td>
+    </tr>
+    <tr>
+      <th>40356068</th>
+      <td>13.000000</td>
+      <td>25.0</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>20.0</td>
+      <td>Queens</td>
+      <td>Tov Kosher Kitchen</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Avec un <code>DataFrame</code> ainsi créé, il est maintenant possible, par exemple, de calculer les scores moyens de chaque grade, pour chaque quartier (ici, dans <code>python</code>).</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[45]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">final</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s2">&quot;borough&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area"><div class="prompt output_prompt">Out[45]:</div>
+
+<div class="output_html rendered_html output_subarea output_execute_result">
+<div>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>A</th>
+      <th>B</th>
+      <th>C</th>
+      <th>Not Yet Graded</th>
+      <th>P</th>
+      <th>Z</th>
+    </tr>
+    <tr>
+      <th>borough</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>Bronx</th>
+      <td>8.837432</td>
+      <td>19.789996</td>
+      <td>28.903614</td>
+      <td>14.046512</td>
+      <td>5.669065</td>
+      <td>22.376238</td>
+    </tr>
+    <tr>
+      <th>Brooklyn</th>
+      <td>8.941166</td>
+      <td>19.869812</td>
+      <td>28.732290</td>
+      <td>16.412587</td>
+      <td>5.353474</td>
+      <td>23.449123</td>
+    </tr>
+    <tr>
+      <th>Manhattan</th>
+      <td>8.935430</td>
+      <td>19.848022</td>
+      <td>31.182162</td>
+      <td>17.836478</td>
+      <td>5.680101</td>
+      <td>24.492228</td>
+    </tr>
+    <tr>
+      <th>Missing</th>
+      <td>8.410000</td>
+      <td>22.000000</td>
+      <td>43.500000</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>Queens</th>
+      <td>9.117012</td>
+      <td>19.879747</td>
+      <td>31.122008</td>
+      <td>14.223881</td>
+      <td>5.283582</td>
+      <td>23.509259</td>
+    </tr>
+    <tr>
+      <th>Staten Island</th>
+      <td>9.331491</td>
+      <td>19.365970</td>
+      <td>32.820000</td>
+      <td>12.848485</td>
+      <td>6.684211</td>
+      <td>19.770833</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+
+</div>
+
 </div>
 </div>
 
