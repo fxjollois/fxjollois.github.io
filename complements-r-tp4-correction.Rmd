@@ -21,6 +21,44 @@ Vous devez donc continuer l'application, avec le contenu suivant :
     - le système affiche un diagramme en barres empilées ainsi que le tableau de contingence, avec les sommes en lignes et en colonnes
 
 
+## Partie `server`
+
+Nous reprenons le code du TP pour cette partie.
+
+- `server.R`
+```{r}
+library(shiny)
+
+shinyServer(function(input, output) {
+    
+    # Code pour le premier onglet
+    output$nuage <- renderPlot({
+        plot(mtcars$mpg ~ mtcars[,input$choix], main = "Consommation")
+    })
+    
+    output$resumeMpg <- renderText({
+        paste("Moyenne mpg :", mean(mtcars$mpg, na.rm = T))
+    })
+    output$resumeVar <- renderText({
+        paste("Moyenne", input$choix, ":", mean(mtcars[,input$choix], na.rm = T))
+    })
+    
+    output$tableau <- renderTable({
+        sub = subset(mtcars, select = c("mpg", input$choix))
+        sapply(sub, summary)
+    })
+    
+    
+    
+    # Code pour le deuxième onglet
+    
+    
+    
+    # Code pour le troisième onglet
+})
+```
+
+
 ## Système d'onglets (*panels*)
 
 Comme déjà précisé dans le TP, nous désirons avoir un système d'onglet afin de limiter les déplacements avec la souris. Pour cela, nous utilisons donc `tabsetPanel()`, qui va prendre en paramètre autant de `tabPanel()` que d'onglets. Chacun contiendra, dans notre travail, trois paramètres :
@@ -29,6 +67,7 @@ Comme déjà précisé dans le TP, nous désirons avoir un système d'onglet afi
 - un titre d'onglet (avec `titlePanel()`)
 - un agencement en deux parties avec `sidebarLayout()`
 
+- `ui.R`
 ```{r}
 library(shiny)
 
@@ -231,6 +270,8 @@ input$choixQl2
 
 Dans l'`ui`, nous créons deux *outputs* pour recevoir le diagramme en barres empilées (avec `plotOutput()`) et la table de contingence (avec `tableOutput()`). Dans la partie `server`, nous déterminons leur rendu, avec les fonctions `renderPlot()` et `renderTable()`.
 
+On défini le paramètre `rownames` à `TRUE` pour l'affichage des modalités de la table de contingence.
+
 - `ui.R`
 ```{r}
 plotOutput("graphQlQl"),
@@ -243,7 +284,7 @@ output$graphQlQl <- renderPlot({
 })
 output$tableQlQl <- renderTable({
     # Code pour la table de contingence
-})
+}, rownames = TRUE)
 ```
 
 #### Diagramme en barres empilées
@@ -276,10 +317,14 @@ Pour la table de contigence, nous utilisons le résultat de `table()`. Nous amé
 t = table(mtcars[,input$choixQl2], mtcars[,input$choixQl1])
 colnames(t) = paste(input$choixQl1, colnames(t), sep = ": ")
 rownames(t) = paste(input$choixQl2, rownames(t), sep = ": ")
-addmargins(t)
+unclass(addmargins(t))
 ```
 
 
 ## Si vous avez tout compris
 
-Ajoutez un onglet pour la description du lien entre deux variables quantitatives.
+Ajoutez deux onglets :
+
+- description d'une variable quantitative
+- description du lien entre une variable quantitative et une variable qualitative
+

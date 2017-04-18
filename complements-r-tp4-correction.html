@@ -255,13 +255,50 @@ $(document).ready(function () {
 </ul></li>
 </ul>
 </div>
+<div id="partie-server" class="section level2">
+<h2>Partie <code>server</code></h2>
+<p>Nous reprenons le code du TP pour cette partie.</p>
+<ul>
+<li><code>server.R</code></li>
+</ul>
+<pre class="r"><code>library(shiny)
+
+shinyServer(function(input, output) {
+    
+    # Code pour le premier onglet
+    output$nuage &lt;- renderPlot({
+        plot(mtcars$mpg ~ mtcars[,input$choix], main = &quot;Consommation&quot;)
+    })
+    
+    output$resumeMpg &lt;- renderText({
+        paste(&quot;Moyenne mpg :&quot;, mean(mtcars$mpg, na.rm = T))
+    })
+    output$resumeVar &lt;- renderText({
+        paste(&quot;Moyenne&quot;, input$choix, &quot;:&quot;, mean(mtcars[,input$choix], na.rm = T))
+    })
+    
+    output$tableau &lt;- renderTable({
+        sub = subset(mtcars, select = c(&quot;mpg&quot;, input$choix))
+        sapply(sub, summary)
+    })
+    
+    
+    
+    # Code pour le deuxième onglet
+    
+    
+    
+    # Code pour le troisième onglet
+})</code></pre>
+</div>
 <div id="systeme-donglets-panels" class="section level2">
 <h2>Système d’onglets (<em>panels</em>)</h2>
 <p>Comme déjà précisé dans le TP, nous désirons avoir un système d’onglet afin de limiter les déplacements avec la souris. Pour cela, nous utilisons donc <code>tabsetPanel()</code>, qui va prendre en paramètre autant de <code>tabPanel()</code> que d’onglets. Chacun contiendra, dans notre travail, trois paramètres :</p>
 <ul>
 <li>le nom (court) apparaissant dans la partie à cliquer pour sélectionner l’onglet</li>
 <li>un titre d’onglet (avec <code>titlePanel()</code>)</li>
-<li>un agencement en deux parties avec <code>sidebarLayout()</code></li>
+<li><p>un agencement en deux parties avec <code>sidebarLayout()</code></p></li>
+<li><p><code>ui.R</code></p></li>
 </ul>
 <pre class="r"><code>library(shiny)
 
@@ -452,6 +489,7 @@ input$choixQl2</code></pre>
 <div id="descriptif-du-lien-entre-les-variables" class="section level3">
 <h3>Descriptif du lien entre les variables</h3>
 <p>Dans l’<code>ui</code>, nous créons deux <em>outputs</em> pour recevoir le diagramme en barres empilées (avec <code>plotOutput()</code>) et la table de contingence (avec <code>tableOutput()</code>). Dans la partie <code>server</code>, nous déterminons leur rendu, avec les fonctions <code>renderPlot()</code> et <code>renderTable()</code>.</p>
+<p>On défini le paramètre <code>rownames</code> à <code>TRUE</code> pour l’affichage des modalités de la table de contingence.</p>
 <ul>
 <li><code>ui.R</code></li>
 </ul>
@@ -465,7 +503,7 @@ tableOutput(&quot;tableQlQl&quot;)</code></pre>
 })
 output$tableQlQl &lt;- renderTable({
     # Code pour la table de contingence
-})</code></pre>
+}, rownames = TRUE)</code></pre>
 <div id="diagramme-en-barres-empilees" class="section level4">
 <h4>Diagramme en barres empilées</h4>
 <p>Nous avons deux possibilités ici pour produire ce graphique. Remarquez que pour la première, il serait nécessaire d’ajouter une légende pour les modalités de la variable empilée.</p>
@@ -492,13 +530,17 @@ ggplot(d, aes(x, fill = y)) +
 <pre class="r"><code>t = table(mtcars[,input$choixQl2], mtcars[,input$choixQl1])
 colnames(t) = paste(input$choixQl1, colnames(t), sep = &quot;: &quot;)
 rownames(t) = paste(input$choixQl2, rownames(t), sep = &quot;: &quot;)
-addmargins(t)</code></pre>
+unclass(addmargins(t))</code></pre>
 </div>
 </div>
 </div>
 <div id="si-vous-avez-tout-compris" class="section level2">
 <h2>Si vous avez tout compris</h2>
-<p>Ajoutez un onglet pour la description du lien entre deux variables quantitatives.</p>
+<p>Ajoutez deux onglets :</p>
+<ul>
+<li>description d’une variable quantitative</li>
+<li>description du lien entre une variable quantitative et une variable qualitative</li>
+</ul>
 </div>
 
 </div>
