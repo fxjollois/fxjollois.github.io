@@ -27,14 +27,14 @@
 <link href="libs/highlightjs-1.1/default.css" rel="stylesheet" />
 <script src="libs/highlightjs-1.1/highlight.js"></script>
 <script src="libs/htmlwidgets-0.8/htmlwidgets.js"></script>
-<link href="libs/leaflet-0.7.3/leaflet.css" rel="stylesheet" />
-<script src="libs/leaflet-0.7.3/leaflet.js"></script>
-<link href="libs/leafletfix-1.0.0/leafletfix.css" rel="stylesheet" />
-<script src="libs/leaflet-binding-1.0.1/leaflet.js"></script>
 <script src="libs/datatables-binding-0.2/datatables.js"></script>
 <link href="libs/dt-core-1.10.12/css/jquery.dataTables.min.css" rel="stylesheet" />
 <link href="libs/dt-core-1.10.12/css/jquery.dataTables.extra.css" rel="stylesheet" />
 <script src="libs/dt-core-1.10.12/js/jquery.dataTables.min.js"></script>
+<link href="libs/leaflet-0.7.3/leaflet.css" rel="stylesheet" />
+<script src="libs/leaflet-0.7.3/leaflet.js"></script>
+<link href="libs/leafletfix-1.0.0/leafletfix.css" rel="stylesheet" />
+<script src="libs/leaflet-binding-1.0.1/leaflet.js"></script>
 <!--
     Font Awesome
 -->
@@ -529,158 +529,39 @@ text(outliers_mpg$hp, outliers_mpg$mpg, row.names(outliers_mpg), pos = 4, cex = 
 <li><code>qplot</code> (ou <code>quickplot</code>) permettant de faire des graphiques rapidement</li>
 <li><code>ggplot</code> permettant d’initialiser un graphique auquel on va ajouter des couches successivement</li>
 </ul>
-<div id="fonction-qplot" class="section level3">
-<h3>Fonction <code>qplot</code></h3>
-<p>Comme indiqué précédemment, cette fonction permet de produire vite des graphiques propres et clairs, soit automatiquement en fonction des variables fournies, soit en définissant précisemment ce que l’on souhaite.</p>
-<p>Voici quelques exemples de production de graphiques. Nous remarquons que le comportement de <code>qplot</code> dépend du type de la variable :</p>
+<p>Le principe de cette grammaire est qu’un graphique est composé de couches :</p>
 <ul>
-<li><code>numeric</code> : histogramme à 30 barres par défaut (<code>geom = &quot;histogram&quot;</code>)</li>
-<li><code>factor</code> : diagramme en barres (<code>geom = &quot;bar&quot;</code>)</li>
-</ul>
-<div id="var-quantitative" class="section level4">
-<h4>Var quantitative</h4>
-<div id="histogramme" class="section level5">
-<h5>Histogramme</h5>
-<p>Il est possible de déclarer le nombre d’intervalles d’un histogramme, ou de les définir directement. Attention, dans ce dernier cas, le premier graphique produit est faux car il est nécessaire d’utiliser la densité (variable spéciale <code>..density..</code> dans <code>ggplot2</code>) et non le dénombrement. Et puisqu’on a préciser des valeurs en <span class="math inline">\(y\)</span>, nous devons préciser que nous souhaitons un histogramme en représentation géométrique.</p>
-<pre class="r"><code>qplot(mtcars$mpg)</code></pre>
-<p><img src="visualisation-donnees_files/figure-html/qplot-uni-hist-1.png" width="672" style="display: block; margin: auto;" /></p>
-<pre class="r"><code>qplot(mpg, data = mtcars)</code></pre>
-<p><img src="visualisation-donnees_files/figure-html/qplot-uni-hist-2.png" width="672" style="display: block; margin: auto;" /></p>
-<pre class="r"><code>qplot(mpg, data = mtcars, binwidth = 2)</code></pre>
-<p><img src="visualisation-donnees_files/figure-html/qplot-uni-hist-3.png" width="672" style="display: block; margin: auto;" /></p>
-<pre class="r"><code>qplot(mpg, data = mtcars, bins = 10)</code></pre>
-<p><img src="visualisation-donnees_files/figure-html/qplot-uni-hist-4.png" width="672" style="display: block; margin: auto;" /></p>
-<pre class="r"><code>qplot(mpg, data = mtcars, breaks = c(10,12.5,15,18,25,35))</code></pre>
-<p><img src="visualisation-donnees_files/figure-html/qplot-uni-hist-5.png" width="672" style="display: block; margin: auto;" /></p>
-<pre class="r"><code>qplot(mpg, y = ..density.., data = mtcars, 
-      geom = &quot;histogram&quot;, breaks = c(10,12.5,15,18,25,35))</code></pre>
-<p><img src="visualisation-donnees_files/figure-html/qplot-uni-hist-6.png" width="672" style="display: block; margin: auto;" /></p>
-</div>
-<div id="boite-a-moustaches" class="section level5">
-<h5>Boîte à moustaches</h5>
-<p>Pour avoir une boîte à moustache sur une variable, nous sommes obligé de déclarer en <span class="math inline">\(x\)</span> une valeur fixe (ici une chaîne vide <code>&quot;&quot;</code>), et de préciser la transformation géométrique (<code>boxplot</code> ici donc).</p>
-<pre class="r"><code>qplot(&quot;&quot;, mpg, data = mtcars, geom = &quot;boxplot&quot;)</code></pre>
-<p><img src="visualisation-donnees_files/figure-html/qplot-uni-boxplot-1.png" width="672" style="display: block; margin: auto;" /></p>
-</div>
-<div id="qq-plot" class="section level5">
-<h5><span class="math inline">\(qq\)</span>-plot</h5>
-<p>Dans le cas de la représentation géomtrique en <span class="math inline">\(qq\)</span>-plot, nous ne définissons pas de <span class="math inline">\(x\)</span> et de <span class="math inline">\(y\)</span>, mais juste l’échantillon à utiliser (<code>sample</code>).</p>
-<pre class="r"><code>qplot(sample = mpg, data = mtcars, geom = &quot;qq&quot;)</code></pre>
-<p><img src="visualisation-donnees_files/figure-html/qplot-uni-qqplot-1.png" width="672" style="display: block; margin: auto;" /></p>
-</div>
-</div>
-<div id="var-qualitative" class="section level4">
-<h4>Var qualitative</h4>
-<p>Un diagramme circulaire nécessite des coordonnées dites polaires et nous utiliserons plutôt la deuxième fonction, <code>ggplot</code>, pour le réaliser.</p>
-<div id="diagramme-en-barres" class="section level5">
-<h5>Diagramme en barres</h5>
-<p>Comme indiqué, si nous mettons une variable numérique, sans préciser la représentation géométrique, <code>qplot</code> produit un histogramme. C’est pourquoi nous devons spécifier que nous souhaitons une représentation en barre (<code>geom = &quot;bar&quot;</code>) pour l’utiliser sur <code>am</code> de <code>mtcars</code>. Sinon, nous réalisons directement une transformation en variable <code>factor</code>. Ce qui est préférable, au regard de l’axe des abcisses généré.</p>
-<pre class="r"><code>qplot(am, data = mtcars, geom = &quot;bar&quot;)</code></pre>
-<p><img src="visualisation-donnees_files/figure-html/qplot-uni-quali-1.png" width="672" style="display: block; margin: auto;" /></p>
-<pre class="r"><code>qplot(factor(am), data = mtcars)</code></pre>
-<p><img src="visualisation-donnees_files/figure-html/qplot-uni-quali-2.png" width="672" style="display: block; margin: auto;" /></p>
-</div>
-</div>
-<div id="var-quantitative---var-quantitative" class="section level4">
-<h4>Var quantitative - Var quantitative</h4>
-<p>Pour réaliser un nuage de points, nous n’avons rien besoin de spécifier (i.e. c’est le choix par défaut de <code>qplot</code> pour deux variables numériques).</p>
-<pre class="r"><code>qplot(hp, mpg, data = mtcars)</code></pre>
-<p><img src="visualisation-donnees_files/figure-html/qplot-quanti-quanti-1.png" width="672" style="display: block; margin: auto;" /></p>
-<p>Il est possible aussi de faire un ajustement (avec <code>geom = &quot;smooth</code>) ou une réprésentation des valeurs prises à l’aide de <em>ticks</em> (avec <code>geom = &quot;rug&quot;</code>). Et même de faire un graphique avec toutes ces informations. Mais pour avoir l’ajustement linéaire en plus des points, il est préférable d’utiliser <code>ggplot</code>.</p>
-<pre class="r"><code>qplot(hp, mpg, data = mtcars, geom = &quot;smooth&quot;)</code></pre>
-<p><img src="visualisation-donnees_files/figure-html/qplot-quanti-quanti-autres-1.png" width="672" style="display: block; margin: auto;" /></p>
-<pre class="r"><code>qplot(hp, mpg, data = mtcars, geom = &quot;smooth&quot;, method = &quot;lm&quot;)</code></pre>
-<p><img src="visualisation-donnees_files/figure-html/qplot-quanti-quanti-autres-2.png" width="672" style="display: block; margin: auto;" /></p>
-<pre class="r"><code>qplot(hp, mpg, data = mtcars, geom = &quot;rug&quot;)</code></pre>
-<p><img src="visualisation-donnees_files/figure-html/qplot-quanti-quanti-autres-3.png" width="672" style="display: block; margin: auto;" /></p>
-<pre class="r"><code>qplot(hp, mpg, data = mtcars, geom = c(&quot;smooth&quot;, &quot;rug&quot;, &quot;point&quot;))</code></pre>
-<p><img src="visualisation-donnees_files/figure-html/qplot-quanti-quanti-autres-4.png" width="672" style="display: block; margin: auto;" /></p>
-<p>Une autre réprésentation est une <em>carte de chaleur</em> (ou <strong>heatmap</strong>), représentation les deux axes et un ensemble de zones rectangulaires ayant une couleur en fonction du nombre de points présents dans cette zone. Ce graphique est très intéressant dans le cas de données nombreuses.</p>
-<pre class="r"><code>qplot(hp, mpg, data = mtcars, geom = &quot;bin2d&quot;)</code></pre>
-<p><img src="visualisation-donnees_files/figure-html/qplot-quanti-quanti-heatmap-1.png" width="672" style="display: block; margin: auto;" /></p>
-<pre class="r"><code>qplot(hp, mpg, data = mtcars, geom = &quot;bin2d&quot;, bins = 10)</code></pre>
-<p><img src="visualisation-donnees_files/figure-html/qplot-quanti-quanti-heatmap-2.png" width="672" style="display: block; margin: auto;" /></p>
-</div>
-<div id="var-qualitative---var-qualitative" class="section level4">
-<h4>Var qualitative - Var qualitative</h4>
-<p>Dans ce cas, la fonction <code>qplot</code> est plutôt utilisé pour réaliser des diagrammes en barres.</p>
-<pre class="r"><code>qplot(factor(am), facets = ~ cyl, data = mtcars, geom = &quot;bar&quot;)</code></pre>
-<p><img src="visualisation-donnees_files/figure-html/qplot-quali-quali-1.png" width="672" style="display: block; margin: auto;" /></p>
-<pre class="r"><code>qplot(factor(am), facets = ~ cyl, fill = factor(am), data = mtcars, geom = &quot;bar&quot;)</code></pre>
-<p><img src="visualisation-donnees_files/figure-html/qplot-quali-quali-2.png" width="672" style="display: block; margin: auto;" /></p>
-<pre class="r"><code>qplot(factor(am), fill = factor(cyl), data = mtcars, geom = &quot;bar&quot;)</code></pre>
-<p><img src="visualisation-donnees_files/figure-html/qplot-quali-quali-3.png" width="672" style="display: block; margin: auto;" /></p>
-<p>Pour les empiler correctement (i.e. somme à 100%), il faut faire une manipulation en deux étapes :</p>
+<li>les <strong>données</strong> à représenter, à partir desquelles nous définissons des attributs <strong>estéthiques</strong> (soit identique pour tous, soit fonction d’une des variables) :
 <ul>
-<li>calculer les profils pour chaque modalité de la variable en <span class="math inline">\(x\)</span>, avec <code>prop.table</code> et <code>table</code></li>
-<li>faire une modification du tableau obtenu avec la fonction <code>melt</code> du package <code>reshape2</code></li>
+<li>les axes <span class="math inline">\(x\)</span> et <span class="math inline">\(y\)</span>,</li>
+<li>la couleur</li>
+<li>la taille</li>
+<li>le symbole</li>
+</ul></li>
+<li>les attributs <strong>géométriques</strong> (point, ligne, …)</li>
+<li>les transformations <strong>statistiques</strong> (déombrement, ajustement, …)</li>
+<li>les <strong>échelles</strong></li>
+<li>le système de <strong>coordonnées</strong> (linéaire, logarithmique, polaire, …)</li>
+<li>le découpage (ou non) en <strong>facettes</strong></li>
 </ul>
-<pre class="r"><code>tab = table(mtcars$am, mtcars$cyl)
-tab</code></pre>
-<pre><code>##    
-##      4  6  8
-##   0  3  4 12
-##   1  8  3  2</code></pre>
-<pre class="r"><code>pro = prop.table(tab, margin = 1)
-pro</code></pre>
-<pre><code>##    
-##             4         6         8
-##   0 0.1578947 0.2105263 0.6315789
-##   1 0.6153846 0.2307692 0.1538462</code></pre>
-<pre class="r"><code>mel = setNames(melt(pro), c(&quot;am&quot;, &quot;cyl&quot;, &quot;value&quot;))
-mel</code></pre>
-<pre><code>##   am cyl     value
-## 1  0   4 0.1578947
-## 2  1   4 0.6153846
-## 3  0   6 0.2105263
-## 4  1   6 0.2307692
-## 5  0   8 0.6315789
-## 6  1   8 0.1538462</code></pre>
-<pre class="r"><code>qplot(factor(am), weight = value, fill = factor(cyl), data = mel, 
-      geom = &quot;bar&quot;)</code></pre>
-<p><img src="visualisation-donnees_files/figure-html/qplot-quali-quali-stack-1.png" width="672" style="display: block; margin: auto;" /></p>
-<p>Il est possible aussi de réaliser une <em>heatmap</em>, ou chaque zone est colorée en fonction du nombre d’individus ayant les modalités correspondantes dans les deux variables. Et si on veut représenter les profils comme précédemment, on peut réutiliser l’objet <code>mel</code> que l’on a créé précédemment. Ici, la lecture se fait verticalement (les proportions sont en fonction de la valeur de la variable en <span class="math inline">\(x\)</span>).</p>
-<pre class="r"><code>qplot(factor(am), factor(cyl), data = mtcars, geom = &quot;bin2d&quot;)</code></pre>
-<p><img src="visualisation-donnees_files/figure-html/qplot-quali-quali-heatmap-1.png" width="672" style="display: block; margin: auto;" /></p>
-<pre class="r"><code>qplot(factor(am), factor(cyl), fill = value, data = mel, geom = &quot;bin2d&quot;)</code></pre>
-<p><img src="visualisation-donnees_files/figure-html/qplot-quali-quali-heatmap-2.png" width="672" style="display: block; margin: auto;" /></p>
-</div>
-<div id="var-quantitative---var-qualitative" class="section level4">
-<h4>Var quantitative - Var qualitative</h4>
-<p>Pour croiser deux variables de type différent, nous devons représenter la distribution de la variable quantitative pour chaque modalité de la variable qualitative (ici, respectivement histogramme, densité, boîte à moustaches, et représentation des points avec une opération de <em>jittering</em>).</p>
-<pre class="r"><code>qplot(mpg, data = mtcars, geom = &quot;histogram&quot;, bins = 10, facets = am ~ .)</code></pre>
-<p><img src="visualisation-donnees_files/figure-html/qplot-quanti-quali-1.png" width="672" style="display: block; margin: auto;" /></p>
-<pre class="r"><code>qplot(mpg, col = factor(am), data = mtcars, geom = &quot;density&quot;)</code></pre>
-<p><img src="visualisation-donnees_files/figure-html/qplot-quanti-quali-2.png" width="672" style="display: block; margin: auto;" /></p>
-<pre class="r"><code>qplot(factor(am), mpg, data = mtcars, geom = &quot;boxplot&quot;)</code></pre>
-<p><img src="visualisation-donnees_files/figure-html/qplot-quanti-quali-3.png" width="672" style="display: block; margin: auto;" /></p>
-<pre class="r"><code>qplot(factor(am), mpg, data = mtcars, geom = &quot;jitter&quot;)</code></pre>
-<p><img src="visualisation-donnees_files/figure-html/qplot-quanti-quali-4.png" width="672" style="display: block; margin: auto;" /></p>
-<pre class="r"><code>qplot(factor(am), mpg, data = mtcars, geom = c(&quot;boxplot&quot;, &quot;jitter&quot;))</code></pre>
-<p><img src="visualisation-donnees_files/figure-html/qplot-quanti-quali-5.png" width="672" style="display: block; margin: auto;" /></p>
-</div>
-<div id="exemple-ameliore-version-qplot" class="section level4">
-<h4>Exemple amélioré version <code>qplot</code></h4>
-<p>Si nous voulons reproduire l’<a href="#amelioration-de-graphique">exemple amélioré</a> précédent, nous voyons que la définition de la couleur et de la taille est simple. Mais nous sommes ici encore limité dans les options, et la fonction <code>ggplot</code> est plus approprié pour personnalisé un tel graphique.</p>
-<pre class="r"><code>qplot(hp, mpg, data = mtcars, color = factor(am), size = wt, 
-      main = &quot;Consommation et autres&quot;,
-      xlab = &quot;Puissance (en ch)&quot;,
-      ylab = &quot;Consommation en Miles/Galon&quot;)</code></pre>
-<p><img src="visualisation-donnees_files/figure-html/qplot-amelioration-1.png" width="672" style="display: block; margin: auto;" /></p>
-</div>
-</div>
+<p>Dans cette librairie, il y a deux fonctions principales :</p>
+<ul>
+<li><code>qplot</code> (ou <code>quickplot</code>) permettant de faire des graphiques rapidement</li>
+<li><code>ggplot</code> permettant d’initialiser un graphique auquel on va ajouter des couches successivement</li>
+</ul>
+<p>Dans ce TP, nous n’aborderons que la deuxième fonction, plus complète.</p>
 <div id="fonction-ggplot" class="section level3">
-<h3>Fonction <code>ggplot</code></h3>
-<p>La fonction <code>ggplot</code> permet de faire plus de choses que <code>qplot</code> mais nécessite un formalisme plus lourd, dont voici quelques détails :</p>
+<h3>Fonction <code>ggplot()</code></h3>
+<p>La fonction <code>ggplot()</code> permet de faire plus de choses que <code>qplot()</code> mais nécessite un formalisme plus lourd, dont voici quelques détails :</p>
 <ul>
 <li><code>ggplot()</code> créé un graphique (et le renvoie, i.e. on peut stocker un graphique dans une variable pour l’afficher plus tard, éventuellement en lui ajoutant des couches)</li>
 <li><code>aes()</code> permet de définir les aspects esthétiques (<code>x</code> et <code>y</code> principalement, mais aussi <code>color</code>, <code>fill</code>, <code>size</code>, …)</li>
-<li><code>geom_xxx()</code> indique la représentation à choisir (<code>xxx</code> étant remplacé par <code>historam</code>, <code>boxplot</code>, …)</li>
-<li><code>stat_xxx</code> indique les transformations statistiques à utiliser, si besoin</li>
-<li><code>scale_xxx</code> s’emploie pour des changements d’échelle</li>
-<li><code>coord_xxx</code> s’utilise pour des modifications de systèmes de coordonnées</li>
+<li><code>geom_xxx()</code> indique la représentation à choisir (<code>xxx</code> étant remplacé par <code>histogram</code>, <code>boxplot</code>, …)</li>
+<li><code>stat_xxx()</code> indique les transformations statistiques à utiliser, si besoin</li>
+<li><code>scale_xxx()</code> s’emploie pour des changements d’échelle</li>
+<li><code>coord_xxx()</code> s’utilise pour des modifications de systèmes de coordonnées</li>
 <li><code>facet_grid()</code> découpe les données (et donc le graphique) en plusieurs facettes selon les variables fournie dans la formule</li>
-<li><code>theme_xxx</code>, <code>labs()</code>, <code>xlab()</code>, <code>ylab()</code>, <code>ggtitle()</code>, … pour des améliorations du graphique (annotation, couleurs, …)</li>
+<li><code>theme_xxx()</code>, <code>labs()</code>, <code>xlab()</code>, <code>ylab()</code>, <code>ggtitle()</code>, … pour des améliorations du graphique (annotation, couleurs, …)</li>
 </ul>
 <p>Hormis la fonction <code>aes()</code>, qui s’utilise à l’intérieur des autres, toutes ces fonctions peuvent s’additionner pour compléter le graphique. Voici un exemple de suite de commandes pour produire un graphique :</p>
 <pre class="r"><code># Récupération des moyennes et des écarts-type de Sepal.Length pour chaque espèce
@@ -708,7 +589,7 @@ ggplot() + geom_histogram(data = mtcars, aes(x = mpg))</code></pre>
 </ul>
 <div id="variable-quantitative" class="section level4">
 <h4>Variable quantitative</h4>
-<p>Pour représenter un histogramme, on a les mêmes possibilités que dans <code>qplot</code>.</p>
+<p>Il est possible de déclarer le nombre d’intervalles d’un histogramme, ou de les définir directement. Attention, dans ce dernier cas, le premier graphique produit est faux car il est nécessaire d’utiliser la densité (variable spéciale <code>..density..</code> dans <code>ggplot2</code>) et non le dénombrement. Et puisqu’on a préciser des valeurs en <span class="math inline">\(y\)</span>, nous devons préciser que nous souhaitons un histogramme en représentation géométrique.</p>
 <pre class="r"><code>ggplot(mtcars, aes(x = mpg)) + geom_histogram()</code></pre>
 <p><img src="visualisation-donnees_files/figure-html/ggplot-quanti-hist-1.png" width="672" style="display: block; margin: auto;" /></p>
 <pre class="r"><code>ggplot(mtcars, aes(x = mpg)) + geom_histogram(binwidth = 2)</code></pre>
@@ -724,7 +605,7 @@ ggplot() + geom_histogram(data = mtcars, aes(x = mpg))</code></pre>
     geom_histogram(aes(y = ..density..), binwidth = 2) +
     geom_density()</code></pre>
 <p><img src="visualisation-donnees_files/figure-html/ggplot-quanti-hist-6.png" width="672" style="display: block; margin: auto;" /></p>
-<p>Pour la boîte à moustaches et le <span class="math inline">\(qq\)</span>-plot, il faut utiliser les fonctions <code>geom_boxplot()</code> et <code>geom_qq()</code>, en spécifiant correctement les aspects esthétiques.</p>
+<p>Pour la boîte à moustaches et le <span class="math inline">\(qq\)</span>-plot, il faut utiliser les fonctions <code>geom_boxplot()</code> et <code>geom_qq()</code>, en spécifiant correctement les aspects esthétiques. Pour avoir une boîte à moustache sur une variable, nous sommes obligé de déclarer en <span class="math inline">\(x\)</span> une valeur fixe (ici une chaîne vide <code>&quot;&quot;</code>)</p>
 <pre class="r"><code>ggplot(mtcars, aes(y = mpg, x = &quot;&quot;)) + geom_boxplot()</code></pre>
 <p><img src="visualisation-donnees_files/figure-html/ggplot-quanti-autres-1.png" width="672" style="display: block; margin: auto;" /></p>
 <pre class="r"><code>ggplot(mtcars, aes(sample = mpg)) + geom_qq()</code></pre>
@@ -758,20 +639,20 @@ ggplot() + geom_histogram(data = mtcars, aes(x = mpg))</code></pre>
     coord_polar(theta = &quot;y&quot;) </code></pre>
 <p><img src="visualisation-donnees_files/figure-html/ggplot-quali-pie-1.png" width="672" style="display: block; margin: auto;" /></p>
 </div>
-<div id="var-quantitative---var-quantitative-1" class="section level4">
+<div id="var-quantitative---var-quantitative" class="section level4">
 <h4>Var quantitative - Var quantitative</h4>
-<p>La représentation d’un nuage de points nécessite la définition des <span class="math inline">\(x\)</span> et <span class="math inline">\(y\)</span>, ainsi que de <code>geom_point()</code>. On peut lui ajouter d’autres représentations, tel que <code>geom_rug()</code> et <code>geom_smooth()</code>, où maintenant nous pouvons définir la fonction <code>lm</code> pour l’ajustement linéaire.</p>
+<p>La représentation d’un nuage de points nécessite la définition des <span class="math inline">\(x\)</span> et <span class="math inline">\(y\)</span>, ainsi que de <code>geom_point()</code>. On peut lui ajouter d’autres représentations, tel que <code>geom_rug()</code> et <code>geom_smooth()</code>, où nous pouvons définir la méthode <code>lm</code> pour l’ajustement linéaire.</p>
 <pre class="r"><code>ggplot(mtcars, aes(hp, mpg)) + geom_point() +
     geom_rug() +
     geom_smooth(method = &quot;lm&quot;)</code></pre>
 <p><img src="visualisation-donnees_files/figure-html/ggplot-quanti-quanti-1.png" width="672" style="display: block; margin: auto;" /></p>
-<p>Et c’est l’utilisation de <code>geom_bin2d()</code> qui permet de faire une <em>heatmap</em>, avec les mêmes options que précédemment.</p>
+<p>Une autre réprésentation est une <em>carte de chaleur</em> (ou <strong>heatmap</strong>), représentation les deux axes et un ensemble de zones rectangulaires ayant une couleur en fonction du nombre de points présents dans cette zone. Ce graphique est très intéressant dans le cas de données nombreuses. Et c’est l’utilisation de <code>geom_bin2d()</code> qui permet de la réaliser.</p>
 <pre class="r"><code>ggplot(mtcars, aes(hp, mpg)) + geom_bin2d()</code></pre>
 <p><img src="visualisation-donnees_files/figure-html/ggplot-quanti-quanti-heatmap-1.png" width="672" style="display: block; margin: auto;" /></p>
 <pre class="r"><code>ggplot(mtcars, aes(hp, mpg)) + geom_bin2d(bins = 10)</code></pre>
 <p><img src="visualisation-donnees_files/figure-html/ggplot-quanti-quanti-heatmap-2.png" width="672" style="display: block; margin: auto;" /></p>
 </div>
-<div id="var-qualitative---var-qualitative-1" class="section level4">
+<div id="var-qualitative---var-qualitative" class="section level4">
 <h4>Var qualitative - Var qualitative</h4>
 <p>La création d’un diagramme en barres pour deux variables qualitatives est assez simple. Par contre, pour la version empilée, c’est le paramètre <code>position = &quot;fill&quot;</code> qui permet de le faire sans autre calcul, les fonctions suivantes n’étant la que pour avoir un graphique plus clair.</p>
 <pre class="r"><code>ggplot(mtcars, aes(factor(am))) + geom_bar() + facet_grid( ~ cyl)</code></pre>
@@ -783,28 +664,37 @@ ggplot() + geom_histogram(data = mtcars, aes(x = mpg))</code></pre>
     scale_y_continuous(labels = percent) + 
     xlab(&quot;am&quot;) + ylab(&quot;&quot;) + labs(fill = &quot;cyl&quot;)</code></pre>
 <p><img src="visualisation-donnees_files/figure-html/ggplot-quali-quali-3.png" width="672" style="display: block; margin: auto;" /></p>
-<p>Pour créer les diagrammes circulaires d’une variable pour chaque modalité de l’autre variable, nous allons ré-utiliser l’objet <code>mel</code> créé précédemment.</p>
-<pre class="r"><code>mel</code></pre>
-<pre><code>##   am cyl     value
-## 1  0   4 0.1578947
-## 2  1   4 0.6153846
-## 3  0   6 0.2105263
-## 4  1   6 0.2307692
-## 5  0   8 0.6315789
-## 6  1   8 0.1538462</code></pre>
-<pre class="r"><code>ggplot(mel, aes(x = &quot;&quot;, y = value, fill = factor(cyl))) + 
-    geom_bar(stat = &quot;identity&quot;, width = 1)  + 
-    scale_y_continuous(labels = percent) +
-    ylab(&quot;am&quot;) + xlab(&quot;&quot;) + labs(fill = &quot;cyl&quot;) +
-    theme(axis.ticks = element_blank()) +
+<p>Pour créer les diagrammes circulaires d’une variable pour chaque modalité de l’autre variable, nous allons utiliser quasiment le même code que précédemment, en ajoutant l’information que les coordonnées sont désomais polaires (<code>coord_polar()</code>), avec un découpage de la zone graphique sur une des variables (avec <code>facet_wrap()</code>). Dans ce cas, il faut mettre une constante en <span class="math inline">\(x\)</span> dans <code>aes()</code>.</p>
+<pre class="r"><code>ggplot(mtcars, aes(0, fill = factor(cyl))) + 
+    geom_bar(position = &quot;fill&quot;) +
+    scale_y_continuous(labels = percent) + 
+    xlab(&quot;am&quot;) + ylab(&quot;&quot;) + labs(fill = &quot;cyl&quot;) +
     coord_polar(theta = &quot;y&quot;) +
-    facet_grid(~ am)</code></pre>
+    facet_wrap(~ factor(am))</code></pre>
 <p><img src="visualisation-donnees_files/figure-html/ggplot-quali-quali-pie-1.png" width="672" style="display: block; margin: auto;" /></p>
-<p>Enfin, il est possible de créer une <em>heatmap</em> avec la fonction <code>geom_bin2d()</code>, toujours soit directement (dénombrement donc), soit en utiliser des profils par exemple.</p>
+<p>Enfin, il est aussi possible aussi de réaliser une <em>heatmap</em>, ou chaque zone est colorée en fonction du nombre d’individus ayant les modalités correspondantes dans les deux variables, avec la fonction <code>geom_bin2d()</code>.</p>
 <pre class="r"><code>ggplot(mtcars, aes(factor(cyl), factor(am))) + geom_bin2d()</code></pre>
 <p><img src="visualisation-donnees_files/figure-html/ggplot-quali-quali-heatmap-1.png" width="672" style="display: block; margin: auto;" /></p>
-<pre class="r"><code>ggplot(mel, aes(factor(am), factor(cyl), fill = value)) + geom_bin2d()</code></pre>
-<p><img src="visualisation-donnees_files/figure-html/ggplot-quali-quali-heatmap-2.png" width="672" style="display: block; margin: auto;" /></p>
+</div>
+<div id="var-quantitative---var-qualitative" class="section level4">
+<h4>Var quantitative - Var qualitative</h4>
+<p>Pour croiser deux variables de type différent, nous devons représenter la distribution de la variable quantitative pour chaque modalité de la variable qualitative (ici, respectivement histogramme, densité, boîte à moustaches, et représentation des points avec une opération de <em>jittering</em>).</p>
+<pre class="r"><code>ggplot(mtcars, aes(mpg)) + geom_histogram(bins = 10) +
+    facet_grid(am ~ .)</code></pre>
+<p><img src="visualisation-donnees_files/figure-html/qplot-quanti-quali-1.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>ggplot(mtcars, aes(mpg, col = factor(am))) +
+    geom_density()</code></pre>
+<p><img src="visualisation-donnees_files/figure-html/qplot-quanti-quali-2.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>ggplot(mtcars, aes(factor(am), mpg, fill = factor(am))) +
+    geom_boxplot()</code></pre>
+<p><img src="visualisation-donnees_files/figure-html/qplot-quanti-quali-3.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>ggplot(mtcars, aes(factor(am), mpg)) + 
+    geom_jitter()</code></pre>
+<p><img src="visualisation-donnees_files/figure-html/qplot-quanti-quali-4.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>ggplot(mtcars, aes(factor(am), mpg)) + 
+    geom_boxplot() +
+    geom_jitter()</code></pre>
+<p><img src="visualisation-donnees_files/figure-html/qplot-quanti-quali-5.png" width="672" style="display: block; margin: auto;" /></p>
 </div>
 <div id="exemple-ameliore-version-ggplot" class="section level4">
 <h4>Exemple amélioré version <code>ggplot</code></h4>
@@ -823,6 +713,89 @@ ggplot(mtcars, aes(x = hp, y = mpg,
 <p><img src="visualisation-donnees_files/figure-html/ggplot-amelioration-1.png" width="672" style="display: block; margin: auto;" /></p>
 </div>
 </div>
+<div id="quelques-exemples-complementaires" class="section level3">
+<h3>Quelques exemples complémentaires</h3>
+<p>Ce sont des exemples plus ou moins simple de créations de graphiques.</p>
+<div id="donnees-iris" class="section level4">
+<h4>Données Iris</h4>
+<p>On cherche à représenter les boîtes à moustaches des 4 variables pour les trois espèces.</p>
+<div id="avec-plot" class="section level5">
+<h5>Avec <code>plot</code></h5>
+<pre class="r"><code>par(mfrow = c(2, 2), mar = c(2, 2, 2, 0) + .1)
+for (i in 1:4) {
+    boxplot(iris[,i] ~ iris$Species, main = names(iris)[i])
+}</code></pre>
+<p><img src="visualisation-donnees_files/figure-html/iris-boxplot-1.png" width="672" style="display: block; margin: auto;" /></p>
+</div>
+<div id="avec-ggplot" class="section level5">
+<h5>Avec <code>ggplot</code></h5>
+<pre class="r"><code>ggplot(melt(iris, id.vars = &quot;Species&quot;), aes(Species, value)) + 
+    geom_boxplot() + facet_grid( ~ variable)</code></pre>
+<p><img src="visualisation-donnees_files/figure-html/iris-boxplot-ggplot-1.png" width="672" style="display: block; margin: auto;" /></p>
+</div>
+</div>
+<div id="donnees-dancombe" class="section level4">
+<h4>Données d’ancombe</h4>
+<pre class="r"><code>DT::datatable(anscombe, options = list(searching = F, ordering = F, paging = F))</code></pre>
+<div id="htmlwidget-2d99e7cca76603e5937c" style="width:100%;height:auto;" class="datatables html-widget"></div>
+<script type="application/json" data-for="htmlwidget-2d99e7cca76603e5937c">{"x":{"filter":"none","data":[["1","2","3","4","5","6","7","8","9","10","11"],[10,8,13,9,11,14,6,4,12,7,5],[10,8,13,9,11,14,6,4,12,7,5],[10,8,13,9,11,14,6,4,12,7,5],[8,8,8,8,8,8,8,19,8,8,8],[8.04,6.95,7.58,8.81,8.33,9.96,7.24,4.26,10.84,4.82,5.68],[9.14,8.14,8.74,8.77,9.26,8.1,6.13,3.1,9.13,7.26,4.74],[7.46,6.77,12.74,7.11,7.81,8.84,6.08,5.39,8.15,6.42,5.73],[6.58,5.76,7.71,8.84,8.47,7.04,5.25,12.5,5.56,7.91,6.89]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> \u003c/th>\n      <th>x1\u003c/th>\n      <th>x2\u003c/th>\n      <th>x3\u003c/th>\n      <th>x4\u003c/th>\n      <th>y1\u003c/th>\n      <th>y2\u003c/th>\n      <th>y3\u003c/th>\n      <th>y4\u003c/th>\n    \u003c/tr>\n  \u003c/thead>\n\u003c/table>","options":{"searching":false,"ordering":false,"paging":false,"columnDefs":[{"className":"dt-right","targets":[1,2,3,4,5,6,7,8]},{"orderable":false,"targets":0}],"order":[],"autoWidth":false,"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
+<pre class="r"><code>par(mfrow = c(2, 2), mar = c(2, 2, 0, 0)+.1)
+f &lt;- function(df) {
+    names(df) = c(&quot;x&quot;, &quot;y&quot;)
+    m = lm(y ~ x, data = df)
+    plot(y ~ x, data = df, pch = 19, bty = &quot;n&quot;, 
+         xlim = range(anscombe[,1:4]),
+         ylim = range(anscombe[,5:8]))
+    abline(m, col = &quot;red&quot;)
+}
+for (i in 1:4) {
+    f(anscombe[,paste(c(&quot;x&quot;, &quot;y&quot;), i, sep = &quot;&quot;)])
+}</code></pre>
+<p><img src="visualisation-donnees_files/figure-html/anscombe-plot-1.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>ans = transform(
+    cbind(
+        melt(subset(anscombe, select = c(x1, x2, x3, x4)), 
+             variable.name = &quot;coordx&quot;, value.name = &quot;x&quot;),
+        melt(subset(anscombe, select = c(y1, y2, y3, y4)), 
+             variable.name = &quot;coordy&quot;, value.name = &quot;y&quot;)
+    ),
+    num = substr(coordx, 2, 2)
+)
+ggplot(ans, aes(x, y)) + geom_point() + 
+    facet_wrap(~ num) + 
+    geom_smooth(method = &quot;lm&quot;, se = FALSE, fullrange = T)</code></pre>
+<p><img src="visualisation-donnees_files/figure-html/anscombe-ggplot-1.png" width="672" style="display: block; margin: auto;" /></p>
+</div>
+</div>
+<div id="applications" class="section level3">
+<h3>Applications</h3>
+<p>Nous allons utiliser les données <code>tips</code> du package <code>reshape2</code>.</p>
+<ol style="list-style-type: decimal">
+<li>Comment répondre aux questions suivantes :</li>
+</ol>
+<ol style="list-style-type: lower-alpha">
+<li>Les pourboires (<code>tip</code>) dépendent ils du montant (<code>total_bill</code>)</li>
+<li>Et des jours de la semaine (<code>day</code>) ?</li>
+<li>Et du nombre de convives (<code>party</code>) ?</li>
+<li>Croiser <code>tip</code> en fonction de <code>total_bill</code> et <code>party</code></li>
+</ol>
+<ol style="list-style-type: decimal">
+<li>Représenter <code>total_bill</code> en fonction de <code>sex</code> et <code>smoker</code>. <!--
+ggplot(tips, aes(sex, smoker, z = total_bill)) + 
+    stat_summary_2d() 
+--></li>
+<li>Toujours dans <code>tips</code>, représenter <code>total_bill</code> et <code>tip</code>, en fonction de <code>sex</code> de 2 façons <!--
+ggplot(tips, aes(total_bill, tip, color = sex)) + geom_point()
+ggplot(tips, aes(total_bill, tip)) + geom_point() + facet_grid(. ~ sex)
+ggplot(tips, aes(total_bill, tip)) + geom_bin2d() + facet_grid(. ~ sex)
+--></li>
+<li>Idem avec <code>smoker</code> en plus <!--
+ggplot(tips, aes(total_bill, tip, color = sex)) + geom_point() + facet_grid(. ~ smoker)
+ggplot(tips, aes(total_bill, tip)) + geom_point() + facet_grid(smoker ~ sex)
+ggplot(tips, aes(total_bill, tip)) + geom_bin2d() + facet_grid(smoker ~ sex)
+--></li>
+</ol>
+</div>
 </div>
 <div id="cartographie" class="section level2">
 <h2>Cartographie</h2>
@@ -833,39 +806,39 @@ ggplot(mtcars, aes(x = hp, y = mpg,
 <p>Voici un premier exemple simple de création de carte du monde</p>
 <pre class="r"><code>m = leaflet() %&gt;% addTiles()
 m</code></pre>
-<div id="htmlwidget-0937e41e5e292af8cff4" style="width:672px;height:480px;" class="leaflet html-widget"></div>
-<script type="application/json" data-for="htmlwidget-0937e41e5e292af8cff4">{"x":{"calls":[{"method":"addTiles","args":["http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",null,null,{"minZoom":0,"maxZoom":18,"maxNativeZoom":null,"tileSize":256,"subdomains":"abc","errorTileUrl":"","tms":false,"continuousWorld":false,"noWrap":false,"zoomOffset":0,"zoomReverse":false,"opacity":1,"zIndex":null,"unloadInvisibleTiles":null,"updateWhenIdle":null,"detectRetina":false,"reuseTiles":false,"attribution":"&copy; <a href=\"http://openstreetmap.org\">OpenStreetMap\u003c/a> contributors, <a href=\"http://creativecommons.org/licenses/by-sa/2.0/\">CC-BY-SA\u003c/a>"}]}]},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-7d593cb392bf98d35d74" style="width:672px;height:480px;" class="leaflet html-widget"></div>
+<script type="application/json" data-for="htmlwidget-7d593cb392bf98d35d74">{"x":{"calls":[{"method":"addTiles","args":["http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",null,null,{"minZoom":0,"maxZoom":18,"maxNativeZoom":null,"tileSize":256,"subdomains":"abc","errorTileUrl":"","tms":false,"continuousWorld":false,"noWrap":false,"zoomOffset":0,"zoomReverse":false,"opacity":1,"zIndex":null,"unloadInvisibleTiles":null,"updateWhenIdle":null,"detectRetina":false,"reuseTiles":false,"attribution":"&copy; <a href=\"http://openstreetmap.org\">OpenStreetMap\u003c/a> contributors, <a href=\"http://creativecommons.org/licenses/by-sa/2.0/\">CC-BY-SA\u003c/a>"}]}]},"evals":[],"jsHooks":[]}</script>
 <p>Pour laquelle il est possible de choisir la zone d’intêrêt, en indiquant les latitudes et longitudes min et max.</p>
 <pre class="r"><code>m %&gt;% fitBounds(0, 40, 5, 50)</code></pre>
-<div id="htmlwidget-66da104d7da582cc905a" style="width:672px;height:480px;" class="leaflet html-widget"></div>
-<script type="application/json" data-for="htmlwidget-66da104d7da582cc905a">{"x":{"calls":[{"method":"addTiles","args":["http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",null,null,{"minZoom":0,"maxZoom":18,"maxNativeZoom":null,"tileSize":256,"subdomains":"abc","errorTileUrl":"","tms":false,"continuousWorld":false,"noWrap":false,"zoomOffset":0,"zoomReverse":false,"opacity":1,"zIndex":null,"unloadInvisibleTiles":null,"updateWhenIdle":null,"detectRetina":false,"reuseTiles":false,"attribution":"&copy; <a href=\"http://openstreetmap.org\">OpenStreetMap\u003c/a> contributors, <a href=\"http://creativecommons.org/licenses/by-sa/2.0/\">CC-BY-SA\u003c/a>"}]}],"fitBounds":[40,0,50,5]},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-e500abe03f67a076af2c" style="width:672px;height:480px;" class="leaflet html-widget"></div>
+<script type="application/json" data-for="htmlwidget-e500abe03f67a076af2c">{"x":{"calls":[{"method":"addTiles","args":["http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",null,null,{"minZoom":0,"maxZoom":18,"maxNativeZoom":null,"tileSize":256,"subdomains":"abc","errorTileUrl":"","tms":false,"continuousWorld":false,"noWrap":false,"zoomOffset":0,"zoomReverse":false,"opacity":1,"zIndex":null,"unloadInvisibleTiles":null,"updateWhenIdle":null,"detectRetina":false,"reuseTiles":false,"attribution":"&copy; <a href=\"http://openstreetmap.org\">OpenStreetMap\u003c/a> contributors, <a href=\"http://creativecommons.org/licenses/by-sa/2.0/\">CC-BY-SA\u003c/a>"}]}],"fitBounds":[40,0,50,5]},"evals":[],"jsHooks":[]}</script>
 <p>Il est aussi possible de préciser les coordonnées géographiques du centre de la carte, ainsi que le niveau de zoom (entre 1 - monde - et 18 - pâté de maison).</p>
 <pre class="r"><code>m = m %&gt;% setView(2.268224, 48.842275, zoom = 17)
 m</code></pre>
-<div id="htmlwidget-a83d4384bcc71d9ce9a2" style="width:672px;height:480px;" class="leaflet html-widget"></div>
-<script type="application/json" data-for="htmlwidget-a83d4384bcc71d9ce9a2">{"x":{"calls":[{"method":"addTiles","args":["http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",null,null,{"minZoom":0,"maxZoom":18,"maxNativeZoom":null,"tileSize":256,"subdomains":"abc","errorTileUrl":"","tms":false,"continuousWorld":false,"noWrap":false,"zoomOffset":0,"zoomReverse":false,"opacity":1,"zIndex":null,"unloadInvisibleTiles":null,"updateWhenIdle":null,"detectRetina":false,"reuseTiles":false,"attribution":"&copy; <a href=\"http://openstreetmap.org\">OpenStreetMap\u003c/a> contributors, <a href=\"http://creativecommons.org/licenses/by-sa/2.0/\">CC-BY-SA\u003c/a>"}]}],"setView":[[48.842275,2.268224],17,[]]},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-4d2ff41ed0286a0a1f0f" style="width:672px;height:480px;" class="leaflet html-widget"></div>
+<script type="application/json" data-for="htmlwidget-4d2ff41ed0286a0a1f0f">{"x":{"calls":[{"method":"addTiles","args":["http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",null,null,{"minZoom":0,"maxZoom":18,"maxNativeZoom":null,"tileSize":256,"subdomains":"abc","errorTileUrl":"","tms":false,"continuousWorld":false,"noWrap":false,"zoomOffset":0,"zoomReverse":false,"opacity":1,"zIndex":null,"unloadInvisibleTiles":null,"updateWhenIdle":null,"detectRetina":false,"reuseTiles":false,"attribution":"&copy; <a href=\"http://openstreetmap.org\">OpenStreetMap\u003c/a> contributors, <a href=\"http://creativecommons.org/licenses/by-sa/2.0/\">CC-BY-SA\u003c/a>"}]}],"setView":[[48.842275,2.268224],17,[]]},"evals":[],"jsHooks":[]}</script>
 <p>On peut y ajouter une <em>pop-up</em> assez facilement.</p>
 <pre class="r"><code>m %&gt;% addPopups(2.268224, 48.842275, &quot;IUT Paris Descartes&quot;)</code></pre>
-<div id="htmlwidget-465aabe8baeb61da0e41" style="width:672px;height:480px;" class="leaflet html-widget"></div>
-<script type="application/json" data-for="htmlwidget-465aabe8baeb61da0e41">{"x":{"calls":[{"method":"addTiles","args":["http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",null,null,{"minZoom":0,"maxZoom":18,"maxNativeZoom":null,"tileSize":256,"subdomains":"abc","errorTileUrl":"","tms":false,"continuousWorld":false,"noWrap":false,"zoomOffset":0,"zoomReverse":false,"opacity":1,"zIndex":null,"unloadInvisibleTiles":null,"updateWhenIdle":null,"detectRetina":false,"reuseTiles":false,"attribution":"&copy; <a href=\"http://openstreetmap.org\">OpenStreetMap\u003c/a> contributors, <a href=\"http://creativecommons.org/licenses/by-sa/2.0/\">CC-BY-SA\u003c/a>"}]},{"method":"addPopups","args":[48.842275,2.268224,"IUT Paris Descartes",null,null,{"maxWidth":300,"minWidth":50,"maxHeight":null,"autoPan":true,"keepInView":false,"closeButton":true,"zoomAnimation":true,"closeOnClick":null,"className":""}]}],"setView":[[48.842275,2.268224],17,[]],"limits":{"lat":[48.842275,48.842275],"lng":[2.268224,2.268224]}},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-98c6a440fdb2c7b8d8d3" style="width:672px;height:480px;" class="leaflet html-widget"></div>
+<script type="application/json" data-for="htmlwidget-98c6a440fdb2c7b8d8d3">{"x":{"calls":[{"method":"addTiles","args":["http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",null,null,{"minZoom":0,"maxZoom":18,"maxNativeZoom":null,"tileSize":256,"subdomains":"abc","errorTileUrl":"","tms":false,"continuousWorld":false,"noWrap":false,"zoomOffset":0,"zoomReverse":false,"opacity":1,"zIndex":null,"unloadInvisibleTiles":null,"updateWhenIdle":null,"detectRetina":false,"reuseTiles":false,"attribution":"&copy; <a href=\"http://openstreetmap.org\">OpenStreetMap\u003c/a> contributors, <a href=\"http://creativecommons.org/licenses/by-sa/2.0/\">CC-BY-SA\u003c/a>"}]},{"method":"addPopups","args":[48.842275,2.268224,"IUT Paris Descartes",null,null,{"maxWidth":300,"minWidth":50,"maxHeight":null,"autoPan":true,"keepInView":false,"closeButton":true,"zoomAnimation":true,"closeOnClick":null,"className":""}]}],"setView":[[48.842275,2.268224],17,[]],"limits":{"lat":[48.842275,48.842275],"lng":[2.268224,2.268224]}},"evals":[],"jsHooks":[]}</script>
 <p>Ou un marqueur, pour lequel le texte s’affichera lorsque nous cliquerons sur le marqueur.</p>
 <pre class="r"><code>m %&gt;% addMarkers(2.268224, 48.842275, popup = &quot;IUT Paris Descartes&quot;)</code></pre>
-<div id="htmlwidget-5d5c47635947cdfec09a" style="width:672px;height:480px;" class="leaflet html-widget"></div>
-<script type="application/json" data-for="htmlwidget-5d5c47635947cdfec09a">{"x":{"calls":[{"method":"addTiles","args":["http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",null,null,{"minZoom":0,"maxZoom":18,"maxNativeZoom":null,"tileSize":256,"subdomains":"abc","errorTileUrl":"","tms":false,"continuousWorld":false,"noWrap":false,"zoomOffset":0,"zoomReverse":false,"opacity":1,"zIndex":null,"unloadInvisibleTiles":null,"updateWhenIdle":null,"detectRetina":false,"reuseTiles":false,"attribution":"&copy; <a href=\"http://openstreetmap.org\">OpenStreetMap\u003c/a> contributors, <a href=\"http://creativecommons.org/licenses/by-sa/2.0/\">CC-BY-SA\u003c/a>"}]},{"method":"addMarkers","args":[48.842275,2.268224,null,null,null,{"clickable":true,"draggable":false,"keyboard":true,"title":"","alt":"","zIndexOffset":0,"opacity":1,"riseOnHover":false,"riseOffset":250},"IUT Paris Descartes",null,null]}],"setView":[[48.842275,2.268224],17,[]],"limits":{"lat":[48.842275,48.842275],"lng":[2.268224,2.268224]}},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-0cdb74438f3103ebf154" style="width:672px;height:480px;" class="leaflet html-widget"></div>
+<script type="application/json" data-for="htmlwidget-0cdb74438f3103ebf154">{"x":{"calls":[{"method":"addTiles","args":["http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",null,null,{"minZoom":0,"maxZoom":18,"maxNativeZoom":null,"tileSize":256,"subdomains":"abc","errorTileUrl":"","tms":false,"continuousWorld":false,"noWrap":false,"zoomOffset":0,"zoomReverse":false,"opacity":1,"zIndex":null,"unloadInvisibleTiles":null,"updateWhenIdle":null,"detectRetina":false,"reuseTiles":false,"attribution":"&copy; <a href=\"http://openstreetmap.org\">OpenStreetMap\u003c/a> contributors, <a href=\"http://creativecommons.org/licenses/by-sa/2.0/\">CC-BY-SA\u003c/a>"}]},{"method":"addMarkers","args":[48.842275,2.268224,null,null,null,{"clickable":true,"draggable":false,"keyboard":true,"title":"","alt":"","zIndexOffset":0,"opacity":1,"riseOnHover":false,"riseOffset":250},"IUT Paris Descartes",null,null]}],"setView":[[48.842275,2.268224],17,[]],"limits":{"lat":[48.842275,48.842275],"lng":[2.268224,2.268224]}},"evals":[],"jsHooks":[]}</script>
 <p>Voire des formes classiques (cercle, rectangle, polygone)</p>
 <pre class="r"><code>m %&gt;% addCircles(2.268224, 48.842275, radius = 100) %&gt;% 
     addRectangles(2.27, 48.835, 2.28, 48.84)</code></pre>
-<div id="htmlwidget-98953d74fe150d7e0df3" style="width:672px;height:480px;" class="leaflet html-widget"></div>
-<script type="application/json" data-for="htmlwidget-98953d74fe150d7e0df3">{"x":{"calls":[{"method":"addTiles","args":["http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",null,null,{"minZoom":0,"maxZoom":18,"maxNativeZoom":null,"tileSize":256,"subdomains":"abc","errorTileUrl":"","tms":false,"continuousWorld":false,"noWrap":false,"zoomOffset":0,"zoomReverse":false,"opacity":1,"zIndex":null,"unloadInvisibleTiles":null,"updateWhenIdle":null,"detectRetina":false,"reuseTiles":false,"attribution":"&copy; <a href=\"http://openstreetmap.org\">OpenStreetMap\u003c/a> contributors, <a href=\"http://creativecommons.org/licenses/by-sa/2.0/\">CC-BY-SA\u003c/a>"}]},{"method":"addCircles","args":[48.842275,2.268224,100,null,null,{"lineCap":null,"lineJoin":null,"clickable":true,"pointerEvents":null,"className":"","stroke":true,"color":"#03F","weight":5,"opacity":0.5,"fill":true,"fillColor":"#03F","fillOpacity":0.2,"dashArray":null},null]},{"method":"addRectangles","args":[48.835,2.27,48.84,2.28,null,null,{"lineCap":null,"lineJoin":null,"clickable":true,"pointerEvents":null,"className":"","stroke":true,"color":"#03F","weight":5,"opacity":0.5,"fill":true,"fillColor":"#03F","fillOpacity":0.2,"dashArray":null,"smoothFactor":1,"noClip":false},null]}],"setView":[[48.842275,2.268224],17,[]],"limits":{"lat":[48.835,48.842275],"lng":[2.268224,2.28]}},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-c1083f9ead9c61c94f7d" style="width:672px;height:480px;" class="leaflet html-widget"></div>
+<script type="application/json" data-for="htmlwidget-c1083f9ead9c61c94f7d">{"x":{"calls":[{"method":"addTiles","args":["http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",null,null,{"minZoom":0,"maxZoom":18,"maxNativeZoom":null,"tileSize":256,"subdomains":"abc","errorTileUrl":"","tms":false,"continuousWorld":false,"noWrap":false,"zoomOffset":0,"zoomReverse":false,"opacity":1,"zIndex":null,"unloadInvisibleTiles":null,"updateWhenIdle":null,"detectRetina":false,"reuseTiles":false,"attribution":"&copy; <a href=\"http://openstreetmap.org\">OpenStreetMap\u003c/a> contributors, <a href=\"http://creativecommons.org/licenses/by-sa/2.0/\">CC-BY-SA\u003c/a>"}]},{"method":"addCircles","args":[48.842275,2.268224,100,null,null,{"lineCap":null,"lineJoin":null,"clickable":true,"pointerEvents":null,"className":"","stroke":true,"color":"#03F","weight":5,"opacity":0.5,"fill":true,"fillColor":"#03F","fillOpacity":0.2,"dashArray":null},null]},{"method":"addRectangles","args":[48.835,2.27,48.84,2.28,null,null,{"lineCap":null,"lineJoin":null,"clickable":true,"pointerEvents":null,"className":"","stroke":true,"color":"#03F","weight":5,"opacity":0.5,"fill":true,"fillColor":"#03F","fillOpacity":0.2,"dashArray":null,"smoothFactor":1,"noClip":false},null]}],"setView":[[48.842275,2.268224],17,[]],"limits":{"lat":[48.835,48.842275],"lng":[2.268224,2.28]}},"evals":[],"jsHooks":[]}</script>
 <p>A partir du jeu de données <code>ozone</code> du package <code>maps</code>, et contenant des informations géogrpahiques, nous allons représenter ces informations sur une carte.</p>
 <pre class="r"><code>DT::datatable(head(ozone))</code></pre>
-<div id="htmlwidget-a245ff5b5f541a945500" style="width:100%;height:auto;" class="datatables html-widget"></div>
-<script type="application/json" data-for="htmlwidget-a245ff5b5f541a945500">{"x":{"filter":"none","data":[["1","2","3","4","5","6"],[-74.0262,-74.5992,-74.7138,-74.1408,-74.2554,-74.1694],[40.2217,40.5597,40.7832,40.6628,40.6514,40.7001],[59,58,90,80,50,47]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> \u003c/th>\n      <th>x\u003c/th>\n      <th>y\u003c/th>\n      <th>median\u003c/th>\n    \u003c/tr>\n  \u003c/thead>\n\u003c/table>","options":{"columnDefs":[{"className":"dt-right","targets":[1,2,3]},{"orderable":false,"targets":0}],"order":[],"autoWidth":false,"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-1d8f066d976ac052051c" style="width:100%;height:auto;" class="datatables html-widget"></div>
+<script type="application/json" data-for="htmlwidget-1d8f066d976ac052051c">{"x":{"filter":"none","data":[["1","2","3","4","5","6"],[-74.0262,-74.5992,-74.7138,-74.1408,-74.2554,-74.1694],[40.2217,40.5597,40.7832,40.6628,40.6514,40.7001],[59,58,90,80,50,47]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> \u003c/th>\n      <th>x\u003c/th>\n      <th>y\u003c/th>\n      <th>median\u003c/th>\n    \u003c/tr>\n  \u003c/thead>\n\u003c/table>","options":{"columnDefs":[{"className":"dt-right","targets":[1,2,3]},{"orderable":false,"targets":0}],"order":[],"autoWidth":false,"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
 <p>Ici, nous faisons en sorte que la taille des cercles soient dépendantes de la variable <code>median</code>, mais nous devons ajuster <em>à la main</em> pour avoir des valeurs intéressantes pour la représentation.</p>
 <pre class="r"><code>leaflet(ozone) %&gt;% addTiles() %&gt;% 
     addCircles(lng = ~x, lat = ~y, radius = ~median*100)</code></pre>
-<div id="htmlwidget-fe5e38be4e666470c535" style="width:672px;height:480px;" class="leaflet html-widget"></div>
-<script type="application/json" data-for="htmlwidget-fe5e38be4e666470c535">{"x":{"calls":[{"method":"addTiles","args":["http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",null,null,{"minZoom":0,"maxZoom":18,"maxNativeZoom":null,"tileSize":256,"subdomains":"abc","errorTileUrl":"","tms":false,"continuousWorld":false,"noWrap":false,"zoomOffset":0,"zoomReverse":false,"opacity":1,"zIndex":null,"unloadInvisibleTiles":null,"updateWhenIdle":null,"detectRetina":false,"reuseTiles":false,"attribution":"&copy; <a href=\"http://openstreetmap.org\">OpenStreetMap\u003c/a> contributors, <a href=\"http://creativecommons.org/licenses/by-sa/2.0/\">CC-BY-SA\u003c/a>"}]},{"method":"addCircles","args":[[40.2217,40.5597,40.7832,40.6628,40.6514,40.7001,40.7087,40.9379,40.7373,40.7373,40.9665,41.0811,41.1384,41.0639,41.19,41.3905,41.316,41.5624,41.677,41.3905,41.5624,41.6712,41.3619,41.7687,41.8603,41.9004,42.1124,42.2499,42.588,41.7114,42.6453,42.2499,42.3244,42.376,42.3817,42.4218,41.9176,42.4505,42.6281,42.8,43.3214],[-74.0262,-74.5992,-74.7138,-74.1408,-74.2554,-74.1694,-73.9116,-73.8543,-73.5678,-73.1668,-73.7397,-73.6251,-73.5678,-73.5105,-73.1668,-73.4533,-72.9376,-73.0522,-73.2241,-72.4219,-72.6511,-72.7657,-72.0782,-72.7084,-72.6511,-72.0782,-72.5938,-71.7917,-71.7917,-71.1041,-71.3333,-71.0468,-71.1041,-71.1041,-71.2187,-71.0468,-74.0262,-73.2241,-73.7397,-73.9116,-73.6251],[5900,5800,9000,8000,5000,4700,8100,5600,5500,7200,6200,10000,9700,9100,8000,8100,7600,7500,8500,9400,8000,8200,7400,6800,6000,8500,3400,6600,6500,7300,6300,6200,3600,5400,4200,5200,6400,6500,6000,5600,6400],null,null,{"lineCap":null,"lineJoin":null,"clickable":true,"pointerEvents":null,"className":"","stroke":true,"color":"#03F","weight":5,"opacity":0.5,"fill":true,"fillColor":"#03F","fillOpacity":0.2,"dashArray":null},null]}],"limits":{"lat":[40.2217,43.3214],"lng":[-74.7138,-71.0468]}},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-ce9a3f72d93af7d8c4ba" style="width:672px;height:480px;" class="leaflet html-widget"></div>
+<script type="application/json" data-for="htmlwidget-ce9a3f72d93af7d8c4ba">{"x":{"calls":[{"method":"addTiles","args":["http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",null,null,{"minZoom":0,"maxZoom":18,"maxNativeZoom":null,"tileSize":256,"subdomains":"abc","errorTileUrl":"","tms":false,"continuousWorld":false,"noWrap":false,"zoomOffset":0,"zoomReverse":false,"opacity":1,"zIndex":null,"unloadInvisibleTiles":null,"updateWhenIdle":null,"detectRetina":false,"reuseTiles":false,"attribution":"&copy; <a href=\"http://openstreetmap.org\">OpenStreetMap\u003c/a> contributors, <a href=\"http://creativecommons.org/licenses/by-sa/2.0/\">CC-BY-SA\u003c/a>"}]},{"method":"addCircles","args":[[40.2217,40.5597,40.7832,40.6628,40.6514,40.7001,40.7087,40.9379,40.7373,40.7373,40.9665,41.0811,41.1384,41.0639,41.19,41.3905,41.316,41.5624,41.677,41.3905,41.5624,41.6712,41.3619,41.7687,41.8603,41.9004,42.1124,42.2499,42.588,41.7114,42.6453,42.2499,42.3244,42.376,42.3817,42.4218,41.9176,42.4505,42.6281,42.8,43.3214],[-74.0262,-74.5992,-74.7138,-74.1408,-74.2554,-74.1694,-73.9116,-73.8543,-73.5678,-73.1668,-73.7397,-73.6251,-73.5678,-73.5105,-73.1668,-73.4533,-72.9376,-73.0522,-73.2241,-72.4219,-72.6511,-72.7657,-72.0782,-72.7084,-72.6511,-72.0782,-72.5938,-71.7917,-71.7917,-71.1041,-71.3333,-71.0468,-71.1041,-71.1041,-71.2187,-71.0468,-74.0262,-73.2241,-73.7397,-73.9116,-73.6251],[5900,5800,9000,8000,5000,4700,8100,5600,5500,7200,6200,10000,9700,9100,8000,8100,7600,7500,8500,9400,8000,8200,7400,6800,6000,8500,3400,6600,6500,7300,6300,6200,3600,5400,4200,5200,6400,6500,6000,5600,6400],null,null,{"lineCap":null,"lineJoin":null,"clickable":true,"pointerEvents":null,"className":"","stroke":true,"color":"#03F","weight":5,"opacity":0.5,"fill":true,"fillColor":"#03F","fillOpacity":0.2,"dashArray":null},null]}],"limits":{"lat":[40.2217,43.3214],"lng":[-74.7138,-71.0468]}},"evals":[],"jsHooks":[]}</script>
 </div>
 <div id="avec-la-librairie-ggmap" class="section level3">
 <h3>Avec la librairie <code>ggmap</code></h3>
@@ -895,97 +868,15 @@ m = get_map(location = c(left, bottom, right, top),
 ggmap(m) + geom_point(data = ozone, aes(x, y, color = median))</code></pre>
 <p><img src="visualisation-donnees_files/figure-html/-ggmap-data-1.png" width="672" style="display: block; margin: auto;" /></p>
 </div>
-</div>
-<div id="quelques-exemples-complementaires" class="section level2">
-<h2>Quelques exemples complémentaires</h2>
-<p>Ce sont des exemples plus ou moins simple de créations de graphiques.</p>
-<div id="donnees-iris" class="section level3">
-<h3>Données Iris</h3>
-<p>On cherche à représenter les boîtes à moustaches des 4 variables pour les trois espèces.</p>
-<div id="avec-plot" class="section level4">
-<h4>Avec <code>plot</code></h4>
-<pre class="r"><code>par(mfrow = c(2, 2), mar = c(2, 2, 2, 0) + .1)
-for (i in 1:4) {
-    boxplot(iris[,i] ~ iris$Species, main = names(iris)[i])
-}</code></pre>
-<p><img src="visualisation-donnees_files/figure-html/iris-boxplot-1.png" width="672" style="display: block; margin: auto;" /></p>
-</div>
-<div id="avec-ggplot" class="section level4">
-<h4>Avec <code>ggplot</code></h4>
-<pre class="r"><code>ggplot(melt(iris, id.vars = &quot;Species&quot;), aes(Species, value)) + 
-    geom_boxplot() + facet_grid( ~ variable)</code></pre>
-<p><img src="visualisation-donnees_files/figure-html/iris-boxplot-ggplot-1.png" width="672" style="display: block; margin: auto;" /></p>
-</div>
-</div>
-<div id="donnees-dancombe" class="section level3">
-<h3>Données d’ancombe</h3>
-<pre class="r"><code>DT::datatable(anscombe, options = list(searching = F, ordering = F, paging = F))</code></pre>
-<div id="htmlwidget-bf955360067bf8001b70" style="width:100%;height:auto;" class="datatables html-widget"></div>
-<script type="application/json" data-for="htmlwidget-bf955360067bf8001b70">{"x":{"filter":"none","data":[["1","2","3","4","5","6","7","8","9","10","11"],[10,8,13,9,11,14,6,4,12,7,5],[10,8,13,9,11,14,6,4,12,7,5],[10,8,13,9,11,14,6,4,12,7,5],[8,8,8,8,8,8,8,19,8,8,8],[8.04,6.95,7.58,8.81,8.33,9.96,7.24,4.26,10.84,4.82,5.68],[9.14,8.14,8.74,8.77,9.26,8.1,6.13,3.1,9.13,7.26,4.74],[7.46,6.77,12.74,7.11,7.81,8.84,6.08,5.39,8.15,6.42,5.73],[6.58,5.76,7.71,8.84,8.47,7.04,5.25,12.5,5.56,7.91,6.89]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> \u003c/th>\n      <th>x1\u003c/th>\n      <th>x2\u003c/th>\n      <th>x3\u003c/th>\n      <th>x4\u003c/th>\n      <th>y1\u003c/th>\n      <th>y2\u003c/th>\n      <th>y3\u003c/th>\n      <th>y4\u003c/th>\n    \u003c/tr>\n  \u003c/thead>\n\u003c/table>","options":{"searching":false,"ordering":false,"paging":false,"columnDefs":[{"className":"dt-right","targets":[1,2,3,4,5,6,7,8]},{"orderable":false,"targets":0}],"order":[],"autoWidth":false,"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
-<pre class="r"><code>par(mfrow = c(2, 2), mar = c(2, 2, 0, 0)+.1)
-f &lt;- function(df) {
-    names(df) = c(&quot;x&quot;, &quot;y&quot;)
-    m = lm(y ~ x, data = df)
-    plot(y ~ x, data = df, pch = 19, bty = &quot;n&quot;, 
-         xlim = range(anscombe[,1:4]),
-         ylim = range(anscombe[,5:8]))
-    abline(m, col = &quot;red&quot;)
-}
-for (i in 1:4) {
-    f(anscombe[,paste(c(&quot;x&quot;, &quot;y&quot;), i, sep = &quot;&quot;)])
-}</code></pre>
-<p><img src="visualisation-donnees_files/figure-html/anscombe-plot-1.png" width="672" style="display: block; margin: auto;" /></p>
-<pre class="r"><code>ans = transform(
-    melt(transform(anscombe, id = 1:nrow(anscombe)), id.vars = &quot;id&quot;),
-    axe = substr(as.character(variable), 1, 1),
-    num = as.numeric(substr(as.character(variable), 2, 2))
-)
-ans$facetX = ans$num %% 2 == 0
-ans$facetY = ans$num &lt;= 2
-ansX = subset(ans, subset = axe == &quot;x&quot;)
-ansY = subset(ans, subset = axe == &quot;y&quot;)
-ansXY = merge(ansX, ansY, by = c(&quot;id&quot;, &quot;num&quot;))
-ggplot(ansXY, aes(value.x, value.y)) + geom_point() + 
-    facet_grid(facetY.x ~ facetX.x) + 
-    geom_smooth(method = &quot;lm&quot;, se = FALSE, fullrange = T)</code></pre>
-<p><img src="visualisation-donnees_files/figure-html/anscombe-ggplot-1.png" width="672" style="display: block; margin: auto;" /></p>
-</div>
-</div>
-<div id="a-faire" class="section level2">
-<h2>A faire</h2>
-<div id="applications" class="section level3">
+<div id="applications-1" class="section level3">
 <h3>Applications</h3>
-<ol style="list-style-type: decimal">
-<li>Dans les données <code>tips</code> du package <code>reshape2</code>, représenter <code>total_bill</code> en fonction de <code>sex</code> et <code>smoker</code>. <!--
-ggplot(tips, aes(sex, smoker, z = total_bill)) + 
-    stat_summary_2d() 
---></li>
-<li>Toujours dans <code>tips</code>, représenter <code>total_bill</code> et <code>tip</code>, en fonction de <code>sex</code> de 2 façons <!--
-ggplot(tips, aes(total_bill, tip, color = sex)) + geom_point()
-ggplot(tips, aes(total_bill, tip)) + geom_point() + facet_grid(. ~ sex)
-ggplot(tips, aes(total_bill, tip)) + geom_bin2d() + facet_grid(. ~ sex)
---></li>
-<li>Idem avec <code>smoker</code> en plus <!--
-ggplot(tips, aes(total_bill, tip, color = sex)) + geom_point() + facet_grid(. ~ smoker)
-ggplot(tips, aes(total_bill, tip)) + geom_point() + facet_grid(smoker ~ sex)
-ggplot(tips, aes(total_bill, tip)) + geom_bin2d() + facet_grid(smoker ~ sex)
---></li>
-<li>Comment répondre aux questions suivantes :</li>
-</ol>
-<ol style="list-style-type: lower-alpha">
-<li>Les pourboires (<code>tip</code>) dépendent ils du montant (<code>total_bill</code>)</li>
-<li>Et des jours de la semaine (<code>day</code>) ?</li>
-<li>Et du nombre de convives (<code>party</code>) ?</li>
-<li>Croiser <code>tip</code> en fonction de <code>total_bill</code> et <code>party</code></li>
-</ol>
-<ol start="5" style="list-style-type: decimal">
-<li>En utiliser les données <code>crime</code> du package <code>ggmap</code>, comment représenter le nombre et les types de crime par rapport à leur localisation ?</li>
-</ol>
+<p>En utilisant les données <code>crime</code> du package <code>ggmap</code>, comment représenter le nombre et les types de crime par rapport à leur localisation ?</p>
 </div>
-<div id="mini-projet" class="section level3">
-<h3>Mini-projet</h3>
-<div id="introduction" class="section level4">
-<h4>Introduction</h4>
+</div>
+<div id="mini-projet" class="section level2">
+<h2>Mini-projet</h2>
+<div id="introduction" class="section level3">
+<h3>Introduction</h3>
 <p>Nous disposons de <a href="https://www.dropbox.com/sh/s7kiuot44g5lxi5/AACVVQzJJh2ivGDH5ikisroua?dl=0">données d’AirBnB</a> pour Paris à la date du 2 septembre 2015 ( <a href="http://insideairbnb.com/get-the-data.html">données source</a> ). Celles-ci ont été légèremment nettoyées et réduites pour obtenir les fichiers suivants :</p>
 <table style="width:8%;">
 <colgroup>
@@ -1074,8 +965,8 @@ ggplot(airbnb.neigh.for, aes(long, lat, group=group)) +
     theme_void() + theme(legend.position=&quot;none&quot;)</code></pre>
 <p><img src="visualisation-donnees_files/figure-html/airbnb-tout-1.png" width="672" style="display: block; margin: auto;" /></p>
 </div>
-<div id="questions" class="section level4">
-<h4>Questions</h4>
+<div id="questions" class="section level3">
+<h3>Questions</h3>
 <ol style="list-style-type: decimal">
 <li>Représenter les logements sur la carte de Paris</li>
 <li>Représenter les quartiers sur la carte de Paris</li>
@@ -1087,7 +978,6 @@ ggplot(airbnb.neigh.for, aes(long, lat, group=group)) +
 <li>Représenter le nombre de logements par quartier</li>
 <li>Idem pour le prix moyen</li>
 </ol>
-</div>
 </div>
 </div>
 

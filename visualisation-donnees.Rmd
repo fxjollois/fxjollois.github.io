@@ -201,152 +201,38 @@ Dans cette librairie, il y a deux fonctions principales :
 - `qplot` (ou `quickplot`) permettant de faire des graphiques rapidement
 - `ggplot` permettant d'initialiser un graphique auquel on va ajouter des couches successivement
 
-### Fonction `qplot`
+Le principe de cette grammaire est qu'un graphique est composé de couches :
 
-Comme indiqué précédemment, cette fonction permet de produire vite des graphiques propres et clairs, soit automatiquement en fonction des variables fournies, soit en définissant précisemment ce que l'on souhaite.
+- les **données** à représenter, à partir desquelles nous définissons des attributs **estéthiques** (soit identique pour tous, soit fonction d'une des variables) :
+    - les axes $x$ et $y$,
+    - la couleur
+    - la taille
+    - le symbole
+- les attributs **géométriques** (point, ligne, ...)
+- les transformations **statistiques** (déombrement, ajustement, ...)
+- les **échelles**
+- le système de **coordonnées** (linéaire, logarithmique, polaire, ...)
+- le découpage (ou non) en **facettes**
 
-Voici quelques exemples de production de graphiques. Nous remarquons que le comportement de `qplot` dépend du type de la variable :
+Dans cette librairie, il y a deux fonctions principales :
 
-- `numeric` : histogramme à 30 barres par défaut (`geom = "histogram"`)
-- `factor` : diagramme en barres (`geom = "bar"`)
+- `qplot` (ou `quickplot`) permettant de faire des graphiques rapidement
+- `ggplot` permettant d'initialiser un graphique auquel on va ajouter des couches successivement
 
-#### Var quantitative 
+Dans ce TP, nous n'aborderons que la deuxième fonction, plus complète.
 
-##### Histogramme
+### Fonction `ggplot()`
 
-Il est possible de déclarer le nombre d'intervalles d'un histogramme, ou de les définir directement. Attention, dans ce dernier cas, le premier graphique produit est faux car il est nécessaire d'utiliser la densité (variable spéciale `..density..` dans `ggplot2`) et non le dénombrement. Et puisqu'on a préciser des valeurs en $y$, nous devons préciser que nous souhaitons un histogramme en représentation géométrique.
-
-```{r qplot-uni-hist}
-qplot(mtcars$mpg)
-qplot(mpg, data = mtcars)
-qplot(mpg, data = mtcars, binwidth = 2)
-qplot(mpg, data = mtcars, bins = 10)
-qplot(mpg, data = mtcars, breaks = c(10,12.5,15,18,25,35))
-qplot(mpg, y = ..density.., data = mtcars, 
-      geom = "histogram", breaks = c(10,12.5,15,18,25,35))
-```
-
-##### Boîte à moustaches
-
-Pour avoir une boîte à moustache sur une variable, nous sommes obligé de déclarer en $x$ une valeur fixe (ici une chaîne vide `""`), et de préciser la transformation géométrique (`boxplot` ici donc).
-
-```{r qplot-uni-boxplot}
-qplot("", mpg, data = mtcars, geom = "boxplot")
-```
-
-##### $qq$-plot
-
-Dans le cas de la représentation géomtrique en $qq$-plot, nous ne définissons pas de $x$ et de $y$, mais juste l'échantillon à utiliser (`sample`). 
-
-```{r qplot-uni-qqplot}
-qplot(sample = mpg, data = mtcars, geom = "qq")
-```
-
-#### Var qualitative
-
-Un diagramme circulaire nécessite des coordonnées dites polaires et nous utiliserons plutôt la deuxième fonction, `ggplot`, pour le réaliser. 
-
-##### Diagramme en barres
-
-Comme indiqué, si nous mettons une variable numérique, sans préciser la représentation géométrique, `qplot` produit un histogramme. C'est pourquoi nous devons spécifier que nous souhaitons une représentation en barre (`geom = "bar"`) pour l'utiliser sur `am` de `mtcars`. Sinon, nous réalisons directement une transformation en variable `factor`. Ce qui est préférable, au regard de l'axe des abcisses généré.
-
-```{r qplot-uni-quali}
-qplot(am, data = mtcars, geom = "bar")
-qplot(factor(am), data = mtcars)
-```
-
-#### Var quantitative - Var quantitative
-
-Pour réaliser un nuage de points, nous n'avons rien besoin de spécifier (i.e. c'est le choix par défaut de `qplot` pour deux variables numériques). 
-
-```{r qplot-quanti-quanti}
-qplot(hp, mpg, data = mtcars)
-```
-
-Il est possible aussi de faire un ajustement (avec `geom = "smooth`) ou une réprésentation des valeurs prises à l'aide de *ticks* (avec `geom = "rug"`). Et même de faire un graphique avec toutes ces informations. Mais pour avoir l'ajustement linéaire en plus des points, il est préférable d'utiliser `ggplot`.
-
-```{r qplot-quanti-quanti-autres}
-qplot(hp, mpg, data = mtcars, geom = "smooth")
-qplot(hp, mpg, data = mtcars, geom = "smooth", method = "lm")
-qplot(hp, mpg, data = mtcars, geom = "rug")
-qplot(hp, mpg, data = mtcars, geom = c("smooth", "rug", "point"))
-```
-
-Une autre réprésentation est une *carte de chaleur* (ou **heatmap**), représentation les deux axes et un ensemble de zones rectangulaires ayant une couleur en fonction du nombre de points présents dans cette zone. Ce graphique est très intéressant dans le cas de données nombreuses.
-
-```{r qplot-quanti-quanti-heatmap}
-qplot(hp, mpg, data = mtcars, geom = "bin2d")
-qplot(hp, mpg, data = mtcars, geom = "bin2d", bins = 10)
-```
-
-#### Var qualitative - Var qualitative
-
-Dans ce cas, la fonction `qplot` est plutôt utilisé pour réaliser des diagrammes en barres. 
-
-```{r qplot-quali-quali}
-qplot(factor(am), facets = ~ cyl, data = mtcars, geom = "bar")
-qplot(factor(am), facets = ~ cyl, fill = factor(am), data = mtcars, geom = "bar")
-qplot(factor(am), fill = factor(cyl), data = mtcars, geom = "bar")
-```
-
-Pour les empiler correctement (i.e. somme à 100%), il faut faire une manipulation en deux étapes :
-
-- calculer les profils pour chaque modalité de la variable en $x$, avec `prop.table` et `table`
-- faire une modification du tableau obtenu avec la fonction `melt` du package `reshape2`
-
-```{r qplot-quali-quali-stack}
-tab = table(mtcars$am, mtcars$cyl)
-tab
-pro = prop.table(tab, margin = 1)
-pro
-mel = setNames(melt(pro), c("am", "cyl", "value"))
-mel
-qplot(factor(am), weight = value, fill = factor(cyl), data = mel, 
-      geom = "bar")
-```
-
-Il est possible aussi de réaliser une *heatmap*, ou chaque zone est colorée en fonction du nombre d'individus ayant les modalités correspondantes dans les deux variables. Et si on veut représenter les profils comme précédemment, on peut réutiliser l'objet `mel` que l'on a créé précédemment. Ici, la lecture se fait verticalement (les proportions sont en fonction de la valeur de la variable en $x$).
-
-```{r qplot-quali-quali-heatmap}
-qplot(factor(am), factor(cyl), data = mtcars, geom = "bin2d")
-qplot(factor(am), factor(cyl), fill = value, data = mel, geom = "bin2d")
-```
-
-#### Var quantitative - Var qualitative
-
-Pour croiser deux variables de type différent, nous devons représenter la distribution de la variable quantitative pour chaque modalité de la variable qualitative (ici, respectivement histogramme, densité, boîte à moustaches, et représentation des points avec une opération de *jittering*).
-
-```{r qplot-quanti-quali}
-qplot(mpg, data = mtcars, geom = "histogram", bins = 10, facets = am ~ .)
-qplot(mpg, col = factor(am), data = mtcars, geom = "density")
-qplot(factor(am), mpg, data = mtcars, geom = "boxplot")
-qplot(factor(am), mpg, data = mtcars, geom = "jitter")
-qplot(factor(am), mpg, data = mtcars, geom = c("boxplot", "jitter"))
-```
-
-#### Exemple amélioré version `qplot`
-
-Si nous voulons reproduire l'[exemple amélioré](#amelioration-de-graphique) précédent, nous voyons que la définition de la couleur et de la taille est simple. Mais nous sommes ici encore limité dans les options, et la fonction `ggplot` est plus approprié pour personnalisé un tel graphique.
-
-```{r qplot-amelioration}
-qplot(hp, mpg, data = mtcars, color = factor(am), size = wt, 
-      main = "Consommation et autres",
-      xlab = "Puissance (en ch)",
-      ylab = "Consommation en Miles/Galon")
-```
-
-### Fonction `ggplot`
-
-La fonction `ggplot` permet de faire plus de choses que `qplot` mais nécessite un formalisme plus lourd, dont voici quelques détails :
+La fonction `ggplot()` permet de faire plus de choses que `qplot()` mais nécessite un formalisme plus lourd, dont voici quelques détails :
 
 - `ggplot()` créé un graphique (et le renvoie, i.e. on peut stocker un graphique dans une variable pour l'afficher plus tard, éventuellement en lui ajoutant des couches)
 - `aes()` permet de définir les aspects esthétiques (`x` et `y` principalement, mais aussi `color`, `fill`, `size`, ...)
-- `geom_xxx()` indique la représentation à choisir (`xxx` étant remplacé par `historam`, `boxplot`, ...)
-- `stat_xxx` indique les transformations statistiques à utiliser, si besoin
-- `scale_xxx` s'emploie pour des changements d'échelle
-- `coord_xxx` s'utilise pour des modifications de systèmes de coordonnées
+- `geom_xxx()` indique la représentation à choisir (`xxx` étant remplacé par `histogram`, `boxplot`, ...)
+- `stat_xxx()` indique les transformations statistiques à utiliser, si besoin
+- `scale_xxx()` s'emploie pour des changements d'échelle
+- `coord_xxx()` s'utilise pour des modifications de systèmes de coordonnées
 - `facet_grid()` découpe les données (et donc le graphique) en plusieurs facettes selon les variables fournie dans la formule
-- `theme_xxx`, `labs()`, `xlab()`, `ylab()`, `ggtitle()`, ... pour des améliorations du graphique (annotation, couleurs, ...)
+- `theme_xxx()`, `labs()`, `xlab()`, `ylab()`, `ggtitle()`, ... pour des améliorations du graphique (annotation, couleurs, ...)
 
 Hormis la fonction `aes()`, qui s'utilise à l'intérieur des autres, toutes ces fonctions peuvent s'additionner pour compléter le graphique. Voici un exemple de suite de commandes pour produire un graphique :
 
@@ -382,7 +268,7 @@ Voici ce qui diffère entre ces trois versions :
 
 #### Variable quantitative
 
-Pour représenter un histogramme, on a les mêmes possibilités que dans `qplot`.
+Il est possible de déclarer le nombre d'intervalles d'un histogramme, ou de les définir directement. Attention, dans ce dernier cas, le premier graphique produit est faux car il est nécessaire d'utiliser la densité (variable spéciale `..density..` dans `ggplot2`) et non le dénombrement. Et puisqu'on a préciser des valeurs en $y$, nous devons préciser que nous souhaitons un histogramme en représentation géométrique.
 
 ```{r ggplot-quanti-hist}
 ggplot(mtcars, aes(x = mpg)) + geom_histogram()
@@ -396,7 +282,7 @@ ggplot(mtcars, aes(x = mpg)) +
     geom_density()
 ```
 
-Pour la boîte à moustaches et le $qq$-plot, il faut utiliser les fonctions `geom_boxplot()` et `geom_qq()`, en spécifiant correctement les aspects esthétiques.
+Pour la boîte à moustaches et le $qq$-plot, il faut utiliser les fonctions `geom_boxplot()` et `geom_qq()`, en spécifiant correctement les aspects esthétiques. Pour avoir une boîte à moustache sur une variable, nous sommes obligé de déclarer en $x$ une valeur fixe (ici une chaîne vide `""`)
 
 ```{r ggplot-quanti-autres}
 ggplot(mtcars, aes(y = mpg, x = "")) + geom_boxplot()
@@ -439,7 +325,7 @@ ggplot(mtcars, aes("", fill = factor(am))) +
 
 #### Var quantitative - Var quantitative
 
-La représentation d'un nuage de points nécessite la définition des $x$ et $y$, ainsi que de `geom_point()`. On peut lui ajouter d'autres représentations, tel que `geom_rug()` et `geom_smooth()`, où maintenant nous pouvons définir la fonction `lm` pour l'ajustement linéaire.
+La représentation d'un nuage de points nécessite la définition des $x$ et $y$, ainsi que de `geom_point()`. On peut lui ajouter d'autres représentations, tel que `geom_rug()` et `geom_smooth()`, où nous pouvons définir la méthode `lm` pour l'ajustement linéaire.
 
 ```{r ggplot-quanti-quanti}
 ggplot(mtcars, aes(hp, mpg)) + geom_point() +
@@ -447,7 +333,7 @@ ggplot(mtcars, aes(hp, mpg)) + geom_point() +
     geom_smooth(method = "lm")
 ```
 
-Et c'est l'utilisation de `geom_bin2d()` qui permet de faire une *heatmap*, avec les mêmes options que précédemment.
+Une autre réprésentation est une *carte de chaleur* (ou **heatmap**), représentation les deux axes et un ensemble de zones rectangulaires ayant une couleur en fonction du nombre de points présents dans cette zone. Ce graphique est très intéressant dans le cas de données nombreuses. Et c'est l'utilisation de `geom_bin2d()` qui permet de la réaliser.
 
 ```{r ggplot-quanti-quanti-heatmap}
 ggplot(mtcars, aes(hp, mpg)) + geom_bin2d()
@@ -467,24 +353,39 @@ ggplot(mtcars, aes(factor(am), fill = factor(cyl))) +
     xlab("am") + ylab("") + labs(fill = "cyl")
 ```
 
-Pour créer les diagrammes circulaires d'une variable pour chaque modalité de l'autre variable, nous allons ré-utiliser l'objet `mel` créé précédemment.
+Pour créer les diagrammes circulaires d'une variable pour chaque modalité de l'autre variable, nous allons utiliser quasiment le même code que précédemment, en ajoutant l'information que les coordonnées sont désomais polaires (`coord_polar()`), avec un découpage de la zone graphique sur une des variables (avec `facet_wrap()`). Dans ce cas, il faut mettre une constante en $x$ dans `aes()`.
 
 ```{r ggplot-quali-quali-pie}
-mel
-ggplot(mel, aes(x = "", y = value, fill = factor(cyl))) + 
-    geom_bar(stat = "identity", width = 1)  + 
-    scale_y_continuous(labels = percent) +
-    ylab("am") + xlab("") + labs(fill = "cyl") +
-    theme(axis.ticks = element_blank()) +
+ggplot(mtcars, aes(0, fill = factor(cyl))) + 
+    geom_bar(position = "fill") +
+    scale_y_continuous(labels = percent) + 
+    xlab("am") + ylab("") + labs(fill = "cyl") +
     coord_polar(theta = "y") +
-    facet_grid(~ am)
+    facet_wrap(~ factor(am))
 ```
 
-Enfin, il est possible de créer une *heatmap* avec la fonction `geom_bin2d()`, toujours soit directement (dénombrement donc), soit en utiliser des profils par exemple.
+Enfin, il est aussi possible aussi de réaliser une *heatmap*, ou chaque zone est colorée en fonction du nombre d'individus ayant les modalités correspondantes dans les deux variables, avec la fonction `geom_bin2d()`.
 
 ```{r ggplot-quali-quali-heatmap}
 ggplot(mtcars, aes(factor(cyl), factor(am))) + geom_bin2d()
-ggplot(mel, aes(factor(am), factor(cyl), fill = value)) + geom_bin2d()
+```
+
+#### Var quantitative - Var qualitative
+
+Pour croiser deux variables de type différent, nous devons représenter la distribution de la variable quantitative pour chaque modalité de la variable qualitative (ici, respectivement histogramme, densité, boîte à moustaches, et représentation des points avec une opération de *jittering*).
+
+```{r qplot-quanti-quali}
+ggplot(mtcars, aes(mpg)) + geom_histogram(bins = 10) +
+    facet_grid(am ~ .)
+ggplot(mtcars, aes(mpg, col = factor(am))) +
+    geom_density()
+ggplot(mtcars, aes(factor(am), mpg, fill = factor(am))) +
+    geom_boxplot()
+ggplot(mtcars, aes(factor(am), mpg)) + 
+    geom_jitter()
+ggplot(mtcars, aes(factor(am), mpg)) + 
+    geom_boxplot() +
+    geom_jitter()
 ```
 
 #### Exemple amélioré version `ggplot`
@@ -503,6 +404,94 @@ ggplot(mtcars, aes(x = hp, y = mpg,
     ylab("Consommation en Miles/Galon") +
     labs(color = "Transmission", size = "Poids (1000 lbs)") 
 ```
+
+
+### Quelques exemples complémentaires
+
+Ce sont des exemples plus ou moins simple de créations de graphiques.
+
+#### Données Iris
+
+On cherche à représenter les boîtes à moustaches des 4 variables pour les trois espèces.
+
+##### Avec `plot`
+
+```{r iris-boxplot}
+par(mfrow = c(2, 2), mar = c(2, 2, 2, 0) + .1)
+for (i in 1:4) {
+    boxplot(iris[,i] ~ iris$Species, main = names(iris)[i])
+}
+```
+
+##### Avec `ggplot`
+
+```{r iris-boxplot-ggplot}
+ggplot(melt(iris, id.vars = "Species"), aes(Species, value)) + 
+    geom_boxplot() + facet_grid( ~ variable)
+```
+
+#### Données d'ancombe
+
+```{r anscombe-data}
+DT::datatable(anscombe, options = list(searching = F, ordering = F, paging = F))
+```
+
+```{r anscombe-plot}
+par(mfrow = c(2, 2), mar = c(2, 2, 0, 0)+.1)
+f <- function(df) {
+    names(df) = c("x", "y")
+    m = lm(y ~ x, data = df)
+    plot(y ~ x, data = df, pch = 19, bty = "n", 
+         xlim = range(anscombe[,1:4]),
+         ylim = range(anscombe[,5:8]))
+    abline(m, col = "red")
+}
+for (i in 1:4) {
+    f(anscombe[,paste(c("x", "y"), i, sep = "")])
+}
+```
+
+```{r anscombe-ggplot}
+ans = transform(
+    cbind(
+        melt(subset(anscombe, select = c(x1, x2, x3, x4)), 
+             variable.name = "coordx", value.name = "x"),
+        melt(subset(anscombe, select = c(y1, y2, y3, y4)), 
+             variable.name = "coordy", value.name = "y")
+    ),
+    num = substr(coordx, 2, 2)
+)
+ggplot(ans, aes(x, y)) + geom_point() + 
+    facet_wrap(~ num) + 
+    geom_smooth(method = "lm", se = FALSE, fullrange = T)
+```
+
+### Applications
+
+Nous allons utiliser les données `tips` du package `reshape2`.
+
+1. Comment répondre aux questions suivantes :
+   a. Les pourboires (`tip`) dépendent ils du montant (`total_bill`)
+   b. Et des jours de la semaine (`day`) ?
+   c. Et du nombre de convives (`party`) ?
+   d. Croiser `tip` en fonction de `total_bill` et `party`
+1. Représenter `total_bill` en fonction de `sex` et `smoker`.
+<!--
+ggplot(tips, aes(sex, smoker, z = total_bill)) + 
+    stat_summary_2d() 
+-->
+1. Toujours dans `tips`, représenter `total_bill` et `tip`, en fonction de `sex` de 2 façons
+<!--
+ggplot(tips, aes(total_bill, tip, color = sex)) + geom_point()
+ggplot(tips, aes(total_bill, tip)) + geom_point() + facet_grid(. ~ sex)
+ggplot(tips, aes(total_bill, tip)) + geom_bin2d() + facet_grid(. ~ sex)
+-->
+1. Idem avec `smoker` en plus
+<!--
+ggplot(tips, aes(total_bill, tip, color = sex)) + geom_point() + facet_grid(. ~ smoker)
+ggplot(tips, aes(total_bill, tip)) + geom_point() + facet_grid(smoker ~ sex)
+ggplot(tips, aes(total_bill, tip)) + geom_bin2d() + facet_grid(smoker ~ sex)
+-->
 
 ## Cartographie
 
@@ -600,98 +589,14 @@ ggmap(m) + geom_point(data = ozone, aes(x, y, color = median))
 ```
 
 
-## Quelques exemples complémentaires
-
-Ce sont des exemples plus ou moins simple de créations de graphiques.
-
-### Données Iris
-
-On cherche à représenter les boîtes à moustaches des 4 variables pour les trois espèces.
-
-#### Avec `plot`
-
-```{r iris-boxplot}
-par(mfrow = c(2, 2), mar = c(2, 2, 2, 0) + .1)
-for (i in 1:4) {
-    boxplot(iris[,i] ~ iris$Species, main = names(iris)[i])
-}
-```
-
-#### Avec `ggplot`
-
-```{r iris-boxplot-ggplot}
-ggplot(melt(iris, id.vars = "Species"), aes(Species, value)) + 
-    geom_boxplot() + facet_grid( ~ variable)
-```
-
-### Données d'ancombe
-
-```{r anscombe-data}
-DT::datatable(anscombe, options = list(searching = F, ordering = F, paging = F))
-```
-
-```{r anscombe-plot}
-par(mfrow = c(2, 2), mar = c(2, 2, 0, 0)+.1)
-f <- function(df) {
-    names(df) = c("x", "y")
-    m = lm(y ~ x, data = df)
-    plot(y ~ x, data = df, pch = 19, bty = "n", 
-         xlim = range(anscombe[,1:4]),
-         ylim = range(anscombe[,5:8]))
-    abline(m, col = "red")
-}
-for (i in 1:4) {
-    f(anscombe[,paste(c("x", "y"), i, sep = "")])
-}
-```
-
-```{r anscombe-ggplot}
-ans = transform(
-    melt(transform(anscombe, id = 1:nrow(anscombe)), id.vars = "id"),
-    axe = substr(as.character(variable), 1, 1),
-    num = as.numeric(substr(as.character(variable), 2, 2))
-)
-ans$facetX = ans$num %% 2 == 0
-ans$facetY = ans$num <= 2
-ansX = subset(ans, subset = axe == "x")
-ansY = subset(ans, subset = axe == "y")
-ansXY = merge(ansX, ansY, by = c("id", "num"))
-ggplot(ansXY, aes(value.x, value.y)) + geom_point() + 
-    facet_grid(facetY.x ~ facetX.x) + 
-    geom_smooth(method = "lm", se = FALSE, fullrange = T)
-```
-
-## A faire 
-
 ### Applications
 
-1. Dans les données `tips` du package `reshape2`, représenter `total_bill` en fonction de `sex` et `smoker`.
-<!--
-ggplot(tips, aes(sex, smoker, z = total_bill)) + 
-    stat_summary_2d() 
--->
-2. Toujours dans `tips`, représenter `total_bill` et `tip`, en fonction de `sex` de 2 façons
-<!--
-ggplot(tips, aes(total_bill, tip, color = sex)) + geom_point()
-ggplot(tips, aes(total_bill, tip)) + geom_point() + facet_grid(. ~ sex)
-ggplot(tips, aes(total_bill, tip)) + geom_bin2d() + facet_grid(. ~ sex)
--->
-3. Idem avec `smoker` en plus
-<!--
-ggplot(tips, aes(total_bill, tip, color = sex)) + geom_point() + facet_grid(. ~ smoker)
-ggplot(tips, aes(total_bill, tip)) + geom_point() + facet_grid(smoker ~ sex)
-ggplot(tips, aes(total_bill, tip)) + geom_bin2d() + facet_grid(smoker ~ sex)
--->
-4. Comment répondre aux questions suivantes :
-   a. Les pourboires (`tip`) dépendent ils du montant (`total_bill`)
-   b. Et des jours de la semaine (`day`) ?
-   c. Et du nombre de convives (`party`) ?
-   d. Croiser `tip` en fonction de `total_bill` et `party`
-5. En utiliser les données `crime` du package `ggmap`, comment représenter le nombre et les types de crime par rapport à leur localisation ?
+En utilisant les données `crime` du package `ggmap`, comment représenter le nombre et les types de crime par rapport à leur localisation ?
 
-### Mini-projet
 
-#### Introduction 
+## Mini-projet
+
+### Introduction 
 
 Nous disposons de [données d'AirBnB](https://www.dropbox.com/sh/s7kiuot44g5lxi5/AACVVQzJJh2ivGDH5ikisroua?dl=0) pour Paris à la date du 2 septembre 2015 ( [données source](http://insideairbnb.com/get-the-data.html) ). Celles-ci ont été légèremment nettoyées et réduites pour obtenir les fichiers suivants :
 
@@ -761,7 +666,7 @@ ggplot(airbnb.neigh.for) +
     theme_void() + theme(legend.position="none")
 ```
 
-#### Questions
+### Questions
 
 1. Représenter les logements sur la carte de Paris
 2. Représenter les quartiers sur la carte de Paris
