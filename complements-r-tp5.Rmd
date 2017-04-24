@@ -22,12 +22,12 @@ shinyUI(fluidPage(
     title = "Test des inputs",
     sidebarLayout(
         sidebarPanel(
-            numericInput(inputId = "numeric", label = "Saisie d'un nombre", 
+            numericInput(inputId = "numeric", label = "numericInput", 
              value = 2, min = 0, max = 5),
-            sliderInput(inputId = "slider", label = "Choix d'une valeur", 
+            sliderInput(inputId = "slider", label = "sliderInput", 
                         value = 2, min = 0, max = 5),
             checkboxInput(inputId = "check", label = "checkboxInput", value = FALSE),
-            textInput(inputId = "texte", label = "Saisie d'un texte court", 
+            textInput(inputId = "texte", label = "textInput", 
                       value = "texte"),
             radioButtons(inputId = "radio", label = "radioButtons", 
                          choices = c("radio 1", "radio 2", "radio 3"), 
@@ -46,6 +46,8 @@ shinyUI(fluidPage(
 ```
 - `server.R`
 ```{r}
+library(shiny)
+
 shinyServer(function(input, output) {
     output$sortie = renderTable({
         entrees = c("numeric", "slider", "check", "texte", "radio", "checkgroup", "date")
@@ -82,7 +84,7 @@ On définit ici une zone de saisie pour un nombre entre 0 et 5, valant 2 par dé
 
 - `ui.R` 
 ```{r}
-numericInput(inputId = "numeric", label = "Saisie d'un nombre", 
+numericInput(inputId = "numeric", label = "numericInput", 
              value = 2, min = 0, max = 5)
 ```
 
@@ -96,7 +98,7 @@ On reprend les mêmes possibilités que ci-dessus mais avec un *slider* donc.
 
 - `ui.R` 
 ```{r}
-sliderInput(inputId = "slider", label = "Choix d'une valeur", 
+sliderInput(inputId = "slider", label = "sliderInput", 
             value = 2, min = 0, max = 5)
 ```
 
@@ -127,7 +129,7 @@ Ici, on permet la saisie d'un texte court, avec comme valeur par défaut `"texte
 
 - `ui.R` 
 ```{r}
-textInput(inputId = "texte", label = "Saisie d'un texte court", 
+textInput(inputId = "texte", label = "textInput", 
           value = "texte")
 ```
 

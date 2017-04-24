@@ -248,12 +248,12 @@ shinyUI(fluidPage(
     title = &quot;Test des inputs&quot;,
     sidebarLayout(
         sidebarPanel(
-            numericInput(inputId = &quot;numeric&quot;, label = &quot;Saisie d&#39;un nombre&quot;, 
+            numericInput(inputId = &quot;numeric&quot;, label = &quot;numericInput&quot;, 
              value = 2, min = 0, max = 5),
-            sliderInput(inputId = &quot;slider&quot;, label = &quot;Choix d&#39;une valeur&quot;, 
+            sliderInput(inputId = &quot;slider&quot;, label = &quot;sliderInput&quot;, 
                         value = 2, min = 0, max = 5),
             checkboxInput(inputId = &quot;check&quot;, label = &quot;checkboxInput&quot;, value = FALSE),
-            textInput(inputId = &quot;texte&quot;, label = &quot;Saisie d&#39;un texte court&quot;, 
+            textInput(inputId = &quot;texte&quot;, label = &quot;textInput&quot;, 
                       value = &quot;texte&quot;),
             radioButtons(inputId = &quot;radio&quot;, label = &quot;radioButtons&quot;, 
                          choices = c(&quot;radio 1&quot;, &quot;radio 2&quot;, &quot;radio 3&quot;), 
@@ -272,7 +272,9 @@ shinyUI(fluidPage(
 <ul>
 <li><code>server.R</code></li>
 </ul>
-<pre class="r"><code>shinyServer(function(input, output) {
+<pre class="r"><code>library(shiny)
+
+shinyServer(function(input, output) {
     output$sortie = renderTable({
         entrees = c(&quot;numeric&quot;, &quot;slider&quot;, &quot;check&quot;, &quot;texte&quot;, &quot;radio&quot;, &quot;checkgroup&quot;, &quot;date&quot;)
         data.frame(
@@ -305,7 +307,7 @@ shinyUI(fluidPage(
 <ul>
 <li><code>ui.R</code></li>
 </ul>
-<pre class="r"><code>numericInput(inputId = &quot;numeric&quot;, label = &quot;Saisie d&#39;un nombre&quot;, 
+<pre class="r"><code>numericInput(inputId = &quot;numeric&quot;, label = &quot;numericInput&quot;, 
              value = 2, min = 0, max = 5)</code></pre>
 </div>
 </div>
@@ -318,7 +320,7 @@ shinyUI(fluidPage(
 <ul>
 <li><code>ui.R</code></li>
 </ul>
-<pre class="r"><code>sliderInput(inputId = &quot;slider&quot;, label = &quot;Choix d&#39;une valeur&quot;, 
+<pre class="r"><code>sliderInput(inputId = &quot;slider&quot;, label = &quot;sliderInput&quot;, 
             value = 2, min = 0, max = 5)</code></pre>
 </div>
 </div>
@@ -346,7 +348,7 @@ shinyUI(fluidPage(
 <ul>
 <li><code>ui.R</code></li>
 </ul>
-<pre class="r"><code>textInput(inputId = &quot;texte&quot;, label = &quot;Saisie d&#39;un texte court&quot;, 
+<pre class="r"><code>textInput(inputId = &quot;texte&quot;, label = &quot;textInput&quot;, 
           value = &quot;texte&quot;)</code></pre>
 </div>
 </div>
