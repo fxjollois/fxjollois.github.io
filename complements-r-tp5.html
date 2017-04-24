@@ -468,26 +468,32 @@ print(graphique_ter)</code></pre>
 summary(co2_ordinale)</code></pre>
 <pre><code>## (313,324] (324,335] (335,345] (345,356] (356,367] 
 ##       123       106        86        88        65</code></pre>
+<p><strong>Aide</strong> : on utilise ici un <code>numericInput()</code></p>
 </div>
 <div id="titre-du-graphique" class="section level4">
 <h4>Titre du graphique</h4>
 <p>L’utilisateur doit rentrer un texte, celui-ci sera le titre du graphique représentant l’évolution de la variable <code>co2</code> dans le temps. L’application doit donc afficher le graphique avec le titre mis à jour (fonction <code>ggtitle()</code>).</p>
+<p><strong>Aide</strong> : on utilise ici un <code>textInput()</code></p>
 </div>
 <div id="moyennes-mobiles" class="section level4">
 <h4>Moyennes mobiles</h4>
 <p>L’utilisateur doit choisir une valeur entre 1 et 100 pour déterminer la taille de la fenêtre glissante pour le calcul de la moyenne mobile. Ce calcul sera fait grâce à la fonction <code>movingFun()</code> du package <code>raster</code> (à installer donc). La courbe des moyennes mobiles sera affichée en couleur (à choisir, cf la fonction <code>colors()</code> pour la liste des couleurs possibles) sur le graphique.</p>
+<p><strong>Aide</strong> : on utilise ici un <code>sliderInput()</code></p>
 </div>
 <div id="couleur-de-la-courbe" class="section level4">
 <h4>Couleur de la courbe</h4>
 <p>L’utilisateur a le choix entre 3 couleurs (à définir par vous-même) pour la courbe de l’évolution du <code>co2</code>. On utilisera donc la couleur choisie pour le graphique. Vous devez définir une des couleurs par défaut.</p>
+<p><strong>Aide</strong> : on utilise ici un <code>radioButtons()</code></p>
 </div>
 <div id="moyennes-mobiles-a-afficher" class="section level4">
 <h4>Moyennes mobiles à afficher ?</h4>
 <p>L’utilisateur doit cocher pour avoir la courbe des moyennes mobiles affichées ou non (par défaut, elle sera affichée). Le graphique doit donc prendre en compte le choix de l’utilisateur.</p>
+<p><strong>Aide</strong> : on utilise ici un <code>checkboxInput()</code></p>
 </div>
 <div id="affichage-des-titres-et-labels" class="section level4">
 <h4>Affichage des titres et labels</h4>
 <p>L’utilisateur va pouvoir choisir s’il veut le label des <span class="math inline">\(x\)</span>, le label des <span class="math inline">\(y\)</span>, et/ou le titre. Par défaut, seul le titre sera visible.</p>
+<p><strong>Aide</strong> : on utilise ici un <code>checkboxGroupInput()</code></p>
 </div>
 <div id="marquage-dune-date" class="section level4">
 <h4>Marquage d’une date</h4>
@@ -499,6 +505,7 @@ date_choisie_mois = as.numeric(format(date_choisie, &quot;%m&quot;))
 date_calculee = date_choisie_annee + (date_choisie_mois - 1) / 12
 graphique + geom_vline(xintercept = date_calculee, col = &quot;red&quot;)</code></pre>
 <p><img src="complements-r-tp5_files/figure-html/unnamed-chunk-18-1.png" width="672" /></p>
+<p><strong>Aide</strong> : on utilise ici un <code>dateInput()</code></p>
 </div>
 </div>
 </div>

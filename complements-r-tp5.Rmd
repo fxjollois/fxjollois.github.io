@@ -248,25 +248,38 @@ co2_ordinale = cut(co2, 5)
 summary(co2_ordinale)
 ```
 
+**Aide** : on utilise ici un `numericInput()`
+
 #### Titre du graphique
 
 L'utilisateur doit rentrer un texte, celui-ci sera le titre du graphique représentant l'évolution de la variable `co2` dans le temps. L'application doit donc afficher le graphique avec le titre mis à jour (fonction `ggtitle()`).
+
+
+**Aide** : on utilise ici un `textInput()`
 
 #### Moyennes mobiles
 
 L'utilisateur doit choisir une valeur entre 1 et 100 pour déterminer la taille de la fenêtre glissante pour le calcul de la moyenne mobile. Ce calcul sera fait grâce à la fonction `movingFun()` du package `raster` (à installer donc). La courbe des moyennes mobiles sera affichée en couleur (à choisir, cf la fonction `colors()` pour la liste des couleurs possibles) sur le graphique.
 
+**Aide** : on utilise ici un `sliderInput()`
+
 #### Couleur de la courbe 
 
 L'utilisateur a le choix entre 3 couleurs (à définir par vous-même) pour la courbe de l'évolution du `co2`. On utilisera donc la couleur choisie pour le graphique. Vous devez définir une des couleurs par défaut.
+
+**Aide** : on utilise ici un `radioButtons()`
 
 #### Moyennes mobiles à afficher ?
 
 L'utilisateur doit cocher pour avoir la courbe des moyennes mobiles affichées ou non (par défaut, elle sera affichée). Le graphique doit donc prendre en compte le choix de l'utilisateur.
 
+**Aide** : on utilise ici un `checkboxInput()`
+
 #### Affichage des titres et labels
 
 L'utilisateur va pouvoir choisir s'il veut le label des $x$, le label des $y$, et/ou le titre. Par défaut, seul le titre sera visible.
+
+**Aide** : on utilise ici un `checkboxGroupInput()`
 
 #### Marquage d'une date
 
@@ -282,3 +295,4 @@ date_calculee = date_choisie_annee + (date_choisie_mois - 1) / 12
 graphique + geom_vline(xintercept = date_calculee, col = "red")
 ```
 
+**Aide** : on utilise ici un `dateInput()`
