@@ -19,5 +19,6 @@ title: Analyse de Données Massives
     - [correction](analyse-donnees-massives-tp6-correction.html)
 1. [TP7 - Connexion à *MongoDB* sous `python`](analyse-donnees-massives-tp7.html)
     - [correction](analyse-donnees-massives-tp7-correction.html)
+1. [TP8 - Données du projet](analyse-donnees-massives-tp8.html)
 
 
