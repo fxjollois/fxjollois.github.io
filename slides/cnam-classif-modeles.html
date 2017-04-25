@@ -651,23 +651,23 @@ summary(faithful.mclust)</pre>
 ## Gaussian finite mixture model fitted by EM algorithm 
 ## ----------------------------------------------------
 ## 
-## Mclust VEV (ellipsoidal, equal shape) model with 4 components:
+## Mclust EEE (ellipsoidal, equal volume, shape and orientation) model with 3 components:
 ## 
 ##  log.likelihood   n df       BIC       ICL
-##       -1047.959 272 33 -2280.909 -2302.185
+##       -1126.361 272 11 -2314.386 -2360.865
 ## 
 ## Clustering table:
-##  1  2  3  4 
-## 86 63 34 89</pre>
+##   1   2   3 
+## 130  97  45</pre>
 
 </article></slide><slide class=''><hgroup><h2>Old Faithful Geyser - BIC</h2></hgroup><article  id="old-faithful-geyser---bic">
 
 <pre class = 'prettyprint lang-r'>summary(faithful.mclust$BIC)</pre>
 
 <pre >## Best BIC values:
-##              VEV,4        EVE,3       VEV,3
-## BIC      -2280.909 -2286.713263 -2352.17517
-## BIC diff     0.000    -5.804148   -71.26606</pre>
+##              EEE,3        EEE,4        VVE,2
+## BIC      -2314.386 -2320.207047 -2320.432965
+## BIC diff     0.000    -5.820699    -6.046616</pre>
 
 </article></slide><slide class=''><hgroup><h2>Old Faithful Geyser - BIC</h2></hgroup><article  id="old-faithful-geyser---bic-1">
 
@@ -697,156 +697,156 @@ summary(faithful.mclust)</pre>
 </tr>
 <tr class="odd">
 <td align="left">s=1</td>
-<td align="right">-5706</td>
-<td align="right">-5706</td>
-<td align="right">-3674</td>
-<td align="right">-3674</td>
-<td align="right">-3674</td>
-<td align="right">-3674</td>
-<td align="right">-3141</td>
-<td align="right">-3141</td>
-<td align="right">-3141</td>
-<td align="right">-3141</td>
-<td align="right">-3141</td>
-<td align="right">-3141</td>
-<td align="right">-3141</td>
-<td align="right">-3141</td>
+<td align="right">-4025</td>
+<td align="right">-4025</td>
+<td align="right">-3056</td>
+<td align="right">-3056</td>
+<td align="right">-3056</td>
+<td align="right">-3056</td>
+<td align="right">-2608</td>
+<td align="right">-2608</td>
+<td align="right">-2608</td>
+<td align="right">-2608</td>
+<td align="right">-2608</td>
+<td align="right">-2608</td>
+<td align="right">-2608</td>
+<td align="right">-2608</td>
 </tr>
 <tr class="even">
 <td align="left">s=2</td>
-<td align="right">-4679</td>
-<td align="right">-4684</td>
-<td align="right">-2948</td>
-<td align="right">-2865</td>
-<td align="right">NA</td>
-<td align="right">NA</td>
-<td align="right">-2744</td>
-<td align="right">-2616</td>
-<td align="right">-2718</td>
-<td align="right">NA</td>
-<td align="right">-2637</td>
-<td align="right">-2443</td>
-<td align="right">NA</td>
-<td align="right">NA</td>
+<td align="right">-3453</td>
+<td align="right">-3458</td>
+<td align="right">-2355</td>
+<td align="right">-2351</td>
+<td align="right">-2353</td>
+<td align="right">-2346</td>
+<td align="right">-2325</td>
+<td align="right">-2324</td>
+<td align="right">-2323</td>
+<td align="right">-2320</td>
+<td align="right">-2329</td>
+<td align="right">-2325</td>
+<td align="right">-2328</td>
+<td align="right">-2322</td>
 </tr>
 <tr class="odd">
 <td align="left">s=3</td>
-<td align="right">-4485</td>
-<td align="right">-4415</td>
-<td align="right">NA</td>
-<td align="right">NA</td>
-<td align="right">NA</td>
-<td align="right">NA</td>
-<td align="right">NA</td>
-<td align="right">-2287</td>
-<td align="right">NA</td>
-<td align="right">NA</td>
-<td align="right">-2553</td>
-<td align="right">-2352</td>
-<td align="right">NA</td>
-<td align="right">NA</td>
+<td align="right">-3378</td>
+<td align="right">-3337</td>
+<td align="right">-2323</td>
+<td align="right">-2333</td>
+<td align="right">-2332</td>
+<td align="right">-2342</td>
+<td align="right">-2314</td>
+<td align="right">-2323</td>
+<td align="right">-2322</td>
+<td align="right">-2332</td>
+<td align="right">-2339</td>
+<td align="right">-2329</td>
+<td align="right">-2336</td>
+<td align="right">-2334</td>
 </tr>
 <tr class="even">
 <td align="left">s=4</td>
-<td align="right">-4199</td>
-<td align="right">-4208</td>
-<td align="right">NA</td>
-<td align="right">NA</td>
-<td align="right">NA</td>
-<td align="right">NA</td>
-<td align="right">NA</td>
-<td align="right">NA</td>
-<td align="right">NA</td>
-<td align="right">NA</td>
-<td align="right">NA</td>
-<td align="right">-2281</td>
-<td align="right">NA</td>
-<td align="right">NA</td>
+<td align="right">-3230</td>
+<td align="right">-3246</td>
+<td align="right">-2324</td>
+<td align="right">-2332</td>
+<td align="right">-2335</td>
+<td align="right">-2343</td>
+<td align="right">-2320</td>
+<td align="right">-2340</td>
+<td align="right">-2333</td>
+<td align="right">-2355</td>
+<td align="right">-2337</td>
+<td align="right">-2342</td>
+<td align="right">-2345</td>
+<td align="right">-2359</td>
 </tr>
 <tr class="odd">
 <td align="left">s=5</td>
-<td align="right">-4039</td>
-<td align="right">-4010</td>
-<td align="right">NA</td>
-<td align="right">NA</td>
-<td align="right">NA</td>
-<td align="right">NA</td>
-<td align="right">NA</td>
-<td align="right">NA</td>
-<td align="right">NA</td>
-<td align="right">NA</td>
-<td align="right">NA</td>
-<td align="right">NA</td>
-<td align="right">NA</td>
-<td align="right">NA</td>
+<td align="right">-3149</td>
+<td align="right">-3128</td>
+<td align="right">-2338</td>
+<td align="right">-2348</td>
+<td align="right">-2356</td>
+<td align="right">-2374</td>
+<td align="right">-2337</td>
+<td align="right">-2354</td>
+<td align="right">-2353</td>
+<td align="right">-2376</td>
+<td align="right">-2356</td>
+<td align="right">-2366</td>
+<td align="right">-2374</td>
+<td align="right">-2385</td>
 </tr>
 <tr class="even">
 <td align="left">s=6</td>
-<td align="right">-3903</td>
-<td align="right">-3869</td>
-<td align="right">NA</td>
-<td align="right">NA</td>
-<td align="right">NA</td>
-<td align="right">NA</td>
-<td align="right">NA</td>
-<td align="right">NA</td>
-<td align="right">NA</td>
-<td align="right">NA</td>
-<td align="right">NA</td>
-<td align="right">NA</td>
-<td align="right">NA</td>
-<td align="right">NA</td>
+<td align="right">-3081</td>
+<td align="right">-3068</td>
+<td align="right">-2338</td>
+<td align="right">-2363</td>
+<td align="right">-2358</td>
+<td align="right">-2373</td>
+<td align="right">-2347</td>
+<td align="right">-2369</td>
+<td align="right">-2364</td>
+<td align="right">-2392</td>
+<td align="right">-2372</td>
+<td align="right">-2387</td>
+<td align="right">-2387</td>
+<td align="right">-2399</td>
 </tr>
 <tr class="odd">
 <td align="left">s=7</td>
-<td align="right">-3742</td>
-<td align="right">-3723</td>
-<td align="right">NA</td>
-<td align="right">NA</td>
-<td align="right">NA</td>
-<td align="right">NA</td>
-<td align="right">NA</td>
-<td align="right">NA</td>
-<td align="right">NA</td>
-<td align="right">NA</td>
-<td align="right">NA</td>
-<td align="right">NA</td>
-<td align="right">NA</td>
-<td align="right">NA</td>
+<td align="right">-2990</td>
+<td align="right">-2998</td>
+<td align="right">-2356</td>
+<td align="right">-2370</td>
+<td align="right">-2376</td>
+<td align="right">-2393</td>
+<td align="right">-2361</td>
+<td align="right">-2381</td>
+<td align="right">-2375</td>
+<td align="right">-2399</td>
+<td align="right">-2393</td>
+<td align="right">-2384</td>
+<td align="right">-2414</td>
+<td align="right">-2426</td>
 </tr>
 <tr class="even">
 <td align="left">s=8</td>
-<td align="right">-3641</td>
-<td align="right">-3623</td>
+<td align="right">-2978</td>
+<td align="right">-2992</td>
+<td align="right">-2372</td>
+<td align="right">NA</td>
+<td align="right">-2396</td>
+<td align="right">NA</td>
+<td align="right">-2377</td>
+<td align="right">-2401</td>
 <td align="right">NA</td>
 <td align="right">NA</td>
-<td align="right">NA</td>
-<td align="right">NA</td>
-<td align="right">NA</td>
-<td align="right">NA</td>
-<td align="right">NA</td>
-<td align="right">NA</td>
-<td align="right">NA</td>
-<td align="right">NA</td>
-<td align="right">NA</td>
-<td align="right">NA</td>
+<td align="right">-2386</td>
+<td align="right">-2405</td>
+<td align="right">-2435</td>
+<td align="right">-2435</td>
 </tr>
 <tr class="odd">
 <td align="left">s=9</td>
-<td align="right">-3591</td>
-<td align="right">-3600</td>
+<td align="right">-2900</td>
+<td align="right">-2921</td>
+<td align="right">-2389</td>
+<td align="right">NA</td>
+<td align="right">-2399</td>
+<td align="right">NA</td>
+<td align="right">-2394</td>
+<td align="right">-2404</td>
 <td align="right">NA</td>
 <td align="right">NA</td>
-<td align="right">NA</td>
-<td align="right">NA</td>
-<td align="right">NA</td>
-<td align="right">NA</td>
-<td align="right">NA</td>
-<td align="right">NA</td>
-<td align="right">NA</td>
-<td align="right">NA</td>
-<td align="right">NA</td>
-<td align="right">NA</td>
+<td align="right">-2418</td>
+<td align="right">-2428</td>
+<td align="right">-2431</td>
+<td align="right">-2447</td>
 </tr>
 </table>
 
@@ -872,9 +872,9 @@ summary(faithful.mclust)</pre>
 summary(faithful.mclustICL)</pre>
 
 <pre >## Best ICL values:
-##              EVE,3        VEV,4       VEV,3
-## ICL      -2300.802 -2302.184742 -2366.01042
-## ICL diff     0.000    -1.382245   -65.20793</pre>
+##              VVE,2       VVV,2        VEE,2
+## ICL      -2320.763 -2322.69508 -2323.395969
+## ICL diff     0.000    -1.93217    -2.633054</pre>
 
 </article></slide><slide class=''><hgroup><h2>Old Faithful Geyser - et ICL ?</h2></hgroup><article  id="old-faithful-geyser---et-icl-1">
 
@@ -902,65 +902,65 @@ summary(iris.mixmod)</pre>
 ## **************************************************************
 ## *       Number of cluster =  8 
 ## *              Model Type =  Gaussian_pk_Lk_Bk 
-## *               Criterion =  BIC(-1194.5269)
+## *               Criterion =  BIC(-1203.5104)
 ## *              Parameters =  list by cluster
 ## *                  Cluster  1 : 
-##                          Proportion =  0.0893 
-##                               Means =  5.2428 3.7216 1.5602 0.3737 
-##                           Variances = |     0.0569     0.0000     0.0000     0.0000 |
-##                                       |     0.0000     0.0892     0.0000     0.0000 |
-##                                       |     0.0000     0.0000     0.0239     0.0000 |
-##                                       |     0.0000     0.0000     0.0000     0.0126 |
+##                          Proportion =  0.1035 
+##                               Means =  5.7154 2.7381 4.1032 1.2806 
+##                           Variances = |     0.0759     0.0000     0.0000     0.0000 |
+##                                       |     0.0000     0.0387     0.0000     0.0000 |
+##                                       |     0.0000     0.0000     0.0475     0.0000 |
+##                                       |     0.0000     0.0000     0.0000     0.0029 |
 ## *                  Cluster  2 : 
-##                          Proportion =  0.0507 
-##                               Means =  4.7166 3.0961 1.3544 0.1964 
-##                           Variances = |     0.0509     0.0000     0.0000     0.0000 |
-##                                       |     0.0000     0.1495     0.0000     0.0000 |
-##                                       |     0.0000     0.0000     0.0132     0.0000 |
-##                                       |     0.0000     0.0000     0.0000     0.0100 |
+##                          Proportion =  0.0654 
+##                               Means =  7.5448 3.1436 6.3928 2.0933 
+##                           Variances = |     0.0544     0.0000     0.0000     0.0000 |
+##                                       |     0.0000     0.1732     0.0000     0.0000 |
+##                                       |     0.0000     0.0000     0.0939     0.0000 |
+##                                       |     0.0000     0.0000     0.0000     0.0493 |
 ## *                  Cluster  3 : 
-##                          Proportion =  0.1664 
-##                               Means =  6.1688 2.8026 5.1399 1.8172 
-##                           Variances = |     0.0952     0.0000     0.0000     0.0000 |
-##                                       |     0.0000     0.0541     0.0000     0.0000 |
-##                                       |     0.0000     0.0000     0.0824     0.0000 |
-##                                       |     0.0000     0.0000     0.0000     0.0445 |
+##                          Proportion =  0.0665 
+##                               Means =  5.4092 2.3995 3.6089 1.0299 
+##                           Variances = |     0.1331     0.0000     0.0000     0.0000 |
+##                                       |     0.0000     0.0360     0.0000     0.0000 |
+##                                       |     0.0000     0.0000     0.1108     0.0000 |
+##                                       |     0.0000     0.0000     0.0000     0.0021 |
 ## *                  Cluster  4 : 
-##                          Proportion =  0.0761 
-##                               Means =  7.4935 3.1305 6.3203 2.0477 
-##                           Variances = |     0.0636     0.0000     0.0000     0.0000 |
-##                                       |     0.0000     0.1521     0.0000     0.0000 |
-##                                       |     0.0000     0.0000     0.1142     0.0000 |
-##                                       |     0.0000     0.0000     0.0000     0.0617 |
-## *                  Cluster  5 : 
 ##                          Proportion =  0.1933 
 ##                               Means =  4.9724 3.3793 1.4448 0.2000 
 ##                           Variances = |     0.1213     0.0000     0.0000     0.0000 |
 ##                                       |     0.0000     0.0913     0.0000     0.0000 |
 ##                                       |     0.0000     0.0000     0.0287     0.0000 |
 ##                                       |     0.0000     0.0000     0.0000     0.0000 |
+## *                  Cluster  5 : 
+##                          Proportion =  0.2599 
+##                               Means =  6.1621 2.8536 4.7636 1.5893 
+##                           Variances = |     0.1786     0.0000     0.0000     0.0000 |
+##                                       |     0.0000     0.0765     0.0000     0.0000 |
+##                                       |     0.0000     0.0000     0.0829     0.0000 |
+##                                       |     0.0000     0.0000     0.0000     0.0447 |
 ## *                  Cluster  6 : 
-##                          Proportion =  0.1686 
-##                               Means =  6.1961 2.9061 4.5308 1.4322 
-##                           Variances = |     0.2327     0.0000     0.0000     0.0000 |
-##                                       |     0.0000     0.0760     0.0000     0.0000 |
-##                                       |     0.0000     0.0000     0.0371     0.0000 |
-##                                       |     0.0000     0.0000     0.0000     0.0138 |
+##                          Proportion =  0.0507 
+##                               Means =  4.7166 3.0961 1.3544 0.1964 
+##                           Variances = |     0.0509     0.0000     0.0000     0.0000 |
+##                                       |     0.0000     0.1495     0.0000     0.0000 |
+##                                       |     0.0000     0.0000     0.0132     0.0000 |
+##                                       |     0.0000     0.0000     0.0000     0.0100 |
 ## *                  Cluster  7 : 
-##                          Proportion =  0.1464 
-##                               Means =  5.5352 2.5713 3.8466 1.1649 
-##                           Variances = |     0.0991     0.0000     0.0000     0.0000 |
-##                                       |     0.0000     0.0620     0.0000     0.0000 |
-##                                       |     0.0000     0.0000     0.1195     0.0000 |
-##                                       |     0.0000     0.0000     0.0000     0.0182 |
+##                          Proportion =  0.1714 
+##                               Means =  6.5846 3.0604 5.5421 2.1375 
+##                           Variances = |     0.0929     0.0000     0.0000     0.0000 |
+##                                       |     0.0000     0.0453     0.0000     0.0000 |
+##                                       |     0.0000     0.0000     0.0705     0.0000 |
+##                                       |     0.0000     0.0000     0.0000     0.0585 |
 ## *                  Cluster  8 : 
-##                          Proportion =  0.1092 
-##                               Means =  6.6222 3.1482 5.5638 2.2636 
-##                           Variances = |     0.0596     0.0000     0.0000     0.0000 |
-##                                       |     0.0000     0.0271     0.0000     0.0000 |
-##                                       |     0.0000     0.0000     0.0654     0.0000 |
-##                                       |     0.0000     0.0000     0.0000     0.0202 |
-## *          Log-likelihood =  775.1410 
+##                          Proportion =  0.0893 
+##                               Means =  5.2428 3.7216 1.5602 0.3737 
+##                           Variances = |     0.0569     0.0000     0.0000     0.0000 |
+##                                       |     0.0000     0.0892     0.0000     0.0000 |
+##                                       |     0.0000     0.0000     0.0239     0.0000 |
+##                                       |     0.0000     0.0000     0.0000     0.0126 |
+## *          Log-likelihood =  779.6327 
 ## **************************************************************</pre>
 
 </article></slide><slide class=''><hgroup><h2>Iris - Evolution du critère</h2></hgroup><article  id="iris---evolution-du-critere">
