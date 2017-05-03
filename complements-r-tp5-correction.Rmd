@@ -1,0 +1,246 @@
+---
+title: Test de différents *inputs* - *correction*
+subtitle: Compléments sur R - STID 1ère année
+---
+
+```{r, include=FALSE}
+knitr::opts_chunk$set(eval = FALSE)
+#library(ggplot2)
+```
+
+
+## Demande
+
+> Créer une application présentant l'évolution du `co2` et permettant les différents choix indiqués ci-dessous. Celle-ci doit avoir une zone à droite permettant la saisie par l'utilisateur des options possibles. Le graphique et la table résumée doit ainsi être dans une zone à gauche.
+
+### Initialisation
+
+Nous commençons par créer la structure de l'application avec un `sidebarLayout()`, dans lequel la partie de contrôle (`sidebarPanel()`) est à droite et vide pour le moment. Et la partie pinricpale (`mainPanel()`) contient uniquement un `plotOutput()` (nommé `graphique`).
+
+le contenu des fichiers indiqués ci-dessous :
+
+
+#### *UI*
+
+```{r}
+library(shiny)
+
+shinyUI(fluidPage(
+    title = "TP5",
+    titlePanel("Evolution du CO2"),
+    sidebarLayout(
+        position = "right",
+        sidebarPanel(
+        ),
+        mainPanel(
+            plotOutput("graphique")
+        )
+    )
+))
+```
+
+#### *Server*
+
+```{r}
+library(shiny)
+library(ggplot2)
+
+co2_df = data.frame(
+    date = unclass(time(co2)),
+    mesure = unclass(co2)
+)
+
+shinyServer(function(input, output) {
+    output$graphique = renderPlot({
+        graphique = ggplot(co2_df, aes(date, mesure)) + geom_line()
+
+        graphique
+    })
+})
+```
+
+
+### Découpage en variable ordinale
+
+> L'utilisateur doit saisir une valeur entre 2 et 10 (5 par défaut). Celle-ci représente le nombre d'intervalles à utiliser pour transformer la variable `co2` en variable qualitative (à l'aide la fonction `cut()`). L'application affichera un tableau avec les intervalles ainsi créés et le nombre de valeurs correspondant à chacune.
+
+On doit donc ajouter les éléments suivants :
+
+#### *UI* : 
+
+- une sortie de type `data.frame`, dans le `mainPanel()` en dessous du `plotOutput()`, nommé `tableau`
+````{r}
+tableOutput("tableau")
+```
+- une entrée numérique, dans le `sidebarPanel()`, nommé `nbIntervalles`, avec des valeurs possibles de 2 à 10, et 5 par défaut
+```{r}
+numericInput("nbIntervalles", "Nombre d'intervalles", min = 2, max = 10, value = 5)
+```
+
+#### *Server* :
+
+- l'affection d'un `renderTable()` à la variable `tableau` de l'`output`
+```{r}
+output$tableau <- renderTable({ 
+    #cf code ci-dessous 
+}, rownames = TRUE)
+```
+- on reprend le code du TP, en remplaçant la valeur `5` par l'`input` nommé `nbIntervalles`
+```{r}
+co2_ordinale <- cut(co2_df$mesure, input$nbIntervalles)
+summary(co2_ordinale)
+```
+
+
+### Titre du graphique
+
+> L'utilisateur doit rentrer un texte, celui-ci sera le titre du graphique représentant l'évolution de la variable `co2` dans le temps. L'application doit donc afficher le graphique avec le titre mis à jour (fonction `ggtitle()`).
+
+#### *UI*
+
+- une entrée de type texte, dans le `sidebarPanel()`, nommé `titre`, avec un texte en fond grâce au paramètre `placeholder`
+```{r}
+textInput("titre", "Titre du graphique", placeholder = "Ecrire votre titre ici")
+```
+
+#### *Server*
+
+- ajout du titre au `graphique`, avant son affichage
+```{r}
+graphique = graphique + ggtitle(input$titre)
+```
+
+
+### Moyennes mobiles
+
+> L'utilisateur doit choisir une valeur entre 1 et 100 pour déterminer la taille de la fenêtre glissante pour le calcul de la moyenne mobile. Ce calcul sera fait grâce à la fonction `movingFun()` du package `raster` (à installer donc). La courbe des moyennes mobiles sera affichée en couleur (à choisir, cf la fonction `colors()` pour la liste des couleurs possibles) sur le graphique.
+
+#### *UI*
+
+- une entrée de type `slider`, nommé `taille`, avec des valeurs possibles de 1 à 100, et 10 par défaut
+```{r}
+sliderInput("taille", "Taille de la fenêtre glissante", min = 1, max = 100, value = 10)
+```
+
+
+#### *Server*
+- chargement de la librairie `raster` en début de fichier
+```{r}
+library(raster)
+```
+- modification du `data.frame`, avec l'ajout d'une variable `moymob` qui contiendra les moyennes mobiles, en début du `renderPlot()`
+```{r}
+co2_df = transform(co2_df,
+                   moymob = movingFun(mesure, input$taille))
+```
+- ajout de la courbe des moyennes mobiles au graphique
+```{r}
+graphique = graphique + 
+    geom_line(aes(y = moymob), col = "red")
+```
+
+### Couleur de la courbe 
+
+> L'utilisateur a le choix entre 3 couleurs (à définir par vous-même) pour la courbe de l'évolution du `co2`. On utilisera donc la couleur choisie pour le graphique. Vous devez définir une des couleurs par défaut.
+
+#### *UI*
+
+- un choix simple (via boutons *radios*) entre trois couleurs, nommé `couleur`
+```{r}
+radioButtons("couleur", "Couleur de la courbe", c("blue", "green", "orange"))
+```
+
+#### *Server*
+
+- modification de la création initiale du graphique, avec mention de la couleur choisie
+```{r}
+graphique = ggplot(co2_df, aes(date, mesure)) + geom_line(col = input$couleur)
+```
+
+### Moyennes mobiles à afficher ?
+
+> L'utilisateur doit cocher pour avoir la courbe des moyennes mobiles affichées ou non (par défaut, elle sera affichée). Le graphique doit donc prendre en compte le choix de l'utilisateur.
+
+#### *UI*
+
+- une case à cocher, nommé `afficheMoyMob`, coché par défaut
+```{r}
+checkboxInput("afficheMoyMob", "Affichier les moyennes mobiles", value = TRUE)
+```
+
+#### *Server*
+
+- Test de la valeur de la case à cocher pour l'ajout de la courbe des moyennes mobiles (attention, on modifie le code déjà présent)
+```{r}
+if (input$afficheMoyMob) {
+    graphique = graphique + 
+        geom_line(aes(y = moymob), col = "red")
+}
+```
+
+
+### Affichage des titres et labels
+
+> L'utilisateur va pouvoir choisir s'il veut le label des $x$, le label des $y$, et/ou le titre. Par défaut, seul le titre sera visible.
+
+#### *UI*
+
+- Ajout d'un ensemble de case à cocher, nommé `choix`, avec les trois valeurs possibles et la case concernant le titre coché
+```{r}
+checkboxGroupInput("choix", "Paramètres d'affichage",
+                   c("Titre", "Label en X", "Label en Y"),
+                   "Titre")
+```
+
+#### *Server*
+
+- Suppression des labels des axes lors de la création du graphique
+```{r}
+graphique = ggplot(co2_df, aes(date, mesure)) + 
+    geom_line(col = input$couleur) +
+    xlab("") + ylab("")
+```
+- Test du choix pour chaque option possible, et ajout de l'élément correspondant
+```{r}
+if ("Titre" %in% input$choix) {
+    graphique = graphique + ggtitle(input$titre)
+}
+if ("Label en X" %in% input$choix) {
+    graphique = graphique + xlab("Date")
+}
+if ("Label en Y" %in% input$choix) {
+    graphique = graphique +ylab("Mesure du CO2")
+}
+```
+
+
+### Marquage d'une date
+
+> L'utilisateur doit choisir une date sur la période de mesure du `co2` (regardez l'aide pour plus d'informations). De cette date, nous ne retenons que le mois et l'année pour ajouter une ligne verticale correspondante sur le graphique.
+
+#### *UI*
+
+- une entrée de date, nommée `date`, avec des valeurs entre le 1er janvier 1959 et le 31 décembre 1997
+```{r}
+dateInput("date", "Date à marquer", min = "1959-01-01", max = "1997-12-31",
+                      "1980-01-01")
+```
+
+#### *Server*
+
+- Ajout de la ligne à marquer, en récupérant le mois et l'année choisie
+```{r}
+annee = as.numeric(format(input$date, "%Y"))
+mois = as.numeric(format(input$date, "%m"))
+date_calculee = annee + (mois - 1) / 12
+graphique = graphique + 
+    geom_vline(xintercept = date_calculee, lty = 2, col = "gray50")
+```
+
+
+## Si vous avez tout compris
+
+- Intégration du choix de l'afficahge des moyennes mobiles dans le groupe de choix des options d'affichage (avec le titre et les labels)
+- Ajout du choix de l'affichage (ou non) de la date à marquer
+- Modification du format de saisie de la date :
+    - On va indiquer le mois et l'année séparemment (utiliser des listes de choix)

@@ -18,3 +18,4 @@ title: Compléments sur `R`
 1. [TP4 - Première application](complements-r-tp4.html)
     - [correction](complements-r-tp4-correction.html)
 1. [TP5 - Test de différents *inputs*](complements-r-tp5.html)
+    - [correction](complements-r-tp5-correction.html)
