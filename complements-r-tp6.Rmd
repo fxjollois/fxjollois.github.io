@@ -338,6 +338,7 @@ tabItems(
 ## A faire
 
 - Ajouter un contrôle dans l'`infoBox()` pour vérifier que les valeurs ont pu être calculées pour 2000 et 2015
+    - Si c'est le cas, affichez une `infoBox()` avec une icône de type `warning` et de couleur rouge
 
 - Modifier la `valueBox()` pour afficher le volume total des ventes pour la ville choisie (somme des ventes sur toute la période), avec une couleur en fonction des critères suivants :
     - inférieur à 2'000'000'000 : rouge

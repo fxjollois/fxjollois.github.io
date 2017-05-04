@@ -19,3 +19,4 @@ title: Compléments sur `R`
     - [correction](complements-r-tp4-correction.html)
 1. [TP5 - Test de différents *inputs*](complements-r-tp5.html)
     - [correction](complements-r-tp5-correction.html)
+1. [TP6 - Tableaux de bord](complements-r-tp6.html)
