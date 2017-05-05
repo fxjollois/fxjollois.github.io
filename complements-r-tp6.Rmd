@@ -344,6 +344,8 @@ tabItems(
     - inférieur à 2'000'000'000 : rouge
     - entre 2'000'000'000 et 50'000'000'000 : bleu clair
     - supérieur à 50'000'000'000 : vert
+    - Afficher le volume en milliards pour simplifier la lecture
+    - Tester les villes *"San Angelo"*, *"San Antonio"*, *"San Marcos"*
 
 - Intégrer dans la `tabBox()` déjà écrite les valeurs prévues sous forme de `textOutput()` simple pour le moment
     - Nombre total de ventes

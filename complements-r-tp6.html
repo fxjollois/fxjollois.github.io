@@ -606,12 +606,17 @@ shinyServer(function(input, output) {
 <div id="a-faire" class="section level2">
 <h2>A faire</h2>
 <ul>
-<li><p>Ajouter un contrôle dans l’<code>infoBox()</code> pour vérifier que les valeurs ont pu être calculées pour 2000 et 2015</p></li>
+<li>Ajouter un contrôle dans l’<code>infoBox()</code> pour vérifier que les valeurs ont pu être calculées pour 2000 et 2015
+<ul>
+<li>Si c’est le cas, affichez une <code>infoBox()</code> avec une icône de type <code>warning</code> et de couleur rouge</li>
+</ul></li>
 <li>Modifier la <code>valueBox()</code> pour afficher le volume total des ventes pour la ville choisie (somme des ventes sur toute la période), avec une couleur en fonction des critères suivants :
 <ul>
 <li>inférieur à 2’000’000’000 : rouge</li>
 <li>entre 2’000’000’000 et 50’000’000’000 : bleu clair</li>
 <li>supérieur à 50’000’000’000 : vert</li>
+<li>Afficher le volume en milliards pour simplifier la lecture</li>
+<li>Tester les villes <em>“San Angelo”</em>, <em>“San Antonio”</em>, <em>“San Marcos”</em></li>
 </ul></li>
 <li>Intégrer dans la <code>tabBox()</code> déjà écrite les valeurs prévues sous forme de <code>textOutput()</code> simple pour le moment
 <ul>
