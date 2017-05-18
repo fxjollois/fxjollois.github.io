@@ -191,6 +191,7 @@ $(document).ready(function () {
             <li class="dropdown-header">DU Dataviz</li>
             <li><a href="analyse-donnees.html">Analyse de données</a></li>
             <li><a href="visualisation-donnees.html">Visualisation de données - R</a></li>
+            <li><a href="visualisation-donnees-tableau.html">Visualisation de données - Tableau</a></li>
             <li><a href="visualisation-donnees-d3.html">Visualisation de données - D3</a></li>
             <li role="separator" class="divider"></li>
             <li class="dropdown-header">Master</li>
@@ -271,7 +272,12 @@ print(b)</code></pre>
 <h3>Sauvegarde de l’environnement</h3>
 <p>Quand on lance la fonction <code>ls()</code>, on liste l’ensemble des objets créés dans l’environnement de travail. La fonction <code>save.image()</code> va tous les sauvegarder dans un même fichier <code>.RData</code>.</p>
 <pre class="r"><code>ls()</code></pre>
-<pre><code>## [1] &quot;a&quot; &quot;b&quot; &quot;c&quot;</code></pre>
+<pre><code>##  [1] &quot;a&quot;         &quot;b&quot;         &quot;b1&quot;        &quot;c&quot;         &quot;d&quot;        
+##  [6] &quot;decathlon&quot; &quot;disj&quot;      &quot;f&quot;         &quot;femmes&quot;    &quot;iris.mds&quot; 
+## [11] &quot;iris.pca&quot;  &quot;lambdabar&quot; &quot;p&quot;         &quot;p2&quot;        &quot;p4&quot;       
+## [16] &quot;pc&quot;        &quot;pl&quot;        &quot;quanti&quot;    &quot;res&quot;       &quot;spam&quot;     
+## [21] &quot;swiss.mds&quot; &quot;the&quot;       &quot;valeurs&quot;   &quot;villes&quot;    &quot;x&quot;        
+## [26] &quot;x.acm&quot;     &quot;x.afc&quot;     &quot;x1&quot;        &quot;z1&quot;        &quot;z1.comp&quot;</code></pre>
 <pre class="r"><code>save.image(&quot;env.RData&quot;)</code></pre>
 <p>Ensuite, nous allons nettoyer l’environnement de travail, en supprimant tous les objets (1ère ligne ci-dessous). Ainsi, en listant les variables avec <code>ls()</code>, on s’aperçoit qu’il n’y a plus rien.</p>
 <pre class="r"><code>rm(list = ls()) # Pour tout supprimer de l&#39;environnement
@@ -280,7 +286,12 @@ ls()</code></pre>
 <p>Enfin, toujours avec la fonction <code>load()</code>, on charge les variables présentes dans le fichier, qu’on retrouve bien en faisant un <code>ls()</code>.</p>
 <pre class="r"><code>load(&quot;env.RData&quot;)
 ls()</code></pre>
-<pre><code>## [1] &quot;a&quot; &quot;b&quot; &quot;c&quot;</code></pre>
+<pre><code>##  [1] &quot;a&quot;         &quot;b&quot;         &quot;b1&quot;        &quot;c&quot;         &quot;d&quot;        
+##  [6] &quot;decathlon&quot; &quot;disj&quot;      &quot;f&quot;         &quot;femmes&quot;    &quot;iris.mds&quot; 
+## [11] &quot;iris.pca&quot;  &quot;lambdabar&quot; &quot;p&quot;         &quot;p2&quot;        &quot;p4&quot;       
+## [16] &quot;pc&quot;        &quot;pl&quot;        &quot;quanti&quot;    &quot;res&quot;       &quot;spam&quot;     
+## [21] &quot;swiss.mds&quot; &quot;the&quot;       &quot;valeurs&quot;   &quot;villes&quot;    &quot;x&quot;        
+## [26] &quot;x.acm&quot;     &quot;x.afc&quot;     &quot;x1&quot;        &quot;z1&quot;        &quot;z1.comp&quot;</code></pre>
 </div>
 <div id="donnees-utilisees" class="section level3">
 <h3>Données utilisées</h3>

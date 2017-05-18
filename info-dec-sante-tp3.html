@@ -191,6 +191,7 @@ $(document).ready(function () {
             <li class="dropdown-header">DU Dataviz</li>
             <li><a href="analyse-donnees.html">Analyse de données</a></li>
             <li><a href="visualisation-donnees.html">Visualisation de données - R</a></li>
+            <li><a href="visualisation-donnees-tableau.html">Visualisation de données - Tableau</a></li>
             <li><a href="visualisation-donnees-d3.html">Visualisation de données - D3</a></li>
             <li role="separator" class="divider"></li>
             <li class="dropdown-header">Master</li>
@@ -403,41 +404,24 @@ m = mongo(url = &quot;mongodb://193.51.82.104:2231&quot;,
 <p><code>R</code> ne gérant pas nativement les données <code>JSON</code>, les documents sont traduits, pour la librairie <code>mongolite</code>, en <code>data.frame</code>. Pour récupérer le premier document, nous utilisons la fonction <code>find()</code> de l’objet créé <code>m</code>.</p>
 <pre class="r"><code>d = m$find(limit = 1)</code></pre>
 <pre><code>## 
- Found 1 records...
- Imported 1 records. Simplifying into dataframe...</code></pre>
+ Imported 0 records. Simplifying into dataframe...</code></pre>
 <pre class="r"><code>d</code></pre>
-<pre><code>##   Code  Name     Continent    Region SurfaceArea IndepYear Population
-## 1  ABW Aruba North America Caribbean         193        NA     103000
-##   LifeExpectancy GNP GNPOld LocalName
-## 1           78.4 828    793     Aruba
-##                                 GovernmentForm HeadOfState Capital.ID
-## 1 Nonmetropolitan Territory of The Netherlands     Beatrix        129
-##   Capital.Name Capital.District Capital.Population Code2    OffLang
-## 1   Oranjestad                –              29034    AW Dutch, 5.3
-##                                     NotOffLang
-## 1 English, Papiamento, Spanish, 9.5, 76.7, 7.4</code></pre>
+<pre><code>## data frame with 0 columns and 0 rows</code></pre>
 <pre class="r"><code>class(d)</code></pre>
 <pre><code>## [1] &quot;data.frame&quot;</code></pre>
 <p>Les objets <code>Capital</code>, <code>OffLang</code> et <code>NotOffLang</code> sont particuliers, comme on peut le voir dans le <code>JSON</code>. <code>Capital</code> est une liste, et les deux autres sont des tableaux de listes. Voila leur classe en <code>R</code>.</p>
 <pre class="r"><code>class(d$Capital)</code></pre>
-<pre><code>## [1] &quot;data.frame&quot;</code></pre>
+<pre><code>## [1] &quot;NULL&quot;</code></pre>
 <pre class="r"><code>d$Capital</code></pre>
-<pre><code>##    ID       Name District Population
-## 1 129 Oranjestad        –      29034</code></pre>
+<pre><code>## NULL</code></pre>
 <pre class="r"><code>class(d$OffLang)</code></pre>
-<pre><code>## [1] &quot;list&quot;</code></pre>
+<pre><code>## [1] &quot;NULL&quot;</code></pre>
 <pre class="r"><code>d$OffLang</code></pre>
-<pre><code>## [[1]]
-##   Language Percentage
-## 1    Dutch        5.3</code></pre>
+<pre><code>## NULL</code></pre>
 <pre class="r"><code>class(d$NotOffLang)</code></pre>
-<pre><code>## [1] &quot;list&quot;</code></pre>
+<pre><code>## [1] &quot;NULL&quot;</code></pre>
 <pre class="r"><code>d$NotOffLang</code></pre>
-<pre><code>## [[1]]
-##     Language Percentage
-## 1    English        9.5
-## 2 Papiamento       76.7
-## 3    Spanish        7.4</code></pre>
+<pre><code>## NULL</code></pre>
 </div>
 <div id="restriction-et-projection" class="section level3">
 <h3>Restriction et Projection</h3>
@@ -448,105 +432,42 @@ m = mongo(url = &quot;mongodb://193.51.82.104:2231&quot;,
 <pre class="r"><code>m$find(query = &#39;{&quot;Name&quot;: &quot;France&quot;}&#39;, 
        fields = &#39;{&quot;Name&quot;: 1, &quot;Population&quot;: 1}&#39;)</code></pre>
 <pre><code>## 
- Found 1 records...
- Imported 1 records. Simplifying into dataframe...</code></pre>
-<pre><code>##                        _id   Name Population
-## 1 586a0f9e9a4df5e90a24d235 France   59225700</code></pre>
+ Imported 0 records. Simplifying into dataframe...</code></pre>
+<pre><code>## data frame with 0 columns and 0 rows</code></pre>
 <pre class="r"><code>m$find(query = &#39;{&quot;Name&quot;: &quot;France&quot;}&#39;, 
        fields = &#39;{&quot;_id&quot;: 0, &quot;Name&quot;: 1, &quot;Population&quot;: 1}&#39;)</code></pre>
 <pre><code>## 
- Found 1 records...
- Imported 1 records. Simplifying into dataframe...</code></pre>
-<pre><code>##     Name Population
-## 1 France   59225700</code></pre>
+ Imported 0 records. Simplifying into dataframe...</code></pre>
+<pre><code>## data frame with 0 columns and 0 rows</code></pre>
 <p>Ici, on recherche les pays du continent <code>&quot;Europe&quot;</code> dont la population est supérieur à 50M d’habitants.</p>
 <pre class="r"><code>m$find(query = &#39;{&quot;Continent&quot;: &quot;Europe&quot;, &quot;Population&quot;: {&quot;$gt&quot;: 50000000}}&#39;,
        fields = &#39;{&quot;_id&quot;: 0, &quot;Name&quot;: 1, &quot;Population&quot;: 1}&#39;)</code></pre>
 <pre><code>## 
- Found 6 records...
- Imported 6 records. Simplifying into dataframe...</code></pre>
-<pre><code>##                 Name Population
-## 1            Germany   82164700
-## 2             France   59225700
-## 3     United Kingdom   59623400
-## 4              Italy   57680000
-## 5 Russian Federation  146934000
-## 6            Ukraine   50456000</code></pre>
+ Imported 0 records. Simplifying into dataframe...</code></pre>
+<pre><code>## data frame with 0 columns and 0 rows</code></pre>
 <pre class="r"><code>m$find(query = &#39;{&quot;Continent&quot;: {&quot;$in&quot;: [&quot;Antarctica&quot;, &quot;South America&quot;]}}&#39;, 
        fields = &#39;{&quot;_id&quot;: 0, &quot;Name&quot;: 1, &quot;Continent&quot;: 1}&#39;)</code></pre>
 <pre><code>## 
- Found 19 records...
- Imported 19 records. Simplifying into dataframe...</code></pre>
-<pre><code>##                                            Name     Continent
-## 1                                     Argentina South America
-## 2                                    Antarctica    Antarctica
-## 3                   French Southern territories    Antarctica
-## 4                                       Bolivia South America
-## 5                                        Brazil South America
-## 6                                 Bouvet Island    Antarctica
-## 7                                         Chile South America
-## 8                                      Colombia South America
-## 9                                       Ecuador South America
-## 10                             Falkland Islands South America
-## 11                                French Guiana South America
-## 12                                       Guyana South America
-## 13            Heard Island and McDonald Islands    Antarctica
-## 14                                         Peru South America
-## 15                                     Paraguay South America
-## 16 South Georgia and the South Sandwich Islands    Antarctica
-## 17                                     Suriname South America
-## 18                                      Uruguay South America
-## 19                                    Venezuela South America</code></pre>
+ Imported 0 records. Simplifying into dataframe...</code></pre>
+<pre><code>## data frame with 0 columns and 0 rows</code></pre>
 <p>Dans ces exemples, nous cherchons en premier les pays avec comme capital <code>&quot;Paris&quot;</code>, et ensuite les pays dont une des langues officielles est le français.</p>
 <pre class="r"><code>m$find(query = &#39;{&quot;Capital.Name&quot;: &quot;Paris&quot;}&#39;,
        fields = &#39;{&quot;_id&quot;: 0, &quot;Name&quot;: 1, &quot;Capital&quot;: 1}&#39;)</code></pre>
 <pre><code>## 
- Found 1 records...
- Imported 1 records. Simplifying into dataframe...</code></pre>
-<pre><code>##     Name Capital.ID Capital.Name Capital.District Capital.Population
-## 1 France       2974        Paris    Île-de-France            2125246</code></pre>
+ Imported 0 records. Simplifying into dataframe...</code></pre>
+<pre><code>## data frame with 0 columns and 0 rows</code></pre>
 <pre class="r"><code>m$find(query = &#39;{&quot;OffLang.Language&quot;: &quot;French&quot;}&#39;,
        fields = &#39;{&quot;_id&quot;: 0, &quot;Name&quot;: 1, &quot;OffLang.Percentage&quot;: 1}&#39;)</code></pre>
 <pre><code>## 
- Found 18 records...
- Imported 18 records. Simplifying into dataframe...</code></pre>
-<pre><code>##                         Name              OffLang
-## 1                    Burundi            0.0, 98.1
-## 2                    Belgium      59.2, 32.6, 1.0
-## 3                     Canada           60.4, 23.4
-## 4                Switzerland 19.2, 63.6, 7.7, 0.6
-## 5                     France                 93.6
-## 6                 Guadeloupe                    0
-## 7                      Haiti                    0
-## 8                 Luxembourg       4.2, 2.3, 64.4
-## 9                     Monaco                 41.9
-## 10                Madagascar            0.0, 98.9
-## 11                Martinique                    0
-## 12                   Mayotte                 20.3
-## 13             New Caledonia                 34.3
-## 14          French Polynesia                 40.8
-## 15                    Rwanda               0, 100
-## 16 Saint Pierre and Miquelon                    0
-## 17                Seychelles             3.8, 1.3
-## 18                   Vanuatu     56.6, 28.3, 14.2</code></pre>
+ Imported 0 records. Simplifying into dataframe...</code></pre>
+<pre><code>## data frame with 0 columns and 0 rows</code></pre>
 <p>Il est aussi posible de trier les documents retournés, via l’option <code>sort</code>. Toujours en <code>JSON</code>, on indique <code>1</code> pour un tri croissant et <code>-1</code> pour un tri décroissant.</p>
 <pre class="r"><code>m$find(fields = &#39;{&quot;_id&quot;: 0, &quot;Name&quot;: 1}&#39;, 
        sort = &#39;{&quot;Population&quot;: -1}&#39;, 
        limit = 10)</code></pre>
 <pre><code>## 
- Found 10 records...
- Imported 10 records. Simplifying into dataframe...</code></pre>
-<pre><code>##                  Name
-## 1               China
-## 2               India
-## 3       United States
-## 4           Indonesia
-## 5              Brazil
-## 6            Pakistan
-## 7  Russian Federation
-## 8          Bangladesh
-## 9               Japan
-## 10            Nigeria</code></pre>
+ Imported 0 records. Simplifying into dataframe...</code></pre>
+<pre><code>## data frame with 0 columns and 0 rows</code></pre>
 </div>
 <div id="agregat" class="section level3">
 <h3>Agrégat</h3>
@@ -554,11 +475,11 @@ m = mongo(url = &quot;mongodb://193.51.82.104:2231&quot;,
 <h4>Dénombrement</h4>
 <p>On peut déjà faire un dénombrement avec la fonction <code>count()</code> de l’objet <code>m</code>. Sans option, on obtient le nombre de documents de la collection. On peut aussi ajouter une restriction pour avoir le nombre de documents respectant ces conditions. Les requêtes s’écrivent de la même manière que pour la fonction <code>find()</code>.</p>
 <pre class="r"><code>m$count()</code></pre>
-<pre><code>## [1] 239</code></pre>
+<pre><code>## [1] 0</code></pre>
 <pre class="r"><code>m$count(query = &#39;{&quot;Name&quot;: &quot;France&quot;}&#39;)</code></pre>
-<pre><code>## [1] 1</code></pre>
+<pre><code>## [1] 0</code></pre>
 <pre class="r"><code>m$count(query = &#39;{&quot;Continent&quot;: &quot;Europe&quot;}&#39;)</code></pre>
-<pre><code>## [1] 46</code></pre>
+<pre><code>## [1] 0</code></pre>
 </div>
 <div id="autre" class="section level4">
 <h4>Autre</h4>
@@ -576,31 +497,15 @@ m = mongo(url = &quot;mongodb://193.51.82.104:2231&quot;,
     {&quot;$group&quot;: {&quot;_id&quot;: &quot;$Continent&quot;, &quot;NbPays&quot;: {&quot;$sum&quot;: 1}}}
 ]&#39;)</code></pre>
 <pre><code>## 
- Found 7 records...
- Imported 7 records. Simplifying into dataframe...</code></pre>
-<pre><code>##             _id NbPays
-## 1       Oceania     28
-## 2 South America     14
-## 3        Europe     46
-## 4    Antarctica      5
-## 5        Africa     58
-## 6          Asia     51
-## 7 North America     37</code></pre>
+ Imported 0 records. Simplifying into dataframe...</code></pre>
+<pre><code>## data frame with 0 columns and 0 rows</code></pre>
 <pre class="r"><code>m$aggregate(pipeline = &#39;[
     {&quot;$group&quot;: {&quot;_id&quot;: &quot;$Continent&quot;, &quot;NbPays&quot;: {&quot;$sum&quot;: 1}, &quot;Population&quot;: {&quot;$sum&quot;: &quot;$Population&quot;}}}, 
     {&quot;$sort&quot;: { &quot;NbPays&quot;: -1}}
 ]&#39;)</code></pre>
 <pre><code>## 
- Found 7 records...
- Imported 7 records. Simplifying into dataframe...</code></pre>
-<pre><code>##             _id NbPays Population
-## 1        Africa     58  784475000
-## 2          Asia     51 3705025700
-## 3        Europe     46  730074600
-## 4 North America     37  482993000
-## 5       Oceania     28   30401150
-## 6 South America     14  345780000
-## 7    Antarctica      5          0</code></pre>
+ Imported 0 records. Simplifying into dataframe...</code></pre>
+<pre><code>## data frame with 0 columns and 0 rows</code></pre>
 <p>Si on veut avoir le pourcentage de population parlant une langue spécifique officiellement, il faut utiliser cette fonction, avec l’action <code>$unwind</code>. Celle-ci permet de dupliquer les lignes de chaque document, avec chaque valeur du tableau indiqué dans <code>$unwind</code>. Ensuite, on se retreint aux pays dont une langue officielle est le français avec <code>$match</code>. Enfin, on n’affiche que le nom du pays et le pourcentage de la population parlant le français.</p>
 <pre class="r"><code>m$aggregate(&#39;[
     { &quot;$unwind&quot;: &quot;$OffLang&quot; },
@@ -608,27 +513,8 @@ m = mongo(url = &quot;mongodb://193.51.82.104:2231&quot;,
     { &quot;$project&quot;: { &quot;_id&quot;: 0, &quot;Name&quot;: 1, &quot;OffLang.Percentage&quot;: 1 }}
 ]&#39;)</code></pre>
 <pre><code>## 
- Found 18 records...
- Imported 18 records. Simplifying into dataframe...</code></pre>
-<pre><code>##                         Name Percentage
-## 1                    Burundi        0.0
-## 2                    Belgium       32.6
-## 3                     Canada       23.4
-## 4                Switzerland       19.2
-## 5                     France       93.6
-## 6                 Guadeloupe        0.0
-## 7                      Haiti        0.0
-## 8                 Luxembourg        4.2
-## 9                     Monaco       41.9
-## 10                Madagascar        0.0
-## 11                Martinique        0.0
-## 12                   Mayotte       20.3
-## 13             New Caledonia       34.3
-## 14          French Polynesia       40.8
-## 15                    Rwanda        0.0
-## 16 Saint Pierre and Miquelon        0.0
-## 17                Seychelles        1.3
-## 18                   Vanuatu       14.2</code></pre>
+ Imported 0 records. Simplifying into dataframe...</code></pre>
+<pre><code>## data frame with 0 columns and 0 rows</code></pre>
 <pre class="r"><code>m$aggregate(&#39;[
     { &quot;$unwind&quot;: &quot;$OffLang&quot; },
     { &quot;$project&quot;: { &quot;Language&quot;: &quot;$OffLang.Language&quot;, &quot;Percentage&quot;: &quot;$OffLang.Percentage&quot;}},
@@ -636,111 +522,8 @@ m = mongo(url = &quot;mongodb://193.51.82.104:2231&quot;,
     { &quot;$sort&quot;: { &quot;NbPays&quot;: -1}}
 ]&#39;)</code></pre>
 <pre><code>## 
- Found 102 records...
- Imported 102 records. Simplifying into dataframe...</code></pre>
-<pre><code>##                  _id NbPays  PctMoyen
-## 1            English     44  21.72045
-## 2             Arabic     22  66.54091
-## 3            Spanish     20  87.16500
-## 4             French     18  18.10000
-## 5         Portuguese      6  34.48333
-## 6             German      6  56.53333
-## 7            Italian      4  50.45000
-## 8              Dutch      4  40.02500
-## 9              Malay      4  32.52500
-## 10           Russian      3  44.93333
-## 11            Danish      3  35.33333
-## 12    Serbo-Croatian      3  90.10000
-## 13           Swedish      2  47.60000
-## 14             Greek      2  86.30000
-## 15             Tamil      2  13.50000
-## 16         Norwegian      2  48.30000
-## 17           Chinese      2  84.55000
-## 18            Ketšua      2  12.25000
-## 19            Samoan      2  69.05000
-## 20            Aimará      2   2.75000
-## 21            Korean      2  99.90000
-## 22          Romanian      2  76.30000
-## 23           Turkish      2  55.00000
-## 24              Zulu      1  22.70000
-## 25         Afrikaans      1  14.30000
-## 26             Hindi      1  39.90000
-## 27           Faroese      1 100.00000
-## 28         Albaniana      1  97.90000
-## 29             Khmer      1  88.60000
-## 30            Fijian      1  50.80000
-## 31          Estonian      1  65.30000
-## 32           Finnish      1  92.70000
-## 33        Vietnamese      1  86.80000
-## 34           Persian      1  45.70000
-## 35          Chamorro      1  29.60000
-## 36             Maori      1   0.00000
-## 37          Malagasy      1  98.90000
-## 38           Romansh      1   0.60000
-## 39             Czech      1  81.20000
-## 40          Dzongkha      1  50.00000
-## 41     Luxembourgish      1  64.40000
-## 42        Papiamento      1  86.20000
-## 43        Turkmenian      1  76.70000
-## 44           Bislama      1  56.60000
-## 45             Uzbek      1  72.60000
-## 46         Icelandic      1  95.70000
-## 47         Hungarian      1  98.50000
-## 48             Wolof      1  48.10000
-## 49              Thai      1  52.60000
-## 50            Rwanda      1 100.00000
-## 51          Armenian      1  93.40000
-## 52           Catalan      1  32.30000
-## 53         Georgiana      1  71.70000
-## 54        Macedonian      1  66.50000
-## 55            Pashto      1  52.40000
-## 56             Xhosa      1  17.70000
-## 57         Mongolian      1  78.80000
-## 58          Tigrinja      1  49.10000
-## 59            Hebrew      1  63.10000
-## 60             Palau      1  82.20000
-## 61       Azerbaijani      1  89.00000
-## 62             Irish      1   1.60000
-## 63       Greenlandic      1  87.50000
-## 64               Ewe      1  23.20000
-## 65        Bulgariana      1  83.20000
-## 66           Slovene      1  87.90000
-## 67          Chichewa      1  58.30000
-## 68          Comorian      1  75.00000
-## 69              Dari      1  32.10000
-## 70             Kabyé      1  13.80000
-## 71               Lao      1  67.20000
-## 72           Bengali      1  97.70000
-## 73          Japanese      1  99.10000
-## 74            Romani      1   0.70000
-## 75             Nauru      1  57.50000
-## 76           Swahili      1   8.80000
-## 77          Kiribati      1  98.90000
-## 78            Kazakh      1  46.00000
-## 79            Kirgiz      1  59.70000
-## 80           Kirundi      1  98.10000
-## 81            Nepali      1  50.40000
-## 82           Singali      1  60.30000
-## 83       Belorussian      1  65.60000
-## 84             Sotho      1  85.00000
-## 85        Lithuanian      1  81.60000
-## 86           Latvian      1  55.10000
-## 87           Burmese      1  69.00000
-## 88           Dhivehi      1 100.00000
-## 89       Marshallese      1  96.80000
-## 90           Maltese      1  95.80000
-## 91              Urdu      1   7.60000
-## 92            Tuvalu      1  92.50000
-## 93         Ukrainian      1  64.70000
-## 94          Pilipino      1  29.30000
-## 95            Polish      1  97.60000
-## 96           Guaraní      1  40.10000
-## 97            Somali      1  98.30000
-## 98            Slovak      1  85.60000
-## 99             Swazi      1  89.90000
-## 100          Tadzhik      1  62.20000
-## 101           Tongan      1  98.30000
-## 102 Mandarin Chinese      1  20.10000</code></pre>
+ Imported 0 records. Simplifying into dataframe...</code></pre>
+<pre><code>## data frame with 0 columns and 0 rows</code></pre>
 </div>
 </div>
 <div id="map-reduce" class="section level3">
@@ -776,14 +559,7 @@ m = mongo(url = &quot;mongodb://193.51.82.104:2231&quot;,
     map = &#39;function() { emit(this.Continent, this.Population)}&#39;,
     reduce = &#39;function(cont, nb) { return Array.sum(nb) }&#39;
 )</code></pre>
-<pre><code>##             _id      value
-## 1        Africa  784475000
-## 2    Antarctica          0
-## 3          Asia 3705025700
-## 4        Europe  730074600
-## 5 North America  482993000
-## 6       Oceania   30401150
-## 7 South America  345780000</code></pre>
+<pre><code>## NULL</code></pre>
 <p>On peut utiliser ce paradigme pour calculer le pourcentage médian de la population parlant cette langue.</p>
 <pre class="r"><code>m$mapreduce(
     map = &#39;function() {
@@ -802,109 +578,7 @@ m = mongo(url = &quot;mongodb://193.51.82.104:2231&quot;,
             return (values[half-1] + values[half]) / 2.0;
     }&#39;
 )</code></pre>
-<pre><code>##                  _id  value
-## 1          Afrikaans  14.30
-## 2             Aimará   2.75
-## 3          Albaniana  97.90
-## 4             Arabic  76.95
-## 5           Armenian  93.40
-## 6        Azerbaijani  89.00
-## 7        Belorussian  65.60
-## 8            Bengali  97.70
-## 9            Bislama  56.60
-## 10        Bulgariana  83.20
-## 11           Burmese  69.00
-## 12           Catalan  32.30
-## 13          Chamorro  29.60
-## 14          Chichewa  58.30
-## 15           Chinese  84.55
-## 16          Comorian  75.00
-## 17             Czech  81.20
-## 18            Danish  12.50
-## 19              Dari  32.10
-## 20           Dhivehi 100.00
-## 21             Dutch  32.25
-## 22          Dzongkha  50.00
-## 23           English   1.35
-## 24          Estonian  65.30
-## 25               Ewe  23.20
-## 26           Faroese 100.00
-## 27            Fijian  50.80
-## 28           Finnish  92.70
-## 29            French   9.20
-## 30         Georgiana  71.70
-## 31            German  76.30
-## 32             Greek  86.30
-## 33       Greenlandic  87.50
-## 34           Guaraní  40.10
-## 35            Hebrew  63.10
-## 36             Hindi  39.90
-## 37         Hungarian  98.50
-## 38         Icelandic  95.70
-## 39             Irish   1.60
-## 40           Italian  50.90
-## 41          Japanese  99.10
-## 42             Kabyé  13.80
-## 43            Kazakh  46.00
-## 44            Ketšua  12.25
-## 45             Khmer  88.60
-## 46            Kirgiz  59.70
-## 47          Kiribati  98.90
-## 48           Kirundi  98.10
-## 49            Korean  99.90
-## 50               Lao  67.20
-## 51           Latvian  55.10
-## 52        Lithuanian  81.60
-## 53     Luxembourgish  64.40
-## 54        Macedonian  66.50
-## 55          Malagasy  98.90
-## 56             Malay  29.80
-## 57           Maltese  95.80
-## 58  Mandarin Chinese  20.10
-## 59             Maori   0.00
-## 60       Marshallese  96.80
-## 61         Mongolian  78.80
-## 62             Nauru  57.50
-## 63            Nepali  50.40
-## 64         Norwegian  48.30
-## 65             Palau  82.20
-## 66        Papiamento  86.20
-## 67            Pashto  52.40
-## 68           Persian  45.70
-## 69          Pilipino  29.30
-## 70            Polish  97.60
-## 71        Portuguese   5.20
-## 72            Romani   0.70
-## 73          Romanian  76.30
-## 74           Romansh   0.60
-## 75           Russian  32.00
-## 76            Rwanda 100.00
-## 77            Samoan  69.05
-## 78    Serbo-Croatian  95.90
-## 79           Singali  60.30
-## 80            Slovak  85.60
-## 81           Slovene  87.90
-## 82            Somali  98.30
-## 83             Sotho  85.00
-## 84           Spanish  94.35
-## 85           Swahili   8.80
-## 86             Swazi  89.90
-## 87           Swedish  47.60
-## 88           Tadzhik  62.20
-## 89             Tamil  13.50
-## 90              Thai  52.60
-## 91          Tigrinja  49.10
-## 92            Tongan  98.30
-## 93           Turkish  55.00
-## 94        Turkmenian  76.70
-## 95            Tuvalu  92.50
-## 96         Ukrainian  64.70
-## 97              Urdu   7.60
-## 98             Uzbek  72.60
-## 99        Vietnamese  86.80
-## 100            Wolof  48.10
-## 101            Xhosa  17.70
-## 102             Zulu  22.70</code></pre>
+<pre><code>## NULL</code></pre>
 </div>
 </div>
 <div id="exercices" class="section level2">

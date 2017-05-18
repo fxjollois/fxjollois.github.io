@@ -20,3 +20,4 @@ title: Compléments sur `R`
 1. [TP5 - Test de différents *inputs*](complements-r-tp5.html)
     - [correction](complements-r-tp5-correction.html)
 1. [TP6 - Tableaux de bord](complements-r-tp6.html)
+1. [Sujet du projet](complements-r-projet.html)
