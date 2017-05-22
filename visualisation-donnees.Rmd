@@ -609,10 +609,10 @@ Nous disposons de [données d'AirBnB](https://www.dropbox.com/sh/s7kiuot44g5lxi5
 On commence déjà par importer ces données dans R.
 
 ```{r airbnb-data}
-airbnb.summ = read.table("airbnb-paris-2015-09-02-summary.csv", 
+airbnb.summ = read.table("donnees/airBnB-2015-09-02/airbnb-paris-2015-09-02-summary.csv", 
                          sep = ",", header = T, 
                          quote = "\"", comment.char = "")
-airbnb.comp = read.table("airbnb-paris-2015-09-02.csv", 
+airbnb.comp = read.table("donnees/airBnB-2015-09-02/airbnb-paris-2015-09-02.csv", 
                          sep = ",", header = T, 
                          quote = "\"", comment.char = "")
 ```
@@ -628,7 +628,7 @@ La librairie [`geojsonio`](https://github.com/ropensci/geojsonio) permet de lire
 On importe donc les données des arrondissements. La fonction `fortify()` de `ggplot2` nous permet ici de passer à un format lisible pour `ggplot()`.
 
 ```{r airbnb-geo}
-airbnb.neigh = geojson_read("airbnb-paris-2015-09-02-neighbourhoods.geojson", what = "sp")
+airbnb.neigh = geojson_read("donnees/airBnB-2015-09-02/airbnb-paris-2015-09-02-neighbourhoods.geojson", what = "sp")
 airbnb.neigh.for = fortify(airbnb.neigh)
 ggplot(airbnb.neigh.for, aes(long, lat, group=group)) +
     geom_polygon()  + theme_void()
@@ -639,7 +639,7 @@ Le problème dans notre cas est que les quartiers ne sont pas classés dans un o
 ```{r airbnb-order}
 airbnb.neigh.ord = data.frame(
     id = as.character(0:19),
-    neighbourhood = unlist(lapply(geojson_read("airbnb-paris-2015-09-02-neighbourhoods.geojson")$features, function(f) return(f$properties$neighbourhood)))
+    neighbourhood = unlist(lapply(geojson_read("donnees/airBnB-2015-09-02/airbnb-paris-2015-09-02-neighbourhoods.geojson")$features, function(f) return(f$properties$neighbourhood)))
 )
 airbnb.neigh.ord
 ```

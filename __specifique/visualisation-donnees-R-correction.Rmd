@@ -1,0 +1,173 @@
+---
+title: Visualisation de données avec **R**
+author: DU Dataviz
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(fig.align = "center", warning = FALSE, message = FALSE)
+```
+
+Dans ce document est présenté un certain nombre de commandes concernant des packages **R** utiles pour la visualisation de données. Voici comment les charger :
+
+```{r librairies}
+library(ggplot2)
+library(scales)
+library(reshape2)
+library(leaflet)
+library(ggmap)
+library(geojsonio)
+```
+
+## Mini-projet
+
+### Introduction 
+
+Nous disposons de [données d'AirBnB](https://www.dropbox.com/sh/s7kiuot44g5lxi5/AACVVQzJJh2ivGDH5ikisroua?dl=0) pour Paris à la date du 2 septembre 2015 ( [données source](http://insideairbnb.com/get-the-data.html) ). Celles-ci ont été légèremment nettoyées et réduites pour obtenir les fichiers suivants :
+
+| Fichier | Contenu |
+|:-|:-|
+`airbnb-paris-2015-09-02-summary.csv           `| Résumé à quelques informations de base |
+`airbnb-paris-2015-09-02.csv                   `| Données plus complètes |
+`airbnb-paris-2015-09-02-neighbourhoods.geojson`| Représentation graphiques des arrondissement |
+
+On commence déjà par importer ces données dans R.
+
+```{r airbnb-data}
+airbnb.summ = read.table("../donnees/airBnB-2015-09-02/airbnb-paris-2015-09-02-summary.csv", 
+                         sep = ",", header = T, 
+                         quote = "\"", comment.char = "")
+airbnb.comp = read.table("../donnees/airBnB-2015-09-02/airbnb-paris-2015-09-02.csv", 
+                         sep = ",", header = T, 
+                         quote = "\"", comment.char = "")
+```
+
+Sur ces données, il est déjà possible de représenter chaque logement par un point, assez simplement
+
+```{r airbnb-point}
+ggplot(airbnb.summ, aes(x=longitude, y=latitude)) + geom_point()
+```
+
+La librairie [`geojsonio`](https://github.com/ropensci/geojsonio) permet de lire et d'écrire des données au format [GeoJSON](http://geojson.org/geojson-spec.html), permettant de réprésenter des objets géoraphiques dans un formalisme issue de `JSON`. Il est très utilisé pour représenter des zones, telles que des villes, des pays, ... 
+
+On importe donc les données des arrondissements. La fonction `fortify()` de `ggplot2` nous permet ici de passer à un format lisible pour `ggplot()`.
+
+```{r airbnb-geo}
+airbnb.neigh = geojson_read("../donnees/airBnB-2015-09-02/airbnb-paris-2015-09-02-neighbourhoods.geojson", what = "sp")
+airbnb.neigh.for = fortify(airbnb.neigh)
+ggplot(airbnb.neigh.for, aes(long, lat, group=group)) +
+    geom_polygon()  + theme_void()
+```
+
+Le problème dans notre cas est que les quartiers ne sont pas classés dans un ordre spécifique dans les données, et que l'objet `airbnb.neigh` ne comporte plus le nom du quartier, ce qui va nous empêcher de faire le lien avec les autres données. Le code suivant permet donc de récupérer l'ordre des quartiers et de le stocker dans un `data.frame`. On lit différement le jeu de données.
+
+```{r airbnb-order}
+airbnb.neigh.ord = data.frame(
+    id = as.character(0:19),
+    neighbourhood = as.character(airbnb.neigh$neighbourhood) #unlist(lapply(geojson_read("../donnees/airBnB-2015-09-02/airbnb-paris-2015-09-02-neighbourhoods.geojson")$features, function(f) return(f$properties$neighbourhood)))
+)
+airbnb.neigh.ord
+```
+
+Il peut être intéressant de calculer le centre de chaque quartier, pour pouvoir l'ajouter sur la carte par la suite. Pour cela, nous prenons la moyenne entre la latitude (et resp. la longitude) minimale et maximale.
+
+```{r airbnb-center}
+airbnb.neigh.cen = merge(airbnb.neigh.ord, 
+                         aggregate(cbind(long, lat) ~ id, airbnb.neigh.for,
+                                   function (c) return(mean(range(c))))
+                         )
+ggplot(airbnb.neigh.for, aes(long, lat, group=group)) +
+    geom_polygon(fill = "gray70", color = "gray50") +
+    geom_text(data = airbnb.neigh.cen, aes(label = neighbourhood, group=id)) + theme_void()
+```
+
+Au final, on peut faire une carte des arrondissements, en y ajoutant le nom du voisinage, les points des logements et une couleur pour chaque arrondissement dépendant de la variable `group` par exemple (on pourra utiliser ce schéma pour représenter des informations statistiques par exemple)
+
+```{r airbnb-tout}
+ggplot(airbnb.neigh.for) +
+    geom_polygon(aes(long, lat, group=group, fill=id), color="gray50") +
+    geom_point(data=airbnb.summ, aes(longitude, latitude), col="gray30", alpha=.5) +
+    geom_text(data=airbnb.neigh.cen, aes(long, lat, label=neighbourhood, group=id)) + 
+    theme_void() + theme(legend.position="none")
+```
+
+## Questions
+
+On déjà récupérer la carte de Paris.
+
+```{r}
+m = get_map("Paris,France", zoom = 11)
+ggmap(m)
+```
+
+### 1. Représenter les logements sur la carte de Paris
+
+```{r}
+ggmap(m) +
+    geom_point(data=airbnb.summ, aes(longitude, latitude), col="gray30", alpha=.5) +
+    theme_void()
+```
+
+
+### 2. Représenter les quartiers sur la carte de Paris
+
+
+```{r}
+ggmap(m) +
+   geom_polygon(data = airbnb.neigh.for, aes(long, lat, group=group), color="gray80") +
+    geom_text(data=airbnb.neigh.cen, aes(long, lat, label=neighbourhood, group=id)) + 
+    theme_void()
+```
+
+### 3. Représenter ces deux informations sur la carte de Paris, avec pour la première
+
+- soit du point par point
+- soit avec une *heatmap*
+
+```{r}
+ggmap(m) +
+    geom_polygon(data = airbnb.neigh.for, aes(long, lat, group=group), color="gray80", alpha = .8) +
+    geom_point(data=airbnb.summ, aes(longitude, latitude), col="gray30", alpha=.5) +
+    # geom_text(data=airbnb.neigh.cen, aes(long, lat, label=neighbourhood, group=id)) + 
+    theme_void()
+```
+
+```{r}
+ggmap(m) +
+    geom_polygon(data = airbnb.neigh.for, aes(long, lat, group=group), color="gray80", alpha = .8) +
+    geom_bin2d(data=airbnb.summ, aes(longitude, latitude)) +
+    # geom_text(data=airbnb.neigh.cen, aes(long, lat, label=neighbourhood, group=id)) + 
+    theme_void()
+```
+
+### 4. Représenter le nombre de logements par quartier
+
+```{r}
+df = merge(
+    airbnb.neigh.for,
+    merge(aggregate(price ~ neighbourhood, airbnb.summ, length),
+          airbnb.neigh.ord))
+
+ggmap(m) +
+    geom_polygon(data = df, 
+                 aes(long, lat, group=group, fill=price)) +
+    # geom_text(data=airbnb.neigh.cen, aes(long, lat, label=neighbourhood, group=id)) + 
+    labs(fill = "Nombre de logement") +
+    theme_void()
+```
+
+### 5. Idem pour le prix moyen
+
+```{r}
+df = merge(
+    airbnb.neigh.for,
+    merge(aggregate(price ~ neighbourhood, airbnb.summ, mean),
+          airbnb.neigh.ord))
+
+ggmap(m) +
+    geom_polygon(data = df, 
+                 aes(long, lat, group=group, fill=price)) +
+    # geom_text(data=airbnb.neigh.cen, aes(long, lat, label=neighbourhood, group=id)) + 
+    labs(fill = "Prix moyen") +
+    theme_void()
+```
+
