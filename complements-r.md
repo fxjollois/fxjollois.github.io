@@ -22,4 +22,5 @@ title: Compléments sur `R`
 1. [TP6 - Tableaux de bord](complements-r-tp6.html)
     - correction : [`ui.R`](complements-r-tp6/ui.R) et [`server.R`](complements-r-tp6/server.R)
 1. [TP récapitulatif](complements-r-recap.html)
+    - correction : [`ui.R`](complements-r-recap/ui.R) et [`server.R`](complements-r-recap/server.R)
 1. [Sujet du projet](complements-r-projet.html)
