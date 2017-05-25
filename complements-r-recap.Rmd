@@ -3,7 +3,7 @@ title: Récapitulatif
 subtitle: Compléments sur R - STID 1ère année
 ---
 
-Nous allons de nouveau utiliser les données synthétiques de la production scientifique mondiale de 1996 à 2014 ([lien vers le fichier `csv`](reporting/tp5/scimagojr%20all.csv) - source : [SCImago Journal & Country Rank](http://www.scimagojr.com/help.php))
+Nous allons de nouveau utiliser les données synthétiques de la production scientifique mondiale de 1996 à 2014 ([lien vers le fichier `csv`](donnees/scimagojr-1996-2014.csv) - source : [SCImago Journal & Country Rank](http://www.scimagojr.com/help.php))
 
 Ce fichier comporte les variables suivantes :
 
