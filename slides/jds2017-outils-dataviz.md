@@ -6,7 +6,7 @@ class: middle, center, inverse, title
 
 ### François-Xavier Jollois
 
-### JdS2017 - Avignon - 30 mars 2017
+### JdS2017 - Avignon - 30 mai 2017
 
 ---
 
