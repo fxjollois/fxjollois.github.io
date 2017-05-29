@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset = "UTF-8">
+		<link rel = "stylesheet" type = "text/css" href = "libs/remark.fxj1.css">
+        <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+	</head>
+	<body>
+		<textarea id="source">
+			<!-- 
+                Slideshow Markdown pas besoin car sourceUrl plus bas
+            -->
+		</textarea>
+		<script src="libs/remark.min.js"></script>
+		<script>
+			var slideshow = remark.create({
+				sourceUrl: 'jds2017-outils-dataviz.md',
+				countIncrementalSlides: false,
+				slideNumberFormat: function (current, total) {
+					p = Math.round((current - 1) / (total - 1) * 100);
+					return '<div id="myProgress"><div id="myBar" style="width: ' + p + '%"></div></div>'
+				}
+			});
+		</script>
+        <script>
+            google.charts.load('current', {packages: ['corechart', 'bar']});
+            google.charts.setOnLoadCallback(drawStacked);
+
+            function drawStacked() {
+                  var data = google.visualization.arrayToDataTable([
+                    ['Solution', 'Logiciel', 'Développement'],
+                    ['Tableau', 80, 20],
+                    ['R', 20, 80],
+                    ['Javascript', 0, 100]
+                  ]);
+
+                  var options = {
+                    title: 'Répartition du coût',
+                    chartArea: {width: '50%'},
+                    isStacked: true
+                  };
+                  var chart = new google.visualization.BarChart(document.getElementById('chart_div'));
+                  chart.draw(data, options);
+                }
+        </script>
+	</body>
+</html>
