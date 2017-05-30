@@ -60,6 +60,9 @@ a {
 table {
     margin: 0 auto;
 }
+table td, table th {
+    padding: 5px;
+}
 
 /* Pour impression en PDF */
 @page {
