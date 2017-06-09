@@ -20,4 +20,4 @@ Dans le cadre du cours sur `R` et la librairie `shiny` (et ses dérivés : `shin
     - Fichier `zip` contenant les données (au format `.RData` de préférence) et les fichiers `ui.R` et `server.R` 
     - Espace de dépôt sur [Moodle](https://moodle.iut.parisdescartes.fr/mod/assign/view.php?id=21890) à utiliser
     - Indiquer les étudiants dans le commentaire du dépôt
-- **Date Limite** : **16 JUIN 2017 - 18h00**
+- **Date Limite** : **23 JUIN 2017 - 18h00**
