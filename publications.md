@@ -4,6 +4,10 @@ title: Publications
 
 [Liste de publications sous Google Scholar](https://scholar.google.fr/citations?hl=fr&user=aW4afqQAAAAJ&view_op=list_works)
 
+- **2017** :
+    -  C. Bouveyron, L. Bozzi, J. Jacques and F.-X. Jollois, The Functional Latent Block Model for the Co-Clustering of Electricity Consumption Curves, Preprint HAL n°01533438, Université Paris Descartes, 2017: [pdf](http://hal.archives-ouvertes.fr/hal-01533438).
+- **2016** :
+    - J-M. Poggi, C. Bouveyron, G. Hébrail, et F-X. Jollois, Un DU d’Analyste Big Data en formation continue courte, au niveau L3, Statistique et Enseignement, vol. 7 (1), pp. 127-134, 2016: [web](http://publications-sfds.math.cnrs.fr/index.php/StatEns/article/view/549)
 - **2015** :
 	- Dani, M. C., Freixo, C., Jollois, F. X., & Nadif, M. (2015). Unsupervised anomaly detection for Aircraft Condition Monitoring System. In Aerospace Conference, 2015 IEEE (pp. 1-7). IEEE.
 	- MC Dani, FX Jollois, M Nadif, C Freixo. Adaptive Threshold for Anomaly Detection Using Time Series Segmentation. Neural Information Processing, 82-89
@@ -46,7 +50,7 @@ title: Publications
 	- F.-X. Jollois, M. Nadif, L'algorithme IEM pour donn&eacute;es binaires, SFC 2003, 10-12 septembre, NeuchÃ¢tel, Suisse, 141--144.
 	- F.-X. Jollois, M. Nadif, G. Govaert, Classification crois&eacute;e sur des donn&eacute;es binaires de grande taille, RSTI s&eacute;rie RIA-ECA, vol. 17(1-2-3), 213--218. 
 - **2002** : 
-	- M. Nadif, G. Govaert, F.-X. Jollois, A hybrid system for identifying homogenous blocks in large data sets, Second Euro-Japanese Workshop on Stochastic Risk Modelling for Finance, Insurance, Production and Reliability, 16-19 septembre, Chamonix, France, 324--333. 
+	- M. Nadif, G. Govaert, F.-X. Jollois, A hybrid system for identifying homogenous blocks in large data sets, Second Euro-Japanese Workshop on Stochastic Risk Modelling for Finance, Insurance, Production and Reliability, 16-19 septembre, Chamonix, France, 324--333.
 	- F.-X. Jollois, M. Nadif, G. Govaert, Assessing the number of clusters of the latent class model, in Classification, Clustering, and Data Analysis : Recent Advances and Applications, 139--146. 
 	- F.-X. Jollois, M. Nadif, Clustering large categorical data, in Advances in Knowledge and Data Mining : 6th Pacific Asia Conference PAKDD 2002, 6-8 Mai, Taipei, Taiwan, 257--263. 
 	- F.-X. Jollois, M. Nadif, &eacute;valuation du nombre de classes dans un cadre bay&eacute;sien, ECA, vol. 1(4), 357--362. 
