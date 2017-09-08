@@ -15,7 +15,7 @@ class: middle, center, inverse, title
 **Cadre** : DUT Statistique et Informatique Décisionnelle - *1ère année*
 
 - Etudiants tout juste diplômés du baccalauréat
-- Domaines du décisionnel et de la statistique
+- Domaine du décisionnel et de la statistique
 - Module dédié à la visualisation de données, avec en amont
 	- Statistique descriptive
 	- Programmation
@@ -24,7 +24,7 @@ class: middle, center, inverse, title
 	- Communication
 - 12 départements STID en France
 
-**Génèse** :
+**Deux éditions** à l'heure actuelle :
 
 - Première expérience en 2016, à Paris puis Carcassonne
 - Elargissement à presque tous les départements STID (10) en 2017
@@ -91,10 +91,10 @@ Expérience nouvelle très bien perçue par les étudiants
 - Aucune consigne donnée sur les problématiques
 
 - Pour *Paris*, passage devant un large jury composé incluant des professionnels de deux entreprises
-	- Lots plus communs
+	- Lots communs
 	- Participation à un séminaire organisé par une des entreprises
 
-- Pour *Carcassonne*, travail était obligatoire, suivi par une évaluation
+- Pour *Carcassonne*, travail obligatoire, suivi par une évaluation
 
 
 ---
