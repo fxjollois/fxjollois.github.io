@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+<meta charset="utf-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="pandoc" />
+
+
+
+
+<title>Visualisation de données - correction</title>
+
+<script src="libs/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="libs/bootstrap-3.3.5/css/journal.min.css" rel="stylesheet" />
+<script src="libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<script src="libs/navigation-1.1/tabsets.js"></script>
+<link href="libs/highlightjs-1.1/default.css" rel="stylesheet" />
+<script src="libs/highlightjs-1.1/highlight.js"></script>
+<!--
+    Font Awesome
+-->
+<script src="https://use.fontawesome.com/32d8325004.js"></script>
+<link rel="stylesheet" href="libs/font-awesome-4.7.0/css/font-awesome.min.css">
+
+<!--
+    CSS perso
+-->
+<style>
+    .contenu {
+        margin-bottom: 50px;
+    }
+
+    .contact-liens {
+        text-align: center;
+    }
+    .contact-liens:hover {
+        text-decoration: none;
+    }
+    .contact-icones {
+        height: 30px;
+    }
+
+    /* Espacement pour barre du haut et pied de page */
+    #header, .section.level1 {
+        margin-top: 60px;
+        margin-bottom: 60px;
+    }
+    /* Espacement pour table des matières */
+    #TOC {
+        margin-top: 100px;
+    }
+    
+    .footer {
+        position: fixed;
+        width: 100%;
+        text-align: center;
+        bottom: 0;
+        left: 0;
+        background-color: #E6E6E6;
+    }
+</style>
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
+<script type="text/javascript">
+if (window.hljs && document.readyState && document.readyState === "complete") {
+   window.setTimeout(function() {
+      hljs.initHighlighting();
+   }, 0);
+}
+</script>
+
+
+
+<style type="text/css">
+h1 {
+  font-size: 34px;
+}
+h1.title {
+  font-size: 38px;
+}
+h2 {
+  font-size: 30px;
+}
+h3 {
+  font-size: 24px;
+}
+h4 {
+  font-size: 18px;
+}
+h5 {
+  font-size: 16px;
+}
+h6 {
+  font-size: 12px;
+}
+.table th:not([align]) {
+  text-align: left;
+}
+</style>
+
+<link rel="stylesheet" href="libs/bootstrap-journal.min.css" type="text/css" />
+
+</head>
+
+<body>
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img {
+  max-width:100%;
+  height: auto;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+</style>
+
+
+
+<div class="container-fluid main-container">
+
+<!-- tabsets -->
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+</script>
+
+<!-- code folding -->
+
+
+
+
+
+<div class="navbar navbar-default navbar-fixed-top">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-main">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">FX Jollois</a>
+    </div>
+    <div id="navbar-main" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button">Données <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+              <li><a href="accesdonnees.html">A télécharger</a></li>
+              <li><a href="donnees-integrees-r.html">Sous R</a></li>
+          </ul>
+        </li>
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button">Enseignement <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li class="dropdown-header">DUT 1ère année</li>
+            <li><a href="exploitation-donnees.html">Exploitation de données</a></li>
+            <li><a href="initiation-a-r.html">Initiation à R</a></li>
+            <li><a href="reporting.html">Reporting</a></li>
+            <li><a href="complements-r.html">Compléments sur R</a></li>
+            <li class="dropdown-header">DUT 2ème année</li>
+            <li><a href="prog-stat-r.html">Programmation statistique avec R</a></li>
+            <li class="dropdown-header">LP MDS Santé</li>
+            <li><a href="info-dec-sante.html">Informatique décisionnelle</a></li>
+            <li class="dropdown-header">DU Analyste Big Data</li>
+            <li><a href="initiation-r-du.html">Initiation à R</a></li>
+            <li><a href="connexion-r-mongodb.html">Connexion entre R et MongoDB</a></li>
+            <li class="dropdown-header">DU Dataviz</li>
+            <li><a href="analyse-donnees.html">Analyse de données</a></li>
+            <li><a href="visualisation-donnees.html">Visualisation de données - R</a></li>
+            <li><a href="visualisation-donnees-tableau.html">Visualisation de données - Tableau</a></li>
+            <li><a href="visualisation-donnees-d3.html">Visualisation de données - D3</a></li>
+            <li role="separator" class="divider"></li>
+            <li class="dropdown-header">Master</li>
+            <li><a href="slides/cnam-classif-modeles.html">Classification et Modèles de mélange</a></li>
+            <li><a href="analyse-donnees-massives.html">Analyse de Données Massives</a></li>
+            <li class="dropdown-header">Iran</li>
+            <li><a href="stat-prog-R.html">Statistical Programming using R</a></li>
+          </ul>
+        </li>
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button">Recherche <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li><a href="recherche.html">Sujets</a></li>
+            <li><a href="publications.html">Publications</a></li>
+          </ul>
+        </li>
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button">Réalisations <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li><a href="realisations.html">Détail</a></li>
+            <li role="separator" class="divider"></li>
+            <li><a href="http://up5.fr/explore-data" target="_blank">explore-data</a></li>
+            <li><a href="http://fxjollois.github.io/cours-sql/" target="_blank">Appli web de cours pour SQL</a></li>
+          </ul>
+        </li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container-fluid -->
+</div>
+<div class="contenu">
+
+<div class="fluid-row" id="header">
+
+
+
+<h1 class="title toc-ignore">Visualisation de données - <em>correction</em></h1>
+<h3 class="subtitle"><em>Compléments sur R - STID 1ère année</em></h3>
+
+</div>
+
+
+<pre class="r"><code>library(ggplot2)
+library(scales)
+library(reshape2)</code></pre>
+<div id="a-faire" class="section level2">
+<h2>A faire</h2>
+<p>Vous devez faire les questions suivantes avec la fonction <code>ggplot()</code>.</p>
+<div id="dans-les-donnees-iris-representer-les-boites-a-moustaches-des-4-variables-pour-les-trois-especes." class="section level4">
+<h4>1. Dans les données <code>iris</code>, représenter les boîtes à moustaches des 4 variables pour les trois espèces.</h4>
+<div id="un-graphque-par-variable" class="section level5">
+<h5>Un graphque par variable</h5>
+<pre class="r"><code>ggplot(iris, aes(Species, Sepal.Length)) + geom_boxplot()</code></pre>
+<p><img src="complements-r-tp2-correction_files/figure-html/unnamed-chunk-2-1.png" width="672" /></p>
+<pre class="r"><code>ggplot(iris, aes(Species, Sepal.Width)) + geom_boxplot()</code></pre>
+<p><img src="complements-r-tp2-correction_files/figure-html/unnamed-chunk-2-2.png" width="672" /></p>
+<pre class="r"><code>ggplot(iris, aes(Species, Petal.Length)) + geom_boxplot()</code></pre>
+<p><img src="complements-r-tp2-correction_files/figure-html/unnamed-chunk-2-3.png" width="672" /></p>
+<pre class="r"><code>ggplot(iris, aes(Species, Petal.Width)) + geom_boxplot()</code></pre>
+<p><img src="complements-r-tp2-correction_files/figure-html/unnamed-chunk-2-4.png" width="672" /></p>
+</div>
+<div id="tous-les-graphiques-sur-la-meme-figure" class="section level5">
+<h5>Tous les graphiques sur la même figure</h5>
+<pre class="r"><code>iris.melt = melt(iris, id.vars = &quot;Species&quot;)
+ggplot(iris.melt, aes(Species, value)) + 
+    geom_boxplot() +
+    facet_wrap(~ variable, scales = &quot;free&quot;)</code></pre>
+<p><img src="complements-r-tp2-correction_files/figure-html/unnamed-chunk-3-1.png" width="672" /></p>
+</div>
+<div id="avec-un-peu-de-personnalisation" class="section level5">
+<h5>Avec un peu de personnalisation</h5>
+<pre class="r"><code>iris.melt = melt(iris, id.vars = &quot;Species&quot;)
+ggplot(iris.melt, aes(Species, value, fill = Species)) + 
+    geom_boxplot() +
+    facet_wrap(~ variable, scales = &quot;free&quot;) +
+    scale_fill_brewer(palette = &quot;Pastel1&quot;) + 
+    theme_minimal() +
+    theme(axis.title = element_blank(),
+          panel.grid = element_blank(),
+          strip.background = element_rect(fill = &quot;black&quot;, color = &quot;black&quot;),
+          strip.text = element_text(color = &quot;white&quot;))</code></pre>
+<p><img src="complements-r-tp2-correction_files/figure-html/unnamed-chunk-4-1.png" width="672" /></p>
+</div>
+</div>
+<div id="dans-les-donnees-tips-du-package-reshape2-representer-total_bill-en-fonction-de-sex-et-smoker." class="section level4">
+<h4>2. Dans les données <code>tips</code> du package <code>reshape2</code>, représenter <code>total_bill</code> en fonction de <code>sex</code> et <code>smoker</code>.</h4>
+<pre class="r"><code>ggplot(tips, aes(sex, total_bill, fill = sex)) + geom_boxplot() +
+    facet_grid(~ smoker, labeller = label_both)</code></pre>
+<p><img src="complements-r-tp2-correction_files/figure-html/unnamed-chunk-5-1.png" width="672" /></p>
+</div>
+<div id="toujours-dans-tips-representer-total_bill-et-tip-en-fonction-de-sex-de-2-facons" class="section level4">
+<h4>3. Toujours dans <code>tips</code>, représenter <code>total_bill</code> et <code>tip</code>, en fonction de <code>sex</code> de 2 façons</h4>
+<pre class="r"><code>ggplot(tips, aes(total_bill, tip, color = sex)) + 
+    geom_point() +
+    geom_smooth(method = &quot;lm&quot;, se = FALSE) +
+    facet_grid(~ sex, labeller = label_both)</code></pre>
+<p><img src="complements-r-tp2-correction_files/figure-html/unnamed-chunk-6-1.png" width="672" /></p>
+<pre class="r"><code>ggplot(tips, aes(total_bill, tip)) + 
+    geom_bin2d() +
+    facet_grid(~ sex, labeller = label_both)</code></pre>
+<p><img src="complements-r-tp2-correction_files/figure-html/unnamed-chunk-7-1.png" width="672" /></p>
+<pre class="r"><code>ggplot(transform(tips, total_bill_cut = cut(total_bill, 5)), 
+       aes(total_bill_cut, tip, fill = total_bill_cut)) +
+    geom_boxplot() +
+    facet_grid(~ sex, labeller = label_both) +
+    theme(axis.text.x = element_text(angle = 45, vjust = .5))</code></pre>
+<p><img src="complements-r-tp2-correction_files/figure-html/unnamed-chunk-8-1.png" width="672" /></p>
+</div>
+<div id="idem-avec-smoker-en-plus" class="section level4">
+<h4>4. Idem avec <code>smoker</code> en plus</h4>
+<pre class="r"><code>ggplot(tips, aes(total_bill, tip, color = sex)) + 
+    geom_point() +
+    geom_smooth(method = &quot;lm&quot;, se = FALSE) +
+    facet_grid(smoker ~ sex, labeller = label_both)</code></pre>
+<p><img src="complements-r-tp2-correction_files/figure-html/unnamed-chunk-9-1.png" width="672" /></p>
+<pre class="r"><code>ggplot(transform(tips, total_bill_cut = cut(total_bill, 5)), 
+       aes(total_bill_cut, tip, fill = total_bill_cut)) +
+    geom_boxplot() +
+    facet_grid(smoker ~ sex, labeller = label_both) +
+    theme(axis.text.x = element_text(angle = 45, vjust = .5))</code></pre>
+<p><img src="complements-r-tp2-correction_files/figure-html/unnamed-chunk-10-1.png" width="672" /></p>
+</div>
+<div id="comment-repondre-aux-questions-suivantes" class="section level4">
+<h4>5. Comment répondre aux questions suivantes :</h4>
+<div id="les-pourboires-tip-dependent-ils-du-montant-total_bill" class="section level5">
+<h5>1. Les pourboires (<code>tip</code>) dépendent ils du montant (<code>total_bill</code>)</h5>
+<pre class="r"><code>ggplot(tips, aes(total_bill, tip)) +
+    geom_point() +
+    geom_smooth(method = &quot;lm&quot;)</code></pre>
+<p><img src="complements-r-tp2-correction_files/figure-html/unnamed-chunk-11-1.png" width="672" /></p>
+</div>
+<div id="et-des-jours-de-la-semaine-day" class="section level5">
+<h5>2. Et des jours de la semaine (<code>day</code>) ?</h5>
+<pre class="r"><code>ggplot(tips, aes(day, tip, fill = day)) +
+    geom_boxplot() +
+    scale_x_discrete(limits = c(&quot;Thur&quot;, &quot;Fri&quot;, &quot;Sat&quot;, &quot;Sun&quot;))</code></pre>
+<p><img src="complements-r-tp2-correction_files/figure-html/unnamed-chunk-12-1.png" width="672" /></p>
+</div>
+<div id="et-du-nombre-de-convives-size" class="section level5">
+<h5>3. Et du nombre de convives (<code>size</code>) ?</h5>
+<pre class="r"><code>ggplot(tips, aes(size, tip)) +
+    geom_boxplot(aes(group = size)) +
+    geom_jitter(width = .2) +
+    scale_x_continuous(breaks = 1:6) +
+    geom_smooth(method = &quot;lm&quot;)</code></pre>
+<p><img src="complements-r-tp2-correction_files/figure-html/unnamed-chunk-13-1.png" width="672" /></p>
+</div>
+<div id="croiser-tip-en-fonction-de-total_bill-et-size" class="section level5">
+<h5>4. Croiser <code>tip</code> en fonction de <code>total_bill</code> et <code>size</code></h5>
+<pre class="r"><code>ggplot(tips, aes(size, total_bill, col = tip)) +
+    geom_jitter(size = 2, width = .2) +
+    scale_color_gradient2(low = &quot;darkred&quot;, mid = &quot;gray60&quot;, high = &quot;darkgreen&quot;, midpoint = 3.5)</code></pre>
+<p><img src="complements-r-tp2-correction_files/figure-html/unnamed-chunk-14-1.png" width="672" /></p>
+<pre class="r"><code>ggplot(tips, aes(factor(size), cut(total_bill, 6), z = tip)) +
+    stat_summary_2d(fun = mean) +
+    labs(x = &quot;size&quot;, y = &quot;total_bill&quot;, fill = &quot;mean(tip)&quot;)</code></pre>
+<p><img src="complements-r-tp2-correction_files/figure-html/unnamed-chunk-15-1.png" width="672" /></p>
+</div>
+</div>
+<div id="bonus-a-partir-des-donnees-anscombe-refaire-le-graphique-suivant" class="section level4">
+<h4>6. <em>bonus</em> : à partir des données <code>anscombe</code>, refaire le graphique suivant</h4>
+<pre class="r"><code>ans = rbind(
+    transform(setNames(subset(anscombe, select = c(x1, y1)), c(&quot;x&quot;, &quot;y&quot;)), ex = 1),
+    transform(setNames(subset(anscombe, select = c(x2, y2)), c(&quot;x&quot;, &quot;y&quot;)), ex = 2),
+    transform(setNames(subset(anscombe, select = c(x3, y3)), c(&quot;x&quot;, &quot;y&quot;)), ex = 3),
+    transform(setNames(subset(anscombe, select = c(x4, y4)), c(&quot;x&quot;, &quot;y&quot;)), ex = 4)
+)
+ggplot(ans, aes(x, y)) +
+    geom_point() +
+    geom_smooth(method = &quot;lm&quot;, fullrange = T, se = FALSE) +
+    facet_wrap(~ ex)</code></pre>
+<p><img src="complements-r-tp2-correction_files/figure-html/anscombe-ggplot-1.png" width="672" /></p>
+<p>ou en une fois</p>
+<pre class="r"><code>ggplot(
+    Reduce(
+        function(a, b) { return(rbind(a, b))},
+        lapply(1:4, function(i) {
+            ans = anscombe[,paste(c(&quot;x&quot;, &quot;y&quot;), i, sep = &quot;&quot;)]
+            names(ans) = c(&quot;x&quot;, &quot;y&quot;)
+            ans$i = i
+            return(ans)
+        })
+    ),
+    aes(x, y)) +
+    geom_point() +
+    geom_smooth(method = &quot;lm&quot;, se = FALSE, fullrange = TRUE) +
+    facet_wrap(~ i)</code></pre>
+<p><img src="complements-r-tp2-correction_files/figure-html/unnamed-chunk-16-1.png" width="672" /></p>
+</div>
+</div>
+
+</div>
+<div class="footer">
+      Site créé avec <a href="http://www.r-project.org" target="_blank"><code>R</code></a> et la 
+      librairie  <a href="http://rmarkdown.rstudio.com/" target="_blank"><code>rmarkdown</code></a>.
+</div>
+<script>
+    $("#TOC").css("margin-top", "100px");
+</script>
+
+
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

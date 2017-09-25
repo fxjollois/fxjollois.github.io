@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+<meta charset="utf-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="pandoc" />
+
+
+
+
+<title>TP1 - correction</title>
+
+<script src="libs/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="libs/bootstrap-3.3.5/css/journal.min.css" rel="stylesheet" />
+<script src="libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<script src="libs/navigation-1.1/tabsets.js"></script>
+<link href="libs/highlightjs-1.1/default.css" rel="stylesheet" />
+<script src="libs/highlightjs-1.1/highlight.js"></script>
+<!--
+    Font Awesome
+-->
+<script src="https://use.fontawesome.com/32d8325004.js"></script>
+<link rel="stylesheet" href="libs/font-awesome-4.7.0/css/font-awesome.min.css">
+
+<!--
+    CSS perso
+-->
+<style>
+    .contenu {
+        margin-bottom: 50px;
+    }
+
+    .contact-liens {
+        text-align: center;
+    }
+    .contact-liens:hover {
+        text-decoration: none;
+    }
+    .contact-icones {
+        height: 30px;
+    }
+
+    /* Espacement pour barre du haut et pied de page */
+    #header, .section.level1 {
+        margin-top: 60px;
+        margin-bottom: 60px;
+    }
+    /* Espacement pour table des matières */
+    #TOC {
+        margin-top: 100px;
+    }
+    
+    .footer {
+        position: fixed;
+        width: 100%;
+        text-align: center;
+        bottom: 0;
+        left: 0;
+        background-color: #E6E6E6;
+    }
+</style>
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
+<script type="text/javascript">
+if (window.hljs && document.readyState && document.readyState === "complete") {
+   window.setTimeout(function() {
+      hljs.initHighlighting();
+   }, 0);
+}
+</script>
+
+
+
+<style type="text/css">
+h1 {
+  font-size: 34px;
+}
+h1.title {
+  font-size: 38px;
+}
+h2 {
+  font-size: 30px;
+}
+h3 {
+  font-size: 24px;
+}
+h4 {
+  font-size: 18px;
+}
+h5 {
+  font-size: 16px;
+}
+h6 {
+  font-size: 12px;
+}
+.table th:not([align]) {
+  text-align: left;
+}
+</style>
+
+<link rel="stylesheet" href="libs/bootstrap-journal.min.css" type="text/css" />
+
+</head>
+
+<body>
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img {
+  max-width:100%;
+  height: auto;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+</style>
+
+
+
+<div class="container-fluid main-container">
+
+<!-- tabsets -->
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+</script>
+
+<!-- code folding -->
+
+
+
+
+
+<div class="navbar navbar-default navbar-fixed-top">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-main">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">FX Jollois</a>
+    </div>
+    <div id="navbar-main" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button">Données <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+              <li><a href="accesdonnees.html">A télécharger</a></li>
+              <li><a href="donnees-integrees-r.html">Sous R</a></li>
+          </ul>
+        </li>
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button">Enseignement <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li class="dropdown-header">DUT 1ère année</li>
+            <li><a href="exploitation-donnees.html">Exploitation de données</a></li>
+            <li><a href="initiation-a-r.html">Initiation à R</a></li>
+            <li><a href="reporting.html">Reporting</a></li>
+            <li><a href="complements-r.html">Compléments sur R</a></li>
+            <li class="dropdown-header">DUT 2ème année</li>
+            <li><a href="prog-stat-r.html">Programmation statistique avec R</a></li>
+            <li class="dropdown-header">LP MDS Santé</li>
+            <li><a href="info-dec-sante.html">Informatique décisionnelle</a></li>
+            <li class="dropdown-header">DU Analyste Big Data</li>
+            <li><a href="initiation-r-du.html">Initiation à R</a></li>
+            <li><a href="connexion-r-mongodb.html">Connexion entre R et MongoDB</a></li>
+            <li class="dropdown-header">DU Dataviz</li>
+            <li><a href="analyse-donnees.html">Analyse de données</a></li>
+            <li><a href="visualisation-donnees.html">Visualisation de données - R</a></li>
+            <li><a href="visualisation-donnees-tableau.html">Visualisation de données - Tableau</a></li>
+            <li><a href="visualisation-donnees-d3.html">Visualisation de données - D3</a></li>
+            <li role="separator" class="divider"></li>
+            <li class="dropdown-header">Master</li>
+            <li><a href="slides/cnam-classif-modeles.html">Classification et Modèles de mélange</a></li>
+            <li><a href="analyse-donnees-massives.html">Analyse de Données Massives</a></li>
+            <li class="dropdown-header">Iran</li>
+            <li><a href="stat-prog-R.html">Statistical Programming using R</a></li>
+          </ul>
+        </li>
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button">Recherche <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li><a href="recherche.html">Sujets</a></li>
+            <li><a href="publications.html">Publications</a></li>
+          </ul>
+        </li>
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button">Réalisations <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li><a href="realisations.html">Détail</a></li>
+            <li role="separator" class="divider"></li>
+            <li><a href="http://up5.fr/explore-data" target="_blank">explore-data</a></li>
+            <li><a href="http://fxjollois.github.io/cours-sql/" target="_blank">Appli web de cours pour SQL</a></li>
+          </ul>
+        </li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container-fluid -->
+</div>
+<div class="contenu">
+
+<div class="fluid-row" id="header">
+
+
+
+<h1 class="title toc-ignore">TP1 - correction</h1>
+<h3 class="subtitle"><em>Initiation a <code>R</code> - STID 1ère année</em></h3>
+
+</div>
+
+
+<div id="exercices" class="section level2">
+<h2>Exercices</h2>
+<div id="creation-de-vecteurs" class="section level3">
+<h3>Création de vecteurs</h3>
+<ol style="list-style-type: decimal">
+<li>Créer un vecteur <code>v1</code> qui va de <span class="math inline">\(1\)</span> à <span class="math inline">\(-1\)</span> par pas de <span class="math inline">\(-0.25\)</span></li>
+</ol>
+<pre class="r"><code>&gt; v1 = seq(1, -1, by = -.25)
+&gt; print(v1)</code></pre>
+<pre><code>[1]  1.00  0.75  0.50  0.25  0.00 -0.25 -0.50 -0.75 -1.00</code></pre>
+<ol start="2" style="list-style-type: decimal">
+<li>Créer un vecteur <code>v2</code> qui va de <span class="math inline">\(0\)</span> à <span class="math inline">\(100\)</span> d’une longueur de <span class="math inline">\(23\)</span></li>
+</ol>
+<pre class="r"><code>&gt; v2 = seq(0, 100, length = 23)
+&gt; print(v2)</code></pre>
+<pre><code> [1]   0.000000   4.545455   9.090909  13.636364  18.181818  22.727273
+ [7]  27.272727  31.818182  36.363636  40.909091  45.454545  50.000000
+[13]  54.545455  59.090909  63.636364  68.181818  72.727273  77.272727
+[19]  81.818182  86.363636  90.909091  95.454545 100.000000</code></pre>
+<ol start="3" style="list-style-type: decimal">
+<li>Créer un vecteur <code>v3</code> qui contient les chaînes : <code>&quot;1ère année&quot;</code>, <code>&quot;2ème année&quot;</code>, <code>&quot;LP&quot;</code></li>
+</ol>
+<pre class="r"><code>&gt; v3 = c(&quot;1ère année&quot;,&quot;2ème année&quot;,&quot;LP&quot;)
+&gt; print(v3)</code></pre>
+<pre><code>[1] &quot;1ère année&quot; &quot;2ème année&quot; &quot;LP&quot;        </code></pre>
+<ol start="4" style="list-style-type: decimal">
+<li>Créer un vecteur <code>v4</code> qui répéte trois fois la chaîne <code>&quot;promo&quot;</code></li>
+</ol>
+<pre class="r"><code>&gt; v4 = rep(&quot;promo&quot;, 3)
+&gt; print(v4)</code></pre>
+<pre><code>[1] &quot;promo&quot; &quot;promo&quot; &quot;promo&quot;</code></pre>
+<ol start="5" style="list-style-type: decimal">
+<li>Regrouper les vecteurs <code>v3</code> et <code>v4</code>, pour avoir le vecteur <code>v5</code> suivant</li>
+</ol>
+<pre class="r"><code>&gt; v5 = paste(v4, v3, sep = &quot;=&quot;)
+&gt; print(v5)</code></pre>
+<pre><code>[1] &quot;promo=1ère année&quot; &quot;promo=2ème année&quot; &quot;promo=LP&quot;        </code></pre>
+<ol start="6" style="list-style-type: decimal">
+<li>Améliorer le code suivant pour avoir le vecteur <code>v6</code> suivant</li>
+</ol>
+<pre class="r"><code>&gt; v6 = paste(v4, paste(&quot;&#39;&quot;, v3, &quot;&#39;&quot;, sep = &quot;&quot;), sep = &quot;=&quot;)
+&gt; print(v6)</code></pre>
+<pre><code>[1] &quot;promo=&#39;1ère année&#39;&quot; &quot;promo=&#39;2ème année&#39;&quot; &quot;promo=&#39;LP&#39;&quot;        </code></pre>
+<ol start="7" style="list-style-type: decimal">
+<li>Créer automatiquement le vecteur <code>v7</code> qui suit à l’aide des fonctions <code>c()</code>, <code>seq()</code>, <code>paste()</code>, <code>rep()</code></li>
+</ol>
+<pre class="r"><code>&gt; v7 = paste(c(&quot;x&quot;, &quot;y&quot;), rep(seq(1,4), each = 2), sep = &quot;&quot;)
+&gt; print(v7)</code></pre>
+<pre><code>[1] &quot;x1&quot; &quot;y1&quot; &quot;x2&quot; &quot;y2&quot; &quot;x3&quot; &quot;y3&quot; &quot;x4&quot; &quot;y4&quot;</code></pre>
+</div>
+<div id="donnees-presentes" class="section level3">
+<h3>Données présentes</h3>
+<p>Sur le jeu de données <code>swiss</code></p>
+<ol style="list-style-type: decimal">
+<li>Donner le nombre de lignes et le nombre de colonnes, séparemment</li>
+</ol>
+<pre class="r"><code>&gt; nrow(swiss)</code></pre>
+<pre><code>[1] 47</code></pre>
+<pre class="r"><code>&gt; ncol(swiss)</code></pre>
+<pre><code>[1] 6</code></pre>
+<ol start="2" style="list-style-type: decimal">
+<li>Afficher les noms de variables</li>
+</ol>
+<pre class="r"><code>&gt; names(swiss)</code></pre>
+<pre><code>[1] &quot;Fertility&quot;        &quot;Agriculture&quot;      &quot;Examination&quot;     
+[4] &quot;Education&quot;        &quot;Catholic&quot;         &quot;Infant.Mortality&quot;</code></pre>
+<ol start="3" style="list-style-type: decimal">
+<li>Afficher les 10 premières lignes</li>
+</ol>
+<pre class="r"><code>&gt; head(swiss, 10)</code></pre>
+<pre><code>             Fertility Agriculture Examination Education Catholic
+Courtelary        80.2        17.0          15        12     9.96
+Delemont          83.1        45.1           6         9    84.84
+Franches-Mnt      92.5        39.7           5         5    93.40
+Moutier           85.8        36.5          12         7    33.77
+Neuveville        76.9        43.5          17        15     5.16
+Porrentruy        76.1        35.3           9         7    90.57
+Broye             83.8        70.2          16         7    92.85
+Glane             92.4        67.8          14         8    97.16
+Gruyere           82.4        53.3          12         7    97.67
+Sarine            82.9        45.2          16        13    91.38
+             Infant.Mortality
+Courtelary               22.2
+Delemont                 22.2
+Franches-Mnt             20.2
+Moutier                  20.3
+Neuveville               20.6
+Porrentruy               26.6
+Broye                    23.6
+Glane                    24.9
+Gruyere                  21.0
+Sarine                   24.4</code></pre>
+<ol start="4" style="list-style-type: decimal">
+<li>Afficher les colonnes <code>Agriculture</code> et <code>Education</code>, en <code>data.frame</code></li>
+</ol>
+<pre class="r"><code>&gt; swiss[c(&quot;Agriculture&quot;, &quot;Education&quot;)]</code></pre>
+<pre><code>             Agriculture Education
+Courtelary          17.0        12
+Delemont            45.1         9
+Franches-Mnt        39.7         5
+Moutier             36.5         7
+Neuveville          43.5        15
+Porrentruy          35.3         7
+Broye               70.2         7
+Glane               67.8         8
+Gruyere             53.3         7
+Sarine              45.2        13
+Veveyse             64.5         6
+Aigle               62.0        12
+Aubonne             67.5         7
+Avenches            60.7        12
+Cossonay            69.3         5
+Echallens           72.6         2
+Grandson            34.0         8
+Lausanne            19.4        28
+La Vallee           15.2        20
+Lavaux              73.0         9
+Morges              59.8        10
+Moudon              55.1         3
+Nyone               50.9        12
+Orbe                54.1         6
+Oron                71.2         1
+Payerne             58.1         8
+Paysd&#39;enhaut        63.5         3
+Rolle               60.8        10
+Vevey               26.8        19
+Yverdon             49.5         8
+Conthey             85.9         2
+Entremont           84.9         6
+Herens              89.7         2
+Martigwy            78.2         6
+Monthey             64.9         3
+St Maurice          75.9         9
+Sierre              84.6         3
+Sion                63.1        13
+Boudry              38.4        12
+La Chauxdfnd         7.7        11
+Le Locle            16.7        13
+Neuchatel           17.6        32
+Val de Ruz          37.6         7
+ValdeTravers        18.7         7
+V. De Geneve         1.2        53
+Rive Droite         46.6        29
+Rive Gauche         27.7        29</code></pre>
+<ol start="5" style="list-style-type: decimal">
+<li>Afficher les lignes pour lesquelles la variable <code>Infant.Mortality</code> est inférieure à 17</li>
+</ol>
+<pre class="r"><code>&gt; swiss[swiss$Infant.Mortality &lt;= 17,]</code></pre>
+<pre><code>          Fertility Agriculture Examination Education Catholic
+Aigle          64.1        62.0          21        12     8.52
+La Vallee      54.3        15.2          31        20     2.15
+Nyone          56.6        50.9          22        12    15.14
+Orbe           57.4        54.1          20         6     4.20
+Rolle          60.5        60.8          16        10     7.72
+Conthey        75.5        85.9           3         2    99.71
+Sierre         92.2        84.6           3         3    99.46
+          Infant.Mortality
+Aigle                 16.5
+La Vallee             10.8
+Nyone                 16.7
+Orbe                  15.3
+Rolle                 16.3
+Conthey               15.1
+Sierre                16.3</code></pre>
+<ol start="6" style="list-style-type: decimal">
+<li>Combiner les deux demandes précédentes</li>
+</ol>
+<pre class="r"><code>&gt; swiss[swiss$Infant.Mortality &lt;= 17,c(&quot;Agriculture&quot;, &quot;Education&quot;)]</code></pre>
+<pre><code>          Agriculture Education
+Aigle            62.0        12
+La Vallee        15.2        20
+Nyone            50.9        12
+Orbe             54.1         6
+Rolle            60.8        10
+Conthey          85.9         2
+Sierre           84.6         3</code></pre>
+</div>
+</div>
+
+</div>
+<div class="footer">
+      Site créé avec <a href="http://www.r-project.org" target="_blank"><code>R</code></a> et la 
+      librairie  <a href="http://rmarkdown.rstudio.com/" target="_blank"><code>rmarkdown</code></a>.
+</div>
+<script>
+    $("#TOC").css("margin-top", "100px");
+</script>
+
+
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

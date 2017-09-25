@@ -1,0 +1,584 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+<meta charset="utf-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="pandoc" />
+
+
+
+
+<title>Première application - correction</title>
+
+<script src="libs/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="libs/bootstrap-3.3.5/css/journal.min.css" rel="stylesheet" />
+<script src="libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<script src="libs/navigation-1.1/tabsets.js"></script>
+<link href="libs/highlightjs-1.1/default.css" rel="stylesheet" />
+<script src="libs/highlightjs-1.1/highlight.js"></script>
+<!--
+    Font Awesome
+-->
+<script src="https://use.fontawesome.com/32d8325004.js"></script>
+<link rel="stylesheet" href="libs/font-awesome-4.7.0/css/font-awesome.min.css">
+
+<!--
+    CSS perso
+-->
+<style>
+    .contenu {
+        margin-bottom: 50px;
+    }
+
+    .contact-liens {
+        text-align: center;
+    }
+    .contact-liens:hover {
+        text-decoration: none;
+    }
+    .contact-icones {
+        height: 30px;
+    }
+
+    /* Espacement pour barre du haut et pied de page */
+    #header, .section.level1 {
+        margin-top: 60px;
+        margin-bottom: 60px;
+    }
+    /* Espacement pour table des matières */
+    #TOC {
+        margin-top: 100px;
+    }
+    
+    .footer {
+        position: fixed;
+        width: 100%;
+        text-align: center;
+        bottom: 0;
+        left: 0;
+        background-color: #E6E6E6;
+    }
+</style>
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
+<script type="text/javascript">
+if (window.hljs && document.readyState && document.readyState === "complete") {
+   window.setTimeout(function() {
+      hljs.initHighlighting();
+   }, 0);
+}
+</script>
+
+
+
+<style type="text/css">
+h1 {
+  font-size: 34px;
+}
+h1.title {
+  font-size: 38px;
+}
+h2 {
+  font-size: 30px;
+}
+h3 {
+  font-size: 24px;
+}
+h4 {
+  font-size: 18px;
+}
+h5 {
+  font-size: 16px;
+}
+h6 {
+  font-size: 12px;
+}
+.table th:not([align]) {
+  text-align: left;
+}
+</style>
+
+<link rel="stylesheet" href="libs/bootstrap-journal.min.css" type="text/css" />
+
+</head>
+
+<body>
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img {
+  max-width:100%;
+  height: auto;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+</style>
+
+
+
+<div class="container-fluid main-container">
+
+<!-- tabsets -->
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+</script>
+
+<!-- code folding -->
+
+
+
+
+
+<div class="navbar navbar-default navbar-fixed-top">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-main">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">FX Jollois</a>
+    </div>
+    <div id="navbar-main" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button">Données <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+              <li><a href="accesdonnees.html">A télécharger</a></li>
+              <li><a href="donnees-integrees-r.html">Sous R</a></li>
+          </ul>
+        </li>
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button">Enseignement <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li class="dropdown-header">DUT 1ère année</li>
+            <li><a href="exploitation-donnees.html">Exploitation de données</a></li>
+            <li><a href="initiation-a-r.html">Initiation à R</a></li>
+            <li><a href="reporting.html">Reporting</a></li>
+            <li><a href="complements-r.html">Compléments sur R</a></li>
+            <li class="dropdown-header">DUT 2ème année</li>
+            <li><a href="prog-stat-r.html">Programmation statistique avec R</a></li>
+            <li class="dropdown-header">LP MDS Santé</li>
+            <li><a href="info-dec-sante.html">Informatique décisionnelle</a></li>
+            <li class="dropdown-header">DU Analyste Big Data</li>
+            <li><a href="initiation-r-du.html">Initiation à R</a></li>
+            <li><a href="connexion-r-mongodb.html">Connexion entre R et MongoDB</a></li>
+            <li class="dropdown-header">DU Dataviz</li>
+            <li><a href="analyse-donnees.html">Analyse de données</a></li>
+            <li><a href="visualisation-donnees.html">Visualisation de données - R</a></li>
+            <li><a href="visualisation-donnees-tableau.html">Visualisation de données - Tableau</a></li>
+            <li><a href="visualisation-donnees-d3.html">Visualisation de données - D3</a></li>
+            <li role="separator" class="divider"></li>
+            <li class="dropdown-header">Master</li>
+            <li><a href="slides/cnam-classif-modeles.html">Classification et Modèles de mélange</a></li>
+            <li><a href="analyse-donnees-massives.html">Analyse de Données Massives</a></li>
+            <li class="dropdown-header">Iran</li>
+            <li><a href="stat-prog-R.html">Statistical Programming using R</a></li>
+          </ul>
+        </li>
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button">Recherche <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li><a href="recherche.html">Sujets</a></li>
+            <li><a href="publications.html">Publications</a></li>
+          </ul>
+        </li>
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button">Réalisations <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li><a href="realisations.html">Détail</a></li>
+            <li role="separator" class="divider"></li>
+            <li><a href="http://up5.fr/explore-data" target="_blank">explore-data</a></li>
+            <li><a href="http://fxjollois.github.io/cours-sql/" target="_blank">Appli web de cours pour SQL</a></li>
+          </ul>
+        </li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container-fluid -->
+</div>
+<div class="contenu">
+
+<div class="fluid-row" id="header">
+
+
+
+<h1 class="title toc-ignore">Première application - <em>correction</em></h1>
+<h3 class="subtitle"><em>Compléments sur R - STID 1ère année</em></h3>
+
+</div>
+
+
+<div id="a-faire" class="section level2">
+<h2>A FAIRE</h2>
+<p>Vous devez donc continuer l’application, avec le contenu suivant :</p>
+<ul>
+<li>Premier onglet
+<ul>
+<li>Le travail fait précédemment</li>
+</ul></li>
+<li>Deuxième onglet : Analyse de variables qualitatives
+<ul>
+<li>l’utilisateur peut choisir une variable parmi <code>cyl</code>, <code>vs</code>, <code>am</code>, <code>gear</code> et <code>carb</code></li>
+<li>le système affiche le diagramme en barres et le diagramme circulaire, ainsi qu’un tableau des occurences et des fréquences des modalités</li>
+</ul></li>
+<li>Troisième onglet : croisement de variables qualitatives
+<ul>
+<li>l’utilisateur doit donc choisir deux variables parmi celles citées (on ne gère pas la possibilité que l’utilisateur choisisse la même deux fois pour le moment)</li>
+<li>le système affiche un diagramme en barres empilées ainsi que le tableau de contingence, avec les sommes en lignes et en colonnes</li>
+</ul></li>
+</ul>
+</div>
+<div id="partie-server" class="section level2">
+<h2>Partie <code>server</code></h2>
+<p>Nous reprenons le code du TP pour cette partie.</p>
+<ul>
+<li><code>server.R</code></li>
+</ul>
+<pre class="r"><code>library(shiny)
+
+shinyServer(function(input, output) {
+    
+    # Code pour le premier onglet
+    output$nuage &lt;- renderPlot({
+        plot(mtcars$mpg ~ mtcars[,input$choix], main = &quot;Consommation&quot;)
+    })
+    
+    output$resumeMpg &lt;- renderText({
+        paste(&quot;Moyenne mpg :&quot;, mean(mtcars$mpg, na.rm = T))
+    })
+    output$resumeVar &lt;- renderText({
+        paste(&quot;Moyenne&quot;, input$choix, &quot;:&quot;, mean(mtcars[,input$choix], na.rm = T))
+    })
+    
+    output$tableau &lt;- renderTable({
+        sub = subset(mtcars, select = c(&quot;mpg&quot;, input$choix))
+        sapply(sub, summary)
+    })
+    
+    
+    
+    # Code pour le deuxième onglet
+    
+    
+    
+    # Code pour le troisième onglet
+})</code></pre>
+</div>
+<div id="systeme-donglets-panels" class="section level2">
+<h2>Système d’onglets (<em>panels</em>)</h2>
+<p>Comme déjà précisé dans le TP, nous désirons avoir un système d’onglet afin de limiter les déplacements avec la souris. Pour cela, nous utilisons donc <code>tabsetPanel()</code>, qui va prendre en paramètre autant de <code>tabPanel()</code> que d’onglets. Chacun contiendra, dans notre travail, trois paramètres :</p>
+<ul>
+<li>le nom (court) apparaissant dans la partie à cliquer pour sélectionner l’onglet</li>
+<li>un titre d’onglet (avec <code>titlePanel()</code>)</li>
+<li><p>un agencement en deux parties avec <code>sidebarLayout()</code></p></li>
+<li><p><code>ui.R</code></p></li>
+</ul>
+<pre class="r"><code>library(shiny)
+
+shinyUI(fluidPage(
+    titlePanel(&quot;Première application&quot;),
+    
+    tabsetPanel(
+        tabPanel(
+            &quot;TP&quot;,
+            titlePanel(&quot;Contenu TP&quot;),
+            # Contenu de l&#39;onglet 
+            sidebarLayout(
+                # -&gt; tout le travail fait durant le TP
+            )
+        ),
+        tabPanel(
+            &quot;Quali&quot;,
+            titlePanel(&quot;Analyse d&#39;une variable qualitative&quot;),
+            # Contenu de l&#39;onglet
+            sidebarLayout(
+                # -&gt; cf plus bas
+            ) 
+        ),
+        tabPanel(
+            &quot;Quali-Quali&quot;,
+            titlePanel(&quot;Croisement de variables qualitatives&quot;),
+            # Contenu de l&#39;onglet
+            sidebarLayout(
+                # -&gt; cf plus bas
+            )
+        )
+    )
+))</code></pre>
+</div>
+<div id="onglet-2" class="section level2">
+<h2>Onglet 2</h2>
+<div id="organisation" class="section level3">
+<h3>Organisation</h3>
+<p>Comme indiqué, cet onglet contiendra donc un <code>sidebarLayout()</code>. Celui-ci prend au moins deux paramètres :</p>
+<ul>
+<li>la partie placée sur le côté (à gauche par défaut), décrite dans <code>sidebarPanel()</code></li>
+<li>la partie principale, avec <code>mainPanel()</code></li>
+<li>éventuellement un troisième paramètre pour dire si on veut la première partie à droite</li>
+</ul>
+<p>L’idée générale de ce type d’organisation est de mettre les <em>inputs</em> sur le côté, et les <em>outputs</em> dans la partie principale. Ici, voici la répartition que cela nous donnera.</p>
+<ul>
+<li><code>ui.R</code></li>
+</ul>
+<pre class="r"><code>sidebarLayout(
+    sidebarPanel(
+        # choix de la variable qualitative
+    ),
+    mainPanel(
+        # diagramme en barres
+        # diagramme circulaire
+        # table d&#39;effectifs et de fréquences
+    )
+)</code></pre>
+</div>
+<div id="choix-de-la-variable-qualitative" class="section level3">
+<h3>Choix de la variable qualitative</h3>
+<p>On décide d’utiliser une liste de sélection, avec <code>selectInput()</code>, que l’on placera donc plutôt dans la partie <code>sidebarPanel()</code>. Dans le <code>selectInput()</code>, nous devons donner trois paramètres (au moins) :</p>
+<ul>
+<li>le nom de l’<em>input</em> pour l’utiliser par la suite dans la partie <code>server</code></li>
+<li>le titre de la liste de sélection</li>
+<li>les choix possibles (ici, la liste des variables qualitatives de <code>mtcars</code>)</li>
+</ul>
+<p>Ainsi, voici le code pour la partie <code>ui</code>. Et bien évidemment, dans la partie <code>server</code>, voici comment nous pourrons faire référence au choix de l’utilisateur.</p>
+<ul>
+<li><code>ui.R</code> :</li>
+</ul>
+<pre class="r"><code>selectInput(&quot;choixQl&quot;, &quot;Variable qualitative&quot;,
+            choices = c(&quot;cyl&quot;, &quot;vs&quot;, &quot;am&quot;, &quot;gear&quot;, &quot;carb&quot;))</code></pre>
+<ul>
+<li><code>server.R</code> :</li>
+</ul>
+<pre class="r"><code>input$choixQl</code></pre>
+</div>
+<div id="descriptif-de-la-variable-qualitative-choisie" class="section level3">
+<h3>Descriptif de la variable qualitative choisie</h3>
+<p>Ici, dans l’<code>ui</code>, nous devons donc prévoir trois <em>outputs</em> pour la description d’une variable qualitative, comme demandée (2 graphiques avec <code>plotOutput()</code> et une table avec <code>tableOutput()</code>). Chacun doit prendre un paramètre, le nom permettant de leur affecter un rendu (avec respectivement <code>renderPlot()</code> et <code>renderTable()</code>). Et dans la partie <code>server</code>, voici comment définir le contenu des ces <em>outputs</em>.</p>
+<ul>
+<li><code>ui.R</code> :</li>
+</ul>
+<pre class="r"><code>plotOutput(&quot;graphQlBar&quot;),
+plotOutput(&quot;graphQlPie&quot;),
+tableOutput(&quot;tableQl&quot;)</code></pre>
+<ul>
+<li><code>server.R</code> :</li>
+</ul>
+<pre class="r"><code>output$graphQlBar &lt;- renderPlot({
+    # Code pour la diagramme en barres
+})
+output$graphQlPie &lt;- renderPlot({
+    # Code pour la diagramme circulaire
+})
+output$tableQl &lt;- renderTable({
+    # Code pour le tableau des effectifs et fréquences
+})</code></pre>
+<div id="diagramme-en-barres" class="section level4">
+<h4>Diagramme en barres</h4>
+<p>Pour le diagramme en barres, il est possible de le faire de différentes façons, telles que présentées ci-dessous. Il faut prendre un de ces trois codes pour le placer dans le <code>renderPlot()</code> correspondant au diagramme en barres.</p>
+<ul>
+<li>Première possibilité : avec <code>R</code> de base</li>
+</ul>
+<pre class="r"><code>barplot(table(mtcars[,input$choixQl]))</code></pre>
+<ul>
+<li>Deuxième possibilité : avec <code>ggplot2</code> et création d’un <code>data.frame</code> temporaire</li>
+</ul>
+<pre class="r"><code>d = data.frame(x = factor(mtcars[,input$choixQl]))
+ggplot(d, aes(x)) + 
+    geom_bar() +
+    labs(x = input$choixQl, y = element_blank())</code></pre>
+<ul>
+<li>Troisième possibilité : toujours avec <code>ggplot2</code> et la fonction <code>aes_string()</code> permettant de déterminer les variables liées aux aspecets esthétiques via une chaîne de caractères</li>
+</ul>
+<pre class="r"><code>ggplot(mtcars, aes_string(input$choixQl)) + 
+    geom_bar()</code></pre>
+</div>
+<div id="diagramme-circulaire" class="section level4">
+<h4>Diagramme circulaire</h4>
+<p>De même que pour le diagramme en barres, nous avons plusieurs possibilités, présentées ci-dessous.</p>
+<ul>
+<li>Première possibilité : avec <code>R</code> de base</li>
+</ul>
+<pre class="r"><code>pie(table(mtcars[,input$choixQl]))</code></pre>
+<ul>
+<li>Deuxième possibilité : avec <code>ggplot2</code> et création d’un <code>data.frame</code> temporaire</li>
+</ul>
+<pre class="r"><code>d = data.frame(x = factor(mtcars[,input$choixQl]))
+ggplot(d, aes(&quot;&quot;, fill = x)) + 
+    geom_bar(position = &quot;fill&quot;, width = 1) +
+    scale_y_continuous(labels = percent) +
+    coord_polar(theta = &quot;y&quot;) +
+    labs(fill = input$choixQl, y = element_blank(), x = element_blank())</code></pre>
+</div>
+<div id="tableau-des-effectifs-et-des-frequences" class="section level4">
+<h4>Tableau des effectifs et des fréquences</h4>
+<p>Le code suivant, à placer dans le <code>renderTable()</code> permet de créer un <code>data.frame</code> contenant trois colonnes :</p>
+<ul>
+<li>les modalités, avec le nom de la table d’effectifs créée avec <code>table()</code></li>
+<li>les effectifs, résultat du <code>table()</code> (l’utilisation de <code>c()</code> permet ici de ne récupérer que les valeurs - sans ca, le tableau <code>t</code> est transformé en <code>data.frame</code> à 2 colonnes)</li>
+<li>les proportions calculées avec <code>prop.table()</code>, auquelles on ajoute le sigle <code>&quot;%&quot;</code></li>
+</ul>
+<pre class="r"><code>t = table(mtcars[,input$choixQl])
+data.frame(
+    Modalité = names(t),
+    Effectif = c(t),
+    Proportion = paste(round(100 * prop.table(t), 1), &quot;%&quot;),
+    row.names = NULL
+)</code></pre>
+</div>
+</div>
+</div>
+<div id="onglet-3" class="section level2">
+<h2>Onglet 3</h2>
+<div id="organisation-1" class="section level3">
+<h3>Organisation</h3>
+<p>L’organisation est ici la même que pour les deux onglets précédents, avec les <em>inputs</em> dans le <code>sidebarPanel()</code> et les <em>outputs</em> dans le <code>mainPanel()</code>.</p>
+<ul>
+<li><code>ui.R</code></li>
+</ul>
+<pre class="r"><code>sidebarLayout(
+    sidebarPanel(
+        # Choix des deux variables qualitatives
+    ),
+    mainPanel(
+        # Diagramme en barres empilées
+        # Table de contingence
+    )
+)</code></pre>
+</div>
+<div id="choix-de-deux-variables-qualitatives" class="section level3">
+<h3>Choix de deux variables qualitatives</h3>
+<ul>
+<li><code>ui.R</code> :</li>
+</ul>
+<pre class="r"><code>selectInput(&quot;choixQl1&quot;, &quot;Variable qualitative 1&quot;,
+            choices = c(&quot;cyl&quot;, &quot;vs&quot;, &quot;am&quot;, &quot;gear&quot;, &quot;carb&quot;)),
+selectInput(&quot;choixQl2&quot;, &quot;Variable qualitative 2&quot;,
+            choices = c(&quot;cyl&quot;, &quot;vs&quot;, &quot;am&quot;, &quot;gear&quot;, &quot;carb&quot;))</code></pre>
+<ul>
+<li><code>server.R</code> :</li>
+</ul>
+<pre class="r"><code>input$choixQl1
+input$choixQl2</code></pre>
+</div>
+<div id="descriptif-du-lien-entre-les-variables" class="section level3">
+<h3>Descriptif du lien entre les variables</h3>
+<p>Dans l’<code>ui</code>, nous créons deux <em>outputs</em> pour recevoir le diagramme en barres empilées (avec <code>plotOutput()</code>) et la table de contingence (avec <code>tableOutput()</code>). Dans la partie <code>server</code>, nous déterminons leur rendu, avec les fonctions <code>renderPlot()</code> et <code>renderTable()</code>.</p>
+<p>On défini le paramètre <code>rownames</code> à <code>TRUE</code> pour l’affichage des modalités de la table de contingence.</p>
+<ul>
+<li><code>ui.R</code></li>
+</ul>
+<pre class="r"><code>plotOutput(&quot;graphQlQl&quot;),
+tableOutput(&quot;tableQlQl&quot;)</code></pre>
+<ul>
+<li><code>server.R</code></li>
+</ul>
+<pre class="r"><code>output$graphQlQl &lt;- renderPlot({
+    # Code pour le diagramme en barres empilées
+})
+output$tableQlQl &lt;- renderTable({
+    # Code pour la table de contingence
+}, rownames = TRUE)</code></pre>
+<div id="diagramme-en-barres-empilees" class="section level4">
+<h4>Diagramme en barres empilées</h4>
+<p>Nous avons deux possibilités ici pour produire ce graphique. Remarquez que pour la première, il serait nécessaire d’ajouter une légende pour les modalités de la variable empilée.</p>
+<ul>
+<li>Première possibilité : avec du code <code>R</code> de base</li>
+</ul>
+<pre class="r"><code>t = table(mtcars[,input$choixQl2], mtcars[,input$choixQl1])
+p = prop.table(t, margin = 2)
+barplot(p * 100, xlab = input$choixQl1, ylab = input$choixQl2)</code></pre>
+<ul>
+<li>Deuxième possibilité : avec <code>ggplot2</code> en créant un nouveau <code>data.frame</code></li>
+</ul>
+<pre class="r"><code>d = data.frame(
+    x = factor(mtcars[,input$choixQl1]),
+    y = factor(mtcars[,input$choixQl2])
+)
+ggplot(d, aes(x, fill = y)) + 
+    geom_bar(position = &quot;fill&quot;) +
+    labs(x = input$choixQl1, fill = input$choixQl2, y = element_blank())</code></pre>
+</div>
+<div id="tableau-de-contingence" class="section level4">
+<h4>Tableau de contingence</h4>
+<p>Pour la table de contigence, nous utilisons le résultat de <code>table()</code>. Nous améliorons celui-ci en ajoutant le nom de la variable devant chaque modalité. Cela permet de mieux comprendre le tableau produit. Pour ajoutant les sommes en lignes et en colonnes (nommées aussi <em>marges</em>), nous utilisons la fonction <code>addmargins()</code>.</p>
+<pre class="r"><code>t = table(mtcars[,input$choixQl2], mtcars[,input$choixQl1])
+colnames(t) = paste(input$choixQl1, colnames(t), sep = &quot;: &quot;)
+rownames(t) = paste(input$choixQl2, rownames(t), sep = &quot;: &quot;)
+unclass(addmargins(t))</code></pre>
+</div>
+</div>
+</div>
+<div id="si-vous-avez-tout-compris" class="section level2">
+<h2>Si vous avez tout compris</h2>
+<p>Ajoutez deux onglets :</p>
+<ul>
+<li>description d’une variable quantitative</li>
+<li>description du lien entre une variable quantitative et une variable qualitative</li>
+</ul>
+</div>
+
+</div>
+<div class="footer">
+      Site créé avec <a href="http://www.r-project.org" target="_blank"><code>R</code></a> et la 
+      librairie  <a href="http://rmarkdown.rstudio.com/" target="_blank"><code>rmarkdown</code></a>.
+</div>
+<script>
+    $("#TOC").css("margin-top", "100px");
+</script>
+
+
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

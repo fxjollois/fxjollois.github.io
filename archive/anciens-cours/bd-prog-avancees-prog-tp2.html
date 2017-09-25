@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+<meta charset="utf-8">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="pandoc" />
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+
+<title>Programmation avancées - TP 2 - Reporting sur un data warehouse</title>
+
+<script src="libs/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="libs/bootstrap-3.3.5/css/journal.min.css" rel="stylesheet" />
+<script src="libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<style>
+    .contenu {
+        margin-bottom: 50px;
+    }
+
+    .contact-liens {
+        text-align: center;
+    }
+    .contact-icones {
+        height: 30px;
+    }
+
+    /* Espacement pour barre du haut et pied de page */
+    #header, .section.level1 {
+        margin-top: 60px;
+        margin-bottom: 60px;
+    }
+    /* Espacement pour table des matières */
+    #TOC {
+        margin-top: 100px;
+    }
+    
+    .footer {
+        position: fixed;
+        width: 100%;
+        text-align: center;
+        bottom: 0;
+        left: 0;
+        background-color: #E6E6E6;
+    }
+</style>
+
+<style type="text/css">code{white-space: pre;}</style>
+<link rel="stylesheet"
+      href="libs/highlight/default.css"
+      type="text/css" />
+<script src="libs/highlight/highlight.js"></script>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
+<script type="text/javascript">
+if (window.hljs && document.readyState && document.readyState === "complete") {
+   window.setTimeout(function() {
+      hljs.initHighlighting();
+   }, 0);
+}
+</script>
+
+
+
+<link rel="stylesheet" href="libs/bootstrap-journal.min.css" type="text/css" />
+
+</head>
+
+<body>
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img {
+  max-width:100%;
+  height: auto;
+}
+h1 {
+  font-size: 34px;
+}
+h1.title {
+  font-size: 38px;
+}
+h2 {
+  font-size: 30px;
+}
+h3 {
+  font-size: 24px;
+}
+h4 {
+  font-size: 18px;
+}
+h5 {
+  font-size: 16px;
+}
+h6 {
+  font-size: 12px;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+</style>
+
+
+<div class="container-fluid main-container">
+
+<!-- tabsets -->
+<script src="libs/navigation-1.0/tabsets.js"></script>
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+</script>
+
+<!-- code folding -->
+
+
+
+
+
+<div class="navbar navbar-default navbar-fixed-top">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-main">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">FX Jollois</a>
+    </div>
+    <div id="navbar-main" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button">Données <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+              <li><a href="accesdonnees.html">A télécharger</a></li>
+              <li><a href="donnees-integrees-r.html">Sous R</a></li>
+          </ul>
+        </li>
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button">Enseignement <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li><a href="enseignement.html">Informations</a></li>
+            <li><a href="supports.html">Supports</a></li>
+            <li role="separator" class="divider"></li>
+            <li class="dropdown-header">DUT 1ère année</li>
+            <li><a href="interrogation-donnees.html">Interrogation de données</a></li>
+            <li><a href="reporting.html">Reporting</a></li>
+            <li class="dropdown-header">DUT 2ème année</li>
+            <li><a href="sid.html">SID</a></li>
+            <li><a href="bd-prog-avancees.html">BD et Programmation avancées</a></li>
+            <li class="dropdown-header">DU Analyste Big Data</li>
+            <li><a href="initiation-r-et-rmongodb.html">Intiation à R</a></li>
+            <li class="dropdown-header">DU Dataviz</li>
+            <li><a href="visualisation-donnees.html">Visualisation de données - R</a></li>
+            <li><a href="visualisation-donnees-d3.html">Visualisation de données - D3</a></li>
+            <li role="separator" class="divider"></li>
+            <li class="dropdown-header">Master MIAGE</li>
+            <li><a href="webreporting.html">Web-Reporting</a></li>
+            <li class="dropdown-header">Master</li>
+            <li><a href="logiciels-stats.html">Logiciels statistiques</a></li>
+            <li><a href="slides/cnam-classif-modeles.html">Classification et Modèles de mélange</a></li>
+          </ul>
+        </li>
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button">Recherche <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li><a href="recherche.html">Sujets</a></li>
+            <li><a href="publications.html">Publications</a></li>
+          </ul>
+        </li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container-fluid -->
+</div>
+<div class="contenu">
+
+<div class="fluid-row" id="header">
+
+
+<h1 class="title">Programmation avancées - TP 2 - Reporting sur un data warehouse</h1>
+
+</div>
+
+
+<p>Nous allons travailler sur la base de données <strong>CA</strong> (disponible au format <code>.RData</code> <a href="https://drive.google.com/folderview?id=0BzA8L2nqa1n5aFRpSklFNnZfdm8&amp;usp=drive_web">ici</a>). Pour charger les données, vous devez faire :</p>
+<pre class="r"><code>load(&quot;ca.RData&quot;)</code></pre>
+<p>Cette base de données est un (petit) <strong>data warehouse</strong> contenant :</p>
+<ul>
+<li>une table des faits (<code>ca</code>) avec :
+<ul>
+<li>le chiffre d’affaire selon les dimensions</li>
+<li>les clés de chaque dimension</li>
+</ul></li>
+<li>trois dimensions :
+<ul>
+<li><code>mois</code> : date (avec le mois et l’année)</li>
+<li><code>groupe</code> : avec une hiérarchie (département &gt; groupe &gt; sous-groupe)</li>
+<li><code>provenance</code></li>
+</ul></li>
+</ul>
+<p>Pour réaliser une jointure entre la table <code>ca</code> et chacune des autres, voici le code à exécuter :</p>
+<pre class="r"><code># Avec la dimension groupe
+ca_groupe = merge(ca, groupe, 
+                  by.x = &quot;groupe_no&quot;, 
+                  by.y = &quot;no&quot;)
+# Avec la dimension mois
+ca_mois = merge(ca, mois, 
+                  by.x = &quot;mois_no&quot;, 
+                  by.y = &quot;no&quot;)
+# Avec la dimension provenance
+ca_prov = merge(ca, provenance, 
+                  by.x = &quot;prov_no&quot;, 
+                  by.y = &quot;no&quot;)
+# Avec toutes les dimensions en une seule fois
+ca_all = merge(merge(merge(ca, groupe, by.x = &quot;groupe_no&quot;, by.y = &quot;no&quot;),
+                     mois, by.x = &quot;mois_no&quot;, by.y = &quot;no&quot;),
+               provenance, by.x = &quot;prov_no&quot;, by.y = &quot;no&quot;)</code></pre>
+<div id="a-faire" class="section level2">
+<h2>A FAIRE</h2>
+<p>Nous allons faire un travail sur plusieurs onglets, pour présenter les résultats de l’entreprise sous la forme d’un reporting dynamique à l’aide de Shiny sous RStudio. Voici la demande à réaliser pour chaque onglet :</p>
+<ul>
+<li><strong>Global</strong> :
+<ul>
+<li>On veut voir le montant total sur les deux années, et pour chaque année
+<ul>
+<li>Evolution de deux façon :</li>
+<li>sur la totalité de la période</li>
+<li>comparaison des deux années</li>
+</ul></li>
+</ul></li>
+<li><strong>Provenance</strong> :
+<ul>
+<li>Réprésentation de toutes les provenances sur le même graphique
+<ul>
+<li>Evolution sur la période ou comparaison des deux années (au choix)</li>
+<li>Choix de la provenance (toutes par défaut)</li>
+</ul></li>
+</ul></li>
+<li><strong>Groupe</strong> :
+<ul>
+<li>Réprésentation d’une sélection (département, groupe ou sous-groupe) sur le même graphique</li>
+<li>Evolution sur la période ou comparaison des deux années (au choix)</li>
+<li>Choix du département (aucun par défaut)
+<ul>
+<li>une fois le département choisi, choix du groupe ou tout le département si aucun choix</li>
+<li>une fois le groupe choisi, choix du sous-groupe ou tout le groupe si aucun choix</li>
+</ul></li>
+<li>Comment faire pour permettre une comparaison entre les départements ? entre les groupes d’un département ? entre les sous-groupes d’un groupe ?</li>
+</ul></li>
+<li><strong>Analyse approfondie</strong> :
+<ul>
+<li>Quelles analyses statistiques peut-on réaliser pour analyser les résultats de l’entreprise ?</li>
+<li>Quelles visualisations peut-on mettre en place dans le même but ?</li>
+</ul></li>
+</ul>
+<p>A vous de développer une application permettant les rendus indiqués, et laissant les choix à l’utilisateur tels qu’indiqués. Si toutefois vous voulez apporter des compléments (graphiques et/ou tableaux supplémentaires, choix différent), vous êtes libre totalement libre de le faire.</p>
+</div>
+<div id="a-savoir" class="section level2">
+<h2>A SAVOIR</h2>
+<div id="execution-de-code-r" class="section level3">
+<h3>Exécution de code <code>R</code></h3>
+<p>Dans le fichier <code>server.R</code>, si vous intégrer du code avant la fonction <code>shinyServer()</code>, celui-ci sera exécuté dès le lancement de l’application (i.e. dès que vous cliquer sur <code>runApp</code> donc). Dans ce cadre, il est par exemple possible d’appeler un fichier <code>.R</code> (voire plusieurs) contenant des fonctions utiles pour votre applications. Ensuite, le code intégré au début de la fonction anonyme définie dans <code>shinyServer()</code> sera exécuté dès l’ouverture d’une nouvelle session sur votre application (donc à chaque fois que quelqu’un ira sur l’URL de l’application).</p>
+<p>Voici un squelette d’un fichier type <code>server.R</code> :</p>
+<pre class="r"><code>library(shiny)
+
+# Code exécuté au démarrage de l&#39;application
+# Par exemple une connexion à une base de données ou un chargement de code via la fonction source()
+
+shinyServer(function(input, output, session) {
+
+  # Code exécuté au démarrage d&#39;une nouvelle session d&#39;un utilisateur
+  # Par exemple une requête SQL sur une base de données ou un chargement de données brutes
+
+    output$rendu &lt;- renderXXX({
+      # Code exécuté au début démarrage puis à chaque modification d&#39;un input si celui-ci est utilisé ici
+      # Par exemple une mise à jour d&#39;un graphique selon un choix de paramètre ou autre fait par l&#39;utilisateur
+    })
+
+})</code></pre>
+</div>
+<div id="modification-du-style-de-lapplication" class="section level3">
+<h3>Modification du style de l’application</h3>
+<p>Vous pouvez changer le thème de votre application via un certain nombre de thèmes prédéfinis, mais vous pouvez aussi en récupérer un pour Bootstrap (framework de développement d’application web - utilisé par exemple, après personnalisation j’imagine, sur le site de la NASA, de la FIFA et de VEVO).</p>
+<p>Pour cela, dans le fichier <code>ui.R</code>, vous devez intégrer les éléments suivants :</p>
+<pre class="r"><code># Chargement de la librairie shinythemes
+library(shinythemes)
+
+shinyUI(fluidPage(
+  theme = shinytheme(&quot;cosmo&quot;), # choix du thème (cosmo ici)
+  title = &quot;votre titre&quot;,
+  ... # le reste
+))</code></pre>
+<p>Pour avoir plus d’informations, vous pouvez aller sur ce <a href="http://rstudio.github.io/shinythemes/">lien</a>. Et une recherche sur la toile devrait vous permettre de récupérer des thèmes pour Bootstrap (gratuits ou payants).</p>
+</div>
+</div>
+
+</div>
+<div class="footer">
+      Site créé avec <a href="http://www.r-project.org" target="_blank"><code>R</code></a> et la 
+      librairie  <a href="http://rmarkdown.rstudio.com/" target="_blank"><code>rmarkdown</code></a>.
+</div>
+<script>
+    $("#TOC").css("margin-top", "100px");
+</script>
+
+
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+$(document).ready(function () {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+});
+
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

@@ -1,0 +1,1957 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+<meta charset="utf-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="pandoc" />
+
+
+
+
+<title>Analyse Exploratoire des Données Multidimensionnelles</title>
+
+<script src="libs/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="libs/bootstrap-3.3.5/css/journal.min.css" rel="stylesheet" />
+<script src="libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<script src="libs/jqueryui-1.11.4/jquery-ui.min.js"></script>
+<link href="libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
+<script src="libs/tocify-1.9.1/jquery.tocify.js"></script>
+<script src="libs/navigation-1.1/tabsets.js"></script>
+<link href="libs/highlightjs-1.1/default.css" rel="stylesheet" />
+<script src="libs/highlightjs-1.1/highlight.js"></script>
+<!--
+    Font Awesome
+-->
+<script src="https://use.fontawesome.com/32d8325004.js"></script>
+<link rel="stylesheet" href="libs/font-awesome-4.7.0/css/font-awesome.min.css">
+
+<!--
+    CSS perso
+-->
+<style>
+    .contenu {
+        margin-bottom: 50px;
+    }
+
+    .contact-liens {
+        text-align: center;
+    }
+    .contact-liens:hover {
+        text-decoration: none;
+    }
+    .contact-icones {
+        height: 30px;
+    }
+
+    /* Espacement pour barre du haut et pied de page */
+    #header, .section.level1 {
+        margin-top: 60px;
+        margin-bottom: 60px;
+    }
+    /* Espacement pour table des matières */
+    #TOC {
+        margin-top: 100px;
+    }
+    
+    .footer {
+        position: fixed;
+        width: 100%;
+        text-align: center;
+        bottom: 0;
+        left: 0;
+        background-color: #E6E6E6;
+    }
+</style>
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
+<script type="text/javascript">
+if (window.hljs && document.readyState && document.readyState === "complete") {
+   window.setTimeout(function() {
+      hljs.initHighlighting();
+   }, 0);
+}
+</script>
+
+
+
+<style type="text/css">
+h1 {
+  font-size: 34px;
+}
+h1.title {
+  font-size: 38px;
+}
+h2 {
+  font-size: 30px;
+}
+h3 {
+  font-size: 24px;
+}
+h4 {
+  font-size: 18px;
+}
+h5 {
+  font-size: 16px;
+}
+h6 {
+  font-size: 12px;
+}
+.table th:not([align]) {
+  text-align: left;
+}
+</style>
+
+<link rel="stylesheet" href="libs/bootstrap-journal.min.css" type="text/css" />
+
+</head>
+
+<body>
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img {
+  max-width:100%;
+  height: auto;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+</style>
+
+
+
+<div class="container-fluid main-container">
+
+<!-- tabsets -->
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+</script>
+
+<!-- code folding -->
+
+
+
+
+<script>
+$(document).ready(function ()  {
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3,h4",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_').toLowerCase();
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = true;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
+
+<style type="text/css">
+
+#TOC {
+  margin: 25px 0px 20px 0px;
+}
+@media (max-width: 768px) {
+#TOC {
+  position: relative;
+  width: 100%;
+}
+}
+
+
+.toc-content {
+  padding-left: 30px;
+  padding-right: 40px;
+}
+
+div.main-container {
+  max-width: 1200px;
+}
+
+div.tocify {
+  width: 20%;
+  max-width: 260px;
+  max-height: 85%;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  div.tocify {
+    width: 25%;
+  }
+}
+
+@media (max-width: 767px) {
+  div.tocify {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+.tocify ul, .tocify li {
+  line-height: 20px;
+}
+
+.tocify-subheader .tocify-item {
+  font-size: 0.90em;
+  padding-left: 25px;
+  text-indent: 0;
+}
+
+.tocify .list-group-item {
+  border-radius: 0px;
+}
+
+
+</style>
+
+<!-- setup 3col/9col grid for toc_float and main content  -->
+<div class="row-fluid">
+<div class="col-xs-12 col-sm-4 col-md-3">
+<div id="TOC" class="tocify">
+</div>
+</div>
+
+<div class="toc-content col-xs-12 col-sm-8 col-md-9">
+
+
+
+<div class="navbar navbar-default navbar-fixed-top">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-main">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">FX Jollois</a>
+    </div>
+    <div id="navbar-main" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button">Données <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+              <li><a href="accesdonnees.html">A télécharger</a></li>
+              <li><a href="donnees-integrees-r.html">Sous R</a></li>
+          </ul>
+        </li>
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button">Enseignement <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li class="dropdown-header">DUT 1ère année</li>
+            <li><a href="exploitation-donnees.html">Exploitation de données</a></li>
+            <li><a href="initiation-a-r.html">Initiation à R</a></li>
+            <li><a href="reporting.html">Reporting</a></li>
+            <li><a href="complements-r.html">Compléments sur R</a></li>
+            <li class="dropdown-header">DUT 2ème année</li>
+            <li><a href="prog-stat-r.html">Programmation statistique avec R</a></li>
+            <li class="dropdown-header">LP MDS Santé</li>
+            <li><a href="info-dec-sante.html">Informatique décisionnelle</a></li>
+            <li class="dropdown-header">DU Analyste Big Data</li>
+            <li><a href="initiation-r-du.html">Initiation à R</a></li>
+            <li><a href="connexion-r-mongodb.html">Connexion entre R et MongoDB</a></li>
+            <li class="dropdown-header">DU Dataviz</li>
+            <li><a href="analyse-donnees.html">Analyse de données</a></li>
+            <li><a href="visualisation-donnees.html">Visualisation de données - R</a></li>
+            <li><a href="visualisation-donnees-tableau.html">Visualisation de données - Tableau</a></li>
+            <li><a href="visualisation-donnees-d3.html">Visualisation de données - D3</a></li>
+            <li role="separator" class="divider"></li>
+            <li class="dropdown-header">Master</li>
+            <li><a href="slides/cnam-classif-modeles.html">Classification et Modèles de mélange</a></li>
+            <li><a href="analyse-donnees-massives.html">Analyse de Données Massives</a></li>
+            <li class="dropdown-header">Iran</li>
+            <li><a href="stat-prog-R.html">Statistical Programming using R</a></li>
+          </ul>
+        </li>
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button">Recherche <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li><a href="recherche.html">Sujets</a></li>
+            <li><a href="publications.html">Publications</a></li>
+          </ul>
+        </li>
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button">Réalisations <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li><a href="realisations.html">Détail</a></li>
+            <li role="separator" class="divider"></li>
+            <li><a href="http://up5.fr/explore-data" target="_blank">explore-data</a></li>
+            <li><a href="http://fxjollois.github.io/cours-sql/" target="_blank">Appli web de cours pour SQL</a></li>
+          </ul>
+        </li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container-fluid -->
+</div>
+<div class="contenu">
+
+<div class="fluid-row" id="header">
+
+
+
+<h1 class="title toc-ignore">Analyse Exploratoire des Données Multidimensionnelles</h1>
+<h3 class="subtitle"><em>DU Dataviz</em></h3>
+
+</div>
+
+
+<div id="presentation" class="section level2">
+<h2>Présentation</h2>
+<div id="organisation-du-module-de-statistique-exploratoire" class="section level3">
+<h3>Organisation du module de Statistique Exploratoire</h3>
+<ul>
+<li><strong>Deux sessions</strong> :
+<ul>
+<li>Analyse exploratoire des données multidimensionnelles (9 et 10 Mars)</li>
+<li>Classification automatique ( et Mars)</li>
+</ul></li>
+<li><strong>Cinq intervenants</strong> :
+<ul>
+<li>FX Jollois (à la place de Servane Gey - 9 Mars) et Charles Bouveyron ( Mars) : introduction aux méthodologies</li>
+<li>Antoine-Eric Sammartino (10 Mars), Rachel Verjus et Taoufik En-Najjary ( Mars) : application sur données réelles</li>
+</ul></li>
+<li><p><strong>Evaluation orale individuelle</strong> à la fin de chaque session (10 et Mars)</p></li>
+<li><p><strong>Validation du module</strong> : moyenne des deux évaluations <span class="math inline">\(\geqslant 10\)</span></p></li>
+</ul>
+</div>
+<div id="coordonnees-et-references" class="section level3">
+<h3>Coordonnées et références</h3>
+<ul>
+<li><strong>Deux intervenants</strong> :
+<ul>
+<li>FX Jollois (à la place de Servane Gey - 9 Mars) <a href="mailto:francois-xavier.jollois@parisdescartes.fr">francois-xavier.jollois@parisdescartes.fr</a> | <a href="mailto:Servane.Gey@parisdescartes.fr">Servane.Gey@parisdescartes.fr</a></li>
+<li>Antoine-Eric Sammartino (10 Mars) <a href="mailto:antoine-eric.sammartino@laposte.net">antoine-eric.sammartino@laposte.net</a></li>
+</ul></li>
+<li><strong>Références</strong> (liste non-exhaustive) :
+<ul>
+<li>Analyse de Données avec R, <em>F. Husson, S. Lê, J. Pagès</em>, Presses Universitaires de Rennes.</li>
+<li>Statistique Exploratoire Multidimensionnelle, <em>L. Lebart, M. Piron, A. Morineau</em>, DUNOD.</li>
+<li>Package R FactoMineR : <a href="http://factominer.free.fr/" class="uri">http://factominer.free.fr/</a></li>
+<li>MOOC Analyse des Données Multidimensionnelles, <em>F. Husson</em>, sur plateforme FUN.</li>
+<li>Multidimensional Scaling, second edition, <em>T.F. Cox, M. A. A. Cox</em>, Chapman &amp; Hall.</li>
+<li>An Introduction to MDS, <em>F. Wickelmaier</em> : <a href="https://homepage.uni-tuebingen.de/florian.wickelmaier/pubs/Wickelmaier2003SQRU.pdf" class="uri">https://homepage.uni-tuebingen.de/florian.wickelmaier/pubs/Wickelmaier2003SQRU.pdf</a></li>
+</ul></li>
+</ul>
+</div>
+<div id="planning-de-la-journee" class="section level3">
+<h3>Planning de la journée</h3>
+<ol style="list-style-type: decimal">
+<li><strong>Tables de données</strong>
+<ul>
+<li>Données brutes, tableaux disjonctifs complets</li>
+<li>Tableaux de contingences, tables de Burt</li>
+</ul></li>
+<li><strong>Analyse en Composantes Principales (ACP)</strong>
+<ul>
+<li>Facteurs et Composantes principales</li>
+<li>Valeurs propres et axes factoriels</li>
+<li>Représentations graphiques</li>
+</ul></li>
+<li><strong>Analyse Factorielle des Correspondances Simples (AFC) et Multiples (ACM)</strong>
+<ul>
+<li>AFC sur tableau de contingence</li>
+<li>ACM sur tableau disjonctif complet ou table de Burt</li>
+<li>Représentations graphiques</li>
+</ul></li>
+<li><strong>Positionnement Multidimensionnel (MDS)</strong></li>
+</ol>
+</div>
+</div>
+<div id="tables-de-donnees" class="section level2">
+<h2>Tables de Données</h2>
+<div id="donnees-brutes" class="section level3">
+<h3>Données brutes</h3>
+<p>Recensement aux Etats-Unis en 2012 (<a href="donnees/Recensement_12.csv">données</a>)</p>
+<pre class="r"><code>x = read.csv2(&quot;donnees/Recensement_12.csv&quot;, row.names = 1)
+head(x, 10)</code></pre>
+<pre><code>   AGE SEXE REGION STAT_MARI SAL_HOR SYNDICAT                   CATEGORIE
+1   58    F     NE         C   13.25      non                     Employe
+2   40    M      W         M   12.50     &lt;NA&gt; Construction et Maintenance
+3   29    M      S         C   14.00     &lt;NA&gt;                     Employe
+4   59    M     NE         D   10.60     &lt;NA&gt;       Transports et Service
+5   51    M      W         M   13.00     &lt;NA&gt;       Transports et Service
+6   19    M   &lt;NA&gt;         C      NA      non                        &lt;NA&gt;
+7   64    F      S         M   19.57     &lt;NA&gt;   Production et Agriculture
+8   23    F     NE         C   13.00     &lt;NA&gt;         Profession liberale
+9   47    M     NW         M   20.10      oui Construction et Maintenance
+10  66    F      S         D   12.50      non                     Employe
+     NIV_ETUDES NB_PERS NB_ENF  REV_FOYER
+1         BAC+3       2      0  40 - &lt; 60
+2  Sans diplome       2      0       &lt; 40
+3         BAC+2       2      0     &gt;= 100
+4           BAC       4      1       &lt; 40
+5  Sans diplome       8      1     &gt;= 100
+6          &lt;NA&gt;      NA     NA       &lt;NA&gt;
+7           BAC       3      0 60 - &lt; 100
+8         BAC+3       2      0  40 - &lt; 60
+9           BAC       3      0  40 - &lt; 60
+10          BAC       1      0       &lt; 40</code></pre>
+<pre class="r"><code>str(x)</code></pre>
+<pre><code>&#39;data.frame&#39;:   599 obs. of  11 variables:
+ $ AGE       : int  58 40 29 59 51 19 64 23 47 66 ...
+ $ SEXE      : Factor w/ 2 levels &quot;F&quot;,&quot;M&quot;: 1 2 2 2 2 2 1 1 2 1 ...
+ $ REGION    : Factor w/ 4 levels &quot;NE&quot;,&quot;NW&quot;,&quot;S&quot;,..: 1 4 3 1 4 NA 3 1 2 3 ...
+ $ STAT_MARI : Factor w/ 5 levels &quot;C&quot;,&quot;D&quot;,&quot;M&quot;,&quot;S&quot;,..: 1 3 1 2 3 1 3 1 3 2 ...
+ $ SAL_HOR   : num  13.2 12.5 14 10.6 13 ...
+ $ SYNDICAT  : Factor w/ 2 levels &quot;non&quot;,&quot;oui&quot;: 1 NA NA NA NA 1 NA NA 2 1 ...
+ $ CATEGORIE : Factor w/ 6 levels &quot;Construction et Maintenance&quot;,..: 2 1 2 6 6 NA 4 5 1 2 ...
+ $ NIV_ETUDES: Factor w/ 7 levels &quot;Autre&quot;,&quot;BAC&quot;,..: 4 7 3 2 7 NA 2 4 2 2 ...
+ $ NB_PERS   : int  2 2 2 4 8 NA 3 2 3 1 ...
+ $ NB_ENF    : int  0 0 0 1 1 NA 0 0 0 0 ...
+ $ REV_FOYER : Factor w/ 4 levels &quot;&gt;= 100&quot;,&quot;&lt; 40&quot;,..: 3 2 1 2 1 NA 4 3 3 2 ...</code></pre>
+</div>
+<div id="traitement-univarie-des-donnees-brutes" class="section level3">
+<h3>Traitement univarié des données brutes</h3>
+<pre class="r"><code>summary(x)</code></pre>
+<pre><code>      AGE        SEXE     REGION    STAT_MARI     SAL_HOR     SYNDICAT  
+ Min.   :16.00   F:297   NE  :121   C   :178   Min.   : 2.0   non :142  
+ 1st Qu.:29.00   M:302   NW  :117   D   : 54   1st Qu.:10.5   oui : 25  
+ Median :42.00           S   :176   M   :303   Median :14.5   NA&#39;s:432  
+ Mean   :41.85           W   :139   S   : 13   Mean   :17.7             
+ 3rd Qu.:53.50           NA&#39;s: 46   V   :  5   3rd Qu.:21.0             
+ Max.   :80.00                      NA&#39;s: 46   Max.   :99.0             
+                                               NA&#39;s   :160              
+                       CATEGORIE          NIV_ETUDES     NB_PERS      
+ Construction et Maintenance: 63   BAC         :308   Min.   : 1.000  
+ Employe                    : 82   BAC+3       :107   1st Qu.: 2.000  
+ Gestion et Vente           :116   BAC+2       : 65   Median : 3.000  
+ Production et Agriculture  : 44   Sans diplome: 39   Mean   : 3.119  
+ Profession liberale        : 89   BAC+5       : 23   3rd Qu.: 4.000  
+ Transports et Service      :152   (Other)     :  8   Max.   :13.000  
+ NA&#39;s                       : 53   NA&#39;s        : 49   NA&#39;s   :46      
+     NB_ENF            REV_FOYER  
+ Min.   :0.0000   &gt;= 100    :110  
+ 1st Qu.:0.0000   &lt; 40      :168  
+ Median :0.0000   40 - &lt; 60 :122  
+ Mean   :0.5443   60 - &lt; 100:147  
+ 3rd Qu.:1.0000   NA&#39;s      : 52  
+ Max.   :6.0000                   
+ NA&#39;s   :46                       </code></pre>
+<pre class="r"><code>par(mfrow=c(2,2), mar = c(2, 2, 4, 0) + .1)
+pie(table(x$SEXE), radius = 1, init.angle = 90,
+    col = c(&quot;lightgreen&quot;,&quot;orange&quot;), main = &quot;Sexe&quot;)
+hist(x$SAL_HOR, 
+     main = &quot;Salaire horaire&quot;, col = &quot;gray80&quot;,
+     xlab = &quot;&quot;, ylab = &quot;&quot;)
+p = 100*prop.table(table(x$NB_ENF))
+barplot(p, main = &quot;Nombre d&#39;enfants au foyer&quot;)
+p4 = 100*prop.table(table(x$REV_FOYER))
+barplot(p4[c(1,3,4,2)], main = &quot;Revenus du foyer&quot;)</code></pre>
+<p><img src="analyse-donnees_files/figure-html/unnamed-chunk-4-1.png" width="672" style="display: block; margin: auto;" /></p>
+</div>
+<div id="traitement-multivarie-variables-quantitatives" class="section level3">
+<h3>Traitement multivarié : variables quantitatives</h3>
+<p>Liens entre variables quantitatives :</p>
+<ul>
+<li>covariance et corrélation.</li>
+<li>Traduit la force du lien linéaire entre 2 variable numériques <span class="math inline">\(X\)</span> et <span class="math inline">\(Y\)</span> :</li>
+</ul>
+<p><span class="math display">\[Cov(X,Y)=\frac{1}{n}\sum_{i=1}^n(x_i-\bar{x})(y_i-\bar{y}),\]</span></p>
+<p><span class="math display">\[Cor(X,Y)=\frac{Cov(X.Y)}{\sigma_X \sigma_Y}\in [-1,1]\]</span></p>
+<p>où <span class="math inline">\(\bar{\bullet}\)</span> représente la moyenne et <span class="math inline">\(\sigma_{\bullet}\)</span> l’écart-type.</p>
+<p>Plus <span class="math inline">\(Cor(X,Y)\)</span> est proche de -1 ou 1, et plus les données sont distribuées suivant une droite. Le signe de <span class="math inline">\(Cor(X,Y)\)</span> traduit une relation croissante (corrélation positive), ou décroissante (corrélation négative).</p>
+<p><span class="math inline">\(X=(x_i^{(j)})\)</span> tableau (ou matrice) de données numériques brutes à <span class="math inline">\(n\)</span> lignes (individus) et p colonnes (variables).</p>
+<p><span class="math inline">\(\Sigma\)</span> matrice des</p>
+<ul>
+<li>variances/covariances : <span class="math inline">\(\Sigma_{k,j}=Cov(X^{(k)},X^{(j)})\)</span></li>
+<li>corrélations : <span class="math inline">\(\Sigma_{k,j}=Cor(X^{(k)},X^{(j)})\)</span></li>
+</ul>
+<p><span class="math inline">\(\Sigma\)</span> matrice <span class="math inline">\(p\times p\)</span> symétrique (définie positive)</p>
+<p><em>Remarque</em> : <span class="math display">\[Cov(X^{k},X^{(k)})=\sigma_{X^{(k)}}^2, \ \ Cor(X^{k},X^{(k)})=\frac{\sigma_{X^{(k)}}^2}{\sigma_{X^{(k)}}^2}=1.\]</span></p>
+<p>Lecture simultanée</p>
+<ul>
+<li>des variances (diagonale variances/covariances)</li>
+<li>des liens entre les variables (hors diagonale corrélations)</li>
+</ul>
+<p>Traduit les liens des variables 2 à 2.</p>
+<pre class="r"><code>quanti = c(1,5,9,10)
+round(cov(x[,quanti], use = &quot;complete.obs&quot;), digits=2)</code></pre>
+<pre><code>           AGE SAL_HOR NB_PERS NB_ENF
+AGE     191.96   39.58   -4.07  -2.09
+SAL_HOR  39.58  113.36   -1.65  -0.74
+NB_PERS  -4.07   -1.65    2.54   0.83
+NB_ENF   -2.09   -0.74    0.83   0.91</code></pre>
+<pre class="r"><code>round(cov(x[,quanti], use = &quot;pairwise.complete.obs&quot;), digits=2)</code></pre>
+<pre><code>           AGE SAL_HOR NB_PERS NB_ENF
+AGE     199.28   39.07   -5.15  -1.97
+SAL_HOR  39.07  131.76   -1.65  -0.81
+NB_PERS  -5.15   -1.65    2.44   0.81
+NB_ENF   -1.97   -0.81    0.81   0.88</code></pre>
+<pre class="r"><code>round(cor(x[,quanti], use = &quot;complete.obs&quot;), digits=2)</code></pre>
+<pre><code>          AGE SAL_HOR NB_PERS NB_ENF
+AGE      1.00    0.27   -0.18  -0.16
+SAL_HOR  0.27    1.00   -0.10  -0.07
+NB_PERS -0.18   -0.10    1.00   0.55
+NB_ENF  -0.16   -0.07    0.55   1.00</code></pre>
+<pre class="r"><code>round(cor(x[,quanti], use = &quot;pairwise.complete.obs&quot;), digits=2)</code></pre>
+<pre><code>          AGE SAL_HOR NB_PERS NB_ENF
+AGE      1.00    0.24   -0.24  -0.15
+SAL_HOR  0.24    1.00   -0.10  -0.08
+NB_PERS -0.24   -0.10    1.00   0.55
+NB_ENF  -0.15   -0.08    0.55   1.00</code></pre>
+<pre class="r"><code>pairs(x[,quanti])</code></pre>
+<p><img src="analyse-donnees_files/figure-html/unnamed-chunk-6-1.png" width="672" style="display: block; margin: auto;" /></p>
+</div>
+<div id="traitement-multivarie-variables-qualitatives" class="section level3">
+<h3>Traitement multivarié : variables qualitatives</h3>
+<div id="donnees-brutes-1" class="section level4">
+<h4>Données brutes</h4>
+<p>Tableau disjonctif complet = recodage des variables qualitatives en autant de variables binaires qu’il y a de modalités.</p>
+<pre><code>   SEXE REGION  REV_FOYER
+1     F     NE  40 - &lt; 60
+2     M      W       &lt; 40
+3     M      S     &gt;= 100
+4     M     NE       &lt; 40
+5     M      W     &gt;= 100
+6     M   &lt;NA&gt;       &lt;NA&gt;
+7     F      S 60 - &lt; 100
+8     F     NE  40 - &lt; 60
+9     M     NW  40 - &lt; 60
+10    F      S       &lt; 40</code></pre>
+<pre><code>      SEXE:F SEXE:M REGION:NE REGION:NW REGION:S REGION:W REV_FOYER:&gt;= 100
+ [1,]      1      0         1         0        0        0                0
+ [2,]      0      1         0         0        0        1                0
+ [3,]      0      1         0         0        1        0                1
+ [4,]      0      1         1         0        0        0                0
+ [5,]      0      1         0         0        0        1                1
+ [6,]      0      1        NA        NA       NA       NA               NA
+ [7,]      1      0         0         0        1        0                0
+ [8,]      1      0         1         0        0        0                0
+ [9,]      0      1         0         1        0        0                0
+[10,]      1      0         0         0        1        0                0
+      REV_FOYER:&lt; 40 REV_FOYER:40 - &lt; 60 REV_FOYER:60 - &lt; 100
+ [1,]              0                   1                    0
+ [2,]              1                   0                    0
+ [3,]              0                   0                    0
+ [4,]              1                   0                    0
+ [5,]              0                   0                    0
+ [6,]             NA                  NA                   NA
+ [7,]              0                   0                    1
+ [8,]              0                   1                    0
+ [9,]              0                   1                    0
+[10,]              1                   0                    0</code></pre>
+</div>
+<div id="donnees-groupees-bivariees" class="section level4">
+<h4>Données groupées bivariées</h4>
+<p>Tableau de contingence = distribution jointe des deux variables qualitatives <span class="math inline">\(X\)</span> et <span class="math inline">\(Y\)</span>.</p>
+<pre class="r"><code>table(x$SEXE,x$REV_FOYER)</code></pre>
+<pre><code>   
+    &gt;= 100 &lt; 40 40 - &lt; 60 60 - &lt; 100
+  F     54   85        64         71
+  M     56   83        58         76</code></pre>
+<p>Profils lignes = distributions de la variable colonne <span class="math inline">\(Y\)</span> conditionnellement aux modalités de la variable ligne <span class="math inline">\(X\)</span>.</p>
+<pre class="r"><code>100 * prop.table(table(x$SEXE,x$REV_FOYER), margin = 1)</code></pre>
+<pre><code>   
+      &gt;= 100     &lt; 40 40 - &lt; 60 60 - &lt; 100
+  F 19.70803 31.02190  23.35766   25.91241
+  M 20.51282 30.40293  21.24542   27.83883</code></pre>
+<p>Profils colonnes = distributions de la variable ligne <span class="math inline">\(X\)</span> conditionnellement aux modalités de la variable colonne <span class="math inline">\(Y\)</span>.</p>
+<pre class="r"><code>100 * prop.table(table(x$SEXE,x$REV_FOYER), margin = 2)</code></pre>
+<pre><code>   
+      &gt;= 100     &lt; 40 40 - &lt; 60 60 - &lt; 100
+  F 49.09091 50.59524  52.45902   48.29932
+  M 50.90909 49.40476  47.54098   51.70068</code></pre>
+<ul>
+<li>Test du <span class="math inline">\(\chi^2\)</span> d’indépendance pour 2 variables qualitatives : permet de tester si deux variables qualitatives <span class="math inline">\(X\)</span> et <span class="math inline">\(Y\)</span> influent l’une sur l’autre.</li>
+<li><strong>Statistique</strong> <span class="math inline">\(T\)</span> du <span class="math inline">\(\chi^2\)</span> d’indépendance : traduit la distance des profils lignes (resp. colonnes) à la distribution marginale de la variable colonne <span class="math inline">\(Y\)</span> (resp. ligne <span class="math inline">\(X\)</span>).</li>
+<li><span class="math inline">\(X\)</span> et <span class="math inline">\(Y\)</span> sont <strong>indépendantes</strong> si et seulement si tous les profils lignes (resp. colonnes) sont égaux à la distribution marginale correspondante.</li>
+<li><span class="math inline">\(\Longrightarrow\)</span> Si <span class="math inline">\(X\)</span> et <span class="math inline">\(Y\)</span> sont indépendantes, <span class="math inline">\(T\)</span> est proche de <span class="math inline">\(0\)</span>.</li>
+<li>Si <span class="math inline">\(T\)</span> est grande, on rejette l’hypothèse d’indépendance entre <span class="math inline">\(X\)</span> et <span class="math inline">\(Y\)</span>.</li>
+<li>Le test est dit <strong>significatif</strong> si sa p-valeur est <span class="math inline">\(&lt;\)</span> au seuil fixé <span class="math inline">\(\alpha\)</span> (en général <span class="math inline">\(\alpha=5\%\)</span>). Dans ce cas, on rejette l’hypothèse d’indépendance entre <span class="math inline">\(X\)</span> et <span class="math inline">\(Y\)</span>.</li>
+</ul>
+<pre class="r"><code>summary(table(x$SEXE,x$REV_FOYER))</code></pre>
+<pre><code>Number of cases in table: 547 
+Number of factors: 2 
+Test for independence of all factors:
+    Chisq = 0.5235, df = 3, p-value = 0.9137</code></pre>
+</div>
+</div>
+<div id="traitement-multivarie-variables-qualitatives-lpm" class="section level3">
+<h3>Traitement multivarié : variables qualitatives (LPM)</h3>
+<p>Données groupées multivariées : Table de Burt.</p>
+<p>Utile lorsqu’il s’agit de stocker une base de données (enquête, etc…) composée d’un grand nombre d’individus.</p>
+<pre><code>                     SEXE:F SEXE:M REGION:NE REGION:NW REGION:S REGION:W
+SEXE:F                  297      0        56        60       84       73
+SEXE:M                    0    302        65        57       92       66
+REGION:NE                56     65       121         0        0        0
+REGION:NW                60     57         0       117        0        0
+REGION:S                 84     92         0         0      176        0
+REGION:W                 73     66         0         0        0      139
+REV_FOYER:&gt;= 100         54     56        23        19       34       28
+REV_FOYER:&lt; 40           85     83        34        32       47       51
+REV_FOYER:40 - &lt; 60      64     58        25        24       42       28
+REV_FOYER:60 - &lt; 100     71     76        32        36       45       32
+                     REV_FOYER:&gt;= 100 REV_FOYER:&lt; 40 REV_FOYER:40 - &lt; 60
+SEXE:F                             54             85                  64
+SEXE:M                             56             83                  58
+REGION:NE                          23             34                  25
+REGION:NW                          19             32                  24
+REGION:S                           34             47                  42
+REGION:W                           28             51                  28
+REV_FOYER:&gt;= 100                  110              0                   0
+REV_FOYER:&lt; 40                      0            168                   0
+REV_FOYER:40 - &lt; 60                 0              0                 122
+REV_FOYER:60 - &lt; 100                0              0                   0
+                     REV_FOYER:60 - &lt; 100
+SEXE:F                                 71
+SEXE:M                                 76
+REGION:NE                              32
+REGION:NW                              36
+REGION:S                               45
+REGION:W                               32
+REV_FOYER:&gt;= 100                        0
+REV_FOYER:&lt; 40                          0
+REV_FOYER:40 - &lt; 60                     0
+REV_FOYER:60 - &lt; 100                  147</code></pre>
+</div>
+</div>
+<div id="analyse-en-composantes-principales-acp" class="section level2">
+<h2>Analyse en Composantes Principales (ACP)</h2>
+<div id="objectifs-de-lacp" class="section level3">
+<h3>Objectifs de l’ACP</h3>
+<ul>
+<li>Méthode descriptive pour l’analyse multivariée de variables <strong>quantitatives</strong>.</li>
+<li>Permet de représenter des données de grande taille pour :
+<ul>
+<li>la visualisation <span class="math inline">\(\longrightarrow\)</span> description résumée
+<ul>
+<li>des individus (détection d’individus ou groupes d’individus atypiques),</li>
+<li>des variables (liaisons et sélection).</li>
+</ul></li>
+<li>la compression <span class="math inline">\(\longrightarrow\)</span> réduction du nombre de variables,</li>
+<li>le débruitage <span class="math inline">\(\longrightarrow\)</span> réduction de la variabilité.</li>
+</ul></li>
+<li><strong>Citation</strong> (<em>Lebart, Piron, Morineau</em>, Chapitre 1)</li>
+</ul>
+<blockquote>
+<p>“Nous cherchons en fait une technique de réduction s’appliquant de façon systématique à divers types de tableaux et conduisant à une reconstitution rapide mais approximative du tableau de départ.”</p>
+</blockquote>
+</div>
+<div id="cadre" class="section level3">
+<h3>Cadre</h3>
+<ul>
+<li><span class="math inline">\(X=(x_i^{(j)})\)</span> tableau (ou matrice) de données numériques brutes à <span class="math inline">\(n\)</span> lignes (individus) et p colonnes (variables).</li>
+<li>Individu <span class="math inline">\(i\)</span> assimilé à un point de <span class="math inline">\(\mathbb{R}^p\)</span> de coordonnées <span class="math inline">\((x_i^{(1)},\ldots,x_i^{(p)})\)</span> (lecture du tableau en lignes).</li>
+<li>Variable <span class="math inline">\(j\)</span> assimilée à point de <span class="math inline">\(\mathbb{R}^n\)</span> de coordonnées <span class="math inline">\((x_1^{(j)},\ldots,x_n^{(j)})\)</span> (lecture du tableau en colonnes).</li>
+</ul>
+<pre class="r"><code>head(iris[,-5])</code></pre>
+<pre><code>  Sepal.Length Sepal.Width Petal.Length Petal.Width
+1          5.1         3.5          1.4         0.2
+2          4.9         3.0          1.4         0.2
+3          4.7         3.2          1.3         0.2
+4          4.6         3.1          1.5         0.2
+5          5.0         3.6          1.4         0.2
+6          5.4         3.9          1.7         0.4</code></pre>
+</div>
+<div id="exemple-dans-mathbbr3-representation-dun-cylindre" class="section level3">
+<h3>Exemple dans <span class="math inline">\(\mathbb{R}^3\)</span> : Représentation d’un cylindre</h3>
+<div class="figure">
+<img src="analyse-donnees/Cylindre_Rectangle_Cercle.jpg" alt="Illusion d’optique" />
+<p class="caption">Illusion d’optique</p>
+</div>
+</div>
+<div id="exemple-1-representation-dans-un-plan" class="section level3">
+<h3>Exemple 1 : Représentation dans un plan</h3>
+<p>Le point de vue adopté par le photographe rend-il convenablement la forme du nuage dans l’espace ?</p>
+<div class="figure">
+<img src="analyse-donnees/fruits2.jpg" alt="Fruits" />
+<p class="caption">Fruits</p>
+</div>
+<p>HLP (Husson F., Lê S., Pagès J.)</p>
+</div>
+<div id="exemple-2-nuage-de-points-dans-mathbbr3" class="section level3">
+<h3>Exemple 2 : Nuage de points dans <span class="math inline">\(\mathbb{R}^3\)</span></h3>
+<p>Forme difficilement visible dans <span class="math inline">\(\mathbb{R}^3\)</span></p>
+<div class="figure">
+<img src="analyse-donnees/Notes3D.jpg" alt="Nuage 3D" />
+<p class="caption">Nuage 3D</p>
+</div>
+<div id="projections-du-nuage" class="section level4">
+<h4>Projections du nuage</h4>
+<p>Projections du nuage sur les axes de coordonnées <span class="math inline">\(\Longrightarrow\)</span> 3 nuages de points dans <span class="math inline">\(\mathbb{R}^2\)</span></p>
+<div class="figure">
+<img src="analyse-donnees/Notes3D_xy.jpg" alt="Nuage 2D xy" />
+<p class="caption">Nuage 2D xy</p>
+</div>
+</div>
+</div>
+<div id="exemple-3-scatterplot-sur-les-iris-de-fisher" class="section level3">
+<h3>Exemple 3 : Scatterplot sur les iris de Fisher</h3>
+<pre class="r"><code>plot(iris[,-5])</code></pre>
+<p><img src="analyse-donnees_files/figure-html/unnamed-chunk-15-1.png" width="672" style="display: block; margin: auto;" /></p>
+</div>
+<div id="objectifs-et-outils" class="section level3">
+<h3>Objectifs et outils</h3>
+<ol style="list-style-type: decimal">
+<li><strong>Objectifs</strong>
+<ul>
+<li>Etudier les individus du point de vue de <strong>l’ensemble des variables</strong>.</li>
+<li>Trouver le(s) meilleur(s) plan(s) afin de rendre compte <strong>au mieux</strong> de la forme du nuage de points.</li>
+<li><strong>Projection</strong> du nuage de points dans <span class="math inline">\(\mathbb{R}^p\)</span> sur des sous-espaces de dimensions <span class="math inline">\(q&lt;&lt;p\)</span>.</li>
+</ul></li>
+<li><strong>Outils</strong>
+<ul>
+<li>Sous-espaces de dimensions <span class="math inline">\(q&lt;&lt;p\)</span> construits sur les données de manière à conserver <strong>au mieux</strong> la forme du nuage dans <span class="math inline">\(\mathbb{R}^p\)</span>.</li>
+<li>Construction de <strong>nouvelles variables</strong> (=facteurs) concentrant la variance du nuage de points en un petit nombre <span class="math inline">\(q\)</span> de facteurs.</li>
+<li><strong>Représentation graphique</strong> des individus dans des plans minimisant les déformations du nuage de points.</li>
+<li><strong>Représentation graphique</strong> des variables dans des plans explicitant les liaisons initiales entre ces variables.</li>
+<li><strong>Réduction de la dimension</strong> (=compression) : approximation du tableau de données initial <span class="math inline">\(n\times p\)</span> par un tableau <span class="math inline">\(n\times q\)</span>.</li>
+</ul></li>
+</ol>
+</div>
+<div id="principe-et-definitions" class="section level3">
+<h3>Principe et définitions</h3>
+<p>Changement de repère dans <span class="math inline">\(\mathbb{R}^p\)</span> (individus), ou <span class="math inline">\(\mathbb{R}^n\)</span> (variables), de manière à <strong>concentrer la variabilité</strong> du nuage de points sur les premiers facteurs.</p>
+<p>Facteurs principaux <span class="math inline">\((F^{(k)})_{1\leq k\leq q}\)</span> :</p>
+<ul>
+<li>combinaisons linéaires des variables initiales <span class="math display">\[F^{(k)} = a_{k,0}+\sum_{j=1}^pa_{k,j}X^{(j)},\]</span></li>
+<li>2 à 2 non-corrélées : <span class="math inline">\(\forall k \neq k&#39; \ \ \ Cor(F^{(k)},F^{(k&#39;)})=0\)</span>.</li>
+</ul>
+<p>Composantes principales <span class="math inline">\((c^{(1)},\ldots,c^{(q)})\)</span> :</p>
+<ul>
+<li>mesures des individus sur les nouvelles variables <span class="math inline">\((F^{(1)},\ldots, F^{(q)})\)</span> <span class="math display">\[ \forall i\in \{1,\ldots, n\} \ k\in \{1,\ldots,q\} \ \ \ c^{(k)}_i= a_{k,0}+\sum_{j=1}^pa_{k,j}x_i^{(j)},\]</span></li>
+<li>centrées <span class="math inline">\(\overline{c^{(k)}}=0\)</span>.</li>
+</ul>
+</div>
+<div id="repere-factoriel-dans-mathbbrp" class="section level3">
+<h3>Repère Factoriel dans <span class="math inline">\(\mathbb{R}^p\)</span></h3>
+<ul>
+<li>Construction d’un nouveau repère de <span class="math inline">\(\mathbb{R}^p\)</span>
+<ul>
+<li>d’<strong>origine</strong> <span class="math inline">\(g=(\overline{x}^{(1)},\ldots, \overline{x}^{(p)})\)</span>,</li>
+<li>d’axes définis par les <strong>facteurs</strong> <span class="math inline">\((F^{(k)})_{1\leq k\leq p}\)</span>,</li>
+<li>concentrant la variance du nuage de points sur les premiers axes,</li>
+<li>minimisant les déformations du nuage de points sur les premiers axes.</li>
+</ul></li>
+<li>Construction basée sur la <strong>diagonalisation</strong> de la matrice des
+<ul>
+<li>variances/covariances (ACP non-normée)</li>
+<li>corrélations (ACP normée).</li>
+</ul></li>
+<li><p>Part de variance expliquée par chaque facteur donnée par les <strong>valeurs propres</strong> de la matrice.</p></li>
+<li><p>Nouveau repère défini par les <strong>vecteurs propres</strong> de la matrice, engendrant les facteurs.</p></li>
+</ul>
+</div>
+<div id="exemple-en-2d" class="section level3">
+<h3>Exemple en 2D</h3>
+<div id="repere-0x1x2" class="section level4">
+<h4>Repère <span class="math inline">\((0,X^{(1)},X^{(2)})\)</span></h4>
+<div class="figure">
+<img src="analyse-donnees/points_plan_init.png" alt="Repère d’origine" />
+<p class="caption">Repère d’origine</p>
+</div>
+</div>
+<div id="repere-factoriel-gf1f2-axe-1-associe-a-la-plus-grande-valeur-propre-axe-2-associe-a-la-plus-petite." class="section level4">
+<h4>Repère factoriel <span class="math inline">\((g,F^{(1)},F^{(2)})\)</span> : axe 1 associé à la plus grande valeur propre, axe 2 associé à la plus petite.</h4>
+<div class="figure">
+<img src="analyse-donnees/points_planfact2.png" alt="Repère factoriel" />
+<p class="caption">Repère factoriel</p>
+</div>
+</div>
+<div id="rotation-du-repere" class="section level4">
+<h4>Rotation du repère…</h4>
+<div class="figure">
+<img src="analyse-donnees/points_planfact.png" alt="Repère factoriel rotation" />
+<p class="caption">Repère factoriel rotation</p>
+</div>
+</div>
+<div id="et-changement-dechelle." class="section level4">
+<h4>… et changement d’échelle.</h4>
+<div class="figure">
+<img src="analyse-donnees/points_planfact_final.png" alt="Repère factoriel échelle" />
+<p class="caption">Repère factoriel échelle</p>
+</div>
+</div>
+</div>
+<div id="construction-du-repere-factoriel" class="section level3">
+<h3>Construction du repère factoriel</h3>
+<ul>
+<li><span class="math inline">\(\Sigma\)</span> : matrice des variances/covariances (ACP non-normée) ou des corrélations (ACP normée) des variables d’origine.</li>
+<li><span class="math inline">\(D\)</span> : matrice des variances/covariances des facteurs.</li>
+<li><span class="math inline">\(D\)</span> obtenue en <strong>diagonalisant <span class="math inline">\(\Sigma\)</span></strong> : calcul des <span class="math inline">\(p\)</span> valeurs propres <span class="math inline">\(\lambda_1\geqslant \ldots \geqslant \lambda_p\)</span> de <span class="math inline">\(\Sigma\)</span>, puis obtention de <span class="math inline">\(D\)</span> par passage du repère d’origine <span class="math inline">\((0, X^{(1)}, \ldots, X^{(p)})\)</span> au nouveau repère <span class="math inline">\((g, F^{(1)}, \ldots, F^{(p)})\)</span>.</li>
+</ul>
+<p><span class="math display">\[\Sigma \Longrightarrow D=\left(\begin{array}{cccc}
+\lambda_1 &amp; 0 &amp; \dots  &amp; 0 \\
+0 &amp; \lambda_2 &amp; \ddots &amp;  \vdots \\
+\vdots &amp; \ddots &amp; \ddots  &amp; 0 \\
+0 &amp; \dots  &amp; 0 &amp; \lambda_p\\
+\end{array} \right)\]</span></p>
+</div>
+<div id="lecture-et-interpretation-des-valeurs-propres" class="section level3">
+<h3>Lecture et interprétation des valeurs propres</h3>
+<ul>
+<li><span class="math inline">\(\lambda_1\geqslant \ldots \geqslant \lambda_p\)</span> valeurs propres de <span class="math inline">\(\Sigma\)</span>, <span class="math inline">\(D=\mbox{diag}(\lambda_1,\ldots,\lambda_p)\)</span></li>
+<li><span class="math inline">\((F^{(1)}, \ldots, F^{(p)})\)</span> facteurs définissant le nouveau repère.</li>
+<li><span class="math inline">\(D\)</span> matrice des variances/covariances des facteurs :
+<ul>
+<li><span class="math inline">\(\forall k \neq k&#39; \ \ \ Cor(F^{(k)},F^{(k&#39;)})=0\)</span>,</li>
+<li><span class="math inline">\(\forall k \ \ \ Var(F^{(k)})=\lambda_k\)</span>.</li>
+</ul></li>
+<li><span class="math inline">\(I_{tot}=Var(X^{(1)})+\ldots+ Var(X^{(p)})\)</span> variance totale du nuage de points. Alors :</li>
+</ul>
+<p><span class="math display">\[\begin{array}{ccl}
+  Tr(D) &amp; = &amp; \lambda_1+\ldots+\lambda_p\\
+        &amp; = &amp; Tr(\Sigma)=I_{tot} \ \ \ \ \mbox{si variances/covariances}\\
+        &amp; = &amp; Tr(\Sigma)=p \ \ \ \ \ \ \ \mbox{si corrélations}\\
+   \end{array}\]</span></p>
+<ul>
+<li><span class="math inline">\(\lambda_1\geqslant \ldots \geqslant \lambda_p\)</span> <span class="math inline">\(\Longrightarrow\)</span> <strong>variabilité</strong> du nuage de points concentrée sur les premiers facteurs.</li>
+<li><strong>Pourcentage de variance expliquée</strong> par le facteur <span class="math inline">\(F^{(k)}\)</span> : <span class="math display">\[100\times \frac{Var(F^{(k)})}{I_{tot}} = 100\times \frac{\lambda_k}{\lambda_1+\ldots+\lambda_p}\]</span></li>
+<li><strong>Pourcentage de variance expliquée</strong> par les <span class="math inline">\(q\)</span> premiers facteurs <span class="math inline">\((F^{(1)},\ldots,F^{(q)})\)</span> : <span class="math display">\[100\times \frac{Var(F^{(1)})+\ldots+Var(F^{(q)})}{I_{tot}} = 100\times \frac{\lambda_1+\ldots+\lambda_q}{\lambda_1+\ldots+\lambda_p}\]</span></li>
+</ul>
+<pre class="r"><code>library(FactoMineR)
+iris.pca=PCA(iris[,-5], ncp=4, graph=F)
+round(iris.pca$eig, digits=2)</code></pre>
+<pre><code>       eigenvalue percentage of variance cumulative percentage of variance
+comp 1       2.92                  72.96                             72.96
+comp 2       0.91                  22.85                             95.81
+comp 3       0.15                   3.67                             99.48
+comp 4       0.02                   0.52                            100.00</code></pre>
+<p>Le <strong>premier axe</strong> factoriel explique 72.9624454% de la variance du nuage de points, le <strong>premier plan</strong> factoriel (constitué des 2 premiers axes factoriels) explique quant à lui 95.8132072 de la variance.</p>
+</div>
+<div id="contributions-et-qualites-de-representation" class="section level3">
+<h3>Contributions et qualités de représentation</h3>
+<ul>
+<li><p><strong>Contribution</strong> de l’individu <span class="math inline">\(i\)</span> à la construction de l’axe <span class="math inline">\(k\)</span> (lecture en colonne): <span class="math display">\[100\frac{\left(c_i^{(k)}\right)^2}{n\times \lambda_k}\]</span> Plus sa valeur est élevée, et plus l’individu contribue à la construction de l’axe.</p></li>
+<li><p><strong>Qualité de représentation</strong> de l’individu <span class="math inline">\(i\)</span> sur l’axe <span class="math inline">\(k\)</span> (lecture en ligne) : <span class="math display">\[Q_i^k=\frac{\left(c_i^{(k)}\right)^2}{\sum_{k=1}^p\left(c_i^{(k)}\right)^2}\]</span> Plus sa valeur est élevée, et mieux l’individu est représenté sur l’axe <span class="math inline">\(k\)</span>.</p></li>
+</ul>
+<div id="contributions" class="section level4">
+<h4>Contributions</h4>
+<pre class="r"><code>head(round(iris.pca$ind$contrib, digits=2))</code></pre>
+<pre><code>  Dim.1 Dim.2 Dim.3 Dim.4
+1  1.17  0.17  0.07  0.02
+2  0.99  0.33  0.25  0.34
+3  1.28  0.09  0.01  0.03
+4  1.21  0.26  0.04  0.14
+5  1.30  0.31  0.00  0.04
+6  0.98  1.62  0.00  0.00</code></pre>
+<pre class="r"><code>colSums(iris.pca$ind$contrib)</code></pre>
+<pre><code>Dim.1 Dim.2 Dim.3 Dim.4 
+  100   100   100   100 </code></pre>
+</div>
+<div id="qualites-de-representation" class="section level4">
+<h4>Qualités de représentation</h4>
+<pre class="r"><code>head(round(iris.pca$ind$cos2, digits=2))</code></pre>
+<pre><code>  Dim.1 Dim.2 Dim.3 Dim.4
+1  0.95  0.04  0.00     0
+2  0.89  0.09  0.01     0
+3  0.98  0.02  0.00     0
+4  0.93  0.06  0.00     0
+5  0.93  0.07  0.00     0
+6  0.66  0.34  0.00     0</code></pre>
+<pre class="r"><code>head(rowSums(iris.pca$ind$cos2), n=15)</code></pre>
+<pre><code> 1  2  3  4  5  6  7  8  9 10 11 12 13 14 15 
+ 1  1  1  1  1  1  1  1  1  1  1  1  1  1  1 </code></pre>
+</div>
+</div>
+<div id="visualisation-du-nuage-de-points" class="section level3">
+<h3>Visualisation du nuage de points</h3>
+<ul>
+<li><strong>Premier plan factoriel</strong>
+<ul>
+<li>meilleur plan au sens de la part de variance expliquée,</li>
+<li>plan engendré par les 2 premiers axes factoriels <span class="math inline">\(F^{(1)}\)</span> et <span class="math inline">\(F^{(2)}\)</span>.</li>
+<li>plan associé aux 2 plus grandes valeurs propres <span class="math inline">\(\lambda_1\)</span> et <span class="math inline">\(\lambda_2\)</span> de la matrice <span class="math inline">\(\Sigma\)</span>.</li>
+</ul></li>
+<li><p><strong>Autres plans factoriels</strong> : plans engendrés par les premiers axes <span class="math inline">\(F^{(1)}\)</span> et <span class="math inline">\(F^{(k)}\)</span>, <span class="math inline">\(2\leqslant k\leqslant q\)</span>, avec <span class="math inline">\(q\)</span> convenablement choisi en terme de variance expliquée par les <span class="math inline">\(q\)</span> premiers facteurs.</p></li>
+<li><p><strong>Projection des données</strong> sur le(s) plan(s) minimisant les déformations du nuage de points impliquées par la projection.</p></li>
+<li><p><strong>Visualisation simple</strong> permettant de se rendre compte de la forme du nuage dans des espaces de dimension 2.</p></li>
+</ul>
+<pre class="r"><code>plot(iris.pca, choix=&quot;ind&quot;)</code></pre>
+<p><img src="analyse-donnees_files/figure-html/unnamed-chunk-19-1.png" width="672" style="display: block; margin: auto;" /></p>
+</div>
+<div id="individus-atypiques" class="section level3">
+<h3>Individus atypiques</h3>
+<ul>
+<li><p>Repérés sur les axes factoriels par des <strong>contributions très élevées</strong> par rapport à celles des autres individus.</p></li>
+<li><p>Individus ayant tendance à <strong>écraser</strong> les autres de part ces contributions extrêmes.</p></li>
+<li><strong>Que faire ?</strong>
+<ul>
+<li>repérer les individus atypiques, i.e. ceux ayant des contributions trop importantes par rapport à celles des autres.</li>
+<li>si le nombre d’individus atypiques représente un faible pourcentage de l’échantillon, revenir vers les collecteurs des données, ou simplement les éliminer de l’étude.</li>
+<li>si ce nombre est élevé, les traiter comme un groupe à part entière.</li>
+</ul></li>
+</ul>
+<p><img src="analyse-donnees_files/figure-html/unnamed-chunk-20-1.png" width="672" style="display: block; margin: auto;" /></p>
+</div>
+<div id="interpretation-des-axes-factoriels-point-de-vue-des-variables" class="section level3">
+<h3>Interprétation des axes factoriels : point de vue des variables</h3>
+<ul>
+<li><p>Variables regardées comme des points de <span class="math inline">\(\mathbb{R}^n\)</span>.</p></li>
+<li><p><span class="math inline">\(d(j,j&#39;)\)</span>, distance dans <strong><span class="math inline">\(\mathbb{R}^n\)</span></strong> entre les variables <span class="math inline">\(X^{(j)}\)</span> et <span class="math inline">\(X^{(j&#39;)}\)</span>.</p></li>
+<li><p>On diagonalise <span class="math inline">\(\Sigma^t\)</span>, transposée de la matrice des <strong>corrélations</strong> des variables <span class="math inline">\((X^{(1)}, \ldots, X^{(p)})\)</span>.</p></li>
+<li>On obtient les propriétés suivantes :
+<ul>
+<li>la norme des vecteurs variables dans <span class="math inline">\(\mathbb{R}^n\)</span> est égale à <strong>1</strong>,</li>
+<li><span class="math inline">\(d^2(j,j&#39;) = 2\left(1-\mbox{Cor}(X^{(j)},X^{(j&#39;)})\right)\)</span>,</li>
+<li><span class="math inline">\(\mbox{Cor}(X^{(j)},X^{(j&#39;)}) = \mbox{cos}(X^{(j)},X^{(j&#39;)})\)</span>,</li>
+<li>les variables sont décrites sur la sphère unité de <span class="math inline">\(\mathbb{R}^p\subset \mathbb{R}^n\)</span> par leurs contributions sur les facteurs-individus.</li>
+</ul></li>
+<li>Ce qui implique :
+<ul>
+<li>les vecteurs variables sont tous sur la sphère unité de <span class="math inline">\(\mathbb{R}^p\)</span>,</li>
+<li>plus les variables sont corrélées, et plus leurs vecteurs variables sont colinéaires,</li>
+<li>moins les variables sont corrélées et plus les vecteurs variables sont orthogonaux.</li>
+</ul></li>
+</ul>
+</div>
+<div id="sphere-et-cercles-des-correlations-lpm" class="section level3">
+<h3>Sphère et cercles des corrélations (LPM)</h3>
+<pre class="r"><code>plot(iris.pca, choix=&quot;var&quot;)</code></pre>
+<p><img src="analyse-donnees_files/figure-html/unnamed-chunk-21-1.png" width="672" style="display: block; margin: auto;" /></p>
+<!-- ![Sphère des corrélations](analyse-donnees/cercle_correlations.jpeg) -->
+</div>
+<div id="contributions-et-qualite-de-representation-des-variables" class="section level3">
+<h3>Contributions et qualité de représentation des variables</h3>
+<ul>
+<li><p><strong>Contribution</strong> de la variable <span class="math inline">\(j\)</span> à l’axe <span class="math inline">\(k\)</span> : <span class="math display">\[100\frac{\left(\mbox{Cor}(F^{(k)},X^{(j)})\right)^2}{\lambda_k}\]</span> Plus sa valeur est élevée, et plus la variable contribue à la construction de l’axe.</p></li>
+<li><p>De plus, on a : <span class="math display">\[\mbox{cos}(F^{(k)},X^{(j)}) = \mbox{Cor}(F^{(k)},X^{(j)}).\]</span></p></li>
+<li><p><span class="math inline">\(\Longrightarrow\)</span> contribution de la variable <span class="math inline">\(j\)</span> à l’axe <span class="math inline">\(k\)</span> interprétée en terme de <strong>proximité</strong> de la variable à l’axe en question.</p></li>
+<li><p><strong>Attention</strong> : si la contribution d’une variable est faible, cela signifie qu’elle contribue à d’autres axes.</p></li>
+<li><p>Une variable est <strong>bien représentée</strong> sur le cercle des corrélations si son vecteur est proche du cercle. Seules les variables bien représentées interviennent dans l’interprétation des axes.</p></li>
+</ul>
+</div>
+<div id="representation-simultanee" class="section level3">
+<h3>Représentation simultanée</h3>
+<p>Interprétation du cercle de corrélations, et analyse conjointe des deux nuages (individus et variables)</p>
+<pre class="r"><code>par(mfrow=c(1,2))
+plot(iris.pca, choix = &quot;ind&quot;)
+plot(iris.pca, choix = &quot;var&quot;)</code></pre>
+<p><img src="analyse-donnees_files/figure-html/unnamed-chunk-22-1.png" width="672" style="display: block; margin: auto;" /></p>
+</div>
+<div id="covariance-ou-correlation" class="section level3">
+<h3>Covariance ou Corrélation ?</h3>
+<ul>
+<li><strong>Corrélation</strong>
+<ul>
+<li>revient à centrer et réduires les variables,</li>
+<li>les variables sont sans dimension,</li>
+<li>les variables ont toutes la même dispersion.</li>
+<li><span class="math inline">\(\Longrightarrow\)</span> choix par défaut.</li>
+</ul></li>
+<li><strong>Covariance</strong>
+<ul>
+<li>revient à simplement centrer les variables,</li>
+<li>les variables sont directement analysées,</li>
+<li>les variables ont des dispersions différentes.</li>
+<li><span class="math inline">\(\Longrightarrow\)</span> à n’utiliser que si les données sont homogènes.</li>
+</ul></li>
+</ul>
+</div>
+<div id="reduction-de-dimension-choix-du-nombre-de-facteurs" class="section level3">
+<h3>Réduction de dimension : Choix du nombre de facteurs</h3>
+<ul>
+<li><p>Pas de “recette” universelle pour choisir le nombre de facteurs à retenir.</p></li>
+<li><strong>Choix dépendant de l’analyse</strong> :
+<ul>
+<li>Garder un petit nombre de facteurs concentrant l’essentiel de la variabilité pour représenter les données.</li>
+<li>Préparer les données pour une éventuelle analyse ultérieure. Dans ce cas, on peut aller un peu plus loin dans le nombre de facteurs à conserver.</li>
+</ul></li>
+</ul>
+<div id="choix-du-nombre-de-facteurs-regle-de-kaiser" class="section level4">
+<h4>Choix du nombre de facteurs : Règle de Kaiser</h4>
+<ul>
+<li>Garder les axes correspondant aux valeurs propres supérieures à la moyenne des valeurs propres, soit
+<ul>
+<li>supérieures à <span class="math inline">\(I_{tot}/p\)</span> dans le cas de la matrice des variances/covariances,</li>
+<li>supérieures à <span class="math inline">\(1\)</span> dans le cas de la matrice des corrélations.</li>
+</ul></li>
+<li>On peut également garder un peu plus de facteurs expliquant un pourcentage de variance cumulé satisfaisant.</li>
+</ul>
+</div>
+<div id="choix-du-nombre-de-facteurs-ebouli-des-valeurs-propres" class="section level4">
+<h4>Choix du nombre de facteurs : Ebouli des valeurs propres</h4>
+<p>Garder les axes correspondant aux valeurs propres situées <strong>avant</strong> une chute brutale sur les valeurs des valeurs propres de <span class="math inline">\(\Sigma\)</span>. Les axes correspondants aux valeurs suivantes expliquent peu de la variabilité du nuage.</p>
+<pre class="r"><code>par(mfrow=c(1,2))
+plot(iris.pca$eig$eigenvalue, type = &#39;b&#39;,
+     main=&quot;Ebouli des valeurs propres&quot;)
+barplot(iris.pca$eig$eigenvalue,
+        main=&quot;Ebouli des valeurs propres&quot;,
+        names.arg=1:nrow(iris.pca$eig))</code></pre>
+<p><img src="analyse-donnees_files/figure-html/unnamed-chunk-23-1.png" width="672" style="display: block; margin: auto;" /></p>
+</div>
+</div>
+<div id="choix-du-nombre-de-facteurs-representation-simultanee" class="section level3">
+<h3>Choix du nombre de facteurs : Représentation simultanée</h3>
+<pre class="r"><code>par(mfrow=c(1,2))
+plot(iris.pca$eig$eigenvalue, type = &#39;b&#39;,
+     main=&quot;Ebouli des valeurs propres&quot;)
+abline(h=1)
+barplot(iris.pca$eig$eigenvalue,
+        main=&quot;Ebouli des valeurs propres&quot;,
+        names.arg=1:nrow(iris.pca$eig))
+abline(h=1)</code></pre>
+<p><img src="analyse-donnees_files/figure-html/unnamed-chunk-24-1.png" width="672" style="display: block; margin: auto;" /></p>
+</div>
+<div id="visualisation-des-especes-sur-le-premier-plan-factoriel" class="section level3">
+<h3>Visualisation des espèces sur le premier plan factoriel</h3>
+<pre class="r"><code>par(mfrow=c(1,2))
+plot(iris.pca, choix = &quot;ind&quot;, habillage = &quot;ind&quot;,
+     col.hab=rainbow(3)[iris$Species])
+legend(&quot;top&quot;, legend = levels(iris$Species),
+       col = rainbow(3), pch = 19, cex = 0.75,
+       ncol = 3)
+plot(iris.pca, choix = &quot;var&quot;)</code></pre>
+<p><img src="analyse-donnees_files/figure-html/unnamed-chunk-25-1.png" width="672" style="display: block; margin: auto;" /></p>
+</div>
+<div id="tp-les-donnees-decathlon" class="section level3">
+<h3>TP : les données décathlon</h3>
+<ul>
+<li>Etude des performances des athlètes dans les différentes disciplines lors de deux épreuves de décathlon en 2004.</li>
+<li>Charger les données dans R</li>
+</ul>
+<pre class="r"><code>data(decathlon)</code></pre>
+<ul>
+<li>Effectuer l’ACP sur les variables d’intérêt. Marquer les autres variables comme illustratives (options quanti.sup et quali.sup dans la fonction PCA)</li>
+<li>Sélectionner le nombre de facteurs à conserver pour la visualisation.</li>
+<li>Visualiser et décrire les données sur les plans factoriels sélectionnés.</li>
+</ul>
+</div>
+</div>
+<div id="analyse-factorielle-des-correspondances-simples-afc" class="section level2">
+<h2>Analyse factorielle des Correspondances Simples (AFC)</h2>
+<ul>
+<li><strong>Données</strong>
+<ul>
+<li>Tableau de contingence entre 2 variables <strong>qualitatives</strong></li>
+<li>Plus généralement tableau de nombres non-négatifs</li>
+</ul></li>
+<li><strong>Problème</strong>
+<ul>
+<li><strong>Visualiser</strong> les correspondances entre les modalités d’une même variable,</li>
+<li><strong>Représentation simultanée</strong> des modalités des 2 variables pour analyser les <strong>liens</strong> entre les 2 variables.</li>
+</ul></li>
+<li><strong>Outil</strong>
+<ul>
+<li><strong>ACP</strong> directement sur la table de contingence impossible (distance entre modalités non-définie),</li>
+<li><strong>distance</strong> entre modalités définie par la distance du <span class="math inline">\(\chi^2\)</span> entre profils lignes (ou colonnes) : 2 profils similaires seront à distance nulle.</li>
+<li><strong>ACP</strong> sur les profils lignes (ou colonnes), centrée sur la distribution marginale correspondante, en remplaçant la distance classique par la distance du <span class="math inline">\(\chi^2\)</span>.</li>
+</ul></li>
+</ul>
+<div id="notations-et-definitions" class="section level3">
+<h3>Notations et définitions</h3>
+<ul>
+<li><span class="math inline">\(X=(f_{i,j})\)</span> tableau de contingence à <span class="math inline">\(1\leqslant i\leqslant n\)</span> modalités lignes et <span class="math inline">\(1\leqslant j\leqslant p\)</span> modalités colonnes.</li>
+<li>Profils-lignes <span class="math inline">\((f_{j|i})_{1\leqslant j\leqslant p}\)</span>, <span class="math inline">\(i=1,\ldots,n\)</span> (resp. profils-colonnes <span class="math inline">\((f_{i|j})_{1\leqslant i\leqslant n}\)</span>, <span class="math inline">\(j=1,\ldots,p\)</span>) = tableau des fréquences conditionnelles aux modalités de la variable ligne (resp. colonne).</li>
+<li>Profil moyen : profil <span class="math inline">\(f_I = (f_{\bullet j})_{1\leq j \leq p}\)</span> (resp. <span class="math inline">\(f_J=(f_{i\bullet})_{1\leq i \leq n}\)</span>) de la distribution marginale en colonnes (resp. en lignes).</li>
+<li>Distance du <span class="math inline">\(\chi^2\)</span> entre les modalités lignes <span class="math inline">\(i\)</span> et <span class="math inline">\(i&#39;\)</span> (resp. colonnes <span class="math inline">\(j\)</span> et <span class="math inline">\(j&#39;\)</span>) : <span class="math display">\[d^2(x_i,x_{i&#39;}) = \sum_{j=1}^p \frac{1}{f_{\bullet j}}\left(\frac{f_{i,j}}{f_{i\bullet}}-\frac{f_{i&#39;,j}}{f_{i&#39;\bullet}}\right)^2\]</span> <span class="math display">\[d^2(y_j,y_{j&#39;}) = \sum_{i=1}^n \frac{1}{f_{i\bullet}}\left(\frac{f_{i,j}}{f_{\bullet j}}-\frac{f_{i,j&#39;}}{f_{\bullet j&#39;}}\right)^2\]</span></li>
+</ul>
+</div>
+<div id="enquete-sur-les-femmes-et-le-travail-en-1974" class="section level3">
+<h3>Enquête sur les femmes et le travail en 1974</h3>
+<p>Pour 1724 femmes interrogées, tableau croisant l’image de la famille idéale et l’activité convenant le mieux à une femme dont les enfants vont à l’école. (<a href="donnees/femme_travail.csv">données</a>)</p>
+<pre class="r"><code>femmes = read.csv2(file=&quot;donnees/femme_travail.csv&quot;, 
+              header=TRUE, row.names=1, sep=&quot;,&quot;)
+x = femmes[,1:3]
+x</code></pre>
+<pre><code>                       rester.au.foyer trav..mi.temps trav..plein.temps
+2 conj. tr. Egalement               13            142               106
+trav. mari + absorbant              30            408               117
+seul le mari trav.                 241            573                94</code></pre>
+<p>Test du <span class="math inline">\(\chi^2\)</span> d’indépendance entre les 2 variables “image idéale” et “activité idéale” :</p>
+<pre class="r"><code>chisq.test(x)</code></pre>
+<pre><code>
+    Pearson&#39;s Chi-squared test
+
+data:  x
+X-squared = 233.43, df = 4, p-value &lt; 2.2e-16</code></pre>
+<p>On rejette l’hypothèse d’indépendance <span class="math inline">\(\Longrightarrow\)</span> d’autant plus naturel de visualiser les relations entre les différentes modalités.</p>
+</div>
+<div id="afc---profils-lignes" class="section level3">
+<h3>AFC - Profils lignes</h3>
+<pre class="r"><code>pl = rbind(x, apply(x, 2, sum))
+rownames(pl)[4] = &quot;Profil moyen&quot;
+round(100*prop.table(as.matrix(pl),margin=1),2)</code></pre>
+<pre><code>                       rester.au.foyer trav..mi.temps trav..plein.temps
+2 conj. tr. Egalement             4.98          54.41             40.61
+trav. mari + absorbant            5.41          73.51             21.08
+seul le mari trav.               26.54          63.11             10.35
+Profil moyen                     16.47          65.14             18.39</code></pre>
+</div>
+<div id="afc---profils-colonnes" class="section level3">
+<h3>AFC - Profils colonnes</h3>
+<pre class="r"><code>pc = cbind(x,apply(x,1,sum))
+colnames(pc)[4] = &quot;Profil moyen&quot;
+round(100*prop.table(as.matrix(pc),margin=2),2)</code></pre>
+<pre><code>                       rester.au.foyer trav..mi.temps trav..plein.temps
+2 conj. tr. Egalement             4.58          12.64             33.44
+trav. mari + absorbant           10.56          36.33             36.91
+seul le mari trav.               84.86          51.02             29.65
+                       Profil moyen
+2 conj. tr. Egalement         15.14
+trav. mari + absorbant        32.19
+seul le mari trav.            52.67</code></pre>
+</div>
+<div id="principe-general-np2" class="section level3">
+<h3>Principe général (<span class="math inline">\(n&gt;p\)</span>)<a href="#fn1" class="footnoteRef" id="fnref1"><sup>1</sup></a></h3>
+<ul>
+<li><strong>Transformation</strong> du tableau de contingence afin de récupérer les profils lignes et colonnes.</li>
+<li><strong>ACP</strong> sur le tableau des profils lignes avec la distance du <span class="math inline">\(\chi^2\)</span> :
+<ul>
+<li>Maximisation sur chaque axe de la distance de chaque modalité de la variable ligne au profil ligne moyen <span class="math inline">\(f_I\)</span>.</li>
+<li>Association de chaque modalité ligne <span class="math inline">\(i\)</span> à un point <span class="math inline">\(M_i\)</span> barycentre des <span class="math inline">\(p\)</span> facteurs pondéré par les fréquences conditionnelles <span class="math inline">\((f_{i,j}/f_{\bullet j})_{1\leq j\leq p}\)</span>.</li>
+</ul></li>
+<li><strong>Représentation</strong> des modalités lignes dans les plans factoriels centrés sur le profil moyen <span class="math inline">\(f_I\)</span>.</li>
+<li><strong>Choix des axes</strong> pour l’analyse des correspondances de la même manière que pour l’ACP.</li>
+</ul>
+</div>
+<div id="proprietes-mathematiques" class="section level3">
+<h3>Propriétés mathématiques</h3>
+<p>La matrice <span class="math inline">\(p\times p\)</span> diagonalisée dans l’ACP avec la distance du <span class="math inline">\(\chi^2\)</span> admet <span class="math inline">\(p-1\)</span> valeurs propres réelles positives <span class="math inline">\(\lambda_1 \geqslant \ldots \geqslant \lambda_{p-1}\)</span> <strong>différentes de <span class="math inline">\(1\)</span></strong> et, pour tout <span class="math inline">\(j=1,\dots,p-1\)</span>, <span class="math inline">\(0\leq \lambda_j\leq 1\)</span>.</p>
+<p><strong>L’inertie totale</strong> <span class="math inline">\(I_{tot}\)</span> du nuage des points modalités <span class="math inline">\(M_i\)</span> est proportionnelle à la statistique <span class="math inline">\(T\)</span> du test du <span class="math inline">\(\chi^2\)</span> d’indépendance : soit <span class="math inline">\(N\)</span> le nombre d’individus, <span class="math display">\[I_{tot} = \sum_{i=1}^n f_{i.}d^2(x_i,f_I) = \sum_{j=1}^pf_{.j}d^2(y_j,f_J)=\frac{T}{N}\]</span></p>
+<p><strong>Relation quasi-barycentrique</strong> : les <span class="math inline">\(p\)</span> modalités colonnes peuvent être représentées sur les mêmes axes factoriels que les <span class="math inline">\(n\)</span> modalités lignes.</p>
+</div>
+<div id="afc-sur-les-donnees-du-travail-des-femmes-en-1974" class="section level3">
+<h3>AFC sur les données du travail des femmes en 1974</h3>
+<pre class="r"><code>x.afc = CA(x)</code></pre>
+<p><img src="analyse-donnees_files/figure-html/unnamed-chunk-31-1.png" width="672" style="display: block; margin: auto;" /></p>
+<div id="interpretation-et-visualisation" class="section level4">
+<h4>Interprétation et visualisation</h4>
+<pre class="r"><code>x.afc$row$coord</code></pre>
+<pre><code>                            Dim 1       Dim 2
+2 conj. tr. Egalement  -0.5586051  0.23338696
+trav. mari + absorbant -0.2437595 -0.17220664
+seul le mari trav.      0.3095622  0.03817256</code></pre>
+<p><strong>Coordonnées</strong> des modalités lignes (=barycentre pondéré) sur les axes factoriels.</p>
+<pre class="r"><code>x.afc$row$contrib</code></pre>
+<pre><code>                          Dim 1     Dim 2
+2 conj. tr. Egalement  40.43165 44.429144
+trav. mari + absorbant 16.37145 51.435978
+seul le mari trav.     43.19691  4.134878</code></pre>
+<ul>
+<li><strong>Contribution</strong> des modalités lignes aux axes factoriels : axe expliqué par les modalités dont la contribution est <span class="math inline">\(\geqslant 100/n (= 33\%)\)</span>.</li>
+<li>Axe 1 construit sur les modalités opposées “les 2 conjoints travaillent également” et “seul le mari travaille”.</li>
+<li>Axe 2 construit sur les modalités opposées “les 2 conjoints travaillent également” et “le travail du mari est plus absorbant”.</li>
+</ul>
+<pre class="r"><code>x.afc$row$cos2</code></pre>
+<pre><code>                           Dim 1      Dim 2
+2 conj. tr. Egalement  0.8513830 0.14861696
+trav. mari + absorbant 0.6670724 0.33292758
+seul le mari trav.     0.9850220 0.01497797</code></pre>
+<ul>
+<li><strong>Qualité de représentation</strong> des modalités lignes sur les axes factoriels : une modalité est bien représentée si son cosinus carré est proche de 1.</li>
+<li>Modalités “les 2 conjoints travaillent également” et “seul le mari travaille” bien représentées sur l’axe 1.</li>
+<li>Modalité “le travail du mari est plus absorbant” mal représentée sur les 2 axes.</li>
+</ul>
+<pre class="r"><code>x.afc$col$coord</code></pre>
+<pre><code>                         Dim 1      Dim 2
+rester.au.foyer    0.618376453  0.1826620
+trav..mi.temps    -0.003638471 -0.0996542
+trav..plein.temps -0.541113279  0.1893869</code></pre>
+<pre class="r"><code>x.afc$col$contrib</code></pre>
+<pre><code>                         Dim 1    Dim 2
+rester.au.foyer   53.913227013 29.61346
+trav..mi.temps     0.007380551 34.85341
+trav..plein.temps 46.079392436 35.53314</code></pre>
+<p>Axes expliqués par les modalités colonnes dont la contribution est <span class="math inline">\(\geqslant 100/p (= 33\%)\)</span>.</p>
+<pre class="r"><code>x.afc$col$cos2</code></pre>
+<pre><code>                        Dim 1      Dim 2
+rester.au.foyer   0.919747391 0.08025261
+trav..mi.temps    0.001331276 0.99866872
+trav..plein.temps 0.890871382 0.10912862</code></pre>
+<ul>
+<li>Modalités “rester au foyer” et “travail à plein temps” bien représentées sur l’axe 1.</li>
+<li>Modalité “travail à mi-temps” bien représentée sur l’axe 2.</li>
+</ul>
+</div>
+<div id="resume" class="section level4">
+<h4>Résumé</h4>
+<ul>
+<li><strong>Analyse simultanée</strong>
+<ul>
+<li>des contributions,</li>
+<li>des cosinus carrés.</li>
+</ul></li>
+<li>Une modalité ligne (resp. colonne) n’intervient dans l’interprétation d’un axe factoriel <strong>que si</strong>
+<ul>
+<li>sa contribution à la construction de l’axe est <span class="math inline">\(\geqslant 1/n\)</span> (resp. <span class="math inline">\(\geqslant 1/p\)</span>),</li>
+<li><strong>ET</strong> elle est bien représentée sur l’axe, i. e. son cosinus carré est proche de 1.</li>
+</ul></li>
+<li>Si deux modalités <strong>bien représentées</strong> sur un plan factoriel sont proches, leurs distributions sont comparables <span class="math inline">\(\Longrightarrow\)</span> les individus prenant ces modalités se comportent de manière comparable.</li>
+</ul>
+</div>
+</div>
+<div id="modalites-atypiques" class="section level3">
+<h3>Modalités atypiques</h3>
+<ul>
+<li><p>Modalités ayant de fortes contributions, éloignées du centre, mais relativement mal représentées sur les axes factoriels.</p></li>
+<li><p>Effet souvent dû à la distance du <span class="math inline">\(\chi^2\)</span>, qui a tendance à sur-représenter les modalités de faible effectif.</p></li>
+<li><strong>Que faire ?</strong>
+<ul>
+<li>les éliminer de l’analyse (les traiter comme modalités illustratives),</li>
+<li>uniquement si ce sont des modalités de faible effectif (apurement),
+<ul>
+<li>les regrouper avec des modalités comparables,</li>
+<li>les ventiler sur les autres modalités : attribuer de manière aléatoire une autre modalité aux individus concernés.</li>
+</ul></li>
+</ul></li>
+</ul>
+</div>
+<div id="interpretation-geometrique-lpm" class="section level3">
+<h3>Interprétation géométrique (LPM)</h3>
+<div class="figure">
+<img src="analyse-donnees/AFC_interpretation.png" />
+
+</div>
+</div>
+<div id="afc---effet-guttman-lpm" class="section level3">
+<h3>AFC - Effet Guttman (LPM)</h3>
+<p>Si les <span class="math inline">\(p-1\)</span> valeurs propres différentes de 1 ont <strong>toutes</strong> une valeur proche de 1, on parle d’effet Guttman.</p>
+<p>Chaque modalité ligne correspond alors exactement à une modalité colonne.</p>
+<div class="figure">
+<img src="analyse-donnees/Guttman.jpeg" />
+
+</div>
+</div>
+</div>
+<div id="analyse-factorielle-des-correspondances-multiples-acm" class="section level2">
+<h2>Analyse Factorielle des Correspondances Multiples (ACM)</h2>
+<ul>
+<li><strong>Données</strong>
+<ul>
+<li>Tableau <span class="math inline">\(X\)</span> de <span class="math inline">\(n\)</span> individus et <span class="math inline">\(s&gt;2\)</span> variables qualitatives.</li>
+<li>Correspond à la donnée de plusieurs tableaux de contingences observés sur les mêmes individus.</li>
+</ul></li>
+<li><strong>Problème</strong>
+<ul>
+<li>Etablir les correspondances entre les modalités d’une même variable.</li>
+<li>Visualiser les liens entre plusieurs variables à l’aide d’une représentation simultanée.</li>
+</ul></li>
+<li><strong>Outils</strong>
+<ul>
+<li>Utilisation du tableau disjonctif complet ou de la table de Burt.</li>
+<li>Pour <span class="math inline">\(s=2\)</span>, effectuer une AFC sur la table de contingence ou sur le tableau disjonctif complet correspondant sont équivalents.</li>
+<li>Généralisation de l’AFC à <span class="math inline">\(s&gt;2\)</span> variables qualitatives.</li>
+</ul></li>
+</ul>
+<div id="enquete-sur-les-consommateurs-de-the" class="section level3">
+<h3>Enquête sur les consommateurs de thé</h3>
+<p>Enquête effectuée sur 300 consommateurs de thé concernant leurs habitudes de consommation. (<a href="donnees/the.csv">données</a>)</p>
+<pre class="r"><code>the = read.csv2(&quot;donnees/the.csv&quot;,header=TRUE)
+x = the[,-c(22,19:21, 23:36)]
+summary(x)</code></pre>
+<pre><code>        ptt.dej           gouter           soiree          apres.dejeuner
+ Pas.ptt dej:156   gouter    :169   Pas.soiree:197   apres dej    : 44   
+ ptt dej    :144   Pas.gouter:131   soiree    :103   Pas.apres dej:256   
+                                                                         
+                                                                         
+                                                                         
+                                                                         
+          apres.diner          tt.moment          maison   
+ apres diner    : 21   Pas.tt moment:197   maison    :291  
+ Pas.apres diner:279   tt moment    :103   Pas.maison:  9  
+                                                           
+                                                           
+                                                           
+                                                           
+        travail             salon.de.t        amis           resto    
+ Pas.travail:213   Pas.salon de t:242   amis    :196   Pas.resto:221  
+ travail    : 87   salon de t    : 58   Pas.amis:104   resto    : 79  
+                                                                      
+                                                                      
+                                                                      
+                                                                      
+      bar         variete      comment          sucre    
+ bar    : 63   noir   : 74   autre :  9   Pas.sucre:155  
+ Pas.bar:237   parfume:193   citron: 33   sucre    :145  
+               vert   : 33   lait  : 63                  
+                             pur   :195                  
+                                                         
+                                                         
+         forme                  lieuachat                type    
+ sachet     :170   GMS               :192   t_bas_de_gamme :  7  
+ sachet+vrac: 94   GMS+mag.spe.      : 78   t_haut_de_gamme: 53  
+ vrac       : 36   magasin specialise: 30   t_inconnu      : 12  
+                                            t_marque_connue: 95  
+                                            t_MDD          : 21  
+                                            t_variable     :112  </code></pre>
+</div>
+<div id="apurement" class="section level3">
+<h3>Apurement</h3>
+<ul>
+<li><strong>Apurement</strong> : réponse au problème des modalités de faible effectif pouvant perturber l’analyse
+<ul>
+<li>petit nuage de points très concentré et très éloigné des autres,</li>
+<li>petit effectif ayant un grand poids dans l’analyse,</li>
+<li>peuvent rendre instables les axes factoriels.</li>
+</ul></li>
+<li><p>L’apurement rend l’analyse plus robuste.</p></li>
+<li><p>Modalités dont l’effectif est insuffisant ventilées aléatoirement dans les autres modalités : individus concernés répartis aléatoirement dans les autres modalités.</p></li>
+<li><p>Modalités ventilées gardées comme modalités illustratives dans l’analyse.</p></li>
+<li><p>Par défaut, une modalité est ventilée si son effectif est inférieur à 2% de l’effectif total.</p></li>
+</ul>
+</div>
+<div id="caracteristiques" class="section level3">
+<h3>Caractéristiques</h3>
+<ul>
+<li><strong>Nombre maximal</strong> de facteurs principaux = <em>nombre total de modalités non-ventilées - nombre de variables</em> = <span class="math inline">\(p&#39;-s\)</span>.</li>
+<li><strong>Somme des valeurs propres</strong> : <span class="math display">\[\sum_{j=1}^{p&#39;-1}\lambda_j = \frac{p&#39;-s}{s}.\]</span></li>
+<li>Premiers axes expliquent une faible part de l’inertie.</li>
+<li>Décroissance des valeurs propres moins forte que dans l’ACP ou l’AFC.</li>
+<li><span class="math inline">\(\Longrightarrow\)</span> Nombre d’axes à retenir pour une analyse ultérieure plus important que pour l’ACP ou l’AFC.</li>
+<li><strong>Règle de Kaiser</strong> : moyenne des valeurs propres = <span class="math display">\[\frac{1}{p&#39;-1}\sum_{j=1}^{p&#39;-1}\lambda_j =  \frac{p&#39;-s}{s\times(p&#39;-1)}.\]</span></li>
+</ul>
+</div>
+<div id="representation-simultanee-1" class="section level3">
+<h3>Représentation simultanée</h3>
+<ul>
+<li><strong>Relation quasi-barycentrique</strong> : comme pour l’AFC, <span class="math inline">\(n\)</span> individus et <span class="math inline">\(p\)</span> modalités représentés dans les mêmes plans factoriels.</li>
+<li>De même que pour l’AFC, contributions et cosinus carrés des modalités permettent d’expliquer les axes factoriels.</li>
+<li>L’interprétation du nuage de points-individus est similaire à l’ACP.</li>
+<li>Variables représentées dans le plan factoriel par les centres de gravité des modalités correspondantes.</li>
+<li><strong>Visualisation</strong> : on se restreint à maximum 4 plans factoriels.</li>
+</ul>
+</div>
+<div id="acm-sur-les-donnees-de-the" class="section level3">
+<h3>ACM sur les données de thé</h3>
+<p>Nombre maximal de facteurs = <span class="math inline">\(13\times 2+3\times 3+4+6\)</span>-18 = 27</p>
+<pre class="r"><code>x.acm = MCA(x, ncp=27, graph=FALSE)
+plot(x.acm, invisible=&quot;var&quot;)</code></pre>
+<p><img src="analyse-donnees_files/figure-html/unnamed-chunk-38-1.png" width="672" style="display: block; margin: auto;" /></p>
+<div id="les-modalites" class="section level4">
+<h4>Les modalités</h4>
+<pre class="r"><code>plot(x.acm, invisible=&quot;ind&quot;)</code></pre>
+<p><img src="analyse-donnees_files/figure-html/unnamed-chunk-39-1.png" width="672" style="display: block; margin: auto;" /></p>
+</div>
+<div id="les-variables" class="section level4">
+<h4>Les variables</h4>
+<pre class="r"><code>plot(x.acm, choix=&quot;var&quot;)</code></pre>
+<p><img src="analyse-donnees_files/figure-html/unnamed-chunk-40-1.png" width="672" style="display: block; margin: auto;" /></p>
+</div>
+<div id="valeurs-propres-et-inertie-expliquee" class="section level4">
+<h4>Valeurs propres et inertie expliquée</h4>
+<pre class="r"><code>x.acm$eig</code></pre>
+<pre><code>       eigenvalue percentage of variance cumulative percentage of variance
+dim 1  0.14827441               9.884961                          9.884961
+dim 2  0.12154673               8.103115                         17.988076
+dim 3  0.09000954               6.000636                         23.988712
+dim 4  0.07805440               5.203627                         29.192339
+dim 5  0.07374870               4.916580                         34.108919
+dim 6  0.07138044               4.758696                         38.867615
+dim 7  0.06782906               4.521937                         43.389552
+dim 8  0.06532655               4.355103                         47.744656
+dim 9  0.06184167               4.122778                         51.867433
+dim 10 0.05852817               3.901878                         55.769311
+dim 11 0.05707772               3.805181                         59.574493
+dim 12 0.05441920               3.627946                         63.202439
+dim 13 0.05192969               3.461979                         66.664418
+dim 14 0.04874462               3.249641                         69.914060
+dim 15 0.04831065               3.220710                         73.134770
+dim 16 0.04690465               3.126977                         76.261747
+dim 17 0.04554779               3.036519                         79.298266
+dim 18 0.04024922               2.683281                         81.981547
+dim 19 0.03812120               2.541414                         84.522961
+dim 20 0.03657138               2.438092                         86.961053
+dim 21 0.03566464               2.377643                         89.338696
+dim 22 0.03484898               2.323266                         91.661961
+dim 23 0.03082882               2.055255                         93.717216
+dim 24 0.02873151               1.915434                         95.632650
+dim 25 0.02732068               1.821378                         97.454028
+dim 26 0.02110048               1.406699                         98.860727
+dim 27 0.01708910               1.139273                        100.000000</code></pre>
+</div>
+<div id="ebouli-des-valeurs-propres-et-regle-de-kaiser" class="section level4">
+<h4>Ebouli des valeurs propres et règle de Kaiser</h4>
+<pre class="r"><code>lambdabar = mean(x.acm$eig$eigenvalue)
+par(mfrow=c(1,2))
+plot(x.acm$eig$eigenvalue, type = &#39;b&#39;, 
+     main=&quot;Ebouli des valeurs propres&quot;)
+abline(h=lambdabar)
+barplot(x.acm$eig$eigenvalue, 
+        main=&quot;Ebouli des valeurs propres&quot;, 
+        names.arg=1:nrow(x.acm$eig))
+abline(h=lambdabar)</code></pre>
+<p><img src="analyse-donnees_files/figure-html/unnamed-chunk-42-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p><span class="math inline">\(\Longrightarrow\)</span> 13 facteurs à retenir.</p>
+</div>
+<div id="contributions-des-modalites-aux-axes-factoriels-sommer-par-variable" class="section level4">
+<h4>Contributions des modalités aux axes factoriels (sommer par variable)</h4>
+<pre class="r"><code>round(x.acm$var$contrib, digits=2)</code></pre>
+<pre><code>                   Dim 1 Dim 2 Dim 3 Dim 4 Dim 5 Dim 6 Dim 7 Dim 8 Dim 9
+Pas.ptt dej         0.46  0.56  6.37  2.83  0.49  1.91  1.42  0.18  0.48
+ptt dej             0.49  0.61  6.90  3.07  0.53  2.07  1.54  0.20  0.52
+gouter              3.14  0.14  1.46  1.83  0.43  0.35  3.02  0.68  0.46
+Pas.gouter          4.05  0.17  1.89  2.36  0.56  0.45  3.89  0.88  0.59
+Pas.soiree          0.68  0.03  2.25  0.46  0.01  9.08  0.27  0.20  0.47
+soiree              1.31  0.05  4.31  0.88  0.01 17.37  0.51  0.37  0.90
+apres dej           2.38  1.02  0.82  2.95 11.12  3.90  1.76  4.54  5.49
+Pas.apres dej       0.41  0.17  0.14  0.51  1.91  0.67  0.30  0.78  0.94
+apres diner         1.15  2.03  1.24 19.54  3.22  1.31  1.82  3.29  1.92
+Pas.apres diner     0.09  0.15  0.09  1.47  0.24  0.10  0.14  0.25  0.14
+Pas.tt moment       0.58  0.01  2.15  1.21  0.24  2.37  0.65  8.00  0.35
+tt moment           1.10  0.03  4.11  2.31  0.47  4.53  1.25 15.30  0.67
+maison              0.01  0.00  0.25  0.01  0.02  0.02  0.20  0.68  0.00
+Pas.maison          0.19  0.01  8.05  0.23  0.69  0.77  6.53 21.85  0.05
+Pas.travail         1.21  0.57  0.09  1.33  0.19  3.84  2.52  0.52  0.57
+travail             2.97  1.41  0.22  3.26  0.45  9.39  6.17  1.28  1.39
+Pas.salon de t      2.69  0.19  0.09  0.04  0.20  0.01  0.75  0.02  0.02
+salon de t         11.24  0.80  0.40  0.16  0.84  0.04  3.11  0.10  0.08
+amis                3.16  0.24  2.20  0.02  0.28  0.34  0.02  0.47  0.07
+Pas.amis            5.95  0.46  4.15  0.03  0.52  0.64  0.03  0.88  0.14
+Pas.resto           2.23  0.71  0.03  0.11  2.84  1.87  0.10  0.10  0.75
+resto               6.25  1.98  0.09  0.31  7.95  5.24  0.28  0.28  2.10
+bar                 4.36  0.25  2.10  0.04  1.68  0.94  0.14  5.59 10.56
+Pas.bar             1.16  0.07  0.56  0.01  0.45  0.25  0.04  1.48  2.81
+noir                0.11  1.66 14.55  0.48  4.16  7.11  0.07  0.13  0.76
+parfume             0.26  2.39  5.90  0.01  0.01  1.69  0.14  0.13  0.36
+vert                2.98  3.28  0.03  1.76  8.00  0.73  0.26  1.93  7.61
+autre               2.32  0.00  3.72 12.52 14.22  0.04  0.33  0.11  0.76
+citron              0.94  0.47  3.07  1.20  0.02  3.72  7.04  4.01 11.97
+lait                0.00  1.35  4.50  6.56  1.46  1.33  8.13  0.08 18.07
+pur                 0.58  0.14  0.81  1.31  2.44  1.97  6.70  1.11  0.65
+Pas.sucre           0.28  0.68  6.27  0.23  1.24  0.49  5.33  2.33  0.27
+sucre               0.30  0.73  6.71  0.25  1.32  0.52  5.70  2.49  0.29
+sachet              4.32  4.49  0.00  0.28  1.98  0.02  0.26  0.12  0.36
+sachet+vrac         6.79  0.03  0.22  5.64  5.00  0.62  1.28  0.07  1.72
+vrac                0.09 18.92  0.78  7.21  0.31  2.42  0.52  0.11  0.67
+GMS                 4.38  4.59  0.00  0.26  0.06  1.45  2.21  0.06  0.00
+GMS+mag.spe.       11.26  0.11  0.80  3.82  0.34  2.05  4.53  0.02  0.14
+magasin specialise  0.01 23.89  1.77  3.43  0.12  0.54  0.11  0.15  0.60
+t_bas_de_gamme      0.41  0.08  0.39  1.54  0.01  5.43 10.47  0.51 13.63
+t_haut_de_gamme     0.34 20.51  0.02  0.68  1.49  0.17  0.03  0.12  0.56
+t_inconnu           0.16  1.04  0.04  1.80 17.31  0.09  2.87  1.80  9.61
+t_marque_connue     3.00  2.46  0.15  0.02  0.01  0.01  1.85  2.37  0.01
+t_MDD               0.74  0.73  0.31  2.49  0.06  2.05  5.19 14.42  0.41
+t_variable          3.45  0.81  0.00  3.55  5.11  0.09  0.57  0.02  0.05
+                   Dim 10 Dim 11 Dim 12 Dim 13 Dim 14 Dim 15 Dim 16 Dim 17
+Pas.ptt dej          0.94   2.67   1.12   5.86   0.23   0.00   1.85   0.03
+ptt dej              1.02   2.90   1.21   6.35   0.25   0.00   2.00   0.03
+gouter               7.21   0.26   0.01   0.14   0.04   2.34   2.45   1.23
+Pas.gouter           9.30   0.34   0.01   0.18   0.05   3.02   3.16   1.59
+Pas.soiree           0.13   1.32   0.08   0.55   0.88   0.08   4.37   0.73
+soiree               0.24   2.52   0.15   1.05   1.68   0.14   8.35   1.40
+apres dej            0.10   0.00   0.90   2.42   6.58  12.07   1.69   0.16
+Pas.apres dej        0.02   0.00   0.16   0.42   1.13   2.07   0.29   0.03
+apres diner          2.47   1.15   0.51   0.03  10.19   3.71  15.57   0.62
+Pas.apres diner      0.19   0.09   0.04   0.00   0.77   0.28   1.17   0.05
+Pas.tt moment        3.75   2.69   0.02   0.42   0.18   0.85   0.01   0.44
+tt moment            7.17   5.15   0.04   0.81   0.34   1.63   0.01   0.84
+maison               0.39   0.08   0.11   0.05   0.07   0.03   0.19   0.21
+Pas.maison          12.70   2.67   3.53   1.58   2.22   1.11   6.24   6.85
+Pas.travail          0.00   0.16   0.22   2.26   1.16   0.72   0.94   0.33
+travail              0.01   0.40   0.55   5.54   2.85   1.76   2.30   0.80
+Pas.salon de t       0.01   0.82   0.04   0.26   0.07   3.43   0.04   0.67
+salon de t           0.02   3.42   0.17   1.09   0.29  14.31   0.17   2.80
+amis                 3.61   0.13   0.08   1.37   3.14   1.19   0.66   0.64
+Pas.amis             6.81   0.25   0.15   2.58   5.92   2.24   1.25   1.21
+Pas.resto            0.08   0.04   0.15   0.18   0.08   2.03   0.11   1.42
+resto                0.22   0.10   0.43   0.50   0.22   5.67   0.31   3.97
+bar                  0.00   1.52   1.54  14.46   0.12   4.78   0.00  10.69
+Pas.bar              0.00   0.40   0.41   3.84   0.03   1.27   0.00   2.84
+noir                 0.03   1.27   0.03   1.04   0.91   5.10   0.48   5.56
+parfume              0.27   3.84   0.00   0.04   0.13   1.38   1.82   0.04
+vert                 2.24   9.30   0.05   4.15   0.32   0.30   4.99  16.22
+autre                0.04   4.88   6.51   3.30   9.88   0.02   2.08   2.41
+citron              14.32   1.22   0.15   2.28   2.89   6.91  11.29   0.03
+lait                 0.69   0.69   1.58   0.01   0.03   2.02   0.06   1.24
+pur                  1.08   1.96   2.02   0.03   0.01   0.06   3.37   0.05
+Pas.sucre            0.14   3.19   0.59   4.03   0.39   4.95   1.67   0.83
+sucre                0.15   3.41   0.63   4.31   0.42   5.29   1.79   0.88
+sachet               0.78   0.02   0.00   0.39   2.72   0.06   1.10   0.30
+sachet+vrac          0.69   0.70   0.25   2.37   6.45   1.30   3.34   1.81
+vrac                 0.33   1.03   0.47   1.27   0.27   1.76   0.45   0.97
+GMS                  0.00   0.16   0.01   0.17   0.44   0.13   0.00   0.00
+GMS+mag.spe.         0.49   0.10   0.00   1.76   6.69   0.63   0.00   0.01
+magasin specialise   1.17   2.32   0.06   1.22   6.24   0.14   0.01   0.05
+t_bas_de_gamme       6.92   2.29   0.09  17.53  15.56   0.58   1.29  18.36
+t_haut_de_gamme      0.64   0.03   0.63   0.35   1.79   0.62   3.21   0.06
+t_inconnu            3.40   8.49  17.54   0.96   1.08   1.05   2.76   1.58
+t_marque_connue      6.90   0.17  30.25   0.00   2.54   0.19   1.14   1.73
+t_MDD                0.00  21.98  23.18   0.99   0.06   1.79   0.68   0.00
+t_variable           3.36   3.86   4.33   1.88   2.69   0.99   5.34   8.29
+                   Dim 18 Dim 19 Dim 20 Dim 21 Dim 22 Dim 23 Dim 24 Dim 25
+Pas.ptt dej         10.74   0.06   1.30   5.68   0.62   0.00   0.02   0.21
+ptt dej             11.63   0.07   1.40   6.15   0.68   0.00   0.02   0.23
+gouter               2.51   5.24   0.74   0.27   1.08   3.83   1.10   0.20
+Pas.gouter           3.24   6.75   0.96   0.34   1.40   4.94   1.42   0.26
+Pas.soiree           4.59   0.55   4.25   0.01   0.03   0.18   2.74   0.15
+soiree               8.77   1.05   8.12   0.02   0.06   0.34   5.24   0.28
+apres dej            4.58   7.99   0.39   0.05   0.10   8.61   4.29   1.28
+Pas.apres dej        0.79   1.37   0.07   0.01   0.02   1.48   0.74   0.22
+apres diner          0.37   2.56   1.02   3.84   2.38   0.00   1.12   0.21
+Pas.apres diner      0.03   0.19   0.08   0.29   0.18   0.00   0.08   0.02
+Pas.tt moment        0.11   1.56   0.14   1.58   0.10   1.47   0.03   0.27
+tt moment            0.22   2.98   0.27   3.02   0.20   2.82   0.06   0.51
+maison               0.03   0.01   0.01   0.22   0.15   0.01   0.18   0.00
+Pas.maison           1.06   0.37   0.21   7.18   4.76   0.26   5.77   0.04
+Pas.travail          2.82   0.53   0.07   5.17   1.32   1.03   0.07   0.59
+travail              6.91   1.31   0.17  12.65   3.24   2.51   0.17   1.45
+Pas.salon de t       0.13   0.39   1.50   0.88   0.04   0.26   5.72   0.65
+salon de t           0.54   1.64   6.28   3.65   0.17   1.08  23.89   2.72
+amis                 0.00   0.76   6.77   5.37   0.00   0.70   0.97   2.13
+Pas.amis             0.01   1.43  12.76  10.13   0.00   1.32   1.83   4.01
+Pas.resto            0.00   0.87   1.46   0.87   2.96   4.59   0.89   1.44
+resto                0.01   2.43   4.08   2.45   8.27  12.85   2.48   4.02
+bar                  3.29   1.17   0.00   0.00   7.20   3.25   2.26   0.20
+Pas.bar              0.88   0.31   0.00   0.00   1.91   0.86   0.60   0.05
+noir                 0.24   0.11   1.40   1.97  21.26   0.53   3.30   1.00
+parfume              0.93   0.03   0.58   0.00  10.74   0.21   0.58   2.86
+vert                 9.41   0.00   0.01   4.01   1.05   0.00   0.76   6.70
+autre                1.33  12.63   0.01   2.21   0.79   0.47  10.96   3.91
+citron               5.15   0.03   5.21   0.53   0.19   2.85   1.11   0.29
+lait                 8.99  10.03   1.39   0.37   1.91   0.90   5.84   0.19
+pur                  0.27   1.21   2.66   0.11   0.17   1.18   2.73   0.79
+Pas.sucre            0.14   2.30   2.78   1.73   3.22   0.20   2.81   2.16
+sucre                0.15   2.46   2.97   1.85   3.44   0.22   3.01   2.31
+sachet               0.38   0.01   7.60   0.51   1.21   1.02   0.04   8.44
+sachet+vrac          0.94   2.81   5.37   0.34   2.91   3.59   0.05   5.77
+vrac                 0.05   6.36   5.04   6.18   0.13   0.75   0.00   5.92
+GMS                  0.44   0.11   0.07   1.33   0.48   1.75   1.00   0.00
+GMS+mag.spe.         1.50   0.55   0.00   3.28   1.69  12.91   1.24   0.67
+magasin specialise   0.09   0.14   0.52   0.00   0.12   5.98   0.53   2.23
+t_bas_de_gamme       0.82   0.00   0.02   1.51   0.00   0.00   0.03   0.02
+t_haut_de_gamme      1.10   5.27   1.90   2.15   5.60   1.31   0.08  22.20
+t_inconnu            4.06  10.50   1.25   0.04   0.23   4.30   0.30   3.01
+t_marque_connue      0.07   0.97   1.53   0.01   0.04   1.30   0.89   8.09
+t_MDD                0.52   1.34   5.16   0.82   3.54   0.38   3.06   1.96
+t_variable           0.16   1.55   2.47   1.24   4.40   7.77   0.02   0.35
+                   Dim 26 Dim 27
+Pas.ptt dej          1.95   0.02
+ptt dej              2.11   0.02
+gouter               3.51   0.00
+Pas.gouter           4.52   0.00
+Pas.soiree           0.00   0.27
+soiree               0.00   0.53
+apres dej            0.11   0.04
+Pas.apres dej        0.02   0.01
+apres diner         10.99   0.75
+Pas.apres diner      0.83   0.06
+Pas.tt moment        5.03   0.11
+tt moment            9.63   0.22
+maison               0.04   0.02
+Pas.maison           1.44   0.67
+Pas.travail          0.69   0.07
+travail              1.69   0.16
+Pas.salon de t       0.39   0.01
+salon de t           1.62   0.04
+amis                 0.20   0.15
+Pas.amis             0.37   0.27
+Pas.resto            0.23   0.20
+resto                0.64   0.55
+bar                  2.33   0.53
+Pas.bar              0.62   0.14
+noir                 0.11   2.00
+parfume              0.80   0.51
+vert                 2.78   0.15
+autre                0.64   0.89
+citron               0.66   1.46
+lait                 0.73   0.84
+pur                  0.10   1.49
+Pas.sucre            0.00   0.07
+sucre                0.00   0.08
+sachet               0.19   6.74
+sachet+vrac          7.28   1.33
+vrac                11.70  14.28
+GMS                  0.97  15.94
+GMS+mag.spe.        11.21   8.19
+magasin specialise   8.48  30.10
+t_bas_de_gamme       0.02   0.17
+t_haut_de_gamme      3.98   7.50
+t_inconnu            0.74   0.02
+t_marque_connue      0.21   2.42
+t_MDD                0.12   1.00
+t_variable           0.30   0.00</code></pre>
+</div>
+<div id="qualite-de-representation-des-modalites-sur-les-axes-factoriels" class="section level4">
+<h4>Qualité de représentation des modalités sur les axes factoriels</h4>
+<pre class="r"><code>round(x.acm$var$cos2, digits=2)</code></pre>
+<pre><code>                   Dim 1 Dim 2 Dim 3 Dim 4 Dim 5 Dim 6 Dim 7 Dim 8 Dim 9
+Pas.ptt dej         0.03  0.03  0.21  0.08  0.01  0.05  0.04  0.00  0.01
+ptt dej             0.03  0.03  0.21  0.08  0.01  0.05  0.04  0.00  0.01
+gouter              0.19  0.01  0.05  0.06  0.01  0.01  0.08  0.02  0.01
+Pas.gouter          0.19  0.01  0.05  0.06  0.01  0.01  0.08  0.02  0.01
+Pas.soiree          0.05  0.00  0.11  0.02  0.00  0.34  0.01  0.01  0.02
+soiree              0.05  0.00  0.11  0.02  0.00  0.34  0.01  0.01  0.02
+apres dej           0.07  0.03  0.02  0.05  0.17  0.06  0.03  0.06  0.07
+Pas.apres dej       0.07  0.03  0.02  0.05  0.17  0.06  0.03  0.06  0.07
+apres diner         0.03  0.05  0.02  0.30  0.05  0.02  0.02  0.04  0.02
+Pas.apres diner     0.03  0.05  0.02  0.30  0.05  0.02  0.02  0.04  0.02
+Pas.tt moment       0.04  0.00  0.10  0.05  0.01  0.09  0.02  0.27  0.01
+tt moment           0.04  0.00  0.10  0.05  0.01  0.09  0.02  0.27  0.01
+maison              0.01  0.00  0.13  0.00  0.01  0.01  0.08  0.26  0.00
+Pas.maison          0.01  0.00  0.13  0.00  0.01  0.01  0.08  0.26  0.00
+Pas.travail         0.11  0.04  0.00  0.06  0.01  0.17  0.11  0.02  0.02
+travail             0.11  0.04  0.00  0.06  0.01  0.17  0.11  0.02  0.02
+Pas.salon de t      0.37  0.02  0.01  0.00  0.01  0.00  0.05  0.00  0.00
+salon de t          0.37  0.02  0.01  0.00  0.01  0.00  0.05  0.00  0.00
+amis                0.24  0.02  0.10  0.00  0.01  0.01  0.00  0.02  0.00
+Pas.amis            0.24  0.02  0.10  0.00  0.01  0.01  0.00  0.02  0.00
+Pas.resto           0.23  0.06  0.00  0.01  0.14  0.09  0.00  0.00  0.03
+resto               0.23  0.06  0.00  0.01  0.14  0.09  0.00  0.00  0.03
+bar                 0.15  0.01  0.04  0.00  0.03  0.02  0.00  0.08  0.15
+Pas.bar             0.15  0.01  0.04  0.00  0.03  0.02  0.00  0.08  0.15
+noir                0.00  0.05  0.31  0.01  0.07  0.12  0.00  0.00  0.01
+parfume             0.02  0.15  0.27  0.00  0.00  0.06  0.00  0.00  0.01
+vert                0.09  0.08  0.00  0.03  0.12  0.01  0.00  0.03  0.10
+autre               0.06  0.00  0.06  0.18  0.19  0.00  0.00  0.00  0.01
+citron              0.03  0.01  0.06  0.02  0.00  0.05  0.10  0.05  0.15
+lait                0.00  0.04  0.09  0.12  0.02  0.02  0.13  0.00  0.25
+pur                 0.04  0.01  0.04  0.05  0.09  0.07  0.23  0.04  0.02
+Pas.sucre           0.02  0.03  0.21  0.01  0.03  0.01  0.13  0.06  0.01
+sucre               0.02  0.03  0.21  0.01  0.03  0.01  0.13  0.06  0.01
+sachet              0.27  0.23  0.00  0.01  0.06  0.00  0.01  0.00  0.01
+sachet+vrac         0.26  0.00  0.01  0.12  0.10  0.01  0.02  0.00  0.03
+vrac                0.00  0.47  0.01  0.12  0.00  0.04  0.01  0.00  0.01
+GMS                 0.32  0.28  0.00  0.01  0.00  0.05  0.07  0.00  0.00
+GMS+mag.spe.        0.41  0.00  0.02  0.07  0.01  0.04  0.07  0.00  0.00
+magasin specialise  0.00  0.58  0.03  0.05  0.00  0.01  0.00  0.00  0.01
+t_bas_de_gamme      0.01  0.00  0.01  0.02  0.00  0.07  0.13  0.01  0.16
+t_haut_de_gamme     0.01  0.55  0.00  0.01  0.02  0.00  0.00  0.00  0.01
+t_inconnu           0.00  0.02  0.00  0.03  0.24  0.00  0.04  0.02  0.11
+t_marque_connue     0.12  0.08  0.00  0.00  0.00  0.00  0.03  0.04  0.00
+t_MDD               0.02  0.02  0.01  0.04  0.00  0.03  0.07  0.18  0.00
+t_variable          0.15  0.03  0.00  0.08  0.11  0.00  0.01  0.00  0.00
+                   Dim 10 Dim 11 Dim 12 Dim 13 Dim 14 Dim 15 Dim 16 Dim 17
+Pas.ptt dej          0.02   0.06   0.02   0.11   0.00   0.00   0.03   0.00
+ptt dej              0.02   0.06   0.02   0.11   0.00   0.00   0.03   0.00
+gouter               0.17   0.01   0.00   0.00   0.00   0.05   0.05   0.02
+Pas.gouter           0.17   0.01   0.00   0.00   0.00   0.05   0.05   0.02
+Pas.soiree           0.00   0.04   0.00   0.02   0.02   0.00   0.11   0.02
+soiree               0.00   0.04   0.00   0.02   0.02   0.00   0.11   0.02
+apres dej            0.00   0.00   0.01   0.03   0.07   0.12   0.02   0.00
+Pas.apres dej        0.00   0.00   0.01   0.03   0.07   0.12   0.02   0.00
+apres diner          0.03   0.01   0.01   0.00   0.10   0.03   0.14   0.01
+Pas.apres diner      0.03   0.01   0.01   0.00   0.10   0.03   0.14   0.01
+Pas.tt moment        0.11   0.08   0.00   0.01   0.00   0.02   0.00   0.01
+tt moment            0.11   0.08   0.00   0.01   0.00   0.02   0.00   0.01
+maison               0.14   0.03   0.04   0.02   0.02   0.01   0.05   0.06
+Pas.maison           0.14   0.03   0.04   0.02   0.02   0.01   0.05   0.06
+Pas.travail          0.00   0.01   0.01   0.07   0.04   0.02   0.03   0.01
+travail              0.00   0.01   0.01   0.07   0.04   0.02   0.03   0.01
+Pas.salon de t       0.00   0.04   0.00   0.01   0.00   0.15   0.00   0.03
+salon de t           0.00   0.04   0.00   0.01   0.00   0.15   0.00   0.03
+amis                 0.11   0.00   0.00   0.04   0.08   0.03   0.02   0.02
+Pas.amis             0.11   0.00   0.00   0.04   0.08   0.03   0.02   0.02
+Pas.resto            0.00   0.00   0.01   0.01   0.00   0.07   0.00   0.04
+resto                0.00   0.00   0.01   0.01   0.00   0.07   0.00   0.04
+bar                  0.00   0.02   0.02   0.17   0.00   0.05   0.00   0.11
+Pas.bar              0.00   0.02   0.02   0.17   0.00   0.05   0.00   0.11
+noir                 0.00   0.02   0.00   0.01   0.01   0.06   0.01   0.06
+parfume              0.01   0.11   0.00   0.00   0.00   0.03   0.04   0.00
+vert                 0.03   0.11   0.00   0.04   0.00   0.00   0.05   0.15
+autre                0.00   0.05   0.07   0.03   0.09   0.00   0.02   0.02
+citron               0.17   0.01   0.00   0.02   0.03   0.07   0.11   0.00
+lait                 0.01   0.01   0.02   0.00   0.00   0.02   0.00   0.01
+pur                  0.03   0.06   0.06   0.00   0.00   0.00   0.08   0.00
+Pas.sucre            0.00   0.07   0.01   0.08   0.01   0.09   0.03   0.01
+sucre                0.00   0.07   0.01   0.08   0.01   0.09   0.03   0.01
+sachet               0.02   0.00   0.00   0.01   0.06   0.00   0.02   0.01
+sachet+vrac          0.01   0.01   0.00   0.03   0.08   0.02   0.04   0.02
+vrac                 0.00   0.01   0.01   0.01   0.00   0.02   0.00   0.01
+GMS                  0.00   0.00   0.00   0.00   0.01   0.00   0.00   0.00
+GMS+mag.spe.         0.01   0.00   0.00   0.02   0.08   0.01   0.00   0.00
+magasin specialise   0.01   0.03   0.00   0.01   0.06   0.00   0.00   0.00
+t_bas_de_gamme       0.07   0.02   0.00   0.17   0.14   0.01   0.01   0.15
+t_haut_de_gamme      0.01   0.00   0.01   0.00   0.02   0.01   0.03   0.00
+t_inconnu            0.04   0.09   0.18   0.01   0.01   0.01   0.02   0.01
+t_marque_connue      0.11   0.00   0.43   0.00   0.03   0.00   0.01   0.02
+t_MDD                0.00   0.24   0.24   0.01   0.00   0.02   0.01   0.00
+t_variable           0.06   0.06   0.07   0.03   0.04   0.01   0.07   0.11
+                   Dim 18 Dim 19 Dim 20 Dim 21 Dim 22 Dim 23 Dim 24 Dim 25
+Pas.ptt dej          0.16   0.00   0.02   0.08   0.01   0.00   0.00   0.00
+ptt dej              0.16   0.00   0.02   0.08   0.01   0.00   0.00   0.00
+gouter               0.04   0.08   0.01   0.00   0.02   0.05   0.01   0.00
+Pas.gouter           0.04   0.08   0.01   0.00   0.02   0.05   0.01   0.00
+Pas.soiree           0.10   0.01   0.08   0.00   0.00   0.00   0.04   0.00
+soiree               0.10   0.01   0.08   0.00   0.00   0.00   0.04   0.00
+apres dej            0.04   0.06   0.00   0.00   0.00   0.06   0.03   0.01
+Pas.apres dej        0.04   0.06   0.00   0.00   0.00   0.06   0.03   0.01
+apres diner          0.00   0.02   0.01   0.03   0.02   0.00   0.01   0.00
+Pas.apres diner      0.00   0.02   0.01   0.03   0.02   0.00   0.01   0.00
+Pas.tt moment        0.00   0.03   0.00   0.03   0.00   0.02   0.00   0.00
+tt moment            0.00   0.03   0.00   0.03   0.00   0.02   0.00   0.00
+maison               0.01   0.00   0.00   0.05   0.03   0.00   0.03   0.00
+Pas.maison           0.01   0.00   0.00   0.05   0.03   0.00   0.03   0.00
+Pas.travail          0.07   0.01   0.00   0.11   0.03   0.02   0.00   0.01
+travail              0.07   0.01   0.00   0.11   0.03   0.02   0.00   0.01
+Pas.salon de t       0.00   0.01   0.05   0.03   0.00   0.01   0.15   0.02
+salon de t           0.00   0.01   0.05   0.03   0.00   0.01   0.15   0.02
+amis                 0.00   0.02   0.13   0.10   0.00   0.01   0.01   0.03
+Pas.amis             0.00   0.02   0.13   0.10   0.00   0.01   0.01   0.03
+Pas.resto            0.00   0.02   0.04   0.02   0.07   0.10   0.02   0.03
+resto                0.00   0.02   0.04   0.02   0.07   0.10   0.02   0.03
+bar                  0.03   0.01   0.00   0.00   0.06   0.02   0.01   0.00
+Pas.bar              0.03   0.01   0.00   0.00   0.06   0.02   0.01   0.00
+noir                 0.00   0.00   0.01   0.02   0.18   0.00   0.02   0.01
+parfume              0.02   0.00   0.01   0.00   0.19   0.00   0.01   0.04
+vert                 0.08   0.00   0.00   0.03   0.01   0.00   0.00   0.04
+autre                0.01   0.09   0.00   0.01   0.01   0.00   0.06   0.02
+citron               0.04   0.00   0.04   0.00   0.00   0.02   0.01   0.00
+lait                 0.08   0.09   0.01   0.00   0.02   0.01   0.04   0.00
+pur                  0.01   0.02   0.05   0.00   0.00   0.02   0.04   0.01
+Pas.sucre            0.00   0.03   0.04   0.02   0.04   0.00   0.03   0.02
+sucre                0.00   0.03   0.04   0.02   0.04   0.00   0.03   0.02
+sachet               0.01   0.00   0.12   0.01   0.02   0.01   0.00   0.10
+sachet+vrac          0.01   0.03   0.05   0.00   0.03   0.03   0.00   0.04
+vrac                 0.00   0.05   0.04   0.05   0.00   0.00   0.00   0.03
+GMS                  0.01   0.00   0.00   0.02   0.01   0.03   0.01   0.00
+GMS+mag.spe.         0.01   0.01   0.00   0.03   0.01   0.10   0.01   0.00
+magasin specialise   0.00   0.00   0.00   0.00   0.00   0.04   0.00   0.01
+t_bas_de_gamme       0.01   0.00   0.00   0.01   0.00   0.00   0.00   0.00
+t_haut_de_gamme      0.01   0.04   0.02   0.02   0.04   0.01   0.00   0.13
+t_inconnu            0.03   0.08   0.01   0.00   0.00   0.02   0.00   0.02
+t_marque_connue      0.00   0.01   0.01   0.00   0.00   0.01   0.01   0.06
+t_MDD                0.00   0.01   0.04   0.01   0.02   0.00   0.02   0.01
+t_variable           0.00   0.02   0.03   0.01   0.04   0.07   0.00   0.00
+                   Dim 26 Dim 27
+Pas.ptt dej          0.02   0.00
+ptt dej              0.02   0.00
+gouter               0.03   0.00
+Pas.gouter           0.03   0.00
+Pas.soiree           0.00   0.00
+soiree               0.00   0.00
+apres dej            0.00   0.00
+Pas.apres dej        0.00   0.00
+apres diner          0.04   0.00
+Pas.apres diner      0.04   0.00
+Pas.tt moment        0.06   0.00
+tt moment            0.06   0.00
+maison               0.01   0.00
+Pas.maison           0.01   0.00
+Pas.travail          0.01   0.00
+travail              0.01   0.00
+Pas.salon de t       0.01   0.00
+salon de t           0.01   0.00
+amis                 0.00   0.00
+Pas.amis             0.00   0.00
+Pas.resto            0.00   0.00
+resto                0.00   0.00
+bar                  0.01   0.00
+Pas.bar              0.01   0.00
+noir                 0.00   0.01
+parfume              0.01   0.00
+vert                 0.01   0.00
+autre                0.00   0.00
+citron               0.00   0.01
+lait                 0.00   0.00
+pur                  0.00   0.01
+Pas.sucre            0.00   0.00
+sucre                0.00   0.00
+sachet               0.00   0.05
+sachet+vrac          0.04   0.01
+vrac                 0.05   0.05
+GMS                  0.01   0.14
+GMS+mag.spe.         0.06   0.03
+magasin specialise   0.04   0.10
+t_bas_de_gamme       0.00   0.00
+t_haut_de_gamme      0.02   0.03
+t_inconnu            0.00   0.00
+t_marque_connue      0.00   0.01
+t_MDD                0.00   0.00
+t_variable           0.00   0.00</code></pre>
+</div>
+</div>
+<div id="tp-les-donnees-de-fertilite" class="section level3">
+<h3>TP : les données de fertilité</h3>
+<ul>
+<li>Etude des données de fertilité chez 100 hommes volontaires (<a href="donnees/fertility.csv">données</a>)</li>
+<li>Charger les données dans R</li>
+</ul>
+<pre class="r"><code>fertility = read.csv2(file=&quot;donnees/fertility.csv&quot;)
+summary(fertility)</code></pre>
+<pre><code>    Season        Age        ChildDeas Trauma    Surg         Fevers  
+ fall  :31   Min.   :27.00   no :87    no :44   no :51   &lt;3months: 9  
+ spring:37   1st Qu.:28.08   yes:13    yes:56   yes:49   &gt;3months:63  
+ summer: 4   Median :30.06                               no      :28  
+ winter:28   Mean   :30.04                                            
+             3rd Qu.:31.50                                            
+             Max.   :36.00                                            
+    Alcohol           Smoke         Sit         Diagnosis
+ 1xday  : 1   daily      :21   Min.   :0.0600   N:88     
+ &gt;1xday : 1   never      :56   1st Qu.:0.2500   O:12     
+ 1xweek :39   occasionnal:23   Median :0.3800            
+ &gt;1xweek:19                    Mean   :0.4068            
+ never  :40                    3rd Qu.:0.5000            
+                               Max.   :1.0000            </code></pre>
+<ul>
+<li>La variable “Diagnosis” pourra être traitée comme illustrative (option “quali.sup”).</li>
+<li>Les variables quantitatives seront traitées comme illustratives (option “quanti.sup”).</li>
+<li>Effectuer une ACM sur le tableau constitué des variables qualitatives.</li>
+<li>Représenter les modalités dans le premier plan factoriel.</li>
+<li>Sélectionner un couple de variables et effectuer une AFC sur le tableau de contingence obtenu.</li>
+</ul>
+</div>
+</div>
+<div id="positionnement-multidimensionnel-mds" class="section level2">
+<h2>Positionnement Multidimensionnel (MDS)</h2>
+<div id="principes-et-objectifs" class="section level3">
+<h3>Principes et Objectifs</h3>
+<ul>
+<li><p>Méthode souvent utilisée lorsque l’on ne dispose que de mesures de proximité entre individus, par exemple en psychologie où l’on estime une similarité entre individus sur des notions perceptuelles.</p></li>
+<li><p>En particulier, fournit une représentation des relations entre variables/modalités différente de celle fournie par l’analyse factorielle.</p></li>
+<li><p>Construction d’une <strong>carte spatiale des individus</strong> à partir d’une matrice <span class="math inline">\(\Delta\)</span> de dissimilarités ou de similarités entre individus.</p></li>
+<li><p><strong>Distance</strong> entre individus sur la carte = traduction de la similarité des individus : plus les individus sont proches, et plus ils sont similaires.</p></li>
+<li><p><span class="math inline">\(\Delta\)</span> contient implicitement le nombre d’axes nécessaires à la construction de la carte. De manière générale, ce nombre est inconnu et plusieurs dimensions doivent être testées.</p></li>
+</ul>
+</div>
+<div id="exemple-correlations-des-variables-du-jeu-de-donnees-iris" class="section level3">
+<h3>Exemple : Corrélations des variables du jeu de données Iris</h3>
+<pre class="r"><code>iris.mds = cmdscale(1-abs(cor(iris[,-5])))
+plot(iris.mds[,1], iris.mds[,2])
+text(iris.mds[,1], iris.mds[,2], labels=colnames(iris[,-5]))</code></pre>
+<p><img src="analyse-donnees_files/figure-html/unnamed-chunk-46-1.png" width="672" style="display: block; margin: auto;" /></p>
+</div>
+<div id="matrice-de-proximite-et-distance-euclidienne" class="section level3">
+<h3>Matrice de proximité et distance euclidienne</h3>
+<ul>
+<li><p><strong>Matrice de proximité</strong> : <span class="math inline">\(\Delta=(\delta_{i,j})_{1\leqslant i,j\leqslant n}\)</span>, avec <span class="math inline">\(\delta_{i,j}\)</span> d’autant plus grand que les individus <span class="math inline">\(i\)</span> et <span class="math inline">\(j\)</span> sont semblables ou dissemblables.</p></li>
+<li><p><span class="math inline">\(\Delta\)</span> positive, symétrique<a href="#fn2" class="footnoteRef" id="fnref2"><sup>2</sup></a>, avec des <span class="math inline">\(0\)</span> (dissimilarité) ou une constante (similarité) sur la diagonale.</p></li>
+</ul>
+<ul>
+<li><p><strong>Objectif</strong> : déduire de <span class="math inline">\(\Delta\)</span> des <em>points</em> dans <span class="math inline">\(\mathbb{R}^d\)</span>.</p></li>
+<li><p><strong>Configuration</strong> : à <span class="math inline">\(d&lt;n-1\)</span> dimension fixée, <span class="math inline">\((x_i^{(1)},\ldots,x_i^{(d)})_{1\leqslant i\leqslant n}\)</span> coordonnées des <span class="math inline">\(n\)</span> points individus dans <span class="math inline">\(\mathbb{R}^d\)</span>.</p></li>
+<li><p><strong>Distance euclidienne</strong> pour la configuration <span class="math inline">\((x_i^{(1)},\ldots,x_i^{(d)})_{1\leqslant i\leqslant n}\)</span> : <span class="math display">\[d_{i,j}=\sqrt{\sum_{k=1}^d \left(x_i^{(k)}-x_j^{(k)}\right)^2}.\]</span></p></li>
+<li><p>Configuration calculée de telle manière que <span class="math inline">\(d_{i,j}\simeq \delta_{i,j}\)</span>.</p></li>
+</ul>
+</div>
+<div id="calcul-de-la-configuration-finale" class="section level3">
+<h3>Calcul de la configuration finale</h3>
+<ul>
+<li><strong>MDS métrique</strong> :
+<ul>
+<li>Configuration calculée directement à partir de <span class="math inline">\(\Delta\)</span> par des méthodes classiques d’algèbre linéaire (centrage double, diagonalisation, etc…).</li>
+<li>Suppose que <span class="math inline">\(\Delta\)</span> est une matrice de distances de type euclidien.</li>
+</ul></li>
+<li><strong>MDS non-métrique</strong> :
+<ul>
+<li>Suppose que <span class="math inline">\(\Delta\)</span> n’est pas une matrice de distances de type euclidien.</li>
+<li>Utilise l’ordre de similarité (des plus semblables au moins semblables).</li>
+<li>Estime la configuration optimale à partir de <span class="math inline">\(\Delta\)</span> par minimisation d’une fonction de <strong>STRESS</strong> : soit <span class="math inline">\(\hat{d}_{i,j}\)</span> une estimation monotone de la distance entre les points <span class="math inline">\(i\)</span> et <span class="math inline">\(j\)</span> (p.e. régression sur <span class="math inline">\(\delta_{i,j}\)</span>). Configuration optimale obtenue à partir de <span class="math inline">\(d_{i,j}\)</span> minimisant <span class="math display">\[\mbox{STRESS} = \sqrt{\frac{\sum(\hat{d}_{i,j}-d_{i,j})^2}{\sum d_{i,j}^2}}\]</span></li>
+<li>Solution obtenue par convergence d’un algorithme de minimisation pas à pas.</li>
+</ul></li>
+</ul>
+</div>
+<div id="exemple-mds-metrique" class="section level3">
+<h3>Exemple : MDS métrique</h3>
+<pre class="r"><code>d = dist(iris[,-5])
+iris.mds = cmdscale(d,20)
+plot(iris.mds[,1],iris.mds[,2])</code></pre>
+<p><img src="analyse-donnees_files/figure-html/unnamed-chunk-47-1.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>plot(iris.mds[,1],iris.mds[,2], 
+     col=rainbow(3)[iris$Species])</code></pre>
+<p><img src="analyse-donnees_files/figure-html/unnamed-chunk-48-1.png" width="672" style="display: block; margin: auto;" /></p>
+</div>
+<div id="exemple-mds-non-metrique" class="section level3">
+<h3>Exemple : MDS non-métrique</h3>
+<pre class="r"><code>library(&quot;MASS&quot;)
+d = dist(swiss, method=&quot;canberra&quot;)
+swiss.mds=isoMDS(d,k=10)</code></pre>
+<pre><code>initial  value 3.886843 
+iter   5 value 2.424561
+iter  10 value 2.096726
+iter  15 value 1.919281
+final  value 1.887041 
+converged</code></pre>
+<pre class="r"><code>plot(swiss.mds$points[,1:2])
+text(swiss.mds$points[,1:2], labels=rownames(swiss))</code></pre>
+<p><img src="analyse-donnees_files/figure-html/unnamed-chunk-50-1.png" width="672" style="display: block; margin: auto;" /></p>
+</div>
+<div id="tp-les-villes-de-france" class="section level3">
+<h3>TP : les villes de France</h3>
+<ul>
+<li>Matrice des distances kilométriques entre 47 villes de France. (<a href="donnees/Distances_Inter_Villes_Matrice.csv">données</a>)</li>
+<li>Charger les données dans R</li>
+</ul>
+<pre class="r"><code>villes = read.table(
+    &quot;donnees/Distances_Inter_Villes_Matrice.csv&quot;, 
+    header = T, sep = &quot;;&quot;, row.names = 1, dec = &quot;,&quot;)
+villes[1:5, 1:5]</code></pre>
+<pre><code>     amie ando ange bale laba
+amie    0 1020  440  560  590
+ando 1020    0  760 1130  830
+ange  440  760    0  770  160
+bale  560 1130  770    0  940
+laba  590  830  160  940    0</code></pre>
+<ul>
+<li>Effectuer un MDS sur cette matrice.</li>
+<li>Représenter les données dans le(s) premier(s) plan(s) obtenus.</li>
+</ul>
+</div>
+</div>
+<div class="footnotes">
+<hr />
+<ol>
+<li id="fn1"><p>si <span class="math inline">\(p&gt;n\)</span> on travaille plutôt sur les profils colonnes.<a href="#fnref1">↩</a></p></li>
+<li id="fn2"><p>si <span class="math inline">\(\Delta\)</span> non-symétrique, on parle de matrice de confusion. Dans ce cas, techniques MDS plus complexes.<a href="#fnref2">↩</a></p></li>
+</ol>
+</div>
+
+</div>
+<div class="footer">
+      Site créé avec <a href="http://www.r-project.org" target="_blank"><code>R</code></a> et la 
+      librairie  <a href="http://rmarkdown.rstudio.com/" target="_blank"><code>rmarkdown</code></a>.
+</div>
+<script>
+    $("#TOC").css("margin-top", "100px");
+</script>
+
+
+</div>
+</div>
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

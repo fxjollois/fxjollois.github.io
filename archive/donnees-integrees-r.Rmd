@@ -1,0 +1,107 @@
+---
+title: "Données disponibles sous R"
+author: "FX Jollois"
+date: "`r Sys.Date()`"
+output:
+    html_document:
+        toc: true
+        toc_float: true
+        toc_depth: 3
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+affiche <- function(df, lim = FALSE) {
+    opt = list(searching = FALSE)
+    if (lim)
+        DT::datatable(head(df, 100), options = opt)
+    else
+        DT::datatable(df, options = opt)
+}
+```
+
+## Informations
+
+Ce document contient présente un ensemble de données disponibles sous R. Il n'est pas exhaustif et ne présente pas toutes les données possibles. Il n'est pas non plus automatisé.
+
+## Pour chaque package, données disponibles 
+
+### `datasets`
+
+#### `mtcars`
+
+```{r}
+affiche(mtcars)
+```
+
+#### `iris`
+
+```{r}
+affiche(iris)
+```
+
+#### `LifeCycleSavings`
+
+```{r}
+affiche(LifeCycleSavings)
+```
+
+#### `Seatbelts`
+
+```{r}
+affiche(Seatbelts)
+```
+
+#### `swiss`
+
+```{r}
+affiche(swiss)
+```
+
+
+
+### `ggplot2` 
+
+#### `diamonds`
+
+```{r}
+affiche(ggplot2::diamonds, lim = TRUE)
+```
+
+#### `economics`
+
+```{r}
+affiche(ggplot2::economics)
+```
+
+#### `midwest`
+
+```{r}
+affiche(ggplot2::midwest)
+```
+
+#### `mpg`
+
+```{r}
+affiche(ggplot2::mpg)
+```
+
+#### `msleep`
+
+```{r}
+affiche(ggplot2::msleep)
+```
+
+#### `presidential`
+
+```{r}
+affiche(ggplot2::presidential)
+```
+
+#### `txhousing`
+
+```{r}
+affiche(ggplot2::txhousing)
+```
+
+

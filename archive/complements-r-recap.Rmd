@@ -1,0 +1,69 @@
+---
+title: Récapitulatif
+subtitle: Compléments sur R - STID 1ère année
+---
+
+Nous allons de nouveau utiliser les données synthétiques de la production scientifique mondiale de 1996 à 2014 ([lien vers le fichier `csv`](donnees/scimagojr-1996-2014.csv) - source : [SCImago Journal & Country Rank](http://www.scimagojr.com/help.php))
+
+Ce fichier comporte les variables suivantes :
+
+- `Year` : année
+- `Rank` : rang du pays en terme de production (par rapport au nombre de documents) pour l'année indiquée
+- `Country` : pays
+- `Documents` : nombre de documents produits
+- `Citable.documents` : nombre de documents citables (articles, reviews et conférences)
+- `Citations` : nombre de citations de documents produits
+- `Self.Citations` : nombre de citations dans un document du même pays
+- `Citations.per.Document` : nombre moyen de citations
+- `H.index` : nombre $h$ d'articles ayant eu au moins $h$ citations (pour plus d'information : [h-index sur Wikipedia](https://fr.wikipedia.org/wiki/Indice_h))
+
+
+Vous devez produire un tableau de bord (via `shinydashboard` - couleur au choix) avec les éléments suivants :
+
+- **Production**
+    - un TOP à taille variable (3, 5, 10 ou 20) des pays les plus producteurs en terme de nombre de documents scientifique
+    - une courbe d'évolution du nombre de documents par année, entre 1996 et 2014
+    - ces deux élements répartis en 1/3-2/3 dans la partie `body` (le choix de la taille du TOP devra être placé au dessus de celui-ci)
+- **Evolution du classement**
+    - un graphique montrant en $x$ les années, en $y$ le rang (de 1 à 10), avec une courbe par pays représentant donc l'évolution du rang des pays classés dans les 10 premiers selon leur production de documents
+- **Evolution de la production des pays**
+    - une graphique montrant l'évolution en base 100 de chaque pays
+    - la liste des pays étant importante, l'utilisateur pour choisir les pays à représenter dans le graphique
+- **Lien Documents-Citations**
+    - un nuage de points avec en $x$ les documents, en $y$ les citations, un point par pays
+    - la taille du point sera fonction du *H-index* moyen
+    - la couleur du point sera fonction du rang médian
+    - le nom des pays devra être affiché
+    - les axes seront logarithmiques
+    
+    
+### Aide
+
+Pour les demandes 1 et 4, il vous sera nécessaire de réaliser des calculs d'aggrégats, et des jointures entre les résultats pour la demande 4.
+
+Pour la demande 2, il vous faudra sélectionner certaines lignes du jeu de données de départ.
+
+Pour la demande 3, il faut calculer une évolution en base 100. Voici comment on peut réaliser cela avec la fonction `apply()`. Nous simulons une matrice de taille 10 par 5, suivant une loi normale de moyenne 10 et d'écart-type 2.
+
+```{r}
+df = matrix(rnorm(50, mean = 10, sd = 2), 10, 5)
+df
+```
+
+Pour avoir l'évolution en base 100 de chaque ligne (imaginons que nous avons des pays décrit par des valeurs sur 5 années), nous utilisons la fonction `apply()` sur les lignes (deuxième paramètre égal à 1), avec une fonction définie à l'intérieur, qui va prendre un vecteur en paramètre et qui va renvoyer ce même vecteur divisé par la première valeur, et multiplié par 100. Cela donne le code suivant 
+
+```{r}
+b100 = apply(df, 1, function (v) {
+    return (v / v[1] * 100)
+})
+b100
+```
+
+Nous voyons que la matrice résultat est de taille 5 par 10. Pour obtenir la transposée, il faut utiliser la fonction `t()`.
+
+```{r}
+b100_OK = t(b100)
+b100_OK
+```
+
+

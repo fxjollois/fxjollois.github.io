@@ -1,0 +1,103 @@
+"CodeCli";"Societe";"Contact";"Fonction";"Adresse";"Ville";"Region";"CodePostal";"Pays";"Tel";"Fax"
+"ALFKI";"Alfreds Futterkiste";"Maria Anders";"Représentant(e)";"Obere Str. 57";"Berlin";;"12209";"Allemagne";"030-0074321";"030-0076545"
+"ANATR";"Ana Trujillo Emparedados y helados";"Ana Trujillo";"Propriétaire";"Avda. de la Constitución 2222";"México D.F.";;"05021";"Mexique";"(5) 555-4729";"(5) 555-3745"
+"ANTON";"Antonio Moreno Taquería";"Antonio Moreno";"Propriétaire";"Mataderos  2312";"México D.F.";;"05023";"Mexique";"(5) 555-3932";
+"AROUT";"Around the Horn";"Thomas Hardy";"Représentant(e)";"120 Hanover Sq.";"London";;"WA1 1DP";"Royaume-Uni";"(71) 555-7788";"(71) 555-6750"
+"BERGS";"Berglunds snabbköp";"Christina Berglund";"Acheteur";"Berguvsvägen  8";"Luleå";;"S-958 22";"Suède";"0921-12 34 65";"0921-12 34 67"
+"BLAUS";"Blauer See Delikatessen";"Hanna Moos";"Représentant(e)";"Forsterstr. 57";"Mannheim";;"68306";"Allemagne";"0621-08460";"0621-08924"
+"BLONP";"Blondel père et fils";"Frédérique Citeaux";"Directeur du marketing";"24, place Kléber";"Strasbourg";;"67000";"France";"88.60.15.31";"88.60.15.32"
+"BOLID";"Bólido Comidas preparadas";"Martín Sommer";"Propriétaire";"C/ Araquil, 67";"Madrid";;"28023";"Espagne";"(91) 555 22 82";"(91) 555 91 99"
+"BONAP";"Bon app'";"Laurence Lebihan";"Propriétaire";"12, rue des Bouchers";"Marseille";;"13008";"France";"91.24.45.40";"91.24.45.41"
+"BOTTM";"Bottom-Dollar Markets";"Elizabeth Lincoln";"Chef comptable";"23 Tsawassen Blvd.";"Tsawassen";"BC";"T2F 8M4";"Canada";"(604) 555-4729";"(604) 555-3745"
+"BSBEV";"B's Beverages";"Victoria Ashworth";"Représentant(e)";"Fauntleroy Circus";"London";;"EC2 5NT";"Royaume-Uni";"(71) 555-1212";
+"CACTU";"Cactus Comidas para llevar";"Patricio Simpson";"Assistant(e) des ventes";"Cerrito 333";"Buenos Aires";;"1010";"Argentine";"(1) 135-5555";"(1) 135-4892"
+"CENTC";"Centro comercial Moctezuma";"Francisco Chang";"Directeur du marketing";"Sierras de Granada 9993";"México D.F.";;"05022";"Mexique";"(5) 555-3392";"(5) 555-7293"
+"CHOPS";"Chop-suey Chinese";"Yang Wang";"Propriétaire";"Hauptstr. 29";"Bern";;"3012";"Suisse";"0452-076545";
+"COMMI";"Comércio Mineiro";"Pedro Afonso";"Assistant(e) des ventes";"Av. dos Lusíadas, 23";"São Paulo";"SP";"05432-043";"Brésil";"(11) 555-7647";
+"CONSH";"Consolidated Holdings";"Elizabeth Brown";"Représentant(e)";"Berkeley Gardens
+12  Brewery ";"London";;"WX1 6LT";"Royaume-Uni";"(71) 555-2282";"(71) 555-9199"
+"DRACD";"Drachenblut Delikatessen";"Sven Ottlieb";"Acheteur";"Walserweg 21";"Aachen";;"52066";"Allemagne";"0241-039123";"0241-059428"
+"DUMON";"Du monde entier";"Janine Labrune";"Propriétaire";"67, rue des Cinquante Otages";"Nantes";;"44000";"France";"40.67.88.88";"40.67.89.89"
+"EASTC";"Eastern Connection";"Ann Devon";"Assistant(e) des ventes";"35 King George";"London";;"WX3 6FW";"Royaume-Uni";"(71) 555-0297";"(71) 555-3373"
+"ERNSH";"Ernst Handel";"Roland Mendel";"Chef des ventes";"Kirchgasse 6";"Graz";;"8010";"Autriche";"7675-3425";"7675-3426"
+"ESPAC";"L'espace                      ";"Michel Roudil";"Propriétaire";"18, Route de Douvres";"Courseulles";;"14470";"France";"31.22.32.84";"31.22.32.86"
+"ETOUR";"Etourdi                       ";"Sylvie Chalet";"Assistant(e) marketing";"47 Quai Hamelin";"Caen";;"14000";"France";"31.92.85.65";
+"FAMIA";"Familia Arquibaldo";"Aria Cruz";"Assistant(e) marketing";"Rua Orós, 92";"São Paulo";"SP";"05442-030";"Brésil";"(11) 555-9857";
+"FISSA";"FISSA Fabrica Inter. Salchichas S.A.";"Diego Roel";"Chef comptable";"C/ Moralzarzal, 86";"Madrid";;"28034";"Espagne";"(91) 555 94 44";"(91) 555 55 93"
+"FOLIG";"Folies gourmandes";"Martine Rancé";"Représentant(e)";"184, chaussée de Tournai";"Lille";;"59000";"France";"20.16.10.16";"20.16.10.17"
+"FOLKO";"Folk och fä HB";"Maria Larsson";"Propriétaire";"Åkergatan 24";"Bräcke";;"S-844 67";"Suède";"0695-34 67 21";
+"FRANK";"Frankenversand";"Peter Franken";"Directeur du marketing";"Berliner Platz 43";"München";;"80805";"Allemagne";"089-0877310";"089-0877451"
+"FRANR";"France restauration";"Carine Schmitt";"Directeur du marketing";"54, rue Royale";"Nantes";;"44000";"France";"40.32.21.21";"40.32.21.20"
+"FRANS";"Franchi S.p.A.";"Paolo Accorti";"Représentant(e)";"Via Monte Bianco 34";"Torino";;"10100";"Italie";"011-4988260";"011-4988261"
+"FURIB";"Furia Bacalhau e Frutos do Mar";"Lino Rodriguez ";"Chef des ventes";"Jardim das rosas n. 32";"Lisboa";;"1675";"Portugal";"(1) 354-2534";"(1) 354-2535"
+"GALED";"Galería del gastrónomo";"Eduardo Saavedra";"Directeur du marketing";"Rambla de Cataluña, 23";"Barcelona";;"08022";"Espagne";"(93) 203 4560";"(93) 203 4561"
+"GODOS";"Godos Cocina Típica";"José Pedro Freyre";"Chef des ventes";"C/ Romero, 33";"Sevilla";;"41101";"Espagne";"(95) 555 82 82";
+"GOURL";"Gourmet Lanchonetes";"André Fonseca";"Assistant(e) des ventes";"Av. Brasil, 442";"Campinas";"SP";"04876-786";"Brésil";"(11) 555-9482";
+"GREAL";"Great Lakes Food Market";"Howard Snyder";"Directeur du marketing";"2732 Baker Blvd.";"Eugene";"OR";"97403";"États-Unis";"(503) 555-7555";
+"GROSR";"GROSELLA-Restaurante";"Manuel Pereira";"Propriétaire";"5ª Ave. Los Palos Grandes";"Caracas";"DF";"1081";"Venezuela";"(2) 283-2951";"(2) 283-3397"
+"HANAR";"Hanari Carnes";"Mario Pontes";"Chef comptable";"Rua do Paço, 67";"Rio de Janeiro";"RJ";"05454-876";"Brésil";"(21) 555-0091";"(21) 555-8765"
+"HILAA";"HILARIÓN-Abastos";"Carlos Hernández";"Représentant(e)";"Carrera 22 con Ave. Carlos Soublette #8-35";"San Cristóbal";"Táchira";"5022";"Venezuela";"(5) 555-1340";"(5) 555-1948"
+"HUNGC";"Hungry Coyote Import Store";"Yoshi Latimer";"Représentant(e)";"City Center Plaza
+516 Main St.";"Elgin";"OR";"97827";"États-Unis";"(503) 555-6874";"(503) 555-2376"
+"HUNGO";"Hungry Owl All-Night Grocers";"Patricia McKenna";"Assistant(e) des ventes";"8 Johnstown Road";"Cork";"Co. Cork";;"Irlande";"2967 542";"2967 3333"
+"ISLAT";"Island Trading";"Jérôme Firenze";"Directeur du marketing";"Garden House
+Crowther Way";"Cowes";"Isle of Wight";"PO31 7PJ";"Royaume-Uni";"(198) 555-8888";
+"KOENE";"Königlich Essen";"Philip Cramer";"Assistant(e) des ventes";"Maubelstr. 90";"Brandenburg";;"14776";"Allemagne";"0555-09876";
+"LACOR";"La corne d'abondance";"Daniel Tonini";"Représentant(e)";"67, avenue de l'Europe";"Versailles";;"78000";"France";"30.59.84.10";"30.59.85.11"
+"LAMAI";"La maison d'Asie";"Annette Roulet";"Chef des ventes";"1 rue Alsace-Lorraine";"Toulouse";;"31000";"France";"61.77.61.10";"61.77.61.11"
+"LAUGB";"Laughing Bacchus Wine Cellars";"Yoshi Tannamuri";"Assistant(e) marketing";"1900 Oak St.";"Vancouver";"BC";"V3F 2K1";"Canada";"(604) 555-3392";"(604) 555-7293"
+"LAZYK";"Lazy K Kountry Store";"John Steel";"Directeur du marketing";"12 Orchestra Terrace";"Walla Walla";"WA";"99362";"États-Unis";"(509) 555-7969";"(509) 555-6221"
+"LEHMS";"Lehmanns Marktstand";"Renate Messner";"Représentant(e)";"Magazinweg 7";"Frankfurt a.M. ";;"60528";"Allemagne";"069-0245984";"069-0245874"
+"LETSS";"Let's Stop N Shop";"Jaime Yorres";"Propriétaire";"87 Polk St.
+Suite 5";"San Francisco";"CA";"94117";"États-Unis";"(415) 555-5938";
+"LILAS";"LILA-Supermercado";"Carlos González";"Chef comptable";"Carrera 52 con Ave. Bolívar #65-98 Llano Largo";"Barquisimeto";"Lara";"3508";"Venezuela";"(9) 331-6954";"(9) 331-7256"
+"LINOD";"LINO-Delicateses";"Felipe Izquierdo";"Propriétaire";"Ave. 5 de Mayo Porlamar";"I. de Margarita";"Nueva Esparta";"4980";"Venezuela";"(8) 34-56-12";"(8) 34-93-93"
+"LONEP";"Lonesome Pine Restaurant";"Fran Wilson";"Chef des ventes";"89 Chiaroscuro Rd.";"Portland";"OR";"97219";"États-Unis";"(503) 555-9573";"(503) 555-9646"
+"MAGAA";"Magazzini Alimentari Riuniti";"Giovanni Rovelli";"Directeur du marketing";"Via Ludovico il Moro 22";"Bergamo";;"24100";"Italie";"035-640230";"035-640231"
+"MAISD";"Maison Dewey";"Catherine Dewey";"Assistant(e) des ventes";"Rue Joseph-Bens 532";"Bruxelles";;"B-1180";"Belgique";"(02) 201 24 67";"(02) 201 24 68"
+"MEREP";"Mère Paillarde";"Jean Fresnière";"Assistant(e) marketing";"43 rue St. Laurent";"Montréal";"Québec";"H1J 1C3";"Canada";"(514) 555-8054";"(514) 555-8055"
+"MORGK";"Morgenstern Gesundkost";"Alexander Feuer";"Assistant(e) marketing";"Heerstr. 22";"Leipzig";;"04179";"Allemagne";"0342-023176";
+"NORTS";"North/South";"Simon Crowther";"Assistant(e) des ventes";"South House
+300 Queensbridge";"London";;"SW7 1RZ";"Royaume-Uni";"(71) 555-7733";"(71) 555-2530"
+"OCEAN";"Océano Atlántico Ltda.";"Yvonne Moncada";"Assistant(e) des ventes";"Ing. Gustavo Moncada 8585
+Piso 20-A";"Buenos Aires";;"1010";"Argentine";"(1) 135-5333";"(1) 135-5535"
+"OLDWO";"Old World Delicatessen";"Rene Phillips";"Représentant(e)";"2743 Bering St.";"Anchorage";"AK";"99508";"États-Unis";"(907) 555-7584";"(907) 555-2880"
+"OTTIK";"Ottilies Käseladen";"Henriette Pfalzheim";"Propriétaire";"Mehrheimerstr. 369";"Köln";;"50739";"Allemagne";"0221-0644327";"0221-0765721"
+"PARIS";"Paris spécialités";"Marie Bertrand";"Propriétaire";"265, boulevard Charonne";"Paris";;"75012";"France";"(1) 42.34.22.66";"(1) 42.34.22.77"
+"PERIC";"Pericles Comidas clásicas";"Guillermo Fernández";"Représentant(e)";"Calle Dr. Jorge Cash 321";"México D.F.";;"05033";"Mexique";"(5) 552-3745";"(5) 545-3745"
+"PICCO";"Piccolo und mehr";"Georg Pipps";"Chef des ventes";"Geislweg 14";"Salzburg";;"5020";"Autriche";"6562-9722";"6562-9723"
+"PILOF";"Pilote et Fils                ";"Cyril Caroline";"Propriétaire";"875b  rue Rachel Est";"Montréal";"Québec";"H2J4K6";"Canada";"(514) 554-8123";
+"PRINI";"Princesa Isabel Vinhos";"Isabel de Castro";"Représentant(e)";"Estrada da saúde n. 58";"Lisboa";;"1756";"Portugal";"(1) 356-5634";
+"QUEDE";"Que Delícia";"Bernardo Batista";"Chef comptable";"Rua da Panificadora, 12";"Rio de Janeiro";"RJ";"02389-673";"Brésil";"(21) 555-4252";"(21) 555-4545"
+"QUEEN";"Queen Cozinha";"Lúcia Carvalho";"Assistant(e) marketing";"Alameda dos Canàrios, 891";"São Paulo";"SP";"05487-020";"Brésil";"(11) 555-1189";
+"QUICK";"QUICK-Stop";"Horst Kloss";"Chef comptable";"Taucherstraße 10";"Cunewalde";;"01307";"Allemagne";"0372-035188";
+"RANCH";"Rancho grande";"Sergio Gutiérrez";"Représentant(e)";"Av. del Libertador 900";"Buenos Aires";;"1010";"Argentine";"(1) 123-5555";"(1) 123-5556"
+"RATTC";"Rattlesnake Canyon Grocery";"Paula Wilson";"Représentant(e)";"2817 Milton Dr.";"Albuquerque";"NM";"87110";"États-Unis";"(505) 555-5939";"(505) 555-3620"
+"REGGC";"Reggiani Caseifici";"Maurizio Moroni";"Assistant(e) des ventes";"Strada Provinciale 124";"Reggio Emilia";;"42100";"Italie";"0522-556721";"0522-556722"
+"RICAR";"Ricardo Adocicados";"Janete Limeira";"Représentant(e)";"Av. Copacabana, 267";"Rio de Janeiro";"RJ";"02389-890";"Brésil";"(21) 555-3412";
+"RICSU";"Richter Supermarkt";"Michael Holz";"Chef des ventes";"Grenzacherweg 237";"Genève";;"1203";"Suisse";"0897-034214";
+"ROMEY";"Romero y tomillo";"Alejandra Camino";"Chef comptable";"Gran Vía, 1";"Madrid";;"28001";"Espagne";"(91) 745 6200";"(91) 745 6210"
+"SANTG";"Santé Gourmet";"Jonas Bergulfsen";"Propriétaire";"Erling Skakkes gate 78";"Stavern";;"4110";"Norvège";"07-98 92 35";"07-98 92 47"
+"SAVEA";"Save-a-lot Markets";"Jose Pavarotti";"Représentant(e)";"187 Suffolk Ln.";"Boise";"ID";"83720";"États-Unis";"(208) 555-8097";
+"SEVES";"Seven Seas Imports";"Hari Kumar";"Chef des ventes";"90 Wadhurst Rd.";"London";;"OX15 4NB";"Royaume-Uni";"(71) 555-1717";"(71) 555-5646"
+"SIMOB";"Simons bistro";"Jytte Petersen";"Propriétaire";"Vinbæltet 34";"København";;"1734";"Danemark";"31 12 34 56";"31 13 35 57"
+"SPECD";"Spécialités du monde";"Dominique Perrier";"Directeur du marketing";"25, rue Lauriston";"Paris";;"75016";"France";"(1) 47.55.60.10";"(1) 47.55.60.20"
+"SPLIR";"Split Rail Beer & Ale";"Art Braunschweiger";"Chef des ventes";"P.O. Box 555";"Lander";"WY";"82520";"États-Unis";"(307) 555-4680";"(307) 555-6525"
+"SUPRD";"Suprêmes délices";"Pascale Cartrain";"Chef comptable";"Boulevard Tirou, 255";"Charleroi";;"B-6000";"Belgique";"(071) 23 67 22 20";"(071) 23 67 22 21"
+"THEBI";"The Big Cheese";"Liz Nixon";"Directeur du marketing";"89 Jefferson Way
+Suite 2";"Portland";"OR";"97201";"États-Unis";"(503) 555-3612";
+"THECR";"The Cracker Box";"Liu Wong";"Assistant(e) marketing";"55 Grizzly Peak Rd.";"Butte";"MT";"59801";"États-Unis";"(406) 555-5834";"(406) 555-8083"
+"TOMSP";"Toms Spezialitäten";"Karin Josephs";"Directeur du marketing";"Luisenstr. 48";"Münster";;"44087";"Allemagne";"0251-031259";"0251-035695"
+"TORTU";"Tortuga Restaurante";"Miguel Angel Paolino";"Propriétaire";"Avda. Azteca 123";"México D.F.";;"05033";"Mexique";"(5) 555-2933";
+"TRADH";"Tradição Hipermercados";"Anabela Domingues";"Représentant(e)";"Av. Inês de Castro, 414";"São Paulo";"SP";"05634-030";"Brésil";"(11) 555-2167";"(11) 555-2168"
+"TRAIH";"Trail's Head Gourmet Provisioners";"Helvetius Nagy";"Assistant(e) des ventes";"722 DaVinci Blvd.";"Kirkland";"WA";"98034";"États-Unis";"(206) 555-8257";"(206) 555-2174"
+"VAFFE";"Vaffeljernet";"Palle Ibsen";"Chef des ventes";"Smagsløget 45";"Århus";;"8200";"Danemark";"86 21 32 43";"86 22 33 44"
+"VICTE";"Victuailles en stock";"Mary Saveley";"Assistant(e) des ventes";"2, rue du Commerce";"Lyon";;"69004";"France";"78.32.54.86";"78.32.54.87"
+"VINET";"Vins et alcools Chevalier";"Paul Henriot";"Chef comptable";"59 rue de l'Abbaye";"Reims";;"51100";"France";"26.47.15.10";"26.47.15.11"
+"WANDK";"Die Wandernde Kuh";"Rita Müller";"Représentant(e)";"Adenauerallee 900";"Stuttgart";;"70563";"Allemagne";"0711-020361";"0711-035428"
+"WARTH";"Wartian Herkku";"Pirkko Koskitalo";"Chef comptable";"Torikatu 38";"Oulu";;"90110";"Finlande";"981-443655";"981-443655"
+"WELLI";"Wellington Importadora";"Paula Parente";"Chef des ventes";"Rua do Mercado, 12";"Resende";"SP";"08737-363";"Brésil";"(14) 555-8122";
+"WHITC";"White Clover Markets";"Karl Jablonski";"Propriétaire";"305 - 14th Ave. S.
+Suite 3B";"Seattle";"WA";"98128";"États-Unis";"(206) 555-4112";"(206) 555-4115"
+"WILMK";"Wilman Kala";"Matti Karttunen";"Assistant du marketing";"Keskuskatu 45";"Helsinki";;"21240";"Finlande";"90-224 8858";"90-224 8858"
+"WOLZA";"Wolski  Zajazd";"Zbyszek Piestrzeniewicz";"Propriétaire";"ul. Filtrowa 68";"Warszawa";;"01-012";"Pologne";"(26) 642-7012";"(26) 642-7012"

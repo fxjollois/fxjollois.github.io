@@ -1,0 +1,375 @@
+---
+title: TP1 - Introduction
+subtitle: Initiation a `R` - STID 1ère année
+---
+
+```{r init, include=FALSE}
+knitr::opts_chunk$set(prompt = TRUE, comment = NA)
+```
+
+## Nouvelle session
+
+- Ouverture d'une session en local ()
+
+## Mode console ou mode script
+
+`R` est un langage scripté, de même que `SQL` ou `python` par exemple. Ceci implique que l'on peut exécuter des commandes en mode console, les unes après les autres. Mais il est aussi possible d'écrire un code dans un script et d'exécuter par la suite ce script.
+
+### Mode console
+
+Pour ce mode, les commandes sont toutes écrites dans la console. Dans celle-ci, on peut utiliser les flèches haut et bas pour naviguer dans l'historique des commandes.
+
+- tapez : `1 + 2` (`Entrée` pour valider)
+```{r}
+1 + 2
+```
+- tapez : `a = 1`, puis `b = 2`, puis `a + b`, puis `a + B`
+```{r}
+a = 1
+b = 2
+a + b
+```
+- Sensibilité à la casse (majuscule/minuscule)
+```{r, error=TRUE}
+a + B
+```
+
+### Mode script
+
+Ce mode permet d'écrire plusieurs commandes et de les exécuter en une seule fois. Il est utile de stocker les différentes commandes et commentaires associés, même si celles-ci sont exécutées les unes après les autres.
+
+- *nouveau R script*
+- écrire les trois instructions suivantes
+```
+a = 1
+b = 2
+a + b
+```
+- pour exécuter, vous avez plusieurs possibilités
+    1. tout sélectionner, et cliquer sur `Run` 
+    2. idem, mais taper sur `Ctrl+Entrée`
+    3. mettre le curseur sur la première ligne, et cliquer sur `Run` trois fois
+    4. idem, mais en tapant sur `Ctrl+Entrée` trois fois
+    5. cliquer sur sur `Source`
+- sauvegarder le script dans un fichier avec l'extension `.r` (ou `.R`)
+    - attention à le nommer correctement (par exemple `tp1.r`) et de le mettre dans un répertoire dédié (par exemple `Initiation à R`, lui même dans un répertoire `Semestre 1`)
+    - on pourra complétement l'exécuter par la suite en tapant `source("tp1.r"")` dans la console
+
+Dans un mode totalement script, l'idée est d'avoir un code qui s'exécute en une fois. Mais comme indiqué précédemment, il est également intéressant de pouvoir stocker dans un fichier l'ensemble des commandes qu'on a exécutées, soit pour réviser, soit pour pouvoir les ré-utiliser plus tard si nécessaire (ce qui arrive très souvent en entreprise).
+
+Une fois les commandes exécutées (via mode console ou script exécuté), les variables `a` et `b` sont créées (cf panneau *Environment*) et utilisables (par ex. `a * b`). Ces variables seront détruites lors de la fin de la session. Une autre moyen de les supprimer est d'utiliser la commande `rm()`. Celle-ci est importante pour nettoyer l'espace de travail et ne pas utiliser trop d'espace (dans un environnement professionnel, sur serveur, il est nécessaire de faire attention à ce *détail*).
+
+```{r, error=TRUE}
+v = "une variable"
+print(v)
+rm(v)
+print(v)
+```
+
+Pour ajouter des commentaires (très important à mettre dans tout code informatique), il n'existe que le caractère `#` à placer en début de ligne, ce qui donne par exemple
+
+```{r, prompt=FALSE}
+# Premières instructions
+#   (taper sur `Ctrl+Entrée` pour exécuter le code)
+```
+
+## Quelques commandes de base
+
+Nous allons voir quelques commandes classiques à connaître pour développer des codes `R`.
+
+### Affichage
+
+Comme on l'a vu précédemment, si on exécute, dans la console ou en exécutant une ligne d'un script, une expression qui renvoie un résultat (par exemple le nom d'une variable ou un calcul), celui-ci s'affiche directement. Dans certains cas, et pour être certain que l'affichage se fasse, il est préférable de l'expliciter avec la commande `print()`.
+
+```{r}
+print(a)
+print(a + b)
+print("bonjour")
+```
+
+### Création de vecteur simple
+
+Comme nous le verrons plus tard, `R` manipule différents types de données, mais le premier à voir est le type `vector`. Les variables `a` et `v` créées ci-dessus sont stockées comme des `vector`s (ensemble indexé de valeurs de même type).
+
+#### Séquences
+
+Les vecteurs les plus simples à créer sont les séquences de nombres. Les deux premières instructions renvoient le même vector : `r 1:5`. La fonction `seq(debut, fin)` permet de créer une séquence (croissante ou décroissante), à partir d'un nombre de départ et d'un nombre de fin. Sans précision, le pas est de $1$ (ou $-1$ si `debut` > `fin`). On peut aussi définir le pas (avec `by = `) ou la longueur (avec `length = `).
+
+```{r}
+1:5
+seq(1, 5)
+seq(5, 1)
+seq(1, 5, by = .5)
+seq(5, 1, length = 3)
+```
+
+#### Combinaison de valeurs
+
+Si on veut combiner des valeurs qui ne constituent pas une séquence, il est possible de créer un vecteur avec la fonction `c()`. Celle-ci prend toutes les valeurs en paramètres (sans limite spécifique) pour les mettre dans un même `vector`. Si ceux-ci sont de types différents (par exemple, numérique et caractère), elle transforme les valeurs numériques en chaînes de caractères.
+
+```{r}
+c(1, 2, 5:7)
+c("FX", "Jollois")
+c(1, "trois")
+```
+
+#### Répétition de valeurs
+
+Une autre besoin est de créer un vecteur répétant un certain nombre de valeurs. Sans précision, la fonction `rep(vec, nb)` répéte le vecteur `vec` autant de fois qu'indiqué dans `nb`. Si on veut répéter chaque valeur directement, on doit utiliser le paramètre `each = ` (cf 3ème exemple). Et on peut combiner les deux écritures pour répéter chaque valeur 3 fois, et le vecteur ainsi créé deux fois (4ème exemple).
+
+```{r}
+rep(5, 2)
+rep(1:5, 2)
+rep(1:5, each = 3)
+rep(1:5, 2, each = 3)
+```
+
+#### Concaténation de chaînes
+
+Pour concaténer deux chaînes (i.e. les regrouper en une seule), nous avons à disposition la fonction `paste()` (et une version pré-paramétrée `paste0()`). Cette fonction prend en paramètres des vecteurs de chaînes pour les concaténer. Si les valeurs ne sont pas des chaînes, elles sont autoamtiquement tranformées. 
+
+Par défaut, les chaînes sont séparées par un espace (cf exemple 1), mais il est possible de définir celui-ci via le paramètre `sep = ` (cf exemple 2 et 3). La fonction `paste0()` est identique mais le séparateur par défaut est une chaîne vide (cf exemple 4). 
+
+```{r}
+paste("bon", "jour")
+paste("bon", "jour", sep = "-")
+paste("bon", "jour", sep = "")
+paste0("bon", "jour")
+```
+
+Si on souhaite concaténer deux vecteurs de tailles différentes, le vecteur le plus court est répéter autant de fois que nécessaire. Dans l'exemple 1 ci-dessous, le terme `"bon"` est donc répéter 2 fois. Il faut donc faire attention à concaténer deux vecteurs cohérents en taille (cf exemple 2, 5 n'étant pas un multiple de 2). 
+
+```{r}
+paste0("bon", c("jour", "soir"))
+paste(c("x", "y"), 1:5, sep = "=")
+```
+
+Enfin, on peut vouloir regrouper des valeurs d'un même vecteur dans une même chaîne. Pour cela, nous devons utiliser le paramètre `collapse = `, comme dans l'exemple ci-dessous.
+
+```{r}
+paste(1:5, collapse = ",")
+```
+
+
+### Opérateurs mathématiques
+
+Comme dans tous les langages, nous avons accès aux opérateurs mathématiques classiques, comme présenté ci-dessous.
+
+```{r}
+- 2
+1 + 2
+1 - 2
+1 * 2
+1 / 2
+(1 / 2) * (3 + 4)
+2 ^ 3 # (puissance)
+2 ** 3 # (puissance)
+sqrt(9) # (racine carrée)
+```
+
+Nous avons aussi accès à des fonctions telles que valeur absolue (`abs()`), logarithme (`log()`) et exponentielle (`exp()`), et toutes les fonctions trigonométrique (avec `cos()`, `sin()`, `tan()`, ...).
+
+```{r}
+abs(-12) # (valeur absolue)
+log(2.718282) # (logarithme)
+exp(1) # (exponentielle)
+cos(1) # (cosinus)
+sin(1) # (sinus)
+tan(1) # (tangente)
+```
+
+### Opérateurs de comparaison
+
+De la même manière, les opérateurs classiques de comparaison sont disponibles, comme présentés ci-dessous.
+
+```{r}
+a > 1
+a >= 1
+a < 1
+a <= 1
+a == 1
+a != 1
+```
+
+On dispose aussi de l'opérateur `%in%` qui test si chaque valeur du premier vecteur est présent dans le deuxième vecteur. Il renvoie donc un vecteur de booléen (`TRUE/FALSE`) indiquant si la valeur est dans le deuxième vecteur ou non.
+
+```{r}
+a %in% c(1, 3, 5)
+c(1, 3, 5) %in% a
+```
+
+### Aide
+
+Pour accéder à l'aide, il est possible d'utiliser les moyens suivants :
+
+- pour obtenir l'aide sur une commande, on peut exécuter
+    - `help(commande)` (par exemple, `help(print)`)
+    - ou plus simplement `?commande` (`?print`)
+- pour chercher dans l'aide, on a aussi deux possibilités
+    - `help.search("terme(s)")` (par exemple, `help.search("print")`)
+    - `??terme` (par exemple, `??print`)
+
+
+## Données déjà présentes
+
+Il existe des données déjà présentes dans le logiciel `R`, soit de base, soit suite à l'ajout d'un package (dont on parlera plus tard). Pour avoir la liste des données, vous pouvez taper `data()`. Pour avoir plus d'informations sur un jeu de données, il faut accéder à l'aide de celui-ci. Nous allons travailler ici sur le jeu de données `mtcars`, qui contient les informations de 32 voitures sur 11 caractéristiques.
+
+Pour voir le jeu de données en entier dans la console, vous devez juste exécuter son nom
+
+```{r}
+mtcars
+```
+
+Vous pouvez aussi le voir dans RStudio à l'aide de la commande `View(mtcars)` (à exécuter dans la console de préférence). Vous pouvez regarder l'aide du jeu de données, avec `?mtcars` par exemple, pour avoir plus d'informations sur ce jeu de données.
+
+### Informations diverses
+
+Les données de type table `SQL` comme `mtcars` sont stockées dans un format spécifique, `data.frame`, comme permet de le confirmer la fonction `class()` (qui renvoie le type de l'opbjet passé en paramètre).
+
+```{r}
+class(mtcars)
+```
+
+Sur un `data.frame`, il est possible d'avoir les dimensions avec `dim()`, qui sont le nombre de lignes (`nrow()`) et le nombre de colonnes (`ncol()`).
+
+```{r}
+dim(mtcars)
+nrow(mtcars)
+ncol(mtcars)
+```
+
+Un `data.frame` contient des noms de colonnes (dits aussi d'attributs), qu'on peut obtenir avec les fonctions `names()` ou `colnames()`. Il contient parfois aussi des noms de lignes (qui sont des identifiants), accessibles avec `rownames()`. Si ce n'est pas le cas, la fonction renvoie une séquence de type `1:nrow(obj)`. Enfin, la fonction `str()` renvoie un résumé de la table sous la forme d'une liste avec un item par variable, contenant le nom de celle-ci, son type et les premières valeurs.
+
+```{r}
+names(mtcars)
+colnames(mtcars)
+rownames(mtcars)
+str(mtcars)
+```
+
+### Extraction de données
+
+Lorsque les données sont grandes, il est souvent utile d'avoir un aperçu des premières lignes. La fonction `head()` renvoie par défaut les 6 premières lignes d'une table passée en paramètre. On peut aussi lui spécifier le nombre de lignes qu'on désire. La fonction `tail()` fonctionne de manière identique, mais renvoie les dernières lignes de la table.
+
+```{r}
+head(mtcars)
+head(mtcars, 3)
+tail(mtcars)
+tail(mtcars, 3)
+```
+
+#### Colonnes
+
+Pour récupérer les valeurs d'une colonne de la table, nous avons 4 façons différentes de le faire, comme présenté ci-dessous. Il faut noter que les trois premières lignes renvoient un vecteur, alors que la dernière renvoie une table (`data.frame`) réduite. Vous remarquerez qu'on peut spécifier soit le nom de la variable, soit sa position dans le `data.frame`.
+
+```{r}
+mtcars$mpg
+mtcars[,"mpg"]
+mtcars[,1]
+mtcars["mpg"]
+```
+
+Il est bien évidemment possible de récupérer plusieurs colonnes en une seule étape. Pour ceci, de manière similaire à précédemment, nous avons trois possibilités (le `$` n'est plus utilisable dans ce cas). Ces trois exemples renvoient exactement le même résultat. C'est une façon de faire une projection comme en `SQL`.
+
+```{r}
+mtcars[c("mpg", "hp")]
+mtcars[,c("mpg", "hp")]
+mtcars[,c(1, 4)]
+```
+
+#### Lignes
+
+De manière similaire, il est possible de récupérer une ligne spécifique, voire plusieurs lignes, en précisant soit sa position, soit son identifiant. 
+
+```{r}
+mtcars[1,]
+mtcars["Mazda RX4",]
+mtcars[c(1, 3, 4),]
+mtcars[c("Mazda RX4", "Datsun 710", "Hornet 4 Drive"),]
+```
+
+Il est aussi possible de passer un vecteur de booléen, nous permettant de sélectionner des lignes qui respectent une condition (simple ou complexe). C'est une façon de faire une restriction comme en `SQL`. 
+
+```{r}
+mtcars[mtcars$mpg < 15,]
+mtcars[mtcars$mpg < 15 & mtcars$qsec < 16,]
+```
+
+#### Cellules
+
+En combinant les deux opérations ci-dessus, il est possible d'obtenir le contenu d'une cellule (exemple 1), ou de plusieurs cellules (exemple 2 à 5). 
+
+```{r}
+mtcars[1,1]
+mtcars[1:5, 1]
+mtcars[1, 1:3]
+mtcars[1:5,1:3]
+mtcars[mtcars$mpg < 15 & mtcars$qsec < 16, c("hp", "disp")]
+```
+
+
+## Exercices 
+
+### Création de vecteurs
+
+1. Créer un vecteur `v1` qui va de $1$ à $-1$ par pas de $-0.25$ 
+```{r include=FALSE}
+v1 = seq(1, -1, by = -.25)
+```
+2. Créer un vecteur `v2` qui va de $0$ à $100$ d'une longueur de $23$
+```{r include=FALSE}
+v2 = seq(0, 100, length = 23)
+```
+3. Créer un vecteur `v3` qui contient les chaînes : `"1ère année"`, `"2ème année"`, `"LP"`
+```{r include=FALSE}
+v3 = c("1ère année","2ème année","LP")
+```
+4. Créer un vecteur `v4` qui répéte trois fois la chaîne `"promo"`
+```{r include=FALSE}
+v4 = rep("promo", 3)
+```
+5. Regrouper les vecteurs `v3` et `v4`, pour avoir le vecteur `v5` suivant
+```{r echo=FALSE}
+print(v5 <- paste(v4, v3, sep = "="))
+```
+6. Améliorer le code suivant pour avoir le vecteur `v6` suivant 
+```{r echo=FALSE}
+print(v6 <- paste(v4, paste("'", v3, "'", sep = ""), sep = "="))
+```
+7. Créer automatiquement le vecteur `v7` qui suit à l'aide des fonctions `c()`, `seq()`, `paste()`, `rep()`
+```{r echo=FALSE}
+print(v7 <- paste(c("x", "y"), rep(seq(1,4), each = 2), sep = ""))
+```
+
+
+### Données présentes
+
+Sur le jeu de données `swiss`
+
+1. Donner le nombre de lignes et le nombre de colonnes, séparemment
+```{r include=FALSE}
+nrow(swiss)
+ncol(swiss)
+```
+2. Afficher les noms de variables
+```{r include=FALSE}
+names(swiss)
+```
+3. Afficher les 10 premières lignes
+```{r include=FALSE}
+head(swiss, 10)
+```
+4. Afficher les colonnes `Agriculture` et `Education`, en `data.frame`
+```{r include=FALSE}
+swiss[c("Agriculture", "Education")]
+```
+5. Afficher les lignes pour lesquelles la variable `Infant.Mortality` est inférieure à 17
+```{r include=FALSE}
+swiss[swiss$Infant.Mortality <= 17,]
+```
+6. Combiner les deux demandes précédentes
+```{r include=FALSE}
+swiss[swiss$Infant.Mortality <= 17,c("Agriculture", "Education")]
+```
+
+

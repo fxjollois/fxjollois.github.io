@@ -1,0 +1,551 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+<meta charset="utf-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="pandoc" />
+
+
+
+
+<title>Test de différents inputs</title>
+
+<script src="libs/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="libs/bootstrap-3.3.5/css/journal.min.css" rel="stylesheet" />
+<script src="libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<script src="libs/navigation-1.1/tabsets.js"></script>
+<link href="libs/highlightjs-1.1/default.css" rel="stylesheet" />
+<script src="libs/highlightjs-1.1/highlight.js"></script>
+<!--
+    Font Awesome
+-->
+<script src="https://use.fontawesome.com/32d8325004.js"></script>
+<link rel="stylesheet" href="libs/font-awesome-4.7.0/css/font-awesome.min.css">
+
+<!--
+    CSS perso
+-->
+<style>
+    .contenu {
+        margin-bottom: 50px;
+    }
+
+    .contact-liens {
+        text-align: center;
+    }
+    .contact-liens:hover {
+        text-decoration: none;
+    }
+    .contact-icones {
+        height: 30px;
+    }
+
+    /* Espacement pour barre du haut et pied de page */
+    #header, .section.level1 {
+        margin-top: 60px;
+        margin-bottom: 60px;
+    }
+    /* Espacement pour table des matières */
+    #TOC {
+        margin-top: 100px;
+    }
+    
+    .footer {
+        position: fixed;
+        width: 100%;
+        text-align: center;
+        bottom: 0;
+        left: 0;
+        background-color: #E6E6E6;
+    }
+</style>
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
+<script type="text/javascript">
+if (window.hljs && document.readyState && document.readyState === "complete") {
+   window.setTimeout(function() {
+      hljs.initHighlighting();
+   }, 0);
+}
+</script>
+
+
+
+<style type="text/css">
+h1 {
+  font-size: 34px;
+}
+h1.title {
+  font-size: 38px;
+}
+h2 {
+  font-size: 30px;
+}
+h3 {
+  font-size: 24px;
+}
+h4 {
+  font-size: 18px;
+}
+h5 {
+  font-size: 16px;
+}
+h6 {
+  font-size: 12px;
+}
+.table th:not([align]) {
+  text-align: left;
+}
+</style>
+
+<link rel="stylesheet" href="libs/bootstrap-journal.min.css" type="text/css" />
+
+</head>
+
+<body>
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img {
+  max-width:100%;
+  height: auto;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+</style>
+
+
+
+<div class="container-fluid main-container">
+
+<!-- tabsets -->
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+</script>
+
+<!-- code folding -->
+
+
+
+
+
+<div class="navbar navbar-default navbar-fixed-top">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-main">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">FX Jollois</a>
+    </div>
+    <div id="navbar-main" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button">Données <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+              <li><a href="accesdonnees.html">A télécharger</a></li>
+              <li><a href="donnees-integrees-r.html">Sous R</a></li>
+          </ul>
+        </li>
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button">Enseignement <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li class="dropdown-header">DUT 1ère année</li>
+            <li><a href="exploitation-donnees.html">Exploitation de données</a></li>
+            <li><a href="initiation-a-r.html">Initiation à R</a></li>
+            <li><a href="reporting.html">Reporting</a></li>
+            <li><a href="complements-r.html">Compléments sur R</a></li>
+            <li class="dropdown-header">DUT 2ème année</li>
+            <li><a href="prog-stat-r.html">Programmation statistique avec R</a></li>
+            <li class="dropdown-header">LP MDS Santé</li>
+            <li><a href="info-dec-sante.html">Informatique décisionnelle</a></li>
+            <li class="dropdown-header">DU Analyste Big Data</li>
+            <li><a href="initiation-r-du.html">Initiation à R</a></li>
+            <li><a href="connexion-r-mongodb.html">Connexion entre R et MongoDB</a></li>
+            <li class="dropdown-header">DU Dataviz</li>
+            <li><a href="analyse-donnees.html">Analyse de données</a></li>
+            <li><a href="visualisation-donnees.html">Visualisation de données - R</a></li>
+            <li><a href="visualisation-donnees-tableau.html">Visualisation de données - Tableau</a></li>
+            <li><a href="visualisation-donnees-d3.html">Visualisation de données - D3</a></li>
+            <li role="separator" class="divider"></li>
+            <li class="dropdown-header">Master</li>
+            <li><a href="slides/cnam-classif-modeles.html">Classification et Modèles de mélange</a></li>
+            <li><a href="analyse-donnees-massives.html">Analyse de Données Massives</a></li>
+            <li class="dropdown-header">Iran</li>
+            <li><a href="stat-prog-R.html">Statistical Programming using R</a></li>
+          </ul>
+        </li>
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button">Recherche <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li><a href="recherche.html">Sujets</a></li>
+            <li><a href="publications.html">Publications</a></li>
+          </ul>
+        </li>
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button">Réalisations <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li><a href="realisations.html">Détail</a></li>
+            <li role="separator" class="divider"></li>
+            <li><a href="http://up5.fr/explore-data" target="_blank">explore-data</a></li>
+            <li><a href="http://fxjollois.github.io/cours-sql/" target="_blank">Appli web de cours pour SQL</a></li>
+          </ul>
+        </li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container-fluid -->
+</div>
+<div class="contenu">
+
+<div class="fluid-row" id="header">
+
+
+
+<h1 class="title toc-ignore">Test de différents <em>inputs</em></h1>
+<h3 class="subtitle"><em>Compléments sur R - STID 1ère année</em></h3>
+
+</div>
+
+
+<p>Comme nous l’avons vu dans le précédent TP, nous pouvons donc créer des interactions avec l’utilisation via des <em>inputs</em>. Nous avons vu pour le moment une liste de choix unique, via la fonction <code>selectInput()</code>. Nous allons voir ici d’autres éléments disponibles.</p>
+<div id="inputs" class="section level2">
+<h2><em>Inputs</em></h2>
+<p>En utilisant le code qui suit, vous verrez le rendu et les sorties générées par tous les <em>inputs</em> vus dans ce TP.</p>
+<ul>
+<li><code>ui.R</code></li>
+</ul>
+<pre class="r"><code>library(shiny)
+
+shinyUI(fluidPage(
+    title = &quot;Test des inputs&quot;,
+    sidebarLayout(
+        sidebarPanel(
+            numericInput(inputId = &quot;numeric&quot;, label = &quot;numericInput&quot;, 
+             value = 2, min = 0, max = 5),
+            sliderInput(inputId = &quot;slider&quot;, label = &quot;sliderInput&quot;, 
+                        value = 2, min = 0, max = 5),
+            checkboxInput(inputId = &quot;check&quot;, label = &quot;checkboxInput&quot;, value = FALSE),
+            textInput(inputId = &quot;texte&quot;, label = &quot;textInput&quot;, 
+                      value = &quot;texte&quot;),
+            radioButtons(inputId = &quot;radio&quot;, label = &quot;radioButtons&quot;, 
+                         choices = c(&quot;radio 1&quot;, &quot;radio 2&quot;, &quot;radio 3&quot;), 
+                         selected = &quot;radio 2&quot;, inline = TRUE),
+            checkboxGroupInput(inputId = &quot;checkgroup&quot;, label = &quot;checkboxGroupInput&quot;, 
+                               choices = c(&quot;check 1&quot;, &quot;check 2&quot;, &quot;check 3&quot;),
+                               selected = c(&quot;check 1&quot;, &quot;check 3&quot;)),
+            dateInput(inputId = &quot;date&quot;, label = &quot;dateInput&quot;, 
+                      value = &quot;2017-04-24&quot;, min = &quot;2017-01-01&quot;, max = &quot;2017-12-31&quot;)
+        ),
+        mainPanel(
+            tableOutput(&quot;sortie&quot;)
+        )
+    )
+))</code></pre>
+<ul>
+<li><code>server.R</code></li>
+</ul>
+<pre class="r"><code>library(shiny)
+
+shinyServer(function(input, output) {
+    output$sortie = renderTable({
+        entrees = c(&quot;numeric&quot;, &quot;slider&quot;, &quot;check&quot;, &quot;texte&quot;, &quot;radio&quot;, &quot;checkgroup&quot;, &quot;date&quot;)
+        data.frame(
+            input = entrees,
+            type = sapply(entrees, 
+                          function(e) return(class(input[[e]]))),
+            valeur = sapply(entrees, 
+                            function(e) return(paste(input[[e]], 
+                                                     collapse = &quot;, &quot;)))
+        )
+    })
+})</code></pre>
+<div id="numerique" class="section level3">
+<h3>Numérique</h3>
+<div id="directement" class="section level4">
+<h4>directement</h4>
+<p>Pour la saisie d’une valeur numérique (au clavier oualors avec des flèches montante et descendante), nous utilisons la fonction <code>numericIput()</code> telle que présentée ci-dessous. Les paramètres de cette fonction sont les suivants :</p>
+<ul>
+<li><code>inputId</code> : identifiant de l’<em>input</em></li>
+<li><code>label</code> : titre de l’<em>input</em></li>
+<li><code>value</code> : valeur initiale</li>
+<li><code>min</code> : valeur minimale permise (pas de limite par défaut)</li>
+<li><code>max</code> : valeur maximale permise (pas de limite par défaut)</li>
+<li><code>step</code> ; pas entre deux valeurs consécutives (1 par défaut)</li>
+</ul>
+<p>Elle prend au minimum les trois premiers paramètres (identifiant, titre, valeur initiale), qui sont communs à tous les <em>inputs</em> que nous allons voir par la suite.</p>
+<div id="exemple" class="section level5">
+<h5>Exemple</h5>
+<p>On définit ici une zone de saisie pour un nombre entre 0 et 5, valant 2 par défaut.</p>
+<ul>
+<li><code>ui.R</code></li>
+</ul>
+<pre class="r"><code>numericInput(inputId = &quot;numeric&quot;, label = &quot;numericInput&quot;, 
+             value = 2, min = 0, max = 5)</code></pre>
+</div>
+</div>
+<div id="via-un-curseur" class="section level4">
+<h4>via un curseur</h4>
+<p>Il existe aussi la fonction <code>sliderInput()</code> permettant de créer un curseur permettant de choisir, via le déplacement de celui-ci, la valeur voulue. Les paramètres de base sont les mêmes que pour le <code>numericInput()</code>, mais il en existe d’autres plus spécifique (que nous ne verrons pas ici). En plus des trois paramètres à indiquer (<code>inputId</code>, <code>label</code>, <code>value</code>), il faut ici bien évidemment spécifier le minimum et le maximum possible.</p>
+<div id="exemple-1" class="section level5">
+<h5>Exemple</h5>
+<p>On reprend les mêmes possibilités que ci-dessus mais avec un <em>slider</em> donc.</p>
+<ul>
+<li><code>ui.R</code></li>
+</ul>
+<pre class="r"><code>sliderInput(inputId = &quot;slider&quot;, label = &quot;sliderInput&quot;, 
+            value = 2, min = 0, max = 5)</code></pre>
+</div>
+</div>
+</div>
+<div id="booleen" class="section level3">
+<h3>Booléen</h3>
+<p>Pour sélectionner une option, nous disposons de la fonction <code>checkboxInput()</code> renvoyant un booléen égale à <code>TRUE</code> si la case est cochée, et <code>FALSE</code> sinon. Celle-ci prend les mêmes trois paramètre de base (identifiant, titre et valeur initiale). Il faut notre ici que le contenu de <code>label</code> n’est pas affichée au dessus comme pour les autres <em>inputs</em>, mais à droite de la case à cocher.</p>
+<div id="exemple-2" class="section level5">
+<h5>Exemple</h5>
+<p>On créé ici une <em>checkbox</em>, non cochée au début de l’application.</p>
+<ul>
+<li><code>ui.R</code></li>
+</ul>
+<pre class="r"><code>checkboxInput(inputId = &quot;check&quot;, label = &quot;checkboxInput&quot;, value = FALSE)</code></pre>
+</div>
+</div>
+<div id="texte" class="section level3">
+<h3>Texte</h3>
+<div id="texte-libre-court" class="section level4">
+<h4>Texte libre court</h4>
+<p>Pour la saisie d’une chaîne de caractères simple (pas plus d’une trentaine de caractères), il existe la fonction <code>textInput()</code>, prenant les trois mêmes paramètres de base. Ici, il n’est pas obligatoire de donner une valeur intiale.</p>
+<div id="exemple-3" class="section level5">
+<h5>Exemple</h5>
+<p>Ici, on permet la saisie d’un texte court, avec comme valeur par défaut <code>&quot;texte&quot;</code>.</p>
+<ul>
+<li><code>ui.R</code></li>
+</ul>
+<pre class="r"><code>textInput(inputId = &quot;texte&quot;, label = &quot;textInput&quot;, 
+          value = &quot;texte&quot;)</code></pre>
+</div>
+</div>
+<div id="choix-unique-dans-une-liste-courte" class="section level4">
+<h4>Choix unique dans une liste courte</h4>
+<p>Si on souhaite que l’utilisateur puisse choisir dans une liste courte, en plus de la fonction <code>selectInput()</code> (permettant de gérer une liste de choix assez longue), nous utilisons la fonction <code>radioButtons()</code>, qui affichera tous les choix possibles.</p>
+<p>Ici, il n’y a pas le paramètre <code>value</code>, c’est le paramètre <code>choice</code> qui permettra de lister les valeurs possibles, via un vecteur de chaînes de caractères.</p>
+<p>Par défaut, c’est la première valeur qui est sélectionnée, mais il est possible de spécifier celle voulue par défaut avec le paramètre <code>selected</code>.</p>
+<p>Le paramètre <code>inline</code> lui permet d’aligner la liste de choix sur la même ligne, plutôt que l’un au dessus de l’autre.</p>
+<div id="exemple-4" class="section level5">
+<h5>Exemple</h5>
+<p>Ici, on donne le choix entre trois valeurs (<code>&quot;radio 1&quot;</code>, <code>&quot;radio 2&quot;</code>, <code>&quot;radio 3&quot;</code>), avec la valeur <code>&quot;radio 2&quot;</code> choisie par défaut. Et on place les éléments en ligne.</p>
+<ul>
+<li><code>ui.R</code></li>
+</ul>
+<pre class="r"><code>radioButtons(inputId = &quot;radio&quot;, label = &quot;radioButtons&quot;, 
+             choices = c(&quot;radio 1&quot;, &quot;radio 2&quot;, &quot;radio 3&quot;), 
+             selected = &quot;radio 2&quot;, inline = TRUE)</code></pre>
+</div>
+</div>
+<div id="choix-multiple-dans-une-liste-courte" class="section level4">
+<h4>Choix multiple dans une liste courte</h4>
+<p>Lorsque l’on veut que l’utilisateur ait le choix de sélectionner plusieurs valeurs possibles pari celles listées, il faut utiliser la fonction <code>ceckboxGroupInput()</code>. De même que pour <code>radioButtons()</code>, les valeurs possibles sont indiquées dans <code>choices</code>. Et on peut indiquer quelles <em>checkbox</em> sont cochées au début de l’application.</p>
+<div id="exemple-5" class="section level5">
+<h5>Exemple</h5>
+<p>La liste des choix possibles est ici <code>&quot;check 1&quot;</code>, <code>&quot;check 2&quot;</code> et <code>&quot;check 3&quot;</code>. Par défaut, la première et la dernière valeur sont choisies.</p>
+<ul>
+<li><code>ui.R</code></li>
+</ul>
+<pre class="r"><code>checkboxGroupInput(inputId = &quot;checkgroup&quot;, label = &quot;checkboxGroupInput&quot;, 
+                   choices = c(&quot;check 1&quot;, &quot;check 2&quot;, &quot;check 3&quot;),
+                   selected = c(&quot;check 1&quot;, &quot;check 3&quot;))</code></pre>
+</div>
+</div>
+</div>
+<div id="date" class="section level3">
+<h3>Date</h3>
+<p>Pour sélectionner une date, il existe la fonction <code>dateInput()</code>. Celle-ci prend les trois paramètres de base. Pour la date initiale, il faut soit mettre un obet de type <code>Date</code>, soit une date au format chaîne de caractères (de type <code>&quot;aaaa-mm-jj&quot;</code>). Ici aussi, il est possible de fixer des dates mnimales et maximales.</p>
+<div id="exemple-6" class="section level5">
+<h5>Exemple</h5>
+<p>On demande à l’utilisateur de rentrer une date sur l’année 2017 (cf le début et la fin de période - avec <code>min</code> et <code>max</code>). La date choisie par défaut est celle du 24 avril 2017.</p>
+<ul>
+<li><code>ui.R</code></li>
+</ul>
+<pre class="r"><code>dateInput(inputId = &quot;date&quot;, label = &quot;dateInput&quot;, 
+          value = &quot;2017-04-24&quot;, min = &quot;2017-01-01&quot;, max = &quot;2017-12-31&quot;)</code></pre>
+</div>
+</div>
+</div>
+<div id="a-faire" class="section level2">
+<h2>A faire</h2>
+<p>Pour tester ces <em>inputs</em>, nous allons utiliser la variable <code>co2</code> déjà présente dans <code>R</code>. Celle-ci est dans un format spécifique aux séries temporelles. Le code suivant permet de créer un <code>data.frame</code> utilisable dans une commande <code>ggplot()</code> par exemple.</p>
+<p>Vous devrez utiliser ce <code>data.frame</code> pour la suite, voire lui ajouter des variables.</p>
+<pre class="r"><code>co2_df = data.frame(
+    date = unclass(time(co2)),
+    mesure = unclass(co2)
+)</code></pre>
+<p>Voici le contenu de ce <code>data.frame</code>. Vous remarquerez que les dates sont au format <span class="math inline">\(année + \frac{\#_{mois} - 1}{12}\)</span></p>
+<table>
+<thead>
+<tr class="header">
+<th align="right">date</th>
+<th align="right">mesure</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="right">1959.000</td>
+<td align="right">315.42</td>
+</tr>
+<tr class="even">
+<td align="right">1959.083</td>
+<td align="right">316.31</td>
+</tr>
+<tr class="odd">
+<td align="right">1959.167</td>
+<td align="right">316.50</td>
+</tr>
+<tr class="even">
+<td align="right">1959.250</td>
+<td align="right">317.56</td>
+</tr>
+<tr class="odd">
+<td align="right">1959.333</td>
+<td align="right">318.13</td>
+</tr>
+<tr class="even">
+<td align="right">1959.417</td>
+<td align="right">318.00</td>
+</tr>
+</tbody>
+</table>
+<div id="note-sur-ggplot" class="section level3">
+<h3>Note sur <code>ggplot()</code></h3>
+<p>Il est possible de sauvegarder un graphique réalisé avec <code>ggplot()</code> dans une variable pour l’afficher plus tard, mais aussi pour lui ajouter un élément pour paramètré ce graphique. L’exmple ci-dessous créé la représentation de l’évolution du <code>co2</code>.</p>
+<pre class="r"><code>graphique = ggplot(co2_df, aes(date, mesure)) + geom_line()</code></pre>
+<p>Une fois qu’il est créé, pour l’afficher, il faut l’appeler directement. Ou alors utiliser la fonction <code>print()</code>.</p>
+<pre class="r"><code>graphique</code></pre>
+<p><img src="complements-r-tp5_files/figure-html/unnamed-chunk-14-1.png" width="672" /></p>
+<p>On ajoute par la suite un titre.</p>
+<pre class="r"><code>graphique_bis = graphique + ggtitle(&quot;Evolution du co2&quot;)
+graphique_bis</code></pre>
+<p><img src="complements-r-tp5_files/figure-html/unnamed-chunk-15-1.png" width="672" /></p>
+<p>Puis on supprime les labels en <span class="math inline">\(x\)</span> et en <span class="math inline">\(y\)</span>.</p>
+<pre class="r"><code>graphique_ter = graphique_bis + xlab(&quot;&quot;) + ylab(&quot;&quot;)
+print(graphique_ter)</code></pre>
+<p><img src="complements-r-tp5_files/figure-html/unnamed-chunk-16-1.png" width="672" /></p>
+</div>
+<div id="demande" class="section level3">
+<h3>Demande</h3>
+<p>Créer une application présentant l’évolution du <code>co2</code> et permettant les différents choix indiqués ci-dessous. Celle-ci doit avoir une zone à gauche permettant la saisie par l’utilisateur des options possibles. Le graphique et la table résumée doit ainsi être dans une zone à gauche.</p>
+<div id="decoupage-en-variable-ordinale" class="section level4">
+<h4>Découpage en variable ordinale</h4>
+<p>L’utilisateur doit saisir une valeur entre 2 et 10 (5 par défaut). Celle-ci représente le nombre d’intervalles à utiliser pour transformer la variable <code>co2</code> en variable qualitative (à l’aide la fonction <code>cut()</code>). L’application affichera un tableau avec les intervalles ainsi créés et le nombre de valeurs correspondant à chacune.</p>
+<p>Voici un exemple d’utilisation.</p>
+<pre class="r"><code>co2_ordinale = cut(co2, 5)
+summary(co2_ordinale)</code></pre>
+<pre><code>## (313,324] (324,335] (335,345] (345,356] (356,367] 
+##       123       106        86        88        65</code></pre>
+<p><strong>Aide</strong> : on utilise ici un <code>numericInput()</code></p>
+</div>
+<div id="titre-du-graphique" class="section level4">
+<h4>Titre du graphique</h4>
+<p>L’utilisateur doit rentrer un texte, celui-ci sera le titre du graphique représentant l’évolution de la variable <code>co2</code> dans le temps. L’application doit donc afficher le graphique avec le titre mis à jour (fonction <code>ggtitle()</code>).</p>
+<p><strong>Aide</strong> : on utilise ici un <code>textInput()</code></p>
+</div>
+<div id="moyennes-mobiles" class="section level4">
+<h4>Moyennes mobiles</h4>
+<p>L’utilisateur doit choisir une valeur entre 1 et 100 pour déterminer la taille de la fenêtre glissante pour le calcul de la moyenne mobile. Ce calcul sera fait grâce à la fonction <code>movingFun()</code> du package <code>raster</code> (à installer donc). La courbe des moyennes mobiles sera affichée en couleur (à choisir, cf la fonction <code>colors()</code> pour la liste des couleurs possibles) sur le graphique.</p>
+<p><strong>Aide</strong> : on utilise ici un <code>sliderInput()</code></p>
+</div>
+<div id="couleur-de-la-courbe" class="section level4">
+<h4>Couleur de la courbe</h4>
+<p>L’utilisateur a le choix entre 3 couleurs (à définir par vous-même) pour la courbe de l’évolution du <code>co2</code>. On utilisera donc la couleur choisie pour le graphique. Vous devez définir une des couleurs par défaut.</p>
+<p><strong>Aide</strong> : on utilise ici un <code>radioButtons()</code></p>
+</div>
+<div id="moyennes-mobiles-a-afficher" class="section level4">
+<h4>Moyennes mobiles à afficher ?</h4>
+<p>L’utilisateur doit cocher pour avoir la courbe des moyennes mobiles affichées ou non (par défaut, elle sera affichée). Le graphique doit donc prendre en compte le choix de l’utilisateur.</p>
+<p><strong>Aide</strong> : on utilise ici un <code>checkboxInput()</code></p>
+</div>
+<div id="affichage-des-titres-et-labels" class="section level4">
+<h4>Affichage des titres et labels</h4>
+<p>L’utilisateur va pouvoir choisir s’il veut le label des <span class="math inline">\(x\)</span>, le label des <span class="math inline">\(y\)</span>, et/ou le titre. Par défaut, seul le titre sera visible.</p>
+<p><strong>Aide</strong> : on utilise ici un <code>checkboxGroupInput()</code></p>
+</div>
+<div id="marquage-dune-date" class="section level4">
+<h4>Marquage d’une date</h4>
+<p>L’utilisateur doit choisir une date sur la période de mesure du <code>co2</code> (regardez l’aide pour plus d’informations). De cette date, nous ne retenons que le mois et l’année pour ajouter une ligne verticale correspondante sur le graphique.</p>
+<p>Par exemple, si l’utilisateur choisi le 1er janvier 1980, voici le résultat que l’on aurait.</p>
+<pre class="r"><code>date_choisie = as.Date(&quot;1980-01-01&quot;)
+date_choisie_annee = as.numeric(format(date_choisie, &quot;%Y&quot;))
+date_choisie_mois = as.numeric(format(date_choisie, &quot;%m&quot;))
+date_calculee = date_choisie_annee + (date_choisie_mois - 1) / 12
+graphique + geom_vline(xintercept = date_calculee, col = &quot;red&quot;)</code></pre>
+<p><img src="complements-r-tp5_files/figure-html/unnamed-chunk-18-1.png" width="672" /></p>
+<p><strong>Aide</strong> : on utilise ici un <code>dateInput()</code></p>
+</div>
+</div>
+</div>
+
+</div>
+<div class="footer">
+      Site créé avec <a href="http://www.r-project.org" target="_blank"><code>R</code></a> et la 
+      librairie  <a href="http://rmarkdown.rstudio.com/" target="_blank"><code>rmarkdown</code></a>.
+</div>
+<script>
+    $("#TOC").css("margin-top", "100px");
+</script>
+
+
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

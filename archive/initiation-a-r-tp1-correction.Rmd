@@ -1,0 +1,81 @@
+---
+title: TP1 - correction
+subtitle: Initiation a `R` - STID 1ère année
+---
+
+```{r init, include=FALSE}
+knitr::opts_chunk$set(prompt = TRUE, comment = NA)
+```
+
+## Exercices 
+
+### Création de vecteurs
+
+1. Créer un vecteur `v1` qui va de $1$ à $-1$ par pas de $-0.25$ 
+```{r}
+v1 = seq(1, -1, by = -.25)
+print(v1)
+```
+2. Créer un vecteur `v2` qui va de $0$ à $100$ d'une longueur de $23$
+```{r}
+v2 = seq(0, 100, length = 23)
+print(v2)
+```
+3. Créer un vecteur `v3` qui contient les chaînes : `"1ère année"`, `"2ème année"`, `"LP"`
+```{r}
+v3 = c("1ère année","2ème année","LP")
+print(v3)
+```
+4. Créer un vecteur `v4` qui répéte trois fois la chaîne `"promo"`
+```{r}
+v4 = rep("promo", 3)
+print(v4)
+```
+5. Regrouper les vecteurs `v3` et `v4`, pour avoir le vecteur `v5` suivant
+```{r}
+v5 = paste(v4, v3, sep = "=")
+print(v5)
+```
+6. Améliorer le code suivant pour avoir le vecteur `v6` suivant 
+```{r}
+v6 = paste(v4, paste("'", v3, "'", sep = ""), sep = "=")
+print(v6)
+```
+7. Créer automatiquement le vecteur `v7` qui suit à l'aide des fonctions `c()`, `seq()`, `paste()`, `rep()`
+```{r}
+v7 = paste(c("x", "y"), rep(seq(1,4), each = 2), sep = "")
+print(v7)
+```
+
+
+### Données présentes
+
+Sur le jeu de données `swiss`
+
+1. Donner le nombre de lignes et le nombre de colonnes, séparemment
+```{r}
+nrow(swiss)
+ncol(swiss)
+```
+2. Afficher les noms de variables
+```{r}
+names(swiss)
+```
+3. Afficher les 10 premières lignes
+```{r}
+head(swiss, 10)
+```
+4. Afficher les colonnes `Agriculture` et `Education`, en `data.frame`
+```{r}
+swiss[c("Agriculture", "Education")]
+```
+5. Afficher les lignes pour lesquelles la variable `Infant.Mortality` est inférieure à 17
+```{r}
+swiss[swiss$Infant.Mortality <= 17,]
+```
+6. Combiner les deux demandes précédentes
+```{r}
+swiss[swiss$Infant.Mortality <= 17,c("Agriculture", "Education")]
+```
+
+

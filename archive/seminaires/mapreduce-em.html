@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Paradigme MapReduce et algorithme EM</title>
+
+  <meta charset="utf-8">
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  <meta name="generator" content="pandoc" />
+
+
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+
+  <base target="_blank">
+
+  <script type="text/javascript">
+    var SLIDE_CONFIG = {
+      // Slide settings
+      settings: {
+                title: 'Paradigme MapReduce et algorithme EM',
+                        useBuilds: true,
+        usePrettify: true,
+        enableSlideAreas: true,
+        enableTouch: true,
+                      },
+
+      // Author information
+      presenters: [
+            ]
+    };
+  </script>
+
+  <link href="libs/ioslides-13.5.1/fonts/fonts.css" rel="stylesheet" />
+  <link href="libs/ioslides-13.5.1/theme/css/default.css" rel="stylesheet" />
+  <link href="libs/ioslides-13.5.1/theme/css/phone.css" rel="stylesheet" />
+  <script src="libs/ioslides-13.5.1/js/modernizr.custom.45394.js"></script>
+  <script src="libs/ioslides-13.5.1/js/prettify/prettify.js"></script>
+  <script src="libs/ioslides-13.5.1/js/prettify/lang-r.js"></script>
+  <script src="libs/ioslides-13.5.1/js/prettify/lang-yaml.js"></script>
+  <script src="libs/ioslides-13.5.1/js/hammer.js"></script>
+  <script src="libs/ioslides-13.5.1/js/slide-controller.js"></script>
+  <script src="libs/ioslides-13.5.1/js/slide-deck.js"></script>
+
+  <style type="text/css">
+
+    b, strong {
+      font-weight: bold;
+    }
+
+    em {
+      font-style: italic;
+    }
+
+    slides > slide {
+      -webkit-transition: all 0.4s ease-in-out;
+      -moz-transition: all 0.4s ease-in-out;
+      -o-transition: all 0.4s ease-in-out;
+      transition: all 0.4s ease-in-out;
+    }
+
+    .auto-fadein {
+      -webkit-transition: opacity 0.6s ease-in;
+      -webkit-transition-delay: 0.4s;
+      -moz-transition: opacity 0.6s ease-in 0.4s;
+      -o-transition: opacity 0.6s ease-in 0.4s;
+      transition: opacity 0.6s ease-in 0.4s;
+      opacity: 0;
+    }
+
+  </style>
+
+
+</head>
+
+<body style="opacity: 0">
+
+<slides>
+
+  <slide class="title-slide segue nobackground">
+        <!-- The content of this hgroup is replaced programmatically through the slide_config.json. -->
+    <hgroup class="auto-fadein">
+      <h1 data-config-title><!-- populated from slide_config.json --></h1>
+      <h2 data-config-subtitle><!-- populated from slide_config.json --></h2>
+      <p data-config-presenter><!-- populated from slide_config.json --></p>
+          </hgroup>
+  </slide>
+
+<slide class=''><hgroup><h2>F.-X. Jollois</h2></hgroup><article  id="f.-x.-jollois">
+
+<h3>Séminaire équipe Fouille de données, LIPADE</h3>
+
+<h3>1er décembre 2014</h3>
+
+<p>Présentation basée sur la lecture des articles présentés ci-après et quelques autres sources.</p>
+
+<p>But : faire un point technique sur le sujet</p>
+
+</article></slide><slide class=''><hgroup><h2>Introduction</h2></hgroup><article  id="introduction">
+
+<p>Quelques références intéressantes :</p>
+
+<ul>
+<li><em>Parallel K-Means Clustering Based on MapReduce</em>, Weizhong Zhao et al <a href='www.geog.ucsb.edu/~hu/papers/ParallelK.pdf' title=''>article</a></li>
+<li><em>Large-Scale Data Sets Clustering Based on MapReduce and Hadoop</em>, Ping ZHOU et al <a href='http://www.jofcis.com/publishedpapers/2011_7_16_5956_5963.pdf' title=''>article</a></li>
+<li><em>Map-Reduce for Machine Learning on Multicore</em>, ChengTao Chu et al <a href='http://www.cs.stanford.edu/~ang/papers/nips06-mapreducemulticore.pdf' title=''>article</a></li>
+<li><em>Heterogeneous Computing Based K-Means Clustering Using Hadoop-MapReduce Framework</em>, Ganage et al <a href='http://www.ijarcsse.com/docs/papers/Volume_3/6_June2013/V3I6-0292.pdf' title=''>article</a></li>
+<li><em>Serial and parallel implementations of model-based clustering via parsimonious Gaussian mixture models</em>, P.D. McNicholas et al <a href='http://www.sciencedirect.com/science/article/pii/S0167947309000632' title=''>article</a></li>
+<li><em>Fully Distributed EM for Very Large Datasets</em>, Jason Wolfe et al <a href='http://w01fe.com/berkeley/pubs/08-icml-em.pdf' title=''>article</a></li>
+</ul>
+
+</article></slide><slide class=''><hgroup><h2>Plan de la présentation</h2></hgroup><article  id="plan-de-la-presentation">
+
+<ul>
+<li>Paradigme de MapReduce</li>
+<li>Dans un cadre de classification</li>
+<li>Adaptation de EM à MapReduce</li>
+<li>Conclusion</li>
+<li>Alternatives</li>
+</ul>
+
+</article></slide><slide class=''><hgroup><h2>Présentation de MapReduce</h2></hgroup><article  id="presentation-de-mapreduce">
+
+<ul>
+<li>Framework développé par Google</li>
+<li>Permet l&#39;écriture simple de programmes sur des clusters informatiques (possiblement très gros)</li>
+<li>Idée de base de la parallélisation des tâches : diviser pour régner</li>
+<li>2 étapes donc :
+
+<ul>
+<li>Etape 1 :
+
+<ol>
+<li>Diviser le travail à faire en plusieurs tâches</li>
+<li>Réaliser les tâches en parallèle</li>
+</ol></li>
+<li>Etape 2 :
+
+<ol>
+<li>Récupérer les différents résultats</li>
+<li>Regrouper ceux-ci pour obtenir le résultat final</li>
+</ol></li>
+</ul></li>
+</ul>
+
+</article></slide><slide class=''><hgroup><h2>Paradigme de MapReduce</h2></hgroup><article  id="paradigme-de-mapreduce">
+
+<p>Le framework MapReduce est constitué de : - un seul <em>JobTracker</em>, qui sera le chef d&#39;orchestre : - programmation (<em>scheduling</em>) des jobs aux musiciens - gestion des défaillances de ceux-ci - un <em>TaskTracker</em> par noeud du cluster, qui sera un musicien : - exécution des tâches demandés par le chef</p>
+
+<p>Le travail se fait exclusivement sur des paires \(&lt; key, value&gt;\) - Entrées : ensemble de paires \(&lt; key, value&gt;\) - Sorties d&#39;un job : paires \(&lt; key, value&gt;\)</p>
+
+</article></slide><slide class=''><hgroup><h2>Schéma de MapReduce</h2></hgroup><article  id="schema-de-mapreduce">
+
+<p><img src="mapreduce-em/Mapreduce.png" style="margin: 0 auto;" width="673"></p>
+
+<div class="footnote">
+Source : <a href="http://commons.wikimedia.org/wiki/File:Mapreduce.png" target="_blank">http://commons.wikimedia.org/wiki/File:Mapreduce.png</a></div>
+
+</article></slide><slide class=''><hgroup><h2>Etapes Map et Reduce</h2></hgroup><article  id="etapes-map-et-reduce">
+
+<p>Comme indiqué, cela s&#39;articule autour de deux grandes étapes (<strong>Map</strong> et <strong>Reduce</strong>) : - Etape <strong>Map</strong> : - réalisé dans chaque noeud du cluster - souvent un seul des deux paramètres intéressant - calcule une liste de couples \(&lt; key, value &gt;\) - Etape <strong>Reduce</strong> : - traitement sur les valeurs (\(value\)) pour chaque \(key\) - travail possible en parallèle - tous les couples avec le même \(key\) arrivent au même <em>worker</em></p>
+
+</article></slide><slide class=''><hgroup><h2>Exemple basique : comptage de mots</h2></hgroup><article  id="exemple-basique-comptage-de-mots">
+
+<p>Deux fonctions à écrire : <code>map(key, value)</code> et <code>reduce(key, value)</code></p>
+
+<pre class = 'prettyprint lang-php'>map(string key, string value) {
+    // key: document name
+    // value: document contents
+    for each word w in value 
+        emit &lt;w, 1&gt;
+}
+
+reduce(string key, list value) {
+    // key: word
+    // value: list of each word appareance
+    sum = 0
+    for each v in value
+        sum = sum + v
+    emit &lt;key, sum&gt;
+}</pre>
+
+<div class="footnote">
+Ceci n&#39;est pas un exemple littéral, mais une adaptation pour illustration</div>
+
+</article></slide><slide class=''><hgroup><h2>Exemple basique : comptage de mots</h2></hgroup><article  id="exemple-basique-comptage-de-mots-1">
+
+<p><img src="mapreduce-em/example-mapreduce-wordcount.png" width=100%></p>
+
+<div class="footnote">
+Source : <a href="http://blog.trifork.com/wp-content/uploads/2009/08/" target="_blank">http://blog.trifork.com/wp-content/uploads/2009/08/</a></div>
+
+</article></slide><slide class=''><hgroup><h2>Algorithme plus détaillé de MapReduce</h2></hgroup><article  id="algorithme-plus-detaille-de-mapreduce">
+
+<ul>
+<li>Lecture des entrées dans le système de fichier distribué, découpages en blocs de taille identique, et assignation de chaque bloc à un <em>worker</em></li>
+<li>Application de la fonction <code>map()</code> dans chaque <em>worker</em></li>
+<li>Distribution des résultats de <code>map()</code> (étape <strong>Shuffle</strong>) en fonction des clés</li>
+<li>Application de la fonction <code>reduce()</code> (en parallèle ou non, selon les besoins)</li>
+<li>Ecriture de la sortie dans le système de fichier distribué (généralement)</li>
+</ul>
+
+</article></slide><slide class=''><hgroup><h2>Caractéristiques</h2></hgroup><article  id="caracteristiques">
+
+<ul>
+<li>Modèle de programmation simple :
+
+<ul>
+<li>deux fonctions à écrire (<code>map()</code> et <code>reduce()</code>)</li>
+<li>indépendant du système de stockage</li>
+<li>adaptatif à tout type de données</li>
+</ul></li>
+<li>Ajout possible d&#39;une fonction <code>combine()</code> des résultats de <code>map()</code> pour les couples avec même clé</li>
+<li>Système gérant seul le découpage, l&#39;allocation et l&#39;exécution</li>
+<li>Tolérance aux défaillances (redémarrage de tâches, réaffectation)</li>
+<li>Parallélisation invisible à l&#39;utilisateur</li>
+</ul>
+
+</article></slide><slide class=''><hgroup><h2>Quelques critiques</h2></hgroup><article  id="quelques-critiques">
+
+<ul>
+<li>Pas de garantie d&#39;être rapide : attention à l&#39;étape <em>shuffle</em> qui peut prendre du temps, et qui n&#39;est pas adaptable par l&#39;utilisateur</li>
+<li>Coût de communication pouvant être important</li>
+<li>Pas adapté à des problèmes où les données peuvent tenir en mémoire ou à un petit cluster</li>
+<li>Pas de support de langage haut niveau, tel que SQL</li>
+<li>Est une réelle nouveauté ?
+
+<ul>
+<li>Proche d&#39;autres implémentations, tel que <em>Clusterpoint</em> ou <em>MongoDB</em></li>
+<li>Facilement applicable avec PL/SQL sous <em>Oracle</em></li>
+</ul></li>
+<li>Pas optimisé au niveau des entres/sorties, et donc pas forcément adapté à un problème de <em>Machine Learning</em> dans lequel on doit régulièrement lire le même jeu de données plusieurs fois</li>
+</ul>
+
+</article></slide><slide class=''><hgroup><h2>Implémentations</h2></hgroup><article  id="implementations">
+
+<p>Toutes <em>open source</em> et <em>forkable</em> sur GitHub</p>
+
+<ul>
+<li><strong>Hadoop</strong> <a href='http://hadoop.apache.org/' title=''>site web</a>
+
+<ul>
+<li>Framework basé sur le système de fichiers distribués <em>HDFS</em></li>
+</ul></li>
+<li><strong>CouchDB</strong> <a href='http://couchdb.apache.org/' title=''>site web</a>
+
+<ul>
+<li>BD <em>NoSQL</em>, basée sur JSON et JavaScript</li>
+</ul></li>
+<li><strong>InfiniSpan</strong> <a href='http://infinispan.org/' title=''>site web</a>
+
+<ul>
+<li>BD <em>NoSQL</em></li>
+</ul></li>
+<li><strong>MongoDB</strong> <a href='http://www.mongodb.org/' title=''>site web</a>
+
+<ul>
+<li>BD <em>NoSQL</em>, basée sur JSON et JavaScript</li>
+</ul></li>
+<li><strong>Riak</strong> <a href='http://basho.com/riak/' title=''>site web</a>
+
+<ul>
+<li>BD <em>NoSQL</em></li>
+</ul></li>
+</ul>
+
+</article></slide><slide class=''><hgroup><h2>Et dans un cadre de classification</h2></hgroup><article  id="et-dans-un-cadre-de-classification">
+
+<ul>
+<li>Proposition d&#39;implémentation des fonctions <code>map()</code> et <code>reduce()</code> dans le cadre de \(k\)-means en dimension 2</li>
+<li>Présentation des détails de certains articles :
+
+<ul>
+<li>Implémentations sensiblement différentes selon les articles</li>
+<li>Dans l&#39;article <em>Parallel K-Means Clustering Based on Mapreduce</em>, Weizhong Zhao et al <a href='www.geog.ucsb.edu/~hu/papers/ParallelK.pdf' title=''>lien</a></li>
+<li>Dans l&#39;article <em>Map-Reduce for Machine Learning on Multicore</em>, Cheng-Tao Chu et al <a href='http://www.cs.stanford.edu/~ang/papers/nips06-mapreducemulticore.pdf' title=''>lien</a></li>
+<li>Dans l&#39;article <em>Large-Scale Data Sets Clustering Based on MapReduce and Hadoop</em>, Ping ZHOU et al <a href='http://www.jofcis.com/publishedpapers/2011_7_16_5956_5963.pdf' title=''>lien</a></li>
+</ul></li>
+<li>Réflexion dans le cadre de <em>EM</em></li>
+</ul>
+
+</article></slide><slide class=''><hgroup><h2>Dans le cadre de \(k\)-means - <code>map()</code></h2></hgroup><article  id="dans-le-cadre-de-k-means---map">
+
+<p>Proposition d&#39;implémentation des fonctions <code>map()</code> et <code>reduce()</code> en dimension 2</p>
+
+<pre class = 'prettyprint lang-php'>map(key, value) { 
+    //key: subset id
+    // value: subset of the dataset
+    for each i in values {
+        ki = assignCluster(i, centers)
+        centersNew[ki][x] += i[x]
+        centersNew[ki][y] += i[y]
+        centersNew[ki][n] += 1 // or i[n] if weighted objects
+    }
+    for each k {
+        emit (k, centersNew[k]) // where centersNew[k] is a vector (x, y, n)
+    }
+}</pre>
+
+</article></slide><slide class=''><hgroup><h2>Dans le cadre de \(k\)-means - <code>reduce()</code></h2></hgroup><article  id="dans-le-cadre-de-k-means---reduce">
+
+<pre class = 'prettyprint lang-php'>reduce(key, value) { 
+    // key: cluster id
+    // value: list of vectors (x, y, n) emit by map() functions
+    x = 0, y = 0, n = 0
+    for each v in value {
+        x += v[x], y += v[y], n += v[n]
+    }
+    x = x / n
+    y = y / n
+    emit(k, [x, y, n])
+}</pre>
+
+</article></slide><slide class=''><hgroup><h2><em>Parallel K-Means Clustering Based on MapReduce</em>, Weizhong Zhao et al <a href='www.geog.ucsb.edu/~hu/papers/ParallelK.pdf' title=''>lien</a></h2></hgroup><article  id="parallel-k-means-clustering-based-on-mapreduce-weizhong-zhao-et-al-lien">
+
+<ul>
+<li>Implémentation de \(k\)-means dans le contexte MapReduce</li>
+<li>3 fonctions détaillées :
+
+<ul>
+<li><code>map()</code> :
+
+<ul>
+<li>Entrées : centres des classes, couple (id de l&#39;individu, valeurs pour l&#39;individu)</li>
+<li>Sorties : couple (classe affectée, chaîne représentant les valeurs de l&#39;individu)</li>
+</ul></li>
+<li><code>combine()</code> :
+
+<ul>
+<li>Entrées : couple (id de la classe, liste des individus affectées à la classe)</li>
+<li>Sorties : couple (id de la classe, chaîne représentant les sommes des valeurs et le nombre d&#39;individus)</li>
+</ul></li>
+<li><code>reduce()</code>
+
+<ul>
+<li>Entrées : couple (id de la classe, liste des calculs partiels de somme et des nombres d&#39;individus)</li>
+<li>Sorties : couple (id de la classe, chaîne représentant les centres des classes)</li>
+</ul></li>
+</ul></li>
+</ul>
+
+</article></slide><slide class=''><hgroup><h2><em>Map-Reduce for Machine Learning on Multicore</em>, Cheng-Tao Chu et al <a href='http://www.cs.stanford.edu/~ang/papers/nips06-mapreducemulticore.pdf' title=''>lien</a></h2></hgroup><article  id="map-reduce-for-machine-learning-on-multicore-cheng-tao-chu-et-al-lien">
+
+<ul>
+<li>Adaptation de plusieurs méthodes dans le contexte <em>MapReduce</em></li>
+<li>\(k\)-means :
+
+<ul>
+<li>Découpage des données en sous-groupes</li>
+<li>Calcul de la distance des individus aux centres, par sous-groupes</li>
+<li>Calcul des sommes dans chaque sous-groupes et calcul des nouveaux centroïdes</li>
+</ul></li>
+<li>EM :
+
+<ul>
+<li>chaque mapper travaille sur un sous-groupe spécifique des données</li>
+<li>Dans l&#39;étape E, les mappers calculent les probabilités a posteriori \(t_{ik}\)</li>
+<li>Dans l&#39;étape M :
+
+<ul>
+<li>pour les probabilités d&#39;appartenance aux classes, chaque mapper fait la somme des \(t_{ik}\) et le reducer fait la somme et divise par \(n\)</li>
+<li>pour les moyennes, chaque mapper fait la somme des valeurs pondérées par les probas a posteriori et la somme des probas, et le reducer fait les sommes et la division</li>
+<li>pour les matrices de variance-covariance, chaque mapper fait les sommes localement, et le reducer fait les sommes et la division</li>
+</ul></li>
+</ul></li>
+</ul>
+
+</article></slide><slide class=''><hgroup><h2><em>Large-Scale Data Sets Clustering Based on MapReduce and Hadoop</em>, Ping ZHOU et al <a href='http://www.jofcis.com/publishedpapers/2011_7_16_5956_5963.pdf' title=''>lien</a></h2></hgroup><article  id="large-scale-data-sets-clustering-based-on-mapreduce-and-hadoop-ping-zhou-et-al-lien">
+
+<ul>
+<li>Travail sur des données de type texte (via <em>Document Vector Representation</em> et <em>Vector space model</em>)</li>
+<li>Quatre étapes pour effectuer un \(k\)-means sur les documents :
+
+<ol>
+<li>Preprocessing des documents :
+
+<ul>
+<li>mapping : d&#39;un document \(d\) à une ensemble de \((w\_{md}\),\(n\_{md})\)</li>
+<li>reducer : pour obtenir des couples \((w\_m, n\_{md}) \forall d=1,...,D\)</li>
+</ul></li>
+<li>Deuxième preprocessing pour le calcul de <em>DFR</em> et <em>TF/IDF</em>
+
+<ul>
+<li>via un job MapReduce</li>
+</ul></li>
+<li>Fonction <code>map()</code> pour calcul des distances entre chaque document et chaque centre, et affectation
+
+<ul>
+<li>renvoie un couple \((k, v\_d)\) pour chaque document \(d\) (\(v\_d\) étant ses coordonnées)</li>
+<li>combinaison possible des sorties pour une même valeur de \(k\) avant envoie vers le reducer</li>
+</ul></li>
+<li>Fonction <code>reduce()</code> pour le calcul des nouveaux centres
+
+<ul>
+<li>création d&#39;un tuple \((iteration, k, g\_k, Card\_k)\)</li>
+</ul></li>
+<li>Si convergence, alors arrêt, sinon retour à l&#39;étape 3</li>
+</ol></li>
+</ul>
+
+</article></slide><slide class=''><hgroup><h2>Dans le cadre de <em>EM</em></h2></hgroup><article  id="dans-le-cadre-de-em">
+
+<ul>
+<li>Implémentations suivant les propositions précédentes :
+
+<ul>
+<li><code>map()</code> (étape E) sur les données locales et <code>reduce()</code> pour chaque classe pour le calcul des paramètres</li>
+<li><code>map()</code> pour le calcul local dans les étapes E et M, et <code>reduce()</code> pour regroupement des résultats après chaque passage</li>
+</ul></li>
+<li>Autre possibilité à envisager ?
+
+<ul>
+<li><code>map()</code> qui réalise un algo EM complet localement, avec des paramètres initiaux différents pour chaque noeud (centres, nombre de classes, &#8230;)</li>
+<li><code>reduce()</code> qui regroupe les résultats pour des nombres de classes identiques par exemple</li>
+</ul></li>
+<li>et encore ?</li>
+</ul>
+
+</article></slide><slide class=''><hgroup><h2>Conclusion</h2></hgroup><article  id="conclusion">
+
+<ul>
+<li>MapReduce :
+
+<ul>
+<li>intéressant car facile à programmer et avec pas de réelle gestion de la parallélisation des tâches</li>
+<li>beaucoup de communications</li>
+<li>peut-être pas optimal pour la classification automatique</li>
+</ul></li>
+<li>Alternative de parallèlisation des calculs :
+
+<ul>
+<li>avec une approche décentralisée ou basée sur des arbres (cf ci-après)</li>
+<li>avec une approche <em>In Memory</em> de type <strong>Spark</strong> (cf ci-après)</li>
+</ul></li>
+<li>Utilisation de MPI (<em>Message Passing Interface</em>), en gérant les communications directement et la répartition des tâches</li>
+</ul>
+
+</article></slide><slide class=''><hgroup><h2><em>Fully Distributed EM for Very Large Datasets</em>, Jason Wolfe et al <a href='http://w01fe.com/berkeley/pubs/08-icml-em.pdf' title=''>lien</a></h2></hgroup><article  id="fully-distributed-em-for-very-large-datasets-jason-wolfe-et-al-lien">
+
+<p>Implémentation de EM selon trois topologies différentes : - <strong>MapReduce</strong> : - Etape E sur les données locales par chaque noeud - Reducer qui récupère les résultats et les agrègent pour les renvoyer aux noeuds - Etape M calculé sur les données locales par chaque noeud - <strong>AllPairs</strong> : - Approche décentralisée, et synchronisée - Chaque noeud renvoie à tous les autres noeuds ses résultats locaux - <strong>JunctionTree</strong> : - Réseau de noeuds sous forme d&#39;arbre de structure arbitraire - Résultats locaux renvoyés et retransmis par les noeuds intermédiaires de l&#39;arbre</p>
+
+</article></slide><slide class=''><hgroup><h2>D&#39;autres voies encore</h2></hgroup><article  id="dautres-voies-encore">
+
+<ul>
+<li><strong>Spark</strong> <a href='http://spark.apache.org' title=''>lien</a>
+
+<ul>
+<li>projet Apache</li>
+<li>Framework pour le calcul sur cluster informatique</li>
+</ul></li>
+<li><strong>Distributed R</strong> <a href='https://github.com/vertica/DistributedR' title=''>lien</a>
+
+<ul>
+<li>projet GitHub, mais développé par HP Vertica</li>
+<li>extension permettant de réaliser des programmes bénéficiant de la parallélisation</li>
+</ul></li>
+<li><strong>BID Data Project</strong> <a href='http://bid2.berkeley.edu/bid-data-project/' title=''>lien</a>
+
+<ul>
+<li>projet issu de Berkely, et sur GitHub</li>
+<li>dédié Machine Learning</li>
+</ul></li>
+<li>sous <strong>Python</strong> <a href='https://wiki.python.org/moin/ParallelProcessing' title=''>lien</a>
+
+<ul>
+<li>existence de plusieurs librairies permettant le travail sur plusieurs processeurs</li>
+</ul></li>
+<li><strong>Flink</strong> <a href='http://flink.incubator.apache.org/' title=''>lien</a>
+
+<ul>
+<li>projet Apache en incubation</li>
+</ul></li>
+<li><strong>H2O</strong> <a href='http://0xdata.com/h2o/' title=''>lien</a>
+
+<ul>
+<li>disponible sous GitHub, développé par 0xdata</li>
+<li>dédié Machine Learning, et interfaçable avec R</li>
+</ul></li>
+</ul></article></slide>
+
+
+  <slide class="backdrop"></slide>
+
+</slides>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+<!-- map slide visiblity events into shiny -->
+<script>
+  (function() {
+    if (window.jQuery) {
+       window.jQuery(document).on('slideleave', function(e) {
+         window.jQuery(e.target).trigger('hidden');
+      });
+       window.jQuery(document).on('slideenter', function(e) {
+         window.jQuery(e.target).trigger('shown');
+      });
+    }
+  })();
+</script>
+
+</body>
+</html>

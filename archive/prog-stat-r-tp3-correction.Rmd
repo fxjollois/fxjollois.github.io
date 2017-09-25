@@ -1,0 +1,130 @@
+---
+title: Utilisation de données externes - *correction*
+subtitle: Programmation statistique avec `R` - STID 2ème année
+---
+
+```{r init, include=FALSE}
+knitr::opts_chunk$set(comment = NA)
+```
+
+## Importation de données
+
+### heart.txt
+
+```{r}
+heart = read.table("donnees/heart.txt", header = T)
+head(heart)
+```
+
+### Detroit_homicide.txt
+
+```{r}
+dh = read.table("donnees/Detroit_homicide.txt", 
+                skip = 35, header = T)
+head(dh)
+dim(dh)
+```
+
+### hepatitis.TXT
+
+```{r}
+hep = read.table("donnees/hepatitis.TXT",
+                 header = T, na.strings = "?")
+head(hep)
+```
+
+### adult
+
+```{r}
+adult = read.table("donnees/adult.data", 
+                   sep = ",", na.strings = " ?")
+head(adult)
+names(adult)
+```
+
+```{r}
+adult.names = read.table("donnees/adult.names",
+                         skip = 96, sep = ":",
+                         stringsAsFactors = FALSE)
+adult.names
+adult.names$V1
+```
+
+```{r}
+names(adult) = c(adult.names$V1, "class")
+head(adult)
+```
+
+## Compléments
+
+Reprendre l'importation du fichier `"heart.txt"` (cf ci-dessus), et répondre aux questions suivantes en complétant le code précédemment écrit.
+
+### Créer une indicatrice binaire FALSE/TRUE pour la présence ou non de problème de coeur (dernière variable)
+
+```{r}
+heart$indicatrice = heart$coeur == "presence"
+```
+
+### Créer une variable comptant le nombre de fois où une variable est égale à A (entre type_douleur, sucre, electro, et vaisseau)
+
+```{r}
+heart$nbA = (heart$type_douleur == "A") + 
+  (heart$sucre == "A") +
+  (heart$electro == "A") +
+  (heart$vaisseau == "A")
+```
+
+```{r}
+heart$nbAbis = 
+  rowSums(heart[c("type_douleur", "sucre", "electro", "vaisseau")] == "A")
+```
+
+### Créer une variable factor à partir de l'indicatrice binaire  faite au point 1 avec comme labels des modalités presence pour TRUE et absence pour FALSE
+
+```{r}
+heart$ind2 = factor(heart$indicatrice, labels = c("Absence", "Présence"))
+head(heart)
+```
+  
+### Créer un nouveau data.frame avec uniquement les individus ayant strictement moins de 60 ans
+
+```{r}
+heart1a = heart[heart$age < 60,]
+heart1b = heart[which(heart$age < 60),]
+heart1 = subset(heart, age < 60)
+```
+
+### Créer maintenant, à partir du précédent, deux data.frames :
+
+- un pour les hommes
+- un autre pour les femmes
+
+```{r}
+heart1f = subset(heart1, sexe == "feminin")
+heart1m = subset(heart1, sexe == "masculin")
+```
+
+## Reprendre l'importation du fichier detroit_homicide.txt (cf ci-dessus)
+
+### Intégrer le texte introductif dans un attribut du data.frame
+
+```{r}
+attributes(dh)
+attr(dh, "names")
+attr(dh, "info") = 
+  paste(readLines("donnees/Detroit_homicide.txt", n = 19), collapse = "\n")
+cat(attr(dh, "info"))
+```
+
+### Intégrer les labels des variables dans un autre attribut, sous forme de data.frame à deux colonnes
+
+```{r}
+noms = tail(readLines("donnees/Detroit_homicide.txt", n = 34), 15)
+noms = noms[noms != ""]
+attr(dh, "info.var") = data.frame(
+  var = trimws(substr(noms, 1, 6)),
+  descriptif = substr(noms, 10, 100),
+  stringsAsFactors = FALSE
+)
+```
+

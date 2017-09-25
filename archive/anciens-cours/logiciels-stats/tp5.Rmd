@@ -1,0 +1,229 @@
+---
+title: "Logiciels stats - R - TP5"
+author: "FX Jollois"
+date: "13 avril 2016"
+output: 
+    html_document:
+        toc: true
+        toc_float: true
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(reshape2)
+library(ggplot2)
+library(gridExtra)
+library(ggdendro)
+library(FactoMineR)
+```
+
+## Importation des données
+
+En premier lieu, on importe les données, puis on assemble les deux fichiers en un seul jeu de données, dans lequel on modifie les noms de variables (étape $1$ et $2$ du TP).
+
+```{r importation}
+pen.tra = read.table("pendigits.tra", sep = ",")
+pen.tes = read.table("pendigits.tes", sep = ",")
+pen = rbind(pen.tra, pen.tes)
+names(pen) = c(paste(c("X", "Y"), rep(1:8, each = 2), sep = ""), "chiffre")
+pen$chiffre = factor(pen$chiffre)
+```
+
+## Un peu de dénombrement
+
+Chaque chiffre est écrit en moyenne `r round(nrow(pen)/10)` fois, avec quelques variations entre les chiffres
+
+```{r occurences-table, results='asis'}
+occur.chiffre = setNames(data.frame(table(pen$chiffre)), c("chiffre", "occurences"))
+knitr::kable(occur.chiffre)
+```
+
+```{r occurences-plot}
+ggplot(occur.chiffre, aes(chiffre, fill = chiffre)) + geom_bar(aes(weight=occurences)) +
+    ylab("")
+```
+
+## Premier exemple de chaque chiffre
+
+Pour répondre à la question $3$, il nous faut une fonction permettant de dessiner un chiffre.
+
+```{r dessineChiffre}
+dessineChiffre <- function(v, titre = NULL) {
+    if (is.data.frame(v))
+        v = unlist(v)
+    don = data.frame(
+        x = v[seq(1,15,by=2)],
+        y = v[seq(2,16,by=2)],
+        position = 1:8
+    )
+    g = ggplot(don, aes(x, y)) + xlim(0, 100) + ylim(0, 100) +
+        geom_path(col = "gray50") +
+        geom_text(aes(label = position)) + 
+        theme_void() 
+    if (!is.null(titre))
+        g = g + ggtitle(titre)
+    g
+}
+# pour tester : dessineChiffre(pen.tra[1,1:16], pen.tra[1,17])
+```
+
+Voici donc le premier exemple de chaque chiffre. On utilise ici le package `gridExtra` (et la fonction `marrangeGrob()`) pour pouvoir mettre plusieurs graphiques sur la même page. Et on se base sur le fait que la fonction `ggplot()` renvoie un objet stockable, et donc la fonction `dessineChiffre()` aussi.
+
+```{r dessine-premier}
+premier = lapply(0:9, function(ch) {
+    prem = subset(pen, chiffre == ch)[1,]
+    dessineChiffre(prem, ch)
+})
+marrangeGrob(premier, nrow = 2, ncol = 5, top = "")
+```
+
+## Tracé moyen de chaque chiffre
+
+Dans un premier temps, nous devons calculer les coordonnées moyennes de chaque point, pour chaque chiffre (réponse à la question $5$).
+
+```{r chiffre-moyen-tab, results='asis'}
+pen.means = apply(pen[-17], 2, tapply, pen$chiffre, mean)
+knitr::kable(round(pen.means))
+```
+
+Puis nous pouvons donc avoir la représentation des tracés moyens (question $6$), dans laquel nous voyons que presque tous les chiffres sont lisibles, et d'autres beaucoup moins (**5** et **9** par exemple).
+
+```{r chiffre-moyen-dessine}
+trace.moyen = lapply(0:9, function(ch) {
+    dessineChiffre(pen.means[ch+1,], ch)
+})
+marrangeGrob(trace.moyen, nrow = 2, ncol = 5, top = "")
+```
+
+## Comparaison des coordonnées pour chaque chiffre
+
+Pour cela, nous pouvons représenter la distribution des coordoonées, pour chaque chiffre, avec des boîtes à moustaches par exemple. 
+
+```{r distribution-coord-chiffre}
+distrib.coord = lapply(names(pen)[-17], function(var) {
+    ggplot(pen, aes_string("chiffre", var, fill = "chiffre")) + geom_boxplot() +
+        ggtitle(var) + 
+        theme(legend.position = "none") + ylab("") + xlab("")
+})
+marrangeGrob(distrib.coord, nrow = 2, ncol = 2, top = "")
+```
+
+## Représentation des tracés dans un espace restreint
+
+Pour pouvoir avoir une vision synthétique (et répondre à la question $8$), il est possible de projeter les tracés dans le premier plan factoriel produit par l'ACP standard. On remarque que les deux premiers axes permettent d'obtenir 50 % de l'information.
+
+```{r acp}
+acp = PCA(pen, graph = FALSE, quali.sup = 17)
+ggplot(acp$eig, aes(factor(1:16), weight=eigenvalue)) + 
+    geom_hline(yintercept = 1, linetype = 2, col = "gray50") + 
+    geom_bar() + xlab("Composantes") + ylab("")
+ggplot(setNames(acp$eig, c("eigen", "pct", "pctcum")), aes(1:16, pctcum)) + geom_line() +
+    ylim(0, 100) + ylab("") + xlab("Composantes")
+```
+
+On peut donc représenter les tracés sur le plan factoriel. 
+
+```{r acp-plan}
+ggplot(data.frame(acp$ind$coord, chiffre = pen$chiffre), aes(Dim.1, Dim.2, col = chiffre)) +
+    geom_point()
+```
+
+Ici, il est difficile de comprendre les différences entre les points pour deux raisons :
+
+- il y a 10 chiffres et donc 10 couleurs, qui ne peuvent être assez différentes pour l'oeil humain
+- certains chiffres se ressemblent et donc les points se chevauchent
+
+Une façon de résoudre ce problème (qui est le but de la question $9$), et de représenter les tracés de chaque chiffre séparemment.
+
+```{r acp-plan-séparé}
+ggplot(data.frame(acp$ind$coord, chiffre = pen$chiffre), aes(Dim.1, Dim.2, col =  chiffre)) +
+    geom_point() + facet_wrap(~chiffre, nrow = 2) + 
+    theme(legend.position = "none") 
+```
+
+On voit ainsi que certains chiffres sont très *éclatés* (tel le 5, le 8 et le 0 par exemple).
+
+## Combien de tracés pour chaque chiffre ?
+
+Finalement, dans la question $10$, nous nous demandons si certains chiffres ont un tracé unique ou plusieurs tracés possibles. Pour cela, nous devons faire de la classification puis trouver un nombre de classes adapté. Pour cela, nous allons nous aider de trois choses :
+
+- Dendrogramme produit par la CAH, avec distance euclienne et critère de *Ward*
+- Evolution du $r^2$ et du $PseudoF$ sur les résultats de $k$-means, pour $k=1,\ldots,10$ 
+
+### Calculs des partitions
+
+On va faire ces calculs pour chaque chiffre.
+
+```{r classif-compute}
+lk = 1:10
+classif = lapply(0:9, function(ch) {
+    sub = subset(pen, chiffre == ch)[-17]
+    cah = hclust(dist(sub), "ward.D2")
+    km = lapply(lk, function(k) {
+        return(kmeans(sub, k))
+    })
+    I = km[[1]]$totss
+    W = unlist(lapply(km, function(r) return(r$tot.withinss))) 
+    B = unlist(lapply(km, function(r) return(r$betweenss))) 
+    r2 = B / I
+    PsF = (r2 / (lk - 1)) / ((1 - r2) / (nrow(sub) - lk))
+    PsF[1] = NA
+    return(list(cah = cah, km = km, r2 = r2, PsF = PsF))
+})
+```
+
+### Recherche du nombre de classes 
+
+Ce qui nous donne pour chaque chiffre les résultats suivants :
+
+```{r classif-plot}
+classif.plot = lapply(classif, function(res) {
+    return(list(
+        ggdendrogram(res$cah),
+        qplot(lk, res$r2, geom = "line") + ggtitle("r2") +
+            ylab("") + scale_x_continuous(breaks = lk),
+        qplot(lk, res$PsF, geom = "line") + ggtitle("Pseudo-F") +
+            ylab("") + scale_x_continuous(breaks = lk)
+    ))
+})
+for (ch in 0:9) {
+    print(marrangeGrob(classif.plot[[ch+1]], nrow = 3, ncol = 1, top = paste("Chiffre :", ch)))
+}
+```
+
+### Proposition du nombre de classes
+
+On peut proposer les nombres de classes suivant pour chaque chiffre :
+
+```{r classif-choix-k, results='asis'}
+k = c(2, 3, 3, 2, 2, 6, 2, 4, 5, 6)
+knitr::kable(data.frame(chiffre = 0:9, "k choisi" = k, check.names = FALSE),
+             align = c("c", "c"))
+```
+
+### Description des classes
+
+Ainsi, voici les différentes possibilités de tracés pour chaque chiffre
+
+```{r description-classes}
+for (ch in 0:9) {
+    kk = k[ch+1]
+    part = classif[[ch+1]]$km[[kk]]$cluster
+    tmoy = data.frame(classif[[ch+1]]$km[[kk]]$centers, id = 1:kk)
+    temp = data.frame(
+            setNames(melt(tmoy[,c(seq(1,15,by=2),17)], id.vars = "id"), c("id", "xvar", "x")),
+            setNames(melt(tmoy[,c(seq(2,16,by=2),17)], id.vars = "id"), c("id", "yvar", "y"))
+        )
+    temp$position = substr(as.character(temp$xvar), 2, 2)
+    sub = data.frame(acp$ind$coord[pen$chiffre == ch,], part = part)
+    grid.arrange(
+        ggplot(temp, aes(x, y, group = 1)) + 
+            geom_path(col = "gray70") + 
+            facet_grid(.~id) +
+            geom_text(aes(label = position)) +
+            theme_void(),
+        ggplot(sub, aes(Dim.1, Dim.2)) + geom_point() + facet_grid(.~part)
+    )
+}
+```
+

@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Librairie D3.js</title>
+
+  <meta charset="utf-8">
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  <meta name="generator" content="pandoc" />
+
+
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+
+  <link rel="stylesheet" media="all" href="libs/ioslides-13.5.1/fonts/fonts.css">
+
+  <link rel="stylesheet" media="all" href="libs/ioslides-13.5.1/theme/css/default.css">
+  <link rel="stylesheet" media="only screen and (max-device-width: 480px)" href="libs/ioslides-13.5.1/theme/css/phone.css">
+
+  <base target="_blank">
+
+  <script type="text/javascript">
+    var SLIDE_CONFIG = {
+      // Slide settings
+      settings: {
+                title: 'Librairie D3.js',
+                        useBuilds: true,
+        usePrettify: true,
+        enableSlideAreas: true,
+        enableTouch: true,
+              },
+
+      // Author information
+      presenters: [
+            ]
+    };
+  </script>
+
+  <style type="text/css">
+
+    b, strong {
+      font-weight: bold;
+    }
+
+    em {
+      font-style: italic;
+    }
+
+    slides > slide {
+      -webkit-transition: all 0.4s ease-in-out;
+      -moz-transition: all 0.4s ease-in-out;
+      -o-transition: all 0.4s ease-in-out;
+      transition: all 0.4s ease-in-out;
+    }
+
+    .auto-fadein {
+      -webkit-transition: opacity 0.6s ease-in;
+      -webkit-transition-delay: 0.4s;
+      -moz-transition: opacity 0.6s ease-in 0.4s;
+      -o-transition: opacity 0.6s ease-in 0.4s;
+      transition: opacity 0.6s ease-in 0.4s;
+      opacity: 0;
+    }
+
+  </style>
+
+
+  <style>
+  slide img {
+  	max-width: 100%;
+  }
+  </style>
+
+</head>
+
+<body style="opacity: 0">
+
+<slides class="layout-widescreen">
+
+  <slide class="title-slide segue nobackground">
+        <!-- The content of this hgroup is replaced programmatically through the slide_config.json. -->
+    <hgroup class="auto-fadein">
+      <h1 data-config-title><!-- populated from slide_config.json --></h1>
+      <h2 data-config-subtitle><!-- populated from slide_config.json --></h2>
+      <p data-config-presenter><!-- populated from slide_config.json --></p>
+            <p style="margin-top: 6px; margin-left: -2px;">Data-Driven Documents</p>
+          </hgroup>
+  </slide>
+
+<slide class=''><hgroup><h2>Introduction à son utilisation</h2></hgroup><article  id="introduction-a-son-utilisation">
+
+<p><a href='http://www.d3js.org' title=''>Lien</a> vers la librairie</p>
+
+<ul>
+<li>Librairie très complète avec beaucoup d&#39;exemples à disposition</li>
+<li>Personnalisation totale possible</li>
+<li>Accès à des primitives <code>SVG</code> permettant toute innovation</li>
+<li>Peu accessible directement et assez technique</li>
+</ul>
+
+<p><a href='../webreporting/exemple-d3.html' title=''>Exemple</a></p>
+
+</article></slide><slide class=''><hgroup><h2>Fonctionnement typique</h2></hgroup><article  id="fonctionnement-typique">
+
+<p>Idée principale :</p>
+
+<ul>
+<li>Lier les données au DOM</li>
+<li>Appliquer des transformations, baées sur les données, au document</li>
+</ul>
+
+<p>Plusieurs concepts à comprendre :</p>
+
+<ul>
+<li>Base : sélection, modification, ajout et insertion d&#39;éléments</li>
+<li>Ajout de données au DOM</li>
+<li>Propriété dynamique, et Transformation</li>
+<li>Chaînage des fonctions</li>
+</ul>
+
+</article></slide><slide class=''><hgroup><h2>Base : sélection et modification</h2></hgroup><article  id="base-selection-et-modification">
+
+<ul>
+<li>Deux fonctions de sélection respectivement d&#39;un élément (<code>select()</code>) et de l&#39;ensemble des éléments (<code>selectAll()</code>) correspondant à la définition passée en paramètre (sélecteur idem que pour le CSS) :</li>
+</ul>
+
+<pre class = 'prettyprint lang-js'>d3.select(&quot;selecteur&quot;);
+d3.selectAll(&quot;selecteur&quot;);</pre>
+
+<ul>
+<li>Une fonction (<code>size()</code>) permettant de connaître la taille de la sélection</li>
+<li>Une fonction (<code>empty()</code>) permettant de savoir si la sélection est vide</li>
+</ul>
+
+</article></slide><slide class=''><hgroup><h2>Base : modification, ajout et insertion d&#39;éléments</h2></hgroup><article  id="base-modification-ajout-et-insertion-delements">
+
+<ul>
+<li>Plusieurs fonctions pour modifier les éléments sélectionnés (par exemple <code>style()</code> ou <code>html()</code>). Le code suivant permet de mettre le texte en rouge pour tout le corps de la page</li>
+</ul>
+
+<pre class = 'prettyprint lang-js'>var corps = d3.select(&quot;body&quot;);
+corps.style(&quot;color&quot;, &quot;red&quot;);</pre>
+
+<ul>
+<li>Deux fonctions pour respectivement insérer un élément HTML fils à la fin (<code>append()</code>) ou au début (<code>insert()</code>) d&#39;un élément père, qui s&#39;utilisent comme suit :</li>
+</ul>
+
+<pre class = 'prettyprint lang-js'>selection.append(&quot;balise&quot;);
+selection.insert(&quot;balise&quot;);</pre>
+
+</article></slide><slide class=''><hgroup><h2>Exemple : sur la base de d3.js</h2></hgroup><article  id="exemple-sur-la-base-de-d3.js">
+
+<p data-height="268" data-theme-id="0" data-slug-hash="bVMMjZ" data-default-tab="result" data-user="fxjollois" class="codepen">
+
+See the Pen <a href='http://codepen.io/fxjollois/pen/bVMMjZ/'>d3.js : base de la librairie</a> by FX Jollois (<a href='http://codepen.io/fxjollois'><span class="cite">@fxjollois</span></a>) on <a href='http://codepen.io'>CodePen</a>.
+
+</p>
+
+<script async src="//assets.codepen.io/assets/embed/ei.js"></script>
+
+</article></slide><slide class=''><hgroup><h2>Ajout de données au DOM</h2></hgroup><article  id="ajout-de-donnees-au-dom">
+
+<ul>
+<li>Avec la fonction <code>data()</code> sur une sélection, il est possible de lier les données passées en paramètres (ce doit être un tableau) au DOM à la sélection en question. Le code suivant affecte chaque élément du tableau à chaque élément renvoyé par le sélecteur précédent</li>
+</ul>
+
+<pre class = 'prettyprint lang-js'>var selection = d3.selectAll(&quot;selecteur&quot;);
+selection.data(tableau);</pre>
+
+<ul>
+<li>S&#39;il y a différence entre la taille de la sélection et la taille du tableau passé en paramètre de <code>data()</code>, il existe deux fonctions utiles
+
+<ul>
+<li><code>enter()</code> : pour gérer les éléments du tableau en plus</li>
+<li><code>exit()</code> : pour gérer les éléments de la sélection en plus</li>
+</ul></li>
+</ul>
+
+</article></slide><slide class=''><hgroup><h2>Propriété dynamique</h2></hgroup><article  id="propriete-dynamique">
+
+<ul>
+<li>Sur chaque sélection, on peut appliquer des modifications de style ou de contenu (voire autre), en fonction des données sont liées au DOM</li>
+<li>Utilisation d&#39;une fonction anonyme, dont les paramètres peuvent être, dans cet ordre :
+
+<ul>
+<li>la valeur de l&#39;élément du tableau affectée à l&#39;élément</li>
+<li>la position de la valeur dans le tableau</li>
+<li>il est possible de n&#39;utiliser que la valeur, voire aucun paramètre si besoin</li>
+</ul></li>
+</ul>
+
+<pre class = 'prettyprint lang-js'>var selection = d3.selectAll(&quot;selecteur&quot;);
+selection.data(tableau);
+selection.html(function(d, i) {
+    return &quot;position = &quot; + i + &quot;, valeur = &quot; + d;
+})</pre>
+
+</article></slide><slide class=''><hgroup><h2>Exemple : ajout de données + propriété dynamique</h2></hgroup><article  id="exemple-ajout-de-donnees-propriete-dynamique">
+
+<p data-height="268" data-theme-id="0" data-slug-hash="eprrjJ" data-default-tab="result" data-user="fxjollois" class="codepen">
+
+See the Pen <a href='http://codepen.io/fxjollois/pen/eprrjJ/'>d3.js</a> by FX Jollois (<a href='http://codepen.io/fxjollois'><span class="cite">@fxjollois</span></a>) on <a href='http://codepen.io'>CodePen</a>.
+
+</p>
+
+<script async src="//assets.codepen.io/assets/embed/ei.js"></script>
+
+</article></slide><slide class=''><hgroup><h2>Exemple : fonction <code>enter()</code></h2></hgroup><article  id="exemple-fonction-enter">
+
+<p data-height="268" data-theme-id="0" data-slug-hash="wKjjXN" data-default-tab="result" data-user="fxjollois" class="codepen">
+
+See the Pen <a href='http://codepen.io/fxjollois/pen/wKjjXN/'>d3.js</a> by FX Jollois (<a href='http://codepen.io/fxjollois'><span class="cite">@fxjollois</span></a>) on <a href='http://codepen.io'>CodePen</a>.
+
+</p>
+
+<script async src="//assets.codepen.io/assets/embed/ei.js"></script>
+
+</article></slide><slide class=''><hgroup><h2>Exemple : fonction <code>exit()</code></h2></hgroup><article  id="exemple-fonction-exit">
+
+<p data-height="268" data-theme-id="0" data-slug-hash="LpmmmL" data-default-tab="result" data-user="fxjollois" class="codepen">
+
+See the Pen <a href='http://codepen.io/fxjollois/pen/LpmmmL/'>d3.js</a> by FX Jollois (<a href='http://codepen.io/fxjollois'><span class="cite">@fxjollois</span></a>) on <a href='http://codepen.io'>CodePen</a>.
+
+</p>
+
+<script async src="//assets.codepen.io/assets/embed/ei.js"></script>
+
+</article></slide><slide class=''><hgroup><h2>Chaînage des fonctions</h2></hgroup><article  id="chainage-des-fonctions">
+
+<ul>
+<li>Principe généralement appliqué en JS orienté objet : <strong>toute fonction d&#39;un objet renvoie cet objet</strong>
+
+<ul>
+<li>sauf si la fonction a pour but de renvoyer un résultat spécifique</li>
+<li>donc concerne plutôt les procédures (qui sont des fonctions en JS)</li>
+</ul></li>
+<li>Corollaire : il est possible d&#39;enchaîner un grand nombre de fonctions directement</li>
+</ul>
+
+<p data-height="268" data-theme-id="0" data-slug-hash="MaGGxK" data-default-tab="result" data-user="fxjollois" class="codepen">
+
+See the Pen <a href='http://codepen.io/fxjollois/pen/MaGGxK/'>d3.js</a> by FX Jollois (<a href='http://codepen.io/fxjollois'><span class="cite">@fxjollois</span></a>) on <a href='http://codepen.io'>CodePen</a>.
+
+</p>
+
+<script async src="//assets.codepen.io/assets/embed/ei.js"></script></article></slide>
+
+
+  <slide class="backdrop"></slide>
+
+</slides>
+
+<script src="libs/ioslides-13.5.1/js/modernizr.custom.45394.js"></script>
+<script src="libs/ioslides-13.5.1/js/prettify/prettify.js"></script>
+<script src="libs/ioslides-13.5.1/js/prettify/lang-r.js"></script>
+<script src="libs/ioslides-13.5.1/js/prettify/lang-yaml.js"></script>
+<script src="libs/ioslides-13.5.1/js/hammer.js"></script>
+<script src="libs/ioslides-13.5.1/js/slide-controller.js"></script>
+<script src="libs/ioslides-13.5.1/js/slide-deck.js"></script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+<!-- map slide visiblity events into shiny -->
+<script>
+  (function() {
+    if (window.jQuery) {
+       window.jQuery(document).on('slideleave', function(e) {
+         window.jQuery(e.target).trigger('hidden');
+      });
+       window.jQuery(document).on('slideenter', function(e) {
+         window.jQuery(e.target).trigger('shown');
+      });
+    }
+  })();
+</script>
+
+</body>
+</html>

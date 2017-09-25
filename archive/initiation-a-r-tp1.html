@@ -1,0 +1,846 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+<meta charset="utf-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="pandoc" />
+
+
+
+
+<title>TP1 - Introduction</title>
+
+<script src="libs/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="libs/bootstrap-3.3.5/css/journal.min.css" rel="stylesheet" />
+<script src="libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<script src="libs/navigation-1.1/tabsets.js"></script>
+<link href="libs/highlightjs-1.1/default.css" rel="stylesheet" />
+<script src="libs/highlightjs-1.1/highlight.js"></script>
+<!--
+    Font Awesome
+-->
+<script src="https://use.fontawesome.com/32d8325004.js"></script>
+<link rel="stylesheet" href="libs/font-awesome-4.7.0/css/font-awesome.min.css">
+
+<!--
+    CSS perso
+-->
+<style>
+    .contenu {
+        margin-bottom: 50px;
+    }
+
+    .contact-liens {
+        text-align: center;
+    }
+    .contact-liens:hover {
+        text-decoration: none;
+    }
+    .contact-icones {
+        height: 30px;
+    }
+
+    /* Espacement pour barre du haut et pied de page */
+    #header, .section.level1 {
+        margin-top: 60px;
+        margin-bottom: 60px;
+    }
+    /* Espacement pour table des matières */
+    #TOC {
+        margin-top: 100px;
+    }
+    
+    .footer {
+        position: fixed;
+        width: 100%;
+        text-align: center;
+        bottom: 0;
+        left: 0;
+        background-color: #E6E6E6;
+    }
+</style>
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
+<script type="text/javascript">
+if (window.hljs && document.readyState && document.readyState === "complete") {
+   window.setTimeout(function() {
+      hljs.initHighlighting();
+   }, 0);
+}
+</script>
+
+
+
+<style type="text/css">
+h1 {
+  font-size: 34px;
+}
+h1.title {
+  font-size: 38px;
+}
+h2 {
+  font-size: 30px;
+}
+h3 {
+  font-size: 24px;
+}
+h4 {
+  font-size: 18px;
+}
+h5 {
+  font-size: 16px;
+}
+h6 {
+  font-size: 12px;
+}
+.table th:not([align]) {
+  text-align: left;
+}
+</style>
+
+<link rel="stylesheet" href="libs/bootstrap-journal.min.css" type="text/css" />
+
+</head>
+
+<body>
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img {
+  max-width:100%;
+  height: auto;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+</style>
+
+
+
+<div class="container-fluid main-container">
+
+<!-- tabsets -->
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+</script>
+
+<!-- code folding -->
+
+
+
+
+
+<div class="navbar navbar-default navbar-fixed-top">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-main">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">FX Jollois</a>
+    </div>
+    <div id="navbar-main" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button">Données <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+              <li><a href="accesdonnees.html">A télécharger</a></li>
+              <li><a href="donnees-integrees-r.html">Sous R</a></li>
+          </ul>
+        </li>
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button">Enseignement <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li class="dropdown-header">DUT 1ère année</li>
+            <li><a href="exploitation-donnees.html">Exploitation de données</a></li>
+            <li><a href="initiation-a-r.html">Initiation à R</a></li>
+            <li><a href="reporting.html">Reporting</a></li>
+            <li><a href="complements-r.html">Compléments sur R</a></li>
+            <li class="dropdown-header">DUT 2ème année</li>
+            <li><a href="prog-stat-r.html">Programmation statistique avec R</a></li>
+            <li class="dropdown-header">LP MDS Santé</li>
+            <li><a href="info-dec-sante.html">Informatique décisionnelle</a></li>
+            <li class="dropdown-header">DU Analyste Big Data</li>
+            <li><a href="initiation-r-du.html">Initiation à R</a></li>
+            <li><a href="connexion-r-mongodb.html">Connexion entre R et MongoDB</a></li>
+            <li class="dropdown-header">DU Dataviz</li>
+            <li><a href="analyse-donnees.html">Analyse de données</a></li>
+            <li><a href="visualisation-donnees.html">Visualisation de données - R</a></li>
+            <li><a href="visualisation-donnees-tableau.html">Visualisation de données - Tableau</a></li>
+            <li><a href="visualisation-donnees-d3.html">Visualisation de données - D3</a></li>
+            <li role="separator" class="divider"></li>
+            <li class="dropdown-header">Master</li>
+            <li><a href="slides/cnam-classif-modeles.html">Classification et Modèles de mélange</a></li>
+            <li><a href="analyse-donnees-massives.html">Analyse de Données Massives</a></li>
+            <li class="dropdown-header">Iran</li>
+            <li><a href="stat-prog-R.html">Statistical Programming using R</a></li>
+          </ul>
+        </li>
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button">Recherche <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li><a href="recherche.html">Sujets</a></li>
+            <li><a href="publications.html">Publications</a></li>
+          </ul>
+        </li>
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button">Réalisations <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li><a href="realisations.html">Détail</a></li>
+            <li role="separator" class="divider"></li>
+            <li><a href="http://up5.fr/explore-data" target="_blank">explore-data</a></li>
+            <li><a href="http://fxjollois.github.io/cours-sql/" target="_blank">Appli web de cours pour SQL</a></li>
+          </ul>
+        </li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container-fluid -->
+</div>
+<div class="contenu">
+
+<div class="fluid-row" id="header">
+
+
+
+<h1 class="title toc-ignore">TP1 - Introduction</h1>
+<h3 class="subtitle"><em>Initiation a <code>R</code> - STID 1ère année</em></h3>
+
+</div>
+
+
+<div id="nouvelle-session" class="section level2">
+<h2>Nouvelle session</h2>
+<ul>
+<li>Ouverture d’une session en local ()</li>
+</ul>
+</div>
+<div id="mode-console-ou-mode-script" class="section level2">
+<h2>Mode console ou mode script</h2>
+<p><code>R</code> est un langage scripté, de même que <code>SQL</code> ou <code>python</code> par exemple. Ceci implique que l’on peut exécuter des commandes en mode console, les unes après les autres. Mais il est aussi possible d’écrire un code dans un script et d’exécuter par la suite ce script.</p>
+<div id="mode-console" class="section level3">
+<h3>Mode console</h3>
+<p>Pour ce mode, les commandes sont toutes écrites dans la console. Dans celle-ci, on peut utiliser les flèches haut et bas pour naviguer dans l’historique des commandes.</p>
+<ul>
+<li>tapez : <code>1 + 2</code> (<code>Entrée</code> pour valider)</li>
+</ul>
+<pre class="r"><code>&gt; 1 + 2</code></pre>
+<pre><code>[1] 3</code></pre>
+<ul>
+<li>tapez : <code>a = 1</code>, puis <code>b = 2</code>, puis <code>a + b</code>, puis <code>a + B</code></li>
+</ul>
+<pre class="r"><code>&gt; a = 1
+&gt; b = 2
+&gt; a + b</code></pre>
+<pre><code>[1] 3</code></pre>
+<ul>
+<li>Sensibilité à la casse (majuscule/minuscule)</li>
+</ul>
+<pre class="r"><code>&gt; a + B</code></pre>
+<pre><code>Error in eval(expr, envir, enclos): objet &#39;B&#39; introuvable</code></pre>
+</div>
+<div id="mode-script" class="section level3">
+<h3>Mode script</h3>
+<p>Ce mode permet d’écrire plusieurs commandes et de les exécuter en une seule fois. Il est utile de stocker les différentes commandes et commentaires associés, même si celles-ci sont exécutées les unes après les autres.</p>
+<ul>
+<li><em>nouveau R script</em></li>
+<li><p>écrire les trois instructions suivantes</p>
+<pre><code>a = 1
+b = 2
+a + b</code></pre></li>
+<li>pour exécuter, vous avez plusieurs possibilités
+<ol style="list-style-type: decimal">
+<li>tout sélectionner, et cliquer sur <code>Run</code></li>
+<li>idem, mais taper sur <code>Ctrl+Entrée</code></li>
+<li>mettre le curseur sur la première ligne, et cliquer sur <code>Run</code> trois fois</li>
+<li>idem, mais en tapant sur <code>Ctrl+Entrée</code> trois fois</li>
+<li>cliquer sur sur <code>Source</code></li>
+</ol></li>
+<li>sauvegarder le script dans un fichier avec l’extension <code>.r</code> (ou <code>.R</code>)
+<ul>
+<li>attention à le nommer correctement (par exemple <code>tp1.r</code>) et de le mettre dans un répertoire dédié (par exemple <code>Initiation à R</code>, lui même dans un répertoire <code>Semestre 1</code>)</li>
+<li>on pourra complétement l’exécuter par la suite en tapant <code>source(&quot;tp1.r&quot;&quot;)</code> dans la console</li>
+</ul></li>
+</ul>
+<p>Dans un mode totalement script, l’idée est d’avoir un code qui s’exécute en une fois. Mais comme indiqué précédemment, il est également intéressant de pouvoir stocker dans un fichier l’ensemble des commandes qu’on a exécutées, soit pour réviser, soit pour pouvoir les ré-utiliser plus tard si nécessaire (ce qui arrive très souvent en entreprise).</p>
+<p>Une fois les commandes exécutées (via mode console ou script exécuté), les variables <code>a</code> et <code>b</code> sont créées (cf panneau <em>Environment</em>) et utilisables (par ex. <code>a * b</code>). Ces variables seront détruites lors de la fin de la session. Une autre moyen de les supprimer est d’utiliser la commande <code>rm()</code>. Celle-ci est importante pour nettoyer l’espace de travail et ne pas utiliser trop d’espace (dans un environnement professionnel, sur serveur, il est nécessaire de faire attention à ce <em>détail</em>).</p>
+<pre class="r"><code>&gt; v = &quot;une variable&quot;
+&gt; print(v)</code></pre>
+<pre><code>[1] &quot;une variable&quot;</code></pre>
+<pre class="r"><code>&gt; rm(v)
+&gt; print(v)</code></pre>
+<pre><code>Error in print(v): objet &#39;v&#39; introuvable</code></pre>
+<p>Pour ajouter des commentaires (très important à mettre dans tout code informatique), il n’existe que le caractère <code>#</code> à placer en début de ligne, ce qui donne par exemple</p>
+<pre class="r"><code># Premières instructions
+#   (taper sur `Ctrl+Entrée` pour exécuter le code)</code></pre>
+</div>
+</div>
+<div id="quelques-commandes-de-base" class="section level2">
+<h2>Quelques commandes de base</h2>
+<p>Nous allons voir quelques commandes classiques à connaître pour développer des codes <code>R</code>.</p>
+<div id="affichage" class="section level3">
+<h3>Affichage</h3>
+<p>Comme on l’a vu précédemment, si on exécute, dans la console ou en exécutant une ligne d’un script, une expression qui renvoie un résultat (par exemple le nom d’une variable ou un calcul), celui-ci s’affiche directement. Dans certains cas, et pour être certain que l’affichage se fasse, il est préférable de l’expliciter avec la commande <code>print()</code>.</p>
+<pre class="r"><code>&gt; print(a)</code></pre>
+<pre><code>[1] 1</code></pre>
+<pre class="r"><code>&gt; print(a + b)</code></pre>
+<pre><code>[1] 3</code></pre>
+<pre class="r"><code>&gt; print(&quot;bonjour&quot;)</code></pre>
+<pre><code>[1] &quot;bonjour&quot;</code></pre>
+</div>
+<div id="creation-de-vecteur-simple" class="section level3">
+<h3>Création de vecteur simple</h3>
+<p>Comme nous le verrons plus tard, <code>R</code> manipule différents types de données, mais le premier à voir est le type <code>vector</code>. Les variables <code>a</code> et <code>v</code> créées ci-dessus sont stockées comme des <code>vector</code>s (ensemble indexé de valeurs de même type).</p>
+<div id="sequences" class="section level4">
+<h4>Séquences</h4>
+<p>Les vecteurs les plus simples à créer sont les séquences de nombres. Les deux premières instructions renvoient le même vector : 1, 2, 3, 4, 5. La fonction <code>seq(debut, fin)</code> permet de créer une séquence (croissante ou décroissante), à partir d’un nombre de départ et d’un nombre de fin. Sans précision, le pas est de <span class="math inline">\(1\)</span> (ou <span class="math inline">\(-1\)</span> si <code>debut</code> &gt; <code>fin</code>). On peut aussi définir le pas (avec <code>by =</code>) ou la longueur (avec <code>length =</code>).</p>
+<pre class="r"><code>&gt; 1:5</code></pre>
+<pre><code>[1] 1 2 3 4 5</code></pre>
+<pre class="r"><code>&gt; seq(1, 5)</code></pre>
+<pre><code>[1] 1 2 3 4 5</code></pre>
+<pre class="r"><code>&gt; seq(5, 1)</code></pre>
+<pre><code>[1] 5 4 3 2 1</code></pre>
+<pre class="r"><code>&gt; seq(1, 5, by = .5)</code></pre>
+<pre><code>[1] 1.0 1.5 2.0 2.5 3.0 3.5 4.0 4.5 5.0</code></pre>
+<pre class="r"><code>&gt; seq(5, 1, length = 3)</code></pre>
+<pre><code>[1] 5 3 1</code></pre>
+</div>
+<div id="combinaison-de-valeurs" class="section level4">
+<h4>Combinaison de valeurs</h4>
+<p>Si on veut combiner des valeurs qui ne constituent pas une séquence, il est possible de créer un vecteur avec la fonction <code>c()</code>. Celle-ci prend toutes les valeurs en paramètres (sans limite spécifique) pour les mettre dans un même <code>vector</code>. Si ceux-ci sont de types différents (par exemple, numérique et caractère), elle transforme les valeurs numériques en chaînes de caractères.</p>
+<pre class="r"><code>&gt; c(1, 2, 5:7)</code></pre>
+<pre><code>[1] 1 2 5 6 7</code></pre>
+<pre class="r"><code>&gt; c(&quot;FX&quot;, &quot;Jollois&quot;)</code></pre>
+<pre><code>[1] &quot;FX&quot;      &quot;Jollois&quot;</code></pre>
+<pre class="r"><code>&gt; c(1, &quot;trois&quot;)</code></pre>
+<pre><code>[1] &quot;1&quot;     &quot;trois&quot;</code></pre>
+</div>
+<div id="repetition-de-valeurs" class="section level4">
+<h4>Répétition de valeurs</h4>
+<p>Une autre besoin est de créer un vecteur répétant un certain nombre de valeurs. Sans précision, la fonction <code>rep(vec, nb)</code> répéte le vecteur <code>vec</code> autant de fois qu’indiqué dans <code>nb</code>. Si on veut répéter chaque valeur directement, on doit utiliser le paramètre <code>each =</code> (cf 3ème exemple). Et on peut combiner les deux écritures pour répéter chaque valeur 3 fois, et le vecteur ainsi créé deux fois (4ème exemple).</p>
+<pre class="r"><code>&gt; rep(5, 2)</code></pre>
+<pre><code>[1] 5 5</code></pre>
+<pre class="r"><code>&gt; rep(1:5, 2)</code></pre>
+<pre><code> [1] 1 2 3 4 5 1 2 3 4 5</code></pre>
+<pre class="r"><code>&gt; rep(1:5, each = 3)</code></pre>
+<pre><code> [1] 1 1 1 2 2 2 3 3 3 4 4 4 5 5 5</code></pre>
+<pre class="r"><code>&gt; rep(1:5, 2, each = 3)</code></pre>
+<pre><code> [1] 1 1 1 2 2 2 3 3 3 4 4 4 5 5 5 1 1 1 2 2 2 3 3 3 4 4 4 5 5 5</code></pre>
+</div>
+<div id="concatenation-de-chaines" class="section level4">
+<h4>Concaténation de chaînes</h4>
+<p>Pour concaténer deux chaînes (i.e. les regrouper en une seule), nous avons à disposition la fonction <code>paste()</code> (et une version pré-paramétrée <code>paste0()</code>). Cette fonction prend en paramètres des vecteurs de chaînes pour les concaténer. Si les valeurs ne sont pas des chaînes, elles sont autoamtiquement tranformées.</p>
+<p>Par défaut, les chaînes sont séparées par un espace (cf exemple 1), mais il est possible de définir celui-ci via le paramètre <code>sep =</code> (cf exemple 2 et 3). La fonction <code>paste0()</code> est identique mais le séparateur par défaut est une chaîne vide (cf exemple 4).</p>
+<pre class="r"><code>&gt; paste(&quot;bon&quot;, &quot;jour&quot;)</code></pre>
+<pre><code>[1] &quot;bon jour&quot;</code></pre>
+<pre class="r"><code>&gt; paste(&quot;bon&quot;, &quot;jour&quot;, sep = &quot;-&quot;)</code></pre>
+<pre><code>[1] &quot;bon-jour&quot;</code></pre>
+<pre class="r"><code>&gt; paste(&quot;bon&quot;, &quot;jour&quot;, sep = &quot;&quot;)</code></pre>
+<pre><code>[1] &quot;bonjour&quot;</code></pre>
+<pre class="r"><code>&gt; paste0(&quot;bon&quot;, &quot;jour&quot;)</code></pre>
+<pre><code>[1] &quot;bonjour&quot;</code></pre>
+<p>Si on souhaite concaténer deux vecteurs de tailles différentes, le vecteur le plus court est répéter autant de fois que nécessaire. Dans l’exemple 1 ci-dessous, le terme <code>&quot;bon&quot;</code> est donc répéter 2 fois. Il faut donc faire attention à concaténer deux vecteurs cohérents en taille (cf exemple 2, 5 n’étant pas un multiple de 2).</p>
+<pre class="r"><code>&gt; paste0(&quot;bon&quot;, c(&quot;jour&quot;, &quot;soir&quot;))</code></pre>
+<pre><code>[1] &quot;bonjour&quot; &quot;bonsoir&quot;</code></pre>
+<pre class="r"><code>&gt; paste(c(&quot;x&quot;, &quot;y&quot;), 1:5, sep = &quot;=&quot;)</code></pre>
+<pre><code>[1] &quot;x=1&quot; &quot;y=2&quot; &quot;x=3&quot; &quot;y=4&quot; &quot;x=5&quot;</code></pre>
+<p>Enfin, on peut vouloir regrouper des valeurs d’un même vecteur dans une même chaîne. Pour cela, nous devons utiliser le paramètre <code>collapse =</code>, comme dans l’exemple ci-dessous.</p>
+<pre class="r"><code>&gt; paste(1:5, collapse = &quot;,&quot;)</code></pre>
+<pre><code>[1] &quot;1,2,3,4,5&quot;</code></pre>
+</div>
+</div>
+<div id="operateurs-mathematiques" class="section level3">
+<h3>Opérateurs mathématiques</h3>
+<p>Comme dans tous les langages, nous avons accès aux opérateurs mathématiques classiques, comme présenté ci-dessous.</p>
+<pre class="r"><code>&gt; - 2</code></pre>
+<pre><code>[1] -2</code></pre>
+<pre class="r"><code>&gt; 1 + 2</code></pre>
+<pre><code>[1] 3</code></pre>
+<pre class="r"><code>&gt; 1 - 2</code></pre>
+<pre><code>[1] -1</code></pre>
+<pre class="r"><code>&gt; 1 * 2</code></pre>
+<pre><code>[1] 2</code></pre>
+<pre class="r"><code>&gt; 1 / 2</code></pre>
+<pre><code>[1] 0.5</code></pre>
+<pre class="r"><code>&gt; (1 / 2) * (3 + 4)</code></pre>
+<pre><code>[1] 3.5</code></pre>
+<pre class="r"><code>&gt; 2 ^ 3 # (puissance)</code></pre>
+<pre><code>[1] 8</code></pre>
+<pre class="r"><code>&gt; 2 ** 3 # (puissance)</code></pre>
+<pre><code>[1] 8</code></pre>
+<pre class="r"><code>&gt; sqrt(9) # (racine carrée)</code></pre>
+<pre><code>[1] 3</code></pre>
+<p>Nous avons aussi accès à des fonctions telles que valeur absolue (<code>abs()</code>), logarithme (<code>log()</code>) et exponentielle (<code>exp()</code>), et toutes les fonctions trigonométrique (avec <code>cos()</code>, <code>sin()</code>, <code>tan()</code>, …).</p>
+<pre class="r"><code>&gt; abs(-12) # (valeur absolue)</code></pre>
+<pre><code>[1] 12</code></pre>
+<pre class="r"><code>&gt; log(2.718282) # (logarithme)</code></pre>
+<pre><code>[1] 1</code></pre>
+<pre class="r"><code>&gt; exp(1) # (exponentielle)</code></pre>
+<pre><code>[1] 2.718282</code></pre>
+<pre class="r"><code>&gt; cos(1) # (cosinus)</code></pre>
+<pre><code>[1] 0.5403023</code></pre>
+<pre class="r"><code>&gt; sin(1) # (sinus)</code></pre>
+<pre><code>[1] 0.841471</code></pre>
+<pre class="r"><code>&gt; tan(1) # (tangente)</code></pre>
+<pre><code>[1] 1.557408</code></pre>
+</div>
+<div id="operateurs-de-comparaison" class="section level3">
+<h3>Opérateurs de comparaison</h3>
+<p>De la même manière, les opérateurs classiques de comparaison sont disponibles, comme présentés ci-dessous.</p>
+<pre class="r"><code>&gt; a &gt; 1</code></pre>
+<pre><code>[1] FALSE</code></pre>
+<pre class="r"><code>&gt; a &gt;= 1</code></pre>
+<pre><code>[1] TRUE</code></pre>
+<pre class="r"><code>&gt; a &lt; 1</code></pre>
+<pre><code>[1] FALSE</code></pre>
+<pre class="r"><code>&gt; a &lt;= 1</code></pre>
+<pre><code>[1] TRUE</code></pre>
+<pre class="r"><code>&gt; a == 1</code></pre>
+<pre><code>[1] TRUE</code></pre>
+<pre class="r"><code>&gt; a != 1</code></pre>
+<pre><code>[1] FALSE</code></pre>
+<p>On dispose aussi de l’opérateur <code>%in%</code> qui test si chaque valeur du premier vecteur est présent dans le deuxième vecteur. Il renvoie donc un vecteur de booléen (<code>TRUE/FALSE</code>) indiquant si la valeur est dans le deuxième vecteur ou non.</p>
+<pre class="r"><code>&gt; a %in% c(1, 3, 5)</code></pre>
+<pre><code>[1] TRUE</code></pre>
+<pre class="r"><code>&gt; c(1, 3, 5) %in% a</code></pre>
+<pre><code>[1]  TRUE FALSE FALSE</code></pre>
+</div>
+<div id="aide" class="section level3">
+<h3>Aide</h3>
+<p>Pour accéder à l’aide, il est possible d’utiliser les moyens suivants :</p>
+<ul>
+<li>pour obtenir l’aide sur une commande, on peut exécuter
+<ul>
+<li><code>help(commande)</code> (par exemple, <code>help(print)</code>)</li>
+<li>ou plus simplement <code>?commande</code> (<code>?print</code>)</li>
+</ul></li>
+<li>pour chercher dans l’aide, on a aussi deux possibilités
+<ul>
+<li><code>help.search(&quot;terme(s)&quot;)</code> (par exemple, <code>help.search(&quot;print&quot;)</code>)</li>
+<li><code>??terme</code> (par exemple, <code>??print</code>)</li>
+</ul></li>
+</ul>
+</div>
+</div>
+<div id="donnees-deja-presentes" class="section level2">
+<h2>Données déjà présentes</h2>
+<p>Il existe des données déjà présentes dans le logiciel <code>R</code>, soit de base, soit suite à l’ajout d’un package (dont on parlera plus tard). Pour avoir la liste des données, vous pouvez taper <code>data()</code>. Pour avoir plus d’informations sur un jeu de données, il faut accéder à l’aide de celui-ci. Nous allons travailler ici sur le jeu de données <code>mtcars</code>, qui contient les informations de 32 voitures sur 11 caractéristiques.</p>
+<p>Pour voir le jeu de données en entier dans la console, vous devez juste exécuter son nom</p>
+<pre class="r"><code>&gt; mtcars</code></pre>
+<pre><code>                     mpg cyl  disp  hp drat    wt  qsec vs am gear carb
+Mazda RX4           21.0   6 160.0 110 3.90 2.620 16.46  0  1    4    4
+Mazda RX4 Wag       21.0   6 160.0 110 3.90 2.875 17.02  0  1    4    4
+Datsun 710          22.8   4 108.0  93 3.85 2.320 18.61  1  1    4    1
+Hornet 4 Drive      21.4   6 258.0 110 3.08 3.215 19.44  1  0    3    1
+Hornet Sportabout   18.7   8 360.0 175 3.15 3.440 17.02  0  0    3    2
+Valiant             18.1   6 225.0 105 2.76 3.460 20.22  1  0    3    1
+Duster 360          14.3   8 360.0 245 3.21 3.570 15.84  0  0    3    4
+Merc 240D           24.4   4 146.7  62 3.69 3.190 20.00  1  0    4    2
+Merc 230            22.8   4 140.8  95 3.92 3.150 22.90  1  0    4    2
+Merc 280            19.2   6 167.6 123 3.92 3.440 18.30  1  0    4    4
+Merc 280C           17.8   6 167.6 123 3.92 3.440 18.90  1  0    4    4
+Merc 450SE          16.4   8 275.8 180 3.07 4.070 17.40  0  0    3    3
+Merc 450SL          17.3   8 275.8 180 3.07 3.730 17.60  0  0    3    3
+Merc 450SLC         15.2   8 275.8 180 3.07 3.780 18.00  0  0    3    3
+Cadillac Fleetwood  10.4   8 472.0 205 2.93 5.250 17.98  0  0    3    4
+Lincoln Continental 10.4   8 460.0 215 3.00 5.424 17.82  0  0    3    4
+Chrysler Imperial   14.7   8 440.0 230 3.23 5.345 17.42  0  0    3    4
+Fiat 128            32.4   4  78.7  66 4.08 2.200 19.47  1  1    4    1
+Honda Civic         30.4   4  75.7  52 4.93 1.615 18.52  1  1    4    2
+Toyota Corolla      33.9   4  71.1  65 4.22 1.835 19.90  1  1    4    1
+Toyota Corona       21.5   4 120.1  97 3.70 2.465 20.01  1  0    3    1
+Dodge Challenger    15.5   8 318.0 150 2.76 3.520 16.87  0  0    3    2
+AMC Javelin         15.2   8 304.0 150 3.15 3.435 17.30  0  0    3    2
+Camaro Z28          13.3   8 350.0 245 3.73 3.840 15.41  0  0    3    4
+Pontiac Firebird    19.2   8 400.0 175 3.08 3.845 17.05  0  0    3    2
+Fiat X1-9           27.3   4  79.0  66 4.08 1.935 18.90  1  1    4    1
+Porsche 914-2       26.0   4 120.3  91 4.43 2.140 16.70  0  1    5    2
+Lotus Europa        30.4   4  95.1 113 3.77 1.513 16.90  1  1    5    2
+Ford Pantera L      15.8   8 351.0 264 4.22 3.170 14.50  0  1    5    4
+Ferrari Dino        19.7   6 145.0 175 3.62 2.770 15.50  0  1    5    6
+Maserati Bora       15.0   8 301.0 335 3.54 3.570 14.60  0  1    5    8
+Volvo 142E          21.4   4 121.0 109 4.11 2.780 18.60  1  1    4    2</code></pre>
+<p>Vous pouvez aussi le voir dans RStudio à l’aide de la commande <code>View(mtcars)</code> (à exécuter dans la console de préférence). Vous pouvez regarder l’aide du jeu de données, avec <code>?mtcars</code> par exemple, pour avoir plus d’informations sur ce jeu de données.</p>
+<div id="informations-diverses" class="section level3">
+<h3>Informations diverses</h3>
+<p>Les données de type table <code>SQL</code> comme <code>mtcars</code> sont stockées dans un format spécifique, <code>data.frame</code>, comme permet de le confirmer la fonction <code>class()</code> (qui renvoie le type de l’opbjet passé en paramètre).</p>
+<pre class="r"><code>&gt; class(mtcars)</code></pre>
+<pre><code>[1] &quot;data.frame&quot;</code></pre>
+<p>Sur un <code>data.frame</code>, il est possible d’avoir les dimensions avec <code>dim()</code>, qui sont le nombre de lignes (<code>nrow()</code>) et le nombre de colonnes (<code>ncol()</code>).</p>
+<pre class="r"><code>&gt; dim(mtcars)</code></pre>
+<pre><code>[1] 32 11</code></pre>
+<pre class="r"><code>&gt; nrow(mtcars)</code></pre>
+<pre><code>[1] 32</code></pre>
+<pre class="r"><code>&gt; ncol(mtcars)</code></pre>
+<pre><code>[1] 11</code></pre>
+<p>Un <code>data.frame</code> contient des noms de colonnes (dits aussi d’attributs), qu’on peut obtenir avec les fonctions <code>names()</code> ou <code>colnames()</code>. Il contient parfois aussi des noms de lignes (qui sont des identifiants), accessibles avec <code>rownames()</code>. Si ce n’est pas le cas, la fonction renvoie une séquence de type <code>1:nrow(obj)</code>. Enfin, la fonction <code>str()</code> renvoie un résumé de la table sous la forme d’une liste avec un item par variable, contenant le nom de celle-ci, son type et les premières valeurs.</p>
+<pre class="r"><code>&gt; names(mtcars)</code></pre>
+<pre><code> [1] &quot;mpg&quot;  &quot;cyl&quot;  &quot;disp&quot; &quot;hp&quot;   &quot;drat&quot; &quot;wt&quot;   &quot;qsec&quot; &quot;vs&quot;   &quot;am&quot;   &quot;gear&quot;
+[11] &quot;carb&quot;</code></pre>
+<pre class="r"><code>&gt; colnames(mtcars)</code></pre>
+<pre><code> [1] &quot;mpg&quot;  &quot;cyl&quot;  &quot;disp&quot; &quot;hp&quot;   &quot;drat&quot; &quot;wt&quot;   &quot;qsec&quot; &quot;vs&quot;   &quot;am&quot;   &quot;gear&quot;
+[11] &quot;carb&quot;</code></pre>
+<pre class="r"><code>&gt; rownames(mtcars)</code></pre>
+<pre><code> [1] &quot;Mazda RX4&quot;           &quot;Mazda RX4 Wag&quot;       &quot;Datsun 710&quot;         
+ [4] &quot;Hornet 4 Drive&quot;      &quot;Hornet Sportabout&quot;   &quot;Valiant&quot;            
+ [7] &quot;Duster 360&quot;          &quot;Merc 240D&quot;           &quot;Merc 230&quot;           
+[10] &quot;Merc 280&quot;            &quot;Merc 280C&quot;           &quot;Merc 450SE&quot;         
+[13] &quot;Merc 450SL&quot;          &quot;Merc 450SLC&quot;         &quot;Cadillac Fleetwood&quot; 
+[16] &quot;Lincoln Continental&quot; &quot;Chrysler Imperial&quot;   &quot;Fiat 128&quot;           
+[19] &quot;Honda Civic&quot;         &quot;Toyota Corolla&quot;      &quot;Toyota Corona&quot;      
+[22] &quot;Dodge Challenger&quot;    &quot;AMC Javelin&quot;         &quot;Camaro Z28&quot;         
+[25] &quot;Pontiac Firebird&quot;    &quot;Fiat X1-9&quot;           &quot;Porsche 914-2&quot;      
+[28] &quot;Lotus Europa&quot;        &quot;Ford Pantera L&quot;      &quot;Ferrari Dino&quot;       
+[31] &quot;Maserati Bora&quot;       &quot;Volvo 142E&quot;         </code></pre>
+<pre class="r"><code>&gt; str(mtcars)</code></pre>
+<pre><code>&#39;data.frame&#39;:   32 obs. of  11 variables:
+ $ mpg : num  21 21 22.8 21.4 18.7 18.1 14.3 24.4 22.8 19.2 ...
+ $ cyl : num  6 6 4 6 8 6 8 4 4 6 ...
+ $ disp: num  160 160 108 258 360 ...
+ $ hp  : num  110 110 93 110 175 105 245 62 95 123 ...
+ $ drat: num  3.9 3.9 3.85 3.08 3.15 2.76 3.21 3.69 3.92 3.92 ...
+ $ wt  : num  2.62 2.88 2.32 3.21 3.44 ...
+ $ qsec: num  16.5 17 18.6 19.4 17 ...
+ $ vs  : num  0 0 1 1 0 1 0 1 1 1 ...
+ $ am  : num  1 1 1 0 0 0 0 0 0 0 ...
+ $ gear: num  4 4 4 3 3 3 3 4 4 4 ...
+ $ carb: num  4 4 1 1 2 1 4 2 2 4 ...</code></pre>
+</div>
+<div id="extraction-de-donnees" class="section level3">
+<h3>Extraction de données</h3>
+<p>Lorsque les données sont grandes, il est souvent utile d’avoir un aperçu des premières lignes. La fonction <code>head()</code> renvoie par défaut les 6 premières lignes d’une table passée en paramètre. On peut aussi lui spécifier le nombre de lignes qu’on désire. La fonction <code>tail()</code> fonctionne de manière identique, mais renvoie les dernières lignes de la table.</p>
+<pre class="r"><code>&gt; head(mtcars)</code></pre>
+<pre><code>                   mpg cyl disp  hp drat    wt  qsec vs am gear carb
+Mazda RX4         21.0   6  160 110 3.90 2.620 16.46  0  1    4    4
+Mazda RX4 Wag     21.0   6  160 110 3.90 2.875 17.02  0  1    4    4
+Datsun 710        22.8   4  108  93 3.85 2.320 18.61  1  1    4    1
+Hornet 4 Drive    21.4   6  258 110 3.08 3.215 19.44  1  0    3    1
+Hornet Sportabout 18.7   8  360 175 3.15 3.440 17.02  0  0    3    2
+Valiant           18.1   6  225 105 2.76 3.460 20.22  1  0    3    1</code></pre>
+<pre class="r"><code>&gt; head(mtcars, 3)</code></pre>
+<pre><code>               mpg cyl disp  hp drat    wt  qsec vs am gear carb
+Mazda RX4     21.0   6  160 110 3.90 2.620 16.46  0  1    4    4
+Mazda RX4 Wag 21.0   6  160 110 3.90 2.875 17.02  0  1    4    4
+Datsun 710    22.8   4  108  93 3.85 2.320 18.61  1  1    4    1</code></pre>
+<pre class="r"><code>&gt; tail(mtcars)</code></pre>
+<pre><code>                mpg cyl  disp  hp drat    wt qsec vs am gear carb
+Porsche 914-2  26.0   4 120.3  91 4.43 2.140 16.7  0  1    5    2
+Lotus Europa   30.4   4  95.1 113 3.77 1.513 16.9  1  1    5    2
+Ford Pantera L 15.8   8 351.0 264 4.22 3.170 14.5  0  1    5    4
+Ferrari Dino   19.7   6 145.0 175 3.62 2.770 15.5  0  1    5    6
+Maserati Bora  15.0   8 301.0 335 3.54 3.570 14.6  0  1    5    8
+Volvo 142E     21.4   4 121.0 109 4.11 2.780 18.6  1  1    4    2</code></pre>
+<pre class="r"><code>&gt; tail(mtcars, 3)</code></pre>
+<pre><code>               mpg cyl disp  hp drat   wt qsec vs am gear carb
+Ferrari Dino  19.7   6  145 175 3.62 2.77 15.5  0  1    5    6
+Maserati Bora 15.0   8  301 335 3.54 3.57 14.6  0  1    5    8
+Volvo 142E    21.4   4  121 109 4.11 2.78 18.6  1  1    4    2</code></pre>
+<div id="colonnes" class="section level4">
+<h4>Colonnes</h4>
+<p>Pour récupérer les valeurs d’une colonne de la table, nous avons 4 façons différentes de le faire, comme présenté ci-dessous. Il faut noter que les trois premières lignes renvoient un vecteur, alors que la dernière renvoie une table (<code>data.frame</code>) réduite. Vous remarquerez qu’on peut spécifier soit le nom de la variable, soit sa position dans le <code>data.frame</code>.</p>
+<pre class="r"><code>&gt; mtcars$mpg</code></pre>
+<pre><code> [1] 21.0 21.0 22.8 21.4 18.7 18.1 14.3 24.4 22.8 19.2 17.8 16.4 17.3 15.2
+[15] 10.4 10.4 14.7 32.4 30.4 33.9 21.5 15.5 15.2 13.3 19.2 27.3 26.0 30.4
+[29] 15.8 19.7 15.0 21.4</code></pre>
+<pre class="r"><code>&gt; mtcars[,&quot;mpg&quot;]</code></pre>
+<pre><code> [1] 21.0 21.0 22.8 21.4 18.7 18.1 14.3 24.4 22.8 19.2 17.8 16.4 17.3 15.2
+[15] 10.4 10.4 14.7 32.4 30.4 33.9 21.5 15.5 15.2 13.3 19.2 27.3 26.0 30.4
+[29] 15.8 19.7 15.0 21.4</code></pre>
+<pre class="r"><code>&gt; mtcars[,1]</code></pre>
+<pre><code> [1] 21.0 21.0 22.8 21.4 18.7 18.1 14.3 24.4 22.8 19.2 17.8 16.4 17.3 15.2
+[15] 10.4 10.4 14.7 32.4 30.4 33.9 21.5 15.5 15.2 13.3 19.2 27.3 26.0 30.4
+[29] 15.8 19.7 15.0 21.4</code></pre>
+<pre class="r"><code>&gt; mtcars[&quot;mpg&quot;]</code></pre>
+<pre><code>                     mpg
+Mazda RX4           21.0
+Mazda RX4 Wag       21.0
+Datsun 710          22.8
+Hornet 4 Drive      21.4
+Hornet Sportabout   18.7
+Valiant             18.1
+Duster 360          14.3
+Merc 240D           24.4
+Merc 230            22.8
+Merc 280            19.2
+Merc 280C           17.8
+Merc 450SE          16.4
+Merc 450SL          17.3
+Merc 450SLC         15.2
+Cadillac Fleetwood  10.4
+Lincoln Continental 10.4
+Chrysler Imperial   14.7
+Fiat 128            32.4
+Honda Civic         30.4
+Toyota Corolla      33.9
+Toyota Corona       21.5
+Dodge Challenger    15.5
+AMC Javelin         15.2
+Camaro Z28          13.3
+Pontiac Firebird    19.2
+Fiat X1-9           27.3
+Porsche 914-2       26.0
+Lotus Europa        30.4
+Ford Pantera L      15.8
+Ferrari Dino        19.7
+Maserati Bora       15.0
+Volvo 142E          21.4</code></pre>
+<p>Il est bien évidemment possible de récupérer plusieurs colonnes en une seule étape. Pour ceci, de manière similaire à précédemment, nous avons trois possibilités (le <code>$</code> n’est plus utilisable dans ce cas). Ces trois exemples renvoient exactement le même résultat. C’est une façon de faire une projection comme en <code>SQL</code>.</p>
+<pre class="r"><code>&gt; mtcars[c(&quot;mpg&quot;, &quot;hp&quot;)]</code></pre>
+<pre><code>                     mpg  hp
+Mazda RX4           21.0 110
+Mazda RX4 Wag       21.0 110
+Datsun 710          22.8  93
+Hornet 4 Drive      21.4 110
+Hornet Sportabout   18.7 175
+Valiant             18.1 105
+Duster 360          14.3 245
+Merc 240D           24.4  62
+Merc 230            22.8  95
+Merc 280            19.2 123
+Merc 280C           17.8 123
+Merc 450SE          16.4 180
+Merc 450SL          17.3 180
+Merc 450SLC         15.2 180
+Cadillac Fleetwood  10.4 205
+Lincoln Continental 10.4 215
+Chrysler Imperial   14.7 230
+Fiat 128            32.4  66
+Honda Civic         30.4  52
+Toyota Corolla      33.9  65
+Toyota Corona       21.5  97
+Dodge Challenger    15.5 150
+AMC Javelin         15.2 150
+Camaro Z28          13.3 245
+Pontiac Firebird    19.2 175
+Fiat X1-9           27.3  66
+Porsche 914-2       26.0  91
+Lotus Europa        30.4 113
+Ford Pantera L      15.8 264
+Ferrari Dino        19.7 175
+Maserati Bora       15.0 335
+Volvo 142E          21.4 109</code></pre>
+<pre class="r"><code>&gt; mtcars[,c(&quot;mpg&quot;, &quot;hp&quot;)]</code></pre>
+<pre><code>                     mpg  hp
+Mazda RX4           21.0 110
+Mazda RX4 Wag       21.0 110
+Datsun 710          22.8  93
+Hornet 4 Drive      21.4 110
+Hornet Sportabout   18.7 175
+Valiant             18.1 105
+Duster 360          14.3 245
+Merc 240D           24.4  62
+Merc 230            22.8  95
+Merc 280            19.2 123
+Merc 280C           17.8 123
+Merc 450SE          16.4 180
+Merc 450SL          17.3 180
+Merc 450SLC         15.2 180
+Cadillac Fleetwood  10.4 205
+Lincoln Continental 10.4 215
+Chrysler Imperial   14.7 230
+Fiat 128            32.4  66
+Honda Civic         30.4  52
+Toyota Corolla      33.9  65
+Toyota Corona       21.5  97
+Dodge Challenger    15.5 150
+AMC Javelin         15.2 150
+Camaro Z28          13.3 245
+Pontiac Firebird    19.2 175
+Fiat X1-9           27.3  66
+Porsche 914-2       26.0  91
+Lotus Europa        30.4 113
+Ford Pantera L      15.8 264
+Ferrari Dino        19.7 175
+Maserati Bora       15.0 335
+Volvo 142E          21.4 109</code></pre>
+<pre class="r"><code>&gt; mtcars[,c(1, 4)]</code></pre>
+<pre><code>                     mpg  hp
+Mazda RX4           21.0 110
+Mazda RX4 Wag       21.0 110
+Datsun 710          22.8  93
+Hornet 4 Drive      21.4 110
+Hornet Sportabout   18.7 175
+Valiant             18.1 105
+Duster 360          14.3 245
+Merc 240D           24.4  62
+Merc 230            22.8  95
+Merc 280            19.2 123
+Merc 280C           17.8 123
+Merc 450SE          16.4 180
+Merc 450SL          17.3 180
+Merc 450SLC         15.2 180
+Cadillac Fleetwood  10.4 205
+Lincoln Continental 10.4 215
+Chrysler Imperial   14.7 230
+Fiat 128            32.4  66
+Honda Civic         30.4  52
+Toyota Corolla      33.9  65
+Toyota Corona       21.5  97
+Dodge Challenger    15.5 150
+AMC Javelin         15.2 150
+Camaro Z28          13.3 245
+Pontiac Firebird    19.2 175
+Fiat X1-9           27.3  66
+Porsche 914-2       26.0  91
+Lotus Europa        30.4 113
+Ford Pantera L      15.8 264
+Ferrari Dino        19.7 175
+Maserati Bora       15.0 335
+Volvo 142E          21.4 109</code></pre>
+</div>
+<div id="lignes" class="section level4">
+<h4>Lignes</h4>
+<p>De manière similaire, il est possible de récupérer une ligne spécifique, voire plusieurs lignes, en précisant soit sa position, soit son identifiant.</p>
+<pre class="r"><code>&gt; mtcars[1,]</code></pre>
+<pre><code>          mpg cyl disp  hp drat   wt  qsec vs am gear carb
+Mazda RX4  21   6  160 110  3.9 2.62 16.46  0  1    4    4</code></pre>
+<pre class="r"><code>&gt; mtcars[&quot;Mazda RX4&quot;,]</code></pre>
+<pre><code>          mpg cyl disp  hp drat   wt  qsec vs am gear carb
+Mazda RX4  21   6  160 110  3.9 2.62 16.46  0  1    4    4</code></pre>
+<pre class="r"><code>&gt; mtcars[c(1, 3, 4),]</code></pre>
+<pre><code>                mpg cyl disp  hp drat    wt  qsec vs am gear carb
+Mazda RX4      21.0   6  160 110 3.90 2.620 16.46  0  1    4    4
+Datsun 710     22.8   4  108  93 3.85 2.320 18.61  1  1    4    1
+Hornet 4 Drive 21.4   6  258 110 3.08 3.215 19.44  1  0    3    1</code></pre>
+<pre class="r"><code>&gt; mtcars[c(&quot;Mazda RX4&quot;, &quot;Datsun 710&quot;, &quot;Hornet 4 Drive&quot;),]</code></pre>
+<pre><code>                mpg cyl disp  hp drat    wt  qsec vs am gear carb
+Mazda RX4      21.0   6  160 110 3.90 2.620 16.46  0  1    4    4
+Datsun 710     22.8   4  108  93 3.85 2.320 18.61  1  1    4    1
+Hornet 4 Drive 21.4   6  258 110 3.08 3.215 19.44  1  0    3    1</code></pre>
+<p>Il est aussi possible de passer un vecteur de booléen, nous permettant de sélectionner des lignes qui respectent une condition (simple ou complexe). C’est une façon de faire une restriction comme en <code>SQL</code>.</p>
+<pre class="r"><code>&gt; mtcars[mtcars$mpg &lt; 15,]</code></pre>
+<pre><code>                     mpg cyl disp  hp drat    wt  qsec vs am gear carb
+Duster 360          14.3   8  360 245 3.21 3.570 15.84  0  0    3    4
+Cadillac Fleetwood  10.4   8  472 205 2.93 5.250 17.98  0  0    3    4
+Lincoln Continental 10.4   8  460 215 3.00 5.424 17.82  0  0    3    4
+Chrysler Imperial   14.7   8  440 230 3.23 5.345 17.42  0  0    3    4
+Camaro Z28          13.3   8  350 245 3.73 3.840 15.41  0  0    3    4</code></pre>
+<pre class="r"><code>&gt; mtcars[mtcars$mpg &lt; 15 &amp; mtcars$qsec &lt; 16,]</code></pre>
+<pre><code>            mpg cyl disp  hp drat   wt  qsec vs am gear carb
+Duster 360 14.3   8  360 245 3.21 3.57 15.84  0  0    3    4
+Camaro Z28 13.3   8  350 245 3.73 3.84 15.41  0  0    3    4</code></pre>
+</div>
+<div id="cellules" class="section level4">
+<h4>Cellules</h4>
+<p>En combinant les deux opérations ci-dessus, il est possible d’obtenir le contenu d’une cellule (exemple 1), ou de plusieurs cellules (exemple 2 à 5).</p>
+<pre class="r"><code>&gt; mtcars[1,1]</code></pre>
+<pre><code>[1] 21</code></pre>
+<pre class="r"><code>&gt; mtcars[1:5, 1]</code></pre>
+<pre><code>[1] 21.0 21.0 22.8 21.4 18.7</code></pre>
+<pre class="r"><code>&gt; mtcars[1, 1:3]</code></pre>
+<pre><code>          mpg cyl disp
+Mazda RX4  21   6  160</code></pre>
+<pre class="r"><code>&gt; mtcars[1:5,1:3]</code></pre>
+<pre><code>                   mpg cyl disp
+Mazda RX4         21.0   6  160
+Mazda RX4 Wag     21.0   6  160
+Datsun 710        22.8   4  108
+Hornet 4 Drive    21.4   6  258
+Hornet Sportabout 18.7   8  360</code></pre>
+<pre class="r"><code>&gt; mtcars[mtcars$mpg &lt; 15 &amp; mtcars$qsec &lt; 16, c(&quot;hp&quot;, &quot;disp&quot;)]</code></pre>
+<pre><code>            hp disp
+Duster 360 245  360
+Camaro Z28 245  350</code></pre>
+</div>
+</div>
+</div>
+<div id="exercices" class="section level2">
+<h2>Exercices</h2>
+<div id="creation-de-vecteurs" class="section level3">
+<h3>Création de vecteurs</h3>
+<ol style="list-style-type: decimal">
+<li><p>Créer un vecteur <code>v1</code> qui va de <span class="math inline">\(1\)</span> à <span class="math inline">\(-1\)</span> par pas de <span class="math inline">\(-0.25\)</span></p></li>
+<li><p>Créer un vecteur <code>v2</code> qui va de <span class="math inline">\(0\)</span> à <span class="math inline">\(100\)</span> d’une longueur de <span class="math inline">\(23\)</span></p></li>
+<li><p>Créer un vecteur <code>v3</code> qui contient les chaînes : <code>&quot;1ère année&quot;</code>, <code>&quot;2ème année&quot;</code>, <code>&quot;LP&quot;</code></p></li>
+<li><p>Créer un vecteur <code>v4</code> qui répéte trois fois la chaîne <code>&quot;promo&quot;</code></p></li>
+<li><p>Regrouper les vecteurs <code>v3</code> et <code>v4</code>, pour avoir le vecteur <code>v5</code> suivant</p></li>
+</ol>
+<pre><code>[1] &quot;promo=1ère année&quot; &quot;promo=2ème année&quot; &quot;promo=LP&quot;        </code></pre>
+<ol start="6" style="list-style-type: decimal">
+<li>Améliorer le code suivant pour avoir le vecteur <code>v6</code> suivant</li>
+</ol>
+<pre><code>[1] &quot;promo=&#39;1ère année&#39;&quot; &quot;promo=&#39;2ème année&#39;&quot; &quot;promo=&#39;LP&#39;&quot;        </code></pre>
+<ol start="7" style="list-style-type: decimal">
+<li>Créer automatiquement le vecteur <code>v7</code> qui suit à l’aide des fonctions <code>c()</code>, <code>seq()</code>, <code>paste()</code>, <code>rep()</code></li>
+</ol>
+<pre><code>[1] &quot;x1&quot; &quot;y1&quot; &quot;x2&quot; &quot;y2&quot; &quot;x3&quot; &quot;y3&quot; &quot;x4&quot; &quot;y4&quot;</code></pre>
+</div>
+<div id="donnees-presentes" class="section level3">
+<h3>Données présentes</h3>
+<p>Sur le jeu de données <code>swiss</code></p>
+<ol style="list-style-type: decimal">
+<li><p>Donner le nombre de lignes et le nombre de colonnes, séparemment</p></li>
+<li><p>Afficher les noms de variables</p></li>
+<li><p>Afficher les 10 premières lignes</p></li>
+<li><p>Afficher les colonnes <code>Agriculture</code> et <code>Education</code>, en <code>data.frame</code></p></li>
+<li><p>Afficher les lignes pour lesquelles la variable <code>Infant.Mortality</code> est inférieure à 17</p></li>
+<li><p>Combiner les deux demandes précédentes</p></li>
+</ol>
+</div>
+</div>
+
+</div>
+<div class="footer">
+      Site créé avec <a href="http://www.r-project.org" target="_blank"><code>R</code></a> et la 
+      librairie  <a href="http://rmarkdown.rstudio.com/" target="_blank"><code>rmarkdown</code></a>.
+</div>
+<script>
+    $("#TOC").css("margin-top", "100px");
+</script>
+
+
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

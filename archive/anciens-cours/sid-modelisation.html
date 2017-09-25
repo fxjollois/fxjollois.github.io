@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Informatique Décisionnelle</title>
+
+  <meta charset="utf-8">
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  <meta name="generator" content="pandoc" />
+
+
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+
+  <link rel="stylesheet" media="all" href="libs/ioslides-13.5.1/fonts/fonts.css">
+
+  <link rel="stylesheet" media="all" href="libs/ioslides-13.5.1/theme/css/default.css">
+  <link rel="stylesheet" media="only screen and (max-device-width: 480px)" href="libs/ioslides-13.5.1/theme/css/phone.css">
+
+  <base target="_blank">
+
+  <script type="text/javascript">
+    var SLIDE_CONFIG = {
+      // Slide settings
+      settings: {
+                title: 'Informatique Décisionnelle',
+                        useBuilds: true,
+        usePrettify: true,
+        enableSlideAreas: true,
+        enableTouch: true,
+              },
+
+      // Author information
+      presenters: [
+            {
+        name:  'Modélisation' ,
+        company: '',
+        gplus: '',
+        twitter: '',
+        www: '',
+        github: ''
+      },
+            ]
+    };
+  </script>
+
+  <style type="text/css">
+
+    b, strong {
+      font-weight: bold;
+    }
+
+    em {
+      font-style: italic;
+    }
+
+    slides > slide {
+      -webkit-transition: all 0.4s ease-in-out;
+      -moz-transition: all 0.4s ease-in-out;
+      -o-transition: all 0.4s ease-in-out;
+      transition: all 0.4s ease-in-out;
+    }
+
+    .auto-fadein {
+      -webkit-transition: opacity 0.6s ease-in;
+      -webkit-transition-delay: 0.4s;
+      -moz-transition: opacity 0.6s ease-in 0.4s;
+      -o-transition: opacity 0.6s ease-in 0.4s;
+      transition: opacity 0.6s ease-in 0.4s;
+      opacity: 0;
+    }
+
+  </style>
+
+
+  <style>
+  slide img {
+  	max-width: 100%;
+  }
+  </style>
+
+</head>
+
+<body style="opacity: 0">
+
+<slides class="layout-widescreen">
+
+  <slide class="title-slide segue nobackground">
+        <!-- The content of this hgroup is replaced programmatically through the slide_config.json. -->
+    <hgroup class="auto-fadein">
+      <h1 data-config-title><!-- populated from slide_config.json --></h1>
+      <h2 data-config-subtitle><!-- populated from slide_config.json --></h2>
+      <p data-config-presenter><!-- populated from slide_config.json --></p>
+            <p style="margin-top: 6px; margin-left: -2px;">DUT STID 2ème année</p>
+          </hgroup>
+  </slide>
+
+<slide class=''><hgroup><h2>Plan du cours</h2></hgroup><article  id="plan-du-cours">
+
+<ul>
+<li>Contraintes</li>
+<li>Pourquoi dénormaliser ?</li>
+<li>Optimisation du temps</li>
+<li>Lisibilité du modèle</li>
+<li>Axes de qualification</li>
+<li>Démarche</li>
+<li>Dénormalisation</li>
+<li>Modélisation dimensionnelle</li>
+<li>Étapes de la modélisation</li>
+<li>Différents modèles</li>
+<li>Atouts et faiblesses</li>
+</ul>
+
+</article></slide><slide class=''><hgroup><h2>Pourquoi dénormaliser ?</h2></hgroup><article  id="pourquoi-denormaliser">
+
+<ul>
+<li>Contexte décisionnel</li>
+<li>Mise à jour par des systèmes de productions</li>
+<li>Pas de maj en ligne</li>
+<li>Intégrité de l’entrepôt jamais remis en cause</li>
+<li>Nécessité de faire des requêtes complexes avec un temps de réponse relativement court</li>
+<li>Solution</li>
+<li>Possibilité d’introduire de la redondance</li>
+<li>Dénormalisation des tables</li>
+</ul>
+
+</article></slide><slide class=''><hgroup><h2>Optimisation du temps</h2></hgroup><article  id="optimisation-du-temps">
+
+<ul>
+<li>Contexte décisionnel</li>
+<li>Requêtes sur des grands ensembles</li>
+<li>Utilisation fréquente d’agrégats, de regroupements, de calculs, &#8230;</li>
+<li>Temps de réponse plus important qu’en transactionnel Solution</li>
+<li>Solution</li>
+<li>Limitation du nombre de tables</li>
+<li>Optimisation des requêtes fréquentes via des index, du partitionnement, &#8230;</li>
+</ul>
+
+</article></slide><slide class=''><hgroup><h2>Lisibilité du modèle</h2></hgroup><article  id="lisibilite-du-modele">
+
+<ul>
+<li>Contexte décisionnel</li>
+<li>Lien entre éléments non corrélés</li>
+<li>Requêtes complexes</li>
+<li>Utilisation par un non-informaticien</li>
+<li>Volonté de réactivité importante du système</li>
+<li>Solution</li>
+<li>Nécessité d’avoir un modèle lisible et intuitif</li>
+<li>Modèle des données évolutif</li>
+</ul>
+
+</article></slide><slide class=''><hgroup><h2>Axes de qualification</h2></hgroup><article  id="axes-de-qualification">
+
+<ul>
+<li>Axes de qualification d’un modèle décisionnel</li>
+<li>Lisibilité</li>
+<li>Performances en terme de chargement</li>
+<li>Performances en terme d’exécution</li>
+<li>Administration</li>
+<li>Évolutivité</li>
+<li>Axes antagonistes</li>
+<li>Exécution rapide → Redondances, agrégations, calcul <br>→ Chargement long &amp; Administration complexe</li>
+<li>Associer un poids à chaque axe</li>
+<li>Trouver le bon équilibre</li>
+</ul>
+
+</article></slide><slide class=''><hgroup><h2>Dénormalisation</h2></hgroup><article  id="denormalisation">
+
+<ul>
+<li>Pas de technique formelle</li>
+<li>Approche pragmatique nécessaire</li>
+<li>Analyse précise des besoins des utilisateurs</li>
+<li>Définition des sujets d’intérêt majeur</li>
+<li>Quelques points important :</li>
+<li>Une table → un sujet d’intérêt</li>
+<li>Moins de tables → moins de jointures</li>
+<li>Tables plus volumineuses</li>
+<li>Requêtes plus simples</li>
+</ul>
+
+</article></slide><slide class=''><hgroup><h2>Modélisation dimensionnelle</h2></hgroup><article  id="modelisation-dimensionnelle">
+
+<ul>
+<li>Analyse de la performance</li>
+<li>Utilisation d’un ensemble d’indicateurs (ou <strong>Faits</strong>)</li>
+<li>Taux d’occupation des lits dans un hôpital</li>
+<li>Nombre de produits en stock</li>
+<li>Montant d&#39;un achat</li>
+<li>&#8230;</li>
+<li>Indicateurs analysés en terme de <strong>Dimensions</strong> (axe d’analyse)</li>
+<li>Temps, Localisation, Clients, Service, &#8230;</li>
+<li>Table de faits regroupant les indicateurs ayant le même ensemble de dimensions</li>
+</ul>
+
+</article></slide><slide class=''><hgroup><h2>Etapes de la modélisation</h2></hgroup><article  id="etapes-de-la-modelisation">
+
+<ol>
+<li>Choix du processus à modéliser</li>
+</ol>
+
+<ul>
+<li>Activité de l’organisation et écoute des utilisateurs</li>
+<li>Pas attaché à un service ou à une fonction</li>
+</ul>
+
+<ol>
+<li>Définition de la granularité du processus</li>
+</ol>
+
+<ul>
+<li>Niveau de détails des mesures d’une ligne de la table de faits</li>
+<li>Étape critique et obligatoire</li>
+</ul>
+
+<ol>
+<li>Choix des dimensions</li>
+</ol>
+
+<ul>
+<li>Caractéristiques de la table des faits</li>
+</ul>
+
+<ol>
+<li>Identification des faits</li>
+</ol>
+
+<ul>
+<li>Mesures à mettre dans la table de faits</li>
+<li>Au niveau de granularité de l’étape 2</li>
+</ul>
+
+</article></slide><slide class=''><hgroup><h2>Sélection du processus</h2></hgroup><article  id="selection-du-processus">
+
+<ul>
+<li>Première étape de la conception : choix du processus à modéliser</li>
+<li>Choix du modèle avec la plus forte incidence</li>
+<li>Répondre aux questions les plus pressantes des utilisateurs</li>
+<li>Données faciles à extraire</li>
+<li>Affinement et extension du modèle par étape</li>
+<li>Création d’autres modèles par la suite</li>
+<li>Se focaliser sur les processus et non les services</li>
+<li>Assurer la cohérence des données en les publiant une seule fois avec un nombre réduit de modèle</li>
+</ul>
+
+</article></slide><slide class=''><hgroup><h2>Choix du grain</h2></hgroup><article  id="choix-du-grain">
+
+<ul>
+<li>Décision importante et cruciale dans la modélisation</li>
+<li>Répondre à la question</li>
+<li>Quel niveau de détail doit-il être rendu disponible dans le modèle dimensionnel ?</li>
+<li>Développer les modèles dimensionnels basés sur les données les plus atomiques et donc les plus détaillées</li>
+<li>Données hautement dimensionnelles</li>
+<li>Souplesse maximale d’analyse</li>
+<li>Élévation du grain entrainant la réduction de dimensions et la vulnérabilité face aux demandes inattendues</li>
+</ul>
+
+</article></slide><slide class=''><hgroup><h2>Granularité</h2></hgroup><article  id="granularite">
+
+<table class = 'rmdtable'>
+<col width="16%" />
+<col width="24%" />
+<col width="36%" />
+<col width="22%" />
+<tr class="header">
+<th align="left">Caractéristiques</th>
+<th align="left">Transaction</th>
+<th align="left">Instantané périodique</th>
+<th align="left">Instantané récapitulatif</th>
+</tr>
+<tr class="odd">
+<td align="left">Période de temps</td>
+<td align="left">Point dans le temps</td>
+<td align="left">Intervalles réguliers prévisibles</td>
+<td align="left">Durée in- determinée, généralement courte</td>
+</tr>
+<tr class="even">
+<td align="left">Grain</td>
+<td align="left">Une ligne par événement</td>
+<td align="left">Une ligne par période</td>
+<td align="left">Une ligne pour la vie de l’entité</td>
+</tr>
+<tr class="odd">
+<td align="left">Chargement</td>
+<td align="left">Insertion</td>
+<td align="left">Insertion</td>
+<td align="left">Insertion et mise à jour</td>
+</tr>
+<tr class="even">
+<td align="left">Mise à jour ?</td>
+<td align="left">aucune</td>
+<td align="left">aucune</td>
+<td align="left">Mise à jour pour chaque activité</td>
+</tr>
+<tr class="odd">
+<td align="left">Dimension date ?</td>
+<td align="left">Date de la transaction</td>
+<td align="left">Date de la fin de période</td>
+<td align="left">Dates multiples pour des étapes standard</td>
+</tr>
+<tr class="even">
+<td align="left">Faits</td>
+<td align="left">Activité de la transaction</td>
+<td align="left">Performance dans un intervalle prédéfini</td>
+<td align="left">Performance sur une durée de vie limitée</td>
+</tr>
+</table>
+
+</article></slide><slide class=''><hgroup><h2>Choix des dimensions</h2></hgroup><article  id="choix-des-dimensions">
+
+<ul>
+<li>Choix naturel une fois le grain de la table de faits choisi pour les dimensions pricipales</li>
+<li>Dimension supplémentaire ne remettant pas en cause le grain choisi (sinon revoir l’étape précédente)</li>
+<li>Séparation de date et d’heure (dimensions souvent présentes)</li>
+<li>Pas de soucis en terme d’espace car tables généralement petites par rapport à la table de faits</li>
+<li>Différents forages possibles</li>
+<li>Vers le bas : ajout d’un attribut à l’intérieur de la hiérarchie naturelle de la dimension ou non</li>
+<li>Vers le haut : suppression d’attributs</li>
+</ul>
+
+</article></slide><slide class=''><hgroup><h2>Dimensions dégénérées</h2></hgroup><article  id="dimensions-degenerees">
+
+<ul>
+<li>Clés de dimension ne correspondant pas à des tables de dimensions</li>
+<li>Courantes avec une granularité au niveau d’une seule transaction ou d’un élément d’une transaction</li>
+<li>Exemple :</li>
+<li>Numéro de transaction d’un Terminal Point de Vente pour une table de faits achats dans un magasin</li>
+<li>Numéro de commande, de facture, de lettre de transport, &#8230;</li>
+<li>Partie de la clé primaire de la table de faits généralement</li>
+</ul>
+
+</article></slide><slide class=''><hgroup><h2>Identification des faits</h2></hgroup><article  id="identification-des-faits">
+
+<ul>
+<li>Choix en fonction de la granularité définie</li>
+<li>Remise en cause possible de l’étape de définition de la granularité</li>
+<li>Estimation utile du nombre de lignes de la table de faits</li>
+<li>Possibilité de calculer des faits à partir d’autres faits de la table</li>
+<li>Ex : Prix unitaire moyen d&#39;un produit</li>
+<li>Fait : prix unitaire à chaque vente + quantité vendue</li>
+</ul>
+
+</article></slide><slide class=''><hgroup><h2>Faits additifs et non additifs</h2></hgroup><article  id="faits-additifs-et-non-additifs">
+
+<ul>
+<li>Attention aux faits additifs et non additifs</li>
+<li>Sommes additives</li>
+<li>Pourcentages et ratios (dont moyennes) non additifs</li>
+<li>Stockage du numérateur et du dénominateur dans la table de faits</li>
+<li>Faire le ratio des sommes et non la somme des ratios</li>
+<li>Prix unitaire non additif</li>
+<li>Additionner les ventes en euro et les quantités</li>
+<li>Rapport = prix moyen d’un produit sur une période</li>
+</ul>
+
+</article></slide><slide class=''><hgroup><h2>Schémas de modélisation</h2></hgroup><article  id="schemas-de-modelisation">
+
+<p>3 types de schéma du plus simple au plus complexe :- En étoile- En flocon- En constellation</p>
+
+<p>Dimensions conformes<br/>- Dimensions potentiellement partagées par des tables de faits différentes<br/>- Cohérence, Intégration, Productivité</p>
+
+</article></slide><slide class=''><hgroup><h2>Schéma en étoile</h2></hgroup><article  id="schema-en-etoile">
+
+<ul>
+<li>Une seule table de faits</li>
+<li>Plusieurs tables de dimensions, toutes rattachées directement à la table de faits</li>
+</ul>
+
+<img src='sid/sid--cours-modelisation-etoile.png' title=''/>
+
+</article></slide><slide class=''><hgroup><h2>Schéma en flocon de neige</h2></hgroup><article  id="schema-en-flocon-de-neige">
+
+<ul>
+<li>Normalisation des dimensions</li>
+<li>Notion de hiérarchie au sein d’une dimension</li>
+</ul>
+
+<img src='sid/sid--cours-modelisation-flocon.png' title=''/>
+
+</article></slide><slide class=''><hgroup><h2>Schéma en constellation de faits</h2></hgroup><article  id="schema-en-constellation-de-faits">
+
+<ul>
+<li>Plusieurs tables de faits</li>
+<li>Tables de dimensions reliées à une ou plusieurs tables de faits</li>
+</ul>
+
+<img src='sid/sid--cours-modelisation-constellation.png' title=''/>
+
+</article></slide><slide class=''><hgroup><h2>Atouts et faiblesses de la modélisation dimensionnelle</h2></hgroup><article  id="atouts-et-faiblesses-de-la-modelisation-dimensionnelle">
+
+<ul>
+<li>Atouts</li>
+<li>Lisibilité</li>
+<li>Performance</li>
+<li>Possibilité d’acquisition de l’expérience</li>
+<li>Faiblesses</li>
+<li>Manque de complétude</li>
+<li>Ajout d’une dimension parfois complexe</li>
+<li>Fondamentalement orientée métier</li>
+<li>Modélisation dimensionnelle adaptée pour les magasins de données, plutôt que pour les entrepôts de données</li>
+</ul>
+
+</article></slide><slide class=''><hgroup><h2>Exemple : Northwind</h2></hgroup><article  id="exemple-northwind">
+
+<img src='sid/Northwind_A4_size_for_Print.png' title=''/></article></slide>
+
+
+  <slide class="backdrop"></slide>
+
+</slides>
+
+<script src="libs/ioslides-13.5.1/js/modernizr.custom.45394.js"></script>
+<script src="libs/ioslides-13.5.1/js/prettify/prettify.js"></script>
+<script src="libs/ioslides-13.5.1/js/prettify/lang-r.js"></script>
+<script src="libs/ioslides-13.5.1/js/prettify/lang-yaml.js"></script>
+<script src="libs/ioslides-13.5.1/js/hammer.js"></script>
+<script src="libs/ioslides-13.5.1/js/slide-controller.js"></script>
+<script src="libs/ioslides-13.5.1/js/slide-deck.js"></script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+<!-- map slide visiblity events into shiny -->
+<script>
+  (function() {
+    if (window.jQuery) {
+       window.jQuery(document).on('slideleave', function(e) {
+         window.jQuery(e.target).trigger('hidden');
+      });
+       window.jQuery(document).on('slideenter', function(e) {
+         window.jQuery(e.target).trigger('shown');
+      });
+    }
+  })();
+</script>
+
+</body>
+</html>

@@ -1,0 +1,814 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+<meta charset="utf-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="pandoc" />
+
+
+
+
+<title>Base de données Médicaments</title>
+
+<script src="libs/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="libs/bootstrap-3.3.5/css/journal.min.css" rel="stylesheet" />
+<script src="libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<script src="libs/navigation-1.1/tabsets.js"></script>
+<link href="libs/highlightjs-1.1/default.css" rel="stylesheet" />
+<script src="libs/highlightjs-1.1/highlight.js"></script>
+<!--
+    Font Awesome
+-->
+<script src="https://use.fontawesome.com/32d8325004.js"></script>
+<link rel="stylesheet" href="libs/font-awesome-4.7.0/css/font-awesome.min.css">
+
+<!--
+    CSS perso
+-->
+<style>
+    .contenu {
+        margin-bottom: 50px;
+    }
+
+    .contact-liens {
+        text-align: center;
+    }
+    .contact-liens:hover {
+        text-decoration: none;
+    }
+    .contact-icones {
+        height: 30px;
+    }
+
+    /* Espacement pour barre du haut et pied de page */
+    #header, .section.level1 {
+        margin-top: 60px;
+        margin-bottom: 60px;
+    }
+    /* Espacement pour table des matières */
+    #TOC {
+        margin-top: 100px;
+    }
+    
+    .footer {
+        position: fixed;
+        width: 100%;
+        text-align: center;
+        bottom: 0;
+        left: 0;
+        background-color: #E6E6E6;
+    }
+</style>
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
+<script type="text/javascript">
+if (window.hljs && document.readyState && document.readyState === "complete") {
+   window.setTimeout(function() {
+      hljs.initHighlighting();
+   }, 0);
+}
+</script>
+
+
+
+<style type="text/css">
+h1 {
+  font-size: 34px;
+}
+h1.title {
+  font-size: 38px;
+}
+h2 {
+  font-size: 30px;
+}
+h3 {
+  font-size: 24px;
+}
+h4 {
+  font-size: 18px;
+}
+h5 {
+  font-size: 16px;
+}
+h6 {
+  font-size: 12px;
+}
+.table th:not([align]) {
+  text-align: left;
+}
+</style>
+
+<link rel="stylesheet" href="libs/bootstrap-journal.min.css" type="text/css" />
+
+</head>
+
+<body>
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img {
+  max-width:100%;
+  height: auto;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+</style>
+
+
+
+<div class="container-fluid main-container">
+
+<!-- tabsets -->
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+</script>
+
+<!-- code folding -->
+
+
+
+
+
+<div class="navbar navbar-default navbar-fixed-top">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-main">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">FX Jollois</a>
+    </div>
+    <div id="navbar-main" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button">Données <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+              <li><a href="accesdonnees.html">A télécharger</a></li>
+              <li><a href="donnees-integrees-r.html">Sous R</a></li>
+          </ul>
+        </li>
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button">Enseignement <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li class="dropdown-header">DUT 1ère année</li>
+            <li><a href="exploitation-donnees.html">Exploitation de données</a></li>
+            <li><a href="initiation-a-r.html">Initiation à R</a></li>
+            <li><a href="reporting.html">Reporting</a></li>
+            <li><a href="complements-r.html">Compléments sur R</a></li>
+            <li class="dropdown-header">DUT 2ème année</li>
+            <li><a href="prog-stat-r.html">Programmation statistique avec R</a></li>
+            <li class="dropdown-header">LP MDS Santé</li>
+            <li><a href="info-dec-sante.html">Informatique décisionnelle</a></li>
+            <li class="dropdown-header">DU Analyste Big Data</li>
+            <li><a href="initiation-r-du.html">Initiation à R</a></li>
+            <li><a href="connexion-r-mongodb.html">Connexion entre R et MongoDB</a></li>
+            <li class="dropdown-header">DU Dataviz</li>
+            <li><a href="analyse-donnees.html">Analyse de données</a></li>
+            <li><a href="visualisation-donnees.html">Visualisation de données - R</a></li>
+            <li><a href="visualisation-donnees-tableau.html">Visualisation de données - Tableau</a></li>
+            <li><a href="visualisation-donnees-d3.html">Visualisation de données - D3</a></li>
+            <li role="separator" class="divider"></li>
+            <li class="dropdown-header">Master</li>
+            <li><a href="slides/cnam-classif-modeles.html">Classification et Modèles de mélange</a></li>
+            <li><a href="analyse-donnees-massives.html">Analyse de Données Massives</a></li>
+            <li class="dropdown-header">Iran</li>
+            <li><a href="stat-prog-R.html">Statistical Programming using R</a></li>
+          </ul>
+        </li>
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button">Recherche <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li><a href="recherche.html">Sujets</a></li>
+            <li><a href="publications.html">Publications</a></li>
+          </ul>
+        </li>
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button">Réalisations <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li><a href="realisations.html">Détail</a></li>
+            <li role="separator" class="divider"></li>
+            <li><a href="http://up5.fr/explore-data" target="_blank">explore-data</a></li>
+            <li><a href="http://fxjollois.github.io/cours-sql/" target="_blank">Appli web de cours pour SQL</a></li>
+          </ul>
+        </li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container-fluid -->
+</div>
+<div class="contenu">
+
+<div class="fluid-row" id="header">
+
+
+
+<h1 class="title toc-ignore">Base de données Médicaments</h1>
+<h3 class="subtitle"><em>Informatique Décisionnelle - LP MDS Santé</em></h3>
+
+</div>
+
+
+<p>Dans ce TP, nous allons utilier la <a href="http://base-donnees-publique.medicaments.gouv.fr/">base de données publique des médicaments</a>. Dans la page <em>Téléchargement</em> (lien situé tout en bas du site), vous trouverez les liens vers un fichier explicatif (en PDF) et les fichiers de données (au format texte).</p>
+<p>Vous devez déjà tous les télécharger (9 fichiers au total), et les placer idéalement dans un répertoire dédié.</p>
+<div id="importation-de-donnees-texte" class="section level2">
+<h2>Importation de données texte</h2>
+<p>Il est possible d’importer des données provenannt de fichiers texte avec la commande <code>read.table()</code>, qui a les paramètres principaux suivants (avec <code>valeur</code> par défaut éventuelle) :</p>
+<ul>
+<li><code>file</code> : nom du fichier</li>
+<li><code>header</code> : présence ou non des noms de variables (<code>FALSE</code>)</li>
+<li><code>sep</code> : séparateur de variable (` `)</li>
+<li><code>na.strings</code> : chaîne(s) pour valeurs manquantes (<code>NA</code>)</li>
+<li><code>skip</code> : nombre de lignes à ne pas prendre en compte en début de fichier (<code>0</code>)</li>
+<li><code>nrow</code> : nombre de lignes à lire (<code>-1</code> : toutes les lignes)</li>
+<li><code>stringsAsFactors</code> : transformations des chaînes en <code>factor</code> ou non (<code>TRUE</code>)</li>
+<li><code>quote</code> : symbole(s) pour les chaînes de caractères (<code>'&quot;</code> - attention aux apostrophes en français donc)</li>
+<li>…</li>
+</ul>
+<p>Cette fonction renvoie un objet de type <code>data.frame</code>.</p>
+<p>Il existe quelques fonctions dérivés avec des valeurs par défaut différentes</p>
+<ul>
+<li><code>read.csv()</code>, <code>read.csv2()</code></li>
+<li><code>read.delim()</code>, <code>read.delim2()</code></li>
+</ul>
+<p>Par exemple, nous disposons du fichier <a href="donnees/heart.txt"><code>heart.txt</code></a>, contenant les données de 270 personnes.</p>
+<object data="donnees/heart.txt" type="text/plain" style="width: 100%">
+<pre><code>impossible à afficher</code></pre>
+</object>
+<p>Nous remarquons les points suivants :</p>
+<ul>
+<li>le nom des colonnes est présent dans la première ligne</li>
+<li>le séparateur de colonnes est la tabulation (<code>&quot;\t&quot;</code>)</li>
+</ul>
+<p>Pour importer ce fichier, nous devons donc utiliser le code suivant. Vous devez d’abord télécharger le fichier. <strong>Attention</strong> : il est supposé ici que le fichier est dans un sous-répertoire <code>donnees</code> du répertoire de travail.</p>
+<pre class="r"><code>heart = read.table(&quot;donnees/heart.txt&quot;, header = T, sep = &quot;\t&quot;)
+head(heart)</code></pre>
+<pre><code>##   age     sexe type_douleur pression cholester sucre electro taux_max
+## 1  70 masculin            D      130       322     A       C      109
+## 2  67  feminin            C      115       564     A       C      160
+## 3  57 masculin            B      124       261     A       A      141
+## 4  64 masculin            D      128       263     A       A      105
+## 5  74  feminin            B      120       269     A       C      121
+## 6  65 masculin            D      120       177     A       A      140
+##   angine depression pic vaisseau    coeur
+## 1    non        2.4   2        D presence
+## 2    non        1.6   2        A  absence
+## 3    non        0.3   1        A presence
+## 4    oui        0.2   2        B  absence
+## 5    oui        0.2   1        B  absence
+## 6    non        0.4   1        A  absence</code></pre>
+<p>Il est aussi possible d’écrire un fichier texte à partir d’un <code>data.frame</code>, en spécifiant aussi les paramètres d’écriture. Par exemple, le code suivant écrit les données <code>heart_bis</code> dans un autre formalisme.</p>
+<ul>
+<li>le séparateur de colonnes est le <code>&quot;%&quot;</code></li>
+<li>les noms des colonnes sont bien écrits</li>
+<li>le nom des lignes ne sont incluses</li>
+<li>le séparateur de décimales est la virgule (<code>&quot;,&quot;</code>), comme en français</li>
+<li>il n’y a pas de <code>&quot;&quot;</code> ou de <code>''</code> autour des chaînes de caractères</li>
+</ul>
+<pre class="r"><code>write.table(heart, file = &quot;donnees/heart_bis.txt&quot;, sep = &quot;%&quot;, 
+            row.names = FALSE, col.names = TRUE, dec = &quot;,&quot;, quote = FALSE)</code></pre>
+<object data="donnees/heart_bis.txt" type="text/plain" style="width: 100%">
+<pre><code>impossible à afficher</code></pre>
+</object>
+<p>Il est parfois difficile de lire directement avec la commande <code>read.table()</code> ou ses dérivés. On peut utiliser dans ce cas la commande <code>readLines()</code>, qui comme son nom l’indique, lit les lignes les unes après les autres. Elle renvoie un tableau de chaîne de caractères, chaque valeur du tableau correspondant à une ligne.</p>
+<pre class="r"><code>heart_lignes = readLines(&quot;donnees/heart.txt&quot;)
+length(heart_lignes)</code></pre>
+<pre><code>## [1] 271</code></pre>
+<pre class="r"><code>heart_lignes[1]</code></pre>
+<pre><code>## [1] &quot;age\tsexe\ttype_douleur\tpression\tcholester\tsucre\telectro\ttaux_max\tangine\tdepression\tpic\tvaisseau\tcoeur&quot;</code></pre>
+<pre class="r"><code>heart_lignes[2]</code></pre>
+<pre><code>## [1] &quot;70\tmasculin\tD\t130\t322\tA\tC\t109\tnon\t2.4\t2\tD\tpresence&quot;</code></pre>
+</div>
+<div id="attributs-dun-objet" class="section level2">
+<h2>Attributs d’un objet</h2>
+<p>Dans <code>R</code>, tout objet peut avoir un ou plusieurs attributs, en particulier les <code>data.frame</code>s, comme par exemple la classe de l’objet, le nom des colonnes, et le nom des lignes. On peut avoir la liste des attributs avec la commande <code>attributes()</code>. Celle-ci nous renvoie une <code>list</code> contenant des objets nommés.</p>
+<pre class="r"><code>attributes(mtcars)</code></pre>
+<pre><code>## $names
+##  [1] &quot;mpg&quot;  &quot;cyl&quot;  &quot;disp&quot; &quot;hp&quot;   &quot;drat&quot; &quot;wt&quot;   &quot;qsec&quot; &quot;vs&quot;   &quot;am&quot;   &quot;gear&quot;
+## [11] &quot;carb&quot;
+## 
+## $row.names
+##  [1] &quot;Mazda RX4&quot;           &quot;Mazda RX4 Wag&quot;       &quot;Datsun 710&quot;         
+##  [4] &quot;Hornet 4 Drive&quot;      &quot;Hornet Sportabout&quot;   &quot;Valiant&quot;            
+##  [7] &quot;Duster 360&quot;          &quot;Merc 240D&quot;           &quot;Merc 230&quot;           
+## [10] &quot;Merc 280&quot;            &quot;Merc 280C&quot;           &quot;Merc 450SE&quot;         
+## [13] &quot;Merc 450SL&quot;          &quot;Merc 450SLC&quot;         &quot;Cadillac Fleetwood&quot; 
+## [16] &quot;Lincoln Continental&quot; &quot;Chrysler Imperial&quot;   &quot;Fiat 128&quot;           
+## [19] &quot;Honda Civic&quot;         &quot;Toyota Corolla&quot;      &quot;Toyota Corona&quot;      
+## [22] &quot;Dodge Challenger&quot;    &quot;AMC Javelin&quot;         &quot;Camaro Z28&quot;         
+## [25] &quot;Pontiac Firebird&quot;    &quot;Fiat X1-9&quot;           &quot;Porsche 914-2&quot;      
+## [28] &quot;Lotus Europa&quot;        &quot;Ford Pantera L&quot;      &quot;Ferrari Dino&quot;       
+## [31] &quot;Maserati Bora&quot;       &quot;Volvo 142E&quot;         
+## 
+## $class
+## [1] &quot;data.frame&quot;</code></pre>
+<p>On peut accéder à chaque objet de cette liste via le nom de l’objet, de deux façons différentes, comme présenté ci-dessous.</p>
+<pre class="r"><code>attributes(mtcars)$names</code></pre>
+<pre><code>##  [1] &quot;mpg&quot;  &quot;cyl&quot;  &quot;disp&quot; &quot;hp&quot;   &quot;drat&quot; &quot;wt&quot;   &quot;qsec&quot; &quot;vs&quot;   &quot;am&quot;   &quot;gear&quot;
+## [11] &quot;carb&quot;</code></pre>
+<pre class="r"><code>attr(mtcars, &quot;names&quot;)</code></pre>
+<pre><code>##  [1] &quot;mpg&quot;  &quot;cyl&quot;  &quot;disp&quot; &quot;hp&quot;   &quot;drat&quot; &quot;wt&quot;   &quot;qsec&quot; &quot;vs&quot;   &quot;am&quot;   &quot;gear&quot;
+## [11] &quot;carb&quot;</code></pre>
+<p>Il est aussi possible de définir de nouveaux attributs à un <code>data.frame</code>, via la commande <code>attr()</code>. Celui-ci ne sera pas visible lorsqu’on l’affichera, mais auquel on pourra accéder directement avec les commandes ci-dessus.</p>
+<pre class="r"><code>attr(mtcars, &quot;info&quot;) = &quot;Ce jeu de données présentes des informations sur 32 voitures, décrites par 11 variables&quot;
+mtcars$info</code></pre>
+<pre><code>## NULL</code></pre>
+<pre class="r"><code>attributes(mtcars)</code></pre>
+<pre><code>## $names
+##  [1] &quot;mpg&quot;  &quot;cyl&quot;  &quot;disp&quot; &quot;hp&quot;   &quot;drat&quot; &quot;wt&quot;   &quot;qsec&quot; &quot;vs&quot;   &quot;am&quot;   &quot;gear&quot;
+## [11] &quot;carb&quot;
+## 
+## $row.names
+##  [1] &quot;Mazda RX4&quot;           &quot;Mazda RX4 Wag&quot;       &quot;Datsun 710&quot;         
+##  [4] &quot;Hornet 4 Drive&quot;      &quot;Hornet Sportabout&quot;   &quot;Valiant&quot;            
+##  [7] &quot;Duster 360&quot;          &quot;Merc 240D&quot;           &quot;Merc 230&quot;           
+## [10] &quot;Merc 280&quot;            &quot;Merc 280C&quot;           &quot;Merc 450SE&quot;         
+## [13] &quot;Merc 450SL&quot;          &quot;Merc 450SLC&quot;         &quot;Cadillac Fleetwood&quot; 
+## [16] &quot;Lincoln Continental&quot; &quot;Chrysler Imperial&quot;   &quot;Fiat 128&quot;           
+## [19] &quot;Honda Civic&quot;         &quot;Toyota Corolla&quot;      &quot;Toyota Corona&quot;      
+## [22] &quot;Dodge Challenger&quot;    &quot;AMC Javelin&quot;         &quot;Camaro Z28&quot;         
+## [25] &quot;Pontiac Firebird&quot;    &quot;Fiat X1-9&quot;           &quot;Porsche 914-2&quot;      
+## [28] &quot;Lotus Europa&quot;        &quot;Ford Pantera L&quot;      &quot;Ferrari Dino&quot;       
+## [31] &quot;Maserati Bora&quot;       &quot;Volvo 142E&quot;         
+## 
+## $class
+## [1] &quot;data.frame&quot;
+## 
+## $info
+## [1] &quot;Ce jeu de données présentes des informations sur 32 voitures, décrites par 11 variables&quot;</code></pre>
+<pre class="r"><code>attr(mtcars, &quot;info&quot;)</code></pre>
+<pre><code>## [1] &quot;Ce jeu de données présentes des informations sur 32 voitures, décrites par 11 variables&quot;</code></pre>
+</div>
+<div id="dates" class="section level2">
+<h2>Dates</h2>
+<p>Comme dans tous les systèmes, les dates sous <code>R</code> sont stockées sous forme d’entiers représentant un nombre de jours depuis une certaine date, sous le format <code>Date</code>. Ci-dessous, nous voyons comment récupérer la date du jour, le nombre de jour depuis l’origine, et le calcul de la date d’origine. Il y a aussi deux exemples d’affichage amélioré d’une date (la date du jour ici).</p>
+<pre class="r"><code># Date du jour
+Sys.Date()</code></pre>
+<pre><code>## [1] &quot;2017-09-25&quot;</code></pre>
+<pre class="r"><code># Entier stocké
+as.numeric(Sys.Date())</code></pre>
+<pre><code>## [1] 17434</code></pre>
+<pre class="r"><code># Date d&#39;origine (et exemple de soustraction de jours d&#39;une date)
+Sys.Date() - as.numeric(Sys.Date())</code></pre>
+<pre><code>## [1] &quot;1970-01-01&quot;</code></pre>
+<pre class="r"><code># Affichage d&#39;une date avec un format spécifique
+format(Sys.Date(), &quot;jour : %d ou %e, mois : %m, année :  %y ou %Y&quot;)</code></pre>
+<pre><code>## [1] &quot;jour : 25 ou 25, mois : 09, année :  17 ou 2017&quot;</code></pre>
+<pre class="r"><code># Affichage d&#39;une date dépendant de la langue locale
+format(Sys.Date(), &quot;%a %e %b ou %A %e %B&quot;)</code></pre>
+<pre><code>## [1] &quot;lun. 25 sept. ou lundi 25 septembre&quot;</code></pre>
+<p>Il est aussi possible de transformer une chaîne de caractère en <code>Date</code> avec la fonction <code>as.Date()</code>. Celle-ci prend en paramètre obligatoire un vecteur de chaînes (éventuellement avec une seule valeur), et de façon optionnelle le format de la date. Voici quelques exemples d’utilisations de cette fonction, avec la présentation des fonctions <code>weekdays()</code>, <code>months()</code>, <code>quarters()</code> et <code>julian()</code>.</p>
+<pre class="r"><code># Tentative de conversion d&#39;une date écrite en &quot;français&quot;
+as.Date(&quot;09/11/2016&quot;)</code></pre>
+<pre><code>## [1] &quot;9-11-20&quot;</code></pre>
+<pre class="r"><code># En spécifiant le format, tout est ok
+as.Date(&quot;09/11/2016&quot;, &quot;%d/%m/%Y&quot;)</code></pre>
+<pre><code>## [1] &quot;2016-11-09&quot;</code></pre>
+<pre class="r"><code># Récupération d&#39;informations de cette date
+d = as.Date(&quot;09/11/2016&quot;, &quot;%d/%m/%Y&quot;)
+weekdays(d) # jour de la semaine</code></pre>
+<pre><code>## [1] &quot;mercredi&quot;</code></pre>
+<pre class="r"><code>months(d)   # mois dans l&#39;année</code></pre>
+<pre><code>## [1] &quot;novembre&quot;</code></pre>
+<pre class="r"><code>quarters(d) # trimestre dans l&#39;année</code></pre>
+<pre><code>## [1] &quot;Q4&quot;</code></pre>
+<pre class="r"><code>julian(d)   # nombre de jour depuis l&#39;origine (éventuellement spécifié, cf ci-dessous)</code></pre>
+<pre><code>## [1] 17114
+## attr(,&quot;origin&quot;)
+## [1] &quot;1970-01-01&quot;</code></pre>
+<pre class="r"><code>julian(d, as.Date(&quot;1900-01-01&quot;))</code></pre>
+<pre><code>## [1] 42681
+## attr(,&quot;origin&quot;)
+## [1] &quot;1900-01-01&quot;</code></pre>
+</div>
+<div id="interrogation-de-donnees" class="section level2">
+<h2>Interrogation de données</h2>
+<p>Nous allons voir ici comment réaliser les opérations classiques faites en <code>SQL</code> au moyen de fonctions <code>R</code>.</p>
+<div id="fonction-subset" class="section level3">
+<h3>Fonction <code>subset()</code></h3>
+<p>Cette fonction permet de réaliser au moins deux opérations classiques en `SQL :</p>
+<ul>
+<li><strong>Restriction</strong> : limitation aux lignes respectant un critère</li>
+<li><strong>Projection</strong> : limitation à certaines colonnes</li>
+</ul>
+<div id="restriction" class="section level4">
+<h4>Restriction</h4>
+<p>La fonction <code>subset()</code> prend en premier paramètre le <code>data.frame</code> sur lequel faire l’opération. Le deuxième paramètre à définir ici est celui pour la restriction (<code>subset =</code>). Voici comment se restreindre par exemple aux voitures (données <code>mtcars</code>) avec une consommation strictement inférieure à 15 (<code>mpg &lt; 15</code>).</p>
+<pre class="r"><code>subset(mtcars, subset = mpg &lt; 15)</code></pre>
+<pre><code>##                      mpg cyl disp  hp drat    wt  qsec vs am gear carb
+## Duster 360          14.3   8  360 245 3.21 3.570 15.84  0  0    3    4
+## Cadillac Fleetwood  10.4   8  472 205 2.93 5.250 17.98  0  0    3    4
+## Lincoln Continental 10.4   8  460 215 3.00 5.424 17.82  0  0    3    4
+## Chrysler Imperial   14.7   8  440 230 3.23 5.345 17.42  0  0    3    4
+## Camaro Z28          13.3   8  350 245 3.73 3.840 15.41  0  0    3    4</code></pre>
+</div>
+<div id="projection" class="section level4">
+<h4>Projection</h4>
+<p>Ici, c’est le paramètre pour la projection qu’il faut définir (<code>select =</code>). On peut lui passer un ou plusieurs noms de colonnes. On veut par exemple ne récupérer que la puissance (<code>hp</code>) et la cylindrée (<code>disp</code>).</p>
+<pre class="r"><code>subset(mtcars, select = c(hp, disp))</code></pre>
+<pre><code>##                      hp  disp
+## Mazda RX4           110 160.0
+## Mazda RX4 Wag       110 160.0
+## Datsun 710           93 108.0
+## Hornet 4 Drive      110 258.0
+## Hornet Sportabout   175 360.0
+## Valiant             105 225.0
+## Duster 360          245 360.0
+## Merc 240D            62 146.7
+## Merc 230             95 140.8
+## Merc 280            123 167.6
+## Merc 280C           123 167.6
+## Merc 450SE          180 275.8
+## Merc 450SL          180 275.8
+## Merc 450SLC         180 275.8
+## Cadillac Fleetwood  205 472.0
+## Lincoln Continental 215 460.0
+## Chrysler Imperial   230 440.0
+## Fiat 128             66  78.7
+## Honda Civic          52  75.7
+## Toyota Corolla       65  71.1
+## Toyota Corona        97 120.1
+## Dodge Challenger    150 318.0
+## AMC Javelin         150 304.0
+## Camaro Z28          245 350.0
+## Pontiac Firebird    175 400.0
+## Fiat X1-9            66  79.0
+## Porsche 914-2        91 120.3
+## Lotus Europa        113  95.1
+## Ford Pantera L      264 351.0
+## Ferrari Dino        175 145.0
+## Maserati Bora       335 301.0
+## Volvo 142E          109 121.0</code></pre>
+<p>Mais il est aussi possible d’exclure des colonnes dans le résultat. C’est-à-dire que plutôt de dire celles qu’on veut, on va indiquer celles dont on ne veut pas.</p>
+<pre class="r"><code>subset(mtcars, select = -c(hp, disp))</code></pre>
+<pre><code>##                      mpg cyl drat    wt  qsec vs am gear carb
+## Mazda RX4           21.0   6 3.90 2.620 16.46  0  1    4    4
+## Mazda RX4 Wag       21.0   6 3.90 2.875 17.02  0  1    4    4
+## Datsun 710          22.8   4 3.85 2.320 18.61  1  1    4    1
+## Hornet 4 Drive      21.4   6 3.08 3.215 19.44  1  0    3    1
+## Hornet Sportabout   18.7   8 3.15 3.440 17.02  0  0    3    2
+## Valiant             18.1   6 2.76 3.460 20.22  1  0    3    1
+## Duster 360          14.3   8 3.21 3.570 15.84  0  0    3    4
+## Merc 240D           24.4   4 3.69 3.190 20.00  1  0    4    2
+## Merc 230            22.8   4 3.92 3.150 22.90  1  0    4    2
+## Merc 280            19.2   6 3.92 3.440 18.30  1  0    4    4
+## Merc 280C           17.8   6 3.92 3.440 18.90  1  0    4    4
+## Merc 450SE          16.4   8 3.07 4.070 17.40  0  0    3    3
+## Merc 450SL          17.3   8 3.07 3.730 17.60  0  0    3    3
+## Merc 450SLC         15.2   8 3.07 3.780 18.00  0  0    3    3
+## Cadillac Fleetwood  10.4   8 2.93 5.250 17.98  0  0    3    4
+## Lincoln Continental 10.4   8 3.00 5.424 17.82  0  0    3    4
+## Chrysler Imperial   14.7   8 3.23 5.345 17.42  0  0    3    4
+## Fiat 128            32.4   4 4.08 2.200 19.47  1  1    4    1
+## Honda Civic         30.4   4 4.93 1.615 18.52  1  1    4    2
+## Toyota Corolla      33.9   4 4.22 1.835 19.90  1  1    4    1
+## Toyota Corona       21.5   4 3.70 2.465 20.01  1  0    3    1
+## Dodge Challenger    15.5   8 2.76 3.520 16.87  0  0    3    2
+## AMC Javelin         15.2   8 3.15 3.435 17.30  0  0    3    2
+## Camaro Z28          13.3   8 3.73 3.840 15.41  0  0    3    4
+## Pontiac Firebird    19.2   8 3.08 3.845 17.05  0  0    3    2
+## Fiat X1-9           27.3   4 4.08 1.935 18.90  1  1    4    1
+## Porsche 914-2       26.0   4 4.43 2.140 16.70  0  1    5    2
+## Lotus Europa        30.4   4 3.77 1.513 16.90  1  1    5    2
+## Ford Pantera L      15.8   8 4.22 3.170 14.50  0  1    5    4
+## Ferrari Dino        19.7   6 3.62 2.770 15.50  0  1    5    6
+## Maserati Bora       15.0   8 3.54 3.570 14.60  0  1    5    8
+## Volvo 142E          21.4   4 4.11 2.780 18.60  1  1    4    2</code></pre>
+</div>
+<div id="combinaison-des-deux" class="section level4">
+<h4>Combinaison des deux</h4>
+<p>Bien évidemment, il est possible de combiner les deux paramètres pour réaliser une opération de restriction et une opération de projection dans la même commande. Nous récupérons ici la puissance (<code>hp</code>) et la cylindrée (<code>disp</code>) des voitures (données <code>mtcars</code>) avec une consommation strictement inférieure à 15 (<code>mpg &lt; 15</code>).</p>
+<pre class="r"><code>subset(mtcars, subset = mpg &lt; 15, select = c(hp, disp))</code></pre>
+<pre><code>##                      hp disp
+## Duster 360          245  360
+## Cadillac Fleetwood  205  472
+## Lincoln Continental 215  460
+## Chrysler Imperial   230  440
+## Camaro Z28          245  350</code></pre>
+</div>
+</div>
+<div id="fonction-transform" class="section level3">
+<h3>Fonction <code>transform()</code></h3>
+<p>Cette fonction permet elle de créer de nouvelles variables, basées sur des calculs à partir d’autres variables. Elle renvoie le <code>data.frame</code>, passé en premier paramètre, complété des nouvelles variables. On calcule ici par exemple le rapport poids (<code>wt</code>) / puissance (<code>hp</code>). Et on calcule aussi la consommation en litres pour 100 km.</p>
+<pre class="r"><code>transform(mtcars, 
+          rapport = round(1000 * wt / hp), 
+          conso = round(236 / mpg, 2))</code></pre>
+<p>Ici, toute fonction existante applicable sur un vecteur est utilisable.</p>
+</div>
+<div id="fonction-aggregate" class="section level3">
+<h3>Fonction <code>aggregate()</code></h3>
+<p>On va pouvoir réaliser ici tous les calculs d’agrégats possibles sur une table, avec ou sans regroupement. Le premier paramètre sera la formule (sous la forme <code>... ~ ...</code>) permettant de déterminer sur quelles variables faire le calcul (à gauche du <code>~</code>) et quelles variables utiliser pour le regroupement (à droite du <code>~</code>). Le deuxième sera le jeu de données à utiliser. Et le troisième sera la fonction à appliquer.</p>
+<pre class="r"><code># Calcul de la moyenne de mpg pour tous
+aggregate(mpg ~ 1, mtcars, mean)</code></pre>
+<pre><code>##        mpg
+## 1 20.09062</code></pre>
+<pre class="r"><code># Calcul de la moyenne de mpg et de hp pour tous
+aggregate(cbind(mpg, hp) ~ 1, mtcars, mean)</code></pre>
+<pre><code>##        mpg       hp
+## 1 20.09062 146.6875</code></pre>
+<pre class="r"><code># Calcul de la moyenne de toutes les variables pour tous
+aggregate(. ~ 1, mtcars, mean)</code></pre>
+<pre><code>##        mpg    cyl     disp       hp     drat      wt     qsec     vs
+## 1 20.09062 6.1875 230.7219 146.6875 3.596563 3.21725 17.84875 0.4375
+##        am   gear   carb
+## 1 0.40625 3.6875 2.8125</code></pre>
+<pre class="r"><code># Calcul de la moyenne de mpg pour chaque modalité de am
+aggregate(mpg ~ am, mtcars, mean)</code></pre>
+<pre><code>##   am      mpg
+## 1  0 17.14737
+## 2  1 24.39231</code></pre>
+<pre class="r"><code># Calcul de la moyenne de mpg en fonction de am et de cyl
+aggregate(mpg ~ am + cyl, mtcars, mean)</code></pre>
+<pre><code>##   am cyl      mpg
+## 1  0   4 22.90000
+## 2  1   4 28.07500
+## 3  0   6 19.12500
+## 4  1   6 20.56667
+## 5  0   8 15.05000
+## 6  1   8 15.40000</code></pre>
+<pre class="r"><code># Calcul de la moyenne de mpg et de hp en fonction de am et de cyl
+aggregate(cbind(mpg, hp) ~ am + cyl, mtcars, mean)</code></pre>
+<pre><code>##   am cyl      mpg        hp
+## 1  0   4 22.90000  84.66667
+## 2  1   4 28.07500  81.87500
+## 3  0   6 19.12500 115.25000
+## 4  1   6 20.56667 131.66667
+## 5  0   8 15.05000 194.16667
+## 6  1   8 15.40000 299.50000</code></pre>
+</div>
+<div id="fonction-merge" class="section level3">
+<h3>Fonction <code>merge()</code></h3>
+<p>Cette fonction permet elle de réaliser des jointures entre deux tables. Pour présenter le fonctionnement, nous allons créer une table avec le type de moteur selon le nombre de cylindres (<code>cyl</code> dans <code>mtcars</code>). Vous remarquerez que la valeur <code>4</code> n’est pas présente dans ce tableau, alors qu’elle l’est dans <code>mtcars</code>. Inversement, <code>12</code> est présent ici mais pas dans <code>mtcars</code>.</p>
+<pre class="r"><code>types = data.frame(
+    cyl = c(6, 8, 12),
+    type = c(&quot;moyen&quot;, &quot;gros&quot;, &quot;très gros&quot;)
+)
+types</code></pre>
+<pre><code>##   cyl      type
+## 1   6     moyen
+## 2   8      gros
+## 3  12 très gros</code></pre>
+<pre class="r"><code>unique(mtcars$cyl)</code></pre>
+<pre><code>## [1] 6 4 8</code></pre>
+<p>La fonction <code>merge()</code> prend, au minimum, deux paramètres que sont les deux tables à fusionner. Par défaut, c’est une jointure naturelle qui est réalisée (i.e. on recherche l’égalité des variables ayant le même nom).</p>
+<pre class="r"><code>merge(mtcars, types)</code></pre>
+<pre><code>##    cyl  mpg  disp  hp drat    wt  qsec vs am gear carb  type
+## 1    6 21.0 160.0 110 3.90 2.620 16.46  0  1    4    4 moyen
+## 2    6 21.0 160.0 110 3.90 2.875 17.02  0  1    4    4 moyen
+## 3    6 18.1 225.0 105 2.76 3.460 20.22  1  0    3    1 moyen
+## 4    6 17.8 167.6 123 3.92 3.440 18.90  1  0    4    4 moyen
+## 5    6 19.2 167.6 123 3.92 3.440 18.30  1  0    4    4 moyen
+## 6    6 21.4 258.0 110 3.08 3.215 19.44  1  0    3    1 moyen
+## 7    6 19.7 145.0 175 3.62 2.770 15.50  0  1    5    6 moyen
+## 8    8 18.7 360.0 175 3.15 3.440 17.02  0  0    3    2  gros
+## 9    8 17.3 275.8 180 3.07 3.730 17.60  0  0    3    3  gros
+## 10   8 14.3 360.0 245 3.21 3.570 15.84  0  0    3    4  gros
+## 11   8 14.7 440.0 230 3.23 5.345 17.42  0  0    3    4  gros
+## 12   8 10.4 472.0 205 2.93 5.250 17.98  0  0    3    4  gros
+## 13   8 16.4 275.8 180 3.07 4.070 17.40  0  0    3    3  gros
+## 14   8 19.2 400.0 175 3.08 3.845 17.05  0  0    3    2  gros
+## 15   8 15.2 275.8 180 3.07 3.780 18.00  0  0    3    3  gros
+## 16   8 15.2 304.0 150 3.15 3.435 17.30  0  0    3    2  gros
+## 17   8 10.4 460.0 215 3.00 5.424 17.82  0  0    3    4  gros
+## 18   8 15.8 351.0 264 4.22 3.170 14.50  0  1    5    4  gros
+## 19   8 15.5 318.0 150 2.76 3.520 16.87  0  0    3    2  gros
+## 20   8 15.0 301.0 335 3.54 3.570 14.60  0  1    5    8  gros
+## 21   8 13.3 350.0 245 3.73 3.840 15.41  0  0    3    4  gros</code></pre>
+<p>Si le nom des colonnes diffère ou que vous ne voulez pas regarder l’égalité entre toutes les variables ayant même nom, il faut le préciser dans les paramètres <code>by</code> (même noms de colonnes dans les deux tables), ou <code>by.x</code> et <code>by.y</code> pour dire quelles variables prendre dans la première table (<code>by.x</code>) et dans la deuxième table (<code>by.y</code>).</p>
+<pre class="r"><code>names(types)[1] = &quot;nbcyl&quot;
+types</code></pre>
+<pre><code>##   nbcyl      type
+## 1     6     moyen
+## 2     8      gros
+## 3    12 très gros</code></pre>
+<pre class="r"><code>merge(mtcars, types, by.x = &quot;cyl&quot;, by.y = &quot;nbcyl&quot;)</code></pre>
+<pre><code>##    cyl  mpg  disp  hp drat    wt  qsec vs am gear carb  type
+## 1    6 21.0 160.0 110 3.90 2.620 16.46  0  1    4    4 moyen
+## 2    6 21.0 160.0 110 3.90 2.875 17.02  0  1    4    4 moyen
+## 3    6 18.1 225.0 105 2.76 3.460 20.22  1  0    3    1 moyen
+## 4    6 17.8 167.6 123 3.92 3.440 18.90  1  0    4    4 moyen
+## 5    6 19.2 167.6 123 3.92 3.440 18.30  1  0    4    4 moyen
+## 6    6 21.4 258.0 110 3.08 3.215 19.44  1  0    3    1 moyen
+## 7    6 19.7 145.0 175 3.62 2.770 15.50  0  1    5    6 moyen
+## 8    8 18.7 360.0 175 3.15 3.440 17.02  0  0    3    2  gros
+## 9    8 17.3 275.8 180 3.07 3.730 17.60  0  0    3    3  gros
+## 10   8 14.3 360.0 245 3.21 3.570 15.84  0  0    3    4  gros
+## 11   8 14.7 440.0 230 3.23 5.345 17.42  0  0    3    4  gros
+## 12   8 10.4 472.0 205 2.93 5.250 17.98  0  0    3    4  gros
+## 13   8 16.4 275.8 180 3.07 4.070 17.40  0  0    3    3  gros
+## 14   8 19.2 400.0 175 3.08 3.845 17.05  0  0    3    2  gros
+## 15   8 15.2 275.8 180 3.07 3.780 18.00  0  0    3    3  gros
+## 16   8 15.2 304.0 150 3.15 3.435 17.30  0  0    3    2  gros
+## 17   8 10.4 460.0 215 3.00 5.424 17.82  0  0    3    4  gros
+## 18   8 15.8 351.0 264 4.22 3.170 14.50  0  1    5    4  gros
+## 19   8 15.5 318.0 150 2.76 3.520 16.87  0  0    3    2  gros
+## 20   8 15.0 301.0 335 3.54 3.570 14.60  0  1    5    8  gros
+## 21   8 13.3 350.0 245 3.73 3.840 15.41  0  0    3    4  gros</code></pre>
+<p>Vous remarquerez, en le testant, que si on ne précise pas sur quelles variables faire la jointure, en l’absence de variables identiques entre les tables, la fonction <code>merge()</code> réalise le produit cartésien.</p>
+<p>Dans les deux exemples ci-dessus, vous avez du voir que toutes les lignes ne son pas retournées. En effet, les voitures de <code>mtcars</code> avec <code>cyl == 4</code> ne sont pas intégrées. De même que la dernière ligne de <code>types</code>. Pour avoir toutes les lignes, il faut ajouter le paramètre <code>all = TRUE</code>, pour lui dire de faire la jointure complète (i.e. <code>FULL OUTER JOIN</code>). Dans ce cas, on aura donc 33 lignes, avec des <code>NA</code> pour les cellules dont il n’a pas l’information.</p>
+<pre class="r"><code>names(types)[1] = &quot;cyl&quot;
+merge(mtcars, types, all = TRUE)</code></pre>
+<pre><code>##    cyl  mpg  disp  hp drat    wt  qsec vs am gear carb      type
+## 1    4 22.8 140.8  95 3.92 3.150 22.90  1  0    4    2      &lt;NA&gt;
+## 2    4 32.4  78.7  66 4.08 2.200 19.47  1  1    4    1      &lt;NA&gt;
+## 3    4 22.8 108.0  93 3.85 2.320 18.61  1  1    4    1      &lt;NA&gt;
+## 4    4 24.4 146.7  62 3.69 3.190 20.00  1  0    4    2      &lt;NA&gt;
+## 5    4 21.5 120.1  97 3.70 2.465 20.01  1  0    3    1      &lt;NA&gt;
+## 6    4 27.3  79.0  66 4.08 1.935 18.90  1  1    4    1      &lt;NA&gt;
+## 7    4 30.4  75.7  52 4.93 1.615 18.52  1  1    4    2      &lt;NA&gt;
+## 8    4 33.9  71.1  65 4.22 1.835 19.90  1  1    4    1      &lt;NA&gt;
+## 9    4 26.0 120.3  91 4.43 2.140 16.70  0  1    5    2      &lt;NA&gt;
+## 10   4 30.4  95.1 113 3.77 1.513 16.90  1  1    5    2      &lt;NA&gt;
+## 11   4 21.4 121.0 109 4.11 2.780 18.60  1  1    4    2      &lt;NA&gt;
+## 12   6 21.0 160.0 110 3.90 2.620 16.46  0  1    4    4     moyen
+## 13   6 21.0 160.0 110 3.90 2.875 17.02  0  1    4    4     moyen
+## 14   6 18.1 225.0 105 2.76 3.460 20.22  1  0    3    1     moyen
+## 15   6 17.8 167.6 123 3.92 3.440 18.90  1  0    4    4     moyen
+## 16   6 19.2 167.6 123 3.92 3.440 18.30  1  0    4    4     moyen
+## 17   6 21.4 258.0 110 3.08 3.215 19.44  1  0    3    1     moyen
+## 18   6 19.7 145.0 175 3.62 2.770 15.50  0  1    5    6     moyen
+## 19   8 18.7 360.0 175 3.15 3.440 17.02  0  0    3    2      gros
+## 20   8 17.3 275.8 180 3.07 3.730 17.60  0  0    3    3      gros
+## 21   8 14.3 360.0 245 3.21 3.570 15.84  0  0    3    4      gros
+## 22   8 14.7 440.0 230 3.23 5.345 17.42  0  0    3    4      gros
+## 23   8 10.4 472.0 205 2.93 5.250 17.98  0  0    3    4      gros
+## 24   8 16.4 275.8 180 3.07 4.070 17.40  0  0    3    3      gros
+## 25   8 19.2 400.0 175 3.08 3.845 17.05  0  0    3    2      gros
+## 26   8 15.2 275.8 180 3.07 3.780 18.00  0  0    3    3      gros
+## 27   8 15.2 304.0 150 3.15 3.435 17.30  0  0    3    2      gros
+## 28   8 10.4 460.0 215 3.00 5.424 17.82  0  0    3    4      gros
+## 29   8 15.8 351.0 264 4.22 3.170 14.50  0  1    5    4      gros
+## 30   8 15.5 318.0 150 2.76 3.520 16.87  0  0    3    2      gros
+## 31   8 15.0 301.0 335 3.54 3.570 14.60  0  1    5    8      gros
+## 32   8 13.3 350.0 245 3.73 3.840 15.41  0  0    3    4      gros
+## 33  12   NA    NA  NA   NA    NA    NA NA NA   NA   NA très gros</code></pre>
+<p>On peut bien évidemment faire les jointures externes gauches (<code>LEFT OUTER JOIN</code>) ou droite (<code>RIGHT OUTER JOIN</code>) avec respectivement les paramètres <code>all.x</code> et <code>all.y</code>.</p>
+<pre class="r"><code>merge(mtcars, types, all.x = TRUE)</code></pre>
+<pre><code>##    cyl  mpg  disp  hp drat    wt  qsec vs am gear carb  type
+## 1    4 22.8 140.8  95 3.92 3.150 22.90  1  0    4    2  &lt;NA&gt;
+## 2    4 32.4  78.7  66 4.08 2.200 19.47  1  1    4    1  &lt;NA&gt;
+## 3    4 22.8 108.0  93 3.85 2.320 18.61  1  1    4    1  &lt;NA&gt;
+## 4    4 24.4 146.7  62 3.69 3.190 20.00  1  0    4    2  &lt;NA&gt;
+## 5    4 21.5 120.1  97 3.70 2.465 20.01  1  0    3    1  &lt;NA&gt;
+## 6    4 27.3  79.0  66 4.08 1.935 18.90  1  1    4    1  &lt;NA&gt;
+## 7    4 30.4  75.7  52 4.93 1.615 18.52  1  1    4    2  &lt;NA&gt;
+## 8    4 33.9  71.1  65 4.22 1.835 19.90  1  1    4    1  &lt;NA&gt;
+## 9    4 26.0 120.3  91 4.43 2.140 16.70  0  1    5    2  &lt;NA&gt;
+## 10   4 30.4  95.1 113 3.77 1.513 16.90  1  1    5    2  &lt;NA&gt;
+## 11   4 21.4 121.0 109 4.11 2.780 18.60  1  1    4    2  &lt;NA&gt;
+## 12   6 21.0 160.0 110 3.90 2.620 16.46  0  1    4    4 moyen
+## 13   6 21.0 160.0 110 3.90 2.875 17.02  0  1    4    4 moyen
+## 14   6 18.1 225.0 105 2.76 3.460 20.22  1  0    3    1 moyen
+## 15   6 17.8 167.6 123 3.92 3.440 18.90  1  0    4    4 moyen
+## 16   6 19.2 167.6 123 3.92 3.440 18.30  1  0    4    4 moyen
+## 17   6 21.4 258.0 110 3.08 3.215 19.44  1  0    3    1 moyen
+## 18   6 19.7 145.0 175 3.62 2.770 15.50  0  1    5    6 moyen
+## 19   8 18.7 360.0 175 3.15 3.440 17.02  0  0    3    2  gros
+## 20   8 17.3 275.8 180 3.07 3.730 17.60  0  0    3    3  gros
+## 21   8 14.3 360.0 245 3.21 3.570 15.84  0  0    3    4  gros
+## 22   8 14.7 440.0 230 3.23 5.345 17.42  0  0    3    4  gros
+## 23   8 10.4 472.0 205 2.93 5.250 17.98  0  0    3    4  gros
+## 24   8 16.4 275.8 180 3.07 4.070 17.40  0  0    3    3  gros
+## 25   8 19.2 400.0 175 3.08 3.845 17.05  0  0    3    2  gros
+## 26   8 15.2 275.8 180 3.07 3.780 18.00  0  0    3    3  gros
+## 27   8 15.2 304.0 150 3.15 3.435 17.30  0  0    3    2  gros
+## 28   8 10.4 460.0 215 3.00 5.424 17.82  0  0    3    4  gros
+## 29   8 15.8 351.0 264 4.22 3.170 14.50  0  1    5    4  gros
+## 30   8 15.5 318.0 150 2.76 3.520 16.87  0  0    3    2  gros
+## 31   8 15.0 301.0 335 3.54 3.570 14.60  0  1    5    8  gros
+## 32   8 13.3 350.0 245 3.73 3.840 15.41  0  0    3    4  gros</code></pre>
+<pre class="r"><code>merge(mtcars, types, all.y = TRUE)</code></pre>
+<pre><code>##    cyl  mpg  disp  hp drat    wt  qsec vs am gear carb      type
+## 1    6 21.0 160.0 110 3.90 2.620 16.46  0  1    4    4     moyen
+## 2    6 21.0 160.0 110 3.90 2.875 17.02  0  1    4    4     moyen
+## 3    6 18.1 225.0 105 2.76 3.460 20.22  1  0    3    1     moyen
+## 4    6 17.8 167.6 123 3.92 3.440 18.90  1  0    4    4     moyen
+## 5    6 19.2 167.6 123 3.92 3.440 18.30  1  0    4    4     moyen
+## 6    6 21.4 258.0 110 3.08 3.215 19.44  1  0    3    1     moyen
+## 7    6 19.7 145.0 175 3.62 2.770 15.50  0  1    5    6     moyen
+## 8    8 18.7 360.0 175 3.15 3.440 17.02  0  0    3    2      gros
+## 9    8 17.3 275.8 180 3.07 3.730 17.60  0  0    3    3      gros
+## 10   8 14.3 360.0 245 3.21 3.570 15.84  0  0    3    4      gros
+## 11   8 14.7 440.0 230 3.23 5.345 17.42  0  0    3    4      gros
+## 12   8 10.4 472.0 205 2.93 5.250 17.98  0  0    3    4      gros
+## 13   8 16.4 275.8 180 3.07 4.070 17.40  0  0    3    3      gros
+## 14   8 19.2 400.0 175 3.08 3.845 17.05  0  0    3    2      gros
+## 15   8 15.2 275.8 180 3.07 3.780 18.00  0  0    3    3      gros
+## 16   8 15.2 304.0 150 3.15 3.435 17.30  0  0    3    2      gros
+## 17   8 10.4 460.0 215 3.00 5.424 17.82  0  0    3    4      gros
+## 18   8 15.8 351.0 264 4.22 3.170 14.50  0  1    5    4      gros
+## 19   8 15.5 318.0 150 2.76 3.520 16.87  0  0    3    2      gros
+## 20   8 15.0 301.0 335 3.54 3.570 14.60  0  1    5    8      gros
+## 21   8 13.3 350.0 245 3.73 3.840 15.41  0  0    3    4      gros
+## 22  12   NA    NA  NA   NA    NA    NA NA NA   NA   NA très gros</code></pre>
+</div>
+<div id="fonction-setnames" class="section level3">
+<h3>Fonction <code>setNames()</code></h3>
+<p>Cette fonction permet de renommer les colonnes d’un <code>data.frame</code> et de le renvoyer. Reprenons un exemple de calcul d’agrégat vu précédemment. Quelque soit le calcul indiqué, le nom de la colonne est toujours le même.</p>
+<pre class="r"><code>aggregate(mpg ~ am, mtcars, mean)</code></pre>
+<pre><code>##   am      mpg
+## 1  0 17.14737
+## 2  1 24.39231</code></pre>
+<p>Si nous voulons avoir dans un même tableau, la moyenne et l’écart-type, il nous faudrait faire une jointure. Mais l’idéal serait de renommer les tableaux correctement. On peut donc le faire avec <code>setNames()</code> dont voici un exemple de fonctionnement.</p>
+<pre class="r"><code>setNames(aggregate(mpg ~ am, mtcars, mean), c(&quot;am&quot;, &quot;Moyenne&quot;))</code></pre>
+<pre><code>##   am  Moyenne
+## 1  0 17.14737
+## 2  1 24.39231</code></pre>
+</div>
+</div>
+<div id="exercices" class="section level2">
+<h2>Exercices</h2>
+<div id="importation" class="section level3">
+<h3>Importation</h3>
+<p>La première étape ici est donc d’importer les données. Il faut pour cela utiliser la fonction <code>read.table()</code>, en évitant que les variables textuelles deviennent des <code>factors</code>. Il faut aussi renommer les variables pour chaque table, selon les informations fournies dans le PDF associé aux données. Il faut aussi gérer les dates pour qu’elles soient correctement représentées. Pour certaines variables, nous avons le descriptif des modalités dans ce document. Enfin, il faudrait ajouter le court descriptif de chaque table comme attribut de celles-ci.</p>
+</div>
+<div id="interrogation" class="section level3">
+<h3>Interrogation</h3>
+<ol style="list-style-type: decimal">
+<li>On veut les informations suivantes dans une table à deux colonnes (<code>statistique</code>, <code>valeur</code>) :
+<ul>
+<li>Nombre de médicaments</li>
+<li>Nombre de médicaments avec autorisation active</li>
+<li>Nombre de médicaments avec surveillance renforcée</li>
+<li>Taux moyen de remboursement (pour ceux avec autorisation active)</li>
+<li>Prix moyen (idem que le taux)</li>
+<li>Durée moyenne de leur mise sur le marché (en nombre de jours - idem que le taux)</li>
+</ul></li>
+<li>Quels sont les dix médicaments avec le plus de composants (Code CIS, Dénomination et nombre de composants) ?</li>
+<li>Pour chaque type de générique, on veut savoir le nombre de médicaments associés, ainsi que leur taux de remboursement moyen et leur prix moyen.</li>
+<li>Quelles sont les voies d’administration possibles ? Et combien de médicaments sont concernés pour chaque voie ?</li>
+<li>Quels sont les médicaments dont le service médical rendu (ou <strong>SMR</strong>) est jugé insuffisant ? Indiquez leur taux de remboursement et leur prix, en les classant par prix décroissant.</li>
+</ol>
+<p><strong>NB</strong> :</p>
+<ul>
+<li>les taux et les prix sont dans au format chaîne de caractères (resp. <code>&quot;xx %&quot;</code> et <code>&quot;xx,xx&quot;</code>) et donc à modifier avant calcul.</li>
+<li>les voies d’administration sont listées dans une seule variable, et séparées par des “;” (par exemple <code>&quot;cutanée;orale;sublinguale&quot;</code>). Il faut donc ici aussi faire un pré-traitement.</li>
+</ul>
+</div>
+</div>
+
+</div>
+<div class="footer">
+      Site créé avec <a href="http://www.r-project.org" target="_blank"><code>R</code></a> et la 
+      librairie  <a href="http://rmarkdown.rstudio.com/" target="_blank"><code>rmarkdown</code></a>.
+</div>
+<script>
+    $("#TOC").css("margin-top", "100px");
+</script>
+
+
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

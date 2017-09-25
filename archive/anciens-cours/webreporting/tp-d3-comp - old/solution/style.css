@@ -1,0 +1,76 @@
+body {
+  font-family: "Helvetica";
+}
+
+h1 {
+  text-align: center;
+  color: #555;
+}
+
+/* Centrage des div conteneurs */
+#tab, #columnChart, #barChart {
+  text-align: center;
+}
+
+/* pour tab */
+#tab tr:hover {
+    background-color: lightgrey;
+}
+
+/* CSS pour placement des div */
+#groupe, #valeur {
+  display: inline-block;
+}
+
+#valeur {
+  vertical-align: top;
+}
+
+/* Placement global */
+#dashboard {
+  width: 800px;
+  margin: 0 auto;
+}
+
+#top {
+  text-align: center;
+}
+
+/* pour affichage < 800px de large */
+@media screen and (max-width: 800px) {
+  #dashboard {
+    width: 100%;
+  }
+}
+
+/* pour pieChart */
+.legend {
+    font-size: 12px;
+}
+
+.arc path {
+    opacity: 0.8;
+}
+.arc path:hover {
+    stroke-width: 2px;
+    stroke: gray;
+    opacity: 1;
+}
+
+
+/* barChart */
+.domain {
+    stroke-width: 2px;
+    fill: none;
+    stroke: black;
+    z-index: 9999;
+}
+
+rect {
+    opacity: 0.8;
+}
+rect:hover {
+    opacity: 1;
+    stroke-width: 2px;
+    stroke: gray;    
+}

@@ -1,0 +1,55 @@
+---
+title: TP2 - Utilisation de données externes - *correction*
+subtitle: Initiation a `R` - STID 1ère année
+---
+
+```{r init, include=FALSE}
+knitr::opts_chunk$set(comment = NA)
+```
+
+## Exercices
+
+### Importation de données
+
+- [`heart.txt`](donnees/heart.txt)
+```{r}
+heart = read.table("donnees/heart.txt", header = T)
+```
+- [`Detroit_homicide.txt`](donnees/Detroit_homicide.txt)
+```{r}
+dh = read.table("donnees/Detroit_homicide.txt", skip = 35, header = T)
+```
+- [`hepatitis.TXT`](donnees/hepatitis.TXT)
+```{r}
+hep = read.table("donnees/hepatitis.TXT", header = T, na.strings = "?")
+```
+
+### Compléments
+
+Reprendre l'importation du fichier `heart.txt` (cf ci-dessus), et répondre aux questions suivantes en complétant le code précédemment écrit.
+
+1. Créer une indicatrice binaire `FALSE/TRUE` pour la présence ou non de problème de coeur (dernière variable)
+```{r}
+heart$indicatrice = (heart$coeur == "presence")
+```
+2. Créer une variable comptant le nombre de fois où une variable est égale à `A` (entre `type_douleur`, `sucre`, `electro`, et `vaisseau`)
+```{r}
+heart$nbA = (heart$type_douleur == "A") + (heart$sucre == "A") + (heart$electro == "A") + (heart$vaisseau == "A")
+```
+3. Créer une variable `factor` à partir de l'indicatrice binaire faite au point 1 avec comme labels des modalités `Présence` pour `TRUE` et `Absence` pour `FALSE` (refaire la variable `coeur` en quelque sorte)
+```{r}
+heart$coeurBis = factor(heart$coeur, labels = c("Absence", "Présence"))
+```
+4. Créer un nouveau `data.frame` avec uniquement les individus ayant strictement moins de 60 ans
+```{r}
+heartJeune = heart[heart$age < 60,]
+```
+5. Créer maintenant, à partir du précédent, deux `data.frames` : 
+    - une pour les hommes
+    - une autre pour les femmes
+```{r}
+heartM = heartJeune[heartJeune$sexe == "masculin",]
+heartF = heartJeune[heartJeune$sexe == "feminin",]
+```
+
+

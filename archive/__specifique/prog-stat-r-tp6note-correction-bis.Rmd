@@ -1,0 +1,279 @@
+---
+title: TP noté - *correction*
+subtitle: Programmation statistique avec `R` - STID 2ème année
+---
+
+```{r, include=FALSE}
+library(knitr)
+```
+
+## Rendu
+
+On choisit donc ici d'afficher le code, et faire en sorte que les tableaux soient affichés au format HTML, grâce à la fonction `kable()` de la librairie `knitr`.
+
+## Importation des données
+
+```{r}
+ca = read.table("../donnees/ca/ca.txt", sep = "%", header = T)
+groupe = read.table("../donnees/ca/groupe.txt", sep = "%", header = T, quote = NULL)
+mois = read.table("../donnees/ca/mois.txt", sep = "%", header = T)
+provenance = read.table("../donnees/ca/provenance.txt", sep = "%", header = T)
+```
+
+## Manipulation
+
+### Informations complètes
+
+En décomposant les étapes :
+
+```{r}
+# Jointure entre ca et provenance
+etape1 = merge(ca, provenance, by.x = "prov_no", by.y = "no")
+# Jointure du résultat avec groupe
+etape2 = merge(etape1, groupe, by.x = "groupe_no", by.y = "no")
+# Enfin, jointure du résultat précédent avec mois
+ca_tout_bis = merge(etape2, mois, by.x = "mois_no", by.y = "no")
+```
+
+Tout dans la même expression, sans création de variables temporaires :
+
+```{r}
+# Remplacement de chaque var temporaire par son calcul
+# Le code est indenté pour plus de clarté
+ca_tout = merge(
+    merge(
+        merge(
+            ca,
+            provenance,
+            by.x = "prov_no", by.y = "no"
+        ),
+        groupe,
+        by.x = "groupe_no", by.y = "no"
+    ),
+    mois,
+    by.x = "mois_no", by.y = "no"
+)
+```
+
+On vérifie que nous obtenons bien évidemment les mêmes `data.frame`s :
+
+```{r}
+identical(ca_tout, ca_tout_bis)
+```
+
+### Comparaison entre année
+
+#### Première version
+
+Ici, on part du `data.frame` `ca_tout` précédemment créé, pour en créer deux (un pour 2003, et un pour 2004), puis on fait une jointure entre les deux, sur tous les attributs en commun sauf `no` et `mois_no`.
+
+Idem, en décomposant chaque étape :
+
+```{r}
+# Partie 2003
+#   - restriction à l'année 2003
+evol2003a = subset(ca_tout, annee == 2003)
+#   - création d'une nouvelle variable ca2003 pour l'utiliser plus tard
+evol2003b = transform(evol2003a, ca2003 = ca)
+#   - supression des variables inutiles : ca, annee, no, mois_no
+evol2003c = subset(evol2003b, select = -c(ca, annee, no, mois_no))
+
+# Partie 2004
+#   - restriction à l'année 2004
+evol2004a = subset(ca_tout, annee == 2004)
+#   - création d'une nouvelle variable ca2004 pour l'utiliser plus tard
+evol2004b = transform(evol2004a, ca2004 = ca)
+#   - supression des variables inutiles : ca, annee, no, mois_no
+evol2004c = subset(evol2004b, select = -c(ca, annee, no, mois_no))
+
+# Jointure entre les deux parties, sur tous les attributs en commun, sauf 
+evol = merge(
+        evol2003c,
+        evol2004c,
+        by = c("prov_no", "code_prov", "provenance",
+               "groupe_no", "code_dep", "departement", 
+               "code_groupe", "groupe", "code_sgroupe", "sous_groupe",
+               "mois", "mois_numero")
+    )
+
+ca_evol_bis = transform(evol, evolution = ca2004 - ca2003)
+```
+
+Et en réalisant tout en une fois :
+
+```{r}
+ca_evol = transform(
+    merge(
+        subset(transform(subset(ca_tout, annee == 2003), ca2003 = ca), 
+               select = -c(ca, annee, no, mois_no)),
+        subset(transform(subset(ca_tout, annee == 2004), ca2004 = ca), 
+               select = -c(ca, annee, no, mois_no)),
+        by = c("prov_no", "code_prov", "provenance",
+               "groupe_no", "code_dep", "departement", 
+               "code_groupe", "groupe", "code_sgroupe", "sous_groupe",
+               "mois", "mois_numero")
+    ),
+    evolution = ca2004 - ca2003
+)
+```
+
+On obtient bien le même résultat :
+
+```{r}
+identical(ca_evol, ca_evol_bis)
+```
+
+
+#### Deuxième version
+
+Dans cette deuxième version, on repart des `data.frame`s de base, pour déjà séparer 2003 et 2004, puis faire les jointures entre les deux. Puis, au final, faire la jointure avec `provenance` et `groupe`.
+
+En décomposant :
+
+```{r}
+autre1 = merge(ca, mois, by.x = "mois_no", by.y = "no")
+autre2003a = subset(autre1, annee == 2003)
+autre2003b = transform(autre2003a, ca2003 = ca)
+autre2003c = subset(autre2003b, select = -c(ca, annee, no, mois_no))
+autre2004a = subset(autre1, annee == 2004)
+autre2004b = transform(autre2004a, ca2004 = ca)
+autre2004c = subset(autre2004b, select = -c(ca, annee, no, mois_no))
+
+autre2 = merge(autre2003c, autre2004c)
+autre3 = merge(autre2, provenance, by.x = "prov_no", by.y = "no")
+autre4 = merge(autre3, groupe, by.x = "groupe_no", by.y = "no")
+
+ca_autre_bis = transform(autre4, evolution = ca2004 - ca2003)
+```
+
+Et en minimisant les créations de variables temporaires :
+
+```{r}
+ca_autre = transform(
+    merge(
+        merge(
+            merge(
+                subset(
+                    transform(
+                        subset(
+                            merge(ca, mois, by.x = "mois_no", by.y = "no"), 
+                            annee == 2003
+                        ), 
+                        ca2003 = ca
+                    ), 
+                    select = -c(ca, annee, no, mois_no)
+                ), 
+                subset(
+                    transform(
+                        subset(
+                            merge(ca, mois, by.x = "mois_no", by.y = "no"), 
+                            annee == 2004
+                        ), 
+                        ca2004 = ca
+                    ), 
+                    select = -c(ca, annee, no, mois_no)
+                )
+            ), 
+            provenance, 
+            by.x = "prov_no", by.y = "no"
+        ), 
+        groupe, by.x = "groupe_no", by.y = "no"), 
+    evolution = ca2004 - ca2003
+)
+```
+
+On regarde qu'on obtient bien le même résultat 
+
+```{r}
+identical(ca_autre, ca_autre_bis)
+```
+
+#### Comparaison entre les 2 versions
+
+Ici, on ne peut pas utiliser `identical()` car l'ordre n'est pas le même entre les deux résultat, dû à la différence de création (principalement, l'ordre des jointures). On va donc créer un nouvel attribut dans chaque table, composé de `mois_numero`, `groupe_no` et de `prov_no`. On pourra ainsi ordonner les tables grâce à cet attribut (grâce à `order()`), et ainsi les comparer. On devra aussi renommer les noms des lignes et réordonner les variables du deuxième `data.frame` pour les mettre dans le même ordre que le premier.
+
+```{r}
+# Création d'un df pour ca_evol
+#   - création de l'attribut ordre
+comp1 = transform(ca_evol, ordre = paste(mois_numero, groupe_no, prov_no, sep = "-"))
+#   - ordonnencement de la table par cet attribut
+comp1 = comp1[order(comp1$ordre),]
+#   - modification des noms de lignes
+rownames(comp1) = 1:nrow(comp1)
+
+# Création d'un df pour ca_autre
+#   - création de l'attribut ordre
+comp2 = transform(ca_autre, ordre = paste(mois_numero, groupe_no, prov_no, sep = "-"))
+#   - ordonnencement de la table par cet attribut
+#   - ordonnencement des colonnes par l'ordre des colonnes de comp1
+comp2 = comp2[order(comp2$ordre), names(comp1)]
+#   - modification des noms de lignes
+rownames(comp2) = 1:nrow(comp2)
+
+# Test pour savoir si ce sont les mêmes tables
+identical(comp1, comp2)
+```
+
+## Quelques informations sur le CA
+
+### Chiffre d'affaires total sur l'ensemble de la période
+
+```{r}
+kable(aggregate(ca ~ 1, ca_tout, sum))
+```
+
+### CA total par provenance
+
+```{r}
+kable(aggregate(ca ~ provenance, ca_tout, sum))
+```
+
+### CA total par année d'exercice
+
+```{r}
+kable(aggregate(ca ~ annee, ca_tout, sum))
+```
+
+### CA total par mois dans l'année, 
+
+- en faisant attention à la présentation dans l'ordre des mois, cf l'attribut `mois_numero` 
+- il faut donc ici un tableau à 12 lignes, une par mois, et deux colonnes, la deuxième colonne contenant le CA total pour chaque mois sur les deux ans
+
+```{r}
+kable(subset(aggregate(ca ~ mois + mois_numero, ca_tout, sum), select = -mois_numero))
+```
+
+### CA total par mois pour 2003 et 2004
+
+- tableau à 4 colonnes : `mois`, `ca2003`, `ca2004`, `evolution`
+
+Dans cette première version, on utilise la table `ca_evol` créée précédemment :
+
+```{r}
+kable(subset(aggregate(cbind(ca2003, ca2004, evolution) ~ mois + mois_numero, 
+                       ca_evol, sum), 
+             select = -mois_numero))
+```
+
+Dans la deuxième version, on utilise la table `ca_tout` créée en premier :
+
+```{r}
+kable(
+    transform(
+        setNames(
+            subset(
+                merge(
+                    aggregate(ca ~ mois + mois_numero, 
+                              subset(ca_tout, annee == 2003), sum), 
+                    aggregate(ca ~ mois + mois_numero, 
+                              subset(ca_tout, annee == 2004), sum),
+                    by = c("mois_numero")
+                ),
+                select = -c(mois_numero, mois.y)
+            ),
+            c("mois", "ca2003", "ca2004")
+        ),
+        evolution = ca2004 - ca2003
+    )
+)
+```

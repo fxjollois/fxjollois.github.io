@@ -1,0 +1,802 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+<meta charset="utf-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="pandoc" />
+
+
+
+
+<title>TP3 - Interrogation de données à la SQL</title>
+
+<script src="libs/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="libs/bootstrap-3.3.5/css/journal.min.css" rel="stylesheet" />
+<script src="libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<script src="libs/navigation-1.1/tabsets.js"></script>
+<link href="libs/highlightjs-1.1/default.css" rel="stylesheet" />
+<script src="libs/highlightjs-1.1/highlight.js"></script>
+<!--
+    Font Awesome
+-->
+<script src="https://use.fontawesome.com/32d8325004.js"></script>
+<link rel="stylesheet" href="libs/font-awesome-4.7.0/css/font-awesome.min.css">
+
+<!--
+    CSS perso
+-->
+<style>
+    .contenu {
+        margin-bottom: 50px;
+    }
+
+    .contact-liens {
+        text-align: center;
+    }
+    .contact-liens:hover {
+        text-decoration: none;
+    }
+    .contact-icones {
+        height: 30px;
+    }
+
+    /* Espacement pour barre du haut et pied de page */
+    #header, .section.level1 {
+        margin-top: 60px;
+        margin-bottom: 60px;
+    }
+    /* Espacement pour table des matières */
+    #TOC {
+        margin-top: 100px;
+    }
+    
+    .footer {
+        position: fixed;
+        width: 100%;
+        text-align: center;
+        bottom: 0;
+        left: 0;
+        background-color: #E6E6E6;
+    }
+</style>
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
+<script type="text/javascript">
+if (window.hljs && document.readyState && document.readyState === "complete") {
+   window.setTimeout(function() {
+      hljs.initHighlighting();
+   }, 0);
+}
+</script>
+
+
+
+<style type="text/css">
+h1 {
+  font-size: 34px;
+}
+h1.title {
+  font-size: 38px;
+}
+h2 {
+  font-size: 30px;
+}
+h3 {
+  font-size: 24px;
+}
+h4 {
+  font-size: 18px;
+}
+h5 {
+  font-size: 16px;
+}
+h6 {
+  font-size: 12px;
+}
+.table th:not([align]) {
+  text-align: left;
+}
+</style>
+
+<link rel="stylesheet" href="libs/bootstrap-journal.min.css" type="text/css" />
+
+</head>
+
+<body>
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img {
+  max-width:100%;
+  height: auto;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+</style>
+
+
+
+<div class="container-fluid main-container">
+
+<!-- tabsets -->
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+</script>
+
+<!-- code folding -->
+
+
+
+
+
+<div class="navbar navbar-default navbar-fixed-top">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-main">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">FX Jollois</a>
+    </div>
+    <div id="navbar-main" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button">Données <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+              <li><a href="accesdonnees.html">A télécharger</a></li>
+              <li><a href="donnees-integrees-r.html">Sous R</a></li>
+          </ul>
+        </li>
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button">Enseignement <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li class="dropdown-header">DUT 1ère année</li>
+            <li><a href="exploitation-donnees.html">Exploitation de données</a></li>
+            <li><a href="initiation-a-r.html">Initiation à R</a></li>
+            <li><a href="reporting.html">Reporting</a></li>
+            <li><a href="complements-r.html">Compléments sur R</a></li>
+            <li class="dropdown-header">DUT 2ème année</li>
+            <li><a href="prog-stat-r.html">Programmation statistique avec R</a></li>
+            <li class="dropdown-header">LP MDS Santé</li>
+            <li><a href="info-dec-sante.html">Informatique décisionnelle</a></li>
+            <li class="dropdown-header">DU Analyste Big Data</li>
+            <li><a href="initiation-r-du.html">Initiation à R</a></li>
+            <li><a href="connexion-r-mongodb.html">Connexion entre R et MongoDB</a></li>
+            <li class="dropdown-header">DU Dataviz</li>
+            <li><a href="analyse-donnees.html">Analyse de données</a></li>
+            <li><a href="visualisation-donnees.html">Visualisation de données - R</a></li>
+            <li><a href="visualisation-donnees-tableau.html">Visualisation de données - Tableau</a></li>
+            <li><a href="visualisation-donnees-d3.html">Visualisation de données - D3</a></li>
+            <li role="separator" class="divider"></li>
+            <li class="dropdown-header">Master</li>
+            <li><a href="slides/cnam-classif-modeles.html">Classification et Modèles de mélange</a></li>
+            <li><a href="analyse-donnees-massives.html">Analyse de Données Massives</a></li>
+            <li class="dropdown-header">Iran</li>
+            <li><a href="stat-prog-R.html">Statistical Programming using R</a></li>
+          </ul>
+        </li>
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button">Recherche <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li><a href="recherche.html">Sujets</a></li>
+            <li><a href="publications.html">Publications</a></li>
+          </ul>
+        </li>
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button">Réalisations <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li><a href="realisations.html">Détail</a></li>
+            <li role="separator" class="divider"></li>
+            <li><a href="http://up5.fr/explore-data" target="_blank">explore-data</a></li>
+            <li><a href="http://fxjollois.github.io/cours-sql/" target="_blank">Appli web de cours pour SQL</a></li>
+          </ul>
+        </li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container-fluid -->
+</div>
+<div class="contenu">
+
+<div class="fluid-row" id="header">
+
+
+
+<h1 class="title toc-ignore">TP3 - Interrogation de données <em>à la SQL</em></h1>
+<h3 class="subtitle"><em>Initiation a <code>R</code> - STID 1ère année</em></h3>
+
+</div>
+
+
+<div id="interrogation-de-donnees" class="section level2">
+<h2>Interrogation de données</h2>
+<p>Nous allons voir ici comment réaliser les opérations classiques faites en <code>SQL</code> au moyen de fonctions <code>R</code>.</p>
+<div id="fonction-subset" class="section level3">
+<h3>Fonction <code>subset()</code></h3>
+<p>Cette fonction permet de réaliser au moins deux opérations classiques en `SQL :</p>
+<ul>
+<li><strong>Restriction</strong> : limitation aux lignes respectant un critère</li>
+<li><strong>Projection</strong> : limitation à certaines colonnes</li>
+</ul>
+<div id="restriction" class="section level4">
+<h4>Restriction</h4>
+<p>La fonction <code>subset()</code> prend en premier paramètre le <code>data.frame</code> sur lequel faire l’opération. Le deuxième paramètre à définir ici est celui pour la restriction (<code>subset =</code>). Voici comment se restreindre par exemple aux voitures (données <code>mtcars</code>) avec une consommation strictement inférieure à 15 (<code>mpg &lt; 15</code>).</p>
+<pre class="r"><code>subset(mtcars, subset = mpg &lt; 15)</code></pre>
+<pre><code>                     mpg cyl disp  hp drat    wt  qsec vs am gear carb
+Duster 360          14.3   8  360 245 3.21 3.570 15.84  0  0    3    4
+Cadillac Fleetwood  10.4   8  472 205 2.93 5.250 17.98  0  0    3    4
+Lincoln Continental 10.4   8  460 215 3.00 5.424 17.82  0  0    3    4
+Chrysler Imperial   14.7   8  440 230 3.23 5.345 17.42  0  0    3    4
+Camaro Z28          13.3   8  350 245 3.73 3.840 15.41  0  0    3    4</code></pre>
+</div>
+<div id="projection" class="section level4">
+<h4>Projection</h4>
+<p>Ici, c’est le paramètre pour la projection qu’il faut définir (<code>select =</code>). On peut lui passer un ou plusieurs noms de colonnes. On veut par exemple ne récupérer que la puissance (<code>hp</code>) et la cylindrée (<code>disp</code>).</p>
+<pre class="r"><code>subset(mtcars, select = c(hp, disp))</code></pre>
+<pre><code>                     hp  disp
+Mazda RX4           110 160.0
+Mazda RX4 Wag       110 160.0
+Datsun 710           93 108.0
+Hornet 4 Drive      110 258.0
+Hornet Sportabout   175 360.0
+Valiant             105 225.0
+Duster 360          245 360.0
+Merc 240D            62 146.7
+Merc 230             95 140.8
+Merc 280            123 167.6
+Merc 280C           123 167.6
+Merc 450SE          180 275.8
+Merc 450SL          180 275.8
+Merc 450SLC         180 275.8
+Cadillac Fleetwood  205 472.0
+Lincoln Continental 215 460.0
+Chrysler Imperial   230 440.0
+Fiat 128             66  78.7
+Honda Civic          52  75.7
+Toyota Corolla       65  71.1
+Toyota Corona        97 120.1
+Dodge Challenger    150 318.0
+AMC Javelin         150 304.0
+Camaro Z28          245 350.0
+Pontiac Firebird    175 400.0
+Fiat X1-9            66  79.0
+Porsche 914-2        91 120.3
+Lotus Europa        113  95.1
+Ford Pantera L      264 351.0
+Ferrari Dino        175 145.0
+Maserati Bora       335 301.0
+Volvo 142E          109 121.0</code></pre>
+<p>Mais il est aussi possible d’exclure des colonnes dans le résultat. C’est-à-dire que plutôt de dire celles qu’on veut, on va indiquer celles dont on ne veut pas.</p>
+<pre class="r"><code>subset(mtcars, select = -c(hp, disp))</code></pre>
+<pre><code>                     mpg cyl drat    wt  qsec vs am gear carb
+Mazda RX4           21.0   6 3.90 2.620 16.46  0  1    4    4
+Mazda RX4 Wag       21.0   6 3.90 2.875 17.02  0  1    4    4
+Datsun 710          22.8   4 3.85 2.320 18.61  1  1    4    1
+Hornet 4 Drive      21.4   6 3.08 3.215 19.44  1  0    3    1
+Hornet Sportabout   18.7   8 3.15 3.440 17.02  0  0    3    2
+Valiant             18.1   6 2.76 3.460 20.22  1  0    3    1
+Duster 360          14.3   8 3.21 3.570 15.84  0  0    3    4
+Merc 240D           24.4   4 3.69 3.190 20.00  1  0    4    2
+Merc 230            22.8   4 3.92 3.150 22.90  1  0    4    2
+Merc 280            19.2   6 3.92 3.440 18.30  1  0    4    4
+Merc 280C           17.8   6 3.92 3.440 18.90  1  0    4    4
+Merc 450SE          16.4   8 3.07 4.070 17.40  0  0    3    3
+Merc 450SL          17.3   8 3.07 3.730 17.60  0  0    3    3
+Merc 450SLC         15.2   8 3.07 3.780 18.00  0  0    3    3
+Cadillac Fleetwood  10.4   8 2.93 5.250 17.98  0  0    3    4
+Lincoln Continental 10.4   8 3.00 5.424 17.82  0  0    3    4
+Chrysler Imperial   14.7   8 3.23 5.345 17.42  0  0    3    4
+Fiat 128            32.4   4 4.08 2.200 19.47  1  1    4    1
+Honda Civic         30.4   4 4.93 1.615 18.52  1  1    4    2
+Toyota Corolla      33.9   4 4.22 1.835 19.90  1  1    4    1
+Toyota Corona       21.5   4 3.70 2.465 20.01  1  0    3    1
+Dodge Challenger    15.5   8 2.76 3.520 16.87  0  0    3    2
+AMC Javelin         15.2   8 3.15 3.435 17.30  0  0    3    2
+Camaro Z28          13.3   8 3.73 3.840 15.41  0  0    3    4
+Pontiac Firebird    19.2   8 3.08 3.845 17.05  0  0    3    2
+Fiat X1-9           27.3   4 4.08 1.935 18.90  1  1    4    1
+Porsche 914-2       26.0   4 4.43 2.140 16.70  0  1    5    2
+Lotus Europa        30.4   4 3.77 1.513 16.90  1  1    5    2
+Ford Pantera L      15.8   8 4.22 3.170 14.50  0  1    5    4
+Ferrari Dino        19.7   6 3.62 2.770 15.50  0  1    5    6
+Maserati Bora       15.0   8 3.54 3.570 14.60  0  1    5    8
+Volvo 142E          21.4   4 4.11 2.780 18.60  1  1    4    2</code></pre>
+</div>
+<div id="combinaison-des-deux" class="section level4">
+<h4>Combinaison des deux</h4>
+<p>Bien évidemment, il est possible de combiner les deux paramètres pour réaliser une opération de restriction et une opération de projection dans la même commande. Nous récupérons ici la puissance (<code>hp</code>) et la cylindrée (<code>disp</code>) des voitures (données <code>mtcars</code>) avec une consommation strictement inférieure à 15 (<code>mpg &lt; 15</code>).</p>
+<pre class="r"><code>subset(mtcars, subset = mpg &lt; 15, select = c(hp, disp))</code></pre>
+<pre><code>                     hp disp
+Duster 360          245  360
+Cadillac Fleetwood  205  472
+Lincoln Continental 215  460
+Chrysler Imperial   230  440
+Camaro Z28          245  350</code></pre>
+</div>
+</div>
+<div id="fonction-transform" class="section level3">
+<h3>Fonction <code>transform()</code></h3>
+<p>Cette fonction permet elle de créer de nouvelles variables, basées sur des calculs à partir d’autres variables. Elle renvoie le <code>data.frame</code>, passé en premier paramètre, complété des nouvelles variables. On calcule ici par exemple le rapport poids (<code>wt</code>) / puissance (<code>hp</code>). Et on calcule aussi la consommation en litres pour 100 km.</p>
+<pre class="r"><code>transform(mtcars, 
+          rapport = round(1000 * wt / hp), 
+          conso = round(236 / mpg, 2))</code></pre>
+<p>Ici, toute fonction existante applicable sur un vecteur est utilisable.</p>
+</div>
+<div id="fonction-aggregate" class="section level3">
+<h3>Fonction <code>aggregate()</code></h3>
+<p>On va pouvoir réaliser ici tous les calculs d’agrégats possibles sur une table, avec ou sans regroupement. Le premier paramètre sera la formule (sous la forme <code>... ~ ...</code>) permettant de déterminer sur quelles variables faire le calcul (à gauche du <code>~</code>) et quelles variables utiliser pour le regroupement (à droite du <code>~</code>). Le deuxième sera le jeu de données à utiliser. Et le troisième sera la fonction à appliquer.</p>
+<pre class="r"><code># Calcul de la moyenne de mpg pour tous
+aggregate(mpg ~ 1, mtcars, mean)</code></pre>
+<pre><code>       mpg
+1 20.09062</code></pre>
+<pre class="r"><code># Calcul de la moyenne de mpg et de hp pour tous
+aggregate(cbind(mpg, hp) ~ 1, mtcars, mean)</code></pre>
+<pre><code>       mpg       hp
+1 20.09062 146.6875</code></pre>
+<pre class="r"><code># Calcul de la moyenne de toutes les variables pour tous
+aggregate(. ~ 1, mtcars, mean)</code></pre>
+<pre><code>       mpg    cyl     disp       hp     drat      wt     qsec     vs
+1 20.09062 6.1875 230.7219 146.6875 3.596563 3.21725 17.84875 0.4375
+       am   gear   carb
+1 0.40625 3.6875 2.8125</code></pre>
+<pre class="r"><code># Calcul de la moyenne de mpg pour chaque modalité de am
+aggregate(mpg ~ am, mtcars, mean)</code></pre>
+<pre><code>  am      mpg
+1  0 17.14737
+2  1 24.39231</code></pre>
+<pre class="r"><code># Calcul de la moyenne de mpg en fonction de am et de cyl
+aggregate(mpg ~ am + cyl, mtcars, mean)</code></pre>
+<pre><code>  am cyl      mpg
+1  0   4 22.90000
+2  1   4 28.07500
+3  0   6 19.12500
+4  1   6 20.56667
+5  0   8 15.05000
+6  1   8 15.40000</code></pre>
+<pre class="r"><code># Calcul de la moyenne de mpg et de hp en fonction de am et de cyl
+aggregate(cbind(mpg, hp) ~ am + cyl, mtcars, mean)</code></pre>
+<pre><code>  am cyl      mpg        hp
+1  0   4 22.90000  84.66667
+2  1   4 28.07500  81.87500
+3  0   6 19.12500 115.25000
+4  1   6 20.56667 131.66667
+5  0   8 15.05000 194.16667
+6  1   8 15.40000 299.50000</code></pre>
+</div>
+<div id="fonction-merge" class="section level3">
+<h3>Fonction <code>merge()</code></h3>
+<p>Cette fonction permet elle de réaliser des jointures entre deux tables. Pour présenter le fonctionnement, nous allons créer une table avec le type de moteur selon le nombre de cylindres (<code>cyl</code> dans <code>mtcars</code>). Vous remarquerez que la valeur <code>4</code> n’est pas présente dans ce tableau, alors qu’elle l’est dans <code>mtcars</code>. Inversement, <code>12</code> est présent ici mais pas dans <code>mtcars</code>.</p>
+<pre class="r"><code>types = data.frame(
+    cyl = c(6, 8, 12),
+    type = c(&quot;moyen&quot;, &quot;gros&quot;, &quot;très gros&quot;)
+)
+types</code></pre>
+<pre><code>  cyl      type
+1   6     moyen
+2   8      gros
+3  12 très gros</code></pre>
+<pre class="r"><code>unique(mtcars$cyl)</code></pre>
+<pre><code>[1] 6 4 8</code></pre>
+<p>La focntion <code>merge()</code> prend, au minimum, deux paramètres que sont les deux tables à fusionner. Par défaut, c’est une jointure naturelle qui est réalisée (i.e. on recherche l’égalité des variables ayant le même nom).</p>
+<pre class="r"><code>merge(mtcars, types)</code></pre>
+<pre><code>   cyl  mpg  disp  hp drat    wt  qsec vs am gear carb  type
+1    6 21.0 160.0 110 3.90 2.620 16.46  0  1    4    4 moyen
+2    6 21.0 160.0 110 3.90 2.875 17.02  0  1    4    4 moyen
+3    6 18.1 225.0 105 2.76 3.460 20.22  1  0    3    1 moyen
+4    6 17.8 167.6 123 3.92 3.440 18.90  1  0    4    4 moyen
+5    6 19.2 167.6 123 3.92 3.440 18.30  1  0    4    4 moyen
+6    6 21.4 258.0 110 3.08 3.215 19.44  1  0    3    1 moyen
+7    6 19.7 145.0 175 3.62 2.770 15.50  0  1    5    6 moyen
+8    8 18.7 360.0 175 3.15 3.440 17.02  0  0    3    2  gros
+9    8 17.3 275.8 180 3.07 3.730 17.60  0  0    3    3  gros
+10   8 14.3 360.0 245 3.21 3.570 15.84  0  0    3    4  gros
+11   8 14.7 440.0 230 3.23 5.345 17.42  0  0    3    4  gros
+12   8 10.4 472.0 205 2.93 5.250 17.98  0  0    3    4  gros
+13   8 16.4 275.8 180 3.07 4.070 17.40  0  0    3    3  gros
+14   8 19.2 400.0 175 3.08 3.845 17.05  0  0    3    2  gros
+15   8 15.2 275.8 180 3.07 3.780 18.00  0  0    3    3  gros
+16   8 15.2 304.0 150 3.15 3.435 17.30  0  0    3    2  gros
+17   8 10.4 460.0 215 3.00 5.424 17.82  0  0    3    4  gros
+18   8 15.8 351.0 264 4.22 3.170 14.50  0  1    5    4  gros
+19   8 15.5 318.0 150 2.76 3.520 16.87  0  0    3    2  gros
+20   8 15.0 301.0 335 3.54 3.570 14.60  0  1    5    8  gros
+21   8 13.3 350.0 245 3.73 3.840 15.41  0  0    3    4  gros</code></pre>
+<p>Si le nom des colonnes diffère ou que vous ne voulez pas regarder l’égalité entre toutes les variables ayant même nom, il faut le préciser dans les paramètres <code>by</code> (même noms de colonnes dans les deux tables), ou <code>by.x</code> et <code>by.y</code> pour dire quelles variables prendre dans la première table (<code>by.x</code>) et dans la deuxième table (<code>by.y</code>).</p>
+<pre class="r"><code>names(types)[1] = &quot;nbcyl&quot;
+types</code></pre>
+<pre><code>  nbcyl      type
+1     6     moyen
+2     8      gros
+3    12 très gros</code></pre>
+<pre class="r"><code>merge(mtcars, types, by.x = &quot;cyl&quot;, by.y = &quot;nbcyl&quot;)</code></pre>
+<pre><code>   cyl  mpg  disp  hp drat    wt  qsec vs am gear carb  type
+1    6 21.0 160.0 110 3.90 2.620 16.46  0  1    4    4 moyen
+2    6 21.0 160.0 110 3.90 2.875 17.02  0  1    4    4 moyen
+3    6 18.1 225.0 105 2.76 3.460 20.22  1  0    3    1 moyen
+4    6 17.8 167.6 123 3.92 3.440 18.90  1  0    4    4 moyen
+5    6 19.2 167.6 123 3.92 3.440 18.30  1  0    4    4 moyen
+6    6 21.4 258.0 110 3.08 3.215 19.44  1  0    3    1 moyen
+7    6 19.7 145.0 175 3.62 2.770 15.50  0  1    5    6 moyen
+8    8 18.7 360.0 175 3.15 3.440 17.02  0  0    3    2  gros
+9    8 17.3 275.8 180 3.07 3.730 17.60  0  0    3    3  gros
+10   8 14.3 360.0 245 3.21 3.570 15.84  0  0    3    4  gros
+11   8 14.7 440.0 230 3.23 5.345 17.42  0  0    3    4  gros
+12   8 10.4 472.0 205 2.93 5.250 17.98  0  0    3    4  gros
+13   8 16.4 275.8 180 3.07 4.070 17.40  0  0    3    3  gros
+14   8 19.2 400.0 175 3.08 3.845 17.05  0  0    3    2  gros
+15   8 15.2 275.8 180 3.07 3.780 18.00  0  0    3    3  gros
+16   8 15.2 304.0 150 3.15 3.435 17.30  0  0    3    2  gros
+17   8 10.4 460.0 215 3.00 5.424 17.82  0  0    3    4  gros
+18   8 15.8 351.0 264 4.22 3.170 14.50  0  1    5    4  gros
+19   8 15.5 318.0 150 2.76 3.520 16.87  0  0    3    2  gros
+20   8 15.0 301.0 335 3.54 3.570 14.60  0  1    5    8  gros
+21   8 13.3 350.0 245 3.73 3.840 15.41  0  0    3    4  gros</code></pre>
+<p>Vous remarquerez, en le testant, que si on ne précise pas sur quelles variables faire la jointure, en l’absence de variables identiques entre les tables, la fonction <code>merge()</code> réalise le produit cartésien.</p>
+<p>Dans les deux exemples ci-dessus, vous avez du voir que toutes les lignes ne son pas retournées. En effet, les voitures de <code>mtcars</code> avec <code>cyl == 4</code> ne sont pas intégrées. De même que la dernière ligne de <code>types</code>. Pour avoir toutes les lignes, il faut ajouter le paramètre <code>all = TRUE</code>, pour lui dire de faire la jointure complète (i.e. <code>FULL OUTER JOIN</code>). Dans ce cas, on aura donc 33 lignes, avec des <code>NA</code> pour les cellules dont il n’a pas l’information.</p>
+<pre class="r"><code>names(types)[1] = &quot;cyl&quot;
+merge(mtcars, types, all = TRUE)</code></pre>
+<pre><code>   cyl  mpg  disp  hp drat    wt  qsec vs am gear carb      type
+1    4 22.8 140.8  95 3.92 3.150 22.90  1  0    4    2      &lt;NA&gt;
+2    4 32.4  78.7  66 4.08 2.200 19.47  1  1    4    1      &lt;NA&gt;
+3    4 22.8 108.0  93 3.85 2.320 18.61  1  1    4    1      &lt;NA&gt;
+4    4 24.4 146.7  62 3.69 3.190 20.00  1  0    4    2      &lt;NA&gt;
+5    4 21.5 120.1  97 3.70 2.465 20.01  1  0    3    1      &lt;NA&gt;
+6    4 27.3  79.0  66 4.08 1.935 18.90  1  1    4    1      &lt;NA&gt;
+7    4 30.4  75.7  52 4.93 1.615 18.52  1  1    4    2      &lt;NA&gt;
+8    4 33.9  71.1  65 4.22 1.835 19.90  1  1    4    1      &lt;NA&gt;
+9    4 26.0 120.3  91 4.43 2.140 16.70  0  1    5    2      &lt;NA&gt;
+10   4 30.4  95.1 113 3.77 1.513 16.90  1  1    5    2      &lt;NA&gt;
+11   4 21.4 121.0 109 4.11 2.780 18.60  1  1    4    2      &lt;NA&gt;
+12   6 21.0 160.0 110 3.90 2.620 16.46  0  1    4    4     moyen
+13   6 21.0 160.0 110 3.90 2.875 17.02  0  1    4    4     moyen
+14   6 18.1 225.0 105 2.76 3.460 20.22  1  0    3    1     moyen
+15   6 17.8 167.6 123 3.92 3.440 18.90  1  0    4    4     moyen
+16   6 19.2 167.6 123 3.92 3.440 18.30  1  0    4    4     moyen
+17   6 21.4 258.0 110 3.08 3.215 19.44  1  0    3    1     moyen
+18   6 19.7 145.0 175 3.62 2.770 15.50  0  1    5    6     moyen
+19   8 18.7 360.0 175 3.15 3.440 17.02  0  0    3    2      gros
+20   8 17.3 275.8 180 3.07 3.730 17.60  0  0    3    3      gros
+21   8 14.3 360.0 245 3.21 3.570 15.84  0  0    3    4      gros
+22   8 14.7 440.0 230 3.23 5.345 17.42  0  0    3    4      gros
+23   8 10.4 472.0 205 2.93 5.250 17.98  0  0    3    4      gros
+24   8 16.4 275.8 180 3.07 4.070 17.40  0  0    3    3      gros
+25   8 19.2 400.0 175 3.08 3.845 17.05  0  0    3    2      gros
+26   8 15.2 275.8 180 3.07 3.780 18.00  0  0    3    3      gros
+27   8 15.2 304.0 150 3.15 3.435 17.30  0  0    3    2      gros
+28   8 10.4 460.0 215 3.00 5.424 17.82  0  0    3    4      gros
+29   8 15.8 351.0 264 4.22 3.170 14.50  0  1    5    4      gros
+30   8 15.5 318.0 150 2.76 3.520 16.87  0  0    3    2      gros
+31   8 15.0 301.0 335 3.54 3.570 14.60  0  1    5    8      gros
+32   8 13.3 350.0 245 3.73 3.840 15.41  0  0    3    4      gros
+33  12   NA    NA  NA   NA    NA    NA NA NA   NA   NA très gros</code></pre>
+<p>On peut bien évidemment faire les jointures externes gauches (<code>LEFT OUTER JOIN</code>) ou droite (<code>RIGHT OUTER JOIN</code>) avec respectivement les paramètres <code>all.x</code> et <code>all.y</code>.</p>
+<pre class="r"><code>merge(mtcars, types, all.x = TRUE)</code></pre>
+<pre><code>   cyl  mpg  disp  hp drat    wt  qsec vs am gear carb  type
+1    4 22.8 140.8  95 3.92 3.150 22.90  1  0    4    2  &lt;NA&gt;
+2    4 32.4  78.7  66 4.08 2.200 19.47  1  1    4    1  &lt;NA&gt;
+3    4 22.8 108.0  93 3.85 2.320 18.61  1  1    4    1  &lt;NA&gt;
+4    4 24.4 146.7  62 3.69 3.190 20.00  1  0    4    2  &lt;NA&gt;
+5    4 21.5 120.1  97 3.70 2.465 20.01  1  0    3    1  &lt;NA&gt;
+6    4 27.3  79.0  66 4.08 1.935 18.90  1  1    4    1  &lt;NA&gt;
+7    4 30.4  75.7  52 4.93 1.615 18.52  1  1    4    2  &lt;NA&gt;
+8    4 33.9  71.1  65 4.22 1.835 19.90  1  1    4    1  &lt;NA&gt;
+9    4 26.0 120.3  91 4.43 2.140 16.70  0  1    5    2  &lt;NA&gt;
+10   4 30.4  95.1 113 3.77 1.513 16.90  1  1    5    2  &lt;NA&gt;
+11   4 21.4 121.0 109 4.11 2.780 18.60  1  1    4    2  &lt;NA&gt;
+12   6 21.0 160.0 110 3.90 2.620 16.46  0  1    4    4 moyen
+13   6 21.0 160.0 110 3.90 2.875 17.02  0  1    4    4 moyen
+14   6 18.1 225.0 105 2.76 3.460 20.22  1  0    3    1 moyen
+15   6 17.8 167.6 123 3.92 3.440 18.90  1  0    4    4 moyen
+16   6 19.2 167.6 123 3.92 3.440 18.30  1  0    4    4 moyen
+17   6 21.4 258.0 110 3.08 3.215 19.44  1  0    3    1 moyen
+18   6 19.7 145.0 175 3.62 2.770 15.50  0  1    5    6 moyen
+19   8 18.7 360.0 175 3.15 3.440 17.02  0  0    3    2  gros
+20   8 17.3 275.8 180 3.07 3.730 17.60  0  0    3    3  gros
+21   8 14.3 360.0 245 3.21 3.570 15.84  0  0    3    4  gros
+22   8 14.7 440.0 230 3.23 5.345 17.42  0  0    3    4  gros
+23   8 10.4 472.0 205 2.93 5.250 17.98  0  0    3    4  gros
+24   8 16.4 275.8 180 3.07 4.070 17.40  0  0    3    3  gros
+25   8 19.2 400.0 175 3.08 3.845 17.05  0  0    3    2  gros
+26   8 15.2 275.8 180 3.07 3.780 18.00  0  0    3    3  gros
+27   8 15.2 304.0 150 3.15 3.435 17.30  0  0    3    2  gros
+28   8 10.4 460.0 215 3.00 5.424 17.82  0  0    3    4  gros
+29   8 15.8 351.0 264 4.22 3.170 14.50  0  1    5    4  gros
+30   8 15.5 318.0 150 2.76 3.520 16.87  0  0    3    2  gros
+31   8 15.0 301.0 335 3.54 3.570 14.60  0  1    5    8  gros
+32   8 13.3 350.0 245 3.73 3.840 15.41  0  0    3    4  gros</code></pre>
+<pre class="r"><code>merge(mtcars, types, all.y = TRUE)</code></pre>
+<pre><code>   cyl  mpg  disp  hp drat    wt  qsec vs am gear carb      type
+1    6 21.0 160.0 110 3.90 2.620 16.46  0  1    4    4     moyen
+2    6 21.0 160.0 110 3.90 2.875 17.02  0  1    4    4     moyen
+3    6 18.1 225.0 105 2.76 3.460 20.22  1  0    3    1     moyen
+4    6 17.8 167.6 123 3.92 3.440 18.90  1  0    4    4     moyen
+5    6 19.2 167.6 123 3.92 3.440 18.30  1  0    4    4     moyen
+6    6 21.4 258.0 110 3.08 3.215 19.44  1  0    3    1     moyen
+7    6 19.7 145.0 175 3.62 2.770 15.50  0  1    5    6     moyen
+8    8 18.7 360.0 175 3.15 3.440 17.02  0  0    3    2      gros
+9    8 17.3 275.8 180 3.07 3.730 17.60  0  0    3    3      gros
+10   8 14.3 360.0 245 3.21 3.570 15.84  0  0    3    4      gros
+11   8 14.7 440.0 230 3.23 5.345 17.42  0  0    3    4      gros
+12   8 10.4 472.0 205 2.93 5.250 17.98  0  0    3    4      gros
+13   8 16.4 275.8 180 3.07 4.070 17.40  0  0    3    3      gros
+14   8 19.2 400.0 175 3.08 3.845 17.05  0  0    3    2      gros
+15   8 15.2 275.8 180 3.07 3.780 18.00  0  0    3    3      gros
+16   8 15.2 304.0 150 3.15 3.435 17.30  0  0    3    2      gros
+17   8 10.4 460.0 215 3.00 5.424 17.82  0  0    3    4      gros
+18   8 15.8 351.0 264 4.22 3.170 14.50  0  1    5    4      gros
+19   8 15.5 318.0 150 2.76 3.520 16.87  0  0    3    2      gros
+20   8 15.0 301.0 335 3.54 3.570 14.60  0  1    5    8      gros
+21   8 13.3 350.0 245 3.73 3.840 15.41  0  0    3    4      gros
+22  12   NA    NA  NA   NA    NA    NA NA NA   NA   NA très gros</code></pre>
+</div>
+</div>
+<div id="et-du-sql-directement" class="section level2">
+<h2>Et du <code>SQL</code> directement</h2>
+<p>La librairie <code>sqldf</code> permet de réaliser des commandes <code>SQL</code> directement sur des <code>data.frame</code>s. il faut simplement mettre la requête <code>SQL</code> en chaîne de caractère comme paramètre de la fonction <code>sqldf()</code>. Les seules restrictions sont que les <code>RIGHT OUTER JOIN</code> et <code>FULL OUTER JOIN</code> ne sont pas supportées (comme en <code>SQLite</code>).</p>
+<pre class="r"><code>library(sqldf)
+sqldf(&quot;SELECT * FROM mtcars&quot;)</code></pre>
+<pre><code>    mpg cyl  disp  hp drat    wt  qsec vs am gear carb
+1  21.0   6 160.0 110 3.90 2.620 16.46  0  1    4    4
+2  21.0   6 160.0 110 3.90 2.875 17.02  0  1    4    4
+3  22.8   4 108.0  93 3.85 2.320 18.61  1  1    4    1
+4  21.4   6 258.0 110 3.08 3.215 19.44  1  0    3    1
+5  18.7   8 360.0 175 3.15 3.440 17.02  0  0    3    2
+6  18.1   6 225.0 105 2.76 3.460 20.22  1  0    3    1
+7  14.3   8 360.0 245 3.21 3.570 15.84  0  0    3    4
+8  24.4   4 146.7  62 3.69 3.190 20.00  1  0    4    2
+9  22.8   4 140.8  95 3.92 3.150 22.90  1  0    4    2
+10 19.2   6 167.6 123 3.92 3.440 18.30  1  0    4    4
+11 17.8   6 167.6 123 3.92 3.440 18.90  1  0    4    4
+12 16.4   8 275.8 180 3.07 4.070 17.40  0  0    3    3
+13 17.3   8 275.8 180 3.07 3.730 17.60  0  0    3    3
+14 15.2   8 275.8 180 3.07 3.780 18.00  0  0    3    3
+15 10.4   8 472.0 205 2.93 5.250 17.98  0  0    3    4
+16 10.4   8 460.0 215 3.00 5.424 17.82  0  0    3    4
+17 14.7   8 440.0 230 3.23 5.345 17.42  0  0    3    4
+18 32.4   4  78.7  66 4.08 2.200 19.47  1  1    4    1
+19 30.4   4  75.7  52 4.93 1.615 18.52  1  1    4    2
+20 33.9   4  71.1  65 4.22 1.835 19.90  1  1    4    1
+21 21.5   4 120.1  97 3.70 2.465 20.01  1  0    3    1
+22 15.5   8 318.0 150 2.76 3.520 16.87  0  0    3    2
+23 15.2   8 304.0 150 3.15 3.435 17.30  0  0    3    2
+24 13.3   8 350.0 245 3.73 3.840 15.41  0  0    3    4
+25 19.2   8 400.0 175 3.08 3.845 17.05  0  0    3    2
+26 27.3   4  79.0  66 4.08 1.935 18.90  1  1    4    1
+27 26.0   4 120.3  91 4.43 2.140 16.70  0  1    5    2
+28 30.4   4  95.1 113 3.77 1.513 16.90  1  1    5    2
+29 15.8   8 351.0 264 4.22 3.170 14.50  0  1    5    4
+30 19.7   6 145.0 175 3.62 2.770 15.50  0  1    5    6
+31 15.0   8 301.0 335 3.54 3.570 14.60  0  1    5    8
+32 21.4   4 121.0 109 4.11 2.780 18.60  1  1    4    2</code></pre>
+<pre class="r"><code>sqldf(&quot;SELECT * FROM mtcars WHERE mpg &lt; 15&quot;)</code></pre>
+<pre><code>   mpg cyl disp  hp drat    wt  qsec vs am gear carb
+1 14.3   8  360 245 3.21 3.570 15.84  0  0    3    4
+2 10.4   8  472 205 2.93 5.250 17.98  0  0    3    4
+3 10.4   8  460 215 3.00 5.424 17.82  0  0    3    4
+4 14.7   8  440 230 3.23 5.345 17.42  0  0    3    4
+5 13.3   8  350 245 3.73 3.840 15.41  0  0    3    4</code></pre>
+<pre class="r"><code>sqldf(&quot;SELECT hp, disp FROM mtcars WHERE mpg &lt; 15&quot;)</code></pre>
+<pre><code>   hp disp
+1 245  360
+2 205  472
+3 215  460
+4 230  440
+5 245  350</code></pre>
+<pre class="r"><code>sqldf(&quot;
+SELECT *, 
+        ROUND(1000 * wt / hp) AS rapport,
+        ROUND(236 / mpg, 2) AS conso
+    FROM mtcars
+      &quot;)</code></pre>
+<pre><code>    mpg cyl  disp  hp drat    wt  qsec vs am gear carb rapport conso
+1  21.0   6 160.0 110 3.90 2.620 16.46  0  1    4    4      24 11.24
+2  21.0   6 160.0 110 3.90 2.875 17.02  0  1    4    4      26 11.24
+3  22.8   4 108.0  93 3.85 2.320 18.61  1  1    4    1      25 10.35
+4  21.4   6 258.0 110 3.08 3.215 19.44  1  0    3    1      29 11.03
+5  18.7   8 360.0 175 3.15 3.440 17.02  0  0    3    2      20 12.62
+6  18.1   6 225.0 105 2.76 3.460 20.22  1  0    3    1      33 13.04
+7  14.3   8 360.0 245 3.21 3.570 15.84  0  0    3    4      15 16.50
+8  24.4   4 146.7  62 3.69 3.190 20.00  1  0    4    2      51  9.67
+9  22.8   4 140.8  95 3.92 3.150 22.90  1  0    4    2      33 10.35
+10 19.2   6 167.6 123 3.92 3.440 18.30  1  0    4    4      28 12.29
+11 17.8   6 167.6 123 3.92 3.440 18.90  1  0    4    4      28 13.26
+12 16.4   8 275.8 180 3.07 4.070 17.40  0  0    3    3      23 14.39
+13 17.3   8 275.8 180 3.07 3.730 17.60  0  0    3    3      21 13.64
+14 15.2   8 275.8 180 3.07 3.780 18.00  0  0    3    3      21 15.53
+15 10.4   8 472.0 205 2.93 5.250 17.98  0  0    3    4      26 22.69
+16 10.4   8 460.0 215 3.00 5.424 17.82  0  0    3    4      25 22.69
+17 14.7   8 440.0 230 3.23 5.345 17.42  0  0    3    4      23 16.05
+18 32.4   4  78.7  66 4.08 2.200 19.47  1  1    4    1      33  7.28
+19 30.4   4  75.7  52 4.93 1.615 18.52  1  1    4    2      31  7.76
+20 33.9   4  71.1  65 4.22 1.835 19.90  1  1    4    1      28  6.96
+21 21.5   4 120.1  97 3.70 2.465 20.01  1  0    3    1      25 10.98
+22 15.5   8 318.0 150 2.76 3.520 16.87  0  0    3    2      23 15.23
+23 15.2   8 304.0 150 3.15 3.435 17.30  0  0    3    2      23 15.53
+24 13.3   8 350.0 245 3.73 3.840 15.41  0  0    3    4      16 17.74
+25 19.2   8 400.0 175 3.08 3.845 17.05  0  0    3    2      22 12.29
+26 27.3   4  79.0  66 4.08 1.935 18.90  1  1    4    1      29  8.64
+27 26.0   4 120.3  91 4.43 2.140 16.70  0  1    5    2      24  9.08
+28 30.4   4  95.1 113 3.77 1.513 16.90  1  1    5    2      13  7.76
+29 15.8   8 351.0 264 4.22 3.170 14.50  0  1    5    4      12 14.94
+30 19.7   6 145.0 175 3.62 2.770 15.50  0  1    5    6      16 11.98
+31 15.0   8 301.0 335 3.54 3.570 14.60  0  1    5    8      11 15.73
+32 21.4   4 121.0 109 4.11 2.780 18.60  1  1    4    2      26 11.03</code></pre>
+<pre class="r"><code>sqldf(&quot;
+SELECT am, cyl, AVG(mpg), AVG(hp)
+    FROM mtcars
+    GROUP BY am, cyl
+      &quot;)</code></pre>
+<pre><code>  am cyl AVG(mpg)   AVG(hp)
+1  0   4 22.90000  84.66667
+2  0   6 19.12500 115.25000
+3  0   8 15.05000 194.16667
+4  1   4 28.07500  81.87500
+5  1   6 20.56667 131.66667
+6  1   8 15.40000 299.50000</code></pre>
+<pre class="r"><code>sqldf(&quot;
+SELECT *
+    FROM mtcars NATURAL JOIN types
+      &quot;)</code></pre>
+<pre><code>    mpg cyl  disp  hp drat    wt  qsec vs am gear carb  type
+1  21.0   6 160.0 110 3.90 2.620 16.46  0  1    4    4 moyen
+2  21.0   6 160.0 110 3.90 2.875 17.02  0  1    4    4 moyen
+3  21.4   6 258.0 110 3.08 3.215 19.44  1  0    3    1 moyen
+4  18.7   8 360.0 175 3.15 3.440 17.02  0  0    3    2  gros
+5  18.1   6 225.0 105 2.76 3.460 20.22  1  0    3    1 moyen
+6  14.3   8 360.0 245 3.21 3.570 15.84  0  0    3    4  gros
+7  19.2   6 167.6 123 3.92 3.440 18.30  1  0    4    4 moyen
+8  17.8   6 167.6 123 3.92 3.440 18.90  1  0    4    4 moyen
+9  16.4   8 275.8 180 3.07 4.070 17.40  0  0    3    3  gros
+10 17.3   8 275.8 180 3.07 3.730 17.60  0  0    3    3  gros
+11 15.2   8 275.8 180 3.07 3.780 18.00  0  0    3    3  gros
+12 10.4   8 472.0 205 2.93 5.250 17.98  0  0    3    4  gros
+13 10.4   8 460.0 215 3.00 5.424 17.82  0  0    3    4  gros
+14 14.7   8 440.0 230 3.23 5.345 17.42  0  0    3    4  gros
+15 15.5   8 318.0 150 2.76 3.520 16.87  0  0    3    2  gros
+16 15.2   8 304.0 150 3.15 3.435 17.30  0  0    3    2  gros
+17 13.3   8 350.0 245 3.73 3.840 15.41  0  0    3    4  gros
+18 19.2   8 400.0 175 3.08 3.845 17.05  0  0    3    2  gros
+19 15.8   8 351.0 264 4.22 3.170 14.50  0  1    5    4  gros
+20 19.7   6 145.0 175 3.62 2.770 15.50  0  1    5    6 moyen
+21 15.0   8 301.0 335 3.54 3.570 14.60  0  1    5    8  gros</code></pre>
+</div>
+<div id="exercices" class="section level2">
+<h2>Exercices</h2>
+<div id="iris" class="section level3">
+<h3><code>iris</code></h3>
+<p>A partir des données <code>iris</code>, déjà présentes dans <code>R</code>, créer les tableaux suivantes, à l’aide des fonctions <code>aggregate()</code> et <code>merge()</code> :</p>
+<ul>
+<li>Moyenne</li>
+</ul>
+<pre><code>     Species Sepal.Length Sepal.Width Petal.Length Petal.Width
+1     setosa        5.006       3.428        1.462       0.246
+2 versicolor        5.936       2.770        4.260       1.326
+3  virginica        6.588       2.974        5.552       2.026</code></pre>
+<ul>
+<li>Ecart-type</li>
+</ul>
+<pre><code>     Species Sepal.Length Sepal.Width Petal.Length Petal.Width
+1     setosa    0.3524897   0.3790644    0.1736640   0.1053856
+2 versicolor    0.5161711   0.3137983    0.4699110   0.1977527
+3  virginica    0.6358796   0.3224966    0.5518947   0.2746501</code></pre>
+<ul>
+<li>Infos sur <code>Sepal.Length</code></li>
+</ul>
+<pre><code>     Species Sepal.Length.Min. Sepal.Length.1st Qu. Sepal.Length.Median
+1     setosa             4.300                4.800               5.000
+2 versicolor             4.900                5.600               5.900
+3  virginica             4.900                6.225               6.500
+  Sepal.Length.Mean Sepal.Length.3rd Qu. Sepal.Length.Max.
+1             5.006                5.200             5.800
+2             5.936                6.300             7.000
+3             6.588                6.900             7.900</code></pre>
+<ul>
+<li>Moyenne et médiane de <code>Sepal.Length</code></li>
+</ul>
+<pre><code>      Espèce Moyenne Médiane
+1     setosa   5.006     5.0
+2 versicolor   5.936     5.9
+3  virginica   6.588     6.5</code></pre>
+</div>
+<div id="heart.txt" class="section level3">
+<h3><code>heart.txt</code></h3>
+<p>Reprenez le jeu de données présent dans le fichier <a href="donnees/heart.txt"><code>heart.txt</code></a>.</p>
+<div id="manipulation" class="section level4">
+<h4>Manipulation</h4>
+<ol style="list-style-type: decimal">
+<li>Créer un nouveau <code>data.frame</code> avec uniquement les individus masculins ayant un problème cardiaque</li>
+<li>Avec ces données, en créer un autre ne gardant que les variables suivantes :
+<ul>
+<li><code>type_douleur</code>, <code>sucre</code>, <code>electro</code>, et <code>vaisseau</code></li>
+<li><code>angine</code>, <code>depression</code></li>
+</ul></li>
+<li>Créer un nouveau <code>data.frame</code> à partir de ce <code>data.frame</code>, avec
+<ol style="list-style-type: decimal">
+<li>une variable <code>nbA</code> comptant le nombre de fois où une variable des variables suivantes est égale à <code>A</code> : <code>type_douleur</code>, <code>sucre</code>, <code>electro</code>, et <code>vaisseau</code></li>
+<li>une variable <code>flag</code> avec les deux modalités suivantes :
+<ul>
+<li><code>&quot;problème&quot;</code> : <code>angine</code> à <code>&quot;oui&quot;</code> et <code>depression</code> supérieur ou égal à <code>4.0</code></li>
+<li><code>&quot;attention&quot;</code> : sinon</li>
+</ul></li>
+</ol></li>
+</ol>
+</div>
+<div id="agregats" class="section level4">
+<h4>Agrégats</h4>
+<ol style="list-style-type: decimal">
+<li>Comparer le cholesterol selon la présence ou non de problème de coeur</li>
+<li>Calculer le nombre de personnes concernés par un problème de coeur</li>
+<li>Fusionner les deux <code>data.frame</code>s précédement créés pour avoir les informations en une seule table</li>
+<li>Calculer les moyennes de chaque variable quantitative selon la présence ou non de problème de coeur</li>
+<li>Comparer l’âge selon la présence ou de problème de coeur et de problème d’angine</li>
+</ol>
+</div>
+</div>
+</div>
+
+</div>
+<div class="footer">
+      Site créé avec <a href="http://www.r-project.org" target="_blank"><code>R</code></a> et la 
+      librairie  <a href="http://rmarkdown.rstudio.com/" target="_blank"><code>rmarkdown</code></a>.
+</div>
+<script>
+    $("#TOC").css("margin-top", "100px");
+</script>
+
+
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

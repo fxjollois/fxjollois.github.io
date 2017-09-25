@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title></title>
+
+  <meta charset="utf-8">
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  <meta name="generator" content="pandoc" />
+
+
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+
+  <base target="_blank">
+
+  <script type="text/javascript">
+    var SLIDE_CONFIG = {
+      // Slide settings
+      settings: {
+                        useBuilds: true,
+        usePrettify: true,
+        enableSlideAreas: true,
+        enableTouch: true,
+                      },
+
+      // Author information
+      presenters: [
+            ]
+    };
+  </script>
+
+  <style>
+  slide img {
+  	max-width: 100%;
+  }
+  </style>
+  <link href="libs/ioslides-13.5.1/fonts/fonts.css" rel="stylesheet" />
+  <link href="libs/ioslides-13.5.1/theme/css/default.css" rel="stylesheet" />
+  <link href="libs/ioslides-13.5.1/theme/css/phone.css" rel="stylesheet" />
+  <script src="libs/ioslides-13.5.1/js/modernizr.custom.45394.js"></script>
+  <script src="libs/ioslides-13.5.1/js/prettify/prettify.js"></script>
+  <script src="libs/ioslides-13.5.1/js/prettify/lang-r.js"></script>
+  <script src="libs/ioslides-13.5.1/js/prettify/lang-yaml.js"></script>
+  <script src="libs/ioslides-13.5.1/js/hammer.js"></script>
+  <script src="libs/ioslides-13.5.1/js/slide-controller.js"></script>
+  <script src="libs/ioslides-13.5.1/js/slide-deck.js"></script>
+
+  <style type="text/css">
+
+    b, strong {
+      font-weight: bold;
+    }
+
+    em {
+      font-style: italic;
+    }
+
+    slides > slide {
+      -webkit-transition: all 0.4s ease-in-out;
+      -moz-transition: all 0.4s ease-in-out;
+      -o-transition: all 0.4s ease-in-out;
+      transition: all 0.4s ease-in-out;
+    }
+
+    .auto-fadein {
+      -webkit-transition: opacity 0.6s ease-in;
+      -webkit-transition-delay: 0.4s;
+      -moz-transition: opacity 0.6s ease-in 0.4s;
+      -o-transition: opacity 0.6s ease-in 0.4s;
+      transition: opacity 0.6s ease-in 0.4s;
+      opacity: 0;
+    }
+
+  </style>
+
+
+</head>
+
+<body style="opacity: 0">
+
+<slides class="layout-widescreen">
+
+  <slide class="title-slide segue nobackground">
+        <!-- The content of this hgroup is replaced programmatically through the slide_config.json. -->
+    <hgroup class="auto-fadein">
+      <h1 data-config-title><!-- populated from slide_config.json --></h1>
+      <h2 data-config-subtitle><!-- populated from slide_config.json --></h2>
+      <p data-config-presenter><!-- populated from slide_config.json --></p>
+          </hgroup>
+  </slide>
+
+<p>class: middle, center, inverse, title</p>
+
+<slide class='segue dark nobackground level1'><hgroup class = 'auto-fadein'><h2>Outils de dataviz pour l&#39;enseignement</h2></hgroup><article  id="outils-de-dataviz-pour-lenseignement">
+
+</article></slide><slide class=''><hgroup><h2>Les choix @ STID Paris</h2></hgroup><article  id="les-choix-stid-paris">
+
+<h3>François-Xavier Jollois</h3>
+
+<h3>JdS2017 - Avignon - 30 mai 2017</h3>
+
+</article></slide><slide class=''><hgroup><h2></h2></hgroup><article >
+
+</article></slide><slide class='segue dark nobackground level1'><hgroup class = 'auto-fadein'><h2>Introduction</h2></hgroup><article  id="introduction">
+
+<ul>
+<li><p>Contexte : enseignements de la dataviz dans le département STID de l&#39;IUT Paris Descartes</p></li>
+<li>Formations concernées :
+
+<ul>
+<li><strong>DU Dataviz</strong> : Formation continue à destination de professionnels voulant acquérir des compétences en stastiques et en visualisation</li>
+<li><strong>DUT Statistique et Informatique Décisionnelle</strong> (<em>STID</em>) : Formation initiale post-Bac sur deux ans</li>
+</ul></li>
+<li><p>But : savoir créer une <strong>dataviz interactive</strong></p></li>
+<li><p>Choix global : utiliser des outils orientés <em>web</em> (<em>i.e</em> permettant la consultation via un navigateur)</p></li>
+<li><p>Présentation des trois outils et discussion sur leur positionnement</p></li>
+</ul>
+
+</article></slide><slide class=''><hgroup><h2></h2></hgroup><article >
+
+</article></slide><slide class='segue dark nobackground level1'><hgroup class = 'auto-fadein'><h2>Quels outils ?</h2></hgroup><article  id="quels-outils">
+
+<ul>
+<li><p>Volonté de présenter un aperçu des différentes situations que les étudiants vont rencontrer plus tard (stage, alternance, emploi)</p></li>
+<li>Trois types d&#39;outils permettant la réalisation de dataviz <strong>interactive</strong>
+
+<ul>
+<li><em>Clic boutons</em> : <strong>Tableau</strong></li>
+<li>Orienté statistique : <strong>R</strong> avec le package <strong><code>shiny</code></strong></li>
+<li>Orienté web : <strong>Javascript</strong></li>
+</ul></li>
+<li><p>Chacun correspondant à un mode de développement distinct</p></li>
+<li><p>Interactivité voulue donc périmètre moins large que l&#39;éventail des possibles sur le sujet</p></li>
+</ul>
+
+</article></slide><slide class=''><hgroup><h2></h2></hgroup><article >
+
+</article></slide><slide class='segue dark nobackground level1'><hgroup class = 'auto-fadein'><h2>Tableau</h2></hgroup><article  id="tableau">
+
+<ul>
+<li><p>Logiciel créé par la société du même nom</p></li>
+<li><p>Outil propriétaire</p></li>
+<li>Connexion à différentes sources de données
+
+<ul>
+<li>Travail sur des données de types individus décrits par des variables</li>
+<li>Requêtage possible</li>
+</ul></li>
+<li>Ensemble de graphiques et tableaux à disposition assez large
+
+<ul>
+<li>Création aisée de cartes géographiques (choroplèthes ou avec des marqueurs)</li>
+</ul></li>
+<li>Plusieurs possibilités de calculs
+
+<ul>
+<li>Nouvelles variables</li>
+<li>Statistiques</li>
+<li>&#8230;</li>
+</ul></li>
+</ul>
+
+</article></slide><slide class=''><hgroup><h2></h2></hgroup><article >
+
+</article></slide><slide class='segue dark nobackground level1'><hgroup class = 'auto-fadein'><h2>Tableau (suite)</h2></hgroup><article  id="tableau-suite">
+
+<h3>Utilisation</h3>
+
+<ul>
+<li>Développement sur le logiciel complet, partage du fichier produit et lecture avec un visionneur gratuit (sans modification possible)</li>
+<li>Version serveur permettant le développement, le déploiement et la diffusion</li>
+</ul>
+
+<h3>Avantages</h3>
+
+<ul>
+<li>Facilité de développement
+
+<ul>
+<li>Pas de programmation : <em>production rapide</em></li>
+<li>Création rapide de liens et d&#39;interactions</li>
+</ul></li>
+<li>Présence de cartes simples à créer et manipuler</li>
+</ul>
+
+<h3>Inconvénients</h3>
+
+<ul>
+<li>Limite des visualisations aux choix présents dans le logiciel</li>
+<li>Interaction avec certaines limites aussi</li>
+<li>Coût non négligeable (particulièrement en mode serveur)</li>
+</ul>
+
+</article></slide><slide class=''><hgroup><h2></h2></hgroup><article >
+
+</article></slide><slide class='segue dark nobackground level1'><hgroup class = 'auto-fadein'><h2>R</h2></hgroup><article  id="r">
+
+<ul>
+<li><p>Langage orienté traitement statistique</p></li>
+<li>Beaucoup de librairies permettant de
+
+<ul>
+<li>Se connecter à toutes sortes de données</li>
+<li>Manipuler tout type de données (tableau, matrice, liste, &#8230;)</li>
+<li>Réaliser tous les calculs imaginables, notamment des analyses statistiques poussées</li>
+</ul></li>
+<li>Librairie <code>shiny</code>
+
+<ul>
+<li>Création d&#39;application web (accessible via un navigateur)</li>
+<li>Outil <em>Shiny Server</em> permettant la diffusion de ces applications
+
+<ul>
+<li>Version pro permettant l&#39;authentification et donc le contrôle des accès aux applications</li>
+</ul></li>
+</ul></li>
+<li><p>Nombreuses librairies pour la visualisation de données (particulièrement <code>ggplot2</code>)</p></li>
+</ul>
+
+</article></slide><slide class=''><hgroup><h2></h2></hgroup><article >
+
+</article></slide><slide class='segue dark nobackground level1'><hgroup class = 'auto-fadein'><h2>R (suite)</h2></hgroup><article  id="r-suite">
+
+<h3>Utilisation</h3>
+
+<ul>
+<li>Développement de l&#39;application en local et déploiement simple sur le serveur</li>
+</ul>
+
+<h3>Avantages</h3>
+
+<ul>
+<li>Pas de limites dans les rendus</li>
+<li>Interaction assez simple à mettre en place avec l&#39;utilisateur</li>
+<li>Production réalisable par les <em>statisticiens</em></li>
+</ul>
+
+<h3>Inconvénients</h3>
+
+<ul>
+<li>Développement parfois long et fastidieux</li>
+<li>Coût de la licence <em>Shiny Server Pro</em></li>
+</ul>
+
+</article></slide><slide class=''><hgroup><h2></h2></hgroup><article >
+
+</article></slide><slide class='segue dark nobackground level1'><hgroup class = 'auto-fadein'><h2>Javascript</h2></hgroup><article  id="javascript">
+
+<ul>
+<li><p>Langage orienté web, puisque dédié initalement à la programmation côté client des navigateurs</p></li>
+<li>Côté client
+
+<ul>
+<li>Nombreuses librairies utiles dont
+
+<ul>
+<li><code>d3.js</code> : visualisation de données</li>
+<li><code>leaflet.js</code> : cartographie</li>
+</ul></li>
+<li>Programmation possible de méthodes spécifiques</li>
+<li>Interaction native</li>
+</ul></li>
+<li>Côté serveur
+
+<ul>
+<li>différents outils pour le contrôle d&#39;authentification</li>
+<li>pré-calculs possible en amont</li>
+<li>possibilité d&#39;intégrer ces visualisations dans un serveur intranet, quelque soit la technologie utilisée</li>
+</ul></li>
+</ul>
+
+</article></slide><slide class=''><hgroup><h2></h2></hgroup><article >
+
+</article></slide><slide class='segue dark nobackground level1'><hgroup class = 'auto-fadein'><h2>Javascript (suite)</h2></hgroup><article  id="javascript-suite">
+
+<h3>Utilisation</h3>
+
+<ul>
+<li>Développement en local et intégration à réaliser (potentiellement complexe)</li>
+</ul>
+
+<h3>Avantages</h3>
+
+<ul>
+<li>Pas de limites dans les rendus</li>
+<li>Pas de limites dans les interactions, utilisation de toutes les interfaces possibles (même analyse des mouvements des yeux via une capture video)</li>
+<li>Solution totalement <em>open source</em> et gratuite (au niveau logiciel)</li>
+</ul>
+
+<h3>Inconvénients</h3>
+
+<ul>
+<li>Développement lourd</li>
+<li>Compétences assez poussées en informatique à avoir</li>
+</ul>
+
+</article></slide><slide class=''><hgroup><h2></h2></hgroup><article >
+
+</article></slide><slide class='segue dark nobackground level1'><hgroup class = 'auto-fadein'><h2>Comment ils sont aborder ?</h2></hgroup><article  id="comment-ils-sont-aborder">
+
+<h3>DU Dataviz</h3>
+
+<ul>
+<li>Formation de 150 heures au total (étalée 6 mois)</li>
+<li><strong>Tableau</strong> : 1 journée (7h)</li>
+<li><strong>R</strong> : 3 journées (21h)</li>
+<li><strong>Javascript</strong> : 4 journées (28h - incluant une introduction à HTML/CSS)</li>
+</ul>
+
+<h3>DUT STID</h3>
+
+<ul>
+<li>Formation sur 2 ans (1620 heures)</li>
+<li><strong>Tableau</strong> : 7h30 (en début de 1ère année)</li>
+<li><strong>R</strong> : ~50h (en 1ère et 2ème année)</li>
+<li><strong>Javascript</strong> : ~30h (en 2ème année - sans compter le cours HTML/CSS en 1ère années)</li>
+</ul>
+
+</article></slide><slide class=''><hgroup><h2></h2></hgroup><article >
+
+</article></slide><slide class='segue dark nobackground level1'><hgroup class = 'auto-fadein'><h2>Pourquoi aborder les trois ?</h2></hgroup><article  id="pourquoi-aborder-les-trois">
+
+<ul>
+<li><p>Trois <em>philosophies</em>/<em>situations</em> différentes</p></li>
+<li><p>Répartition des coûts logiciel/développement/compétences orthogonale entre les trois</p></li>
+</ul>
+
+<table class = 'rmdtable'>
+<col width="22%" />
+<col width="21%" />
+<col width="38%" />
+<col width="18%" />
+<tr class="header">
+<th align="left">Outil</th>
+<th align="left">Coût logiciel</th>
+<th align="left">Temps de<br> développement</th>
+<th align="left">Compétences</th>
+</tr>
+<tr class="odd">
+<td align="left"><strong>Tableau</strong></td>
+<td align="left">Important</td>
+<td align="left">Très faible</td>
+<td align="left">Statistique uniquement</td>
+</tr>
+<tr class="even">
+<td align="left"><strong>R</strong></td>
+<td align="left">Modéré</td>
+<td align="left">Important</td>
+<td align="left">Statistique principalement</td>
+</tr>
+<tr class="odd">
+<td align="left"><strong>Javascript</strong></td>
+<td align="left">Très faible</td>
+<td align="left">Très important</td>
+<td align="left">Informatique fortement<br> et statistique</td>
+</tr>
+</table>
+
+</article></slide><slide class=''><hgroup><h2></h2></hgroup><article >
+
+</article></slide><slide class='segue dark nobackground level1'><hgroup class = 'auto-fadein'><h2>Pourquoi pas d&#39;autres ?</h2></hgroup><article  id="pourquoi-pas-dautres">
+
+<ul>
+<li><p>Difficulté de présenter d&#39;autres solutions</p></li>
+<li><em>Concurrents</em>
+
+<ul>
+<li>solutions <em>clic boutons</em> : <strong>QlikView</strong>, <strong>SAS VA</strong>, &#8230;</li>
+<li><em>framework</em> web : <strong>BIRT</strong>, &#8230;</li>
+<li>solution <em>classique</em> en entreprise : <strong>Excel</strong>
+
+<ul>
+<li>vu par ailleurs dans le DUT STID</li>
+</ul></li>
+<li>langage entre R et Javascript : <strong>Python</strong>
+
+<ul>
+<li>vu par ailleurs dans le DUT STID</li>
+</ul></li>
+<li>sans interaction et orienté statistique
+
+<ul>
+<li><strong>SAS</strong> vu par ailleurs dans le DUT STID</li>
+<li>&#8230;</li>
+</ul></li>
+</ul></li>
+<li><p>Choix restreint pour ne pas (trop) perturber l&#39;enseignement</p></li>
+</ul>
+
+</article></slide><slide class=''><hgroup><h2></h2></hgroup><article >
+
+<p>class: inverse</p>
+
+</article></slide><slide class='segue dark nobackground level1'><hgroup class = 'auto-fadein'><h2>Conclusion</h2></hgroup><article  id="conclusion">
+
+<ul>
+<li>Chaque solution correspond à une situation différente dépendant
+
+<ul>
+<li>Des compétences en interne</li>
+<li>Des besoins</li>
+<li>Du temps et du budget disponibles</li>
+</ul></li>
+<li>Les étudiants/apprenants comprennent les différences entre les solutions
+
+<ul>
+<li>Mais préfèrent le <em>clic bouton</em> pour la plupart</li>
+</ul></li>
+</ul>
+
+<p>&#8211;</p>
+
+<h3>Exercice intéressant à mettre en oeuvre</h3>
+
+<ul>
+<li><p><strong>Comparaison des trois outils pour réaliser la même dataviz</strong></p></li>
+<li><p>Difficile pour le moment pour des raisons de coordination d&#39;enseignants</p></li>
+</ul></article></slide>
+
+
+  <slide class="backdrop"></slide>
+
+</slides>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+<!-- map slide visiblity events into shiny -->
+<script>
+  (function() {
+    if (window.jQuery) {
+       window.jQuery(document).on('slideleave', function(e) {
+         window.jQuery(e.target).trigger('hidden');
+      });
+       window.jQuery(document).on('slideenter', function(e) {
+         window.jQuery(e.target).trigger('shown');
+      });
+    }
+  })();
+</script>
+
+</body>
+</html>

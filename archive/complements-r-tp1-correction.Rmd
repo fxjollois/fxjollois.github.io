@@ -1,0 +1,166 @@
+---
+title: Fonctions et listes - correction
+subtitle: Compléments sur `R` - STID 1ère année
+---
+
+```{r, include=FALSE}
+knitr::opts_chunk$set(comment = NULL)
+```
+
+
+## Exercices
+
+### sur les fonctions
+
+#### Affichage d'un pays
+
+Créer une fonction `affichePays()` qui prend en paramètre un nom de pays et un continent, et qui l'affiche sur une ligne (de type `pays (continent)`)
+
+```{r}
+affichePays <- function(pays, continent) {
+    cat(pays, " (", continent, ")\n", sep = "")
+}
+affichePays("France", "Europe")
+```
+
+Ajouter un paramètre à cette fonction, qui sera l'année d'indépendance (avec la valeur `NA` par défaut) 
+
+- Si l'année est `NA`, alors on affichera `pays (continent)`
+- sinon, on affichera : `pays (continent - indépendance en XXXX)`
+
+```{r}
+affichePays <- function(pays, continent, annee = NA) {
+    cat(pays, " (", continent, sep = "")
+    if (!is.na(annee)) {
+        cat(" - independance en", annee)
+    }
+    cat(")\n")
+}
+affichePays("France", "Europe")
+affichePays("France", "Europe", 843)
+affichePays("France", "Europe", NA)
+```
+
+#### Calcul du ratio 
+
+Créer une fonction avec les caractéristiques suivantes :
+
+- Paramètres :
+    - une valeur (population d'un pays)
+    - un vecteur de valeur (population de plusieurs villes)
+- Retour :
+    - le ratio entre la somme des valeurs du vecteur (des populations des villes) et la première valeur (population d'un pays)
+- Par exemple :
+    - `ratio(10, c(1, 2, 3))` renverra `.6`
+
+```{r}
+ratio <- function(pop.pays, pop.villes) {
+    r = sum(pop.villes) / pop.pays
+    return(r)
+}
+ratio(10, 1:3)
+```
+
+### `world`
+
+A partir des données présentes dans le fichier [`world-liste.RData`](donnees/World/world-liste.Rdata), répondre aux questions suivantes. Ces données concernent les pays dans le monde (à la fin du siècle dernier), et sont représentées sous forme de liste dans l'objet `Country.liste`.
+
+```{r}
+# chargement des données
+load("donnees/World/world-liste.Rdata")
+```
+
+#### Donner le nombre de pays représentés
+
+```{r}
+length(Country.liste)
+```
+
+#### Calculer la population mondiale
+
+Deux façons ici
+
+```{r}
+Reduce(
+    function(a, b) {
+        a$Population = a$Population + b$Population
+        return(a)
+    },
+    Country.liste,
+    list(Population = 0)
+)
+```
+
+ou 
+
+```{r}
+sum(
+    sapply(
+        Country.liste,
+        function(p) { return(as.numeric(p$Population)) }
+    )
+)
+```
+
+
+#### Affichage de tous les pays
+
+Utiliser la fonction `affichePays()` créée précédemment dans une fonction anonyme, pour afficher les informations des pays (un pays par ligne)
+
+```{r}
+invisible(
+    lapply(
+        Country.liste,
+        function(p) {
+            affichePays(p$Name, p$Continent, p$IndepYear)
+        }
+    )
+)
+```
+
+
+#### Nouvelle liste avec ratio
+
+Utiliser la fonction de calcul de ratio de la population pour savoir pour chaque pays le ratio entre la population des villes de celui-ci et la population du pays
+
+Idéalement, créer une nouvelle liste qui ajoute cette information aux autres, pour chaque pays
+
+```{r}
+Country.liste2 = lapply(
+    Country.liste,
+    function(p) {
+        p$Ratio = ratio(p$Population, p$City$Population)
+        return(p)
+    }
+)
+```
+
+Ici, on créé une nouvelle liste avec uniquement le nom et le ratio de chaque pays.
+
+```{r}
+Country.ratio = lapply(
+    Country.liste,
+    function(p) {
+        res = list(
+            Name = p$Name,
+            Ratio = ratio(p$Population, p$City$Population)
+        )
+        return(res)
+    }
+)
+```
+
+
+#### Pays avec ratio > 1
+
+Identifier quels pays ont un ratio supérieur à `1` avec la nouvelle liste créée
+
+```{r}
+Filter(
+    function(p) { return(p$Ratio > 1)},
+    Country.ratio
+)
+```
+
+
+

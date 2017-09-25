@@ -1,0 +1,372 @@
+---
+title: Tableaux de bord
+subtitle: Compléments sur R - STID 1ère année
+---
+
+```{r, include=FALSE}
+knitr::opts_chunk$set(eval = FALSE)
+library(ggplot2)
+```
+
+Nous allons utiliser dans ce TP le package `shinydashboard` (à installer donc), qui permet de créer des tableaux de bords (ou *dashboard* en anglais), à l'aide de la librairie `shiny`.
+
+## Données
+
+Le `data.frame` `txhousing` du package `ggplot2` contient les informations économiques mensuelles du Texas, pour différentes villes et sur la période 2000-2015.
+
+```{r, eval=TRUE, echo=FALSE}
+knitr::kable(head(txhousing))
+```
+
+## Squelette
+
+Nous allons commencer par créer la base de notre application. Ainsi, au lieu de créer une `fluidPage()` comme nous l'avions fait précédemment, nous allons utiliser la fonction `dashboardPage()`. Celle-ci prend au minimum trois arguments
+
+- l'en-tête, créée avec la fonction `dashboardHeader()`
+- la partie gauche (pour les interactions a priori), créée avec la fonction `dashboardSidebar()`
+- la partie droite (principale), créée avec la fonction `dashboardBody()`
+
+Elle peut aussi prendre deux autres paramètres optionnels :
+
+- le titre (donné dans `title`)
+- l'habillage ou couleur principale (avec le paramètre `skin`, pouvant prendre les valeurs `"blue"`, `"black"`, `"purple"`, `"green"`, `"red"` ou `"yellow"`)
+
+Voici donc le contenu initial de notre nouvelle application (à mettre dans un nouveau répertoire donc).
+
+- `ui.R`
+```{r}
+library(shiny)
+library(shinydashboard)
+
+shinyUI(dashboardPage(
+    dashboardHeader(),
+    dashboardSidebar(),
+    dashboardBody(),
+    title = "TP 6",
+    skin = "yellow"
+))
+```
+- `server.R`
+```{r}
+library(shiny)
+library(shinydashboard)
+
+shinyServer(function(input, output) {
+    
+})
+```
+
+## En-tête
+
+Dans la partie en-tête, déclarée avec la fonction `dashboardHeader()`, nous allons écrire d'une part le titre qui apparaîtra en haut à gauche de l'application, ainsi que les différents items qui vont appraître dans la barre de menu en haut.
+
+Pour ajouter un titre au tableau de bord, il suffit de donner une valeur au paramètre `title` de la fonction `dashboardHeader()`. Commençons par lui donner le titre `"TP 6"`, comme ci-dessous.
+
+```{r}
+dashboardHeader(
+    title = "TP 6"
+)
+```
+
+Il est possible d'ajouter d'autres éléments dans la barre de menu, que nous ne verrons pas ici.
+
+## Corps du tableau de bords
+
+### Boîte 
+
+La fonction `box()` permet de déclarer une boîte, dans laquelle nous allons pouvoir intégrer des éléments de type `input` ou `output`. On pourra ensuite positionner ces boîtes librement avec des fonctions telles que `fluidRow()`.
+
+Nous allons d'abord créer une `box()` qui contiendra l'évolution globale du volume des ventes (variable `volume`). Pour cela, nous allons devoir faire un agrégat par date, bien évidemment.
+
+Dans l'interface, nous ajoutons donc une `box()`, avec un titre et une sortie de type graphique, nommée `conso`. Dans la partie serveur, nous créons le graphique classiquement, dans un `renderPlot()`.
+
+- `ui.R`
+```{r}
+dashboardBody(
+    box(
+        title = "Volume des ventes",
+        plotOutput("conso")
+    )
+)
+```
+- `server.R`
+```{r}
+output$conso <- renderPlot({
+    df = aggregate(volume ~ date, txhousing, sum)
+    ggplot(df, aes(date, volume)) + geom_line()
+})
+```
+
+#### Personnalisation
+
+La fonction `box()` peut prendre différents paramètres permettant de personnaliser l'affichage :
+
+- `footer` : texte en pied de la boîte
+- `status` : statut de la boîte, définissant un aspect type (regarder l'aide de `validStatuses` pour plus d'infos)
+- `solidHeader` : pour dire si le titre a une couleur de fond ou non
+- `width` : largeur de la boîte (entre 1 et 12),
+- ...
+
+On peut donc avoir une boîte personnalisée comme ci-dessous.
+
+- `ui.R`
+```{r}
+box(
+    title = "Volume des ventes",
+    plotOutput("conso"),
+    footer = "Données provenant de txhousing",
+    status = "info",
+    solidHeader = TRUE,
+    width = 8
+)
+```
+
+
+
+### Autres types de boîtes
+
+#### `infoBox()`
+
+Ce type de boîte permet de donner une information particulière, courte. Voici comment l'intégrer dans l'interface.
+
+- `ui.R` (à la suite de la première `box()`)
+```{r}
+infoBox(
+    title = "Progression"
+)
+```
+
+En plus du titre, nous pouvons bien évidemment mettre une valeur. On peut aussi personnaliser ces boîtes en changeant l'icône, le remplissage ou non et la couleur.
+
+- `ui.R`
+```{r}
+infoBox(
+    title = "Progression",
+    value = "?",
+    subtitle = "Entre 2000 et 2015",
+    icon = icon("line-chart"),
+    fill = TRUE,
+    color = "light-blue"
+)
+```
+
+#### `valueBox()`
+
+C'est un autre type de boîte pour donner une information courte, comme nous l'avions vu avec le package `flexdashboard`.
+
+- `ui.R` (à la suite de l'`infoBox()`)
+```{r}
+valueBox(
+    value = "?",
+    subtitle = "Volume totale des ventes"
+)
+```
+
+Ici, nous pouvons la personnaliser, avec une icône et une couleur spécifiques.
+
+- `ui.R`
+```{r}
+valueBox(
+    value = "?",
+    subtitle = "Volume totale des ventes",
+    icon = icon("usd"),
+    color = "light-blue"
+)
+```
+
+#### `tabBox()`
+
+On peut avoir un système d'onglets dans une `box()` grâce à cette fonction. Celle-ci prend en premier paramètre le titre qui s'affichera en haut à droite par défaut. Un autre paramètre possible est la largeur. Ici, nous définissons une largeur de 4, pour que le `tabBox()` se mette à la suite des deux autres boîtes (tester l'applciation en commentant cette ligne). Ensuite, chaque onglet est définié avec la fonction `tabPanel()`. Celle-ci prend en paramètre le titre et une suite d'éléments (ici, du texte uniquement - nous modifierons cela par la suite).
+
+- `ui.R`
+```{r}
+tabBox(
+    title = "Informations",
+    width = 4,
+    tabPanel(title = "Nombre", "Nombre de ventes"),
+    tabPanel(title = "Prix médian", "prix médian")
+)
+```
+
+
+## Partie de gauche
+
+La fonction `dashboardSidebar()` va nous permetter de déterminer le contenu de la partie gauche du tableau de bord, dédiée principalement aux différents choix que pourra faire l'utilisateur.
+
+Dans ce type de tableau de bord, il est courant de soit vouloir toutes les villes, soit uniquement une ville spécifique. Pour cela, nous allons donc ajouter un `selectInput()`, nommée `ville`, qui permettra à l'utilisateur de choisir soit toutes les villes, soit une seule. Dans la liste des choix, nous devons donc créer un vecteur contenant toutes les valeurs de la variable `city`, ainsi que la chaîne `"Toutes les villes"`. Et dans le serveur, il va nous falloir tester le choix de l'utilisateur, et différencier le code à exécuter selon celui-ci.
+
+Voici donc les éléments à ajouter à notre code précédent.
+
+- `ui.R` (dans le `dashboardSidebar()`)
+```{r}
+selectInput(
+    "ville",
+    "Choix de la ville",
+    c("Toutes les villes", unique(txhousing$city))
+)
+```
+- `server.R` (à la place de la création de `df`)
+```{r}
+if (input$ville == "Toutes les villes") {
+    df = aggregate(volume ~ date, txhousing, sum)
+} else {
+    df = aggregate(volume ~ date, 
+                   subset(txhousing, city == input$ville),
+                   sum)
+}
+```
+
+
+## Modification des boîtes selon les `input`
+
+(cette partie n'est pas spécifique à `shinydashboard`)
+
+Il est possible de créer un `output` de type interface avec la fonction `uiOutput()`. Ceci nous permet de créer une `infoBox()` (ou une `valueBox()`) en fonction des `input` de l'utilisateur (ou autre chose). Pour créer le rendu, nous devrons utiliser la fonction `renderUI()`.
+
+Nous allons l'utiliser ici pour indiquer la progression en % du volume de ventes mensuels médians entre Janvier 2000 et Janvier 2015 pour la ville choisie.
+
+Nous allons commencer par modifier l'interface pour intégrer un `uiOutput()`. Et dans la partie serveur, nous allons pour le moment renvoyer la même `ìnfoBox()` que précédemment.
+
+- `ui.R` (à la place de l'`ìnfoBox()`)
+```{r}
+uiOutput("progression")
+```
+- `server.R` (à la suite)
+```{r}
+output$progression <- renderUI({
+    valeur = 0
+    couleur = "light-blue"
+    infoBox(
+        title = "Progression",
+        value = valeur,
+        subtitle = "Entre 2000 et 2015",
+        icon = icon("line-chart"),
+        fill = TRUE,
+        color = couleur
+    )
+})
+```
+
+Il nous faut maintenant calculer la progression entre Janvier 2000 et Janvier 2015 pour la ville choisie. Si l'utilisateur choisit toutes les villes, le calcul se fera pour toutes les villes. Nous allons donc ré-utiliser presque le même calcul, sauf que l'agrégat se fera sur l'année (`year`).
+
+Une fois la valeur calculée, nous allons choisir la couleur avec la règle suivante :
+
+- inférieure strictement à 200 : rouge (`"red"`)
+- entre 200 et 350 : bleu clair (`"light-blue"`)
+- supérieure à 350 : vert (`"green"`)
+
+- `server.R`
+```{r}
+output$progression <- renderUI({
+    if (input$ville == "Toutes les villes") {
+        med2000 = median(subset(txhousing, year == 2000)$volume, na.rm = T)
+        med2015 = median(subset(txhousing, year == 2015)$volume, na.rm = T)
+    } else {
+        med2000 = median(subset(txhousing, year == 2000 & city == input$ville)$volume, 
+                         na.rm = T)
+        med2015 = median(subset(txhousing, year == 2015 & city == input$ville)$volume, 
+                         na.rm = T)
+    }
+    valeur = round(med2015 / med2000 * 100, 2)
+    couleur = ifelse(valeur < 200, "red", ifelse(valeur < 350, "light-blue", "green"))
+    infoBox(
+        title = "Progression",
+        value = paste(valeur, "%"),
+        subtitle = "Entre 2000 et 2015",
+        icon = icon("line-chart"),
+        fill = TRUE,
+        color = couleur
+    )
+})
+```
+
+Tester les trois premières villes pour voir la modification de l'`infoBox()`.
+
+Pour information, la ville de *Terkaxana* n'a aucune information pour 2000. La valeur obtenue est donc `NA`. L'`infoBox()` ne fonctionne donc pas pour celle-ci (avec une production d'erreur, non bloquante pour l'application).
+
+## Multiples *écrans*
+
+Il est possible de donner la possibilité d'avoir plusieurs *écrans* (ou ensemble de graphique) dans le tableau de bords. Pour cela, nous allons définir un menu (avec plusieurs items) dans la partie `sidebar` et définir le contenu de chaque item de ce menu dans le `body`.
+
+Le menu se déclare avec la fonction `sidebarMenu()`, et les items du menu par des `menuItem()`. On doit définir le texte à afficher et l'identifiant de l'item. On peut y ajouter des icônes pour personnaliser le menu. On peut aussi insérer un lien si on le souhaite.
+
+- `ui.R` : dans la partie `sidebar`, en dessous du `selectInput()`
+```{r}
+sidebarMenu(
+    menuItem("Résumé", tabName = "resume", icon = icon("dashboard")),
+    menuItem("TOP", tabName = "top", icon = icon("thumbs-up")),
+    menuItem("Liste des icônes", icon = icon("font-awesome"), href = "http://fontawesome.io/icons/")
+)
+```
+
+Dans la partie `body`, nous devons définir le contenu de chaque item dans un `tabItem()` dans lequel el premier paramètre est l'identifiant de l'item (cf `tabName` de `menuItem()`). Tous les items doivent être inclus dans un `tabItems()`.
+
+- `ui.R` : dans la partie `body`
+```{r}
+tabItems(
+    tabItem(
+        "resume",
+        box(
+            title = "Volume des ventes",
+            plotOutput("conso"),
+            footer = "Données provenant de txhousing",
+            status = "info",
+            solidHeader = TRUE,
+            width = 8
+        ),
+        uiOutput("progression"),
+        valueBox(
+            value = "?",
+            subtitle = "Volume totale des ventes",
+            icon = icon("usd"),
+            color = "light-blue"
+        ),
+        tabBox(
+            title = "Informations",
+            width = 4,
+            tabPanel("Nombre", "Nombre de ventes"),
+            tabPanel("Prix médian", "prix médian")
+        )
+    ),
+    tabItem(
+        "top"
+    )
+)
+```
+
+
+## A faire
+
+- Ajouter un contrôle dans l'`infoBox()` pour vérifier que les valeurs ont pu être calculées pour 2000 et 2015
+    - Si c'est le cas, affichez une `infoBox()` avec une icône de type `warning` et de couleur rouge
+
+- Modifier la `valueBox()` pour afficher le volume total des ventes pour la ville choisie (somme des ventes sur toute la période), avec une couleur en fonction des critères suivants :
+    - inférieur à 2'000'000'000 : rouge
+    - entre 2'000'000'000 et 50'000'000'000 : bleu clair
+    - supérieur à 50'000'000'000 : vert
+    - Afficher le volume en milliards pour simplifier la lecture
+    - Tester les villes *"San Angelo"*, *"San Antonio"*, *"San Marcos"*
+
+- Intégrer dans la `tabBox()` déjà écrite les valeurs prévues sous forme de `textOutput()` simple pour le moment
+    - Nombre total de ventes
+    - Prix de vente médian 
+
+- Modifier la `box()` avec le graphique pour en faire une `tabBox()` contenant les éléments suivants :
+    - le graphique tel que nous l'avons défini ci-dessus
+    - la tableau des volumes totaux de ventes, année par année (en lignes) et mois par mois (en colonnes), pour la ville choisie (ou toutes les villes), en millions de dollars
+        - Voici le code pour obtenir un tel tableau (avec `aggregate()` et `acast()` du package `reshape2`)
+```{r, eval=TRUE}
+library(reshape2)
+a = aggregate(volume ~ year + month, txhousing, sum)
+b = acast(a, year ~ month, value.var = "volume")
+c = b / 1000000
+```
+```{r, eval=TRUE, echo=FALSE}
+knitr::kable(c, digits = 0)
+```
+
+- Intégrer dans l'item `"TOP"`, les différents TOP suivants (chacun dans une `box()`) :
+    - Les meilleures villes, au sens volume total des ventes sur la période
+    - Les meilleurs années, idem
+    - Les meilles mois, idem
+    - Pour chaque top, on pourra choisir la taille de celui-ci (entre 3, 5 et 10)

@@ -1,0 +1,82 @@
+---
+title: TP4 - Document automatique - *correction*
+subtitle: Initiation a `R` - STID 1ère année
+---
+
+```{r, include=FALSE}
+knitr::opts_chunk$set(echo=FALSE, fig.align=TRUE)
+```
+
+## Données
+
+Les donées `mtcars` contiennent les informations (`r ncol(mtcars)` variables) de `r nrow(mtcars)` voitures. Vous pouvez avoir plus d'informations sur [cette page](https://stat.ethz.ch/R-manual/R-devel/library/datasets/html/mtcars.html)
+
+```{r}
+knitr::kable(mtcars)
+```
+
+## Consommation
+
+Voici la distribution de la consommation (en *Miles (US)/Galon*) des voitures.
+
+```{r, fig.cap = "Histogramme de la consommation en Miles(US)/Galon"}
+hist(mtcars$mpg, main = "", xlab = "", ylab = "", col = "gray80")
+```
+
+```{r}
+boxplot(mtcars$mpg, horizontal = TRUE)
+```
+
+
+
+## Transmission
+
+Pour créer la nouvelle variable, nous devons utiliser le code suivant :
+
+```{r, echo=TRUE}
+mtcars$trans = factor(mtcars$am, labels = c("automatic", "manual"))
+```
+
+Voici la répartition des voitures en fonction de la transmission (automatique ou manuelle).
+
+```{r}
+tab = setNames(aggregate(mpg ~ trans, mtcars, length),
+               c("Transmission", "Effectif"))
+knitr::kable(tab)
+```
+
+Enfin, on représente cette répartition via un diagramme circulaire
+
+```{r, fig.cap="Répartition des voitures selon la transmission", fig.width=2.5, fig.height=2.5}
+pie(table(mtcars$trans), col = c("orange", "blue"))
+```
+
+
+## Consommation et transmission
+
+### Sous-tables
+
+Nous créons ici deux sous-tables, une pour `"automatic"`, l'autre pour `"manual"`, avec le code suivant :
+
+```{r, echo=TRUE}
+mtcars_auto = subset(mtcars, subset = trans == "automatic")
+mtcars_manu = subset(mtcars, subset = trans == "manual")
+```
+
+### Automatique
+
+```{r, fig.cap="Distribution de la consommation (en Miles(US)/Galon) pour les voitures à transmission automatique"}
+par(mfrow = c(1,2))
+hist(mtcars_auto$mpg, main = "", xlab = "", ylab = "")
+boxplot(mtcars_auto$mpg)
+```
+
+### Manuelle
+
+```{r, fig.cap="Distribution de la consommation (en Miles(US)/Galon) pour les voitures à transmission manuelle"}
+par(mfrow = c(1,2))
+hist(mtcars_manu$mpg, main = "", xlab = "", ylab = "")
+boxplot(mtcars_manu$mpg)
+```
+
+

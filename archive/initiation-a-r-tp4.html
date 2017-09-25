@@ -1,0 +1,683 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+<meta charset="utf-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="pandoc" />
+
+
+
+
+<title>TP4 - Document automatique</title>
+
+<script src="libs/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="libs/bootstrap-3.3.5/css/journal.min.css" rel="stylesheet" />
+<script src="libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<script src="libs/navigation-1.1/tabsets.js"></script>
+<link href="libs/highlightjs-1.1/default.css" rel="stylesheet" />
+<script src="libs/highlightjs-1.1/highlight.js"></script>
+<!--
+    Font Awesome
+-->
+<script src="https://use.fontawesome.com/32d8325004.js"></script>
+<link rel="stylesheet" href="libs/font-awesome-4.7.0/css/font-awesome.min.css">
+
+<!--
+    CSS perso
+-->
+<style>
+    .contenu {
+        margin-bottom: 50px;
+    }
+
+    .contact-liens {
+        text-align: center;
+    }
+    .contact-liens:hover {
+        text-decoration: none;
+    }
+    .contact-icones {
+        height: 30px;
+    }
+
+    /* Espacement pour barre du haut et pied de page */
+    #header, .section.level1 {
+        margin-top: 60px;
+        margin-bottom: 60px;
+    }
+    /* Espacement pour table des matières */
+    #TOC {
+        margin-top: 100px;
+    }
+    
+    .footer {
+        position: fixed;
+        width: 100%;
+        text-align: center;
+        bottom: 0;
+        left: 0;
+        background-color: #E6E6E6;
+    }
+</style>
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
+<script type="text/javascript">
+if (window.hljs && document.readyState && document.readyState === "complete") {
+   window.setTimeout(function() {
+      hljs.initHighlighting();
+   }, 0);
+}
+</script>
+
+
+
+<style type="text/css">
+h1 {
+  font-size: 34px;
+}
+h1.title {
+  font-size: 38px;
+}
+h2 {
+  font-size: 30px;
+}
+h3 {
+  font-size: 24px;
+}
+h4 {
+  font-size: 18px;
+}
+h5 {
+  font-size: 16px;
+}
+h6 {
+  font-size: 12px;
+}
+.table th:not([align]) {
+  text-align: left;
+}
+</style>
+
+<link rel="stylesheet" href="libs/bootstrap-journal.min.css" type="text/css" />
+
+</head>
+
+<body>
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img {
+  max-width:100%;
+  height: auto;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+</style>
+
+
+
+<div class="container-fluid main-container">
+
+<!-- tabsets -->
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+</script>
+
+<!-- code folding -->
+
+
+
+
+
+<div class="navbar navbar-default navbar-fixed-top">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-main">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">FX Jollois</a>
+    </div>
+    <div id="navbar-main" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button">Données <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+              <li><a href="accesdonnees.html">A télécharger</a></li>
+              <li><a href="donnees-integrees-r.html">Sous R</a></li>
+          </ul>
+        </li>
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button">Enseignement <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li class="dropdown-header">DUT 1ère année</li>
+            <li><a href="exploitation-donnees.html">Exploitation de données</a></li>
+            <li><a href="initiation-a-r.html">Initiation à R</a></li>
+            <li><a href="reporting.html">Reporting</a></li>
+            <li><a href="complements-r.html">Compléments sur R</a></li>
+            <li class="dropdown-header">DUT 2ème année</li>
+            <li><a href="prog-stat-r.html">Programmation statistique avec R</a></li>
+            <li class="dropdown-header">LP MDS Santé</li>
+            <li><a href="info-dec-sante.html">Informatique décisionnelle</a></li>
+            <li class="dropdown-header">DU Analyste Big Data</li>
+            <li><a href="initiation-r-du.html">Initiation à R</a></li>
+            <li><a href="connexion-r-mongodb.html">Connexion entre R et MongoDB</a></li>
+            <li class="dropdown-header">DU Dataviz</li>
+            <li><a href="analyse-donnees.html">Analyse de données</a></li>
+            <li><a href="visualisation-donnees.html">Visualisation de données - R</a></li>
+            <li><a href="visualisation-donnees-tableau.html">Visualisation de données - Tableau</a></li>
+            <li><a href="visualisation-donnees-d3.html">Visualisation de données - D3</a></li>
+            <li role="separator" class="divider"></li>
+            <li class="dropdown-header">Master</li>
+            <li><a href="slides/cnam-classif-modeles.html">Classification et Modèles de mélange</a></li>
+            <li><a href="analyse-donnees-massives.html">Analyse de Données Massives</a></li>
+            <li class="dropdown-header">Iran</li>
+            <li><a href="stat-prog-R.html">Statistical Programming using R</a></li>
+          </ul>
+        </li>
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button">Recherche <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li><a href="recherche.html">Sujets</a></li>
+            <li><a href="publications.html">Publications</a></li>
+          </ul>
+        </li>
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button">Réalisations <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li><a href="realisations.html">Détail</a></li>
+            <li role="separator" class="divider"></li>
+            <li><a href="http://up5.fr/explore-data" target="_blank">explore-data</a></li>
+            <li><a href="http://fxjollois.github.io/cours-sql/" target="_blank">Appli web de cours pour SQL</a></li>
+          </ul>
+        </li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container-fluid -->
+</div>
+<div class="contenu">
+
+<div class="fluid-row" id="header">
+
+
+
+<h1 class="title toc-ignore">TP4 - Document automatique</h1>
+<h3 class="subtitle"><em>Initiation a <code>R</code> - STID 1ère année</em></h3>
+
+</div>
+
+
+<p>Nous allons voir dans ce TP comment on peut produire un document (<code>HTML</code>, <code>PDF</code> voire <code>Word</code>) incluant à la fois le texte et les commandes <code>R</code> pour produire les éléments pour appuyer les commentaires (importation de données, tableaux, graphiques, …). Ce type de document peut être produit sous <code>R</code> avec <a href="http://rmarkdown.rstudio.com/" title="Site officiel de R markdown">rmarkdown</a></p>
+<blockquote>
+<p>ce document a été écrit en <code>R markdown</code>. Vous pouvez voir le fichier source <a href="initiation-a-r-tp4.Rmd" title="Fichier source du TP4">ici</a>. Pour mieux comprendre le langage, il est préférable de regarder le fichier source et ce document qui est donc la traduction du source en HTML.</p>
+</blockquote>
+<div id="librairies" class="section level2">
+<h2>Librairies</h2>
+<p><code>R</code> fonctionne sur le principe d’un moteur de base, avec des fonctionnalités limitées. Celles-ci peuvent être augmentées grâce à l’ajout de <strong>librairies</strong> (appelées aussi <em>packages</em>). Il en existe de nombreuses, disponibles sur le site du <a href="https://cran.r-project.org/" title="site du CRAN"><strong>CRAN</strong></a> (<em>Comprehensive R Archive Network</em>).</p>
+<div id="chemins-de-recherche-des-librairies" class="section level3">
+<h3>Chemin(s) de recherche des librairies</h3>
+<p>La commande <code>.libPaths()</code> permet de lister les différents répertoires dans lesquels <code>R</code> va pouvoir chercher les librairies. Si nous voulons en installer de nouvelles, et pouvoir les réutiliser plus tard, il faut donc spécifier un répertoire dans lequel nous avons les droits d’écriture.</p>
+<p>Premièrement, il vous faut créer un répertoire dans votre <code>&quot;Z:/&quot;</code> qui contiendra les librairies <code>R</code>, par exemple nommé <code>&quot;Rlib&quot;</code>, directement à la racine de votre <code>&quot;Z:/&quot;</code>. Une fois celui-ci créé, vous pouvez indiquez à <code>R</code> qu’il doit aussi prendre en compte ce répertoire pour la recherche de librairies. Pour cela, vous devez exécuter la commande <code>.libPaths(&quot;z:/Rlib&quot;)</code>. Afin de vérfier que le répertoire a bien été ajouté, vous pouvez de nouveau lister les dossiers connus de <code>R</code> avec <code>.libPaths()</code>. Normalement, votre répertoire (ici <code>&quot;Z:/Rlib&quot;</code>) doit être affiché en premier.</p>
+<p>Voici donc les commandes à exécutées ici.</p>
+<pre class="r"><code>.libPaths()
+.libPaths(&quot;z:/Rlib&quot;)
+.libPaths()</code></pre>
+<p><strong>Attention.</strong> Cet ajout du répertoire <code>&quot;Z:/Rlib&quot;</code> aux chemins connus de <code>R</code>, via la commande <code>.libPaths()</code>, devra être effectué à chaque nouvelle session (i.e. à chaque fois que vous relancez RStudio donc).</p>
+</div>
+<div id="installation-dune-librairie" class="section level3">
+<h3>Installation d’une librairie</h3>
+<p>Une fois le répertoire ajouté, nous pouvons installer les librairies directement dans <code>R</code> avec la commande <code>install.packages()</code>, en y listant les librairies voulues. Nous allons utilsier ici la librairie <code>rmarkdown</code>. Vous devez donc executer la commande suivante.</p>
+<pre class="r"><code>install.packages(&quot;rmarkdown&quot;)</code></pre>
+<p>Quand vous l’exécuterez, vous verrez qu’il doit aussi installer d’autres librairies, appelées ici dépendances. Tout ceci est géré automatiquement par <code>R</code> sans que nous ayons à connaître la liste de ces dépendances.</p>
+<p><strong>Attention.</strong> L’installation d’une librairie n’est à faire qu’une seule fois.</p>
+</div>
+<div id="chargement-dune-librairie" class="section level3">
+<h3>Chargement d’une librairie</h3>
+<p>Une fois les librairies installées, il sera donc possible de les utiliser. Mais pour ceci, il faut tout d’abord les charger, à chaque session grâce à la fonction <code>library()</code>. Pour charger une librairie, il faudra donc exécuter un code de type :</p>
+<pre class="r"><code>library(rmarkdown)</code></pre>
+<p><strong>Attention.</strong> Le chargement d’une librairie via <code>library()</code> devra être effectuée à chaque nouvelle session, pour les librairies dont vous avez besoin.</p>
+</div>
+</div>
+<div id="langage-markdown" class="section level2">
+<h2>Langage <code>markdown</code></h2>
+<p>L’idée d’un document de type <code>R markdown</code> est donc d’inclure les commentaires et les commandes permettant d’obtenir les différents résultats. La syntaxe pour l’écriture du document est le langage <a href="https://daringfireball.net/projects/markdown/" title="page officiel du langage markdown">markdown</a>. Il a l’avantage d’être très simple à utiliser et à lire. Voici quelques éléments de base. Il a été fait pour ensuite être traduit en <code>HTML</code>.</p>
+<div id="titres" class="section level3">
+<h3>Titres</h3>
+<p>Il y a deux façons d’écrire des titres. La première avec des <code>&quot;#&quot;</code> en début de ligne, pour produire des titres de niveau 1 (<code>&lt;h1&gt;</code>) à 6 (<code>&lt;h6&gt;</code>).</p>
+<pre><code># Titre de niveau 1
+
+## Titre de niveau 2
+
+...
+
+###### Titre de niveau 6</code></pre>
+<p>L’autre ne concerne que les titres de niveau 1 et 2.</p>
+<pre><code>Titre de niveau 1
+=================
+
+Titre de niveau 2
+-----------------</code></pre>
+</div>
+<div id="paragraphes-et-divers" class="section level3">
+<h3>Paragraphes et divers</h3>
+<p>Les paragraphes s’écrivent simplement, sans notation particulière. Un passage à la ligne seule ne sera pas suffisant pour un changement de paragraphe, il est nécessaire de laisser (au moins) une ligne entre deux paragraphes.</p>
+<p>Il est possible de mettre en avant des mots de deux façons :</p>
+<ul>
+<li><code>**mot(s) important(s)**</code> : un ou plusieurs mots encadrés par des <code>**</code> (ou des <code>__</code>) seront transformés en balise <code>strong</code> (souvent <strong>mis en gras</strong>)</li>
+<li><code>*mot(s) moins importants*</code> : idem que précédement mais avec <code>*</code> (ou <code>_</code>), transformés en balise <code>em</code> (souvent <em>mis en italique</em>)</li>
+</ul>
+<p>Pour faire un lien vers une page ou une URL, il est possible d’utiliser plusieurs syntaxes :</p>
+<ul>
+<li><code>&lt;url&gt;</code> : lien mis directement (par exemple <a href="http://fxjollois.github.io" class="uri">http://fxjollois.github.io</a>)</li>
+<li><code>[texte](lien &quot;texte optionnel&quot;)</code> : lien mis sur un texte (par exemple <a href="http://fxjollois.github.io" title="bla bla quand souris sur lien">ma page web</a>)</li>
+<li><code>[texte][label]</code> : lien mis sur un texte aussi, avec un pied de page ajouté plus tard avec <code>[label]: url &quot;texte optionnel&quot;</code> (par exemple <a href="http://fxjollois.github.io" title="texte qui s&#39;affiche lorsque la souris est sur le lien">page perso</a>)</li>
+</ul>
+<p>Pour intégrer des images dans un document <code>markdown</code>, on utilise un formalisme similaire aux liens, avec un <code>!</code>avant :</p>
+<ul>
+<li><p><code>![texte](lien &quot;texte optionnel&quot;)</code> : le texte sert à contextualiser l’image</p>
+<img src="Rpubs.jpg" title="bla bla quand souris sur image" alt="bla bla bla" /></li>
+<li><p><code>![texte][label]</code> : on définit le label par la suite avec <code>[label]: lien &quot;texte optionnel&quot;</code></p>
+<div class="figure">
+<img src="Rpubs.jpg" title="re bla bla bla bla qui s&#39;affiche lorsque la souris est sur l&#39;image" alt="re bla" />
+<p class="caption">re bla</p>
+</div></li>
+</ul>
+<p>On peut aussi ajouter des lignes horizontales, pour découper le texte. Pour cela, il est nécessaire d’écrire une ligne avec</p>
+<ul>
+<li>soit au moins 3 caractères identiques (<code>&quot;*&quot;</code> ou <code>&quot;-&quot;</code>)</li>
+<li>soit 3 caractères identiques (toujours <code>&quot;*&quot;</code> ou <code>&quot;-&quot;</code>) séparés d’un espace.</li>
+</ul>
+<p>Voici les quatre façons de faire donc, qui produiront le même résultat :</p>
+<pre><code>***
+---
+* * *
+- - -</code></pre>
+<p>Et un exemple de séparation</p>
+<hr />
+<p>On peut aussi créer des blocs de citations (équivalent à la balise <code>blockquote</code>), en commençant les lignes par <code>&quot;&gt;&quot;</code>.</p>
+<blockquote>
+<p>Voici un exemple de bloc de citation, permettant de mettre en avant des éléments importants.</p>
+</blockquote>
+</div>
+<div id="listes" class="section level3">
+<h3>Listes</h3>
+<p>Il est possible de créer deux types de listes (non-ordonnées et ordonnées). Il faut noter cependant que les listes doivent être séparées des paragraphes par (au moins) une ligne au-dessus et en-dessous. De plus, pour les sous-listes, il faut mettre une tabulation (ou deux si sous-sous-liste, et ainsi de suite).</p>
+<p>Il est bien évidemment totalement possible de mélanger les deux types de listes si besoin.</p>
+<div id="non-ordonnees" class="section level4">
+<h4>Non-ordonnées</h4>
+<p>Ce sont les plus simples à écrire. Les items commencent tous par le même caractère. Le caractère utilisé ici (<code>&quot;-&quot;</code>) peut être remplacé par <code>&quot;*&quot;</code> ou <code>&quot;+&quot;</code>.</p>
+<ul>
+<li>1er élément</li>
+<li>2ème élément
+<ul>
+<li>sous-élement A</li>
+<li>sous-élément B</li>
+<li>…</li>
+</ul></li>
+<li>etc…</li>
+</ul>
+</div>
+<div id="ordonnees" class="section level4">
+<h4>Ordonnées</h4>
+<p>Pour avoir une liste ordonnée, il est nécessaire de commencer la ligne par un chiffre suivi de <code>&quot;.&quot;</code>. Par contre, le chiffre indiqué n’est pas pris en compte. Ce qui fait que la sous-liste ici produira bien <code>1</code>, <code>2</code> et <code>3</code>.</p>
+<ol style="list-style-type: decimal">
+<li>élément 1</li>
+<li>élément 2
+<ol style="list-style-type: decimal">
+<li>sous-élément 1</li>
+<li>sous-élément 2</li>
+<li>sous-élément 3</li>
+</ol></li>
+</ol>
+</div>
+</div>
+<div id="tableaux" class="section level3">
+<h3>Tableaux</h3>
+<p>On peut définir un tableau directement, en précisant d’abord le nom des colonnes (séparés par <code>&quot;|&quot;</code>). Il faut ensuite faire une séparation via une ligne avec <code>&quot;---&quot;</code> (au moins) pour chaque colonne et toujours des séparations (<code>&quot;|&quot;</code>) entre les colonnes. Ensuite, les valeurs de chaque ligne doivent être toujours séparées par des <code>&quot;|&quot;</code>.</p>
+<p>Le style de chaque colonne (aligné à gauche - par défaut, aligné à droite ou centré) peut être indiqué dans la ligne de séparation entre les noms de colonnes et les valeurs, avec</p>
+<ul>
+<li><code>---</code> (ou <code>:--</code>) : aligné à gauche</li>
+<li><code>--:</code> : aligné à droite</li>
+<li><code>:-:</code> : centré</li>
+</ul>
+<p>Voici un exemple de tableau, dans lequel nous avons défini le style de chaque colonne</p>
+<table>
+<thead>
+<tr class="header">
+<th align="left">col 1</th>
+<th align="center">col 2</th>
+<th>…</th>
+<th align="right">col n</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">Ligne</td>
+<td align="center">complète</td>
+<td>sur 4</td>
+<td align="right">colonnes</td>
+</tr>
+<tr class="even">
+<td align="left">Ligne</td>
+<td align="center">incomplète</td>
+<td>à la fin</td>
+</tr>
+<tr class="odd">
+<td align="left">ligne</td>
+<td align="center">incomplète</td>
+<td>au début</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="codes" class="section level3">
+<h3>Codes</h3>
+<p>L’intérêt de ce langage est aussi de pouvoir intégrer des éléments de code (soit des blocs complets, soit des éléments en ligne), permettant de présenter le travail fait.</p>
+<div id="bloc-de-code" class="section level4">
+<h4>Bloc de code</h4>
+<p>Pour créer un bloc de code, il faut soit le précéder et le suivre d’une ligne avec <code>```</code>, soit le faire commencer par une indentation (une tabulation ou 4 espaces).</p>
+<pre><code># premier code quelconque
+d = read.table(&quot;d&quot;)
+summary(d)</code></pre>
+<pre><code># deuxième code quelconque
+dd = subset(d, var1 == valeur)
+summary(dd)</code></pre>
+</div>
+<div id="code-en-ligne" class="section level4">
+<h4>Code en ligne</h4>
+<p>Il est aussi possible d’écrire du code (par exemple un nom de fonction ou autre) dans une phrase, en encadrant ce code entre deux <code>`</code>, ce qui donne par exemple <code>fonction()</code>.</p>
+</div>
+</div>
+</div>
+<div id="document-r-markdown" class="section level2">
+<h2>Document <code>R markdown</code></h2>
+<p>Un document <code>R markdown</code> (généralement enregistré avec l’extension <code>.rmd</code> ou <code>.Rmd</code>) permet d’une part d’utiliser la syntaxe <code>markdown</code> pour écrire du texte, mais aussi d’inclure des commandes <code>R</code> directement dans le document. Ainsi, un seul document contient le code et le commentaire, ce qui est un atout non négligeable pour des rapports ou présentations devant être mises à jour ou refaits régulièrement.</p>
+<p>Il est possible d’inclure les commandes <code>R</code> soit dans un bloc de code, appelé <em>chunck</em> dans <strong>R Studio</strong>, ou en ligne, appelé <em>inline chunck</em>.</p>
+<p>Pour créer un document <code>R markdown</code> dans <strong>R Studio</strong>, vous pouvez cliquer sur l’icône <img src="icon_Rstudio_plus.jpg" title="Bouton de création d&#39;un nouveau document - R Studio" alt="bouton nouveau document RStudio" />, puis sur <em>R markdown…</em>. Vous devez voir apparaître une interface vous demandant de choisir entre un document, une présentation, une application <em>Shiny</em> ou de choisir un <em>template</em> prédéfini. Nous allons rester sur le <em>document</em> pour le moment. De plus, vous pouvez indiquer le titre et l’auteur, ainsi que choisir le format de sortie (HTML, PDF ou Word). Nous allons garder HTML pour le moment.</p>
+<div id="en-tete" class="section level3">
+<h3>En-tête</h3>
+<p>Lors de la création d’un nouveau document <code>R markdown</code>, vous devez voir apparaître en début de document une partie d’en-tête, comme ci-dessous, au format <code>YAML</code>.</p>
+<pre><code>---
+title: &quot;Untitled&quot;
+author: &quot;FX Jollois&quot;
+date: &quot;17/10/2016&quot;
+output: html_document
+---</code></pre>
+<p>Dans cette en-tête, nous pouvons donc définir le titre, éventuellement un sous-titre (avec <code>subtitle:</code>), le ou les auteurs, la date et des options de sortie. Pour le moment, nous allons garder la sortie au format HTML. Pour passer au format <code>PDF</code>, il faut écrire <code>pdf_document</code> dans <code>output</code> (ainsi qu’avoir <span class="math inline">\(\LaTeX\)</span> installé sur sa machine - ce qui n’est pas le cas à l’IUT). Pour créer un document de type Word, il faut choisir <code>word_document</code> pour <code>output</code>.</p>
+<p>Il y a d’autres possibilités de sortie, ainsi que la possibilité d’ajouter d’autres paramètres de sortie, que nous ne verrons pas ici.</p>
+</div>
+<div id="chunck" class="section level3">
+<h3><em>Chunck</em></h3>
+<p>Un <em>chunck</em> sera donc un bloc de commande <code>R</code> (ou autre langage possible) qui sera exécuté par <strong>R Studio</strong>. Pour cela, il faut indiquer sur la première ligne le langage utilisé. Pour <code>R</code>, voici donc un exemple simple</p>
+<pre><code>&#96;&#96;&#96;{r}
+# code R
+summary(iris)
+&#96;&#96;&#96;</code></pre>
+<p>Dans le document sera donc intégré à la fois le code, ainsi que le résultat de son exécution. L’exemple donnera donc</p>
+<pre class="r"><code># code R
+aggregate(. ~ Species, iris, mean)</code></pre>
+<pre><code>##      Species Sepal.Length Sepal.Width Petal.Length Petal.Width
+## 1     setosa        5.006       3.428        1.462       0.246
+## 2 versicolor        5.936       2.770        4.260       1.326
+## 3  virginica        6.588       2.974        5.552       2.026</code></pre>
+<p>Il est possible de nommer le <em>chunck</em> en lui donnant un label (sans espace, sans accent) après <code>r</code> dans les <code>{}</code>. Ceci est intéressant surtout dans l’étape de développement, car si une erreur arrive lors de l’exécution, il sera plus facile de retrouver dans quel <em>chunck</em> est l’erreur (indiqué lors de l’affichage de l’erreur).</p>
+<p>De plus, il est possible de mettre des options dans le <em>chunck</em>, toujours dans les <code>{}</code>, après une <code>&quot;,&quot;</code>. Voici quelques options classiques et utiles (avec leur valeur par défaut indiquée, si elle existe) :</p>
+<ul>
+<li><code>include = TRUE</code> : si <code>FALSE</code>, le code est exécuté mais il n’est pas inclus dans le document (ni le code, ni son résultat)</li>
+<li><code>echo = TRUE</code> : si <code>FALSE</code>, le code n’est pas affiché mais bien exécuté</li>
+<li><code>eval = TRUE</code> : si <code>FALSE</code>, le code est affiché mais n’est pas exécuté</li>
+<li><code>results = 'markup'</code> : permet de définir comment le résultat est affiché (intéressant pour les tableaux, cf plus loin)</li>
+<li><code>fig.cap</code> : titre du graphique produit</li>
+</ul>
+<p>Il est possible de mettre plusieurs options, toutes séparées par des <code>&quot;,&quot;</code>.</p>
+<div id="quelques-exemples" class="section level4">
+<h4>Quelques exemples</h4>
+<p>Dans la suite, voici quelques exemples de <em>chuncks</em> avec options. Regardez le source pour mieux comprendre le fonctionnement.</p>
+<p>Tout d’abord, on importe les données <code>heart.txt</code>, mais ce genre de code n’est souvent pas à inclure, dans le sens où l’on ne veut ni l’afficher, ni voir de résultat.</p>
+<p>Ensuite, la librairie <code>knitr</code> contient une fonction <code>kable()</code> permettant d’afficher un <code>data.frame</code> au format <code>markdown</code>. Cela permet d’avoir un résultat plus lisible qu’une sortie de console <code>R</code> classique.</p>
+<pre class="r"><code>knitr::kable(head(heart))</code></pre>
+<table>
+<thead>
+<tr class="header">
+<th align="right">age</th>
+<th align="left">sexe</th>
+<th align="left">type_douleur</th>
+<th align="right">pression</th>
+<th align="right">cholester</th>
+<th align="left">sucre</th>
+<th align="left">electro</th>
+<th align="right">taux_max</th>
+<th align="left">angine</th>
+<th align="right">depression</th>
+<th align="right">pic</th>
+<th align="left">vaisseau</th>
+<th align="left">coeur</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="right">70</td>
+<td align="left">masculin</td>
+<td align="left">D</td>
+<td align="right">130</td>
+<td align="right">322</td>
+<td align="left">A</td>
+<td align="left">C</td>
+<td align="right">109</td>
+<td align="left">non</td>
+<td align="right">2.4</td>
+<td align="right">2</td>
+<td align="left">D</td>
+<td align="left">presence</td>
+</tr>
+<tr class="even">
+<td align="right">67</td>
+<td align="left">feminin</td>
+<td align="left">C</td>
+<td align="right">115</td>
+<td align="right">564</td>
+<td align="left">A</td>
+<td align="left">C</td>
+<td align="right">160</td>
+<td align="left">non</td>
+<td align="right">1.6</td>
+<td align="right">2</td>
+<td align="left">A</td>
+<td align="left">absence</td>
+</tr>
+<tr class="odd">
+<td align="right">57</td>
+<td align="left">masculin</td>
+<td align="left">B</td>
+<td align="right">124</td>
+<td align="right">261</td>
+<td align="left">A</td>
+<td align="left">A</td>
+<td align="right">141</td>
+<td align="left">non</td>
+<td align="right">0.3</td>
+<td align="right">1</td>
+<td align="left">A</td>
+<td align="left">presence</td>
+</tr>
+<tr class="even">
+<td align="right">64</td>
+<td align="left">masculin</td>
+<td align="left">D</td>
+<td align="right">128</td>
+<td align="right">263</td>
+<td align="left">A</td>
+<td align="left">A</td>
+<td align="right">105</td>
+<td align="left">oui</td>
+<td align="right">0.2</td>
+<td align="right">2</td>
+<td align="left">B</td>
+<td align="left">absence</td>
+</tr>
+<tr class="odd">
+<td align="right">74</td>
+<td align="left">feminin</td>
+<td align="left">B</td>
+<td align="right">120</td>
+<td align="right">269</td>
+<td align="left">A</td>
+<td align="left">C</td>
+<td align="right">121</td>
+<td align="left">oui</td>
+<td align="right">0.2</td>
+<td align="right">1</td>
+<td align="left">B</td>
+<td align="left">absence</td>
+</tr>
+<tr class="even">
+<td align="right">65</td>
+<td align="left">masculin</td>
+<td align="left">D</td>
+<td align="right">120</td>
+<td align="right">177</td>
+<td align="left">A</td>
+<td align="left">A</td>
+<td align="right">140</td>
+<td align="left">non</td>
+<td align="right">0.4</td>
+<td align="right">1</td>
+<td align="left">A</td>
+<td align="left">absence</td>
+</tr>
+</tbody>
+</table>
+<p>Enfin, on peut vouloir faire un graphique, ce qui pourrait donner ce qui suit. Pour ce genre de présentation, nous pouvons décider de ne pas afficher le code permettant de les obtenir.</p>
+<div class="figure">
+<img src="initiation-a-r-tp4_files/figure-html/graph-1.png" alt="Répartition du sexe des individus selon le problème cardiaque" width="672" />
+<p class="caption">
+Répartition du sexe des individus selon le problème cardiaque
+</p>
+</div>
+</div>
+</div>
+<div id="inline-chunck" class="section level3">
+<h3><em>Inline chunck</em></h3>
+<p>On peut faire des <em>chuncks</em> en ligne en encadrant le code avec des <code>`</code> et en commencant le code par un <code>r</code>. Par exemple, on peut dire que dans le jeu de données <code>heart</code> sont présentés 270 individus et 13 variables.</p>
+</div>
+<div id="parametres-globaux-des-chuncks" class="section level3">
+<h3>Paramètres globaux des <em>chuncks</em></h3>
+<p>Il est possible de déterminer des paramètres globaux pour tous les blocs <em>chuncks</em> du document (sauf paramètres locaux précisés). Ceci doit se faire comme suit, avec la fonction <code>set()</code> de l’objet <code>opts_chunck</code> de la librairie <code>knitr</code>. Il est par exemple possible de définir <code>echo=FALSE</code> pour n’avoir aucun code apparaissant dans le document.</p>
+<pre><code>knitr::opts_chunk$set(...)</code></pre>
+</div>
+</div>
+<div id="exercice" class="section level2">
+<h2>Exercice</h2>
+<p>Dans votre document, penser à nommer chaque chunck différement. Et n’hésiter pas à commenter le document pour le rendre plus conforme à ce qu’on pourrait vouloir produire comme document.</p>
+<p>Vous trouverez sur le site <a href="http://rmarkdown.rstudio.com/" title="Site officiel de R markdown">rmarkdown</a> beaucoup d’informations et de compléments sur cette librairie. Beaucoup sont résumées dans ce <a href="https://www.rstudio.com/wp-content/uploads/2015/03/rmarkdown-reference.pdf">document</a>.</p>
+<ol style="list-style-type: decimal">
+<li>Créer un nouveau document <code>R markdown</code>, intitulé <code>&quot;TP4&quot;</code>, avec votre nom comme auteur</li>
+<li>Sauvegarder ce document sous le nom <code>&quot;TP4.Rmd&quot;</code></li>
+<li>Cliquer sur <img src="icon_Rstudio_knitHTML.jpg" title="bouton permettant de convertir un .Rmd en .html" alt="bouton knitHTML RStudio" /> pour voir le résultat de l’exemple fourni</li>
+<li>Supprimer le contenu du document, en gardant uniquement l’en-tête</li>
+<li>Paramétrer l’ensemble des chuncks pour ne pas voir apparaître le code des <em>chuncks</em> dans le résultat</li>
+<li>Créer 4 titres de niveau 2, avec le contenu suivant
+<ol style="list-style-type: decimal">
+<li><strong>Données</strong> :
+<ul>
+<li>écrire un texte introductif précisant (en ligne) le nombre de lignes et de colonnes du jeu de données <code>mtcars</code>, et incluant un lien vers la pagede présentation <a href="https://stat.ethz.ch/R-manual/R-devel/library/datasets/html/mtcars.html" class="uri">https://stat.ethz.ch/R-manual/R-devel/library/datasets/html/mtcars.html</a></li>
+<li>afficher proprement l’ensemble du jeu de données</li>
+</ul></li>
+<li><strong>Consommation</strong>
+<ul>
+<li>Histogramme de la consommation (variable <code>mpg</code>, fonction <code>hist()</code>)</li>
+<li>Boîte à moustache horizontale (fonction <code>boxplot()</code>)</li>
+</ul></li>
+<li><strong>Transmission</strong> :
+<ul>
+<li>créer une nouvelle variable <code>trans</code> dans le jeu de données <code>mtcars</code> prenant comme valeur <code>&quot;automatic&quot;</code> pour <code>am == 0</code> et <code>&quot;manual&quot;</code> pour <code>am == 1</code>, en affichant le code pour la créer</li>
+<li>afficher un tableau à deux colonnes :
+<ul>
+<li><code>&quot;Transmission&quot;</code> avec les deux modalités de <code>trans</code></li>
+<li><code>&quot;Effectif&quot;</code> avec l’effectif pour chaque transmission</li>
+</ul></li>
+<li>afficher le diagramme circulaire de la répartition des voitures en fonction de leur transmission avec les paramètres suivants (fonction <code>pie()</code> et fonction <code>table()</code>) :
+<ul>
+<li>un titre de figure indiquant ce qui est représenté (cf <code>fig.cap</code>)</li>
+<li>centrage dans le document (cf <code>fig.align</code>)</li>
+<li>largeur et hauteur de <code>2.5</code>(cf <code>fig.width</code> et <code>fig.height</code>)</li>
+<li>la couleur <code>&quot;orange&quot;</code> pour <code>&quot;automatic&quot;</code> et <code>&quot;blue&quot;</code> pour <code>&quot;manual&quot;</code> (option <code>color</code> de la fonction <code>pie()</code>)</li>
+</ul></li>
+</ul></li>
+<li><strong>Consommation et transmission</strong> : trois sous-parties (avec des titres de niveau 3 à mettre)
+<ul>
+<li><em>Sous-tables</em> : Faire deux sous-tables, une pour <code>&quot;automatic&quot;</code>, l’autre pour <code>&quot;manual&quot;</code></li>
+<li><em>Automatique</em> : représenter l’histogramme et la boîte à moustaches de la consommation pour les voitures à transmission automatique</li>
+<li><em>Manuel</em> : faire de même pour les voitures à transmission manuelle</li>
+</ul></li>
+</ol></li>
+</ol>
+</div>
+
+</div>
+<div class="footer">
+      Site créé avec <a href="http://www.r-project.org" target="_blank"><code>R</code></a> et la 
+      librairie  <a href="http://rmarkdown.rstudio.com/" target="_blank"><code>rmarkdown</code></a>.
+</div>
+<script>
+    $("#TOC").css("margin-top", "100px");
+</script>
+
+
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

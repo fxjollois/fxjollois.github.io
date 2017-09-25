@@ -1,0 +1,211 @@
+---
+title: TP2 - Utilisation de données externes
+subtitle: Initiation a `R` - STID 1ère année
+---
+
+```{r init, include=FALSE}
+knitr::opts_chunk$set(prompt = TRUE, comment = NA)
+```
+
+## Type de données
+
+### Transformation de type
+
+Dans `R`, il est possible de passer d'un type à l'autre, quand cela est possible, avec les commandes `as.nouveautype()`. Ci-dessous sont présentés deux exemples simples (passage de `numeric` à `character` et inversement).
+
+```{r}
+as.character(c(1, 3, 5))
+as.numeric(c("1", "3", "5"))
+```
+
+Il existe d'autres commandes de ce type que vous découvrirez progressivement.
+
+### `factor`
+
+Nous avons déjà vu dans le TP1 des variables `numeric` dans un `data.frame` avec `mtcars`, ainsi qu'un vecteur de `character` avec le nom des colonnes de cette table.
+
+```{r}
+class(mtcars$mpg)
+class(rownames(mtcars))
+```
+
+Il existe dans `R` un moyen de stocker des variables qualitatives, avec le type `factor`. Si nous prenons la variable `am` de `mtcars`, indiquant le type de transmission (boîte de vitesses) de la voiture, et qui vaut `0` (automatique) ou `1` (manuelle). C'est clairement une variable qualitative. Elle est stockée au format `numeric`, mais on peut la passer soit en `character`, soit en `factor`.
+
+```{r}
+mtcars$am
+as.character(mtcars$am)
+as.factor(mtcars$am)
+```
+
+On remarque pour le type `factor`, en plus des valeurs, `R` garde les modalités de la variable (nommées `levels` ici). 
+
+On dispose de la fonction `factor`, qui transforme une variable en `factor`. L'intérêt de celle-ci, par rapport à `as.factor()`, est qu'il est possible de paramètrer le nom des modalités.
+
+```{r}
+factor(mtcars$am)
+factor(mtcars$am, labels = c("automatic", "manual"))
+```
+
+## Modification de `data.frame`
+
+### Création
+
+La fonction `data.frame` permet de créer un `data.frame` à partir de vecteurs. Elle prend en paramètre les vecteurs, qu'on peut nommer directement.
+
+```{r}
+v = 1:100
+d = data.frame(
+    x = v,
+    y = v * log(v)
+)
+head(d)
+```
+
+### Ajout de variables 
+
+Il est possible d'ajouter des variables à un `data.frame` de manière assez simple. 
+
+```{r}
+d$z = factor(sin(v) > 0)
+head(d)
+```
+
+## Accès aux fichiers
+
+### Adressage relatif ou absolu
+
+Dans tout langage de programmation, dès qu'on veut accéder à un fichier (ou l'écrire), on a le choix entre deux types d'adressage pour situer ce fichier :
+
+- **relatif** : le chemin vers le fichier est indiqué par rapport au répertoire courant
+    - `"fichier.ext"` : le fichier est dans le répertoire courant
+    - `"rep/fichier.ext"` : le fichier est dans le sous-dossier `"rep"` présent dans le répertoire courant
+    - `"../fichier.ext"`: le fichier est dans le répertoire contenant le répertoire courant
+    - ...
+- **absolu** : le chemin vers le fichier est défini de manière absolument et ne dépend pasdu répertoire courant
+    - `"C:/chemin/vers/rep/fichier.ext"` : on indique clairement où se situe le fichier
+
+L'adressage absolu est utile si vous êtes certain que le fichier ne changera jamais de place (accès à un fichier sur un serveur, travail dans un environnement fixe, ...). Mais on utilise plus facilement l'adresse relatif, car les fichiers à lire ou écrire se trouve généralement dans le répertoire courant ou dans un sous-répertoire.
+
+### Répertoire de travail
+
+Dans `R`, la notion de répertoire de travail permet au logiciel de savoir où lire et écrire les fichiers (texte, image, vidéo, ...). C'est le répertoire courant dans lequel le logiciel cherche. Il est possible de connaître ce répertoire avec la commande `getwd()`
+
+```{r}
+getwd()
+```
+
+Il est possible de le changer via la commande `setwd()`. On vérifie ensuite que la commande a bien fonctionné.
+
+```{r, eval=FALSE}
+setwd("/Users/fxjollois/Documents/")
+getwd()
+```
+
+## Importation de données texte
+
+Il est possible d'importer des données provenannt de fichiers texte avec la commande `read.table()`, qui a les paramètres principaux suivants (avec `valeur` par défaut éventuelle) :
+
+- `file` : nom du fichier
+- `header` : présence ou non des noms de variables (`FALSE`)
+- `sep` : séparateur de variable (` `)
+- `na.strings` : chaîne(s) pour valeurs manquantes (`NA`)
+- `skip` : nombre de lignes à ne pas prendre en compte en début de fichier (`0`)
+- `nrow` : nombre de lignes à lire (`-1` : toutes les lignes)
+- `stringsAsFactors` : transformations des chaînes en `factor` ou non (`TRUE`)
+- ...
+
+Cette fonction renvoie un objet de type `data.frame`.
+
+Il existe quelques fonctions dérivés avec des valeurs par défaut différentes
+
+- `read.csv()`, `read.csv2()`
+- `read.delim()`, `read.delim2()`
+
+Par exemple, nous disposons du fichier [`Iris.txt`](donnees/Iris.txt), contenant les données de 150 iris (données déjà présentes dans `R` dans l'objet `iris` pour information).
+
+<object data="donnees/Iris.txt" type="text/plain" style="width: 100%">
+    impossible à afficher
+</object>
+      
+Nous remarquons les points suivants :
+
+- le nom des colonnes est présent dans la première ligne
+- le séparateur de colonnes est le point-virgule (`";"`)
+
+Pour importer ce fichier, nous devons donc utiliser le code suivant. Vous devez d'abord télécharger le fichier. **Attention** : il est supposé ici que le fichier est dans un sous-répertoire `donnees` du répertoire de travail.
+
+```{r}
+iris = read.table("donnees/Iris.txt", header = T, sep = ";")
+head(iris)
+```
+
+Il est aussi possible d'écrire un fichier texte à partir d'un `data.frame`, en spécifiant aussi les paramètres d'écriture. Par exemple, le code suivant écrit les données `iris` dans un autre formalisme.
+
+- le séparateur de colonnes est le `"%"`
+- les noms des colonnes sont bien écrits
+- le nom des lignes ne sont incluses
+- le séparateur de décimales est la virgule (`","`), comme en français
+- il n'y a pas de `""` ou de `''` autour des chaînes de caractères
+
+```{r}
+write.table(iris, file = "donnees/Iris_bis.txt", sep = "%", 
+            row.names = FALSE, col.names = TRUE, dec = ",", quote = FALSE)
+```
+
+<object data="donnees/Iris_bis.txt" type="text/plain" style="width: 100%">
+    impossible à afficher
+</object>
+
+Il est parfois difficile de lire directement avec la commande `read.table()` ou ses dérivés. On peut utiliser dans ce cas la commande `readLines()`, qui comme son nom l'indique, lit les lignes les unes après les autres. Elle renvoie un tableau de chaîne de caractères, chaque valeur du tableau correspondant à une ligne.
+
+```{r}
+iris_lignes = readLines("donnees/Iris.txt")
+length(iris_lignes)
+iris_lignes[1]
+iris_lignes[2]
+```
+
+## Exercices
+
+### Importation de données
+
+Vous devez importer les données suivantes dans `R`.
+
+[`heart.txt`](donnees/heart.txt)
+
+Pas de difficulté spéciale ici. Le séparateur est la tabulation (`\t` en R).
+
+<object data="donnees/heart.txt" type="text/plain" style="width: 100%">
+    impossible à afficher
+</object>
+
+[`Detroit_homicide.txt`](donnees/Detroit_homicide.txt)
+
+Ici, les premières lignes ne sont pas à prendre en considération lors de l'importation. Et nous avons des `labels` pour les variables.
+
+<object data="donnees/Detroit_homicide.txt" type="text/plain" style="width: 100%">
+    impossible à afficher
+</object>
+
+[`hepatitis.TXT`](donnees/hepatitis.TXT)
+
+Attention à l'indicateur de données manquantes (`?` dans ce fichier).
+
+<object data="donnees/hepatitis.TXT" type="text/plain" style="width: 100%">
+    impossible à afficher
+</object>
+
+### Compléments
+
+Reprendre l'importation du fichier `heart.txt` (cf ci-dessus), et répondre aux questions suivantes en complétant le code précédemment écrit.
+
+1. Créer une indicatrice binaire `FALSE/TRUE` pour la présence ou non de problème de coeur (dernière variable)
+2. Créer une variable comptant le nombre de fois où une variable est égale à `A` (entre `type_douleur`, `sucre`, `electro`, et `vaisseau`)
+3. Créer une variable `factor` à partir de l'indicatrice binaire faite au point 1 avec comme labels des modalités `Présence` pour `TRUE` et `Absence` pour `FALSE` (refaire la variable `coeur` en quelque sorte)
+4. Créer un nouveau `data.frame` avec uniquement les individus ayant strictement moins de 60 ans
+5. Créer maintenant, à partir du précédent, deux `data.frames` : 
+    - une pour les hommes
+    - une autre pour les femmes
+    
+
+

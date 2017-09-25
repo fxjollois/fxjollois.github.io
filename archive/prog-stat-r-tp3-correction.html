@@ -1,0 +1,542 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+<meta charset="utf-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="pandoc" />
+
+
+
+
+<title>Utilisation de données externes - correction</title>
+
+<script src="libs/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="libs/bootstrap-3.3.5/css/journal.min.css" rel="stylesheet" />
+<script src="libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<script src="libs/navigation-1.1/tabsets.js"></script>
+<link href="libs/highlightjs-1.1/default.css" rel="stylesheet" />
+<script src="libs/highlightjs-1.1/highlight.js"></script>
+<!--
+    Font Awesome
+-->
+<script src="https://use.fontawesome.com/32d8325004.js"></script>
+<link rel="stylesheet" href="libs/font-awesome-4.7.0/css/font-awesome.min.css">
+
+<!--
+    CSS perso
+-->
+<style>
+    .contenu {
+        margin-bottom: 50px;
+    }
+
+    .contact-liens {
+        text-align: center;
+    }
+    .contact-liens:hover {
+        text-decoration: none;
+    }
+    .contact-icones {
+        height: 30px;
+    }
+
+    /* Espacement pour barre du haut et pied de page */
+    #header, .section.level1 {
+        margin-top: 60px;
+        margin-bottom: 60px;
+    }
+    /* Espacement pour table des matières */
+    #TOC {
+        margin-top: 100px;
+    }
+    
+    .footer {
+        position: fixed;
+        width: 100%;
+        text-align: center;
+        bottom: 0;
+        left: 0;
+        background-color: #E6E6E6;
+    }
+</style>
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
+<script type="text/javascript">
+if (window.hljs && document.readyState && document.readyState === "complete") {
+   window.setTimeout(function() {
+      hljs.initHighlighting();
+   }, 0);
+}
+</script>
+
+
+
+<style type="text/css">
+h1 {
+  font-size: 34px;
+}
+h1.title {
+  font-size: 38px;
+}
+h2 {
+  font-size: 30px;
+}
+h3 {
+  font-size: 24px;
+}
+h4 {
+  font-size: 18px;
+}
+h5 {
+  font-size: 16px;
+}
+h6 {
+  font-size: 12px;
+}
+.table th:not([align]) {
+  text-align: left;
+}
+</style>
+
+<link rel="stylesheet" href="libs/bootstrap-journal.min.css" type="text/css" />
+
+</head>
+
+<body>
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img {
+  max-width:100%;
+  height: auto;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+</style>
+
+
+
+<div class="container-fluid main-container">
+
+<!-- tabsets -->
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+</script>
+
+<!-- code folding -->
+
+
+
+
+
+<div class="navbar navbar-default navbar-fixed-top">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-main">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">FX Jollois</a>
+    </div>
+    <div id="navbar-main" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button">Données <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+              <li><a href="accesdonnees.html">A télécharger</a></li>
+              <li><a href="donnees-integrees-r.html">Sous R</a></li>
+          </ul>
+        </li>
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button">Enseignement <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li class="dropdown-header">DUT 1ère année</li>
+            <li><a href="exploitation-donnees.html">Exploitation de données</a></li>
+            <li><a href="initiation-a-r.html">Initiation à R</a></li>
+            <li><a href="reporting.html">Reporting</a></li>
+            <li><a href="complements-r.html">Compléments sur R</a></li>
+            <li class="dropdown-header">DUT 2ème année</li>
+            <li><a href="prog-stat-r.html">Programmation statistique avec R</a></li>
+            <li class="dropdown-header">LP MDS Santé</li>
+            <li><a href="info-dec-sante.html">Informatique décisionnelle</a></li>
+            <li class="dropdown-header">DU Analyste Big Data</li>
+            <li><a href="initiation-r-du.html">Initiation à R</a></li>
+            <li><a href="connexion-r-mongodb.html">Connexion entre R et MongoDB</a></li>
+            <li class="dropdown-header">DU Dataviz</li>
+            <li><a href="analyse-donnees.html">Analyse de données</a></li>
+            <li><a href="visualisation-donnees.html">Visualisation de données - R</a></li>
+            <li><a href="visualisation-donnees-tableau.html">Visualisation de données - Tableau</a></li>
+            <li><a href="visualisation-donnees-d3.html">Visualisation de données - D3</a></li>
+            <li role="separator" class="divider"></li>
+            <li class="dropdown-header">Master</li>
+            <li><a href="slides/cnam-classif-modeles.html">Classification et Modèles de mélange</a></li>
+            <li><a href="analyse-donnees-massives.html">Analyse de Données Massives</a></li>
+            <li class="dropdown-header">Iran</li>
+            <li><a href="stat-prog-R.html">Statistical Programming using R</a></li>
+          </ul>
+        </li>
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button">Recherche <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li><a href="recherche.html">Sujets</a></li>
+            <li><a href="publications.html">Publications</a></li>
+          </ul>
+        </li>
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button">Réalisations <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li><a href="realisations.html">Détail</a></li>
+            <li role="separator" class="divider"></li>
+            <li><a href="http://up5.fr/explore-data" target="_blank">explore-data</a></li>
+            <li><a href="http://fxjollois.github.io/cours-sql/" target="_blank">Appli web de cours pour SQL</a></li>
+          </ul>
+        </li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container-fluid -->
+</div>
+<div class="contenu">
+
+<div class="fluid-row" id="header">
+
+
+
+<h1 class="title toc-ignore">Utilisation de données externes - <em>correction</em></h1>
+<h3 class="subtitle"><em>Programmation statistique avec <code>R</code> - STID 2ème année</em></h3>
+
+</div>
+
+
+<div id="importation-de-donnees" class="section level2">
+<h2>Importation de données</h2>
+<div id="heart.txt" class="section level3">
+<h3>heart.txt</h3>
+<pre class="r"><code>heart = read.table(&quot;donnees/heart.txt&quot;, header = T)
+head(heart)</code></pre>
+<pre><code>  age     sexe type_douleur pression cholester sucre electro taux_max
+1  70 masculin            D      130       322     A       C      109
+2  67  feminin            C      115       564     A       C      160
+3  57 masculin            B      124       261     A       A      141
+4  64 masculin            D      128       263     A       A      105
+5  74  feminin            B      120       269     A       C      121
+6  65 masculin            D      120       177     A       A      140
+  angine depression pic vaisseau    coeur
+1    non        2.4   2        D presence
+2    non        1.6   2        A  absence
+3    non        0.3   1        A presence
+4    oui        0.2   2        B  absence
+5    oui        0.2   1        B  absence
+6    non        0.4   1        A  absence</code></pre>
+</div>
+<div id="detroit_homicide.txt" class="section level3">
+<h3>Detroit_homicide.txt</h3>
+<pre class="r"><code>dh = read.table(&quot;donnees/Detroit_homicide.txt&quot;, 
+                skip = 35, header = T)
+head(dh)</code></pre>
+<pre><code>     FTP UEMP   MAN    LIC     GR CLEAR     WM  NMAN   GOV   HE     WE
+1 260.35 11.0 455.5 178.15 215.98  93.4 558724 538.1 133.9 2.98 117.18
+2 269.80  7.0 480.2 156.41 180.48  88.5 538584 547.6 137.6 3.09 134.02
+3 272.04  5.2 506.1 198.02 209.57  94.4 519171 562.8 143.6 3.23 141.68
+4 272.96  4.3 535.8 222.10 231.67  92.0 500457 591.0 150.3 3.33 147.98
+5 272.51  3.5 576.0 301.92 297.65  91.0 482418 626.1 164.3 3.46 159.85
+6 261.34  3.2 601.7 391.22 367.62  87.4 465029 659.8 179.5 3.60 157.19
+    HOM   ACC    ASR
+1  8.60 39.17 306.18
+2  8.90 40.27 315.16
+3  8.52 45.31 277.53
+4  8.89 49.51 234.07
+5 13.07 55.05 230.84
+6 14.57 53.90 217.99</code></pre>
+<pre class="r"><code>dim(dh)</code></pre>
+<pre><code>[1] 13 14</code></pre>
+</div>
+<div id="hepatitis.txt" class="section level3">
+<h3>hepatitis.TXT</h3>
+<pre class="r"><code>hep = read.table(&quot;donnees/hepatitis.TXT&quot;,
+                 header = T, na.strings = &quot;?&quot;)
+head(hep)</code></pre>
+<pre><code>  AGE    SEX STEROID ANTIVIRALS FATIGUE MALAISE ANOREXIA LIVER_BIG
+1  30   male      no         no      no      no       no        no
+2  50 female      no         no     yes      no       no        no
+3  78 female     yes         no     yes      no       no       yes
+4  31 female    &lt;NA&gt;        yes      no      no       no       yes
+5  34 female     yes         no      no      no       no       yes
+6  34 female     yes         no      no      no       no       yes
+  LIVER_FIRM SPLEEN_PALPABLE SPIDERS ASCITES VARICES BILIRUBIN
+1         no              no      no      no      no       1.0
+2         no              no      no      no      no       0.9
+3         no              no      no      no      no       0.7
+4         no              no      no      no      no       0.7
+5         no              no      no      no      no       1.0
+6         no              no      no      no      no       0.9
+  ALK_PHOSPHATE SGOT ALBUMIN PROTIME HISTOLOGY Class
+1         85.00   18     4.0   61.85        no  LIVE
+2        135.00   42     3.5   61.85        no  LIVE
+3         96.00   32     4.0   61.85        no  LIVE
+4         46.00   52     4.0   80.00        no  LIVE
+5        105.33  200     4.0   61.85        no  LIVE
+6         95.00   28     4.0   75.00        no  LIVE</code></pre>
+</div>
+<div id="adult" class="section level3">
+<h3>adult</h3>
+<pre class="r"><code>adult = read.table(&quot;donnees/adult.data&quot;, 
+                   sep = &quot;,&quot;, na.strings = &quot; ?&quot;)
+head(adult)</code></pre>
+<pre><code>  V1                V2     V3         V4 V5                  V6
+1 39         State-gov  77516  Bachelors 13       Never-married
+2 50  Self-emp-not-inc  83311  Bachelors 13  Married-civ-spouse
+3 38           Private 215646    HS-grad  9            Divorced
+4 53           Private 234721       11th  7  Married-civ-spouse
+5 28           Private 338409  Bachelors 13  Married-civ-spouse
+6 37           Private 284582    Masters 14  Married-civ-spouse
+                  V7             V8     V9     V10  V11 V12 V13
+1       Adm-clerical  Not-in-family  White    Male 2174   0  40
+2    Exec-managerial        Husband  White    Male    0   0  13
+3  Handlers-cleaners  Not-in-family  White    Male    0   0  40
+4  Handlers-cleaners        Husband  Black    Male    0   0  40
+5     Prof-specialty           Wife  Black  Female    0   0  40
+6    Exec-managerial           Wife  White  Female    0   0  40
+             V14    V15
+1  United-States  &lt;=50K
+2  United-States  &lt;=50K
+3  United-States  &lt;=50K
+4  United-States  &lt;=50K
+5           Cuba  &lt;=50K
+6  United-States  &lt;=50K</code></pre>
+<pre class="r"><code>names(adult)</code></pre>
+<pre><code> [1] &quot;V1&quot;  &quot;V2&quot;  &quot;V3&quot;  &quot;V4&quot;  &quot;V5&quot;  &quot;V6&quot;  &quot;V7&quot;  &quot;V8&quot;  &quot;V9&quot;  &quot;V10&quot; &quot;V11&quot;
+[12] &quot;V12&quot; &quot;V13&quot; &quot;V14&quot; &quot;V15&quot;</code></pre>
+<pre class="r"><code>adult.names = read.table(&quot;donnees/adult.names&quot;,
+                         skip = 96, sep = &quot;:&quot;,
+                         stringsAsFactors = FALSE)
+adult.names</code></pre>
+<pre><code>               V1
+1             age
+2       workclass
+3          fnlwgt
+4       education
+5   education-num
+6  marital-status
+7      occupation
+8    relationship
+9            race
+10            sex
+11   capital-gain
+12   capital-loss
+13 hours-per-week
+14 native-country
+                                                                                                                                                                                                                                                                                                                                                                                                                                 V2
+1                                                                                                                                                                                                                                                                                                                                                                                                                       continuous.
+2                                                                                                                                                                                                                                                                                                                            Private, Self-emp-not-inc, Self-emp-inc, Federal-gov, Local-gov, State-gov, Without-pay, Never-worked.
+3                                                                                                                                                                                                                                                                                                                                                                                                                       continuous.
+4                                                                                                                                                                                                                                                                            Bachelors, Some-college, 11th, HS-grad, Prof-school, Assoc-acdm, Assoc-voc, 9th, 7th-8th, 12th, Masters, 1st-4th, 10th, Doctorate, 5th-6th, Preschool.
+5                                                                                                                                                                                                                                                                                                                                                                                                                       continuous.
+6                                                                                                                                                                                                                                                                                                                        Married-civ-spouse, Divorced, Never-married, Separated, Widowed, Married-spouse-absent, Married-AF-spouse.
+7                                                                                                                                                                                                         Tech-support, Craft-repair, Other-service, Sales, Exec-managerial, Prof-specialty, Handlers-cleaners, Machine-op-inspct, Adm-clerical, Farming-fishing, Transport-moving, Priv-house-serv, Protective-serv, Armed-Forces.
+8                                                                                                                                                                                                                                                                                                                                                               Wife, Own-child, Husband, Not-in-family, Other-relative, Unmarried.
+9                                                                                                                                                                                                                                                                                                                                                                      White, Asian-Pac-Islander, Amer-Indian-Eskimo, Other, Black.
+10                                                                                                                                                                                                                                                                                                                                                                                                                    Female, Male.
+11                                                                                                                                                                                                                                                                                                                                                                                                                      continuous.
+12                                                                                                                                                                                                                                                                                                                                                                                                                      continuous.
+13                                                                                                                                                                                                                                                                                                                                                                                                                      continuous.
+14  United-States, Cambodia, England, Puerto-Rico, Canada, Germany, Outlying-US(Guam-USVI-etc), India, Japan, Greece, South, China, Cuba, Iran, Honduras, Philippines, Italy, Poland, Jamaica, Vietnam, Mexico, Portugal, Ireland, France, Dominican-Republic, Laos, Ecuador, Taiwan, Haiti, Columbia, Hungary, Guatemala, Nicaragua, Scotland, Thailand, Yugoslavia, El-Salvador, Trinadad&amp;Tobago, Peru, Hong, Holand-Netherlands.</code></pre>
+<pre class="r"><code>adult.names$V1</code></pre>
+<pre><code> [1] &quot;age&quot;            &quot;workclass&quot;      &quot;fnlwgt&quot;         &quot;education&quot;     
+ [5] &quot;education-num&quot;  &quot;marital-status&quot; &quot;occupation&quot;     &quot;relationship&quot;  
+ [9] &quot;race&quot;           &quot;sex&quot;            &quot;capital-gain&quot;   &quot;capital-loss&quot;  
+[13] &quot;hours-per-week&quot; &quot;native-country&quot;</code></pre>
+<pre class="r"><code>names(adult) = c(adult.names$V1, &quot;class&quot;)
+head(adult)</code></pre>
+<pre><code>  age         workclass fnlwgt  education education-num
+1  39         State-gov  77516  Bachelors            13
+2  50  Self-emp-not-inc  83311  Bachelors            13
+3  38           Private 215646    HS-grad             9
+4  53           Private 234721       11th             7
+5  28           Private 338409  Bachelors            13
+6  37           Private 284582    Masters            14
+       marital-status         occupation   relationship   race     sex
+1       Never-married       Adm-clerical  Not-in-family  White    Male
+2  Married-civ-spouse    Exec-managerial        Husband  White    Male
+3            Divorced  Handlers-cleaners  Not-in-family  White    Male
+4  Married-civ-spouse  Handlers-cleaners        Husband  Black    Male
+5  Married-civ-spouse     Prof-specialty           Wife  Black  Female
+6  Married-civ-spouse    Exec-managerial           Wife  White  Female
+  capital-gain capital-loss hours-per-week native-country  class
+1         2174            0             40  United-States  &lt;=50K
+2            0            0             13  United-States  &lt;=50K
+3            0            0             40  United-States  &lt;=50K
+4            0            0             40  United-States  &lt;=50K
+5            0            0             40           Cuba  &lt;=50K
+6            0            0             40  United-States  &lt;=50K</code></pre>
+</div>
+</div>
+<div id="complements" class="section level2">
+<h2>Compléments</h2>
+<p>Reprendre l’importation du fichier <code>&quot;heart.txt&quot;</code> (cf ci-dessus), et répondre aux questions suivantes en complétant le code précédemment écrit.</p>
+<div id="creer-une-indicatrice-binaire-falsetrue-pour-la-presence-ou-non-de-probleme-de-coeur-derniere-variable" class="section level3">
+<h3>Créer une indicatrice binaire FALSE/TRUE pour la présence ou non de problème de coeur (dernière variable)</h3>
+<pre class="r"><code>heart$indicatrice = heart$coeur == &quot;presence&quot;</code></pre>
+</div>
+<div id="creer-une-variable-comptant-le-nombre-de-fois-ou-une-variable-est-egale-a-a-entre-type_douleur-sucre-electro-et-vaisseau" class="section level3">
+<h3>Créer une variable comptant le nombre de fois où une variable est égale à A (entre type_douleur, sucre, electro, et vaisseau)</h3>
+<pre class="r"><code>heart$nbA = (heart$type_douleur == &quot;A&quot;) + 
+  (heart$sucre == &quot;A&quot;) +
+  (heart$electro == &quot;A&quot;) +
+  (heart$vaisseau == &quot;A&quot;)</code></pre>
+<pre class="r"><code>heart$nbAbis = 
+  rowSums(heart[c(&quot;type_douleur&quot;, &quot;sucre&quot;, &quot;electro&quot;, &quot;vaisseau&quot;)] == &quot;A&quot;)</code></pre>
+</div>
+<div id="creer-une-variable-factor-a-partir-de-lindicatrice-binaire-faite-au-point-1-avec-comme-labels-des-modalites-presence-pour-true-et-absence-pour-false" class="section level3">
+<h3>Créer une variable factor à partir de l’indicatrice binaire faite au point 1 avec comme labels des modalités presence pour TRUE et absence pour FALSE</h3>
+<pre class="r"><code>heart$ind2 = factor(heart$indicatrice, labels = c(&quot;Absence&quot;, &quot;Présence&quot;))
+head(heart)</code></pre>
+<pre><code>  age     sexe type_douleur pression cholester sucre electro taux_max
+1  70 masculin            D      130       322     A       C      109
+2  67  feminin            C      115       564     A       C      160
+3  57 masculin            B      124       261     A       A      141
+4  64 masculin            D      128       263     A       A      105
+5  74  feminin            B      120       269     A       C      121
+6  65 masculin            D      120       177     A       A      140
+  angine depression pic vaisseau    coeur indicatrice nbA nbAbis     ind2
+1    non        2.4   2        D presence        TRUE   1      1 Présence
+2    non        1.6   2        A  absence       FALSE   2      2  Absence
+3    non        0.3   1        A presence        TRUE   3      3 Présence
+4    oui        0.2   2        B  absence       FALSE   2      2  Absence
+5    oui        0.2   1        B  absence       FALSE   1      1  Absence
+6    non        0.4   1        A  absence       FALSE   3      3  Absence</code></pre>
+</div>
+<div id="creer-un-nouveau-data.frame-avec-uniquement-les-individus-ayant-strictement-moins-de-60-ans" class="section level3">
+<h3>Créer un nouveau data.frame avec uniquement les individus ayant strictement moins de 60 ans</h3>
+<pre class="r"><code>heart1a = heart[heart$age &lt; 60,]
+heart1b = heart[which(heart$age &lt; 60),]
+heart1 = subset(heart, age &lt; 60)</code></pre>
+</div>
+<div id="creer-maintenant-a-partir-du-precedent-deux-data.frames" class="section level3">
+<h3>Créer maintenant, à partir du précédent, deux data.frames :</h3>
+<ul>
+<li>un pour les hommes</li>
+<li>un autre pour les femmes</li>
+</ul>
+<pre class="r"><code>heart1f = subset(heart1, sexe == &quot;feminin&quot;)
+heart1m = subset(heart1, sexe == &quot;masculin&quot;)</code></pre>
+</div>
+</div>
+<div id="reprendre-limportation-du-fichier-detroit_homicide.txt-cf-ci-dessus" class="section level2">
+<h2>Reprendre l’importation du fichier detroit_homicide.txt (cf ci-dessus)</h2>
+<div id="integrer-le-texte-introductif-dans-un-attribut-du-data.frame" class="section level3">
+<h3>Intégrer le texte introductif dans un attribut du data.frame</h3>
+<pre class="r"><code>attributes(dh)</code></pre>
+<pre><code>$names
+ [1] &quot;FTP&quot;   &quot;UEMP&quot;  &quot;MAN&quot;   &quot;LIC&quot;   &quot;GR&quot;    &quot;CLEAR&quot; &quot;WM&quot;    &quot;NMAN&quot; 
+ [9] &quot;GOV&quot;   &quot;HE&quot;    &quot;WE&quot;    &quot;HOM&quot;   &quot;ACC&quot;   &quot;ASR&quot;  
+
+$class
+[1] &quot;data.frame&quot;
+
+$row.names
+ [1]  1  2  3  4  5  6  7  8  9 10 11 12 13</code></pre>
+<pre class="r"><code>attr(dh, &quot;names&quot;)</code></pre>
+<pre><code> [1] &quot;FTP&quot;   &quot;UEMP&quot;  &quot;MAN&quot;   &quot;LIC&quot;   &quot;GR&quot;    &quot;CLEAR&quot; &quot;WM&quot;    &quot;NMAN&quot; 
+ [9] &quot;GOV&quot;   &quot;HE&quot;    &quot;WE&quot;    &quot;HOM&quot;   &quot;ACC&quot;   &quot;ASR&quot;  </code></pre>
+<pre class="r"><code>attr(dh, &quot;info&quot;) = 
+  paste(readLines(&quot;donnees/Detroit_homicide.txt&quot;, n = 19), collapse = &quot;\n&quot;)
+cat(attr(dh, &quot;info&quot;))</code></pre>
+<pre><code>This is the data set called `DETROIT&#39; in the book `Subset selection in
+regression&#39; by Alan J. Miller published in the Chapman &amp; Hall series of
+monographs on Statistics &amp; Applied Probability, no. 40.   The data are
+unusual in that a subset of three predictors can be found which gives a
+very much better fit to the data than the subsets found from the Efroymson
+stepwise algorithm, or from forward selection or backward elimination.
+
+The original data were given in appendix A of `Regression analysis and its
+application: A data-oriented approach&#39; by Gunst &amp; Mason, Statistics
+textbooks and monographs no. 24, Marcel Dekker.   It has caused problems
+because some copies of the Gunst &amp; Mason book do not contain all of the data,
+and because Miller does not say which variables he used as predictors and
+which is the dependent variable.   (HOM was the dependent variable, and the
+predictors were FTP ... WE)
+
+The data were collected by J.C. Fisher and used in his paper: &quot;Homicide in
+Detroit: The Role of Firearms&quot;, Criminology, vol.14, 387-400 (1976)
+
+The data are on the homicide rate in Detroit for the years 1961-1973.</code></pre>
+</div>
+<div id="integrer-les-labels-des-variables-dans-un-autre-attribut-sous-forme-de-data.frame-a-deux-colonnes" class="section level3">
+<h3>Intégrer les labels des variables dans un autre attribut, sous forme de data.frame à deux colonnes</h3>
+<pre class="r"><code>noms = tail(readLines(&quot;donnees/Detroit_homicide.txt&quot;, n = 34), 15)
+noms = noms[noms != &quot;&quot;]
+attr(dh, &quot;info.var&quot;) = data.frame(
+  var = trimws(substr(noms, 1, 6)),
+  descriptif = substr(noms, 10, 100),
+  stringsAsFactors = FALSE
+)</code></pre>
+</div>
+</div>
+
+</div>
+<div class="footer">
+      Site créé avec <a href="http://www.r-project.org" target="_blank"><code>R</code></a> et la 
+      librairie  <a href="http://rmarkdown.rstudio.com/" target="_blank"><code>rmarkdown</code></a>.
+</div>
+<script>
+    $("#TOC").css("margin-top", "100px");
+</script>
+
+
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

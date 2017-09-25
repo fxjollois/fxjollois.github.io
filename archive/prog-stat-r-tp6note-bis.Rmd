@@ -1,0 +1,69 @@
+---
+title: TP noté - *sujet*
+subtitle: Programmation statistique avec `R` - STID 2ème année
+---
+
+```{r, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE, fig.align = 'center')
+library(diagram)
+```
+
+## Rendu
+
+*4 points*
+
+Vous devez rédiger un compte-rendu de TP sous la forme d'un document `R markdown`. Les fichiers `.Rmd` et `.html` seront à déposer sur **Moodle**. Les fichiers `.txt` doivent être lues dans le même répertoire que le fichier `.Rmd`. La notation sur cette partie prendra en compte la présence ou non d'erreurs à la compilation, la clarté du document et la qualité du rendu.
+
+## Importation des données
+
+*4 points*
+
+Vous devez **importer** les quatre fichiers suivants :
+
+- [`ca.txt`](donnees/ca/ca.txt)
+- [`groupe.txt`](donnees/ca/groupe.txt)
+- [`mois.txt`](donnees/ca/mois.txt)
+- [`provenance.txt`](donnees/ca/provenance.txt)
+
+Dans le fichier `groupe.txt`, il faut faire attention à la présence d'apostrophe (`"'"`) dans certains mots. La fonction `read.table()` considère ce caractère comme un début (ou une fin) de chaîne de caractères. Il faut donc modifier l'option `quote` pour indiquer qu'il n'y a pas de caractères pour les chaînes de caractères dans ce fichier.
+
+## Manipulation
+
+*6 points* (3 points par question)
+
+### Informations complètes
+
+Ces quatre tables constituent un data-mart simple d'un magasin fictif. `ca` est la table des faits, et les trois autres sont les tables de dimension. Dans chaque table, la clé primaire est dénommée `no`. Dans la table `ca`, les clés externes sont dénommées `dim_no`, `dim` étant remplacé par le nom de la dimension bien évidemment. Voici donc le *modèle relationnel des données* de ce data-mart.
+
+```{r}
+par(mar = c(0, 0, 2, 0) + .1)
+M <- matrix(nrow = 4, ncol = 4, byrow = TRUE, data = 0)
+M[,3] = c("mois_no", "groupe_no", 0, "prov_no")
+plotmat(M, 
+        pos = c(2, 1, 1), 
+        name = c("Mois", "Groupe", "CA", "Provenance"),
+        lwd = 1, box.lwd = 2, cex.txt = 0.8, 
+        box.size = 0.1, box.type = "square", box.prop = 0.5,
+        main = "MRD du data-mart")
+```
+
+Pour pouvoir faire des analyses, il faut donc réaliser une **jointure** entre ces quatre tables. Le résultat des jointures doit être stockée dans un `data.frame` nommée `ca_tout`.
+
+### Comparaison entre année
+
+Nous souhaitons pouvoir comparer les deux années, pour évaluer l'évolution du chiffre d'affaires. Pour cela, vous devez créer un `data.frame`, nommé `ca_evol`, qui contient donc, pour chaque mois, provenance et groupe, le CA en 2003 (`ca2003`), en 2004 (`ca2004`) et l'évolution entre les deux (`evolution`, égale à la différence entre `ca2004` et `ca2003`).
+
+## Informations sur le CA
+
+*6 points* (1 point par question, sauf pour la dernière, 2 points)
+
+La table ainsi créée contient donc toutes les informations concernant le chiffre d'affaires de l'entreprise, déclinée par chaque dimension. Nous pouvons donc obtenir les informations suivantes. Les résultats sont à présenter sous la forme de tableaux.
+
+1. Chiffre d'affaires total sur l'ensemble de la période
+1. CA total par département
+1. CA total par année d'exercice
+1. CA total par mois dans l'année, 
+    - en faisant attention à la présentation dans l'ordre des mois, cf l'attribut `mois_numero` 
+    - il faut donc ici un tableau à 12 lignes, une par mois, et deux colonnes, la deuxième colonne contenant le CA total pour chaque mois sur les deux ans
+1. CA total par mois pour 2003 et 2004
+    - tableau à 4 colonnes : `mois`, `ca2003`, `ca2004`, `évolution`

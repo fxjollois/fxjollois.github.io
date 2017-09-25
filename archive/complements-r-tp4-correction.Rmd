@@ -1,0 +1,330 @@
+---
+title: Première application - *correction*
+subtitle: Compléments sur R - STID 1ère année
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(eval = FALSE)
+```
+
+## A FAIRE
+
+Vous devez donc continuer l'application, avec le contenu suivant :
+
+- Premier onglet
+    - Le travail fait précédemment
+- Deuxième onglet : Analyse de variables qualitatives
+    - l'utilisateur peut choisir une variable parmi `cyl`, `vs`, `am`, `gear` et `carb`
+    - le système affiche le diagramme en barres et le diagramme circulaire, ainsi qu'un tableau des occurences et des fréquences des modalités
+- Troisième onglet : croisement de variables qualitatives
+    - l'utilisateur doit donc choisir deux variables parmi celles citées (on ne gère pas la possibilité que l'utilisateur choisisse la même deux fois pour le moment)
+    - le système affiche un diagramme en barres empilées ainsi que le tableau de contingence, avec les sommes en lignes et en colonnes
+
+
+## Partie `server`
+
+Nous reprenons le code du TP pour cette partie.
+
+- `server.R`
+```{r}
+library(shiny)
+
+shinyServer(function(input, output) {
+    
+    # Code pour le premier onglet
+    output$nuage <- renderPlot({
+        plot(mtcars$mpg ~ mtcars[,input$choix], main = "Consommation")
+    })
+    
+    output$resumeMpg <- renderText({
+        paste("Moyenne mpg :", mean(mtcars$mpg, na.rm = T))
+    })
+    output$resumeVar <- renderText({
+        paste("Moyenne", input$choix, ":", mean(mtcars[,input$choix], na.rm = T))
+    })
+    
+    output$tableau <- renderTable({
+        sub = subset(mtcars, select = c("mpg", input$choix))
+        sapply(sub, summary)
+    })
+    
+    
+    
+    # Code pour le deuxième onglet
+    
+    
+    
+    # Code pour le troisième onglet
+})
+```
+
+
+## Système d'onglets (*panels*)
+
+Comme déjà précisé dans le TP, nous désirons avoir un système d'onglet afin de limiter les déplacements avec la souris. Pour cela, nous utilisons donc `tabsetPanel()`, qui va prendre en paramètre autant de `tabPanel()` que d'onglets. Chacun contiendra, dans notre travail, trois paramètres :
+
+- le nom (court) apparaissant dans la partie à cliquer pour sélectionner l'onglet
+- un titre d'onglet (avec `titlePanel()`)
+- un agencement en deux parties avec `sidebarLayout()`
+
+- `ui.R`
+```{r}
+library(shiny)
+
+shinyUI(fluidPage(
+    titlePanel("Première application"),
+    
+    tabsetPanel(
+        tabPanel(
+            "TP",
+            titlePanel("Contenu TP"),
+            # Contenu de l'onglet 
+            sidebarLayout(
+                # -> tout le travail fait durant le TP
+            )
+        ),
+        tabPanel(
+            "Quali",
+            titlePanel("Analyse d'une variable qualitative"),
+            # Contenu de l'onglet
+            sidebarLayout(
+                # -> cf plus bas
+            ) 
+        ),
+        tabPanel(
+            "Quali-Quali",
+            titlePanel("Croisement de variables qualitatives"),
+            # Contenu de l'onglet
+            sidebarLayout(
+                # -> cf plus bas
+            )
+        )
+    )
+))
+```
+
+
+## Onglet 2
+
+### Organisation
+
+Comme indiqué, cet onglet contiendra donc un `sidebarLayout()`. Celui-ci prend au moins deux paramètres :
+
+- la partie placée sur le côté (à gauche par défaut), décrite dans `sidebarPanel()`
+- la partie principale, avec `mainPanel()`
+- éventuellement un troisième paramètre pour dire si on veut la première partie à droite
+
+L'idée générale de ce type d'organisation est de mettre les *inputs* sur le côté, et les *outputs* dans la partie principale. Ici, voici la répartition que cela nous donnera.
+
+- `ui.R`
+```{r}
+sidebarLayout(
+    sidebarPanel(
+        # choix de la variable qualitative
+    ),
+    mainPanel(
+        # diagramme en barres
+        # diagramme circulaire
+        # table d'effectifs et de fréquences
+    )
+)
+```
+
+
+### Choix de la variable qualitative
+
+On décide d'utiliser une liste de sélection, avec `selectInput()`, que l'on placera donc plutôt dans la partie `sidebarPanel()`. Dans le `selectInput()`, nous devons donner trois paramètres (au moins) :
+
+- le nom de l'*input* pour l'utiliser par la suite dans la partie `server`
+- le titre de la liste de sélection
+- les choix possibles (ici, la liste des variables qualitatives de `mtcars`)
+
+Ainsi, voici le code pour la partie `ui`. Et bien évidemment, dans la partie `server`, voici comment nous pourrons faire référence au choix de l'utilisateur.
+
+- `ui.R` :
+```{r}
+selectInput("choixQl", "Variable qualitative",
+            choices = c("cyl", "vs", "am", "gear", "carb"))
+```
+- `server.R` :
+```{r}
+input$choixQl
+```
+
+### Descriptif de la variable qualitative choisie
+
+Ici, dans l'`ui`, nous devons donc prévoir trois *outputs* pour la description d'une variable qualitative, comme demandée (2 graphiques avec `plotOutput()` et une table avec `tableOutput()`). Chacun doit prendre un paramètre, le nom permettant de leur affecter un rendu (avec respectivement `renderPlot()` et `renderTable()`). Et dans la partie `server`, voici comment définir le contenu des ces *outputs*.
+
+- `ui.R` :
+```{r}
+plotOutput("graphQlBar"),
+plotOutput("graphQlPie"),
+tableOutput("tableQl")
+```
+- `server.R` :
+```{r}
+output$graphQlBar <- renderPlot({
+    # Code pour la diagramme en barres
+})
+output$graphQlPie <- renderPlot({
+    # Code pour la diagramme circulaire
+})
+output$tableQl <- renderTable({
+    # Code pour le tableau des effectifs et fréquences
+})
+```
+
+#### Diagramme en barres
+
+Pour le diagramme en barres, il est possible de le faire de différentes façons, telles que présentées ci-dessous. Il faut prendre un de ces trois codes pour le placer dans le `renderPlot()` correspondant au diagramme en barres.
+
+- Première possibilité : avec `R` de base
+```{r}
+barplot(table(mtcars[,input$choixQl]))
+```
+- Deuxième possibilité : avec `ggplot2` et création d'un `data.frame` temporaire
+```{r}
+d = data.frame(x = factor(mtcars[,input$choixQl]))
+ggplot(d, aes(x)) + 
+    geom_bar() +
+    labs(x = input$choixQl, y = element_blank())
+```
+- Troisième possibilité : toujours avec `ggplot2` et la fonction `aes_string()` permettant de déterminer les variables liées aux aspecets esthétiques via une chaîne de caractères
+```{r}
+ggplot(mtcars, aes_string(input$choixQl)) + 
+    geom_bar()
+```
+
+#### Diagramme circulaire
+
+De même que pour le diagramme en barres, nous avons plusieurs possibilités, présentées ci-dessous.
+
+- Première possibilité : avec `R` de base
+```{r}
+pie(table(mtcars[,input$choixQl]))
+```
+- Deuxième possibilité : avec `ggplot2` et création d'un `data.frame` temporaire
+```{r}
+d = data.frame(x = factor(mtcars[,input$choixQl]))
+ggplot(d, aes("", fill = x)) + 
+    geom_bar(position = "fill", width = 1) +
+    scale_y_continuous(labels = percent) +
+    coord_polar(theta = "y") +
+    labs(fill = input$choixQl, y = element_blank(), x = element_blank())
+```
+
+#### Tableau des effectifs et des fréquences
+
+Le code suivant, à placer dans le `renderTable()` permet de créer un `data.frame` contenant trois colonnes :
+
+- les modalités, avec le nom de la table d'effectifs créée avec `table()`
+- les effectifs, résultat du `table()` (l'utilisation de `c()` permet ici de ne récupérer que les valeurs - sans ca, le tableau `t` est transformé en `data.frame` à 2 colonnes)
+- les proportions calculées avec `prop.table()`, auquelles on ajoute le sigle `"%"`
+
+```{r}
+t = table(mtcars[,input$choixQl])
+data.frame(
+    Modalité = names(t),
+    Effectif = c(t),
+    Proportion = paste(round(100 * prop.table(t), 1), "%"),
+    row.names = NULL
+)
+```
+
+## Onglet 3
+
+### Organisation
+
+L'organisation est ici la même que pour les deux onglets précédents, avec les *inputs* dans le `sidebarPanel()` et les *outputs* dans le `mainPanel()`.
+
+- `ui.R`
+```{r}
+sidebarLayout(
+    sidebarPanel(
+        # Choix des deux variables qualitatives
+    ),
+    mainPanel(
+        # Diagramme en barres empilées
+        # Table de contingence
+    )
+)
+```
+
+
+### Choix de deux variables qualitatives
+
+- `ui.R` :
+```{r}
+selectInput("choixQl1", "Variable qualitative 1",
+            choices = c("cyl", "vs", "am", "gear", "carb")),
+selectInput("choixQl2", "Variable qualitative 2",
+            choices = c("cyl", "vs", "am", "gear", "carb"))
+```
+- `server.R` :
+```{r}
+input$choixQl1
+input$choixQl2
+```
+
+### Descriptif du lien entre les variables
+
+Dans l'`ui`, nous créons deux *outputs* pour recevoir le diagramme en barres empilées (avec `plotOutput()`) et la table de contingence (avec `tableOutput()`). Dans la partie `server`, nous déterminons leur rendu, avec les fonctions `renderPlot()` et `renderTable()`.
+
+On défini le paramètre `rownames` à `TRUE` pour l'affichage des modalités de la table de contingence.
+
+- `ui.R`
+```{r}
+plotOutput("graphQlQl"),
+tableOutput("tableQlQl")
+```
+- `server.R`
+```{r}
+output$graphQlQl <- renderPlot({
+    # Code pour le diagramme en barres empilées
+})
+output$tableQlQl <- renderTable({
+    # Code pour la table de contingence
+}, rownames = TRUE)
+```
+
+#### Diagramme en barres empilées
+
+Nous avons deux possibilités ici pour produire ce graphique. Remarquez que pour la première, il serait nécessaire d'ajouter une légende pour les modalités de la variable empilée.
+
+- Première possibilité : avec du code `R` de base
+```{r}
+t = table(mtcars[,input$choixQl2], mtcars[,input$choixQl1])
+p = prop.table(t, margin = 2)
+barplot(p * 100, xlab = input$choixQl1, ylab = input$choixQl2)
+```
+- Deuxième possibilité : avec `ggplot2` en créant un nouveau `data.frame`
+```{r}
+d = data.frame(
+    x = factor(mtcars[,input$choixQl1]),
+    y = factor(mtcars[,input$choixQl2])
+)
+ggplot(d, aes(x, fill = y)) + 
+    geom_bar(position = "fill") +
+    labs(x = input$choixQl1, fill = input$choixQl2, y = element_blank())
+```
+
+
+#### Tableau de contingence
+
+Pour la table de contigence, nous utilisons le résultat de `table()`. Nous améliorons celui-ci en ajoutant le nom de la variable devant chaque modalité. Cela permet de mieux comprendre le tableau produit. Pour ajoutant les sommes en lignes et en colonnes (nommées aussi *marges*), nous utilisons la fonction `addmargins()`.
+
+```{r}
+t = table(mtcars[,input$choixQl2], mtcars[,input$choixQl1])
+colnames(t) = paste(input$choixQl1, colnames(t), sep = ": ")
+rownames(t) = paste(input$choixQl2, rownames(t), sep = ": ")
+unclass(addmargins(t))
+```
+
+
+## Si vous avez tout compris
+
+Ajoutez deux onglets :
+
+- description d'une variable quantitative
+- description du lien entre une variable quantitative et une variable qualitative
+

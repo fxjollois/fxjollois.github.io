@@ -1,0 +1,208 @@
+---
+title: TP3 - Interrogation de données *à la SQL* 
+subtitle: Initiation a `R` - STID 1ère année
+---
+
+```{r init, include=FALSE}
+knitr::opts_chunk$set(comment = NA)
+library(gsubfn)
+library(proto)
+library(RSQLite)
+library(DBI)
+library(tcltk)
+```
+
+
+## Interrogation de données
+
+Nous allons voir ici comment réaliser les opérations classiques faites en `SQL` au moyen de fonctions `R`.
+
+### Fonction `subset()`
+
+Cette fonction permet de réaliser au moins deux opérations classiques en `SQL :
+
+- **Restriction** : limitation aux lignes respectant un critère 
+- **Projection** : limitation à certaines colonnes
+
+#### Restriction
+
+La fonction `subset()` prend en premier paramètre le `data.frame` sur lequel faire l'opération. Le deuxième paramètre à définir ici est celui pour la restriction (`subset =`). Voici comment se restreindre par exemple aux voitures (données `mtcars`) avec une consommation strictement inférieure à 15 (`mpg < 15`).
+
+```{r}
+subset(mtcars, subset = mpg < 15)
+```
+
+#### Projection
+
+Ici, c'est le paramètre pour la projection qu'il faut définir (`select =`). On peut lui passer un ou plusieurs noms de colonnes. On veut par exemple ne récupérer que la puissance (`hp`) et la cylindrée (`disp`).
+
+```{r}
+subset(mtcars, select = c(hp, disp))
+```
+
+Mais il est aussi possible d'exclure des colonnes dans le résultat. C'est-à-dire que plutôt de dire celles qu'on veut, on va indiquer celles dont on ne veut pas.
+
+```{r}
+subset(mtcars, select = -c(hp, disp))
+```
+
+#### Combinaison des deux
+
+Bien évidemment, il est possible de combiner les deux paramètres pour réaliser une opération de restriction et une opération de projection dans la même commande. Nous récupérons ici la puissance (`hp`) et la cylindrée (`disp`) des voitures (données `mtcars`) avec une consommation strictement inférieure à 15 (`mpg < 15`).
+
+```{r}
+subset(mtcars, subset = mpg < 15, select = c(hp, disp))
+```
+
+### Fonction `transform()`
+
+Cette fonction permet elle de créer de nouvelles variables, basées sur des calculs à partir d'autres variables. Elle renvoie le `data.frame`, passé en premier paramètre, complété des nouvelles variables. On calcule ici par exemple le rapport poids (`wt`) / puissance (`hp`). Et on calcule aussi la consommation en litres pour 100 km.
+
+```{r, eval = FALSE}
+transform(mtcars, 
+          rapport = round(1000 * wt / hp), 
+          conso = round(236 / mpg, 2))
+```
+
+Ici, toute fonction existante applicable sur un vecteur est utilisable.
+
+### Fonction `aggregate()`
+
+On va pouvoir réaliser ici tous les calculs d'agrégats possibles sur une table, avec ou sans regroupement. Le premier paramètre sera la formule (sous la forme `... ~ ...`) permettant de déterminer sur quelles variables faire le calcul (à gauche du `~`) et quelles variables utiliser pour le regroupement (à droite du `~`). Le deuxième sera le jeu de données à utiliser. Et le troisième sera la fonction à appliquer.
+
+```{r}
+# Calcul de la moyenne de mpg pour tous
+aggregate(mpg ~ 1, mtcars, mean)
+# Calcul de la moyenne de mpg et de hp pour tous
+aggregate(cbind(mpg, hp) ~ 1, mtcars, mean)
+# Calcul de la moyenne de toutes les variables pour tous
+aggregate(. ~ 1, mtcars, mean)
+# Calcul de la moyenne de mpg pour chaque modalité de am
+aggregate(mpg ~ am, mtcars, mean)
+# Calcul de la moyenne de mpg en fonction de am et de cyl
+aggregate(mpg ~ am + cyl, mtcars, mean)
+# Calcul de la moyenne de mpg et de hp en fonction de am et de cyl
+aggregate(cbind(mpg, hp) ~ am + cyl, mtcars, mean)
+```
+
+### Fonction `merge()`
+
+Cette fonction permet elle de réaliser des jointures entre deux tables. Pour présenter le fonctionnement, nous allons créer une table avec le type de moteur selon le nombre de cylindres (`cyl` dans `mtcars`). Vous remarquerez que la valeur `4` n'est pas présente dans ce tableau, alors qu'elle l'est dans `mtcars`. Inversement, `12` est présent ici mais pas dans `mtcars`.
+
+```{r}
+types = data.frame(
+    cyl = c(6, 8, 12),
+    type = c("moyen", "gros", "très gros")
+)
+types
+unique(mtcars$cyl)
+```
+
+La focntion `merge()` prend, au minimum, deux paramètres que sont les deux tables à fusionner. Par défaut, c'est une jointure naturelle qui est réalisée (i.e. on recherche l'égalité des variables ayant le même nom).
+
+```{r}
+merge(mtcars, types)
+```
+
+Si le nom des colonnes diffère ou que vous ne voulez pas regarder l'égalité entre toutes les variables ayant même nom, il faut le préciser dans les paramètres `by` (même noms de colonnes dans les deux tables), ou `by.x` et `by.y` pour dire quelles variables prendre dans la première table (`by.x`) et dans la deuxième table (`by.y`).
+
+```{r}
+names(types)[1] = "nbcyl"
+types
+merge(mtcars, types, by.x = "cyl", by.y = "nbcyl")
+```
+
+Vous remarquerez, en le testant, que si on ne précise pas sur quelles variables faire la jointure, en l'absence de variables identiques entre les tables, la fonction `merge()` réalise le produit cartésien.
+
+Dans les deux exemples ci-dessus, vous avez du voir que toutes les lignes ne son pas retournées. En effet, les voitures de `mtcars` avec `cyl == 4` ne sont pas intégrées. De même que la dernière ligne de `types`. Pour avoir toutes les lignes, il faut ajouter le paramètre `all = TRUE`, pour lui dire de faire la jointure complète (i.e. `FULL OUTER JOIN`). Dans ce cas, on aura donc 33 lignes, avec des `NA` pour les cellules dont il n'a pas l'information.
+
+```{r}
+names(types)[1] = "cyl"
+merge(mtcars, types, all = TRUE)
+```
+
+On peut bien évidemment faire les jointures externes gauches (`LEFT OUTER JOIN`) ou droite (`RIGHT OUTER JOIN`) avec respectivement les paramètres `all.x` et `all.y`.
+
+```{r}
+merge(mtcars, types, all.x = TRUE)
+merge(mtcars, types, all.y = TRUE)
+```
+
+## Et du `SQL` directement
+
+La librairie `sqldf` permet de réaliser des commandes `SQL` directement sur des `data.frame`s. il faut simplement mettre la requête `SQL` en chaîne de caractère comme paramètre de la fonction `sqldf()`. Les seules restrictions sont que les `RIGHT OUTER JOIN` et `FULL OUTER JOIN` ne sont pas supportées (comme en `SQLite`).
+
+```{r}
+library(sqldf)
+sqldf("SELECT * FROM mtcars")
+sqldf("SELECT * FROM mtcars WHERE mpg < 15")
+sqldf("SELECT hp, disp FROM mtcars WHERE mpg < 15")
+sqldf("
+SELECT *, 
+        ROUND(1000 * wt / hp) AS rapport,
+        ROUND(236 / mpg, 2) AS conso
+    FROM mtcars
+      ")
+sqldf("
+SELECT am, cyl, AVG(mpg), AVG(hp)
+    FROM mtcars
+    GROUP BY am, cyl
+      ")
+sqldf("
+SELECT *
+    FROM mtcars NATURAL JOIN types
+      ")
+```
+
+## Exercices
+
+### `iris`
+
+A partir des données `iris`, déjà présentes dans `R`, créer les tableaux suivantes, à l'aide des fonctions `aggregate()` et `merge()` :
+
+- Moyenne
+```{r, echo=FALSE}
+aggregate(. ~ Species, iris, mean)
+```
+- Ecart-type
+```{r, echo=FALSE}
+aggregate(. ~ Species, iris, sd)
+```
+- Infos sur `Sepal.Length`
+```{r, echo=FALSE}
+aggregate(Sepal.Length ~ Species, iris, summary)
+```
+- Moyenne et médiane de `Sepal.Length`
+```{r, echo=FALSE}
+merge(setNames(aggregate(Sepal.Length ~ Species, iris, mean), c("Espèce", "Moyenne")), 
+      setNames(aggregate(Sepal.Length ~ Species, iris, median), c("Espèce", "Médiane")))
+```
+
+### `heart.txt`
+
+Reprenez le jeu de données présent dans le fichier [`heart.txt`](donnees/heart.txt).
+
+#### Manipulation
+
+1. Créer un nouveau `data.frame` avec uniquement les individus masculins ayant un problème cardiaque 
+2. Avec ces données, en créer un autre ne gardant que les variables suivantes :
+    - `type_douleur`, `sucre`, `electro`, et `vaisseau`
+    - `angine`, `depression`
+3. Créer un nouveau `data.frame` à partir de ce `data.frame`, avec
+    1. une variable `nbA` comptant le nombre de fois où une variable des variables suivantes est égale à `A` : `type_douleur`, `sucre`, `electro`, et `vaisseau`
+    2. une variable `flag` avec les deux modalités suivantes :
+        - `"problème"` : `angine` à `"oui"` et `depression` supérieur ou égal à `4.0`
+        - `"attention"` : sinon
+
+#### Agrégats
+
+1. Comparer le cholesterol selon la présence ou non de problème de coeur
+2. Calculer le nombre de personnes concernés par un problème de coeur
+3. Fusionner les deux `data.frame`s précédement créés pour avoir les informations en une seule table
+4. Calculer les moyennes de chaque variable quantitative selon la présence ou non de problème de coeur
+5. Comparer l'âge selon la présence ou de problème de coeur et de problème d'angine
+
+
+
+
+

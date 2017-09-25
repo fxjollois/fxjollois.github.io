@@ -1,0 +1,674 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+<meta charset="utf-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="pandoc" />
+
+
+
+
+<title>Fonctions</title>
+
+<script src="libs/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="libs/bootstrap-3.3.5/css/journal.min.css" rel="stylesheet" />
+<script src="libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<script src="libs/navigation-1.1/tabsets.js"></script>
+<link href="libs/highlightjs-1.1/default.css" rel="stylesheet" />
+<script src="libs/highlightjs-1.1/highlight.js"></script>
+<!--
+    Font Awesome
+-->
+<script src="https://use.fontawesome.com/32d8325004.js"></script>
+<link rel="stylesheet" href="libs/font-awesome-4.7.0/css/font-awesome.min.css">
+
+<!--
+    CSS perso
+-->
+<style>
+    .contenu {
+        margin-bottom: 50px;
+    }
+
+    .contact-liens {
+        text-align: center;
+    }
+    .contact-liens:hover {
+        text-decoration: none;
+    }
+    .contact-icones {
+        height: 30px;
+    }
+
+    /* Espacement pour barre du haut et pied de page */
+    #header, .section.level1 {
+        margin-top: 60px;
+        margin-bottom: 60px;
+    }
+    /* Espacement pour table des matières */
+    #TOC {
+        margin-top: 100px;
+    }
+    
+    .footer {
+        position: fixed;
+        width: 100%;
+        text-align: center;
+        bottom: 0;
+        left: 0;
+        background-color: #E6E6E6;
+    }
+</style>
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
+<script type="text/javascript">
+if (window.hljs && document.readyState && document.readyState === "complete") {
+   window.setTimeout(function() {
+      hljs.initHighlighting();
+   }, 0);
+}
+</script>
+
+
+
+<style type="text/css">
+h1 {
+  font-size: 34px;
+}
+h1.title {
+  font-size: 38px;
+}
+h2 {
+  font-size: 30px;
+}
+h3 {
+  font-size: 24px;
+}
+h4 {
+  font-size: 18px;
+}
+h5 {
+  font-size: 16px;
+}
+h6 {
+  font-size: 12px;
+}
+.table th:not([align]) {
+  text-align: left;
+}
+</style>
+
+<link rel="stylesheet" href="libs/bootstrap-journal.min.css" type="text/css" />
+
+</head>
+
+<body>
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img {
+  max-width:100%;
+  height: auto;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+</style>
+
+
+
+<div class="container-fluid main-container">
+
+<!-- tabsets -->
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+</script>
+
+<!-- code folding -->
+
+
+
+
+
+<div class="navbar navbar-default navbar-fixed-top">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-main">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">FX Jollois</a>
+    </div>
+    <div id="navbar-main" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button">Données <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+              <li><a href="accesdonnees.html">A télécharger</a></li>
+              <li><a href="donnees-integrees-r.html">Sous R</a></li>
+          </ul>
+        </li>
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button">Enseignement <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li class="dropdown-header">DUT 1ère année</li>
+            <li><a href="exploitation-donnees.html">Exploitation de données</a></li>
+            <li><a href="initiation-a-r.html">Initiation à R</a></li>
+            <li><a href="reporting.html">Reporting</a></li>
+            <li><a href="complements-r.html">Compléments sur R</a></li>
+            <li class="dropdown-header">DUT 2ème année</li>
+            <li><a href="prog-stat-r.html">Programmation statistique avec R</a></li>
+            <li class="dropdown-header">LP MDS Santé</li>
+            <li><a href="info-dec-sante.html">Informatique décisionnelle</a></li>
+            <li class="dropdown-header">DU Analyste Big Data</li>
+            <li><a href="initiation-r-du.html">Initiation à R</a></li>
+            <li><a href="connexion-r-mongodb.html">Connexion entre R et MongoDB</a></li>
+            <li class="dropdown-header">DU Dataviz</li>
+            <li><a href="analyse-donnees.html">Analyse de données</a></li>
+            <li><a href="visualisation-donnees.html">Visualisation de données - R</a></li>
+            <li><a href="visualisation-donnees-tableau.html">Visualisation de données - Tableau</a></li>
+            <li><a href="visualisation-donnees-d3.html">Visualisation de données - D3</a></li>
+            <li role="separator" class="divider"></li>
+            <li class="dropdown-header">Master</li>
+            <li><a href="slides/cnam-classif-modeles.html">Classification et Modèles de mélange</a></li>
+            <li><a href="analyse-donnees-massives.html">Analyse de Données Massives</a></li>
+            <li class="dropdown-header">Iran</li>
+            <li><a href="stat-prog-R.html">Statistical Programming using R</a></li>
+          </ul>
+        </li>
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button">Recherche <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li><a href="recherche.html">Sujets</a></li>
+            <li><a href="publications.html">Publications</a></li>
+          </ul>
+        </li>
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button">Réalisations <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li><a href="realisations.html">Détail</a></li>
+            <li role="separator" class="divider"></li>
+            <li><a href="http://up5.fr/explore-data" target="_blank">explore-data</a></li>
+            <li><a href="http://fxjollois.github.io/cours-sql/" target="_blank">Appli web de cours pour SQL</a></li>
+          </ul>
+        </li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container-fluid -->
+</div>
+<div class="contenu">
+
+<div class="fluid-row" id="header">
+
+
+
+<h1 class="title toc-ignore">Fonctions</h1>
+<h3 class="subtitle"><em>Programmation statistique avec <code>R</code> - STID 2ème année</em></h3>
+
+</div>
+
+
+<div id="exercices" class="section level2">
+<h2>Exercices</h2>
+<div id="sur-les-fonctions" class="section level3">
+<h3>sur les fonctions</h3>
+<div id="creer-une-fonction-affichepays-qui-prend-en-parametre-un-nom-de-pays-et-un-continent-et-qui-laffiche-sur-une-ligne" class="section level4">
+<h4>1. Créer une fonction <code>affichePays()</code> qui prend en paramètre un nom de pays et un continent, et qui l’affiche sur une ligne :</h4>
+<pre><code>`pays (continent)`</code></pre>
+<pre class="r"><code>affichePays &lt;- function (pays, continent) {
+    cat(pays, &quot; (&quot;, continent, &quot;)\n&quot;, sep = &quot;&quot;)
+}
+affichePays(&quot;France&quot;, &quot;Europe&quot;)</code></pre>
+<pre><code>## France (Europe)</code></pre>
+</div>
+<div id="ajouter-un-parametre-a-cette-fonction-qui-sera-lannee-dindependance-avec-la-valeur-na-par-defaut" class="section level4">
+<h4>2. Ajouter un paramètre à cette fonction, qui sera l’année d’indépendance (avec la valeur <code>NA</code> par défaut) =</h4>
+<pre><code>- si l&#39;année est `NA`, alors on affichera
+
+`pays (continent)`
+
+- sinon, on affichera :
+
+`pays (continent - indépendance en XXXX)`</code></pre>
+<pre class="r"><code>affichePays &lt;- function (pays, continent, indep = NA) {
+    cat(pays, &quot; (&quot;, continent, sep = &quot;&quot;)
+    if (!is.na(indep)) {
+        cat(&quot; - indépendant en&quot;, indep)
+    }
+    cat(&quot;)\n&quot;, sep = &quot;&quot;)
+}
+affichePays(&quot;France&quot;, &quot;Europe&quot;)</code></pre>
+<pre><code>## France (Europe)</code></pre>
+<pre class="r"><code>affichePays(&quot;France&quot;, &quot;Europe&quot;, 843)</code></pre>
+<pre><code>## France (Europe - indépendant en 843)</code></pre>
+<pre class="r"><code>affichePays(&quot;France&quot;, &quot;Europe&quot;, NA)</code></pre>
+<pre><code>## France (Europe)</code></pre>
+</div>
+<div id="creer-une-fonction-avec-les-caracteristiques-suivantes" class="section level4">
+<h4>3. Créer une fonction avec les caractéristiques suivantes :</h4>
+<pre><code>- Paramètres :
+    - une valeur (population d&#39;un pays)
+    - un vecteur de valeur (population de plusieurs villes)
+- Retour :
+    - la ration entre la somme des valeurs du vecteur et la première valeur
+- Par exemple :
+    - `f(10, c(1, 2, 3))` renverra `.6`</code></pre>
+<pre class="r"><code>ratio &lt;- function (pop.pays, pop.villes) {
+    # on ajoute des contrôles pour s&#39;assurer que l&#39;on passe bien des nombres
+    if (!is.numeric(pop.pays) | !is.numeric(pop.villes)) {
+        return (NULL)
+    }
+    return(sum(pop.villes, na.rm = TRUE) / pop.pays)
+}
+ratio(10, c(1, 2, 3))</code></pre>
+<pre><code>## [1] 0.6</code></pre>
+<pre class="r"><code>ratio(&quot;10&quot;, c(1, 2, 3))</code></pre>
+<pre><code>## NULL</code></pre>
+<pre class="r"><code>ratio(10, c(1, 2, NA))</code></pre>
+<pre><code>## [1] 0.3</code></pre>
+<pre class="r"><code>ratio(10, c(1, 2, &quot;a&quot;))</code></pre>
+<pre><code>## NULL</code></pre>
+</div>
+</div>
+<div id="world" class="section level3">
+<h3><code>world</code></h3>
+<p>A partir des données présentes dans le fichier <a href="donnees/World/world-liste.Rdata"><code>world-liste.RData</code></a>, répondre aux questions suivantes. Ces données concernent les pays dans le monde (à la fin du siècle dernier), et sont représentées sous forme de liste dans l’objet <code>Country.liste</code>.</p>
+<pre class="r"><code>load(&quot;donnees/World/world-liste.Rdata&quot;)</code></pre>
+<div id="donner-le-nombre-de-pays-representes" class="section level4">
+<h4>1. Donner le nombre de pays représentés</h4>
+<pre class="r"><code>length(Country.liste)</code></pre>
+<pre><code>## [1] 239</code></pre>
+</div>
+<div id="calculer-la-population-mondiale" class="section level4">
+<h4>2. Calculer la population mondiale</h4>
+<p>Plusieurs possibilités :</p>
+<ul>
+<li>Décomposition en 2 étapes :</li>
+</ul>
+<pre class="r"><code>p = sapply(Country.liste, function(e) {
+    return(e$Population)
+})
+sum(as.numeric(p))</code></pre>
+<pre><code>## [1] 6078749450</code></pre>
+<ul>
+<li>Idem avec <code>Reduce</code> sur <code>p</code> :</li>
+</ul>
+<pre class="r"><code>Reduce(function(a, b) { return (a+b)}, p, numeric(1))</code></pre>
+<pre><code>## [1] 6078749450</code></pre>
+<ul>
+<li>En une étape :</li>
+</ul>
+<pre class="r"><code>sum(as.numeric(sapply(Country.liste, function (p) return(p$Population))))</code></pre>
+<pre><code>## [1] 6078749450</code></pre>
+<ul>
+<li>Idem avec <code>Reduce</code> directement sur <code>Country.liste</code> :</li>
+</ul>
+<pre class="r"><code>res = Reduce(
+    function (a, b) {
+        a$Population = a$Population + b$Population
+        return(a)
+    },
+    Country.liste,
+    list(Population = numeric(1))
+)
+res</code></pre>
+<pre><code>## $Population
+## [1] 6078749450</code></pre>
+<ul>
+<li>Idem mais sans initialisation :</li>
+</ul>
+<pre class="r"><code>res = Reduce(
+    function (a, b) {
+        a$Population = as.numeric(a$Population) + b$Population
+        return(a)
+    },
+    Country.liste
+)
+res$Population</code></pre>
+<pre><code>## [1] 6078749450</code></pre>
+</div>
+<div id="utiliser-la-fonction-affichepays-creee-precedemment-dans-une-fonction-anonyme-pour-afficher-les-informations-des-pays-un-pays-par-ligne" class="section level4">
+<h4>3. Utiliser la fonction <code>affichePays()</code> créée précédemment dans une fonction anonyme, pour afficher les informations des pays (un pays par ligne)</h4>
+<pre class="r"><code>invisible(
+    lapply(
+        Country.liste, 
+        function(p) { 
+            affichePays(p$Name, p$Continent, p$IndepYear) 
+        }
+    )
+)</code></pre>
+<pre><code>## Aruba (North America)
+## Afghanistan (Asia - indépendant en 1919)
+## Angola (Africa - indépendant en 1975)
+## Anguilla (North America)
+## Albania (Europe - indépendant en 1912)
+## Andorra (Europe - indépendant en 1278)
+## Netherlands Antilles (North America)
+## United Arab Emirates (Asia - indépendant en 1971)
+## Argentina (South America - indépendant en 1816)
+## Armenia (Asia - indépendant en 1991)
+## American Samoa (Oceania)
+## Antarctica (Antarctica)
+## French Southern territories (Antarctica)
+## Antigua and Barbuda (North America - indépendant en 1981)
+## Australia (Oceania - indépendant en 1901)
+## Austria (Europe - indépendant en 1918)
+## Azerbaijan (Asia - indépendant en 1991)
+## Burundi (Africa - indépendant en 1962)
+## Belgium (Europe - indépendant en 1830)
+## Benin (Africa - indépendant en 1960)
+## Burkina Faso (Africa - indépendant en 1960)
+## Bangladesh (Asia - indépendant en 1971)
+## Bulgaria (Europe - indépendant en 1908)
+## Bahrain (Asia - indépendant en 1971)
+## Bahamas (North America - indépendant en 1973)
+## Bosnia and Herzegovina (Europe - indépendant en 1992)
+## Belarus (Europe - indépendant en 1991)
+## Belize (North America - indépendant en 1981)
+## Bermuda (North America)
+## Bolivia (South America - indépendant en 1825)
+## Brazil (South America - indépendant en 1822)
+## Barbados (North America - indépendant en 1966)
+## Brunei (Asia - indépendant en 1984)
+## Bhutan (Asia - indépendant en 1910)
+## Bouvet Island (Antarctica)
+## Botswana (Africa - indépendant en 1966)
+## Central African Republic (Africa - indépendant en 1960)
+## Canada (North America - indépendant en 1867)
+## Cocos (Keeling) Islands (Oceania)
+## Switzerland (Europe - indépendant en 1499)
+## Chile (South America - indépendant en 1810)
+## China (Asia - indépendant en -1523)
+## Côte d’Ivoire (Africa - indépendant en 1960)
+## Cameroon (Africa - indépendant en 1960)
+## Congo, The Democratic Republic of the (Africa - indépendant en 1960)
+## Congo (Africa - indépendant en 1960)
+## Cook Islands (Oceania)
+## Colombia (South America - indépendant en 1810)
+## Comoros (Africa - indépendant en 1975)
+## Cape Verde (Africa - indépendant en 1975)
+## Costa Rica (North America - indépendant en 1821)
+## Cuba (North America - indépendant en 1902)
+## Christmas Island (Oceania)
+## Cayman Islands (North America)
+## Cyprus (Asia - indépendant en 1960)
+## Czech Republic (Europe - indépendant en 1993)
+## Germany (Europe - indépendant en 1955)
+## Djibouti (Africa - indépendant en 1977)
+## Dominica (North America - indépendant en 1978)
+## Denmark (Europe - indépendant en 800)
+## Dominican Republic (North America - indépendant en 1844)
+## Algeria (Africa - indépendant en 1962)
+## Ecuador (South America - indépendant en 1822)
+## Egypt (Africa - indépendant en 1922)
+## Eritrea (Africa - indépendant en 1993)
+## Western Sahara (Africa)
+## Spain (Europe - indépendant en 1492)
+## Estonia (Europe - indépendant en 1991)
+## Ethiopia (Africa - indépendant en -1000)
+## Finland (Europe - indépendant en 1917)
+## Fiji Islands (Oceania - indépendant en 1970)
+## Falkland Islands (South America)
+## France (Europe - indépendant en 843)
+## Faroe Islands (Europe)
+## Micronesia, Federated States of (Oceania - indépendant en 1990)
+## Gabon (Africa - indépendant en 1960)
+## United Kingdom (Europe - indépendant en 1066)
+## Georgia (Asia - indépendant en 1991)
+## Ghana (Africa - indépendant en 1957)
+## Gibraltar (Europe)
+## Guinea (Africa - indépendant en 1958)
+## Guadeloupe (North America)
+## Gambia (Africa - indépendant en 1965)
+## Guinea-Bissau (Africa - indépendant en 1974)
+## Equatorial Guinea (Africa - indépendant en 1968)
+## Greece (Europe - indépendant en 1830)
+## Grenada (North America - indépendant en 1974)
+## Greenland (North America)
+## Guatemala (North America - indépendant en 1821)
+## French Guiana (South America)
+## Guam (Oceania)
+## Guyana (South America - indépendant en 1966)
+## Hong Kong (Asia)
+## Heard Island and McDonald Islands (Antarctica)
+## Honduras (North America - indépendant en 1838)
+## Croatia (Europe - indépendant en 1991)
+## Haiti (North America - indépendant en 1804)
+## Hungary (Europe - indépendant en 1918)
+## Indonesia (Asia - indépendant en 1945)
+## India (Asia - indépendant en 1947)
+## British Indian Ocean Territory (Africa)
+## Ireland (Europe - indépendant en 1921)
+## Iran (Asia - indépendant en 1906)
+## Iraq (Asia - indépendant en 1932)
+## Iceland (Europe - indépendant en 1944)
+## Israel (Asia - indépendant en 1948)
+## Italy (Europe - indépendant en 1861)
+## Jamaica (North America - indépendant en 1962)
+## Jordan (Asia - indépendant en 1946)
+## Japan (Asia - indépendant en -660)
+## Kazakstan (Asia - indépendant en 1991)
+## Kenya (Africa - indépendant en 1963)
+## Kyrgyzstan (Asia - indépendant en 1991)
+## Cambodia (Asia - indépendant en 1953)
+## Kiribati (Oceania - indépendant en 1979)
+## Saint Kitts and Nevis (North America - indépendant en 1983)
+## South Korea (Asia - indépendant en 1948)
+## Kuwait (Asia - indépendant en 1961)
+## Laos (Asia - indépendant en 1953)
+## Lebanon (Asia - indépendant en 1941)
+## Liberia (Africa - indépendant en 1847)
+## Libyan Arab Jamahiriya (Africa - indépendant en 1951)
+## Saint Lucia (North America - indépendant en 1979)
+## Liechtenstein (Europe - indépendant en 1806)
+## Sri Lanka (Asia - indépendant en 1948)
+## Lesotho (Africa - indépendant en 1966)
+## Lithuania (Europe - indépendant en 1991)
+## Luxembourg (Europe - indépendant en 1867)
+## Latvia (Europe - indépendant en 1991)
+## Macao (Asia)
+## Morocco (Africa - indépendant en 1956)
+## Monaco (Europe - indépendant en 1861)
+## Moldova (Europe - indépendant en 1991)
+## Madagascar (Africa - indépendant en 1960)
+## Maldives (Asia - indépendant en 1965)
+## Mexico (North America - indépendant en 1810)
+## Marshall Islands (Oceania - indépendant en 1990)
+## Macedonia (Europe - indépendant en 1991)
+## Mali (Africa - indépendant en 1960)
+## Malta (Europe - indépendant en 1964)
+## Myanmar (Asia - indépendant en 1948)
+## Mongolia (Asia - indépendant en 1921)
+## Northern Mariana Islands (Oceania)
+## Mozambique (Africa - indépendant en 1975)
+## Mauritania (Africa - indépendant en 1960)
+## Montserrat (North America)
+## Martinique (North America)
+## Mauritius (Africa - indépendant en 1968)
+## Malawi (Africa - indépendant en 1964)
+## Malaysia (Asia - indépendant en 1957)
+## Mayotte (Africa)
+## Namibia (Africa - indépendant en 1990)
+## New Caledonia (Oceania)
+## Niger (Africa - indépendant en 1960)
+## Norfolk Island (Oceania)
+## Nigeria (Africa - indépendant en 1960)
+## Nicaragua (North America - indépendant en 1838)
+## Niue (Oceania)
+## Netherlands (Europe - indépendant en 1581)
+## Norway (Europe - indépendant en 1905)
+## Nepal (Asia - indépendant en 1769)
+## Nauru (Oceania - indépendant en 1968)
+## New Zealand (Oceania - indépendant en 1907)
+## Oman (Asia - indépendant en 1951)
+## Pakistan (Asia - indépendant en 1947)
+## Panama (North America - indépendant en 1903)
+## Pitcairn (Oceania)
+## Peru (South America - indépendant en 1821)
+## Philippines (Asia - indépendant en 1946)
+## Palau (Oceania - indépendant en 1994)
+## Papua New Guinea (Oceania - indépendant en 1975)
+## Poland (Europe - indépendant en 1918)
+## Puerto Rico (North America)
+## North Korea (Asia - indépendant en 1948)
+## Portugal (Europe - indépendant en 1143)
+## Paraguay (South America - indépendant en 1811)
+## Palestine (Asia)
+## French Polynesia (Oceania)
+## Qatar (Asia - indépendant en 1971)
+## Réunion (Africa)
+## Romania (Europe - indépendant en 1878)
+## Russian Federation (Europe - indépendant en 1991)
+## Rwanda (Africa - indépendant en 1962)
+## Saudi Arabia (Asia - indépendant en 1932)
+## Sudan (Africa - indépendant en 1956)
+## Senegal (Africa - indépendant en 1960)
+## Singapore (Asia - indépendant en 1965)
+## South Georgia and the South Sandwich Islands (Antarctica)
+## Saint Helena (Africa)
+## Svalbard and Jan Mayen (Europe)
+## Solomon Islands (Oceania - indépendant en 1978)
+## Sierra Leone (Africa - indépendant en 1961)
+## El Salvador (North America - indépendant en 1841)
+## San Marino (Europe - indépendant en 885)
+## Somalia (Africa - indépendant en 1960)
+## Saint Pierre and Miquelon (North America)
+## Sao Tome and Principe (Africa - indépendant en 1975)
+## Suriname (South America - indépendant en 1975)
+## Slovakia (Europe - indépendant en 1993)
+## Slovenia (Europe - indépendant en 1991)
+## Sweden (Europe - indépendant en 836)
+## Swaziland (Africa - indépendant en 1968)
+## Seychelles (Africa - indépendant en 1976)
+## Syria (Asia - indépendant en 1941)
+## Turks and Caicos Islands (North America)
+## Chad (Africa - indépendant en 1960)
+## Togo (Africa - indépendant en 1960)
+## Thailand (Asia - indépendant en 1350)
+## Tajikistan (Asia - indépendant en 1991)
+## Tokelau (Oceania)
+## Turkmenistan (Asia - indépendant en 1991)
+## East Timor (Asia)
+## Tonga (Oceania - indépendant en 1970)
+## Trinidad and Tobago (North America - indépendant en 1962)
+## Tunisia (Africa - indépendant en 1956)
+## Turkey (Asia - indépendant en 1923)
+## Tuvalu (Oceania - indépendant en 1978)
+## Taiwan (Asia - indépendant en 1945)
+## Tanzania (Africa - indépendant en 1961)
+## Uganda (Africa - indépendant en 1962)
+## Ukraine (Europe - indépendant en 1991)
+## United States Minor Outlying Islands (Oceania)
+## Uruguay (South America - indépendant en 1828)
+## United States (North America - indépendant en 1776)
+## Uzbekistan (Asia - indépendant en 1991)
+## Holy See (Vatican City State) (Europe - indépendant en 1929)
+## Saint Vincent and the Grenadines (North America - indépendant en 1979)
+## Venezuela (South America - indépendant en 1811)
+## Virgin Islands, British (North America)
+## Virgin Islands, U.S. (North America)
+## Vietnam (Asia - indépendant en 1945)
+## Vanuatu (Oceania - indépendant en 1980)
+## Wallis and Futuna (Oceania)
+## Samoa (Oceania - indépendant en 1962)
+## Yemen (Asia - indépendant en 1918)
+## Yugoslavia (Europe - indépendant en 1918)
+## South Africa (Africa - indépendant en 1910)
+## Zambia (Africa - indépendant en 1964)
+## Zimbabwe (Africa - indépendant en 1980)</code></pre>
+</div>
+<div id="utiliser-la-fonction-de-calcul-de-ratio-de-la-population-pour-savoir-pour-chaque-pays-le-ratio-entre-la-population-des-villes-de-celui-ci-et-la-population-du-pays" class="section level4">
+<h4>4. Utiliser la fonction de calcul de ratio de la population pour savoir pour chaque pays le ratio entre la population des villes de celui-ci et la population du pays</h4>
+<p>Idéalement, créer une nouvelle liste qui ajoute cette information aux autres, pour chaque pays</p>
+<pre class="r"><code>Country.new = lapply(
+    Country.liste,
+    function(e) {
+        e$Ratio = ratio(e$Population, e$City$Population)
+        return(e)
+    }
+)</code></pre>
+</div>
+<div id="identifier-quels-pays-ont-un-ratio-superieur-a-1-avec-la-nouvelle-liste-creee" class="section level4">
+<h4>5. Identifier quels pays ont un ratio supérieur à <code>1</code> avec la nouvelle liste créée</h4>
+<pre class="r"><code>res = Filter(
+    function(e) {
+        if (is.null(e$Ratio)) {
+            return (FALSE)
+        }
+        return (e$Ratio &gt; 1)
+    },
+    Country.new
+)
+sapply(res, function(e) return (e$Name))</code></pre>
+<pre><code>## [1] &quot;Cocos (Keeling) Islands&quot; &quot;Gibraltar&quot;              
+## [3] &quot;Singapore&quot;</code></pre>
+</div>
+</div>
+</div>
+
+</div>
+<div class="footer">
+      Site créé avec <a href="http://www.r-project.org" target="_blank"><code>R</code></a> et la 
+      librairie  <a href="http://rmarkdown.rstudio.com/" target="_blank"><code>rmarkdown</code></a>.
+</div>
+<script>
+    $("#TOC").css("margin-top", "100px");
+</script>
+
+
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

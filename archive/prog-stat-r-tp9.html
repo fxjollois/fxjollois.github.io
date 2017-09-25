@@ -1,0 +1,652 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+<meta charset="utf-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="pandoc" />
+
+
+
+
+<title>Fonctions</title>
+
+<script src="libs/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="libs/bootstrap-3.3.5/css/journal.min.css" rel="stylesheet" />
+<script src="libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<script src="libs/navigation-1.1/tabsets.js"></script>
+<link href="libs/highlightjs-1.1/default.css" rel="stylesheet" />
+<script src="libs/highlightjs-1.1/highlight.js"></script>
+<!--
+    Font Awesome
+-->
+<script src="https://use.fontawesome.com/32d8325004.js"></script>
+<link rel="stylesheet" href="libs/font-awesome-4.7.0/css/font-awesome.min.css">
+
+<!--
+    CSS perso
+-->
+<style>
+    .contenu {
+        margin-bottom: 50px;
+    }
+
+    .contact-liens {
+        text-align: center;
+    }
+    .contact-liens:hover {
+        text-decoration: none;
+    }
+    .contact-icones {
+        height: 30px;
+    }
+
+    /* Espacement pour barre du haut et pied de page */
+    #header, .section.level1 {
+        margin-top: 60px;
+        margin-bottom: 60px;
+    }
+    /* Espacement pour table des matières */
+    #TOC {
+        margin-top: 100px;
+    }
+    
+    .footer {
+        position: fixed;
+        width: 100%;
+        text-align: center;
+        bottom: 0;
+        left: 0;
+        background-color: #E6E6E6;
+    }
+</style>
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
+<script type="text/javascript">
+if (window.hljs && document.readyState && document.readyState === "complete") {
+   window.setTimeout(function() {
+      hljs.initHighlighting();
+   }, 0);
+}
+</script>
+
+
+
+<style type="text/css">
+h1 {
+  font-size: 34px;
+}
+h1.title {
+  font-size: 38px;
+}
+h2 {
+  font-size: 30px;
+}
+h3 {
+  font-size: 24px;
+}
+h4 {
+  font-size: 18px;
+}
+h5 {
+  font-size: 16px;
+}
+h6 {
+  font-size: 12px;
+}
+.table th:not([align]) {
+  text-align: left;
+}
+</style>
+
+<link rel="stylesheet" href="libs/bootstrap-journal.min.css" type="text/css" />
+
+</head>
+
+<body>
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img {
+  max-width:100%;
+  height: auto;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+</style>
+
+
+
+<div class="container-fluid main-container">
+
+<!-- tabsets -->
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+</script>
+
+<!-- code folding -->
+
+
+
+
+
+<div class="navbar navbar-default navbar-fixed-top">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-main">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">FX Jollois</a>
+    </div>
+    <div id="navbar-main" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button">Données <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+              <li><a href="accesdonnees.html">A télécharger</a></li>
+              <li><a href="donnees-integrees-r.html">Sous R</a></li>
+          </ul>
+        </li>
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button">Enseignement <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li class="dropdown-header">DUT 1ère année</li>
+            <li><a href="exploitation-donnees.html">Exploitation de données</a></li>
+            <li><a href="initiation-a-r.html">Initiation à R</a></li>
+            <li><a href="reporting.html">Reporting</a></li>
+            <li><a href="complements-r.html">Compléments sur R</a></li>
+            <li class="dropdown-header">DUT 2ème année</li>
+            <li><a href="prog-stat-r.html">Programmation statistique avec R</a></li>
+            <li class="dropdown-header">LP MDS Santé</li>
+            <li><a href="info-dec-sante.html">Informatique décisionnelle</a></li>
+            <li class="dropdown-header">DU Analyste Big Data</li>
+            <li><a href="initiation-r-du.html">Initiation à R</a></li>
+            <li><a href="connexion-r-mongodb.html">Connexion entre R et MongoDB</a></li>
+            <li class="dropdown-header">DU Dataviz</li>
+            <li><a href="analyse-donnees.html">Analyse de données</a></li>
+            <li><a href="visualisation-donnees.html">Visualisation de données - R</a></li>
+            <li><a href="visualisation-donnees-tableau.html">Visualisation de données - Tableau</a></li>
+            <li><a href="visualisation-donnees-d3.html">Visualisation de données - D3</a></li>
+            <li role="separator" class="divider"></li>
+            <li class="dropdown-header">Master</li>
+            <li><a href="slides/cnam-classif-modeles.html">Classification et Modèles de mélange</a></li>
+            <li><a href="analyse-donnees-massives.html">Analyse de Données Massives</a></li>
+            <li class="dropdown-header">Iran</li>
+            <li><a href="stat-prog-R.html">Statistical Programming using R</a></li>
+          </ul>
+        </li>
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button">Recherche <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li><a href="recherche.html">Sujets</a></li>
+            <li><a href="publications.html">Publications</a></li>
+          </ul>
+        </li>
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button">Réalisations <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li><a href="realisations.html">Détail</a></li>
+            <li role="separator" class="divider"></li>
+            <li><a href="http://up5.fr/explore-data" target="_blank">explore-data</a></li>
+            <li><a href="http://fxjollois.github.io/cours-sql/" target="_blank">Appli web de cours pour SQL</a></li>
+          </ul>
+        </li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container-fluid -->
+</div>
+<div class="contenu">
+
+<div class="fluid-row" id="header">
+
+
+
+<h1 class="title toc-ignore">Fonctions</h1>
+<h3 class="subtitle"><em>Programmation statistique avec <code>R</code> - STID 2ème année</em></h3>
+
+</div>
+
+
+<p>Dans ce TP, nous allons aborder la création de fonction en <code>R</code>.</p>
+<div id="creation-dune-fonction" class="section level2">
+<h2>Création d’une fonction</h2>
+<p>On utilise l’opérateur <code>function()</code> pour déclarer sa propre fonction. Celle-ci peut prendre autant de paramètres que nécessaire. Pour retourner une valeur, on utilise l’opérateur <code>return()</code>. Pour créer une procédure, il suffit de déclarer une fonction qui ne retourne aucune valeur.</p>
+<div id="classique" class="section level3">
+<h3>Classique</h3>
+<p>Voici un exemple de déclaration d’une procédure, qui affiche un texte simple (grâce à la fonction <code>cat()</code>).</p>
+<pre class="r"><code>afficheBonjour &lt;- function() {
+    cat(&quot;Bonjour\n&quot;)
+}
+afficheBonjour()</code></pre>
+<pre><code>Bonjour</code></pre>
+<p>Et voici l’exemple d’une fonction, renvoyant le carré de <span class="math inline">\(\pi\)</span>.</p>
+<pre class="r"><code>pi2 &lt;- function() {
+    res = pi ** 2
+    return(res)
+}
+a = pi2()
+cat(&quot;Pi au carré = &quot;, a, &quot;\n&quot;)</code></pre>
+<pre><code>Pi au carré =  9.869604 </code></pre>
+</div>
+<div id="parametres" class="section level3">
+<h3>Paramètres</h3>
+<p>On peut donc passer un paramètre, en le nommant avec les mêmes contraintes que pour un nom de variable classique.</p>
+<pre class="r"><code>afficheBonjour &lt;- function(prenom) {
+    cat(&quot;Bonjour&quot;, prenom, &quot;\n&quot;)
+}
+afficheBonjour(&quot;FX&quot;)</code></pre>
+<pre><code>Bonjour FX </code></pre>
+<p>Par contre, il est absolument nécessaire de donner une valeur à chaque paramètre de la fonction définie.</p>
+<pre class="r"><code>afficheBonjour()</code></pre>
+<pre><code>Error in cat(&quot;Bonjour&quot;, prenom, &quot;\n&quot;): l&#39;argument &quot;prenom&quot; est manquant, avec aucune valeur par défaut</code></pre>
+<p>De même que pour une procédure, on peut passer des paramètres à une fonction.</p>
+<pre class="r"><code>puissance &lt;- function(a, b) {
+    res = a ** b
+    return(res)
+}
+a = puissance(2, 4)
+cat(&quot;a =&quot;, a, &quot;\n&quot;)</code></pre>
+<pre><code>a = 16 </code></pre>
+<p>On remarque ici que la variable <code>a</code> à l’intérieur de la fonction est indépendante de la variable <code>a</code> précédemment déclarée. On dit que la <strong>portée</strong> d’une variable d’une fonction est limitée à celle-ci.</p>
+<p>Dans la suite, les exemples seront soit une procédure, soit une fonction, car le fonctionnement est généralement le même.</p>
+</div>
+<div id="parametres-nommes" class="section level3">
+<h3>Paramètres nommés</h3>
+<p>Quand on déclare une fonction à plusieurs paramètres, il est possible de préciser à quel paramètre on affecte chaque valeur passée. Dans la suite, nous déclarons une fonction à 2 paramètres (<code>nom</code> et <code>prenom</code>).</p>
+<ul>
+<li>Dans le premier appel, on procéde classiquement, comme dans les autres langages de programmation classique.</li>
+<li>Dans le deuxième appel, l’ordre est le même mais on précise le nom des paramètres. Ceci est souvent utilisé pour rendre un code lisible et compréhensible par d’autres personnes.</li>
+<li>Dans le troisième appel, on se permet de modifier l’ordre des paramètres de la fonction. Ceci est possible uniquement parce qu’on les nomme dans l’appel.</li>
+</ul>
+<pre class="r"><code>afficheBonjour &lt;- function(nom, prenom) {
+    cat(&quot;Bonjour &quot;, prenom, &quot; &quot;, nom, &quot;\n&quot;)
+}
+afficheBonjour(&quot;Jollois&quot;, &quot;FX&quot;) # ordre par défaut</code></pre>
+<pre><code>Bonjour  FX   Jollois </code></pre>
+<pre class="r"><code>afficheBonjour(nom = &quot;Jollois&quot;, prenom = &quot;FX&quot;) # idem mais en précisant le nom des paramètres</code></pre>
+<pre><code>Bonjour  FX   Jollois </code></pre>
+<pre class="r"><code>afficheBonjour(prenom = &quot;FX&quot;, nom = &quot;Jollois&quot;) # en modifiant l&#39;ordre de passage des paramètres</code></pre>
+<pre><code>Bonjour  FX   Jollois </code></pre>
+</div>
+<div id="valeurs-par-defaut-pour-les-parametres" class="section level3">
+<h3>Valeurs par défaut pour les paramètres</h3>
+<p>On peut aussi définir des valeurs par défaut aux paramètres. Ces valeurs seront celles prises par le paramètre si, lors de l’appel, la valeur de celui-ci n’est pas défini. On reprend l’exemple suivant en fixant une valeur par défaut pour le prénom.</p>
+<pre class="r"><code>afficheBonjour &lt;- function(nom, prenom = &quot;??&quot;) {
+    cat(&quot;Bonjour &quot;, prenom, &quot; &quot;, nom, &quot;\n&quot;)
+}
+afficheBonjour(&quot;Jollois&quot;, &quot;FX&quot;) # rien de changé par raport à avant</code></pre>
+<pre><code>Bonjour  FX   Jollois </code></pre>
+<pre class="r"><code>afficheBonjour(&quot;Jollois&quot;)</code></pre>
+<pre><code>Bonjour  ??   Jollois </code></pre>
+</div>
+<div id="passage-de-parametres-a-dautres-fonctions-..." class="section level3">
+<h3>Passage de paramètres à d’autres fonctions (<code>...</code>)</h3>
+<p>Lorsqu’on définit une fonction qui en utilise une autre, on peut permettre le passage de paramètres (nommés onligatoirement) à cette sous-fonction. Par exemple, nous créons une fonction qui va afficher la moyenne d’un vecteur. Mais si ce vecteur contient des <code>NA</code>, la fonction <code>mean()</code> renverra <code>NA</code>. Nous allons donc permettre de passer le paramètre <code>na.rm</code> dans la fonction <code>mean()</code>.</p>
+<pre class="r"><code>afficheMoyenne &lt;- function(x, ...) {
+    m = mean(x, ...)
+    cat(&quot;Moyenne =&quot;, m, &quot;\n&quot;)
+}
+afficheMoyenne(c(3, 9, 1, 7, 12))</code></pre>
+<pre><code>Moyenne = 6.4 </code></pre>
+<pre class="r"><code>afficheMoyenne(c(3, 9, 1, NA, 12))</code></pre>
+<pre><code>Moyenne = NA </code></pre>
+<pre class="r"><code>afficheMoyenne(c(3, 9, 1, NA, 12), na.rm = TRUE)</code></pre>
+<pre><code>Moyenne = 6.25 </code></pre>
+</div>
+</div>
+<div id="lapply-et-associes" class="section level2">
+<h2><code>lapply</code> et associés</h2>
+<div id="liste" class="section level3">
+<h3>Liste</h3>
+<p>On manipule en <code>R</code> des listes sans le savoir, avec les <code>data.frames</code>.</p>
+<pre class="r"><code>class(mtcars)</code></pre>
+<pre><code>[1] &quot;data.frame&quot;</code></pre>
+<pre class="r"><code>is.list(mtcars)</code></pre>
+<pre><code>[1] TRUE</code></pre>
+<p>Mais on peut aussi bien évidemment les créer <em>ex-nihilo</em>. Celles-ci peuvent contenir des objets de tout type, même des sous-listes.</p>
+<pre class="r"><code>l = list(a = &quot;chaîne&quot;, 
+         b = 12, 
+         c = 1:10, 
+         d = head(mtcars), 
+         e = list(x = 1:10, y = log(1:10)))
+length(l)</code></pre>
+<pre><code>[1] 5</code></pre>
+<pre class="r"><code>names(l)</code></pre>
+<pre><code>[1] &quot;a&quot; &quot;b&quot; &quot;c&quot; &quot;d&quot; &quot;e&quot;</code></pre>
+<pre class="r"><code>l[1]</code></pre>
+<pre><code>$a
+[1] &quot;chaîne&quot;</code></pre>
+<pre class="r"><code>l[[1]]</code></pre>
+<pre><code>[1] &quot;chaîne&quot;</code></pre>
+<pre class="r"><code>l$a</code></pre>
+<pre><code>[1] &quot;chaîne&quot;</code></pre>
+<pre class="r"><code>l[1:2]</code></pre>
+<pre><code>$a
+[1] &quot;chaîne&quot;
+
+$b
+[1] 12</code></pre>
+<pre class="r"><code>l[c(&quot;a&quot;, &quot;c&quot;)]</code></pre>
+<pre><code>$a
+[1] &quot;chaîne&quot;
+
+$c
+ [1]  1  2  3  4  5  6  7  8  9 10</code></pre>
+<pre class="r"><code>l[sapply(l, length) == 1]</code></pre>
+<pre><code>$a
+[1] &quot;chaîne&quot;
+
+$b
+[1] 12</code></pre>
+</div>
+<div id="lapply-et-autres" class="section level3">
+<h3><code>lapply</code> et autres</h3>
+<p>La fonction <code>lapply()</code> permet d’exécuter une fonction (passée en deuxième paramètre) à chaque élément d’une liste (passée en premier paramètre), ou un vecteur. Il existe aussi les fonctions <code>sapply()</code> et <code>vapply()</code>, qui sont similaires mais qui cherchent à simplifier le résultat (la deuxième permet de spécifier le nom des retours de la fonctions, si ceux-ci sont multiples).</p>
+<pre class="r"><code>lapply(l, class)</code></pre>
+<pre><code>$a
+[1] &quot;character&quot;
+
+$b
+[1] &quot;numeric&quot;
+
+$c
+[1] &quot;integer&quot;
+
+$d
+[1] &quot;data.frame&quot;
+
+$e
+[1] &quot;list&quot;</code></pre>
+<pre class="r"><code>sapply(l, class)</code></pre>
+<pre><code>           a            b            c            d            e 
+ &quot;character&quot;    &quot;numeric&quot;    &quot;integer&quot; &quot;data.frame&quot;       &quot;list&quot; </code></pre>
+</div>
+<div id="fonction-particuliere" class="section level3">
+<h3>Fonction particulière</h3>
+<p>On a parfois (voire souvent) besoin d’utiliser une fonction spécifique dans les fonctions comme <code>lapply()</code>. On peut soit la définir avant et l’utiliser comme une autre.</p>
+<pre class="r"><code>infoElement &lt;- function(e) {
+    return(c(classe = class(e), longueur = length(e)))
+}
+lapply(l, infoElement)</code></pre>
+<pre><code>$a
+     classe    longueur 
+&quot;character&quot;         &quot;1&quot; 
+
+$b
+   classe  longueur 
+&quot;numeric&quot;       &quot;1&quot; 
+
+$c
+   classe  longueur 
+&quot;integer&quot;      &quot;10&quot; 
+
+$d
+      classe     longueur 
+&quot;data.frame&quot;         &quot;11&quot; 
+
+$e
+  classe longueur 
+  &quot;list&quot;      &quot;2&quot; </code></pre>
+<pre class="r"><code>sapply(l, infoElement)</code></pre>
+<pre><code>         a           b         c         d            e     
+classe   &quot;character&quot; &quot;numeric&quot; &quot;integer&quot; &quot;data.frame&quot; &quot;list&quot;
+longueur &quot;1&quot;         &quot;1&quot;       &quot;10&quot;      &quot;11&quot;         &quot;2&quot;   </code></pre>
+<pre class="r"><code>vapply(l, infoElement, c(CLASSE = &quot;&quot;, LONG = &quot;&quot;))</code></pre>
+<pre><code>       a           b         c         d            e     
+CLASSE &quot;character&quot; &quot;numeric&quot; &quot;integer&quot; &quot;data.frame&quot; &quot;list&quot;
+LONG   &quot;1&quot;         &quot;1&quot;       &quot;10&quot;      &quot;11&quot;         &quot;2&quot;   </code></pre>
+</div>
+<div id="fonction-anonyme" class="section level3">
+<h3>Fonction anonyme</h3>
+<p>Mais puisqu’on ne l’utilise généralement que dans cette fonction, il est possible de la déclarer directement dans la fonction <code>lapply()</code>. On parle alors de <em>fonction anonyme</em> (comme en <em>JavaScript</em> par exemple).</p>
+<pre class="r"><code>sapply(l, function(e) {
+    return(c(classe = class(e), longueur = length(e)))
+})</code></pre>
+<pre><code>         a           b         c         d            e     
+classe   &quot;character&quot; &quot;numeric&quot; &quot;integer&quot; &quot;data.frame&quot; &quot;list&quot;
+longueur &quot;1&quot;         &quot;1&quot;       &quot;10&quot;      &quot;11&quot;         &quot;2&quot;   </code></pre>
+</div>
+<div id="fonctionnement-invisible" class="section level3">
+<h3>Fonctionnement <em>invisible</em></h3>
+<p>On a parfois besoin d’appliquer une fonction qui ne retourne rien à une liste, par exemple pour afficher l’élément ou une partie de celui-ci. Dans l’exemple ci-dessous, on remarque que le code affiche bien chaque élément, mais renvoie aussi une liste contenant les éléments (qui est donc identique à la liste passée en paramètre). Ce comportement est dû au fait que la fonction ne renvoie pas de résultat.</p>
+<pre class="r"><code>lapply(l, function (e) { print(e); })</code></pre>
+<pre><code>[1] &quot;chaîne&quot;
+[1] 12
+ [1]  1  2  3  4  5  6  7  8  9 10
+                   mpg cyl disp  hp drat    wt  qsec vs am gear carb
+Mazda RX4         21.0   6  160 110 3.90 2.620 16.46  0  1    4    4
+Mazda RX4 Wag     21.0   6  160 110 3.90 2.875 17.02  0  1    4    4
+Datsun 710        22.8   4  108  93 3.85 2.320 18.61  1  1    4    1
+Hornet 4 Drive    21.4   6  258 110 3.08 3.215 19.44  1  0    3    1
+Hornet Sportabout 18.7   8  360 175 3.15 3.440 17.02  0  0    3    2
+Valiant           18.1   6  225 105 2.76 3.460 20.22  1  0    3    1
+$x
+ [1]  1  2  3  4  5  6  7  8  9 10
+
+$y
+ [1] 0.0000000 0.6931472 1.0986123 1.3862944 1.6094379 1.7917595 1.9459101
+ [8] 2.0794415 2.1972246 2.3025851</code></pre>
+<pre><code>$a
+[1] &quot;chaîne&quot;
+
+$b
+[1] 12
+
+$c
+ [1]  1  2  3  4  5  6  7  8  9 10
+
+$d
+                   mpg cyl disp  hp drat    wt  qsec vs am gear carb
+Mazda RX4         21.0   6  160 110 3.90 2.620 16.46  0  1    4    4
+Mazda RX4 Wag     21.0   6  160 110 3.90 2.875 17.02  0  1    4    4
+Datsun 710        22.8   4  108  93 3.85 2.320 18.61  1  1    4    1
+Hornet 4 Drive    21.4   6  258 110 3.08 3.215 19.44  1  0    3    1
+Hornet Sportabout 18.7   8  360 175 3.15 3.440 17.02  0  0    3    2
+Valiant           18.1   6  225 105 2.76 3.460 20.22  1  0    3    1
+
+$e
+$e$x
+ [1]  1  2  3  4  5  6  7  8  9 10
+
+$e$y
+ [1] 0.0000000 0.6931472 1.0986123 1.3862944 1.6094379 1.7917595 1.9459101
+ [8] 2.0794415 2.1972246 2.3025851</code></pre>
+<p>Dans ce type de cas, si on veut éviter ce comportement, on peut utiliser la fonction <code>invisibile()</code>. Ceci va rendre invisible l’exécution du code et on ne verra donc pas la liste retournée par <code>lapply()</code>.</p>
+<pre class="r"><code>invisible(lapply(l, function (e) { print(e); }))</code></pre>
+<pre><code>[1] &quot;chaîne&quot;
+[1] 12
+ [1]  1  2  3  4  5  6  7  8  9 10
+                   mpg cyl disp  hp drat    wt  qsec vs am gear carb
+Mazda RX4         21.0   6  160 110 3.90 2.620 16.46  0  1    4    4
+Mazda RX4 Wag     21.0   6  160 110 3.90 2.875 17.02  0  1    4    4
+Datsun 710        22.8   4  108  93 3.85 2.320 18.61  1  1    4    1
+Hornet 4 Drive    21.4   6  258 110 3.08 3.215 19.44  1  0    3    1
+Hornet Sportabout 18.7   8  360 175 3.15 3.440 17.02  0  0    3    2
+Valiant           18.1   6  225 105 2.76 3.460 20.22  1  0    3    1
+$x
+ [1]  1  2  3  4  5  6  7  8  9 10
+
+$y
+ [1] 0.0000000 0.6931472 1.0986123 1.3862944 1.6094379 1.7917595 1.9459101
+ [8] 2.0794415 2.1972246 2.3025851</code></pre>
+</div>
+<div id="fonctions-autres" class="section level3">
+<h3>Fonctions autres</h3>
+<div id="recherche" class="section level4">
+<h4>Recherche</h4>
+<p>Il est possible de faire une recherche dans une liste (ou un vecteur) avec les fonctions <code>Find()</code> et <code>Position()</code>. Celles-ci renvoient le premier élément trouvé (ou le dernier car il est possible de partir de la droite). La fonction passée en premier paramètre doit renvoyer les valeurs <code>TRUE</code> ou <code>FALSE</code>.</p>
+<p>On cherche par exemple ici le premier (ou dernier) élément de type <code>vector</code> dans la liste précédemment créée.</p>
+<pre class="r"><code>Find(is.vector, l)</code></pre>
+<pre><code>[1] &quot;chaîne&quot;</code></pre>
+<pre class="r"><code>Find(is.vector, l, right = TRUE)</code></pre>
+<pre><code>$x
+ [1]  1  2  3  4  5  6  7  8  9 10
+
+$y
+ [1] 0.0000000 0.6931472 1.0986123 1.3862944 1.6094379 1.7917595 1.9459101
+ [8] 2.0794415 2.1972246 2.3025851</code></pre>
+<pre class="r"><code>Position(is.vector, l)</code></pre>
+<pre><code>[1] 1</code></pre>
+<pre class="r"><code>Position(is.vector, l, right = TRUE)</code></pre>
+<pre><code>[1] 5</code></pre>
+</div>
+<div id="filtre" class="section level4">
+<h4>Filtre</h4>
+<p>Pour récupérer tous les éléments d’une liste respectant une condition (grâce à la fonction passée en paramètre donc), on dispose de la fonction <code>Filter()</code>. Nous récupérons ici tous les éléments de la liste qui sont de type <code>vector</code>.</p>
+<pre class="r"><code>Filter(is.vector, l)</code></pre>
+<pre><code>$a
+[1] &quot;chaîne&quot;
+
+$b
+[1] 12
+
+$c
+ [1]  1  2  3  4  5  6  7  8  9 10
+
+$e
+$e$x
+ [1]  1  2  3  4  5  6  7  8  9 10
+
+$e$y
+ [1] 0.0000000 0.6931472 1.0986123 1.3862944 1.6094379 1.7917595 1.9459101
+ [8] 2.0794415 2.1972246 2.3025851</code></pre>
+</div>
+<div id="reduction" class="section level4">
+<h4>Réduction</h4>
+<p>On peut opérer une opération de réduction d’une liste à l’aide d’une fonction binaire (à deux paramètres donc).</p>
+<pre class="r"><code>Reduce(function(a, b) return(a + b), 1:5, 0)</code></pre>
+<pre><code>[1] 15</code></pre>
+<p>Pour fonctionner correctement, la fonction doit retourner un objet utilisable dans la fonction. Dans l’exemple ci-dessous, nous transformons <code>mtcars</code> en une liste de 32 éléments, chacune étant une liste nommée des caractéristiques de la voiture (avec en plus le nom de celle-ci).</p>
+<pre class="r"><code>mt = lapply(1:nrow(mtcars), function(i) {
+        return(c(nom = rownames(mtcars)[i], as.list(mtcars[i,])))
+    })
+unlist(mt[[1]]) # unlist() utilisé pour améliorer l&#39;affichage </code></pre>
+<pre><code>        nom         mpg         cyl        disp          hp        drat 
+&quot;Mazda RX4&quot;        &quot;21&quot;         &quot;6&quot;       &quot;160&quot;       &quot;110&quot;       &quot;3.9&quot; 
+         wt        qsec          vs          am        gear        carb 
+     &quot;2.62&quot;     &quot;16.46&quot;         &quot;0&quot;         &quot;1&quot;         &quot;4&quot;         &quot;4&quot; </code></pre>
+<p>Imaginons qu’on souhaite faire la somme des consommations, il nous faut créer une liste initiale avec la valeur <code>0</code> pour l’élément <code>mpg</code>. Ensuite, on additionne les deux valeurs qu’on stocke dans <code>a</code> (qui aura pour première valeur <code>init</code>) et on retourne celle-ci.</p>
+<pre class="r"><code>init = list(mpg = 0)
+Reduce(function(a, b) { a$mpg = a$mpg + b$mpg; return(a)}, mt, init)</code></pre>
+<pre><code>$mpg
+[1] 642.9</code></pre>
+</div>
+</div>
+</div>
+<div id="exercices" class="section level2">
+<h2>Exercices</h2>
+<div id="sur-les-fonctions" class="section level3">
+<h3>sur les fonctions</h3>
+<ol style="list-style-type: decimal">
+<li><p>Créer une fonction <code>affichePays()</code> qui prend en paramètre un nom de pays et un continent, et qui l’affiche sur une ligne :</p>
+<p><code>pays (continent)</code></p></li>
+<li>Ajouter un paramètre à cette fonction, qui sera l’année d’indépendance (avec la valeur <code>NA</code> par défaut) =
+<ul>
+<li>si l’année est <code>NA</code>, alors on affichera</li>
+</ul>
+<p><code>pays (continent)</code></p>
+<ul>
+<li>sinon, on affichera :</li>
+</ul>
+<p><code>pays (continent - indépendance en XXXX)</code></p></li>
+<li>Créer une fonction avec les caractéristiques suivantes :
+<ul>
+<li>Paramètres :
+<ul>
+<li>une valeur (population d’un pays)</li>
+<li>un vecteur de valeur (population de plusieurs villes)</li>
+</ul></li>
+<li>Retour :
+<ul>
+<li>la ration entre la somme des valeurs du vecteur et la première valeur</li>
+</ul></li>
+<li>Par exemple :
+<ul>
+<li><code>f(10, c(1, 2, 3))</code> renverra <code>.6</code></li>
+</ul></li>
+</ul></li>
+</ol>
+</div>
+<div id="world" class="section level3">
+<h3><code>world</code></h3>
+<p>A partir des données présentes dans le fichier <a href="donnees/World/world-liste.Rdata"><code>world-liste.RData</code></a>, répondre aux questions suivantes. Ces données concernent les pays dans le monde (à la fin du siècle dernier), et sont représentées sous forme de liste dans l’objet <code>Country.liste</code>.</p>
+<ol style="list-style-type: decimal">
+<li>Donner le nombre de pays représentés</li>
+<li>Calculer la population mondiale</li>
+<li>Utiliser la fonction <code>affichePays()</code> créée précédemment dans une fonction anonyme, pour afficher les informations des pays (un pays par ligne)</li>
+<li>Utiliser la fonction de calcul de ratio de la population pour savoir pour chaque pays le ratio entre la population des villes de celui-ci et la population du pays
+<ul>
+<li>Idéalement, créer une nouvelle liste qui ajoute cette information aux autres, pour chaque pays</li>
+</ul></li>
+<li>Identifier quels pays ont un ratio supérieur à <code>1</code> avec la nouvelle liste créée</li>
+</ol>
+</div>
+</div>
+
+</div>
+<div class="footer">
+      Site créé avec <a href="http://www.r-project.org" target="_blank"><code>R</code></a> et la 
+      librairie  <a href="http://rmarkdown.rstudio.com/" target="_blank"><code>rmarkdown</code></a>.
+</div>
+<script>
+    $("#TOC").css("margin-top", "100px");
+</script>
+
+
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

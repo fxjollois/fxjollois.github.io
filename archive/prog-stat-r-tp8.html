@@ -1,0 +1,650 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+<meta charset="utf-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="pandoc" />
+
+
+
+
+<title>Visualisation de données</title>
+
+<script src="libs/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="libs/bootstrap-3.3.5/css/journal.min.css" rel="stylesheet" />
+<script src="libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<script src="libs/navigation-1.1/tabsets.js"></script>
+<link href="libs/highlightjs-1.1/default.css" rel="stylesheet" />
+<script src="libs/highlightjs-1.1/highlight.js"></script>
+<!--
+    Font Awesome
+-->
+<script src="https://use.fontawesome.com/32d8325004.js"></script>
+<link rel="stylesheet" href="libs/font-awesome-4.7.0/css/font-awesome.min.css">
+
+<!--
+    CSS perso
+-->
+<style>
+    .contenu {
+        margin-bottom: 50px;
+    }
+
+    .contact-liens {
+        text-align: center;
+    }
+    .contact-liens:hover {
+        text-decoration: none;
+    }
+    .contact-icones {
+        height: 30px;
+    }
+
+    /* Espacement pour barre du haut et pied de page */
+    #header, .section.level1 {
+        margin-top: 60px;
+        margin-bottom: 60px;
+    }
+    /* Espacement pour table des matières */
+    #TOC {
+        margin-top: 100px;
+    }
+    
+    .footer {
+        position: fixed;
+        width: 100%;
+        text-align: center;
+        bottom: 0;
+        left: 0;
+        background-color: #E6E6E6;
+    }
+</style>
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
+<script type="text/javascript">
+if (window.hljs && document.readyState && document.readyState === "complete") {
+   window.setTimeout(function() {
+      hljs.initHighlighting();
+   }, 0);
+}
+</script>
+
+
+
+<style type="text/css">
+h1 {
+  font-size: 34px;
+}
+h1.title {
+  font-size: 38px;
+}
+h2 {
+  font-size: 30px;
+}
+h3 {
+  font-size: 24px;
+}
+h4 {
+  font-size: 18px;
+}
+h5 {
+  font-size: 16px;
+}
+h6 {
+  font-size: 12px;
+}
+.table th:not([align]) {
+  text-align: left;
+}
+</style>
+
+<link rel="stylesheet" href="libs/bootstrap-journal.min.css" type="text/css" />
+
+</head>
+
+<body>
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img {
+  max-width:100%;
+  height: auto;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+</style>
+
+
+
+<div class="container-fluid main-container">
+
+<!-- tabsets -->
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+</script>
+
+<!-- code folding -->
+
+
+
+
+
+<div class="navbar navbar-default navbar-fixed-top">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-main">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">FX Jollois</a>
+    </div>
+    <div id="navbar-main" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button">Données <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+              <li><a href="accesdonnees.html">A télécharger</a></li>
+              <li><a href="donnees-integrees-r.html">Sous R</a></li>
+          </ul>
+        </li>
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button">Enseignement <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li class="dropdown-header">DUT 1ère année</li>
+            <li><a href="exploitation-donnees.html">Exploitation de données</a></li>
+            <li><a href="initiation-a-r.html">Initiation à R</a></li>
+            <li><a href="reporting.html">Reporting</a></li>
+            <li><a href="complements-r.html">Compléments sur R</a></li>
+            <li class="dropdown-header">DUT 2ème année</li>
+            <li><a href="prog-stat-r.html">Programmation statistique avec R</a></li>
+            <li class="dropdown-header">LP MDS Santé</li>
+            <li><a href="info-dec-sante.html">Informatique décisionnelle</a></li>
+            <li class="dropdown-header">DU Analyste Big Data</li>
+            <li><a href="initiation-r-du.html">Initiation à R</a></li>
+            <li><a href="connexion-r-mongodb.html">Connexion entre R et MongoDB</a></li>
+            <li class="dropdown-header">DU Dataviz</li>
+            <li><a href="analyse-donnees.html">Analyse de données</a></li>
+            <li><a href="visualisation-donnees.html">Visualisation de données - R</a></li>
+            <li><a href="visualisation-donnees-tableau.html">Visualisation de données - Tableau</a></li>
+            <li><a href="visualisation-donnees-d3.html">Visualisation de données - D3</a></li>
+            <li role="separator" class="divider"></li>
+            <li class="dropdown-header">Master</li>
+            <li><a href="slides/cnam-classif-modeles.html">Classification et Modèles de mélange</a></li>
+            <li><a href="analyse-donnees-massives.html">Analyse de Données Massives</a></li>
+            <li class="dropdown-header">Iran</li>
+            <li><a href="stat-prog-R.html">Statistical Programming using R</a></li>
+          </ul>
+        </li>
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button">Recherche <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li><a href="recherche.html">Sujets</a></li>
+            <li><a href="publications.html">Publications</a></li>
+          </ul>
+        </li>
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button">Réalisations <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li><a href="realisations.html">Détail</a></li>
+            <li role="separator" class="divider"></li>
+            <li><a href="http://up5.fr/explore-data" target="_blank">explore-data</a></li>
+            <li><a href="http://fxjollois.github.io/cours-sql/" target="_blank">Appli web de cours pour SQL</a></li>
+          </ul>
+        </li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container-fluid -->
+</div>
+<div class="contenu">
+
+<div class="fluid-row" id="header">
+
+
+
+<h1 class="title toc-ignore">Visualisation de données</h1>
+<h3 class="subtitle"><em>Programmation statistique avec <code>R</code> - STID 2ème année</em></h3>
+
+</div>
+
+
+<p>Dans ce TP, nous allons aborder la librairie <a href="http://had.co.nz/ggplot2/"><code>ggplot2</code></a>, une des plus connues pour la visualisation de données. Ce package reproduit la grammaire des graphiques (cf <a href="http://www.springer.com/us/book/9780387245447"><em>Grammar of Graphics</em>, Leland Wilkinson</a>), avec le même formalisme. Vous pouvez trouver plus d’informations sur le site officiel et la <a href="http://docs.ggplot2.org/current/">documentation</a>. Finalement, cet <a href="http://www.tandfonline.com/doi/abs/10.1198/jcgs.2009.07098">article</a> permet de bien comprendre la philosophie du package et de la grammaire.</p>
+<p>Voici toutes les librairies que nous allons utiliser. L’installation de <code>ggplot2</code> vous permettra d’installer aussi <code>scales</code> et <code>reshape2</code>.</p>
+<pre class="r"><code>library(RColorBrewer)
+library(ggplot2)
+library(scales)
+library(reshape2)</code></pre>
+<p>Voici ici un exemple de graphique personnalisé, représentant 4 variables (trois quantitatives et une qualitative), utilisant les fonctions de base de <code>R</code> pour le produire. Vous constaterez que le code est long et fastidieux.</p>
+<pre class="r"><code>par(family = &quot;serif&quot;, mar = c(5, 4, 2, 0)+.1)
+couleurs_am = brewer.pal(3, &quot;Dark2&quot;)
+plot(mpg ~ hp, data = mtcars,
+     pch = 19,
+     cex = wt/3,
+     col = couleurs_am[mtcars$am+1],
+     main = &quot;Consommation et autres&quot;,
+     sub = &quot;Source : 1974 Motor Trend US magazine&quot;, font.sub = 3, cex.sub = .8,
+     xlab = &quot;Puissance (en ch)&quot;,
+     ylab = &quot;Consommation en Miles/Galon&quot;,
+     bty = &quot;n&quot;, axes = FALSE)
+axis(1, lwd = 0, lwd.ticks = .5)
+at.y = axis(2, lwd = 0, lwd.ticks = .5, labels = FALSE)
+text(y = at.y, x = 35, labels = at.y, srt = 0, pos = 2, xpd = TRUE)
+l1 = legend(&quot;topright&quot;, legend = c(&quot;Automatique&quot;, &quot;Manuelle&quot;), 
+       col = couleurs_am, bty = &quot;n&quot;, cex = .8, pch = 19,
+       text.width = 50, text.col = couleurs_am, 
+       title = &quot;Boîte de vitesse&quot;, title.col = &quot;black&quot;)
+legend(l1$rect$left, l1$rect$top-l1$rect$h-1, 
+       legend = range(mtcars$wt), title = &quot;Poids  (1000 lbs)&quot;,
+       pch = 19, pt.cex = range(mtcars$wt)/3, bty = &quot;n&quot;, cex = .8, col = gray(.5),
+       text.width = 50, adj = -.25)
+outliers_hp = subset(mtcars, subset = hp &gt; 250)
+text(outliers_hp$hp, outliers_hp$mpg, row.names(outliers_hp), pos = c(3, 2), cex = .8, font = 4)
+outliers_mpg = subset(mtcars, subset = mpg &gt; 30)
+text(outliers_mpg$hp, outliers_mpg$mpg, row.names(outliers_mpg), pos = 4, cex = .8, font = 4)</code></pre>
+<p><img src="prog-stat-r-tp8_files/figure-html/ex-amelioration-1.png" width="672" /></p>
+<p>Le principe de cette grammaire est qu’un graphique est composé de couches :</p>
+<ul>
+<li>les <strong>données</strong> à représenter, à partir desquelles nous définissons des attributs <strong>estéthiques</strong> (soit identique pour tous, soit fonction d’une des variables) :
+<ul>
+<li>les axes <span class="math inline">\(x\)</span> et <span class="math inline">\(y\)</span>,</li>
+<li>la couleur</li>
+<li>la taille</li>
+<li>le symbole</li>
+</ul></li>
+<li>les attributs <strong>géométriques</strong> (point, ligne, …)</li>
+<li>les transformations <strong>statistiques</strong> (déombrement, ajustement, …)</li>
+<li>les <strong>échelles</strong></li>
+<li>le système de <strong>coordonnées</strong> (linéaire, logarithmique, polaire, …)</li>
+<li>le découpage (ou non) en <strong>facettes</strong></li>
+</ul>
+<p>Dans cette librairie, il y a deux fonctions principales :</p>
+<ul>
+<li><code>qplot</code> (ou <code>quickplot</code>) permettant de faire des graphiques rapidement</li>
+<li><code>ggplot</code> permettant d’initialiser un graphique auquel on va ajouter des couches successivement</li>
+</ul>
+<div id="fonction-qplot" class="section level2">
+<h2>Fonction <code>qplot</code></h2>
+<p>Comme indiqué précédemment, cette fonction permet de produire vite des graphiques propres et clairs, soit automatiquement en fonction des variables fournies, soit en définissant précisemment ce que l’on souhaite.</p>
+<p>Voici quelques exemples de production de graphiques. Nous remarquons que le comportement de <code>qplot</code> dépend du type de la variable :</p>
+<ul>
+<li><code>numeric</code> : histogramme à 30 barres par défaut (<code>geom = &quot;histogram&quot;</code>)</li>
+<li><code>factor</code> : diagramme en barres (<code>geom = &quot;bar&quot;</code>)</li>
+</ul>
+<div id="var-quantitative" class="section level3">
+<h3>Var quantitative</h3>
+<div id="histogramme" class="section level4">
+<h4>Histogramme</h4>
+<p>Il est possible de déclarer le nombre d’intervalles d’un histogramme, ou de les définir directement. Attention, dans ce dernier cas, le premier graphique produit est faux car il est nécessaire d’utiliser la densité (variable spéciale <code>..density..</code> dans <code>ggplot2</code>) et non le dénombrement. Et puisqu’on a préciser des valeurs en <span class="math inline">\(y\)</span>, nous devons préciser que nous souhaitons un histogramme en représentation géométrique.</p>
+<pre class="r"><code>qplot(mtcars$mpg)</code></pre>
+<pre><code>## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</code></pre>
+<p><img src="prog-stat-r-tp8_files/figure-html/qplot-uni-hist-1.png" width="672" /></p>
+<pre class="r"><code>qplot(mpg, data = mtcars)</code></pre>
+<pre><code>## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</code></pre>
+<p><img src="prog-stat-r-tp8_files/figure-html/qplot-uni-hist-2.png" width="672" /></p>
+<pre class="r"><code>qplot(mpg, data = mtcars, binwidth = 2)</code></pre>
+<p><img src="prog-stat-r-tp8_files/figure-html/qplot-uni-hist-3.png" width="672" /></p>
+<pre class="r"><code>qplot(mpg, data = mtcars, bins = 10)</code></pre>
+<p><img src="prog-stat-r-tp8_files/figure-html/qplot-uni-hist-4.png" width="672" /></p>
+<pre class="r"><code>qplot(mpg, data = mtcars, breaks = c(10,12.5,15,18,25,35))</code></pre>
+<p><img src="prog-stat-r-tp8_files/figure-html/qplot-uni-hist-5.png" width="672" /></p>
+<pre class="r"><code>qplot(mpg, y = ..density.., data = mtcars, 
+      geom = &quot;histogram&quot;, breaks = c(10,12.5,15,18,25,35))</code></pre>
+<p><img src="prog-stat-r-tp8_files/figure-html/qplot-uni-hist-6.png" width="672" /></p>
+</div>
+<div id="boite-a-moustaches" class="section level4">
+<h4>Boîte à moustaches</h4>
+<p>Pour avoir une boîte à moustache sur une variable, nous sommes obligé de déclarer en <span class="math inline">\(x\)</span> une valeur fixe (ici une chaîne vide <code>&quot;&quot;</code>), et de préciser la transformation géométrique (<code>boxplot</code> ici donc).</p>
+<pre class="r"><code>qplot(&quot;&quot;, mpg, data = mtcars, geom = &quot;boxplot&quot;)</code></pre>
+<p><img src="prog-stat-r-tp8_files/figure-html/qplot-uni-boxplot-1.png" width="672" /></p>
+</div>
+<div id="qq-plot" class="section level4">
+<h4><span class="math inline">\(qq\)</span>-plot</h4>
+<p>Dans le cas de la représentation géomtrique en <span class="math inline">\(qq\)</span>-plot, nous ne définissons pas de <span class="math inline">\(x\)</span> et de <span class="math inline">\(y\)</span>, mais juste l’échantillon à utiliser (<code>sample</code>).</p>
+<pre class="r"><code>qplot(sample = mpg, data = mtcars, geom = &quot;qq&quot;)</code></pre>
+<p><img src="prog-stat-r-tp8_files/figure-html/qplot-uni-qqplot-1.png" width="672" /></p>
+</div>
+</div>
+<div id="var-qualitative" class="section level3">
+<h3>Var qualitative</h3>
+<p>Un diagramme circulaire nécessite des coordonnées dites polaires et nous utiliserons plutôt la deuxième fonction, <code>ggplot</code>, pour le réaliser.</p>
+<div id="diagramme-en-barres" class="section level4">
+<h4>Diagramme en barres</h4>
+<p>Comme indiqué, si nous mettons une variable numérique, sans préciser la représentation géométrique, <code>qplot</code> produit un histogramme. C’est pourquoi nous devons spécifier que nous souhaitons une représentation en barre (<code>geom = &quot;bar&quot;</code>) pour l’utiliser sur <code>am</code> de <code>mtcars</code>. Sinon, nous réalisons directement une transformation en variable <code>factor</code>. Ce qui est préférable, au regard de l’axe des abcisses généré.</p>
+<pre class="r"><code>qplot(am, data = mtcars, geom = &quot;bar&quot;)</code></pre>
+<p><img src="prog-stat-r-tp8_files/figure-html/qplot-uni-quali-1.png" width="672" /></p>
+<pre class="r"><code>qplot(factor(am), data = mtcars)</code></pre>
+<p><img src="prog-stat-r-tp8_files/figure-html/qplot-uni-quali-2.png" width="672" /></p>
+</div>
+</div>
+<div id="var-quantitative---var-quantitative" class="section level3">
+<h3>Var quantitative - Var quantitative</h3>
+<p>Pour réaliser un nuage de points, nous n’avons rien besoin de spécifier (i.e. c’est le choix par défaut de <code>qplot</code> pour deux variables numériques).</p>
+<pre class="r"><code>qplot(hp, mpg, data = mtcars)</code></pre>
+<p><img src="prog-stat-r-tp8_files/figure-html/qplot-quanti-quanti-1.png" width="672" /></p>
+<p>Il est possible aussi de faire un ajustement (avec <code>geom = &quot;smooth</code>) ou une réprésentation des valeurs prises à l’aide de <em>ticks</em> (avec <code>geom = &quot;rug&quot;</code>). Et même de faire un graphique avec toutes ces informations. Mais pour avoir l’ajustement linéaire en plus des points, il est préférable d’utiliser <code>ggplot</code>.</p>
+<pre class="r"><code>qplot(hp, mpg, data = mtcars, geom = &quot;smooth&quot;)</code></pre>
+<pre><code>## `geom_smooth()` using method = &#39;loess&#39;</code></pre>
+<p><img src="prog-stat-r-tp8_files/figure-html/qplot-quanti-quanti-autres-1.png" width="672" /></p>
+<pre class="r"><code>qplot(hp, mpg, data = mtcars, geom = &quot;smooth&quot;, method = &quot;lm&quot;)</code></pre>
+<p><img src="prog-stat-r-tp8_files/figure-html/qplot-quanti-quanti-autres-2.png" width="672" /></p>
+<pre class="r"><code>qplot(hp, mpg, data = mtcars, geom = &quot;rug&quot;)</code></pre>
+<p><img src="prog-stat-r-tp8_files/figure-html/qplot-quanti-quanti-autres-3.png" width="672" /></p>
+<pre class="r"><code>qplot(hp, mpg, data = mtcars, geom = c(&quot;smooth&quot;, &quot;rug&quot;, &quot;point&quot;))</code></pre>
+<pre><code>## `geom_smooth()` using method = &#39;loess&#39;</code></pre>
+<p><img src="prog-stat-r-tp8_files/figure-html/qplot-quanti-quanti-autres-4.png" width="672" /></p>
+<p>Une autre réprésentation est une <em>carte de chaleur</em> (ou <strong>heatmap</strong>), représentation les deux axes et un ensemble de zones rectangulaires ayant une couleur en fonction du nombre de points présents dans cette zone. Ce graphique est très intéressant dans le cas de données nombreuses.</p>
+<pre class="r"><code>qplot(hp, mpg, data = mtcars, geom = &quot;bin2d&quot;)</code></pre>
+<p><img src="prog-stat-r-tp8_files/figure-html/qplot-quanti-quanti-heatmap-1.png" width="672" /></p>
+<pre class="r"><code>qplot(hp, mpg, data = mtcars, geom = &quot;bin2d&quot;, bins = 10)</code></pre>
+<p><img src="prog-stat-r-tp8_files/figure-html/qplot-quanti-quanti-heatmap-2.png" width="672" /></p>
+</div>
+<div id="var-qualitative---var-qualitative" class="section level3">
+<h3>Var qualitative - Var qualitative</h3>
+<p>Dans ce cas, la fonction <code>qplot</code> est plutôt utilisé pour réaliser des diagrammes en barres.</p>
+<pre class="r"><code>qplot(factor(am), facets = ~ cyl, data = mtcars, geom = &quot;bar&quot;)</code></pre>
+<p><img src="prog-stat-r-tp8_files/figure-html/qplot-quali-quali-1.png" width="672" /></p>
+<pre class="r"><code>qplot(factor(am), facets = ~ cyl, fill = factor(am), data = mtcars, geom = &quot;bar&quot;)</code></pre>
+<p><img src="prog-stat-r-tp8_files/figure-html/qplot-quali-quali-2.png" width="672" /></p>
+<pre class="r"><code>qplot(factor(am), fill = factor(cyl), data = mtcars, geom = &quot;bar&quot;)</code></pre>
+<p><img src="prog-stat-r-tp8_files/figure-html/qplot-quali-quali-3.png" width="672" /></p>
+<p>Pour les empiler correctement (i.e. somme à 100%), il faut faire une manipulation en deux étapes :</p>
+<ul>
+<li>calculer les profils pour chaque modalité de la variable en <span class="math inline">\(x\)</span>, avec <code>prop.table</code> et <code>table</code></li>
+<li>faire une modification du tableau obtenu avec la fonction <code>melt</code> du package <code>reshape2</code></li>
+</ul>
+<pre class="r"><code>tab = table(mtcars$am, mtcars$cyl)
+tab</code></pre>
+<pre><code>##    
+##      4  6  8
+##   0  3  4 12
+##   1  8  3  2</code></pre>
+<pre class="r"><code>pro = prop.table(tab, margin = 1)
+pro</code></pre>
+<pre><code>##    
+##             4         6         8
+##   0 0.1578947 0.2105263 0.6315789
+##   1 0.6153846 0.2307692 0.1538462</code></pre>
+<pre class="r"><code>mel = setNames(melt(pro), c(&quot;am&quot;, &quot;cyl&quot;, &quot;value&quot;))
+mel</code></pre>
+<pre><code>##   am cyl     value
+## 1  0   4 0.1578947
+## 2  1   4 0.6153846
+## 3  0   6 0.2105263
+## 4  1   6 0.2307692
+## 5  0   8 0.6315789
+## 6  1   8 0.1538462</code></pre>
+<pre class="r"><code>qplot(factor(am), weight = value, fill = factor(cyl), data = mel, 
+      geom = &quot;bar&quot;)</code></pre>
+<p><img src="prog-stat-r-tp8_files/figure-html/qplot-quali-quali-stack-1.png" width="672" /></p>
+<p>Il est possible aussi de réaliser une <em>heatmap</em>, ou chaque zone est colorée en fonction du nombre d’individus ayant les modalités correspondantes dans les deux variables. Et si on veut représenter les profils comme précédemment, on peut réutiliser l’objet <code>mel</code> que l’on a créé précédemment. Ici, la lecture se fait verticalement (les proportions sont en fonction de la valeur de la variable en <span class="math inline">\(x\)</span>).</p>
+<pre class="r"><code>qplot(factor(am), factor(cyl), data = mtcars, geom = &quot;bin2d&quot;)</code></pre>
+<p><img src="prog-stat-r-tp8_files/figure-html/qplot-quali-quali-heatmap-1.png" width="672" /></p>
+<pre class="r"><code>qplot(factor(am), factor(cyl), fill = value, data = mel, geom = &quot;bin2d&quot;)</code></pre>
+<p><img src="prog-stat-r-tp8_files/figure-html/qplot-quali-quali-heatmap-2.png" width="672" /></p>
+</div>
+<div id="var-quantitative---var-qualitative" class="section level3">
+<h3>Var quantitative - Var qualitative</h3>
+<p>Pour croiser deux variables de type différent, nous devons représenter la distribution de la variable quantitative pour chaque modalité de la variable qualitative (ici, respectivement histogramme, densité, boîte à moustaches, et représentation des points avec une opération de <em>jittering</em>).</p>
+<pre class="r"><code>qplot(mpg, data = mtcars, geom = &quot;histogram&quot;, bins = 10, facets = am ~ .)</code></pre>
+<p><img src="prog-stat-r-tp8_files/figure-html/qplot-quanti-quali-1.png" width="672" /></p>
+<pre class="r"><code>qplot(mpg, col = factor(am), data = mtcars, geom = &quot;density&quot;)</code></pre>
+<p><img src="prog-stat-r-tp8_files/figure-html/qplot-quanti-quali-2.png" width="672" /></p>
+<pre class="r"><code>qplot(factor(am), mpg, data = mtcars, geom = &quot;boxplot&quot;)</code></pre>
+<p><img src="prog-stat-r-tp8_files/figure-html/qplot-quanti-quali-3.png" width="672" /></p>
+<pre class="r"><code>qplot(factor(am), mpg, data = mtcars, geom = &quot;jitter&quot;)</code></pre>
+<p><img src="prog-stat-r-tp8_files/figure-html/qplot-quanti-quali-4.png" width="672" /></p>
+<pre class="r"><code>qplot(factor(am), mpg, data = mtcars, geom = c(&quot;boxplot&quot;, &quot;jitter&quot;))</code></pre>
+<p><img src="prog-stat-r-tp8_files/figure-html/qplot-quanti-quali-5.png" width="672" /></p>
+</div>
+<div id="exemple-ameliore-version-qplot" class="section level3">
+<h3>Exemple amélioré version <code>qplot</code></h3>
+<p>Si nous voulons reproduire l’<a href="#amelioration-de-graphique">exemple amélioré</a> précédent, nous voyons que la définition de la couleur et de la taille est simple. Mais nous sommes ici encore limité dans les options, et la fonction <code>ggplot</code> est plus approprié pour personnalisé un tel graphique.</p>
+<pre class="r"><code>qplot(hp, mpg, data = mtcars, color = factor(am), size = wt, 
+      main = &quot;Consommation et autres&quot;,
+      xlab = &quot;Puissance (en ch)&quot;,
+      ylab = &quot;Consommation en Miles/Galon&quot;)</code></pre>
+<p><img src="prog-stat-r-tp8_files/figure-html/qplot-amelioration-1.png" width="672" /></p>
+</div>
+</div>
+<div id="fonction-ggplot" class="section level2">
+<h2>Fonction <code>ggplot</code></h2>
+<p>La fonction <code>ggplot</code> permet de faire plus de choses que <code>qplot</code> mais nécessite un formalisme plus lourd, dont voici quelques détails :</p>
+<ul>
+<li><code>ggplot()</code> créé un graphique (et le renvoie, i.e. on peut stocker un graphique dans une variable pour l’afficher plus tard, éventuellement en lui ajoutant des couches)</li>
+<li><code>aes()</code> permet de définir les aspects esthétiques (<code>x</code> et <code>y</code> principalement, mais aussi <code>color</code>, <code>fill</code>, <code>size</code>, …)</li>
+<li><code>geom_xxx()</code> indique la représentation à choisir (<code>xxx</code> étant remplacé par <code>historam</code>, <code>boxplot</code>, …)</li>
+<li><code>stat_xxx</code> indique les transformations statistiques à utiliser, si besoin</li>
+<li><code>scale_xxx</code> s’emploie pour des changements d’échelle</li>
+<li><code>coord_xxx</code> s’utilise pour des modifications de systèmes de coordonnées</li>
+<li><code>facet_grid()</code> découpe les données (et donc le graphique) en plusieurs facettes selon les variables fournie dans la formule</li>
+<li><code>theme_xxx</code>, <code>labs()</code>, <code>xlab()</code>, <code>ylab()</code>, <code>ggtitle()</code>, … pour des améliorations du graphique (annotation, couleurs, …)</li>
+</ul>
+<p>Hormis la fonction <code>aes()</code>, qui s’utilise à l’intérieur des autres, toutes ces fonctions peuvent s’additionner pour compléter le graphique. Voici un exemple de suite de commandes pour produire un graphique :</p>
+<pre class="r"><code># Récupération des moyennes et des écarts-type de Sepal.Length pour chaque espèce
+iris.mean = data.frame(
+    Species = levels(iris$Species),
+    mean = tapply(iris$Sepal.Length, iris$Species, mean),
+    sd = tapply(iris$Sepal.Length, iris$Species, sd)
+)
+ggplot(data = iris, aes(y = Sepal.Length, x = Species)) + geom_boxplot() +
+    geom_jitter() +
+    geom_errorbar(data = iris.mean, 
+                  aes(y = mean, ymin = mean - sd, ymax = mean + sd), 
+                  col = &quot;red&quot;, width = .4)</code></pre>
+<pre><code>## Warning: Ignoring unknown aesthetics: y</code></pre>
+<p><img src="prog-stat-r-tp8_files/figure-html/ggplot-ex-1.png" width="672" /></p>
+<p>Dans le code précédent, vous pouvez remarquer que <span class="math inline">\(x\)</span> n’est défini qu’une seule fois, dans le <code>ggplot()</code>. Cette spécification est conservée pour les fonctions ajoutées, et donc pour <code>geom_errorbar()</code>.</p>
+<p>Pour détailler ce comportement, voici trois commandes permettant de faire strictement le même graphique (le premier produit dans le paragraphe ci-dessous).</p>
+<pre class="r"><code>ggplot(mtcars, aes(x = mpg)) + geom_histogram()
+ggplot(mtcars) + geom_histogram(aes(x = mpg))
+ggplot() + geom_histogram(data = mtcars, aes(x = mpg))</code></pre>
+<p>Voici ce qui diffère entre ces trois versions :</p>
+<ul>
+<li>Dans la première, les données seront <code>mtcars</code> pour l’ensemble des commandes ajoutées, et <span class="math inline">\(x\)</span> sera la variable <code>mpg</code> (sauf spécification ultérieure)</li>
+<li>Dans la seconde, on utilisera toujours <code>mtcars</code> comme données, mais <span class="math inline">\(x\)</span> n’est défini que pour l’histogramme. On devra définir <span class="math inline">\(x\)</span> pour les fonctions ultérieures si besoin</li>
+<li>Dans la dernière, il n’y aucune spécification de base, et chaque fonction devra déterminée quelles données prendre, ainsi que les aspects esthétiques à utiliser dans celles-ci.</li>
+</ul>
+<div id="variable-quantitative" class="section level3">
+<h3>Variable quantitative</h3>
+<p>Pour représenter un histogramme, on a les mêmes possibilités que dans <code>qplot</code>.</p>
+<pre class="r"><code>ggplot(mtcars, aes(x = mpg)) + geom_histogram()</code></pre>
+<pre><code>## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</code></pre>
+<p><img src="prog-stat-r-tp8_files/figure-html/ggplot-quanti-hist-1.png" width="672" /></p>
+<pre class="r"><code>ggplot(mtcars, aes(x = mpg)) + geom_histogram(binwidth = 2)</code></pre>
+<p><img src="prog-stat-r-tp8_files/figure-html/ggplot-quanti-hist-2.png" width="672" /></p>
+<pre class="r"><code>ggplot(mtcars, aes(x = mpg)) + geom_histogram(bins = 10)</code></pre>
+<p><img src="prog-stat-r-tp8_files/figure-html/ggplot-quanti-hist-3.png" width="672" /></p>
+<pre class="r"><code>ggplot(mtcars, aes(x = mpg)) + geom_histogram(breaks = c(10,12.5,15,18,25,35))</code></pre>
+<p><img src="prog-stat-r-tp8_files/figure-html/ggplot-quanti-hist-4.png" width="672" /></p>
+<pre class="r"><code>ggplot(mtcars, aes(x = mpg)) + 
+    geom_histogram(aes(y = ..density..), breaks = c(10,12.5,15,18,25,35))</code></pre>
+<p><img src="prog-stat-r-tp8_files/figure-html/ggplot-quanti-hist-5.png" width="672" /></p>
+<pre class="r"><code>ggplot(mtcars, aes(x = mpg)) + 
+    geom_histogram(aes(y = ..density..), binwidth = 2) +
+    geom_density()</code></pre>
+<p><img src="prog-stat-r-tp8_files/figure-html/ggplot-quanti-hist-6.png" width="672" /></p>
+<p>Pour la boîte à moustaches et le <span class="math inline">\(qq\)</span>-plot, il faut utiliser les fonctions <code>geom_boxplot()</code> et <code>geom_qq()</code>, en spécifiant correctement les aspects esthétiques.</p>
+<pre class="r"><code>ggplot(mtcars, aes(y = mpg, x = &quot;&quot;)) + geom_boxplot()</code></pre>
+<p><img src="prog-stat-r-tp8_files/figure-html/ggplot-quanti-autres-1.png" width="672" /></p>
+<pre class="r"><code>ggplot(mtcars, aes(sample = mpg)) + geom_qq()</code></pre>
+<p><img src="prog-stat-r-tp8_files/figure-html/ggplot-quanti-autres-2.png" width="672" /></p>
+</div>
+<div id="variable-qualitative" class="section level3">
+<h3>Variable qualitative</h3>
+<p>Pour un diagramme en barre, on peut se contenter d’utiliser la fonction <code>geom_bar()</code>. Le passage en <code>factor()</code> de la variable qualitative permet d’avoir un axe en abcisse propre (car <code>am</code> est codée numériquement dans <code>mtcars</code>). L’utilisation du calcul <code>(..count..)/sum(..count..)</code> permet de faire le calcul des pourcentages (avec le changement d’échelle sur <span class="math inline">\(y\)</span>).</p>
+<pre class="r"><code>ggplot(mtcars, aes(x = am)) + geom_bar()</code></pre>
+<p><img src="prog-stat-r-tp8_files/figure-html/ggplot-quali-bar-1.png" width="672" /></p>
+<pre class="r"><code>ggplot(mtcars, aes(x = factor(am))) + geom_bar()</code></pre>
+<p><img src="prog-stat-r-tp8_files/figure-html/ggplot-quali-bar-2.png" width="672" /></p>
+<pre class="r"><code>ggplot(mtcars, aes(x = factor(am))) +  
+    geom_bar(aes(y = (..count..)/sum(..count..))) +
+    scale_y_continuous(labels = percent) +
+    ylab(&quot;&quot;)</code></pre>
+<p><img src="prog-stat-r-tp8_files/figure-html/ggplot-quali-bar-3.png" width="672" /></p>
+<p>On peut aussi représenter ce diagramme en version empilé, en faisant quelques modifications sur les aspects esthétiques (<code>fill</code> pour la variable et spécification identique à la précédente pour <span class="math inline">\(y\)</span>), sur l’échelle (idem) et sur les labels. La dernière partie sert à supprimer le trait sur l’axe <span class="math inline">\(x\)</span>.</p>
+<pre class="r"><code>ggplot(mtcars, aes(&quot;&quot;, fill = factor(am))) + 
+    geom_bar(aes(y = (..count..)/sum(..count..))) +
+    scale_y_continuous(labels = percent) +
+    ylab(&quot;&quot;) + xlab(&quot;&quot;) + labs(fill = &quot;am&quot;) +
+    theme(axis.ticks = element_blank())</code></pre>
+<p><img src="prog-stat-r-tp8_files/figure-html/ggplot-quali-stack-1.png" width="672" /></p>
+<p>A partir de la base du graphique précédent, en ajoutant un changement de système de coordonnées (avec <code>coord_polar()</code>), on obtient un diagramme circulaire.</p>
+<pre class="r"><code>ggplot(mtcars, aes(&quot;&quot;, fill = factor(am))) + 
+    geom_bar(aes(y = (..count..)/sum(..count..)), width = 1) +
+    scale_y_continuous(labels = percent) +
+    ylab(&quot;&quot;) + xlab(&quot;&quot;) + labs(fill = &quot;am&quot;) +
+    theme(axis.ticks = element_blank()) + 
+    coord_polar(theta = &quot;y&quot;) </code></pre>
+<p><img src="prog-stat-r-tp8_files/figure-html/ggplot-quali-pie-1.png" width="672" /></p>
+</div>
+<div id="var-quantitative---var-quantitative-1" class="section level3">
+<h3>Var quantitative - Var quantitative</h3>
+<p>La représentation d’un nuage de points nécessite la définition des <span class="math inline">\(x\)</span> et <span class="math inline">\(y\)</span>, ainsi que de <code>geom_point()</code>. On peut lui ajouter d’autres représentations, tel que <code>geom_rug()</code> et <code>geom_smooth()</code>, où maintenant nous pouvons définir la fonction <code>lm</code> pour l’ajustement linéaire.</p>
+<pre class="r"><code>ggplot(mtcars, aes(hp, mpg)) + geom_point() +
+    geom_rug() +
+    geom_smooth(method = &quot;lm&quot;)</code></pre>
+<p><img src="prog-stat-r-tp8_files/figure-html/ggplot-quanti-quanti-1.png" width="672" /></p>
+<p>Et c’est l’utilisation de <code>geom_bin2d()</code> qui permet de faire une <em>heatmap</em>, avec les mêmes options que précédemment.</p>
+<pre class="r"><code>ggplot(mtcars, aes(hp, mpg)) + geom_bin2d()</code></pre>
+<p><img src="prog-stat-r-tp8_files/figure-html/ggplot-quanti-quanti-heatmap-1.png" width="672" /></p>
+<pre class="r"><code>ggplot(mtcars, aes(hp, mpg)) + geom_bin2d(bins = 10)</code></pre>
+<p><img src="prog-stat-r-tp8_files/figure-html/ggplot-quanti-quanti-heatmap-2.png" width="672" /></p>
+</div>
+<div id="var-qualitative---var-qualitative-1" class="section level3">
+<h3>Var qualitative - Var qualitative</h3>
+<p>La création d’un diagramme en barres pour deux variables qualitatives est assez simple. Par contre, pour la version empilée, c’est le paramètre <code>position = &quot;fill&quot;</code> qui permet de le faire sans autre calcul, les fonctions suivantes n’étant la que pour avoir un graphique plus clair.</p>
+<pre class="r"><code>ggplot(mtcars, aes(factor(am))) + geom_bar() + facet_grid( ~ cyl)</code></pre>
+<p><img src="prog-stat-r-tp8_files/figure-html/ggplot-quali-quali-1.png" width="672" /></p>
+<pre class="r"><code>ggplot(mtcars, aes(factor(am), fill = factor(cyl))) + geom_bar() </code></pre>
+<p><img src="prog-stat-r-tp8_files/figure-html/ggplot-quali-quali-2.png" width="672" /></p>
+<pre class="r"><code>ggplot(mtcars, aes(factor(am), fill = factor(cyl))) + 
+    geom_bar(position = &quot;fill&quot;) +
+    scale_y_continuous(labels = percent) + 
+    xlab(&quot;am&quot;) + ylab(&quot;&quot;) + labs(fill = &quot;cyl&quot;)</code></pre>
+<p><img src="prog-stat-r-tp8_files/figure-html/ggplot-quali-quali-3.png" width="672" /></p>
+<p>Pour créer les diagrammes circulaires d’une variable pour chaque modalité de l’autre variable, nous allons ré-utiliser l’objet <code>mel</code> créé précédemment.</p>
+<pre class="r"><code>mel</code></pre>
+<pre><code>##   am cyl     value
+## 1  0   4 0.1578947
+## 2  1   4 0.6153846
+## 3  0   6 0.2105263
+## 4  1   6 0.2307692
+## 5  0   8 0.6315789
+## 6  1   8 0.1538462</code></pre>
+<pre class="r"><code>ggplot(mel, aes(x = &quot;&quot;, y = value, fill = factor(cyl))) + 
+    geom_bar(stat = &quot;identity&quot;, width = 1)  + 
+    scale_y_continuous(labels = percent) +
+    ylab(&quot;am&quot;) + xlab(&quot;&quot;) + labs(fill = &quot;cyl&quot;) +
+    theme(axis.ticks = element_blank()) +
+    coord_polar(theta = &quot;y&quot;) +
+    facet_grid(~ am)</code></pre>
+<p><img src="prog-stat-r-tp8_files/figure-html/ggplot-quali-quali-pie-1.png" width="672" /></p>
+<p>Enfin, il est possible de créer une <em>heatmap</em> avec la fonction <code>geom_bin2d()</code>, toujours soit directement (dénombrement donc), soit en utiliser des profils par exemple.</p>
+<pre class="r"><code>ggplot(mtcars, aes(factor(cyl), factor(am))) + geom_bin2d()</code></pre>
+<p><img src="prog-stat-r-tp8_files/figure-html/ggplot-quali-quali-heatmap-1.png" width="672" /></p>
+<pre class="r"><code>ggplot(mel, aes(factor(am), factor(cyl), fill = value)) + geom_bin2d()</code></pre>
+<p><img src="prog-stat-r-tp8_files/figure-html/ggplot-quali-quali-heatmap-2.png" width="672" /></p>
+</div>
+<div id="exemple-ameliore-version-ggplot" class="section level3">
+<h3>Exemple amélioré version <code>ggplot</code></h3>
+<pre class="r"><code>nom = rownames(mtcars)
+nom[mtcars$hp &lt;= 250 &amp; mtcars$mpg &lt;= 30] = &quot;&quot;
+ggplot(mtcars, aes(x = hp, y = mpg, 
+                   color = factor(am, labels = c(&quot;Automatique&quot;, &quot;Manuelle&quot;)), 
+                   size = wt, 
+                   label = nom)) + 
+    geom_point() + 
+    geom_text(size = 3, color = &quot;black&quot;, vjust = -.75, fontface = &quot;bold&quot;) +
+    ggtitle(&quot;Consommation et autres&quot;) +
+    xlab(&quot;Puissance (en ch)&quot;) + xlim(25, 350) +
+    ylab(&quot;Consommation en Miles/Galon&quot;) +
+    labs(color = &quot;Transmission&quot;, size = &quot;Poids (1000 lbs)&quot;) </code></pre>
+<p><img src="prog-stat-r-tp8_files/figure-html/ggplot-amelioration-1.png" width="672" /></p>
+</div>
+</div>
+<div id="a-faire" class="section level2">
+<h2>A faire</h2>
+<p>Vous devez faire les questions suivantes avec la fonction <code>qplot()</code> puis avec la fonction <code>ggplot()</code>.</p>
+<ol style="list-style-type: decimal">
+<li>Dans les données <code>iris</code>, représenter les boîtes à moustaches des 4 variables pour les trois espèces.</li>
+<li>Dans les données <code>tips</code> du package <code>reshape2</code>, représenter <code>total_bill</code> en fonction de <code>sex</code> et <code>smoker</code>.</li>
+<li>Toujours dans <code>tips</code>, représenter <code>total_bill</code> et <code>tip</code>, en fonction de <code>sex</code> de 2 façons</li>
+<li>Idem avec <code>smoker</code> en plus</li>
+<li>Comment répondre aux questions suivantes :
+<ol style="list-style-type: decimal">
+<li>Les pourboires (<code>tip</code>) dépendent ils du montant (<code>total_bill</code>)</li>
+<li>Et des jours de la semaine (<code>day</code>) ?</li>
+<li>Et du nombre de convives (<code>size</code>) ?</li>
+<li>Croiser <code>tip</code> en fonction de <code>total_bill</code> et <code>size</code></li>
+</ol></li>
+<li><em>bonus</em> : à partir des données <code>anscombe</code>, refaire le graphique suivant</li>
+</ol>
+<p><img src="prog-stat-r-tp8_files/figure-html/anscombe-ggplot-1.png" width="672" /></p>
+</div>
+
+</div>
+<div class="footer">
+      Site créé avec <a href="http://www.r-project.org" target="_blank"><code>R</code></a> et la 
+      librairie  <a href="http://rmarkdown.rstudio.com/" target="_blank"><code>rmarkdown</code></a>.
+</div>
+<script>
+    $("#TOC").css("margin-top", "100px");
+</script>
+
+
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

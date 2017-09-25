@@ -1,0 +1,666 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Stockage massif de données</title>
+
+  <meta charset="utf-8">
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  <meta name="generator" content="pandoc" />
+
+
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+
+  <base target="_blank">
+
+  <script type="text/javascript">
+    var SLIDE_CONFIG = {
+      // Slide settings
+      settings: {
+                title: 'Stockage massif de données',
+                        subtitle: 'Initiation au Big Data',
+                useBuilds: true,
+        usePrettify: true,
+        enableSlideAreas: true,
+        enableTouch: true,
+                      },
+
+      // Author information
+      presenters: [
+            {
+        name:  'FX Jollois' ,
+        company: '',
+        gplus: '',
+        twitter: '',
+        www: '',
+        github: ''
+      },
+            ]
+    };
+  </script>
+
+  <style>
+  slide img {
+  	max-width: 100%;
+  }
+  </style>
+  <link href="libs/ioslides-13.5.1/fonts/fonts.css" rel="stylesheet" />
+  <link href="libs/ioslides-13.5.1/theme/css/default.css" rel="stylesheet" />
+  <link href="libs/ioslides-13.5.1/theme/css/phone.css" rel="stylesheet" />
+  <script src="libs/ioslides-13.5.1/js/modernizr.custom.45394.js"></script>
+  <script src="libs/ioslides-13.5.1/js/prettify/prettify.js"></script>
+  <script src="libs/ioslides-13.5.1/js/prettify/lang-r.js"></script>
+  <script src="libs/ioslides-13.5.1/js/prettify/lang-yaml.js"></script>
+  <script src="libs/ioslides-13.5.1/js/hammer.js"></script>
+  <script src="libs/ioslides-13.5.1/js/slide-controller.js"></script>
+  <script src="libs/ioslides-13.5.1/js/slide-deck.js"></script>
+
+  <style type="text/css">
+
+    b, strong {
+      font-weight: bold;
+    }
+
+    em {
+      font-style: italic;
+    }
+
+    slides > slide {
+      -webkit-transition: all 0.4s ease-in-out;
+      -moz-transition: all 0.4s ease-in-out;
+      -o-transition: all 0.4s ease-in-out;
+      transition: all 0.4s ease-in-out;
+    }
+
+    .auto-fadein {
+      -webkit-transition: opacity 0.6s ease-in;
+      -webkit-transition-delay: 0.4s;
+      -moz-transition: opacity 0.6s ease-in 0.4s;
+      -o-transition: opacity 0.6s ease-in 0.4s;
+      transition: opacity 0.6s ease-in 0.4s;
+      opacity: 0;
+    }
+
+  </style>
+
+
+</head>
+
+<body style="opacity: 0">
+
+<slides class="layout-widescreen">
+
+  <slide class="title-slide segue nobackground">
+        <!-- The content of this hgroup is replaced programmatically through the slide_config.json. -->
+    <hgroup class="auto-fadein">
+      <h1 data-config-title><!-- populated from slide_config.json --></h1>
+      <h2 data-config-subtitle><!-- populated from slide_config.json --></h2>
+      <p data-config-presenter><!-- populated from slide_config.json --></p>
+          </hgroup>
+  </slide>
+
+<slide class=''><hgroup><h2>Plan</h2></hgroup><article  id="plan">
+
+<p>Ce cours est une introduction aux nouveaux outils de gestion de bases de données massives, utilisés dans des environnements <em>Big Data</em>.</p>
+
+<ul>
+<li>Retour sur les BD relationnelles</li>
+<li>Contexte</li>
+<li>Typologie</li>
+<li>Compléments</li>
+</ul>
+
+</article></slide><slide class=''><hgroup><h2>Quelques sources</h2></hgroup><article  id="quelques-sources">
+
+<ul>
+<li><a href='http://webdam.inria.fr/Jorge/?action=chapters' title=''>http://webdam.inria.fr/Jorge/?action=chapters</a></li>
+<li><a href='http://www.lsis.org/espinasseb/Supports/BD/BD_NOSQL-4p.pdf' title=''>http://www.lsis.org/espinasseb/Supports/BD/BD_NOSQL-4p.pdf</a></li>
+<li><a href='http://www.fil.univ-lille1.fr/~caronc/BDA/NoSQLPar4.pdf' title=''>http://www.fil.univ-lille1.fr/~caronc/BDA/NoSQLPar4.pdf</a></li>
+<li><a href='http://cedric.cnam.fr/~rigaux/docs/nfe204.pdf' title=''>http://cedric.cnam.fr/~rigaux/docs/nfe204.pdf</a></li>
+<li><a href='http://perso.univ-rennes1.fr/virginie.sans/BDO/cours/BDO_CM4.pdf' title=''>http://perso.univ-rennes1.fr/virginie.sans/BDO/cours/BDO_CM4.pdf</a></li>
+<li><a href='http://jlguillaume.free.fr/www/documents/teaching/ntw1314/LI385_C2_NOSQL.pdf' title=''>http://jlguillaume.free.fr/www/documents/teaching/ntw1314/LI385_C2_NOSQL.pdf</a></li>
+<li><a href='http://blogdesexperts.infotel.com/2014/02/19/relationnel-vs-nosql-l%E2%80%99ecosysteme-de-la-base-de-donnees-a-l%E2%80%99heure-du-%C2%AB-bigdata-%C2%BB/' title=''>http://blogdesexperts.infotel.com/2014/02/19/relationnel-vs-nosql-l%E2%80%99ecosysteme-de-la-base-de-donnees-a-l%E2%80%99heure-du-%C2%AB-bigdata-%C2%BB/</a></li>
+<li><a href='http://www.dataversity.net/acid-vs-base-the-shifting-ph-of-database-transaction-processing/' title=''>http://www.dataversity.net/acid-vs-base-the-shifting-ph-of-database-transaction-processing/</a></li>
+<li><a href='http://nosql-database.org/' title=''>http://nosql-database.org/</a></li>
+<li><a href='http://www.nosqlfordummies.com/' title=''>http://www.nosqlfordummies.com/</a></li>
+</ul>
+
+</article></slide><slide class=''><hgroup><h2>Retour sur les BD relationnelles</h2></hgroup><article  id="retour-sur-les-bd-relationnelles">
+
+<p>A l&#39;heure actuelle, les BD classiquement utilisées sont les BD relationnelles :</p>
+
+<ul>
+<li>ensemble structuré d&#39;informations (<em>structure explicite</em>) :
+
+<ul>
+<li>tables décrites par des attributs</li>
+<li>reliées entre elles par des relations</li>
+</ul></li>
+<li>stockage persistant</li>
+</ul>
+
+<p>Celles-ci sont gérées dans un SGBD permettant :</p>
+
+<ul>
+<li>l&#39;accès aux fichiers sur le disque</li>
+<li>la création, la suppression, l&#39;insertion, la modification et la recherche de valeurs (via <strong>SQL</strong>)</li>
+<li>la sécurisation et la gestion des accès concurrents</li>
+</ul>
+
+</article></slide><slide class=''><hgroup><h2>Retour sur les BD relationnelles (suite)</h2></hgroup><article  id="retour-sur-les-bd-relationnelles-suite">
+
+<p>Utilisées dans quasiment toutes les applications, elles ont pour avantages :</p>
+
+<ul>
+<li>maturité importante des logiciels</li>
+<li>documentation souvent très complète</li>
+<li>performances globalement satisfaisantes</li>
+</ul>
+
+</article></slide><slide class=''><hgroup><h2>Nouveau contexte</h2></hgroup><article  id="nouveau-contexte">
+
+<p>Mais un <strong>nouveau contexte</strong> est apparu :</p>
+
+<ul>
+<li>Applications basées sur le Web (Google, Yahoo, Amazon, LinkedIn, &#8230;)
+
+<ul>
+<li>Utilisation de ressources non ou faiblement structurées (page web, textes, images, &#8230;)</li>
+<li>Explosion de la taille mémoire des données</li>
+</ul></li>
+<li>BD relationnelles classiques montrant leurs limites
+
+<ul>
+<li>Recherche dans des documents pas optimale</li>
+<li>Capacités de stockage limités</li>
+</ul></li>
+</ul>
+
+<p>Il a donc fallu développer de nouveaux outils avec les caractéristiques suivantes :</p>
+
+<ul>
+<li>Distribution des données pour résister à la montée en charge</li>
+<li>Gestion des données non structurées, complexes et hétérogènes (sans déclaration préalable du format des données - <em>structure implicite</em>)</li>
+</ul>
+
+</article></slide><slide class=''><hgroup><h2>Premiers éléments pour la passage à l&#39;échelle</h2></hgroup><article  id="premiers-elements-pour-la-passage-a-lechelle">
+
+<p>On distingue deux grands types de passage à l&#39;échelle</p>
+
+<p><strong>Vertical scaling</strong> (ou <em>scaling up</em>)</p>
+
+<ul>
+<li>on augmente la capacité de l&#39;unique serveur</li>
+</ul>
+
+<p><strong>Horizontal scaling</strong> (ou <em>scaling out</em>)</p>
+
+<ul>
+<li>on ajoute des petits serveurs</li>
+</ul>
+
+</article></slide><slide class=''><hgroup><h2>Passage à l&#39;échelle</h2></hgroup><article  id="passage-a-lechelle">
+
+<p>La première coûtant rapidement très chère, la deuxième solution est celle privilégiée, selon deux possibilités :</p>
+
+<ul>
+<li>Paradigme <em>Maître/Esclave</em>
+
+<ul>
+<li>Ecritures par le maître, lecture par les esclaves</li>
+<li>Réplication directe des écritures aux esclaves (donc lecture éventuellement fausse car avant fin de la réplication)</li>
+<li>temps de réplication pouvant être très long</li>
+</ul></li>
+<li><em>Partitionnement</em>
+
+<ul>
+<li>Répartition des données dans les différents noeuds</li>
+<li>Pas transparent : la répartition doit potentiellement être connue des applications</li>
+<li>Problème sur les contraintes d&#39;intégrité à prévoir</li>
+</ul></li>
+</ul>
+
+</article></slide><slide class=''><hgroup><h2>Quelques autres possibilités</h2></hgroup><article  id="quelques-autres-possibilites">
+
+<p>D&#39;autres solutions sont envisageables :</p>
+
+<ul>
+<li>Plusieurs <em>Maîtres</em>, avec réplication
+
+<ul>
+<li>gestion d&#39;accès concurrents</li>
+</ul></li>
+<li>Ne permettent que des <code>INSERT</code>, sans <code>UPDATE</code> ou <code>DELETE</code>
+
+<ul>
+<li>les données sont seulement inactivées, et non supprimées</li>
+</ul></li>
+<li>Limiter au maximum (voire les supprimer) les <code>JOIN</code>
+
+<ul>
+<li>dénormalisation des données</li>
+<li>tables de taille (très) importantes</li>
+</ul></li>
+<li>Bases de données <em>In-Memory</em>
+
+<ul>
+<li>données stockées sur la <strong>RAM</strong></li>
+<li>suppression des temps d&#39;accès aux disques</li>
+</ul></li>
+</ul>
+
+</article></slide><slide class=''><hgroup><h2>Bases de données NoSQL</h2></hgroup><article  id="bases-de-donnees-nosql">
+
+<p>On parle maintenant de systèmes <strong>NoSQL</strong> (pour <em>Not Only SQL</em>)</p>
+
+<ul>
+<li>Classe de BD non relationnelles
+
+<ul>
+<li>Rien de nouveau réellement, existent depuis plus longtemps que les SBGDR</li>
+</ul></li>
+<li>Pas forcément de schéma fixe des données</li>
+<li>Pas forcément d&#39;utilisation du concept de <strong>jointure</strong></li>
+<li>Relaxation d&#39;au moins une des propriétés <strong>ACID</strong> :
+
+<ul>
+<li><strong>A</strong>tomicity</li>
+<li><strong>C</strong>onsistancy</li>
+<li><strong>I</strong>solation</li>
+<li><strong>D</strong>urability</li>
+</ul></li>
+</ul>
+
+</article></slide><slide class=''><hgroup><h2>Bases de données NoSQL (suite)</h2></hgroup><article  id="bases-de-donnees-nosql-suite">
+
+<p>Pourquoi on en (re)parle</p>
+
+<ul>
+<li>Explosion des réseaux sociaux</li>
+<li>Croissance de l&#39;utilisation du stockage en ligne, distribué</li>
+<li>Grande dynamique de la communauté open-source</li>
+</ul>
+
+</article></slide><slide class=''><hgroup><h2>Théorème CAP</h2></hgroup><article  id="theoreme-cap">
+
+<p>Proposé par Brewer (2000), puis amélioré par la suite par Gilbert et Lynch.</p>
+
+<p>Il existe trois propriétés essentielles d&#39;un système :</p>
+
+<ul>
+<li><strong>Consistency</strong> (cohérence) : les données sont cohérentes entre tous les noeuds</li>
+<li><strong>Availability</strong> (disponibilité) : les données sont disponibles à n&#39;importe quel moment</li>
+<li><strong>Partition Tolerance</strong> (resistance au partitionnement) : le système continue de fonctionner même si un des noeuds est inopérant</li>
+</ul>
+
+<p><strong>Problème</strong> : Aucun système distribué ne peut respecter ces trois propriétés.</p>
+
+</article></slide><slide class=''><hgroup><h2>Théorème CAP (suite)</h2></hgroup><article  id="theoreme-cap-suite">
+
+<p>On a donc le choix entre :</p>
+
+<ul>
+<li><strong>C + A</strong> : un problème sur un des noeuds fait stopper le système (les SGBDR classiques sont plutôt dans cette catégorie)</li>
+<li><strong>C + P</strong> : les données ne sont pas forcément disponibles au moment de la requête</li>
+<li><strong>A + P</strong> : les données renvoyées ne sont pas toujours cohérentes</li>
+</ul>
+
+</article></slide><slide class=''><hgroup><h2>Conséquence du passage à l&#39;échelle</h2></hgroup><article  id="consequence-du-passage-a-lechelle">
+
+<ul>
+<li>Le passage à l&#39;échelle implique (presque obligatoirement) le <em>partitionnement</em> des données</li>
+<li>Il faut donc faire le choix entre <em>cohérence</em> et <em>disponibilité</em></li>
+<li>Dans pratiquement tous les systèmes, la disponibilité est préférée, et donc la cohérence stricte est abandonnée (d&#39;où le non-respect de <em>ACID</em>)</li>
+<li>Heureusement, une réponse existe : <strong>BASE</strong> :
+
+<ul>
+<li><strong>Basically Available</strong> : il y aura une réponse à toute requête, même si c&#39;est du genre <em>failure</em> ou <em>inconsistent data</em></li>
+<li><strong>Soft State</strong> : le système n&#39;est pas consistent à tout instant</li>
+<li><strong>Eventually consistent</strong> : le système deviendra finalement consistent, lorsqu&#39;il ne recevra plus d&#39;entrées</li>
+</ul></li>
+</ul>
+
+<p>Tous les systèmes actuels des géants du web sont dans cette configuration <strong>BASE</strong></p>
+
+</article></slide><slide class=''><hgroup><h2>Typologie NoSQL</h2></hgroup><article  id="typologie-nosql">
+
+<p>Il existe quatre principaux types de bases de données dites NoSQL (voir <a href='http://nosql-database.org/' title=''>ce site web</a>, d&#39;autres existent mais nous n&#39;en parlerons pas ici).</p>
+
+<p>Scofield a proposé un comparatif de ceux-ci sur quelques critères (avec les SGBDR classiques en plus).</p>
+
+<table class = 'rmdtable'>
+<tr class="header">
+<th align="left">Data Model</th>
+<th align="left">Performance</th>
+<th align="left">Scalability</th>
+<th align="left">Flexibility</th>
+<th align="left">Complexity</th>
+<th align="left">Functionality</th>
+</tr>
+<tr class="odd">
+<td align="left"><strong>Key–Value Store</strong></td>
+<td align="left">high</td>
+<td align="left">high</td>
+<td align="left">high</td>
+<td align="left">none</td>
+<td align="left">variable (none)</td>
+</tr>
+<tr class="even">
+<td align="left"><strong>Document-Oriented Store</strong></td>
+<td align="left">high</td>
+<td align="left">variable (high)</td>
+<td align="left">high</td>
+<td align="left">low</td>
+<td align="left">variable (low)</td>
+</tr>
+<tr class="odd">
+<td align="left"><strong>Column-Oriented Store</strong></td>
+<td align="left">high</td>
+<td align="left">high</td>
+<td align="left">moderate</td>
+<td align="left">low</td>
+<td align="left">minimal</td>
+</tr>
+<tr class="even">
+<td align="left"><strong>Graph Database</strong></td>
+<td align="left">variable</td>
+<td align="left">variable</td>
+<td align="left">high</td>
+<td align="left">high</td>
+<td align="left">graph theory</td>
+</tr>
+<tr class="odd">
+<td align="left"><strong>Relational Database</strong></td>
+<td align="left">variable</td>
+<td align="left">variable</td>
+<td align="left">low</td>
+<td align="left">moderate</td>
+<td align="left">relational algebra</td>
+</tr>
+</table>
+
+</article></slide><slide class=''><hgroup><h2>Key-Value Store</h2></hgroup><article  id="key-value-store">
+
+<p>Principe :</p>
+
+<ul>
+<li>Système à base de couples <em>clé / valeur</em></li>
+<li>Tableau associant des clés à un espace mémoire où sont stockées les valeurs</li>
+<li>Une valeur peut être n&#39;importe quel objet (chaîne, numérique, objet, &#8230;)</li>
+<li>On ne peut requêter le système que sur la clé, et pas sur le contenu de la valeur</li>
+<li>Structure de la valeur inconnue par le système (c&#39;est l&#39;applicatif qui gère)</li>
+<li>Modèle assimilé à une table de hashage</li>
+</ul>
+
+<p>Exemples :</p>
+
+<ul>
+<li><a href='http://aws.amazon.com/dynamodb/' title=''>DynamoDB</a></li>
+<li><a href='http://redis.io/' title=''>Redis</a></li>
+<li><a href='http://project-voldemort.com/' title=''>Voldemort</a></li>
+</ul>
+
+</article></slide><slide class=''><hgroup><h2>Key-Value Store (suite)</h2></hgroup><article  id="key-value-store-suite">
+
+<p>4 opérations possibles (<strong>CRUD</strong>) :</p>
+
+<ul>
+<li><code>create(key, value)</code> : on associe une valeur à la clé</li>
+<li><code>read(key)</code> : on renvoie la valeur qui correspond à la clé</li>
+<li><code>update(key, value)</code> : on met à jour la valeur correspondant à la clé</li>
+<li><code>delete(key)</code> : on supprime la valeur correspondant à la clé</li>
+</ul>
+
+</article></slide><slide class=''><hgroup><h2>Key-Value Store (suite)</h2></hgroup><article  id="key-value-store-suite-1">
+
+<p><strong>Pour</strong> :</p>
+
+<ul>
+<li>Interface de requêtage très simple et souvent accessible facilement, par n&#39;importe quel langage</li>
+<li>Performances très élevées en lecture et en écriture</li>
+</ul>
+
+<p><strong>Contre</strong> :</p>
+
+<ul>
+<li>Modèle très (trop ?) simple</li>
+<li>Traitements complexes à faire du côté de l&#39;application</li>
+</ul>
+
+</article></slide><slide class=''><hgroup><h2>Document-Oriented Store</h2></hgroup><article  id="document-oriented-store">
+
+<p>Principe :</p>
+
+<ul>
+<li>Documents stockés dans un format clé/valeur, où la valeur est structuré</li>
+<li>Structure d&#39;un document sous forme arborescente</li>
+<li>Pas de schéma pré-définis des documents, d&#39;où une grande adaptabilité</li>
+<li>Interface de requêtage simple</li>
+<li>Contrairement au modèle <em>key-value</em>, on peut requêter sur les valeurs</li>
+</ul>
+
+<p>Exemples :</p>
+
+<ul>
+<li><a href='http://www.mongodb.org/' title=''>MongoDB</a></li>
+<li><a href='http://couchdb.apache.org/' title=''>CouchDB</a></li>
+<li><a href='http://www.elasticsearch.org/' title=''>Elasticsearch</a></li>
+</ul>
+
+</article></slide><slide class=''><hgroup><h2>Document-Oriented Store (suite)</h2></hgroup><article  id="document-oriented-store-suite">
+
+<p>Un document est composé de champs associés à des valeurs (entier, numérique, chaîne, liste, tableau), dans un format type JSON ou XML</p>
+
+<p>Grande hétérogénéité permise entre les documents, puisque la structure de ceux-ci n&#39;est jamais pré-supposée</p>
+
+<p>Pas de prototypage ou de modélisation des données en amont nécessaires</p>
+
+</article></slide><slide class=''><hgroup><h2>Document-Oriented Store (suite)</h2></hgroup><article  id="document-oriented-store-suite-1">
+
+<p><strong>Pour</strong></p>
+
+<ul>
+<li>Modèle de données simple et puissant</li>
+<li>Mise à l&#39;échelle aisée</li>
+<li>Requêtage sur le contenu des documents possible</li>
+</ul>
+
+<p><strong>Contre</strong></p>
+
+<ul>
+<li>pas fait pour des données liées</li>
+<li>lenteur éventuelle sur des requêtes complexes</li>
+</ul>
+
+</article></slide><slide class=''><hgroup><h2>Column-Oriented Store</h2></hgroup><article  id="column-oriented-store">
+
+<p>Principe :</p>
+
+<ul>
+<li>Données stockées par colonnes, et non par lignes</li>
+<li>A chaque valeur possible d&#39;un attribut, on indique l&#39;objet ayant cette valeur (compression possible de la colonne si regroupement des valeurs identiques)</li>
+<li>Ajout d&#39;une colonne simple, mais ajout d&#39;une ligne complexe</li>
+<li>Modèle très efficace pour l&#39;analyse de données</li>
+</ul>
+
+<p>Exemples :</p>
+
+<ul>
+<li><a href='http://hbase.apache.org/' title=''>HBase</a></li>
+<li><a href='https://cassandra.apache.org/' title=''>Cassandra</a></li>
+<li><a href='http://hypertable.org/' title=''>Hypertable</a></li>
+</ul>
+
+</article></slide><slide class=''><hgroup><h2>Column-Oriented Store (suite)</h2></hgroup><article  id="column-oriented-store-suite">
+
+<p>Il existe deux sous-types de ce genre de système :</p>
+
+<ul>
+<li>Stockage des colonnes sans compression et de manière séparée</li>
+<li>Regroupement de plusieurs colonnes dans des familles de colonnes</li>
+</ul>
+
+<p>Bien qu&#39;ils soient étiquetés dans le même groupe pour les BD NoSQL, ces deux types ne répondent pas aux mêmes besoins et il est important de savoir ce qu&#39;on veut faire pour choisir entre les deux</p>
+
+</article></slide><slide class=''><hgroup><h2>Column-Oriented Store (suite)</h2></hgroup><article  id="column-oriented-store-suite-1">
+
+<p><strong>Pour</strong></p>
+
+<ul>
+<li>Prise en compte très facile de données <em>sparse</em> (type <strong>B</strong>) (pas de valeur <code>NULL</code> présente dans les données)</li>
+<li>Parfait pour les datawarehouses (type <strong>A</strong>) et pour les opérations de type agrégation</li>
+<li>Très grande flexibilité (type <strong>B</strong>)</li>
+</ul>
+
+<p><strong>Contre</strong></p>
+
+<ul>
+<li>Pas adapté aux données reliées ou complexes</li>
+<li>Maintenance lourde</li>
+</ul>
+
+</article></slide><slide class=''><hgroup><h2>Graph Database</h2></hgroup><article  id="graph-database">
+
+<p>Principe :</p>
+
+<ul>
+<li>Modèle basé sur la théorie des graphes</li>
+<li>Adapté à la manipulation d&#39;objets structuré en réseau : cartographie, réseaux sociaux, &#8230;</li>
+<li>2 composants principaux :
+
+<ul>
+<li>Base de stockage des objets (chaque objet est un noeud du graphe)</li>
+<li>Description des relations entre objets (avec possiblement des propriétés)</li>
+</ul></li>
+<li>Capacité à manipuler des relations non-triviales et/ou variables</li>
+</ul>
+
+<p>Exemples :</p>
+
+<ul>
+<li><a href='http://www.orientechnologies.com/' title=''>OrientDB</a></li>
+<li><a href='http://www.neo4j.org/' title=''>Neo4J</a></li>
+<li><a href='http://www.infinitegraph.com/' title=''>Infinite Graph</a></li>
+</ul>
+
+</article></slide><slide class=''><hgroup><h2>Graph Database (suite)</h2></hgroup><article  id="graph-database-suite">
+
+<p>Typiquement adapté aux traitements des problématiques de type réseaux sociaux ou de cartographie, et donc beaucoup plus rapide qu&#39;un SGBDR dans un tel cadre</p>
+
+<p>Particulièrement adapté à ce qu&#39;on appelle le <em>Web sémantique</em> et les moteurs de recommandation</p>
+
+<p><strong>Pour</strong></p>
+
+<ul>
+<li>Très efficace pour les données liées</li>
+<li>Modèles d&#39;interrogation établis et performant</li>
+<li>Capacité de gérer des (très) grosses quantités de données</li>
+</ul>
+
+<p><strong>Contre</strong></p>
+
+<ul>
+<li>Partitionnement (de type <em>sharding</em>)</li>
+</ul>
+
+</article></slide><slide class=''><hgroup><h2>Lequel prendre ?</h2></hgroup><article  id="lequel-prendre">
+
+<ul>
+<li>Faire un tour sur <a href='http://db-engines.com/en/' title=''>db-engines.com</a> pour voir les BD existantes et les tendances du moment</li>
+<li>Benchmarking possible avec <a href='http://labs.yahoo.com/news/yahoo-cloud-serving-benchmark/' title=''>YCSB</a>
+
+<ul>
+<li><em>Yahoo! Cloud Serving Benchmark</em> (code disponible sur <a href='https://github.com/brianfrankcooper/YCSB/' title=''>GitHub</a>)</li>
+</ul></li>
+<li>Il y a un très bon <a href='http://www.altoros.com/vendor_independent_comparison_of_nosql_databases.html' title=''>comparatif</a> fait par un cabinet indépendant
+
+<ul>
+<li>rapport disponible sur demande</li>
+<li>basé sur <em>YCSB</em></li>
+</ul></li>
+<li>Test possible à faible coût avec <a href='http://aws.amazon.com/' title=''>Amazon Web Service</a></li>
+<li>Réfléchir à l&#39;utilisation à venir et surtout
+
+<ul>
+<li>Quelles requêtes je vais avoir besoin de faire ?</li>
+<li>Quelles performances je veux avoir en lecture ? en écriture ?</li>
+</ul></li>
+<li>Ne pas forcément rejeter les BD relationnelles sans avoir peser le pour et le contre</li>
+</ul>
+
+</article></slide><slide class=''><hgroup><h2>Utilisations principales par type de BD</h2></hgroup><article  id="utilisations-principales-par-type-de-bd">
+
+<ul>
+<li><em>Key-Value Store</em>
+
+<ul>
+<li>dépôt de données avec besoins de requêtage très simples</li>
+<li>système de stockage de cache ou dʼinformation de sessions distribuées</li>
+<li>profils, préférences dʼutilisateur, paniers d&#39;achat, capteurs, logs</li>
+</ul></li>
+<li><em>Column Store</em>
+
+<ul>
+<li>logging et analyse de clientèle (NetFlix)</li>
+<li>optimisation de recherche (eBay)</li>
+<li>BI (Adobe)</li>
+<li>Analyse d&#39;audience</li>
+</ul></li>
+</ul>
+
+</article></slide><slide class=''><hgroup><h2>Utilisations principales par type de BD (suite)</h2></hgroup><article  id="utilisations-principales-par-type-de-bd-suite">
+
+<ul>
+<li><em>Document Store</em>
+
+<ul>
+<li>Enregistrement dʼévénements</li>
+<li>Systèmes de gestion de contenu (CMS)</li>
+<li>Web analytique ou analytique temps-réel</li>
+<li>Catalogue de produits</li>
+<li>Systèmes d&#39;exploitation</li>
+</ul></li>
+<li><em>Graph database</em>
+
+<ul>
+<li>Moteurs de recommandation</li>
+<li>BI, Semantic Web</li>
+<li>Social Computing</li>
+<li>Données géospatiales</li>
+</ul></li>
+</ul></article></slide>
+
+
+  <slide class="backdrop"></slide>
+
+</slides>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+<!-- map slide visiblity events into shiny -->
+<script>
+  (function() {
+    if (window.jQuery) {
+       window.jQuery(document).on('slideleave', function(e) {
+         window.jQuery(e.target).trigger('hidden');
+      });
+       window.jQuery(document).on('slideenter', function(e) {
+         window.jQuery(e.target).trigger('shown');
+      });
+    }
+  })();
+</script>
+
+</body>
+</html>

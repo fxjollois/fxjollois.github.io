@@ -1,0 +1,1252 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+<meta charset="utf-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="pandoc" />
+
+
+
+
+<title>TP5 - Récapitulatif - correction</title>
+
+<script src="libs/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="libs/bootstrap-3.3.5/css/journal.min.css" rel="stylesheet" />
+<script src="libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<script src="libs/navigation-1.1/tabsets.js"></script>
+<link href="libs/highlightjs-1.1/default.css" rel="stylesheet" />
+<script src="libs/highlightjs-1.1/highlight.js"></script>
+<!--
+    Font Awesome
+-->
+<script src="https://use.fontawesome.com/32d8325004.js"></script>
+<link rel="stylesheet" href="libs/font-awesome-4.7.0/css/font-awesome.min.css">
+
+<!--
+    CSS perso
+-->
+<style>
+    .contenu {
+        margin-bottom: 50px;
+    }
+
+    .contact-liens {
+        text-align: center;
+    }
+    .contact-liens:hover {
+        text-decoration: none;
+    }
+    .contact-icones {
+        height: 30px;
+    }
+
+    /* Espacement pour barre du haut et pied de page */
+    #header, .section.level1 {
+        margin-top: 60px;
+        margin-bottom: 60px;
+    }
+    /* Espacement pour table des matières */
+    #TOC {
+        margin-top: 100px;
+    }
+    
+    .footer {
+        position: fixed;
+        width: 100%;
+        text-align: center;
+        bottom: 0;
+        left: 0;
+        background-color: #E6E6E6;
+    }
+</style>
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
+<script type="text/javascript">
+if (window.hljs && document.readyState && document.readyState === "complete") {
+   window.setTimeout(function() {
+      hljs.initHighlighting();
+   }, 0);
+}
+</script>
+
+
+
+<style type="text/css">
+h1 {
+  font-size: 34px;
+}
+h1.title {
+  font-size: 38px;
+}
+h2 {
+  font-size: 30px;
+}
+h3 {
+  font-size: 24px;
+}
+h4 {
+  font-size: 18px;
+}
+h5 {
+  font-size: 16px;
+}
+h6 {
+  font-size: 12px;
+}
+.table th:not([align]) {
+  text-align: left;
+}
+</style>
+
+<link rel="stylesheet" href="libs/bootstrap-journal.min.css" type="text/css" />
+
+</head>
+
+<body>
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img {
+  max-width:100%;
+  height: auto;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+</style>
+
+
+
+<div class="container-fluid main-container">
+
+<!-- tabsets -->
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+</script>
+
+<!-- code folding -->
+
+
+
+
+
+<div class="navbar navbar-default navbar-fixed-top">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-main">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">FX Jollois</a>
+    </div>
+    <div id="navbar-main" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button">Données <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+              <li><a href="accesdonnees.html">A télécharger</a></li>
+              <li><a href="donnees-integrees-r.html">Sous R</a></li>
+          </ul>
+        </li>
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button">Enseignement <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li class="dropdown-header">DUT 1ère année</li>
+            <li><a href="exploitation-donnees.html">Exploitation de données</a></li>
+            <li><a href="initiation-a-r.html">Initiation à R</a></li>
+            <li><a href="reporting.html">Reporting</a></li>
+            <li><a href="complements-r.html">Compléments sur R</a></li>
+            <li class="dropdown-header">DUT 2ème année</li>
+            <li><a href="prog-stat-r.html">Programmation statistique avec R</a></li>
+            <li class="dropdown-header">LP MDS Santé</li>
+            <li><a href="info-dec-sante.html">Informatique décisionnelle</a></li>
+            <li class="dropdown-header">DU Analyste Big Data</li>
+            <li><a href="initiation-r-du.html">Initiation à R</a></li>
+            <li><a href="connexion-r-mongodb.html">Connexion entre R et MongoDB</a></li>
+            <li class="dropdown-header">DU Dataviz</li>
+            <li><a href="analyse-donnees.html">Analyse de données</a></li>
+            <li><a href="visualisation-donnees.html">Visualisation de données - R</a></li>
+            <li><a href="visualisation-donnees-tableau.html">Visualisation de données - Tableau</a></li>
+            <li><a href="visualisation-donnees-d3.html">Visualisation de données - D3</a></li>
+            <li role="separator" class="divider"></li>
+            <li class="dropdown-header">Master</li>
+            <li><a href="slides/cnam-classif-modeles.html">Classification et Modèles de mélange</a></li>
+            <li><a href="analyse-donnees-massives.html">Analyse de Données Massives</a></li>
+            <li class="dropdown-header">Iran</li>
+            <li><a href="stat-prog-R.html">Statistical Programming using R</a></li>
+          </ul>
+        </li>
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button">Recherche <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li><a href="recherche.html">Sujets</a></li>
+            <li><a href="publications.html">Publications</a></li>
+          </ul>
+        </li>
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button">Réalisations <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li><a href="realisations.html">Détail</a></li>
+            <li role="separator" class="divider"></li>
+            <li><a href="http://up5.fr/explore-data" target="_blank">explore-data</a></li>
+            <li><a href="http://fxjollois.github.io/cours-sql/" target="_blank">Appli web de cours pour SQL</a></li>
+          </ul>
+        </li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container-fluid -->
+</div>
+<div class="contenu">
+
+<div class="fluid-row" id="header">
+
+
+
+<h1 class="title toc-ignore">TP5 - Récapitulatif - <em>correction</em></h1>
+<h3 class="subtitle"><em>Initiation a <code>R</code> - STID 1ère année</em></h3>
+
+</div>
+
+
+<p>Créer un document <code>html</code> en <code>R markdown</code>, contenant les éléments suivants. Vous devez faire un chapitre (avec titre de niveau 2 donc), pour chaque item de la liste suivante. N’hésitez pas à faire des sous-partie pour chaque sous-item. Vous devez utiliser le langage <code>R</code>, et pas de <code>SQL</code>.</p>
+<div id="importation" class="section level2">
+<h2>Importation</h2>
+<p>Importer les données dans <code>R</code>, à l’aide de <code>read.table()</code></p>
+<pre class="r"><code>Categorie = read.table(&quot;Categorie.txt&quot;,
+                       header = T, sep = &quot;;&quot;, quote = &#39;&quot;&#39;, encoding = &quot;UTF-8&quot;)
+Client = read.table(&quot;Client.txt&quot;,
+                       header = T, sep = &quot;;&quot;, quote = &#39;&quot;&#39;, encoding = &quot;UTF-8&quot;)
+Commande = read.table(&quot;Commande.txt&quot;,
+                       header = T, sep = &quot;;&quot;, quote = &#39;&quot;&#39;, encoding = &quot;UTF-8&quot;)
+DetailCommande = read.table(&quot;DetailCommande.txt&quot;,
+                       header = T, sep = &quot;;&quot;, quote = &#39;&quot;&#39;, encoding = &quot;UTF-8&quot;)
+Employe = read.table(&quot;Employe.txt&quot;,
+                       header = T, sep = &quot;;&quot;, quote = &#39;&quot;&#39;, encoding = &quot;UTF-8&quot;)
+Fournisseur = read.table(&quot;Fournisseur.txt&quot;,
+                       header = T, sep = &quot;;&quot;, quote = &#39;&quot;&#39;, encoding = &quot;UTF-8&quot;)
+Messager = read.table(&quot;Messager.txt&quot;,
+                       header = T, sep = &quot;;&quot;, quote = &#39;&quot;&#39;, encoding = &quot;UTF-8&quot;)
+Produit = read.table(&quot;Produit.txt&quot;,
+                       header = T, sep = &quot;;&quot;, quote = &#39;&quot;&#39;, encoding = &quot;UTF-8&quot;)</code></pre>
+<hr />
+</div>
+<div id="employes" class="section level2">
+<h2>Employés</h2>
+<div id="lister-les-employes-nom-et-prenom-situes-au-royaume-uni" class="section level3">
+<h3>Lister les employés (nom et prénom) situés au <code>&quot;Royaume-Uni&quot;</code></h3>
+<p>Ici, nous utilisons la fonction <code>subset()</code> qui permet de faire :</p>
+<ul>
+<li>une restriction aux employés du Royaume-Uni (avec <code>subset =</code>)</li>
+<li>une projection sur le nom et le prénom (avec <code>select =</code>)</li>
+</ul>
+<pre class="r"><code>A = subset(Employe, subset = Pays == &quot;Royaume-Uni&quot;, select = c(Nom, prenom))
+knitr::kable(A, row.names = FALSE, caption = &quot;Employés du Royaume-Uni&quot;)</code></pre>
+<table>
+<caption>Employés du Royaume-Uni</caption>
+<thead>
+<tr class="header">
+<th align="left">Nom</th>
+<th align="left">prenom</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">Buchanan</td>
+<td align="left">Steven</td>
+</tr>
+<tr class="even">
+<td align="left">Suyama</td>
+<td align="left">Michael</td>
+</tr>
+<tr class="odd">
+<td align="left">Emery</td>
+<td align="left">Patrick</td>
+</tr>
+<tr class="even">
+<td align="left">Dodsworth</td>
+<td align="left">Anne</td>
+</tr>
+<tr class="odd">
+<td align="left">Suyama</td>
+<td align="left">Jordan</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="lister-les-differentes-fonctions-occupees-par-les-employes" class="section level3">
+<h3>Lister les différentes fonctions occupées par les employés</h3>
+<p>La première étape ici est de créer une table avec uniquement la colone <code>Fonction</code>. Ensuite, grâce à la fonction <code>unique()</code>, nous supprimons les doublons.</p>
+<pre class="r"><code>B1 = subset(Employe, select = Fonction)
+B2 = unique(B1)
+knitr::kable(B2, row.names = FALSE, caption = &quot;Fonctions existantes&quot;)</code></pre>
+<table>
+<caption>Fonctions existantes</caption>
+<thead>
+<tr class="header">
+<th align="left">Fonction</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">Représentant(e)</td>
+</tr>
+<tr class="even">
+<td align="left">Vice-Président</td>
+</tr>
+<tr class="odd">
+<td align="left">Chef des ventes</td>
+</tr>
+<tr class="even">
+<td align="left">Assistante commerciale</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="indiquer-le-nombre-demployes-par-pays" class="section level3">
+<h3>Indiquer le nombre d’employés par pays</h3>
+<p>Après avoir dénombrer les employés par pays avec un calcul d’agrégat, réalisé via la fonction <code>aggregate()</code>, nous renommons les colonnes du résultat pour que le tableau fourni soit correct.</p>
+<pre class="r"><code>C1 = aggregate(NoEmp ~ Pays, Employe, length)
+C2 = setNames(C1, c(&quot;Pays&quot;, &quot;Effectif&quot;))
+knitr::kable(C2, row.names = FALSE, caption = &quot;Répartition des employés par pays&quot;)</code></pre>
+<table>
+<caption>Répartition des employés par pays</caption>
+<thead>
+<tr class="header">
+<th align="left">Pays</th>
+<th align="right">Effectif</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">Etats-Unis</td>
+<td align="right">5</td>
+</tr>
+<tr class="even">
+<td align="left">Royaume-Uni</td>
+<td align="right">5</td>
+</tr>
+</tbody>
+</table>
+<hr />
+</div>
+</div>
+<div id="produits" class="section level2">
+<h2>Produits</h2>
+<div id="lister-le-nombre-de-produits-par-pays-des-fournisseurs" class="section level3">
+<h3>Lister le nombre de produits par pays des fournisseurs</h3>
+<p>Dans cette demande, nous devons regrouper des informations de <code>Produit</code> (dénombrement) avec des informations de <code>Fournisseur</code> (pays). Nou devons donc faire une jointure (avec <code>merge()</code>), puis faire le calcul d’agrégat et un renommage.</p>
+<pre class="r"><code>D1 = merge(Produit, Fournisseur)
+D2 = aggregate(Refprod ~ Pays, D1, length)
+D3 = setNames(D2, c(&quot;Pays&quot;, &quot;Effectif&quot;))
+knitr::kable(D3, row.names = FALSE, caption = &quot;Répartition des produits par pays&quot;)</code></pre>
+<table>
+<caption>Répartition des produits par pays</caption>
+<thead>
+<tr class="header">
+<th align="left">Pays</th>
+<th align="right">Effectif</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">Allemagne</td>
+<td align="right">9</td>
+</tr>
+<tr class="even">
+<td align="left">Australie</td>
+<td align="right">8</td>
+</tr>
+<tr class="odd">
+<td align="left">Brésil</td>
+<td align="right">1</td>
+</tr>
+<tr class="even">
+<td align="left">Canada</td>
+<td align="right">4</td>
+</tr>
+<tr class="odd">
+<td align="left">Danemark</td>
+<td align="right">2</td>
+</tr>
+<tr class="even">
+<td align="left">Espagne</td>
+<td align="right">2</td>
+</tr>
+<tr class="odd">
+<td align="left">Etats-Unis</td>
+<td align="right">12</td>
+</tr>
+<tr class="even">
+<td align="left">Finlande</td>
+<td align="right">3</td>
+</tr>
+<tr class="odd">
+<td align="left">France</td>
+<td align="right">10</td>
+</tr>
+<tr class="even">
+<td align="left">Italie</td>
+<td align="right">6</td>
+</tr>
+<tr class="odd">
+<td align="left">Japon</td>
+<td align="right">6</td>
+</tr>
+<tr class="even">
+<td align="left">Norvège</td>
+<td align="right">3</td>
+</tr>
+<tr class="odd">
+<td align="left">Pays-Bas</td>
+<td align="right">2</td>
+</tr>
+<tr class="even">
+<td align="left">Royaume-Uni</td>
+<td align="right">7</td>
+</tr>
+<tr class="odd">
+<td align="left">Singapour</td>
+<td align="right">3</td>
+</tr>
+<tr class="even">
+<td align="left">Suède</td>
+<td align="right">6</td>
+</tr>
+</tbody>
+</table>
+<p>On peut aussi vouloir trier le résultat par ordre décroissant de nombre de produits.</p>
+<pre class="r"><code>D4 = D3[order(D3$Effectif, decreasing = TRUE),]
+knitr::kable(D4, row.names = FALSE, caption = &quot;Répartition triée&quot;)</code></pre>
+<table>
+<caption>Répartition triée</caption>
+<thead>
+<tr class="header">
+<th align="left">Pays</th>
+<th align="right">Effectif</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">Etats-Unis</td>
+<td align="right">12</td>
+</tr>
+<tr class="even">
+<td align="left">France</td>
+<td align="right">10</td>
+</tr>
+<tr class="odd">
+<td align="left">Allemagne</td>
+<td align="right">9</td>
+</tr>
+<tr class="even">
+<td align="left">Australie</td>
+<td align="right">8</td>
+</tr>
+<tr class="odd">
+<td align="left">Royaume-Uni</td>
+<td align="right">7</td>
+</tr>
+<tr class="even">
+<td align="left">Italie</td>
+<td align="right">6</td>
+</tr>
+<tr class="odd">
+<td align="left">Japon</td>
+<td align="right">6</td>
+</tr>
+<tr class="even">
+<td align="left">Suède</td>
+<td align="right">6</td>
+</tr>
+<tr class="odd">
+<td align="left">Canada</td>
+<td align="right">4</td>
+</tr>
+<tr class="even">
+<td align="left">Finlande</td>
+<td align="right">3</td>
+</tr>
+<tr class="odd">
+<td align="left">Norvège</td>
+<td align="right">3</td>
+</tr>
+<tr class="even">
+<td align="left">Singapour</td>
+<td align="right">3</td>
+</tr>
+<tr class="odd">
+<td align="left">Danemark</td>
+<td align="right">2</td>
+</tr>
+<tr class="even">
+<td align="left">Espagne</td>
+<td align="right">2</td>
+</tr>
+<tr class="odd">
+<td align="left">Pays-Bas</td>
+<td align="right">2</td>
+</tr>
+<tr class="even">
+<td align="left">Brésil</td>
+<td align="right">1</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="lister-le-nombre-de-produits-par-categorie" class="section level3">
+<h3>Lister le nombre de produits par catégorie</h3>
+<p>Cette demande est similaire à la précédente. Par contre, vues les questions qui suivent, nous allons réutiliser le résultat de la jointure de <code>Produit</code> et <code>Categorie</code>.</p>
+<pre class="r"><code>E = merge(Produit, Categorie)
+E1a = aggregate(Refprod ~ NomCateg, E, length)
+E1b = setNames(E1a, c(&quot;Catégorie&quot;, &quot;Effectif&quot;))
+knitr::kable(E1a, row.names = FALSE, caption = &quot;Répartition des produits par catégorie&quot;)</code></pre>
+<table>
+<caption>Répartition des produits par catégorie</caption>
+<thead>
+<tr class="header">
+<th align="left">NomCateg</th>
+<th align="right">Refprod</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">Boissons</td>
+<td align="right">15</td>
+</tr>
+<tr class="even">
+<td align="left">Condiments</td>
+<td align="right">12</td>
+</tr>
+<tr class="odd">
+<td align="left">Desserts</td>
+<td align="right">14</td>
+</tr>
+<tr class="even">
+<td align="left">Pâtes et céréales</td>
+<td align="right">7</td>
+</tr>
+<tr class="odd">
+<td align="left">Poissons et fruits de mer</td>
+<td align="right">13</td>
+</tr>
+<tr class="even">
+<td align="left">Produits laitiers</td>
+<td align="right">12</td>
+</tr>
+<tr class="odd">
+<td align="left">Produits secs</td>
+<td align="right">5</td>
+</tr>
+<tr class="even">
+<td align="left">Viandes</td>
+<td align="right">6</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="ajouter-le-prix-moyen-le-prix-minimum-min-et-le-prix-maximum-max" class="section level3">
+<h3>Ajouter le prix moyen, le prix minimum (<code>min</code>) et le prix maximum (<code>max</code>)</h3>
+<p>Il faut ici créer les trois autres table, pour chaque agrégat à calculer, puis faire la jointure entre les 4 tables ainsi obtenues (avec la précédente).</p>
+<pre class="r"><code>E2a = aggregate(PrixUnit ~ NomCateg, E, mean)
+E2b = setNames(E2a, c(&quot;Catégorie&quot;, &quot;Prix moyen&quot;))
+E3a = aggregate(PrixUnit ~ NomCateg, E, min)
+E3b = setNames(E3a, c(&quot;Catégorie&quot;, &quot;Prix minimum&quot;))
+E4a = aggregate(PrixUnit ~ NomCateg, E, max)
+E4b = setNames(E4a, c(&quot;Catégorie&quot;, &quot;Prix maximum&quot;))
+Efinal = merge(merge(merge(E1b, E2b), E3b), E4b)
+knitr::kable(Efinal, row.names = FALSE, caption = &quot;Résumé des produits par catégorie&quot;, digits = 2)</code></pre>
+<table>
+<caption>Résumé des produits par catégorie</caption>
+<thead>
+<tr class="header">
+<th align="left">Catégorie</th>
+<th align="right">Effectif</th>
+<th align="right">Prix moyen</th>
+<th align="right">Prix minimum</th>
+<th align="right">Prix maximum</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">Boissons</td>
+<td align="right">15</td>
+<td align="right">191.58</td>
+<td align="right">22.50</td>
+<td align="right">1317.50</td>
+</tr>
+<tr class="even">
+<td align="left">Condiments</td>
+<td align="right">12</td>
+<td align="right">115.31</td>
+<td align="right">50.00</td>
+<td align="right">219.50</td>
+</tr>
+<tr class="odd">
+<td align="left">Desserts</td>
+<td align="right">14</td>
+<td align="right">140.06</td>
+<td align="right">46.00</td>
+<td align="right">405.00</td>
+</tr>
+<tr class="even">
+<td align="left">Pâtes et céréales</td>
+<td align="right">7</td>
+<td align="right">101.25</td>
+<td align="right">35.00</td>
+<td align="right">190.00</td>
+</tr>
+<tr class="odd">
+<td align="left">Poissons et fruits de mer</td>
+<td align="right">13</td>
+<td align="right">98.53</td>
+<td align="right">30.00</td>
+<td align="right">312.50</td>
+</tr>
+<tr class="even">
+<td align="left">Produits laitiers</td>
+<td align="right">12</td>
+<td align="right">148.04</td>
+<td align="right">12.50</td>
+<td align="right">275.00</td>
+</tr>
+<tr class="odd">
+<td align="left">Produits secs</td>
+<td align="right">5</td>
+<td align="right">161.85</td>
+<td align="right">50.00</td>
+<td align="right">265.00</td>
+</tr>
+<tr class="even">
+<td align="left">Viandes</td>
+<td align="right">6</td>
+<td align="right">270.03</td>
+<td align="right">37.25</td>
+<td align="right">618.95</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div id="creer-une-table-montantcommande-qui-contient-pour-chaque-commande-les-informations-suivantes" class="section level2">
+<h2>Créer une table <code>MontantCommande</code> qui contient, pour chaque commande, les informations suivantes</h2>
+<ul>
+<li>Numéro de commande</li>
+<li>Montant total de la commande</li>
+<li>Frais de port</li>
+<li>Montant total des produits</li>
+<li>Nombre de produits différents dans la commande</li>
+</ul>
+<p>Pour cette demande, il faut en premier lieu calculer le faire coût de chaque produit, stocké dans une nouvelle variable. Puis, on réalise les calculs d’agrégats (nombre et somme) à partir de la table <code>DetailCommade</code>. Ensuite, on joint <code>Commande</code> et les deux tables créées (avec un renommage des variables de celles-ci précédemment). Enfin, on ne garde que quelques informations et on calcule le montant final.</p>
+<pre class="r"><code>F1 = transform(DetailCommande, coutProduit = PrixUnit * Qte * (1 - Remise.))
+F2a = aggregate(Refprod ~ Nocom, F1, length) 
+F2b = setNames(F2a, c(&quot;NoCom&quot;, &quot;NbProduits&quot;))
+F3a = aggregate(coutProduit ~ Nocom, F1, sum)
+F3b = setNames(F3a, c(&quot;NoCom&quot;, &quot;MtProduits&quot;))
+F4 = merge(merge(Commande, F2b), F3b)
+F5 = subset(F4, select = c(NoCom, Port, MtProduits, NbProduits))
+MontantCommande = transform(F5, MtCommande = Port + MtProduits)
+knitr::kable(head(MontantCommande), row.names = FALSE, caption = &quot;Premières lignes de la table `MontantCommande`&quot;, digits = 2)</code></pre>
+<table>
+<caption>Premières lignes de la table <code>MontantCommande</code></caption>
+<thead>
+<tr class="header">
+<th align="right">NoCom</th>
+<th align="right">Port</th>
+<th align="right">MtProduits</th>
+<th align="right">NbProduits</th>
+<th align="right">MtCommande</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="right">10248</td>
+<td align="right">162</td>
+<td align="right">2200.0</td>
+<td align="right">3</td>
+<td align="right">2362.0</td>
+</tr>
+<tr class="even">
+<td align="right">10249</td>
+<td align="right">58</td>
+<td align="right">9317.0</td>
+<td align="right">2</td>
+<td align="right">9375.0</td>
+</tr>
+<tr class="odd">
+<td align="right">10250</td>
+<td align="right">329</td>
+<td align="right">7758.0</td>
+<td align="right">3</td>
+<td align="right">8087.0</td>
+</tr>
+<tr class="even">
+<td align="right">10251</td>
+<td align="right">207</td>
+<td align="right">3270.3</td>
+<td align="right">3</td>
+<td align="right">3477.3</td>
+</tr>
+<tr class="odd">
+<td align="right">10252</td>
+<td align="right">256</td>
+<td align="right">17989.5</td>
+<td align="right">3</td>
+<td align="right">18245.5</td>
+</tr>
+<tr class="even">
+<td align="right">10253</td>
+<td align="right">291</td>
+<td align="right">7224.0</td>
+<td align="right">3</td>
+<td align="right">7515.0</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="calculer-le-montant-total-des-commandes-de-chaque-client" class="section level2">
+<h2>Calculer le montant total des commandes de chaque client</h2>
+<p>Après avoir fait la jointure entre <code>Commande</code> et la nouvelle table <code>MontantCommande</code>, on fait la somme des montants des commandes pour chaque client. Ensuite, on regroupe avec <code>Clinet</code> pour récupérer le nom de la société. Enfin, puisqu’on affiche un chiffre d’affaires par client, on fait un tri décroissant sur le montant total des commandes.</p>
+<pre class="r"><code>G1 = merge(Commande, MontantCommande)
+G2 = aggregate(MtCommande ~ CodeCli, G1, sum)
+G3 = setNames(G2, c(&quot;CodeCli&quot;, &quot;MontantCommandes&quot;))
+G4 = merge(Client, G3)
+G5 = subset(G4, select = c(Societe, MontantCommandes))
+G6 = G5[order(G5$MontantCommandes, decreasing = TRUE),]
+knitr::kable(G6, row.names = FALSE, caption = &quot;Chiffre d&#39;affaires de chaque client&quot;)</code></pre>
+<table>
+<caption>Chiffre d’affaires de chaque client</caption>
+<thead>
+<tr class="header">
+<th align="left">Societe</th>
+<th align="right">MontantCommandes</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">QUICK-Stop</td>
+<td align="right">579397.65</td>
+</tr>
+<tr class="even">
+<td align="left">Ernst Handel</td>
+<td align="right">555283.90</td>
+</tr>
+<tr class="odd">
+<td align="left">Save-a-lot Markets</td>
+<td align="right">555230.80</td>
+</tr>
+<tr class="even">
+<td align="left">Rattlesnake Canyon Grocery</td>
+<td align="right">266146.94</td>
+</tr>
+<tr class="odd">
+<td align="left">Hungry Owl All-Night Grocers</td>
+<td align="right">263601.05</td>
+</tr>
+<tr class="even">
+<td align="left">Hanari Carnes</td>
+<td align="right">167771.10</td>
+</tr>
+<tr class="odd">
+<td align="left">Königlich Essen</td>
+<td align="right">158563.15</td>
+</tr>
+<tr class="even">
+<td align="left">Folk och fä HB</td>
+<td align="right">156255.10</td>
+</tr>
+<tr class="odd">
+<td align="left">Mère Paillarde</td>
+<td align="right">151313.15</td>
+</tr>
+<tr class="even">
+<td align="left">White Clover Markets</td>
+<td align="right">143566.35</td>
+</tr>
+<tr class="odd">
+<td align="left">Frankenversand</td>
+<td align="right">140280.65</td>
+</tr>
+<tr class="even">
+<td align="left">Queen Cozinha</td>
+<td align="right">138451.95</td>
+</tr>
+<tr class="odd">
+<td align="left">Berglunds snabbköp</td>
+<td align="right">132446.85</td>
+</tr>
+<tr class="even">
+<td align="left">Suprêmes délices</td>
+<td align="right">124537.40</td>
+</tr>
+<tr class="odd">
+<td align="left">Piccolo und mehr</td>
+<td align="right">121536.40</td>
+</tr>
+<tr class="even">
+<td align="left">HILARIÓN-Abastos</td>
+<td align="right">120125.00</td>
+</tr>
+<tr class="odd">
+<td align="left">Bon app’</td>
+<td align="right">116624.05</td>
+</tr>
+<tr class="even">
+<td align="left">Bottom-Dollar Markets</td>
+<td align="right">107924.25</td>
+</tr>
+<tr class="odd">
+<td align="left">Richter Supermarkt</td>
+<td align="right">101718.40</td>
+</tr>
+<tr class="even">
+<td align="left">Lehmanns Marktstand</td>
+<td align="right">101356.25</td>
+</tr>
+<tr class="odd">
+<td align="left">Great Lakes Food Market</td>
+<td align="right">97980.85</td>
+</tr>
+<tr class="even">
+<td align="left">Blondel père et fils</td>
+<td align="right">95757.15</td>
+</tr>
+<tr class="odd">
+<td align="left">Simons bistro</td>
+<td align="right">86306.85</td>
+</tr>
+<tr class="even">
+<td align="left">LINO-Delicateses</td>
+<td align="right">85731.70</td>
+</tr>
+<tr class="odd">
+<td align="left">Seven Seas Imports</td>
+<td align="right">85658.30</td>
+</tr>
+<tr class="even">
+<td align="left">LILA-Supermercado</td>
+<td align="right">84046.65</td>
+</tr>
+<tr class="odd">
+<td align="left">Vaffeljernet</td>
+<td align="right">83946.00</td>
+</tr>
+<tr class="even">
+<td align="left">Wartian Herkku</td>
+<td align="right">82342.35</td>
+</tr>
+<tr class="odd">
+<td align="left">Old World Delicatessen</td>
+<td align="right">80779.75</td>
+</tr>
+<tr class="even">
+<td align="left">Eastern Connection</td>
+<td align="right">77969.00</td>
+</tr>
+<tr class="odd">
+<td align="left">Around the Horn</td>
+<td align="right">73507.50</td>
+</tr>
+<tr class="even">
+<td align="left">Ottilies Käseladen</td>
+<td align="right">66748.75</td>
+</tr>
+<tr class="odd">
+<td align="left">Ricardo Adocicados</td>
+<td align="right">65381.55</td>
+</tr>
+<tr class="even">
+<td align="left">Chop-suey Chinese</td>
+<td align="right">63591.80</td>
+</tr>
+<tr class="odd">
+<td align="left">Folies gourmandes</td>
+<td align="right">61484.00</td>
+</tr>
+<tr class="even">
+<td align="left">Godos Cocina Típica</td>
+<td align="right">60050.75</td>
+</tr>
+<tr class="odd">
+<td align="left">Split Rail Beer &amp; Ale</td>
+<td align="right">60021.40</td>
+</tr>
+<tr class="even">
+<td align="left">Tortuga Restaurante</td>
+<td align="right">56396.00</td>
+</tr>
+<tr class="odd">
+<td align="left">Maison Dewey</td>
+<td align="right">50988.70</td>
+</tr>
+<tr class="even">
+<td align="left">Die Wandernde Kuh</td>
+<td align="right">50088.65</td>
+</tr>
+<tr class="odd">
+<td align="left">La maison d’Asie</td>
+<td align="right">49827.50</td>
+</tr>
+<tr class="even">
+<td align="left">Victuailles en stock</td>
+<td align="right">48343.30</td>
+</tr>
+<tr class="odd">
+<td align="left">Gourmet Lanchonetes</td>
+<td align="right">43686.00</td>
+</tr>
+<tr class="even">
+<td align="left">Magazzini Alimentari Riuniti</td>
+<td align="right">38213.20</td>
+</tr>
+<tr class="odd">
+<td align="left">Reggiani Caseifici</td>
+<td align="right">36815.00</td>
+</tr>
+<tr class="even">
+<td align="left">B’s Beverages</td>
+<td align="right">36556.00</td>
+</tr>
+<tr class="odd">
+<td align="left">Antonio Moreno Taquería</td>
+<td align="right">36452.60</td>
+</tr>
+<tr class="even">
+<td align="left">Tradição Hipermercados</td>
+<td align="right">35595.40</td>
+</tr>
+<tr class="odd">
+<td align="left">Que Delícia</td>
+<td align="right">34957.65</td>
+</tr>
+<tr class="even">
+<td align="left">Furia Bacalhau e Frutos do Mar</td>
+<td align="right">33524.65</td>
+</tr>
+<tr class="odd">
+<td align="left">Island Trading</td>
+<td align="right">32533.00</td>
+</tr>
+<tr class="even">
+<td align="left">Wellington Importadora</td>
+<td align="right">31319.20</td>
+</tr>
+<tr class="odd">
+<td align="left">Santé Gourmet</td>
+<td align="right">30037.00</td>
+</tr>
+<tr class="even">
+<td align="left">Princesa Isabel Vinhos</td>
+<td align="right">27049.20</td>
+</tr>
+<tr class="odd">
+<td align="left">Morgenstern Gesundkost</td>
+<td align="right">26811.00</td>
+</tr>
+<tr class="even">
+<td align="left">Toms Spezialitäten</td>
+<td align="right">24504.80</td>
+</tr>
+<tr class="odd">
+<td align="left">Pericles Comidas clásicas</td>
+<td align="right">22612.00</td>
+</tr>
+<tr class="even">
+<td align="left">Bólido Comidas preparadas</td>
+<td align="right">22121.00</td>
+</tr>
+<tr class="odd">
+<td align="left">Familia Arquibaldo</td>
+<td align="right">21679.50</td>
+</tr>
+<tr class="even">
+<td align="left">Lonesome Pine Restaurant</td>
+<td align="right">21679.00</td>
+</tr>
+<tr class="odd">
+<td align="left">Drachenblut Delikatessen</td>
+<td align="right">20342.00</td>
+</tr>
+<tr class="even">
+<td align="left">Comércio Mineiro</td>
+<td align="right">19987.00</td>
+</tr>
+<tr class="odd">
+<td align="left">Océano Atlántico Ltda.</td>
+<td align="right">18839.00</td>
+</tr>
+<tr class="even">
+<td align="left">Wolski Zajazd</td>
+<td align="right">18515.00</td>
+</tr>
+<tr class="odd">
+<td align="left">The Big Cheese</td>
+<td align="right">18127.00</td>
+</tr>
+<tr class="even">
+<td align="left">Blauer See Delikatessen</td>
+<td align="right">17038.00</td>
+</tr>
+<tr class="odd">
+<td align="left">France restauration</td>
+<td align="right">16708.00</td>
+</tr>
+<tr class="even">
+<td align="left">Let’s Stop N Shop</td>
+<td align="right">16378.75</td>
+</tr>
+<tr class="odd">
+<td align="left">Hungry Coyote Import Store</td>
+<td align="right">16356.00</td>
+</tr>
+<tr class="even">
+<td align="left">Wilman Kala</td>
+<td align="right">16234.00</td>
+</tr>
+<tr class="odd">
+<td align="left">Rancho grande</td>
+<td align="right">15328.00</td>
+</tr>
+<tr class="even">
+<td align="left">Spécialités du monde</td>
+<td align="right">12661.00</td>
+</tr>
+<tr class="odd">
+<td align="left">Alfreds Futterkiste</td>
+<td align="right">11809.00</td>
+</tr>
+<tr class="even">
+<td align="left">La corne d’abondance</td>
+<td align="right">10400.00</td>
+</tr>
+<tr class="odd">
+<td align="left">The Cracker Box</td>
+<td align="right">10384.00</td>
+</tr>
+<tr class="even">
+<td align="left">Cactus Comidas para llevar</td>
+<td align="right">9433.00</td>
+</tr>
+<tr class="odd">
+<td align="left">Ana Trujillo Emparedados y helados</td>
+<td align="right">9272.00</td>
+</tr>
+<tr class="even">
+<td align="left">Consolidated Holdings</td>
+<td align="right">8871.00</td>
+</tr>
+<tr class="odd">
+<td align="left">Du monde entier</td>
+<td align="right">8394.00</td>
+</tr>
+<tr class="even">
+<td align="left">Trail’s Head Gourmet Provisioners</td>
+<td align="right">8196.00</td>
+</tr>
+<tr class="odd">
+<td align="left">Franchi S.p.A.</td>
+<td align="right">8103.00</td>
+</tr>
+<tr class="even">
+<td align="left">GROSELLA-Restaurante</td>
+<td align="right">7785.00</td>
+</tr>
+<tr class="odd">
+<td align="left">Vins et alcools Chevalier</td>
+<td align="right">7689.00</td>
+</tr>
+<tr class="even">
+<td align="left">Romero y tomillo</td>
+<td align="right">7677.00</td>
+</tr>
+<tr class="odd">
+<td align="left">Galería del gastrónomo</td>
+<td align="right">4376.00</td>
+</tr>
+<tr class="even">
+<td align="left">North/South</td>
+<td align="right">3433.00</td>
+</tr>
+<tr class="odd">
+<td align="left">Laughing Bacchus Wine Cellars</td>
+<td align="right">2650.00</td>
+</tr>
+<tr class="even">
+<td align="left">Lazy K Kountry Store</td>
+<td align="right">1887.00</td>
+</tr>
+<tr class="odd">
+<td align="left">Centro comercial Moctezuma</td>
+<td align="right">520.00</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="calculer-le-montant-total-des-commandes-pour-chaque-pays-des-clients" class="section level2">
+<h2>Calculer le montant total des commandes pour chaque pays des clients</h2>
+<p>On réutilise ici la table créée précédemment, résultante de la jointure entre <code>Client</code> et celle où l’on a calculer pour chaque client la somme des montants des commandes. On fait donc ensuite un aggrégat par pays, que l’on trie pour affichage.</p>
+<pre class="r"><code>H1 = aggregate(MontantCommandes ~ Pays, G4, sum)
+H2 = H1[order(H1$MontantCommandes, decreasing = TRUE),]
+knitr::kable(H2, row.names = FALSE, caption = &quot;Chiffre d&#39;affaires par pays&quot;)</code></pre>
+<table>
+<caption>Chiffre d’affaires par pays</caption>
+<thead>
+<tr class="header">
+<th align="left">Pays</th>
+<th align="right">MontantCommandes</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">États-Unis</td>
+<td align="right">1296733.84</td>
+</tr>
+<tr class="even">
+<td align="left">Allemagne</td>
+<td align="right">1196939.90</td>
+</tr>
+<tr class="odd">
+<td align="left">Autriche</td>
+<td align="right">676820.30</td>
+</tr>
+<tr class="even">
+<td align="left">Brésil</td>
+<td align="right">558829.35</td>
+</tr>
+<tr class="odd">
+<td align="left">France</td>
+<td align="right">427888.00</td>
+</tr>
+<tr class="even">
+<td align="left">Royaume-Uni</td>
+<td align="right">318527.80</td>
+</tr>
+<tr class="odd">
+<td align="left">Venezuela</td>
+<td align="right">297688.35</td>
+</tr>
+<tr class="even">
+<td align="left">Suède</td>
+<td align="right">288701.95</td>
+</tr>
+<tr class="odd">
+<td align="left">Irlande</td>
+<td align="right">263601.05</td>
+</tr>
+<tr class="even">
+<td align="left">Canada</td>
+<td align="right">261887.40</td>
+</tr>
+<tr class="odd">
+<td align="left">Belgique</td>
+<td align="right">175526.10</td>
+</tr>
+<tr class="even">
+<td align="left">Danemark</td>
+<td align="right">170252.85</td>
+</tr>
+<tr class="odd">
+<td align="left">Suisse</td>
+<td align="right">165310.20</td>
+</tr>
+<tr class="even">
+<td align="left">Mexique</td>
+<td align="right">125252.60</td>
+</tr>
+<tr class="odd">
+<td align="left">Finlande</td>
+<td align="right">98576.35</td>
+</tr>
+<tr class="even">
+<td align="left">Espagne</td>
+<td align="right">94224.75</td>
+</tr>
+<tr class="odd">
+<td align="left">Italie</td>
+<td align="right">83131.20</td>
+</tr>
+<tr class="even">
+<td align="left">Portugal</td>
+<td align="right">60573.85</td>
+</tr>
+<tr class="odd">
+<td align="left">Argentine</td>
+<td align="right">43600.00</td>
+</tr>
+<tr class="even">
+<td align="left">Norvège</td>
+<td align="right">30037.00</td>
+</tr>
+<tr class="odd">
+<td align="left">Pologne</td>
+<td align="right">18515.00</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+</div>
+<div class="footer">
+      Site créé avec <a href="http://www.r-project.org" target="_blank"><code>R</code></a> et la 
+      librairie  <a href="http://rmarkdown.rstudio.com/" target="_blank"><code>rmarkdown</code></a>.
+</div>
+<script>
+    $("#TOC").css("margin-top", "100px");
+</script>
+
+
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

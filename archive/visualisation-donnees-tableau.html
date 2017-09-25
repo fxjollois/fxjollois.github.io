@@ -1,0 +1,575 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+<meta charset="utf-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="pandoc" />
+
+
+
+
+<title>Visualisation de données - Tableau</title>
+
+<script src="libs/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="libs/bootstrap-3.3.5/css/journal.min.css" rel="stylesheet" />
+<script src="libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<script src="libs/navigation-1.1/tabsets.js"></script>
+<link href="libs/highlightjs-1.1/default.css" rel="stylesheet" />
+<script src="libs/highlightjs-1.1/highlight.js"></script>
+<!--
+    Font Awesome
+-->
+<script src="https://use.fontawesome.com/32d8325004.js"></script>
+<link rel="stylesheet" href="libs/font-awesome-4.7.0/css/font-awesome.min.css">
+
+<!--
+    CSS perso
+-->
+<style>
+    .contenu {
+        margin-bottom: 50px;
+    }
+
+    .contact-liens {
+        text-align: center;
+    }
+    .contact-liens:hover {
+        text-decoration: none;
+    }
+    .contact-icones {
+        height: 30px;
+    }
+
+    /* Espacement pour barre du haut et pied de page */
+    #header, .section.level1 {
+        margin-top: 60px;
+        margin-bottom: 60px;
+    }
+    /* Espacement pour table des matières */
+    #TOC {
+        margin-top: 100px;
+    }
+    
+    .footer {
+        position: fixed;
+        width: 100%;
+        text-align: center;
+        bottom: 0;
+        left: 0;
+        background-color: #E6E6E6;
+    }
+</style>
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
+<script type="text/javascript">
+if (window.hljs && document.readyState && document.readyState === "complete") {
+   window.setTimeout(function() {
+      hljs.initHighlighting();
+   }, 0);
+}
+</script>
+
+
+
+<style type="text/css">
+h1 {
+  font-size: 34px;
+}
+h1.title {
+  font-size: 38px;
+}
+h2 {
+  font-size: 30px;
+}
+h3 {
+  font-size: 24px;
+}
+h4 {
+  font-size: 18px;
+}
+h5 {
+  font-size: 16px;
+}
+h6 {
+  font-size: 12px;
+}
+.table th:not([align]) {
+  text-align: left;
+}
+</style>
+
+<link rel="stylesheet" href="libs/bootstrap-journal.min.css" type="text/css" />
+
+</head>
+
+<body>
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img {
+  max-width:100%;
+  height: auto;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+</style>
+
+
+
+<div class="container-fluid main-container">
+
+<!-- tabsets -->
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+</script>
+
+<!-- code folding -->
+
+
+
+
+
+<div class="navbar navbar-default navbar-fixed-top">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-main">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">FX Jollois</a>
+    </div>
+    <div id="navbar-main" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button">Données <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+              <li><a href="accesdonnees.html">A télécharger</a></li>
+              <li><a href="donnees-integrees-r.html">Sous R</a></li>
+          </ul>
+        </li>
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button">Enseignement <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li class="dropdown-header">DUT 1ère année</li>
+            <li><a href="exploitation-donnees.html">Exploitation de données</a></li>
+            <li><a href="initiation-a-r.html">Initiation à R</a></li>
+            <li><a href="reporting.html">Reporting</a></li>
+            <li><a href="complements-r.html">Compléments sur R</a></li>
+            <li class="dropdown-header">DUT 2ème année</li>
+            <li><a href="prog-stat-r.html">Programmation statistique avec R</a></li>
+            <li class="dropdown-header">LP MDS Santé</li>
+            <li><a href="info-dec-sante.html">Informatique décisionnelle</a></li>
+            <li class="dropdown-header">DU Analyste Big Data</li>
+            <li><a href="initiation-r-du.html">Initiation à R</a></li>
+            <li><a href="connexion-r-mongodb.html">Connexion entre R et MongoDB</a></li>
+            <li class="dropdown-header">DU Dataviz</li>
+            <li><a href="analyse-donnees.html">Analyse de données</a></li>
+            <li><a href="visualisation-donnees.html">Visualisation de données - R</a></li>
+            <li><a href="visualisation-donnees-tableau.html">Visualisation de données - Tableau</a></li>
+            <li><a href="visualisation-donnees-d3.html">Visualisation de données - D3</a></li>
+            <li role="separator" class="divider"></li>
+            <li class="dropdown-header">Master</li>
+            <li><a href="slides/cnam-classif-modeles.html">Classification et Modèles de mélange</a></li>
+            <li><a href="analyse-donnees-massives.html">Analyse de Données Massives</a></li>
+            <li class="dropdown-header">Iran</li>
+            <li><a href="stat-prog-R.html">Statistical Programming using R</a></li>
+          </ul>
+        </li>
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button">Recherche <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li><a href="recherche.html">Sujets</a></li>
+            <li><a href="publications.html">Publications</a></li>
+          </ul>
+        </li>
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button">Réalisations <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li><a href="realisations.html">Détail</a></li>
+            <li role="separator" class="divider"></li>
+            <li><a href="http://up5.fr/explore-data" target="_blank">explore-data</a></li>
+            <li><a href="http://fxjollois.github.io/cours-sql/" target="_blank">Appli web de cours pour SQL</a></li>
+          </ul>
+        </li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container-fluid -->
+</div>
+<div class="contenu">
+
+<div class="fluid-row" id="header">
+
+
+
+<h1 class="title toc-ignore">Visualisation de données - Tableau</h1>
+
+</div>
+
+
+<style>
+img {
+    margin: 10px auto;
+}
+em {
+    background-color: #f4f4f4;
+    padding: 0 5px;
+    font-style: normal;
+}
+</style>
+<p>Dans ce cours, nous allons aborder l’utilisation du logiciel <a href="https://public.tableau.com/s/"><strong>Tableau Public</strong></a>, version gratuite de <strong>Tableau Software</strong>, outil phare dans le domaine de la <strong>BI</strong> et de la <strong>Visualisation de données</strong>.</p>
+<p>Dans ce présentation de l’outil, nous allons utiliser les données synthétiques de la production scientifique mondiale de 1996 à 2014 (<a href="reporting/tp5/scimagojr%20all.xlsx">lien vers le fichier Excel</a> - source : <a href="http://www.scimagojr.com/help.php">SCImago Journal &amp; Country Rank</a>)</p>
+<p>Ce fichier comporte les variables suivantes :</p>
+<ul>
+<li><code>Year</code> : année</li>
+<li><code>Rank</code> : rang du pays en terme de production (par rapport au nombre de documents) pour l’année indiquée</li>
+<li><code>Country</code> : pays</li>
+<li><code>Documents</code> : nombre de documents produits</li>
+<li><code>Citable.documents</code> : nombre de documents citables (articles, reviews et conférences)</li>
+<li><code>Citations</code> : nombre de citations de documents produits</li>
+<li><code>Self.Citations</code> : nombre de citations dans un document du même pays</li>
+<li><code>Citations.per.Document</code> : nombre moyen de citations</li>
+<li><code>H.index</code> : nombre <span class="math inline">\(h\)</span> d’articles ayant eu au moins <span class="math inline">\(h\)</span> citations (pour plus d’information : <a href="https://fr.wikipedia.org/wiki/Indice_h">h-index sur Wikipedia</a>)</li>
+</ul>
+<p>Nous allons aborder les points suivants :</p>
+<ol style="list-style-type: decimal">
+<li>Importation des données dans <strong>Tableau</strong>
+<ul>
+<li>Fichier texte puis choisir le fichier</li>
+</ul></li>
+<li>Vérification des données (type particulièrement)
+<ul>
+<li>Toutes sont des numériques (symbole <code>#</code> au dessus du nom des variables)</li>
+<li>Sauf <code>Country</code>, avec le symbole <i class="fa fa-world"></i>, qui indique que c’est une variable géographique</li>
+</ul></li>
+<li>Première <strong>Feuille</strong> et premier tableau : <em>Production scientifique</em>
+<ul>
+<li>Cliquer sur <em>Feuille 1</em> en bas à gauche</li>
+<li>Double-cliquer sur <code>Documents</code>, dans les <strong>Mesures</strong></li>
+<li>Cliquer sur le tableau dans la partie <strong>Montre moi</strong> (en haut à droite)</li>
+<li>Glisser et Déplacer <code>Country</code> (dans les <strong>Dimensions</strong>) dans la partie pour les lignes</li>
+<li>Faire un clic droit dans la zone au-dessus des valeurs obtenues puis choisir le tri dans l’ordre décroissant</li>
+<li>Faire un clic droit sur <code>Country</code> dans le tableau et choisir <em>Filtrer</em>
+<ul>
+<li>Cliquer sur <em>Premiers</em>, choisir <em>Par champs</em> puis <em>OK</em></li>
+</ul></li>
+<li>Double-cliquer sur le titre <em>“Feuille 1”</em> en haut pour le changer</li>
+<li>Double-cliquer sur l’onglet <em>Feuille 1</em> en bas pour changer le titre de la feuille</li>
+<li>On a un TOP 10 des pays sur leur production scientifique</li>
+</ul></li>
+<li>Deuxième feuille et premier graphique : <em>Evolution de la production scientifique</em>
+<ul>
+<li>Cliquer, dans le menu, sur <em>Feuille de calcul</em> puis <em>Nouvelle feuille de calcul</em>, ou cliquer en bas de la fenêtre sur le <code>+</code> avec l’icône d’un graphique</li>
+<li>Double-cliquer sur <code>Documents</code>, puis sur <code>Year</code></li>
+<li>Changer le titre (idem que précédement)</li>
+<li>Dans la partie à gauche, cliquer sur <strong>Analyse</strong>
+<ul>
+<li>Faire un Glisser/Déplacer de <em>Ligne de constante</em> dans le graphique</li>
+<li>Choisir la case pour <code>Year</code> et indiquer l’année 2002</li>
+<li>Avec un clic droit sur la ligne, il est possible de la modifier (type de ligne, couleur, étiquette, …)</li>
+</ul></li>
+<li>Faire de même pour 2013</li>
+<li>Toujours dans <strong>Analyse</strong>
+<ul>
+<li>Faire un Glisser/Déplacer de <em>Ligne de moyenne</em> maintenant</li>
+<li>Sélectionner le croisement <code>SOMME ...</code> et <em>Table</em></li>
+<li>Nous avons maintenant une ligne représentant la production scientifique annuelle moyenne (toujours autant modifiable)</li>
+</ul></li>
+<li>Changer aussi le titre de la feuille</li>
+<li>On a l’évolution de la production scientifique mondiale sur la période analysée</li>
+</ul></li>
+<li>Premier <strong>Tableau de bord</strong> : <em>Synthèse de la production scientifique mondiale</em>
+<ul>
+<li>Cliquer <em>Tableau de bord</em> puis <em>Nouveau Tableau de Bord</em> dans le menu, ou sur l’icône en bas avec un <code>+</code> et un quadrillage</li>
+<li>Glisser/Déplacer chacune des feuilles précédemment créées en les sélectionnant dans la partie gauche</li>
+<li>Le jeu est ici de faire des Glisser/Déplacer pour avoir l’organisation que l’on souhaite</li>
+<li>Il est possible d’ajouter des images, des pages web ou du texte (cf <em>Objets</em> dans le menu à gauche)
+<ul>
+<li>Ajouter un petit texte explicatif du résultats éventuellement</li>
+</ul></li>
+<li>Il est aussi possible de modifier la taille du tableau de bord</li>
+<li>Nous avons notre premier tableau de bord
+<ul>
+<li>Revenir sur le TOP pour avoir les 20 premiers pays</li>
+</ul></li>
+</ul></li>
+<li>Troisième feuille et première carte : <em>Cartographie de la production scientifique</em>
+<ul>
+<li>Créer une nouvelle feuille</li>
+<li>Double-cliquer sur <code>Country</code>
+<ul>
+<li>une carte doit apparaître avec des points</li>
+</ul></li>
+<li>Dans le menu <strong>Montre-moi</strong>, choisir la carte avec les continents en couleurs
+<ul>
+<li>nous avons une carte <em>choroplèthe</em></li>
+</ul></li>
+<li>Double-cliquer sur <code>Documents</code>
+<ul>
+<li>les pays sont maintenant avec une couleur en fonction de leur production scientifique</li>
+</ul></li>
+<li>Nous avons une carte choroplèthe indiquant la production scientifique des pays</li>
+<li>Glisser/Déplacer <code>Citations</code> dans l’icône <strong>infobulle</strong> dans <strong>Repères</strong></li>
+<li>Faire de même avec <code>H.index</code>
+<ul>
+<li>Faire un clic droit sur la zone <code>SOMME(H.index)</code>, et choisir <code>Mesure (somme)</code> puis <code>Moyenne</code></li>
+</ul></li>
+<li>En pointant la souris sur un pays, nous avons aussi le nombre total de citations et le <em>H index</em> moyen annuel
+<ul>
+<li>Cliquer sur <em>Infobulle</em> pour personnaliser l’affichage</li>
+</ul></li>
+<li>Changer le titre aussi du graphique et de la feuille</li>
+</ul></li>
+<li>Quatrième feuille : <em>Evolution de la contribution des plus importants pays</em>
+<ul>
+<li>Créer une nouvelle feuille</li>
+<li>Glisser/Déplacer <code>Country</code> sur les lignes</li>
+<li>Idem sur <em>Filtres</em>
+<ul>
+<li>Choisir les 10 premiers sur la production totale de documents</li>
+</ul></li>
+<li>Glisser/Déplacer <code>Year</code> dans les colonnes
+<ul>
+<li>Clic sur la flèche à droite de <em>Year</em> dans les colonnes et choisir <em>Discret</em></li>
+<li>On a maintenant un tableau</li>
+</ul></li>
+<li>Double-cliquer sur <code>Documents</code></li>
+<li>Dans <em>Analyse</em> (dans le menu), choisir <em>Pourcentage de</em> puis <em>colonnes</em></li>
+<li>Dans <strong>Montrez-moi</strong>, choisir les diagrammes en barres empilées</li>
+<li>Changer le titre et le nom de la feuille</li>
+<li>Nous avons l’évolution de la contribution des 10 pus gros pays producteurs scientifiques (un peu biaisé ici, car c’est la répartition entre les 10, mais c’est révélateur tout de même)</li>
+</ul></li>
+<li>Cinquième feuille : <em>Evolution par pays, en base 100</em>
+<ul>
+<li>Faire un clic-droit sur la deuxième feuille créée (celle avec l’évolution de la production scientifique), puis choisir <em>Dupliquer</em></li>
+<li>Glisser/Déplacer la feuille (nommée <em>Feuille 5</em> normalement), après les autres</li>
+<li>Supprimer la ligne horizontale indiquant la moyenne</li>
+<li>Glisser/Déplacer <code>Country</code> sur <em>Couleurs</em> (dans <em>Repères</em>)
+<ul>
+<li>Il y a trop de pays pour tous les afficher</li>
+<li>Choisir <em>Filtrer puis ajouter</em></li>
+<li>Chercher et ajouter les pays suivants :
+<ul>
+<li><code>United States</code></li>
+<li><code>France</code></li>
+<li><code>China</code></li>
+<li><code>Germany</code></li>
+<li><code>United Kingdom</code></li>
+</ul></li>
+</ul></li>
+<li>Cliquer sur la fenêtre à droite de <code>SOMME(Documents)</code> dans <em>Lignes</em>
+<ul>
+<li>Choisir <em>Ajouter un calcul de table rapide</em></li>
+<li>Dans le <em>Type de calcul</em>, sélectionner <em>Pourcentage de</em></li>
+<li>Dans la partie <em>En rapport avec</em>, choisir <em>Premier</em>, puis fermer la fenêtre</li>
+</ul></li>
+<li>Nous avons les évolutions en base 100 des 5 pays sur la période analysée</li>
+<li>Cliquer sur la flèche à droite de <code>Country</code> dans <em>Filtres</em>
+<ul>
+<li>Choisir <em>Afficher le filtre</em></li>
+</ul></li>
+<li>Il est maintenant possible de choisir les pays à afficher dans le graphique
+<ul>
+<li>Regarder l’évolution impressionnante de certains pays tels que :
+<ul>
+<li><code>Serbia</code></li>
+<li><code>Macao</code></li>
+<li><code>Montenegro</code></li>
+<li><code>Afghanistan</code></li>
+<li><code>Iran</code></li>
+<li><code>Qatar</code></li>
+<li>…</li>
+</ul></li>
+</ul></li>
+</ul></li>
+<li>Sixième feuille : <em>TOP par année, à taille variable</em>
+<ul>
+<li>Dupliquer le premier tableau et placer le à la fin</li>
+<li>Faire un clic-droit dans le vide du panneau de gauche et choisir <em>Créer un paramètre…</em>
+<ul>
+<li>Donner lui un nom (par exemple <code>pChoixTaille</code>)</li>
+<li>Choisir <em>Entier</em> comme type et cliquer sur <em>Liste</em> pour définir les valeurs possibles</li>
+<li>Cliquer pour ajouter les valeurs (ici 3, 5, 10 et 50 par exemple)
+<ul>
+<li>Noter que la valeur par défaut est la première indiquée mais que c’est modifiable si besoin</li>
+</ul></li>
+<li>Cliquer sur <em>OK</em></li>
+</ul></li>
+<li>Cliquer sur la flèche à droite de <code>Country</code> dans le panneau <em>Filtres</em> et cliquer sur <em>Modifier le filtre…</em></li>
+<li>Retourner dans la partie <em>Premiers</em>
+<ul>
+<li>Si vous cliquer sur la flèche à droite du 10, vous pouvez sélectionner votre paramètre (<code>pChoixTaille</code> donc normalement)</li>
+<li>Vous avez maintenant un TOP 3</li>
+</ul></li>
+<li>Pour afficher le contrôle du paramètre, cliquer sur la flèche à droite du paramètre dans le panneau de gauche et choisir <em>Afficher le contrôle de paramètre</em></li>
+<li>Vous pouvez maintenant sélectionner le nombre de pays affichés dans votre TOP</li>
+<li>Recréer un paramètre comme précédemment
+<ul>
+<li>Nommer le <code>pChoixAnnee</code></li>
+<li>Choisir <em>Entier</em> pour le type et <em>Plage</em> pour les valeurs</li>
+<li>Plutôt que de chercher les années min et max, nous pouvons les récupérer directement. Cliquer sur <em>Définir à partir du champ…</em> et sélectionner <code>Year</code></li>
+<li>Choisir <code>2014</code> comme valeur actuelle puis cliquer sur <em>OK</em></li>
+</ul></li>
+<li>Faire un clic-droit dans le vide du panneau de gauche et choisir <em>Créer un champs calculé…</em> et nommer-le <code>cChoixAnnee</code>
+<ul>
+<li><p>Entrer la formule suivante dans le cadre dédié</p>
+<pre><code>IF ([Year] = [pChoixAnnee]) THEN 1 ELSE 0 END</code></pre></li>
+<li>Faire un clic sur la flèche à droite du champ <code>Choix année</code> et cliquer sur <em>Convertir en dimension</em></li>
+<li>Glisser-déplacer cette dimension dans le panneau <em>Filtres</em>
+<ul>
+<li>Sélectionner la valeur 1 et cliquer sur <em>OK</em></li>
+</ul></li>
+<li>Afficher le contrôle du paramètre <code>pChoixAnnee</code> pour pouvoir choisir l’année présentée</li>
+</ul></li>
+<li>Nous avons un TOP à taille variable et sur une année choisie
+<ul>
+<li>Il est possible de modifier les titres des contrôles de paramètres éventuellement</li>
+</ul></li>
+</ul></li>
+<li>Première <strong>Histoire</strong> : <em>Analyse de la production scientifique</em>
+<ul>
+<li>Cliquer sur <em>Histoire</em>, puis <em>Nouvelle Histoire</em> dans le menu, ou sur l’icône avec un <code>+</code> sur un livre en bas</li>
+<li>Changer le titre et le nom de l’histoire</li>
+<li>Glisser/Déplacer le tableau de bord dans le cadre prévu</li>
+<li>Double-cliquer sur <em>Ajouter une légende</em> pour ajouter un texte présentant le tableau de bord</li>
+<li>Cliquer sur <em>Nouveau plan vierge</em>
+<ul>
+<li>Glisser la carte</li>
+<li>Ajouter une légende</li>
+<li>Si on souhaite cacher la légende, qui n’a que peu d’intérêt ici, retourner sur la feuille correspondant à la carte
+<ul>
+<li>Cliquer dans le menu sur <em>Analyse</em>, puis <em>Légendes</em> et décocher <em>Légende des couleurs</em></li>
+<li>retourner sur l’histoire pour voir que la légende a bien été enlevée</li>
+</ul></li>
+<li>Idem, on peut recadrer la carte si on le souhaite (toujours dans la feuille)</li>
+</ul></li>
+<li>Ajouter la répartition de la production scientifique des 10 pays les plus productifs</li>
+<li>Idem pour l’évolution en base 100 et pour le TOP par année (dans deux plans différents)</li>
+</ul></li>
+<li>Vous devriez avoir à la fin ce <a href="visualisation-donnees-tableau.twb">tableau</a>
+<ul>
+<li>Qui peut s’intégrer dans une page web comme cela par exemple</li>
+</ul></li>
+</ol>
+<div id="viz1495039017400" class="tableauPlaceholder" style="position: relative">
+<noscript>
+<a href='#'><img alt='Analyse de la production scientifique ' src='https:&#47;&#47;public.tableau.com&#47;static&#47;images&#47;vi&#47;visualisation-donnees-tableau&#47;Analyse&#47;1_rss.png' style='border: none' /></a>
+</noscript>
+<object class="tableauViz" style="display:none;">
+<param name='host_url' value='https%3A%2F%2Fpublic.tableau.com%2F' /> <param name='site_root' value='' /><param name='name' value='visualisation-donnees-tableau&#47;Analyse' /><param name='tabs' value='no' /><param name='toolbar' value='yes' /><param name='static_image' value='https:&#47;&#47;public.tableau.com&#47;static&#47;images&#47;vi&#47;visualisation-donnees-tableau&#47;Analyse&#47;1.png' /> <param name='animate_transition' value='yes' /><param name='display_static_image' value='yes' /><param name='display_spinner' value='yes' /><param name='display_overlay' value='yes' /><param name='display_count' value='yes' />
+</object>
+</div>
+<script type='text/javascript'>                    
+var divElement = document.getElementById('viz1495039017400');                    
+var vizElement = divElement.getElementsByTagName('object')[0];                  
+vizElement.style.width='1020px';vizElement.style.height='1033px';                   
+var scriptElement = document.createElement('script');                   
+scriptElement.src = 'https://public.tableau.com/javascripts/api/viz_v1.js';  
+vizElement.parentNode.insertBefore(scriptElement, vizElement);                
+</script>
+<div id="a-faire" class="section level2">
+<h2>A FAIRE</h2>
+<p>Réaliser les <em>feuilles</em> suivantes :</p>
+<ul>
+<li>Le nuage de points entre le nombre moyen de documents produits par an et le nombre moyen de citations par an, pour chaque pays, avec
+<ul>
+<li>le nom de chaque pays indiqué sur le graphique</li>
+<li>une couleur (entre du vert pour le 1er et du rouge pour le dernier) par pays en fonction de son rang médian</li>
+<li>une taille en fonction du <em>H-index</em> moyen</li>
+<li>deux lignes de références au niveau des moyennes de chaque variable</li>
+<li>des axes logarithmiques</li>
+</ul></li>
+<li>Une représentation graphique de l’évolution des rangs des pays, uniquement sur les 10 premiers rangs, avec le pays en 1er en haut, avec
+<ul>
+<li>une couleur par pays</li>
+<li>le nom de chaque pays sur le graphique</li>
+</ul></li>
+<li>Une carte des pays dont le <em>H-index</em> moyen est supérieur à une valeur choisie par l’utilisateur, avec
+<ul>
+<li>valeurs dans le domaine des valeurs possibles pour cet indice,</li>
+<li>la couleur des pays dépendante de la valeur de l’indice, avec une échelle de couleur fixe</li>
+</ul></li>
+<li>Une carte des pays représentant le TOP réalisé plus haut avec
+<ul>
+<li>une sélection des pays identique à celle du TOP</li>
+<li>idem pour l’année</li>
+<li>une couleur dépendante du nombre de documents produits</li>
+</ul></li>
+</ul>
+<p>De plus, réaliser :</p>
+<ul>
+<li>Un <em>dashboard</em> intégrant le TOP et la dernière carte, avec
+<ul>
+<li>le contrôle du nombre de pays, sous forme de <em>radio button</em> (bouton rond avec sélection unique)</li>
+<li>le contrôle de l’année, sous forme de <em>slider</em></li>
+</ul></li>
+<li>Une <em>story</em> regroupant tous ces éléments de manière cohérente</li>
+</ul>
+</div>
+
+</div>
+<div class="footer">
+      Site créé avec <a href="http://www.r-project.org" target="_blank"><code>R</code></a> et la 
+      librairie  <a href="http://rmarkdown.rstudio.com/" target="_blank"><code>rmarkdown</code></a>.
+</div>
+<script>
+    $("#TOC").css("margin-top", "100px");
+</script>
+
+
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

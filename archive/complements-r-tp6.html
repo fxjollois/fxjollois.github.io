@@ -1,0 +1,949 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+<meta charset="utf-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="pandoc" />
+
+
+
+
+<title>Tableaux de bord</title>
+
+<script src="libs/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="libs/bootstrap-3.3.5/css/journal.min.css" rel="stylesheet" />
+<script src="libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<script src="libs/navigation-1.1/tabsets.js"></script>
+<link href="libs/highlightjs-1.1/default.css" rel="stylesheet" />
+<script src="libs/highlightjs-1.1/highlight.js"></script>
+<!--
+    Font Awesome
+-->
+<script src="https://use.fontawesome.com/32d8325004.js"></script>
+<link rel="stylesheet" href="libs/font-awesome-4.7.0/css/font-awesome.min.css">
+
+<!--
+    CSS perso
+-->
+<style>
+    .contenu {
+        margin-bottom: 50px;
+    }
+
+    .contact-liens {
+        text-align: center;
+    }
+    .contact-liens:hover {
+        text-decoration: none;
+    }
+    .contact-icones {
+        height: 30px;
+    }
+
+    /* Espacement pour barre du haut et pied de page */
+    #header, .section.level1 {
+        margin-top: 60px;
+        margin-bottom: 60px;
+    }
+    /* Espacement pour table des matières */
+    #TOC {
+        margin-top: 100px;
+    }
+    
+    .footer {
+        position: fixed;
+        width: 100%;
+        text-align: center;
+        bottom: 0;
+        left: 0;
+        background-color: #E6E6E6;
+    }
+</style>
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
+<script type="text/javascript">
+if (window.hljs && document.readyState && document.readyState === "complete") {
+   window.setTimeout(function() {
+      hljs.initHighlighting();
+   }, 0);
+}
+</script>
+
+
+
+<style type="text/css">
+h1 {
+  font-size: 34px;
+}
+h1.title {
+  font-size: 38px;
+}
+h2 {
+  font-size: 30px;
+}
+h3 {
+  font-size: 24px;
+}
+h4 {
+  font-size: 18px;
+}
+h5 {
+  font-size: 16px;
+}
+h6 {
+  font-size: 12px;
+}
+.table th:not([align]) {
+  text-align: left;
+}
+</style>
+
+<link rel="stylesheet" href="libs/bootstrap-journal.min.css" type="text/css" />
+
+</head>
+
+<body>
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img {
+  max-width:100%;
+  height: auto;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+</style>
+
+
+
+<div class="container-fluid main-container">
+
+<!-- tabsets -->
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+</script>
+
+<!-- code folding -->
+
+
+
+
+
+<div class="navbar navbar-default navbar-fixed-top">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-main">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">FX Jollois</a>
+    </div>
+    <div id="navbar-main" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button">Données <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+              <li><a href="accesdonnees.html">A télécharger</a></li>
+              <li><a href="donnees-integrees-r.html">Sous R</a></li>
+          </ul>
+        </li>
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button">Enseignement <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li class="dropdown-header">DUT 1ère année</li>
+            <li><a href="exploitation-donnees.html">Exploitation de données</a></li>
+            <li><a href="initiation-a-r.html">Initiation à R</a></li>
+            <li><a href="reporting.html">Reporting</a></li>
+            <li><a href="complements-r.html">Compléments sur R</a></li>
+            <li class="dropdown-header">DUT 2ème année</li>
+            <li><a href="prog-stat-r.html">Programmation statistique avec R</a></li>
+            <li class="dropdown-header">LP MDS Santé</li>
+            <li><a href="info-dec-sante.html">Informatique décisionnelle</a></li>
+            <li class="dropdown-header">DU Analyste Big Data</li>
+            <li><a href="initiation-r-du.html">Initiation à R</a></li>
+            <li><a href="connexion-r-mongodb.html">Connexion entre R et MongoDB</a></li>
+            <li class="dropdown-header">DU Dataviz</li>
+            <li><a href="analyse-donnees.html">Analyse de données</a></li>
+            <li><a href="visualisation-donnees.html">Visualisation de données - R</a></li>
+            <li><a href="visualisation-donnees-tableau.html">Visualisation de données - Tableau</a></li>
+            <li><a href="visualisation-donnees-d3.html">Visualisation de données - D3</a></li>
+            <li role="separator" class="divider"></li>
+            <li class="dropdown-header">Master</li>
+            <li><a href="slides/cnam-classif-modeles.html">Classification et Modèles de mélange</a></li>
+            <li><a href="analyse-donnees-massives.html">Analyse de Données Massives</a></li>
+            <li class="dropdown-header">Iran</li>
+            <li><a href="stat-prog-R.html">Statistical Programming using R</a></li>
+          </ul>
+        </li>
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button">Recherche <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li><a href="recherche.html">Sujets</a></li>
+            <li><a href="publications.html">Publications</a></li>
+          </ul>
+        </li>
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button">Réalisations <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li><a href="realisations.html">Détail</a></li>
+            <li role="separator" class="divider"></li>
+            <li><a href="http://up5.fr/explore-data" target="_blank">explore-data</a></li>
+            <li><a href="http://fxjollois.github.io/cours-sql/" target="_blank">Appli web de cours pour SQL</a></li>
+          </ul>
+        </li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container-fluid -->
+</div>
+<div class="contenu">
+
+<div class="fluid-row" id="header">
+
+
+
+<h1 class="title toc-ignore">Tableaux de bord</h1>
+<h3 class="subtitle"><em>Compléments sur R - STID 1ère année</em></h3>
+
+</div>
+
+
+<p>Nous allons utiliser dans ce TP le package <code>shinydashboard</code> (à installer donc), qui permet de créer des tableaux de bords (ou <em>dashboard</em> en anglais), à l’aide de la librairie <code>shiny</code>.</p>
+<div id="donnees" class="section level2">
+<h2>Données</h2>
+<p>Le <code>data.frame</code> <code>txhousing</code> du package <code>ggplot2</code> contient les informations économiques mensuelles du Texas, pour différentes villes et sur la période 2000-2015.</p>
+<table>
+<thead>
+<tr class="header">
+<th align="left">city</th>
+<th align="right">year</th>
+<th align="right">month</th>
+<th align="right">sales</th>
+<th align="right">volume</th>
+<th align="right">median</th>
+<th align="right">listings</th>
+<th align="right">inventory</th>
+<th align="right">date</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">Abilene</td>
+<td align="right">2000</td>
+<td align="right">1</td>
+<td align="right">72</td>
+<td align="right">5380000</td>
+<td align="right">71400</td>
+<td align="right">701</td>
+<td align="right">6.3</td>
+<td align="right">2000.000</td>
+</tr>
+<tr class="even">
+<td align="left">Abilene</td>
+<td align="right">2000</td>
+<td align="right">2</td>
+<td align="right">98</td>
+<td align="right">6505000</td>
+<td align="right">58700</td>
+<td align="right">746</td>
+<td align="right">6.6</td>
+<td align="right">2000.083</td>
+</tr>
+<tr class="odd">
+<td align="left">Abilene</td>
+<td align="right">2000</td>
+<td align="right">3</td>
+<td align="right">130</td>
+<td align="right">9285000</td>
+<td align="right">58100</td>
+<td align="right">784</td>
+<td align="right">6.8</td>
+<td align="right">2000.167</td>
+</tr>
+<tr class="even">
+<td align="left">Abilene</td>
+<td align="right">2000</td>
+<td align="right">4</td>
+<td align="right">98</td>
+<td align="right">9730000</td>
+<td align="right">68600</td>
+<td align="right">785</td>
+<td align="right">6.9</td>
+<td align="right">2000.250</td>
+</tr>
+<tr class="odd">
+<td align="left">Abilene</td>
+<td align="right">2000</td>
+<td align="right">5</td>
+<td align="right">141</td>
+<td align="right">10590000</td>
+<td align="right">67300</td>
+<td align="right">794</td>
+<td align="right">6.8</td>
+<td align="right">2000.333</td>
+</tr>
+<tr class="even">
+<td align="left">Abilene</td>
+<td align="right">2000</td>
+<td align="right">6</td>
+<td align="right">156</td>
+<td align="right">13910000</td>
+<td align="right">66900</td>
+<td align="right">780</td>
+<td align="right">6.6</td>
+<td align="right">2000.417</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="squelette" class="section level2">
+<h2>Squelette</h2>
+<p>Nous allons commencer par créer la base de notre application. Ainsi, au lieu de créer une <code>fluidPage()</code> comme nous l’avions fait précédemment, nous allons utiliser la fonction <code>dashboardPage()</code>. Celle-ci prend au minimum trois arguments</p>
+<ul>
+<li>l’en-tête, créée avec la fonction <code>dashboardHeader()</code></li>
+<li>la partie gauche (pour les interactions a priori), créée avec la fonction <code>dashboardSidebar()</code></li>
+<li>la partie droite (principale), créée avec la fonction <code>dashboardBody()</code></li>
+</ul>
+<p>Elle peut aussi prendre deux autres paramètres optionnels :</p>
+<ul>
+<li>le titre (donné dans <code>title</code>)</li>
+<li>l’habillage ou couleur principale (avec le paramètre <code>skin</code>, pouvant prendre les valeurs <code>&quot;blue&quot;</code>, <code>&quot;black&quot;</code>, <code>&quot;purple&quot;</code>, <code>&quot;green&quot;</code>, <code>&quot;red&quot;</code> ou <code>&quot;yellow&quot;</code>)</li>
+</ul>
+<p>Voici donc le contenu initial de notre nouvelle application (à mettre dans un nouveau répertoire donc).</p>
+<ul>
+<li><code>ui.R</code></li>
+</ul>
+<pre class="r"><code>library(shiny)
+library(shinydashboard)
+
+shinyUI(dashboardPage(
+    dashboardHeader(),
+    dashboardSidebar(),
+    dashboardBody(),
+    title = &quot;TP 6&quot;,
+    skin = &quot;yellow&quot;
+))</code></pre>
+<ul>
+<li><code>server.R</code></li>
+</ul>
+<pre class="r"><code>library(shiny)
+library(shinydashboard)
+
+shinyServer(function(input, output) {
+    
+})</code></pre>
+</div>
+<div id="en-tete" class="section level2">
+<h2>En-tête</h2>
+<p>Dans la partie en-tête, déclarée avec la fonction <code>dashboardHeader()</code>, nous allons écrire d’une part le titre qui apparaîtra en haut à gauche de l’application, ainsi que les différents items qui vont appraître dans la barre de menu en haut.</p>
+<p>Pour ajouter un titre au tableau de bord, il suffit de donner une valeur au paramètre <code>title</code> de la fonction <code>dashboardHeader()</code>. Commençons par lui donner le titre <code>&quot;TP 6&quot;</code>, comme ci-dessous.</p>
+<pre class="r"><code>dashboardHeader(
+    title = &quot;TP 6&quot;
+)</code></pre>
+<p>Il est possible d’ajouter d’autres éléments dans la barre de menu, que nous ne verrons pas ici.</p>
+</div>
+<div id="corps-du-tableau-de-bords" class="section level2">
+<h2>Corps du tableau de bords</h2>
+<div id="boite" class="section level3">
+<h3>Boîte</h3>
+<p>La fonction <code>box()</code> permet de déclarer une boîte, dans laquelle nous allons pouvoir intégrer des éléments de type <code>input</code> ou <code>output</code>. On pourra ensuite positionner ces boîtes librement avec des fonctions telles que <code>fluidRow()</code>.</p>
+<p>Nous allons d’abord créer une <code>box()</code> qui contiendra l’évolution globale du volume des ventes (variable <code>volume</code>). Pour cela, nous allons devoir faire un agrégat par date, bien évidemment.</p>
+<p>Dans l’interface, nous ajoutons donc une <code>box()</code>, avec un titre et une sortie de type graphique, nommée <code>conso</code>. Dans la partie serveur, nous créons le graphique classiquement, dans un <code>renderPlot()</code>.</p>
+<ul>
+<li><code>ui.R</code></li>
+</ul>
+<pre class="r"><code>dashboardBody(
+    box(
+        title = &quot;Volume des ventes&quot;,
+        plotOutput(&quot;conso&quot;)
+    )
+)</code></pre>
+<ul>
+<li><code>server.R</code></li>
+</ul>
+<pre class="r"><code>output$conso &lt;- renderPlot({
+    df = aggregate(volume ~ date, txhousing, sum)
+    ggplot(df, aes(date, volume)) + geom_line()
+})</code></pre>
+<div id="personnalisation" class="section level4">
+<h4>Personnalisation</h4>
+<p>La fonction <code>box()</code> peut prendre différents paramètres permettant de personnaliser l’affichage :</p>
+<ul>
+<li><code>footer</code> : texte en pied de la boîte</li>
+<li><code>status</code> : statut de la boîte, définissant un aspect type (regarder l’aide de <code>validStatuses</code> pour plus d’infos)</li>
+<li><code>solidHeader</code> : pour dire si le titre a une couleur de fond ou non</li>
+<li><code>width</code> : largeur de la boîte (entre 1 et 12),</li>
+<li>…</li>
+</ul>
+<p>On peut donc avoir une boîte personnalisée comme ci-dessous.</p>
+<ul>
+<li><code>ui.R</code></li>
+</ul>
+<pre class="r"><code>box(
+    title = &quot;Volume des ventes&quot;,
+    plotOutput(&quot;conso&quot;),
+    footer = &quot;Données provenant de txhousing&quot;,
+    status = &quot;info&quot;,
+    solidHeader = TRUE,
+    width = 8
+)</code></pre>
+</div>
+</div>
+<div id="autres-types-de-boites" class="section level3">
+<h3>Autres types de boîtes</h3>
+<div id="infobox" class="section level4">
+<h4><code>infoBox()</code></h4>
+<p>Ce type de boîte permet de donner une information particulière, courte. Voici comment l’intégrer dans l’interface.</p>
+<ul>
+<li><code>ui.R</code> (à la suite de la première <code>box()</code>)</li>
+</ul>
+<pre class="r"><code>infoBox(
+    title = &quot;Progression&quot;
+)</code></pre>
+<p>En plus du titre, nous pouvons bien évidemment mettre une valeur. On peut aussi personnaliser ces boîtes en changeant l’icône, le remplissage ou non et la couleur.</p>
+<ul>
+<li><code>ui.R</code></li>
+</ul>
+<pre class="r"><code>infoBox(
+    title = &quot;Progression&quot;,
+    value = &quot;?&quot;,
+    subtitle = &quot;Entre 2000 et 2015&quot;,
+    icon = icon(&quot;line-chart&quot;),
+    fill = TRUE,
+    color = &quot;light-blue&quot;
+)</code></pre>
+</div>
+<div id="valuebox" class="section level4">
+<h4><code>valueBox()</code></h4>
+<p>C’est un autre type de boîte pour donner une information courte, comme nous l’avions vu avec le package <code>flexdashboard</code>.</p>
+<ul>
+<li><code>ui.R</code> (à la suite de l’<code>infoBox()</code>)</li>
+</ul>
+<pre class="r"><code>valueBox(
+    value = &quot;?&quot;,
+    subtitle = &quot;Volume totale des ventes&quot;
+)</code></pre>
+<p>Ici, nous pouvons la personnaliser, avec une icône et une couleur spécifiques.</p>
+<ul>
+<li><code>ui.R</code></li>
+</ul>
+<pre class="r"><code>valueBox(
+    value = &quot;?&quot;,
+    subtitle = &quot;Volume totale des ventes&quot;,
+    icon = icon(&quot;usd&quot;),
+    color = &quot;light-blue&quot;
+)</code></pre>
+</div>
+<div id="tabbox" class="section level4">
+<h4><code>tabBox()</code></h4>
+<p>On peut avoir un système d’onglets dans une <code>box()</code> grâce à cette fonction. Celle-ci prend en premier paramètre le titre qui s’affichera en haut à droite par défaut. Un autre paramètre possible est la largeur. Ici, nous définissons une largeur de 4, pour que le <code>tabBox()</code> se mette à la suite des deux autres boîtes (tester l’applciation en commentant cette ligne). Ensuite, chaque onglet est définié avec la fonction <code>tabPanel()</code>. Celle-ci prend en paramètre le titre et une suite d’éléments (ici, du texte uniquement - nous modifierons cela par la suite).</p>
+<ul>
+<li><code>ui.R</code></li>
+</ul>
+<pre class="r"><code>tabBox(
+    title = &quot;Informations&quot;,
+    width = 4,
+    tabPanel(title = &quot;Nombre&quot;, &quot;Nombre de ventes&quot;),
+    tabPanel(title = &quot;Prix médian&quot;, &quot;prix médian&quot;)
+)</code></pre>
+</div>
+</div>
+</div>
+<div id="partie-de-gauche" class="section level2">
+<h2>Partie de gauche</h2>
+<p>La fonction <code>dashboardSidebar()</code> va nous permetter de déterminer le contenu de la partie gauche du tableau de bord, dédiée principalement aux différents choix que pourra faire l’utilisateur.</p>
+<p>Dans ce type de tableau de bord, il est courant de soit vouloir toutes les villes, soit uniquement une ville spécifique. Pour cela, nous allons donc ajouter un <code>selectInput()</code>, nommée <code>ville</code>, qui permettra à l’utilisateur de choisir soit toutes les villes, soit une seule. Dans la liste des choix, nous devons donc créer un vecteur contenant toutes les valeurs de la variable <code>city</code>, ainsi que la chaîne <code>&quot;Toutes les villes&quot;</code>. Et dans le serveur, il va nous falloir tester le choix de l’utilisateur, et différencier le code à exécuter selon celui-ci.</p>
+<p>Voici donc les éléments à ajouter à notre code précédent.</p>
+<ul>
+<li><code>ui.R</code> (dans le <code>dashboardSidebar()</code>)</li>
+</ul>
+<pre class="r"><code>selectInput(
+    &quot;ville&quot;,
+    &quot;Choix de la ville&quot;,
+    c(&quot;Toutes les villes&quot;, unique(txhousing$city))
+)</code></pre>
+<ul>
+<li><code>server.R</code> (à la place de la création de <code>df</code>)</li>
+</ul>
+<pre class="r"><code>if (input$ville == &quot;Toutes les villes&quot;) {
+    df = aggregate(volume ~ date, txhousing, sum)
+} else {
+    df = aggregate(volume ~ date, 
+                   subset(txhousing, city == input$ville),
+                   sum)
+}</code></pre>
+</div>
+<div id="modification-des-boites-selon-les-input" class="section level2">
+<h2>Modification des boîtes selon les <code>input</code></h2>
+<p>(cette partie n’est pas spécifique à <code>shinydashboard</code>)</p>
+<p>Il est possible de créer un <code>output</code> de type interface avec la fonction <code>uiOutput()</code>. Ceci nous permet de créer une <code>infoBox()</code> (ou une <code>valueBox()</code>) en fonction des <code>input</code> de l’utilisateur (ou autre chose). Pour créer le rendu, nous devrons utiliser la fonction <code>renderUI()</code>.</p>
+<p>Nous allons l’utiliser ici pour indiquer la progression en % du volume de ventes mensuels médians entre Janvier 2000 et Janvier 2015 pour la ville choisie.</p>
+<p>Nous allons commencer par modifier l’interface pour intégrer un <code>uiOutput()</code>. Et dans la partie serveur, nous allons pour le moment renvoyer la même <code>ìnfoBox()</code> que précédemment.</p>
+<ul>
+<li><code>ui.R</code> (à la place de l’<code>ìnfoBox()</code>)</li>
+</ul>
+<pre class="r"><code>uiOutput(&quot;progression&quot;)</code></pre>
+<ul>
+<li><code>server.R</code> (à la suite)</li>
+</ul>
+<pre class="r"><code>output$progression &lt;- renderUI({
+    valeur = 0
+    couleur = &quot;light-blue&quot;
+    infoBox(
+        title = &quot;Progression&quot;,
+        value = valeur,
+        subtitle = &quot;Entre 2000 et 2015&quot;,
+        icon = icon(&quot;line-chart&quot;),
+        fill = TRUE,
+        color = couleur
+    )
+})</code></pre>
+<p>Il nous faut maintenant calculer la progression entre Janvier 2000 et Janvier 2015 pour la ville choisie. Si l’utilisateur choisit toutes les villes, le calcul se fera pour toutes les villes. Nous allons donc ré-utiliser presque le même calcul, sauf que l’agrégat se fera sur l’année (<code>year</code>).</p>
+<p>Une fois la valeur calculée, nous allons choisir la couleur avec la règle suivante :</p>
+<ul>
+<li>inférieure strictement à 200 : rouge (<code>&quot;red&quot;</code>)</li>
+<li>entre 200 et 350 : bleu clair (<code>&quot;light-blue&quot;</code>)</li>
+<li><p>supérieure à 350 : vert (<code>&quot;green&quot;</code>)</p></li>
+<li><p><code>server.R</code></p></li>
+</ul>
+<pre class="r"><code>output$progression &lt;- renderUI({
+    if (input$ville == &quot;Toutes les villes&quot;) {
+        med2000 = median(subset(txhousing, year == 2000)$volume, na.rm = T)
+        med2015 = median(subset(txhousing, year == 2015)$volume, na.rm = T)
+    } else {
+        med2000 = median(subset(txhousing, year == 2000 &amp; city == input$ville)$volume, 
+                         na.rm = T)
+        med2015 = median(subset(txhousing, year == 2015 &amp; city == input$ville)$volume, 
+                         na.rm = T)
+    }
+    valeur = round(med2015 / med2000 * 100, 2)
+    couleur = ifelse(valeur &lt; 200, &quot;red&quot;, ifelse(valeur &lt; 350, &quot;light-blue&quot;, &quot;green&quot;))
+    infoBox(
+        title = &quot;Progression&quot;,
+        value = paste(valeur, &quot;%&quot;),
+        subtitle = &quot;Entre 2000 et 2015&quot;,
+        icon = icon(&quot;line-chart&quot;),
+        fill = TRUE,
+        color = couleur
+    )
+})</code></pre>
+<p>Tester les trois premières villes pour voir la modification de l’<code>infoBox()</code>.</p>
+<p>Pour information, la ville de <em>Terkaxana</em> n’a aucune information pour 2000. La valeur obtenue est donc <code>NA</code>. L’<code>infoBox()</code> ne fonctionne donc pas pour celle-ci (avec une production d’erreur, non bloquante pour l’application).</p>
+</div>
+<div id="multiples-ecrans" class="section level2">
+<h2>Multiples <em>écrans</em></h2>
+<p>Il est possible de donner la possibilité d’avoir plusieurs <em>écrans</em> (ou ensemble de graphique) dans le tableau de bords. Pour cela, nous allons définir un menu (avec plusieurs items) dans la partie <code>sidebar</code> et définir le contenu de chaque item de ce menu dans le <code>body</code>.</p>
+<p>Le menu se déclare avec la fonction <code>sidebarMenu()</code>, et les items du menu par des <code>menuItem()</code>. On doit définir le texte à afficher et l’identifiant de l’item. On peut y ajouter des icônes pour personnaliser le menu. On peut aussi insérer un lien si on le souhaite.</p>
+<ul>
+<li><code>ui.R</code> : dans la partie <code>sidebar</code>, en dessous du <code>selectInput()</code></li>
+</ul>
+<pre class="r"><code>sidebarMenu(
+    menuItem(&quot;Résumé&quot;, tabName = &quot;resume&quot;, icon = icon(&quot;dashboard&quot;)),
+    menuItem(&quot;TOP&quot;, tabName = &quot;top&quot;, icon = icon(&quot;thumbs-up&quot;)),
+    menuItem(&quot;Liste des icônes&quot;, icon = icon(&quot;font-awesome&quot;), href = &quot;http://fontawesome.io/icons/&quot;)
+)</code></pre>
+<p>Dans la partie <code>body</code>, nous devons définir le contenu de chaque item dans un <code>tabItem()</code> dans lequel el premier paramètre est l’identifiant de l’item (cf <code>tabName</code> de <code>menuItem()</code>). Tous les items doivent être inclus dans un <code>tabItems()</code>.</p>
+<ul>
+<li><code>ui.R</code> : dans la partie <code>body</code></li>
+</ul>
+<pre class="r"><code>tabItems(
+    tabItem(
+        &quot;resume&quot;,
+        box(
+            title = &quot;Volume des ventes&quot;,
+            plotOutput(&quot;conso&quot;),
+            footer = &quot;Données provenant de txhousing&quot;,
+            status = &quot;info&quot;,
+            solidHeader = TRUE,
+            width = 8
+        ),
+        uiOutput(&quot;progression&quot;),
+        valueBox(
+            value = &quot;?&quot;,
+            subtitle = &quot;Volume totale des ventes&quot;,
+            icon = icon(&quot;usd&quot;),
+            color = &quot;light-blue&quot;
+        ),
+        tabBox(
+            title = &quot;Informations&quot;,
+            width = 4,
+            tabPanel(&quot;Nombre&quot;, &quot;Nombre de ventes&quot;),
+            tabPanel(&quot;Prix médian&quot;, &quot;prix médian&quot;)
+        )
+    ),
+    tabItem(
+        &quot;top&quot;
+    )
+)</code></pre>
+</div>
+<div id="a-faire" class="section level2">
+<h2>A faire</h2>
+<ul>
+<li>Ajouter un contrôle dans l’<code>infoBox()</code> pour vérifier que les valeurs ont pu être calculées pour 2000 et 2015
+<ul>
+<li>Si c’est le cas, affichez une <code>infoBox()</code> avec une icône de type <code>warning</code> et de couleur rouge</li>
+</ul></li>
+<li>Modifier la <code>valueBox()</code> pour afficher le volume total des ventes pour la ville choisie (somme des ventes sur toute la période), avec une couleur en fonction des critères suivants :
+<ul>
+<li>inférieur à 2’000’000’000 : rouge</li>
+<li>entre 2’000’000’000 et 50’000’000’000 : bleu clair</li>
+<li>supérieur à 50’000’000’000 : vert</li>
+<li>Afficher le volume en milliards pour simplifier la lecture</li>
+<li>Tester les villes <em>“San Angelo”</em>, <em>“San Antonio”</em>, <em>“San Marcos”</em></li>
+</ul></li>
+<li>Intégrer dans la <code>tabBox()</code> déjà écrite les valeurs prévues sous forme de <code>textOutput()</code> simple pour le moment
+<ul>
+<li>Nombre total de ventes</li>
+<li>Prix de vente médian</li>
+</ul></li>
+<li>Modifier la <code>box()</code> avec le graphique pour en faire une <code>tabBox()</code> contenant les éléments suivants :
+<ul>
+<li>le graphique tel que nous l’avons défini ci-dessus</li>
+<li>la tableau des volumes totaux de ventes, année par année (en lignes) et mois par mois (en colonnes), pour la ville choisie (ou toutes les villes), en millions de dollars
+<ul>
+<li>Voici le code pour obtenir un tel tableau (avec <code>aggregate()</code> et <code>acast()</code> du package <code>reshape2</code>)</li>
+</ul></li>
+</ul></li>
+</ul>
+<pre class="r"><code>library(reshape2)
+a = aggregate(volume ~ year + month, txhousing, sum)
+b = acast(a, year ~ month, value.var = &quot;volume&quot;)
+c = b / 1000000</code></pre>
+<table>
+<thead>
+<tr class="header">
+<th></th>
+<th align="right">1</th>
+<th align="right">2</th>
+<th align="right">3</th>
+<th align="right">4</th>
+<th align="right">5</th>
+<th align="right">6</th>
+<th align="right">7</th>
+<th align="right">8</th>
+<th align="right">9</th>
+<th align="right">10</th>
+<th align="right">11</th>
+<th align="right">12</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>2000</td>
+<td align="right">1619</td>
+<td align="right">2224</td>
+<td align="right">2926</td>
+<td align="right">2731</td>
+<td align="right">3363</td>
+<td align="right">3623</td>
+<td align="right">3257</td>
+<td align="right">3380</td>
+<td align="right">2732</td>
+<td align="right">2624</td>
+<td align="right">2418</td>
+<td align="right">2445</td>
+</tr>
+<tr class="even">
+<td>2001</td>
+<td align="right">1831</td>
+<td align="right">2356</td>
+<td align="right">3123</td>
+<td align="right">3033</td>
+<td align="right">3558</td>
+<td align="right">3917</td>
+<td align="right">3744</td>
+<td align="right">3686</td>
+<td align="right">2672</td>
+<td align="right">2538</td>
+<td align="right">2556</td>
+<td align="right">2790</td>
+</tr>
+<tr class="odd">
+<td>2002</td>
+<td align="right">2176</td>
+<td align="right">2585</td>
+<td align="right">3103</td>
+<td align="right">3306</td>
+<td align="right">3879</td>
+<td align="right">3720</td>
+<td align="right">3801</td>
+<td align="right">3573</td>
+<td align="right">2927</td>
+<td align="right">2954</td>
+<td align="right">2610</td>
+<td align="right">3166</td>
+</tr>
+<tr class="even">
+<td>2003</td>
+<td align="right">2184</td>
+<td align="right">2511</td>
+<td align="right">3249</td>
+<td align="right">3296</td>
+<td align="right">3869</td>
+<td align="right">4261</td>
+<td align="right">4448</td>
+<td align="right">4329</td>
+<td align="right">3674</td>
+<td align="right">3417</td>
+<td align="right">2778</td>
+<td align="right">3658</td>
+</tr>
+<tr class="odd">
+<td>2004</td>
+<td align="right">2282</td>
+<td align="right">2911</td>
+<td align="right">3933</td>
+<td align="right">4243</td>
+<td align="right">4512</td>
+<td align="right">5262</td>
+<td align="right">4887</td>
+<td align="right">4736</td>
+<td align="right">3913</td>
+<td align="right">3671</td>
+<td align="right">3451</td>
+<td align="right">4113</td>
+</tr>
+<tr class="even">
+<td>2005</td>
+<td align="right">2619</td>
+<td align="right">3326</td>
+<td align="right">4589</td>
+<td align="right">4717</td>
+<td align="right">5442</td>
+<td align="right">6095</td>
+<td align="right">5712</td>
+<td align="right">5904</td>
+<td align="right">4730</td>
+<td align="right">4438</td>
+<td align="right">4264</td>
+<td align="right">4698</td>
+</tr>
+<tr class="odd">
+<td>2006</td>
+<td align="right">3216</td>
+<td align="right">4112</td>
+<td align="right">5661</td>
+<td align="right">5147</td>
+<td align="right">6614</td>
+<td align="right">7438</td>
+<td align="right">6390</td>
+<td align="right">6613</td>
+<td align="right">5223</td>
+<td align="right">4949</td>
+<td align="right">4699</td>
+<td align="right">5177</td>
+</tr>
+<tr class="even">
+<td>2007</td>
+<td align="right">3581</td>
+<td align="right">4321</td>
+<td align="right">5780</td>
+<td align="right">5630</td>
+<td align="right">6739</td>
+<td align="right">7127</td>
+<td align="right">6590</td>
+<td align="right">6768</td>
+<td align="right">4527</td>
+<td align="right">4582</td>
+<td align="right">4375</td>
+<td align="right">4373</td>
+</tr>
+<tr class="odd">
+<td>2008</td>
+<td align="right">3145</td>
+<td align="right">3972</td>
+<td align="right">4754</td>
+<td align="right">5024</td>
+<td align="right">5779</td>
+<td align="right">6068</td>
+<td align="right">5818</td>
+<td align="right">5515</td>
+<td align="right">4061</td>
+<td align="right">3784</td>
+<td align="right">2738</td>
+<td align="right">3542</td>
+</tr>
+<tr class="even">
+<td>2009</td>
+<td align="right">2173</td>
+<td align="right">2861</td>
+<td align="right">3623</td>
+<td align="right">3725</td>
+<td align="right">4429</td>
+<td align="right">5310</td>
+<td align="right">5372</td>
+<td align="right">4671</td>
+<td align="right">4237</td>
+<td align="right">4291</td>
+<td align="right">3952</td>
+<td align="right">3808</td>
+</tr>
+<tr class="odd">
+<td>2010</td>
+<td align="right">2251</td>
+<td align="right">2921</td>
+<td align="right">4441</td>
+<td align="right">4991</td>
+<td align="right">5303</td>
+<td align="right">5424</td>
+<td align="right">4227</td>
+<td align="right">4186</td>
+<td align="right">3614</td>
+<td align="right">3344</td>
+<td align="right">3273</td>
+<td align="right">3877</td>
+</tr>
+<tr class="even">
+<td>2011</td>
+<td align="right">2452</td>
+<td align="right">2854</td>
+<td align="right">4128</td>
+<td align="right">4264</td>
+<td align="right">4786</td>
+<td align="right">5477</td>
+<td align="right">4812</td>
+<td align="right">5177</td>
+<td align="right">4180</td>
+<td align="right">3616</td>
+<td align="right">3465</td>
+<td align="right">3997</td>
+</tr>
+<tr class="odd">
+<td>2012</td>
+<td align="right">2648</td>
+<td align="right">3414</td>
+<td align="right">4679</td>
+<td align="right">5039</td>
+<td align="right">6181</td>
+<td align="right">6531</td>
+<td align="right">6106</td>
+<td align="right">6330</td>
+<td align="right">4797</td>
+<td align="right">4999</td>
+<td align="right">4617</td>
+<td align="right">4911</td>
+</tr>
+<tr class="even">
+<td>2013</td>
+<td align="right">3505</td>
+<td align="right">4153</td>
+<td align="right">5934</td>
+<td align="right">6970</td>
+<td align="right">8274</td>
+<td align="right">8098</td>
+<td align="right">8473</td>
+<td align="right">8166</td>
+<td align="right">6364</td>
+<td align="right">5935</td>
+<td align="right">5193</td>
+<td align="right">5893</td>
+</tr>
+<tr class="odd">
+<td>2014</td>
+<td align="right">3948</td>
+<td align="right">4961</td>
+<td align="right">6426</td>
+<td align="right">7201</td>
+<td align="right">8422</td>
+<td align="right">9178</td>
+<td align="right">8911</td>
+<td align="right">8470</td>
+<td align="right">7268</td>
+<td align="right">7146</td>
+<td align="right">5679</td>
+<td align="right">7152</td>
+</tr>
+<tr class="even">
+<td>2015</td>
+<td align="right">4445</td>
+<td align="right">5255</td>
+<td align="right">7417</td>
+<td align="right">7903</td>
+<td align="right">8895</td>
+<td align="right">10095</td>
+<td align="right">10109</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>Intégrer dans l’item <code>&quot;TOP&quot;</code>, les différents TOP suivants (chacun dans une <code>box()</code>) :
+<ul>
+<li>Les meilleures villes, au sens volume total des ventes sur la période</li>
+<li>Les meilleurs années, idem</li>
+<li>Les meilles mois, idem</li>
+<li>Pour chaque top, on pourra choisir la taille de celui-ci (entre 3, 5 et 10)</li>
+</ul></li>
+</ul>
+</div>
+
+</div>
+<div class="footer">
+      Site créé avec <a href="http://www.r-project.org" target="_blank"><code>R</code></a> et la 
+      librairie  <a href="http://rmarkdown.rstudio.com/" target="_blank"><code>rmarkdown</code></a>.
+</div>
+<script>
+    $("#TOC").css("margin-top", "100px");
+</script>
+
+
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

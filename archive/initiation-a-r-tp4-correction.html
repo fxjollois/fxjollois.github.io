@@ -1,0 +1,818 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+<meta charset="utf-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="pandoc" />
+
+
+
+
+<title>TP4 - Document automatique - correction</title>
+
+<script src="libs/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="libs/bootstrap-3.3.5/css/journal.min.css" rel="stylesheet" />
+<script src="libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<script src="libs/navigation-1.1/tabsets.js"></script>
+<link href="libs/highlightjs-1.1/default.css" rel="stylesheet" />
+<script src="libs/highlightjs-1.1/highlight.js"></script>
+<!--
+    Font Awesome
+-->
+<script src="https://use.fontawesome.com/32d8325004.js"></script>
+<link rel="stylesheet" href="libs/font-awesome-4.7.0/css/font-awesome.min.css">
+
+<!--
+    CSS perso
+-->
+<style>
+    .contenu {
+        margin-bottom: 50px;
+    }
+
+    .contact-liens {
+        text-align: center;
+    }
+    .contact-liens:hover {
+        text-decoration: none;
+    }
+    .contact-icones {
+        height: 30px;
+    }
+
+    /* Espacement pour barre du haut et pied de page */
+    #header, .section.level1 {
+        margin-top: 60px;
+        margin-bottom: 60px;
+    }
+    /* Espacement pour table des matières */
+    #TOC {
+        margin-top: 100px;
+    }
+    
+    .footer {
+        position: fixed;
+        width: 100%;
+        text-align: center;
+        bottom: 0;
+        left: 0;
+        background-color: #E6E6E6;
+    }
+</style>
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
+<script type="text/javascript">
+if (window.hljs && document.readyState && document.readyState === "complete") {
+   window.setTimeout(function() {
+      hljs.initHighlighting();
+   }, 0);
+}
+</script>
+
+
+
+<style type="text/css">
+h1 {
+  font-size: 34px;
+}
+h1.title {
+  font-size: 38px;
+}
+h2 {
+  font-size: 30px;
+}
+h3 {
+  font-size: 24px;
+}
+h4 {
+  font-size: 18px;
+}
+h5 {
+  font-size: 16px;
+}
+h6 {
+  font-size: 12px;
+}
+.table th:not([align]) {
+  text-align: left;
+}
+</style>
+
+<link rel="stylesheet" href="libs/bootstrap-journal.min.css" type="text/css" />
+
+</head>
+
+<body>
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img {
+  max-width:100%;
+  height: auto;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+</style>
+
+
+
+<div class="container-fluid main-container">
+
+<!-- tabsets -->
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+</script>
+
+<!-- code folding -->
+
+
+
+
+
+<div class="navbar navbar-default navbar-fixed-top">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-main">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">FX Jollois</a>
+    </div>
+    <div id="navbar-main" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button">Données <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+              <li><a href="accesdonnees.html">A télécharger</a></li>
+              <li><a href="donnees-integrees-r.html">Sous R</a></li>
+          </ul>
+        </li>
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button">Enseignement <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li class="dropdown-header">DUT 1ère année</li>
+            <li><a href="exploitation-donnees.html">Exploitation de données</a></li>
+            <li><a href="initiation-a-r.html">Initiation à R</a></li>
+            <li><a href="reporting.html">Reporting</a></li>
+            <li><a href="complements-r.html">Compléments sur R</a></li>
+            <li class="dropdown-header">DUT 2ème année</li>
+            <li><a href="prog-stat-r.html">Programmation statistique avec R</a></li>
+            <li class="dropdown-header">LP MDS Santé</li>
+            <li><a href="info-dec-sante.html">Informatique décisionnelle</a></li>
+            <li class="dropdown-header">DU Analyste Big Data</li>
+            <li><a href="initiation-r-du.html">Initiation à R</a></li>
+            <li><a href="connexion-r-mongodb.html">Connexion entre R et MongoDB</a></li>
+            <li class="dropdown-header">DU Dataviz</li>
+            <li><a href="analyse-donnees.html">Analyse de données</a></li>
+            <li><a href="visualisation-donnees.html">Visualisation de données - R</a></li>
+            <li><a href="visualisation-donnees-tableau.html">Visualisation de données - Tableau</a></li>
+            <li><a href="visualisation-donnees-d3.html">Visualisation de données - D3</a></li>
+            <li role="separator" class="divider"></li>
+            <li class="dropdown-header">Master</li>
+            <li><a href="slides/cnam-classif-modeles.html">Classification et Modèles de mélange</a></li>
+            <li><a href="analyse-donnees-massives.html">Analyse de Données Massives</a></li>
+            <li class="dropdown-header">Iran</li>
+            <li><a href="stat-prog-R.html">Statistical Programming using R</a></li>
+          </ul>
+        </li>
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button">Recherche <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li><a href="recherche.html">Sujets</a></li>
+            <li><a href="publications.html">Publications</a></li>
+          </ul>
+        </li>
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button">Réalisations <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li><a href="realisations.html">Détail</a></li>
+            <li role="separator" class="divider"></li>
+            <li><a href="http://up5.fr/explore-data" target="_blank">explore-data</a></li>
+            <li><a href="http://fxjollois.github.io/cours-sql/" target="_blank">Appli web de cours pour SQL</a></li>
+          </ul>
+        </li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container-fluid -->
+</div>
+<div class="contenu">
+
+<div class="fluid-row" id="header">
+
+
+
+<h1 class="title toc-ignore">TP4 - Document automatique - <em>correction</em></h1>
+<h3 class="subtitle"><em>Initiation a <code>R</code> - STID 1ère année</em></h3>
+
+</div>
+
+
+<div id="donnees" class="section level2">
+<h2>Données</h2>
+<p>Les donées <code>mtcars</code> contiennent les informations (11 variables) de 32 voitures. Vous pouvez avoir plus d’informations sur <a href="https://stat.ethz.ch/R-manual/R-devel/library/datasets/html/mtcars.html">cette page</a></p>
+<table>
+<thead>
+<tr class="header">
+<th></th>
+<th align="right">mpg</th>
+<th align="right">cyl</th>
+<th align="right">disp</th>
+<th align="right">hp</th>
+<th align="right">drat</th>
+<th align="right">wt</th>
+<th align="right">qsec</th>
+<th align="right">vs</th>
+<th align="right">am</th>
+<th align="right">gear</th>
+<th align="right">carb</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Mazda RX4</td>
+<td align="right">21.0</td>
+<td align="right">6</td>
+<td align="right">160.0</td>
+<td align="right">110</td>
+<td align="right">3.90</td>
+<td align="right">2.620</td>
+<td align="right">16.46</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="right">4</td>
+<td align="right">4</td>
+</tr>
+<tr class="even">
+<td>Mazda RX4 Wag</td>
+<td align="right">21.0</td>
+<td align="right">6</td>
+<td align="right">160.0</td>
+<td align="right">110</td>
+<td align="right">3.90</td>
+<td align="right">2.875</td>
+<td align="right">17.02</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="right">4</td>
+<td align="right">4</td>
+</tr>
+<tr class="odd">
+<td>Datsun 710</td>
+<td align="right">22.8</td>
+<td align="right">4</td>
+<td align="right">108.0</td>
+<td align="right">93</td>
+<td align="right">3.85</td>
+<td align="right">2.320</td>
+<td align="right">18.61</td>
+<td align="right">1</td>
+<td align="right">1</td>
+<td align="right">4</td>
+<td align="right">1</td>
+</tr>
+<tr class="even">
+<td>Hornet 4 Drive</td>
+<td align="right">21.4</td>
+<td align="right">6</td>
+<td align="right">258.0</td>
+<td align="right">110</td>
+<td align="right">3.08</td>
+<td align="right">3.215</td>
+<td align="right">19.44</td>
+<td align="right">1</td>
+<td align="right">0</td>
+<td align="right">3</td>
+<td align="right">1</td>
+</tr>
+<tr class="odd">
+<td>Hornet Sportabout</td>
+<td align="right">18.7</td>
+<td align="right">8</td>
+<td align="right">360.0</td>
+<td align="right">175</td>
+<td align="right">3.15</td>
+<td align="right">3.440</td>
+<td align="right">17.02</td>
+<td align="right">0</td>
+<td align="right">0</td>
+<td align="right">3</td>
+<td align="right">2</td>
+</tr>
+<tr class="even">
+<td>Valiant</td>
+<td align="right">18.1</td>
+<td align="right">6</td>
+<td align="right">225.0</td>
+<td align="right">105</td>
+<td align="right">2.76</td>
+<td align="right">3.460</td>
+<td align="right">20.22</td>
+<td align="right">1</td>
+<td align="right">0</td>
+<td align="right">3</td>
+<td align="right">1</td>
+</tr>
+<tr class="odd">
+<td>Duster 360</td>
+<td align="right">14.3</td>
+<td align="right">8</td>
+<td align="right">360.0</td>
+<td align="right">245</td>
+<td align="right">3.21</td>
+<td align="right">3.570</td>
+<td align="right">15.84</td>
+<td align="right">0</td>
+<td align="right">0</td>
+<td align="right">3</td>
+<td align="right">4</td>
+</tr>
+<tr class="even">
+<td>Merc 240D</td>
+<td align="right">24.4</td>
+<td align="right">4</td>
+<td align="right">146.7</td>
+<td align="right">62</td>
+<td align="right">3.69</td>
+<td align="right">3.190</td>
+<td align="right">20.00</td>
+<td align="right">1</td>
+<td align="right">0</td>
+<td align="right">4</td>
+<td align="right">2</td>
+</tr>
+<tr class="odd">
+<td>Merc 230</td>
+<td align="right">22.8</td>
+<td align="right">4</td>
+<td align="right">140.8</td>
+<td align="right">95</td>
+<td align="right">3.92</td>
+<td align="right">3.150</td>
+<td align="right">22.90</td>
+<td align="right">1</td>
+<td align="right">0</td>
+<td align="right">4</td>
+<td align="right">2</td>
+</tr>
+<tr class="even">
+<td>Merc 280</td>
+<td align="right">19.2</td>
+<td align="right">6</td>
+<td align="right">167.6</td>
+<td align="right">123</td>
+<td align="right">3.92</td>
+<td align="right">3.440</td>
+<td align="right">18.30</td>
+<td align="right">1</td>
+<td align="right">0</td>
+<td align="right">4</td>
+<td align="right">4</td>
+</tr>
+<tr class="odd">
+<td>Merc 280C</td>
+<td align="right">17.8</td>
+<td align="right">6</td>
+<td align="right">167.6</td>
+<td align="right">123</td>
+<td align="right">3.92</td>
+<td align="right">3.440</td>
+<td align="right">18.90</td>
+<td align="right">1</td>
+<td align="right">0</td>
+<td align="right">4</td>
+<td align="right">4</td>
+</tr>
+<tr class="even">
+<td>Merc 450SE</td>
+<td align="right">16.4</td>
+<td align="right">8</td>
+<td align="right">275.8</td>
+<td align="right">180</td>
+<td align="right">3.07</td>
+<td align="right">4.070</td>
+<td align="right">17.40</td>
+<td align="right">0</td>
+<td align="right">0</td>
+<td align="right">3</td>
+<td align="right">3</td>
+</tr>
+<tr class="odd">
+<td>Merc 450SL</td>
+<td align="right">17.3</td>
+<td align="right">8</td>
+<td align="right">275.8</td>
+<td align="right">180</td>
+<td align="right">3.07</td>
+<td align="right">3.730</td>
+<td align="right">17.60</td>
+<td align="right">0</td>
+<td align="right">0</td>
+<td align="right">3</td>
+<td align="right">3</td>
+</tr>
+<tr class="even">
+<td>Merc 450SLC</td>
+<td align="right">15.2</td>
+<td align="right">8</td>
+<td align="right">275.8</td>
+<td align="right">180</td>
+<td align="right">3.07</td>
+<td align="right">3.780</td>
+<td align="right">18.00</td>
+<td align="right">0</td>
+<td align="right">0</td>
+<td align="right">3</td>
+<td align="right">3</td>
+</tr>
+<tr class="odd">
+<td>Cadillac Fleetwood</td>
+<td align="right">10.4</td>
+<td align="right">8</td>
+<td align="right">472.0</td>
+<td align="right">205</td>
+<td align="right">2.93</td>
+<td align="right">5.250</td>
+<td align="right">17.98</td>
+<td align="right">0</td>
+<td align="right">0</td>
+<td align="right">3</td>
+<td align="right">4</td>
+</tr>
+<tr class="even">
+<td>Lincoln Continental</td>
+<td align="right">10.4</td>
+<td align="right">8</td>
+<td align="right">460.0</td>
+<td align="right">215</td>
+<td align="right">3.00</td>
+<td align="right">5.424</td>
+<td align="right">17.82</td>
+<td align="right">0</td>
+<td align="right">0</td>
+<td align="right">3</td>
+<td align="right">4</td>
+</tr>
+<tr class="odd">
+<td>Chrysler Imperial</td>
+<td align="right">14.7</td>
+<td align="right">8</td>
+<td align="right">440.0</td>
+<td align="right">230</td>
+<td align="right">3.23</td>
+<td align="right">5.345</td>
+<td align="right">17.42</td>
+<td align="right">0</td>
+<td align="right">0</td>
+<td align="right">3</td>
+<td align="right">4</td>
+</tr>
+<tr class="even">
+<td>Fiat 128</td>
+<td align="right">32.4</td>
+<td align="right">4</td>
+<td align="right">78.7</td>
+<td align="right">66</td>
+<td align="right">4.08</td>
+<td align="right">2.200</td>
+<td align="right">19.47</td>
+<td align="right">1</td>
+<td align="right">1</td>
+<td align="right">4</td>
+<td align="right">1</td>
+</tr>
+<tr class="odd">
+<td>Honda Civic</td>
+<td align="right">30.4</td>
+<td align="right">4</td>
+<td align="right">75.7</td>
+<td align="right">52</td>
+<td align="right">4.93</td>
+<td align="right">1.615</td>
+<td align="right">18.52</td>
+<td align="right">1</td>
+<td align="right">1</td>
+<td align="right">4</td>
+<td align="right">2</td>
+</tr>
+<tr class="even">
+<td>Toyota Corolla</td>
+<td align="right">33.9</td>
+<td align="right">4</td>
+<td align="right">71.1</td>
+<td align="right">65</td>
+<td align="right">4.22</td>
+<td align="right">1.835</td>
+<td align="right">19.90</td>
+<td align="right">1</td>
+<td align="right">1</td>
+<td align="right">4</td>
+<td align="right">1</td>
+</tr>
+<tr class="odd">
+<td>Toyota Corona</td>
+<td align="right">21.5</td>
+<td align="right">4</td>
+<td align="right">120.1</td>
+<td align="right">97</td>
+<td align="right">3.70</td>
+<td align="right">2.465</td>
+<td align="right">20.01</td>
+<td align="right">1</td>
+<td align="right">0</td>
+<td align="right">3</td>
+<td align="right">1</td>
+</tr>
+<tr class="even">
+<td>Dodge Challenger</td>
+<td align="right">15.5</td>
+<td align="right">8</td>
+<td align="right">318.0</td>
+<td align="right">150</td>
+<td align="right">2.76</td>
+<td align="right">3.520</td>
+<td align="right">16.87</td>
+<td align="right">0</td>
+<td align="right">0</td>
+<td align="right">3</td>
+<td align="right">2</td>
+</tr>
+<tr class="odd">
+<td>AMC Javelin</td>
+<td align="right">15.2</td>
+<td align="right">8</td>
+<td align="right">304.0</td>
+<td align="right">150</td>
+<td align="right">3.15</td>
+<td align="right">3.435</td>
+<td align="right">17.30</td>
+<td align="right">0</td>
+<td align="right">0</td>
+<td align="right">3</td>
+<td align="right">2</td>
+</tr>
+<tr class="even">
+<td>Camaro Z28</td>
+<td align="right">13.3</td>
+<td align="right">8</td>
+<td align="right">350.0</td>
+<td align="right">245</td>
+<td align="right">3.73</td>
+<td align="right">3.840</td>
+<td align="right">15.41</td>
+<td align="right">0</td>
+<td align="right">0</td>
+<td align="right">3</td>
+<td align="right">4</td>
+</tr>
+<tr class="odd">
+<td>Pontiac Firebird</td>
+<td align="right">19.2</td>
+<td align="right">8</td>
+<td align="right">400.0</td>
+<td align="right">175</td>
+<td align="right">3.08</td>
+<td align="right">3.845</td>
+<td align="right">17.05</td>
+<td align="right">0</td>
+<td align="right">0</td>
+<td align="right">3</td>
+<td align="right">2</td>
+</tr>
+<tr class="even">
+<td>Fiat X1-9</td>
+<td align="right">27.3</td>
+<td align="right">4</td>
+<td align="right">79.0</td>
+<td align="right">66</td>
+<td align="right">4.08</td>
+<td align="right">1.935</td>
+<td align="right">18.90</td>
+<td align="right">1</td>
+<td align="right">1</td>
+<td align="right">4</td>
+<td align="right">1</td>
+</tr>
+<tr class="odd">
+<td>Porsche 914-2</td>
+<td align="right">26.0</td>
+<td align="right">4</td>
+<td align="right">120.3</td>
+<td align="right">91</td>
+<td align="right">4.43</td>
+<td align="right">2.140</td>
+<td align="right">16.70</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="right">5</td>
+<td align="right">2</td>
+</tr>
+<tr class="even">
+<td>Lotus Europa</td>
+<td align="right">30.4</td>
+<td align="right">4</td>
+<td align="right">95.1</td>
+<td align="right">113</td>
+<td align="right">3.77</td>
+<td align="right">1.513</td>
+<td align="right">16.90</td>
+<td align="right">1</td>
+<td align="right">1</td>
+<td align="right">5</td>
+<td align="right">2</td>
+</tr>
+<tr class="odd">
+<td>Ford Pantera L</td>
+<td align="right">15.8</td>
+<td align="right">8</td>
+<td align="right">351.0</td>
+<td align="right">264</td>
+<td align="right">4.22</td>
+<td align="right">3.170</td>
+<td align="right">14.50</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="right">5</td>
+<td align="right">4</td>
+</tr>
+<tr class="even">
+<td>Ferrari Dino</td>
+<td align="right">19.7</td>
+<td align="right">6</td>
+<td align="right">145.0</td>
+<td align="right">175</td>
+<td align="right">3.62</td>
+<td align="right">2.770</td>
+<td align="right">15.50</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="right">5</td>
+<td align="right">6</td>
+</tr>
+<tr class="odd">
+<td>Maserati Bora</td>
+<td align="right">15.0</td>
+<td align="right">8</td>
+<td align="right">301.0</td>
+<td align="right">335</td>
+<td align="right">3.54</td>
+<td align="right">3.570</td>
+<td align="right">14.60</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="right">5</td>
+<td align="right">8</td>
+</tr>
+<tr class="even">
+<td>Volvo 142E</td>
+<td align="right">21.4</td>
+<td align="right">4</td>
+<td align="right">121.0</td>
+<td align="right">109</td>
+<td align="right">4.11</td>
+<td align="right">2.780</td>
+<td align="right">18.60</td>
+<td align="right">1</td>
+<td align="right">1</td>
+<td align="right">4</td>
+<td align="right">2</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="consommation" class="section level2">
+<h2>Consommation</h2>
+<p>Voici la distribution de la consommation (en <em>Miles (US)/Galon</em>) des voitures.</p>
+<div class="figure" style="text-align: TRUE">
+<img src="initiation-a-r-tp4-correction_files/figure-html/unnamed-chunk-3-1.png" alt="Histogramme de la consommation en Miles(US)/Galon" width="672" />
+<p class="caption">
+Histogramme de la consommation en Miles(US)/Galon
+</p>
+</div>
+<p><img src="initiation-a-r-tp4-correction_files/figure-html/unnamed-chunk-4-1.png" width="672" style="display: block; margin: auto auto auto 0;" /></p>
+</div>
+<div id="transmission" class="section level2">
+<h2>Transmission</h2>
+<p>Pour créer la nouvelle variable, nous devons utiliser le code suivant :</p>
+<pre class="r"><code>mtcars$trans = factor(mtcars$am, labels = c(&quot;automatic&quot;, &quot;manual&quot;))</code></pre>
+<p>Voici la répartition des voitures en fonction de la transmission (automatique ou manuelle).</p>
+<table>
+<thead>
+<tr class="header">
+<th align="left">Transmission</th>
+<th align="right">Effectif</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">automatic</td>
+<td align="right">19</td>
+</tr>
+<tr class="even">
+<td align="left">manual</td>
+<td align="right">13</td>
+</tr>
+</tbody>
+</table>
+<p>Enfin, on représente cette répartition via un diagramme circulaire</p>
+<div class="figure" style="text-align: TRUE">
+<img src="initiation-a-r-tp4-correction_files/figure-html/unnamed-chunk-7-1.png" alt="Répartition des voitures selon la transmission" width="240" />
+<p class="caption">
+Répartition des voitures selon la transmission
+</p>
+</div>
+</div>
+<div id="consommation-et-transmission" class="section level2">
+<h2>Consommation et transmission</h2>
+<div id="sous-tables" class="section level3">
+<h3>Sous-tables</h3>
+<p>Nous créons ici deux sous-tables, une pour <code>&quot;automatic&quot;</code>, l’autre pour <code>&quot;manual&quot;</code>, avec le code suivant :</p>
+<pre class="r"><code>mtcars_auto = subset(mtcars, subset = trans == &quot;automatic&quot;)
+mtcars_manu = subset(mtcars, subset = trans == &quot;manual&quot;)</code></pre>
+</div>
+<div id="automatique" class="section level3">
+<h3>Automatique</h3>
+<div class="figure" style="text-align: TRUE">
+<img src="initiation-a-r-tp4-correction_files/figure-html/unnamed-chunk-9-1.png" alt="Distribution de la consommation (en Miles(US)/Galon) pour les voitures à transmission automatique" width="672" />
+<p class="caption">
+Distribution de la consommation (en Miles(US)/Galon) pour les voitures à transmission automatique
+</p>
+</div>
+</div>
+<div id="manuelle" class="section level3">
+<h3>Manuelle</h3>
+<div class="figure" style="text-align: TRUE">
+<img src="initiation-a-r-tp4-correction_files/figure-html/unnamed-chunk-10-1.png" alt="Distribution de la consommation (en Miles(US)/Galon) pour les voitures à transmission manuelle" width="672" />
+<p class="caption">
+Distribution de la consommation (en Miles(US)/Galon) pour les voitures à transmission manuelle
+</p>
+</div>
+</div>
+</div>
+
+</div>
+<div class="footer">
+      Site créé avec <a href="http://www.r-project.org" target="_blank"><code>R</code></a> et la 
+      librairie  <a href="http://rmarkdown.rstudio.com/" target="_blank"><code>rmarkdown</code></a>.
+</div>
+<script>
+    $("#TOC").css("margin-top", "100px");
+</script>
+
+
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

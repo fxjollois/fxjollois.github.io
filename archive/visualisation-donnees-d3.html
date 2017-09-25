@@ -1,0 +1,568 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+<meta charset="utf-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="pandoc" />
+
+
+
+
+<title>Visualisation de données - D3.js</title>
+
+<script src="libs/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="libs/bootstrap-3.3.5/css/journal.min.css" rel="stylesheet" />
+<script src="libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<script src="libs/navigation-1.1/tabsets.js"></script>
+<link href="libs/highlightjs-1.1/default.css" rel="stylesheet" />
+<script src="libs/highlightjs-1.1/highlight.js"></script>
+<!--
+    Font Awesome
+-->
+<script src="https://use.fontawesome.com/32d8325004.js"></script>
+<link rel="stylesheet" href="libs/font-awesome-4.7.0/css/font-awesome.min.css">
+
+<!--
+    CSS perso
+-->
+<style>
+    .contenu {
+        margin-bottom: 50px;
+    }
+
+    .contact-liens {
+        text-align: center;
+    }
+    .contact-liens:hover {
+        text-decoration: none;
+    }
+    .contact-icones {
+        height: 30px;
+    }
+
+    /* Espacement pour barre du haut et pied de page */
+    #header, .section.level1 {
+        margin-top: 60px;
+        margin-bottom: 60px;
+    }
+    /* Espacement pour table des matières */
+    #TOC {
+        margin-top: 100px;
+    }
+    
+    .footer {
+        position: fixed;
+        width: 100%;
+        text-align: center;
+        bottom: 0;
+        left: 0;
+        background-color: #E6E6E6;
+    }
+</style>
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
+<script type="text/javascript">
+if (window.hljs && document.readyState && document.readyState === "complete") {
+   window.setTimeout(function() {
+      hljs.initHighlighting();
+   }, 0);
+}
+</script>
+
+
+
+<style type="text/css">
+h1 {
+  font-size: 34px;
+}
+h1.title {
+  font-size: 38px;
+}
+h2 {
+  font-size: 30px;
+}
+h3 {
+  font-size: 24px;
+}
+h4 {
+  font-size: 18px;
+}
+h5 {
+  font-size: 16px;
+}
+h6 {
+  font-size: 12px;
+}
+.table th:not([align]) {
+  text-align: left;
+}
+</style>
+
+<link rel="stylesheet" href="libs/bootstrap-journal.min.css" type="text/css" />
+
+</head>
+
+<body>
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img {
+  max-width:100%;
+  height: auto;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+</style>
+
+
+
+<div class="container-fluid main-container">
+
+<!-- tabsets -->
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+</script>
+
+<!-- code folding -->
+
+
+
+
+
+<div class="navbar navbar-default navbar-fixed-top">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-main">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">FX Jollois</a>
+    </div>
+    <div id="navbar-main" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button">Données <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+              <li><a href="accesdonnees.html">A télécharger</a></li>
+              <li><a href="donnees-integrees-r.html">Sous R</a></li>
+          </ul>
+        </li>
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button">Enseignement <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li class="dropdown-header">DUT 1ère année</li>
+            <li><a href="exploitation-donnees.html">Exploitation de données</a></li>
+            <li><a href="initiation-a-r.html">Initiation à R</a></li>
+            <li><a href="reporting.html">Reporting</a></li>
+            <li><a href="complements-r.html">Compléments sur R</a></li>
+            <li class="dropdown-header">DUT 2ème année</li>
+            <li><a href="prog-stat-r.html">Programmation statistique avec R</a></li>
+            <li class="dropdown-header">LP MDS Santé</li>
+            <li><a href="info-dec-sante.html">Informatique décisionnelle</a></li>
+            <li class="dropdown-header">DU Analyste Big Data</li>
+            <li><a href="initiation-r-du.html">Initiation à R</a></li>
+            <li><a href="connexion-r-mongodb.html">Connexion entre R et MongoDB</a></li>
+            <li class="dropdown-header">DU Dataviz</li>
+            <li><a href="analyse-donnees.html">Analyse de données</a></li>
+            <li><a href="visualisation-donnees.html">Visualisation de données - R</a></li>
+            <li><a href="visualisation-donnees-tableau.html">Visualisation de données - Tableau</a></li>
+            <li><a href="visualisation-donnees-d3.html">Visualisation de données - D3</a></li>
+            <li role="separator" class="divider"></li>
+            <li class="dropdown-header">Master</li>
+            <li><a href="slides/cnam-classif-modeles.html">Classification et Modèles de mélange</a></li>
+            <li><a href="analyse-donnees-massives.html">Analyse de Données Massives</a></li>
+            <li class="dropdown-header">Iran</li>
+            <li><a href="stat-prog-R.html">Statistical Programming using R</a></li>
+          </ul>
+        </li>
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button">Recherche <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li><a href="recherche.html">Sujets</a></li>
+            <li><a href="publications.html">Publications</a></li>
+          </ul>
+        </li>
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button">Réalisations <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li><a href="realisations.html">Détail</a></li>
+            <li role="separator" class="divider"></li>
+            <li><a href="http://up5.fr/explore-data" target="_blank">explore-data</a></li>
+            <li><a href="http://fxjollois.github.io/cours-sql/" target="_blank">Appli web de cours pour SQL</a></li>
+          </ul>
+        </li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container-fluid -->
+</div>
+<div class="contenu">
+
+<div class="fluid-row" id="header">
+
+
+
+<h1 class="title toc-ignore">Visualisation de données - D3.js</h1>
+<h3 class="subtitle"><em>Data-Driven Documents</em></h3>
+
+</div>
+
+
+<p><a href="http://www.d3js.org">D3.js</a> est une librairie <code>javascript</code> très complète avec beaucoup d’exemples à disposition, avec une personnalisation totale possible. Elle permet l’accès à des primitives <code>SVG</code> permettant toute innovation. Malheureusement, elle est peu accessible directement et assez technique.</p>
+<p>Les exemples présentés ci-dessous sont disponibles directement <a href="http://codepen.io/collection/DojQMG/">sur cette page</a>.</p>
+<div id="fonctionnement-typique" class="section level2">
+<h2>Fonctionnement typique</h2>
+<p>L’edée principale est de lier les données au <strong>DOM</strong> (<em>Document Object Model</em>), et d’appliquer des transformations, basées sur les données, au document.</p>
+<p>Il y a plusieurs concepts spécifiques à bien comprendre pour l’utiliser pleinement :</p>
+<ul>
+<li>Sélection, modification, ajout et insertion d’éléments</li>
+<li>Ajout de données au DOM</li>
+<li>Propriété dynamique, et Transformation</li>
+<li>Chaînage des fonctions</li>
+</ul>
+</div>
+<div id="base" class="section level2">
+<h2>Base</h2>
+<div id="selection-et-modification" class="section level3">
+<h3>Sélection et modification</h3>
+<p>Il existe deux fonctions de sélection respectivement d’un élément (<code>select()</code>) et de l’ensemble des éléments (<code>selectAll()</code>) correspondant à la définition passée en paramètre (sélecteur idem que pour le CSS) :</p>
+<pre class="js"><code>var selection1 = d3.select(&quot;selecteur&quot;);
+var selection2 = d3.selectAll(&quot;selecteur&quot;);</code></pre>
+<p>On a de plus deux fonctions sur l’objet renvoyé par ces sélecteurs pour connaître la taille de la sélection :</p>
+<ul>
+<li><code>size()</code> : taille de la sélection</li>
+<li><code>empty()</code> : sélection vide ou non</li>
+</ul>
+</div>
+<div id="modification-ajout-et-insertion-delements" class="section level3">
+<h3>Modification, ajout et insertion d’éléments</h3>
+<p>Plusieurs fonctions permettent de modifier les éléments sélectionnés (comme par exemple <code>style()</code> pour appliquer des règles <code>CSS</code> ou <code>html()</code> pour modifier le contenu de la balise). Le code suivant permet de mettre le texte en rouge pour tout le corps de la page</p>
+<pre class="js"><code>var corps = d3.select(&quot;body&quot;);
+corps.style(&quot;color&quot;, &quot;red&quot;);</code></pre>
+<p>Deux fonctions sont utiles pour respectivement insérer un élément <code>HTML</code> fils à la fin (<code>append()</code>) ou au début (<code>insert()</code>) d’un élément père, qui s’utilisent comme suit :</p>
+<pre class="js"><code>selection.append(&quot;balise&quot;);
+selection.insert(&quot;balise&quot;);</code></pre>
+</div>
+<div id="exemple" class="section level3">
+<h3>Exemple</h3>
+<p>Ici, on sélectionne la balise <code>&lt;body&gt;</code> (qui est vide au départ). Dans cette sélection, on ajoute deux balises <code>div</code>, pour mettre dans la première la taille de la sélection (<code>1</code> normalement) et dans la seconde le test si elle est vide ou non (normalement <code>false</code>). Enfin, on met le texte de la sélection en rouge (donc tout).</p>
+<p data-height="320" data-theme-id="0" data-slug-hash="bVMMjZ" data-default-tab="js,result" data-user="fxjollois" data-embed-version="2" class="codepen">
+See the Pen <a href="http://codepen.io/fxjollois/pen/bVMMjZ/">d3.js : base de la librairie</a> by FX Jollois (<a href="http://codepen.io/fxjollois"><span class="citation">@fxjollois</span></a>) on <a href="http://codepen.io">CodePen</a>.
+</p>
+<script async src="//assets.codepen.io/assets/embed/ei.js"></script>
+</div>
+</div>
+<div id="ajout-de-donnees-au-dom" class="section level2">
+<h2>Ajout de données au DOM</h2>
+<p>Avec la fonction <code>data()</code> sur une sélection, il est possible de lier les données passées en paramètres (ce doit être un <strong>tableau</strong>) au DOM à la sélection en question. Le code suivant affecte chaque élément du tableau à chaque élément renvoyé par le sélecteur précédent</p>
+<pre class="js"><code>var selection = d3.selectAll(&quot;selecteur&quot;);
+selection.data(tableau);</code></pre>
+<p>S’il y a différence entre la taille de la sélection et la taille du tableau passé en paramètre de <code>data()</code>, il existe deux fonctions utiles pour gérer ces cas :</p>
+<ul>
+<li><code>enter()</code> : pour gérer les éléments du tableau en plus</li>
+<li><code>exit()</code> : pour gérer les éléments de la sélection en plus</li>
+</ul>
+<div id="propriete-dynamique" class="section level3">
+<h3>Propriété dynamique</h3>
+<p>Sur chaque sélection, on peut appliquer des modifications de style ou de contenu (voire autre), en fonction des données sont liées au DOM. On passe par l’utilisation d’une fonction anonyme, dont les paramètres peuvent être, dans cet ordre :</p>
+<ul>
+<li>la valeur de l’élément du tableau affectée à l’élément</li>
+<li>la position de la valeur dans le tableau</li>
+<li>il est possible de n’utiliser que la valeur, voire aucun paramètre si besoin</li>
+</ul>
+<pre class="js"><code>var selection = d3.selectAll(&quot;selecteur&quot;);
+selection.data(tableau);
+selection.html(function(d, i) {
+    return &quot;position = &quot; + i + &quot;, valeur = &quot; + d;
+})</code></pre>
+</div>
+<div id="exemples" class="section level3">
+<h3>Exemples</h3>
+<div id="ajout-de-donnees-propriete-dynamique" class="section level4">
+<h4>Ajout de données + propriété dynamique</h4>
+<p>Dans cet exemple, on affecte les données du tableau (qui contient des couleurs) à chaque <code>div</code> du <code>body</code>. Et on affecte un style <code>CSS</code> (la couleur), en prenant comme valeur celle contenu dans le tableau.</p>
+<p data-height="266" data-theme-id="0" data-slug-hash="eprrjJ" data-default-tab="html,result" data-user="fxjollois" data-embed-version="2" class="codepen">
+See the Pen <a href="http://codepen.io/fxjollois/pen/eprrjJ/">d3.js : data + style dynamique</a> by FX Jollois (<a href="http://codepen.io/fxjollois"><span class="citation">@fxjollois</span></a>) on <a href="http://codepen.io">CodePen</a>.
+</p>
+<script async src="//assets.codepen.io/assets/embed/ei.js"></script>
+</div>
+<div id="fonction-enter" class="section level4">
+<h4>fonction <code>enter()</code></h4>
+<p>Le tableau passé en paramètre de <code>data()</code> est ici plus long que la sélection. Pour les valeurs supplémentaires du tableau (sélectionnées avec le <code>enter()</code>), on ajoute des <code>div</code> (avec <code>append()</code>).</p>
+<p data-height="266" data-theme-id="0" data-slug-hash="wKjjXN" data-default-tab="html,result" data-user="fxjollois" data-embed-version="2" class="codepen">
+See the Pen <a href="http://codepen.io/fxjollois/pen/wKjjXN/">d3.js : data + enter()</a> by FX Jollois (<a href="http://codepen.io/fxjollois"><span class="citation">@fxjollois</span></a>) on <a href="http://codepen.io">CodePen</a>.
+</p>
+<script async src="//assets.codepen.io/assets/embed/ei.js"></script>
+</div>
+<div id="fonction-exit" class="section level4">
+<h4>fonction <code>exit()</code></h4>
+<p>C’est ici le contraire, le tableau est plus petit que la sélection. Pour les éléments de la sélection en trop (sélectionnés avec le <code>exit()</code>), on les supprime (avec <code>remove()</code>).</p>
+<p data-height="266" data-theme-id="0" data-slug-hash="LpmmmL" data-default-tab="html,result" data-user="fxjollois" data-embed-version="2" class="codepen">
+See the Pen <a href="http://codepen.io/fxjollois/pen/LpmmmL/">d3.js : data + exit()</a> by FX Jollois (<a href="http://codepen.io/fxjollois"><span class="citation">@fxjollois</span></a>) on <a href="http://codepen.io">CodePen</a>.
+</p>
+<script async src="//assets.codepen.io/assets/embed/ei.js"></script>
+</div>
+</div>
+</div>
+<div id="chainage-des-fonctions" class="section level2">
+<h2>Chaînage des fonctions</h2>
+<p>Il faut absolument comprendre le principe généralement appliqué en <code>JS</code> orienté objet :</p>
+<blockquote>
+<p><strong>Toute fonction d’un objet renvoie cet objet</strong></p>
+</blockquote>
+<p>Ceci est vrai sauf si la fonction a pour but de renvoyer un résultat spécifique. Et cela ne concerne donc que les procédures (qui sont aussi des fonctions en JS).</p>
+<p>Le corollaire de ce principe est intéressant :</p>
+<blockquote>
+<p>Il est possible d’enchaîner un grand nombre de fonctions directement</p>
+</blockquote>
+<p>Dans l’exemple ci-dessous, on utilise ce principe pour créer autant de <code>div</code> qu’il y a de couleurs dans le tableau, en indiquant le contenu <code>HTML</code> de celles-ci, et en leur appliquant un style <code>CSS</code> spécifique.</p>
+<p data-height="266" data-theme-id="0" data-slug-hash="MaGGxK" data-default-tab="js,result" data-user="fxjollois" data-embed-version="2" class="codepen">
+See the Pen <a href="http://codepen.io/fxjollois/pen/MaGGxK/">d3.js : chaînage des fonctions</a> by FX Jollois (<a href="http://codepen.io/fxjollois"><span class="citation">@fxjollois</span></a>) on <a href="http://codepen.io">CodePen</a>.
+</p>
+<script async src="//assets.codepen.io/assets/embed/ei.js"></script>
+</div>
+<div id="lecture-de-donnees" class="section level2">
+<h2>Lecture de données</h2>
+<p>Il existe plusieurs fonctions dans la librairie D3 pour charger des données de tout type (<code>JSON</code>, <code>CSV</code>, <code>TSV</code>, <code>XML</code>, …). Les fonctions pour le faire sont toutes de type <code>d3.xxx()</code> (<code>xxx</code> étant remplacé par le format approprié - <code>d3.json()</code> pour du <code>JSON</code> par exemple).</p>
+<p>L’exemple ci-dessous charge des données obtenues via l’API <a href="http://www.omdbapi.com/"><strong>Open Movie Database</strong> (OMDb)</a>, qui permet d’accéder à une grande base de données de films. Nous avons choisi de faire une recherche sur les termes <em>Big</em>, <em>Bang</em> et <em>Theory</em>. On doit donc charger la page obtenue grâce à l’URL suivante :</p>
+<blockquote>
+<p><a href="http://www.omdbapi.com/?s=big+bang+theory"><code>http://www.omdbapi.com/?s=big+bang+theory</code></a></p>
+</blockquote>
+<p data-height="372" data-theme-id="0" data-slug-hash="PNxVoY" data-default-tab="js,result" data-user="fxjollois" data-embed-version="2" class="codepen">
+See the Pen <a href="http://codepen.io/fxjollois/pen/PNxVoY/">d3.js : lecture de données JSON</a> by FX Jollois (<a href="http://codepen.io/fxjollois"><span class="citation">@fxjollois</span></a>) on <a href="http://codepen.io">CodePen</a>.
+</p>
+<script async src="//assets.codepen.io/assets/embed/ei.js"></script>
+</div>
+<div id="ajout-dinteractive" class="section level2">
+<h2>Ajout d’interactivé</h2>
+<p>Il est possible d’ajouter des gestions d’événements sur les objets créés via la fonction <code>on()</code>. Celle-ci prend en premier paramètre l’événement (par exemple <code>mouseover</code> pour gérer le positionnement de la souris sur l’objet), et en deuxième paramètre la fonction à appliquer lors de la survenue de cet évènement.</p>
+<p>Dans cette fonction, il n’y aucun paramètre possible. Mais nous avons accès à l’objet via <code>this</code>. Si de plus, nous avons pris le soin d’ajouter des propriétés à cet objet (via la fonction <code>property(&quot;nom&quot;, valeur)</code>), nous pouvons y accéder à la valeur via <code>this.nom</code>.</p>
+<p>Dans l’exemple ci-dessous, nous ajoutons à chaque <code>div</code> la gestion du passage de la souris sur celle-ci (ainsi que sa sortie). Pour cela, nous ajoutons une propriété <code>couleur</code> à chacune, qui prendra la valeur de la couleur dans le tableau. Ensuite, on indique que lorsque la souris passe sur la <code>div</code> (<code>on(&quot;mouseover&quot;, ...)</code>), on change la couleur de la police par celle spécifique à la <code>div</code>.</p>
+<p>Si nous ne gérons pas la sortie de la souris, la couleur ne sera jamais rechangé. Nous gérons donc ce cas (via <code>on(&quot;mouseout, ...)</code>) en indiquant que la couleur redevient noire.</p>
+<p data-height="265" data-theme-id="0" data-slug-hash="xVMjxG" data-default-tab="js,result" data-user="fxjollois" data-embed-version="2" class="codepen">
+See the Pen <a href="http://codepen.io/fxjollois/pen/xVMjxG/">d3.js : ajout d’interactivé</a> by FX Jollois (<a href="http://codepen.io/fxjollois"><span class="citation">@fxjollois</span></a>) on <a href="http://codepen.io">CodePen</a>.
+</p>
+<script async src="//assets.codepen.io/assets/embed/ei.js"></script>
+<p>Pour récupérer les informations de la souris, il existe l’objet <code>d3.event</code> qui contient en particulier les informations suivantes :</p>
+<ul>
+<li><code>clientX</code> et <code>clientY</code> : position relative à la partie visible du navigateur Mouse position relative to the browser’s visible viewport.</li>
+<li><code>screenX</code> et <code>screenY</code> : position relative au moniteur</li>
+<li><code>offsetX</code> et <code>offsetY</code> : position relative à l’objet sur lequel la souris est (implémentation varaible entres les navigateurs)</li>
+<li><code>pageX</code> et <code>pageY</code> : position relatice au document <code>HTML</code></li>
+</ul>
+<p>Voici un petit exemple de ce qu’on peut récupérer comme informations.</p>
+<p data-height="265" data-theme-id="0" data-slug-hash="zqejqx" data-default-tab="html,result" data-user="fxjollois" data-embed-version="2" class="codepen">
+See the Pen <a href="http://codepen.io/fxjollois/pen/zqejqx/">d3.js : infos sur la souris</a> by FX Jollois (<a href="http://codepen.io/fxjollois"><span class="citation">@fxjollois</span></a>) on <a href="http://codepen.io">CodePen</a>.
+</p>
+<script async src="//assets.codepen.io/assets/embed/ei.js"></script>
+</div>
+<div id="graphique-svg" class="section level2">
+<h2>Graphique <code>SVG</code></h2>
+<p>La librairie d3 permet de créer des graphiques au format <code>SVG</code> (<em>Scalable Vector Graphics</em>), et c’est régulièrement dans ce cadre qu’on l’utilise.</p>
+<p>Ces graphiques sont définis dans un langage de type <code>XML</code> (et donc similaire à <code>HTML</code>). C’est un langage de définition basé sur des primitives de dessin (rectangle, cercle, ligne, texte, …), qui permet de produire tout type de graphique. L’un des gros avantages est qu’ils sont <em>zoomable</em> sans perte de définition.</p>
+<p>Vous pouvez trouver dans les liens qui suivent un certain nombre d’informations sur ces graphiques :</p>
+<ul>
+<li><a href="http://www.w3schools.com/svg/">Section <code>SVG</code> sur W3Schools</a></li>
+<li><a href="http://www.yoyodesign.org/doc/w3c/svg1/">REcommandation W3C traduite</a></li>
+<li><a href="https://developer.mozilla.org/fr/docs/Web/SVG">Section SVG sur Mozilla</a></li>
+</ul>
+<p>Dans l’exemple ci-dessous, nous créons un graphique de largeur 200 pixels et de hauteur 100 pixels. Une fois créé, on ajoute une transformation (via la balise <code>g</code> ajoutée). Celle-ci est une translation de 10 pixels en <span class="math inline">\(x\)</span> et de 10 pixels en <span class="math inline">\(y\)</span>. C’est le résultat de la translation qui est renvoyé, ce qui veut dire que tout ce qu’on ajoute intégrera donc cette première translation.</p>
+<p>On ajoute ensuite un rectangle dont le point haut gauche est situé en <span class="math inline">\((0,0)\)</span>. Notez donc que le point origine est donc situé <strong>en haut à gauche</strong> sur un écran. Ce rectangle est un carré de 50 pixels, rempli en rouge. On ajoute finalement un texte.</p>
+<p data-height="325" data-theme-id="0" data-slug-hash="EKGPXZ" data-default-tab="js,result" data-user="fxjollois" data-embed-version="2" class="codepen">
+See the Pen <a href="http://codepen.io/fxjollois/pen/EKGPXZ/">d3.js : création de SVG</a> by FX Jollois (<a href="http://codepen.io/fxjollois"><span class="citation">@fxjollois</span></a>) on <a href="http://codepen.io">CodePen</a>.
+</p>
+<script async src="//assets.codepen.io/assets/embed/ei.js"></script>
+</div>
+<div id="echelles" class="section level2">
+<h2>Echelles</h2>
+<p>Dans un graphique, nous devons faire un passage d’échelle entre les données et la zone graphique. Par exemple, si l’on doit afficher des valeurs entre -1000 et 1000 sur l’axe <span class="math inline">\(x\)</span>, il nous faut une fonction pour les transformer dans l’intervalle <span class="math inline">\([0,largeur]\)</span> (où <span class="math inline">\(largeur\)</span> représente la largeur du graphique <code>SVG</code> produit).</p>
+<p>Les fonctions dans D3 pour réaliser cela ont toutes comme nom <code>d3.scale.xxx()</code>, où <code>xxx</code> est à remplacer par le type de changement d’échelle qu’on souhaite. Il faut notre que ces fonctions renvoient elle-même une fonction de changement d’échelle. Il faut de plus déterminer deux éléments importants :</p>
+<ul>
+<li>Le <strong>domaine</strong> (ou <em>domain</em>) : la plage des données d’origine</li>
+<li>L’<strong>étendu</strong> (ou <em>range</em>) : la plage de ce qu’on doit obtenir au final</li>
+</ul>
+<div id="quantitatif" class="section level3">
+<h3>Quantitatif</h3>
+<div id="vers-du-numerique" class="section level4">
+<h4>Vers du numérique</h4>
+<p>L’exemple proposé ci-dessus est typiquement un problème de changement d’échelle <strong>linéaire</strong>. Il existe pour cela la fonction <code>d3.scale.linear()</code>.</p>
+<pre class="js"><code>var echelle = d3.scale.linear()
+                    .domain([-1000, 1000])
+                    .range([0, 100]);
+console.log(echelle(-1000)) // renvoie 0
+console.log(echelle(0))     // renvoie 50
+console.log(echelle(1000))  // renvoie 100</code></pre>
+</div>
+<div id="vers-des-couleurs" class="section level4">
+<h4>Vers des couleurs</h4>
+<p>L’intérêt de ces échelles réside aussi dans la possibilité de passer de valeurs numériques à des couleurs par exemple. On doit juste définir dans l’étendu les couleurs de début et de fin (et éventuellement certaines intermédiaires).</p>
+<pre class="js"><code>var echelle = d3.scale.linear()
+                    .domain([-1000, 1000])
+                    .range([&quot;red&quot;, &quot;green&quot;]);
+console.log(echelle(-1000)) // renvoie &quot;#ff0000&quot;
+console.log(echelle(0))     // renvoie &quot;#804000&quot;
+console.log(echelle(1000))  // renvoie &quot;#008000&quot;</code></pre>
+</div>
+</div>
+<div id="qualitatif" class="section level3">
+<h3>Qualitatif</h3>
+<div id="vers-du-numerique-1" class="section level4">
+<h4>Vers du numérique</h4>
+<p>Un autre changement d’échelle classique est le passage d’un ensemble de modalités à une plage de valeurs. Pour cela, on utilise la fonction <code>d3.scale.ordinal()</code>. Ici, nous définissons l’étendu par bandes (<code>&quot;A&quot;</code> sera sur la bande ainsi <span class="math inline">\([0, 33.33...]\)</span>)</p>
+<pre class="js"><code>var echelle = d3.scale.ordinal()
+                    .domain([&quot;A&quot;, &quot;B&quot;, &quot;Z&quot;])
+                    .rangeBands([0, 100]);
+console.log(echelle(&quot;A&quot;)) // renvoie 0
+console.log(echelle(&quot;B&quot;)) // renvoie 33.3333...3
+console.log(echelle(&quot;Z&quot;)) // renvoie 66.6666...7</code></pre>
+</div>
+<div id="vers-des-couleurs-1" class="section level4">
+<h4>Vers des couleurs</h4>
+<p>Dans ce cas aussi, on peut affecter une couleur à chaque modalité, toujours en définissant des couleurs dans l’étendu. Il existe de plus des fonctions spécifiques pour cela dans d3, comme <code>d3.scale.category10()</code>, dans lesquelles il n’y a pas d’étendu à définir.</p>
+<pre class="js"><code>var echelle = d3.scale.category10()
+                    .domain([&quot;A&quot;, &quot;B&quot;, &quot;Z&quot;]);
+console.log(echelle(&quot;A&quot;)) // renvoie &quot;#1f77b4&quot;
+console.log(echelle(&quot;B&quot;)) // renvoie &quot;#ff7f0e&quot;
+console.log(echelle(&quot;Z&quot;)) // renvoie &quot;#2ca02c&quot;</code></pre>
+</div>
+</div>
+<div id="exemple-1" class="section level3">
+<h3>Exemple</h3>
+<p>Dans l’exemple ci-dessous, nous allons utiliser les fonctions de D3 pour faire tous les changements d’échelle vu ci-dessus. Ceux-ci sont classiques dans la création d’un graphique avec cette librairie.</p>
+<p>Nos données concernent la répartition des logements en location par <strong>AirBnB</strong> sur Paris le 2 septembre 2015 (voir <a href="http://insideairbnb.com/get-the-data.html">les données ici</a>), par type (logement complet, chambre privée, chambre partagée). Nous avons le décompte et le prix moyen comme information.</p>
+<p data-height="351" data-theme-id="0" data-slug-hash="grQJgb" data-default-tab="html,result" data-user="fxjollois" data-embed-version="2" class="codepen">
+See the Pen <a href="http://codepen.io/fxjollois/pen/grQJgb/">d3.js : échelles</a> by FX Jollois (<a href="http://codepen.io/fxjollois"><span class="citation">@fxjollois</span></a>) on <a href="http://codepen.io">CodePen</a>.
+</p>
+<script async src="//assets.codepen.io/assets/embed/ei.js"></script>
+</div>
+</div>
+<div id="creation-dun-graphique" class="section level2">
+<h2>Création d’un graphique</h2>
+<p>Dans l’exemple ci-dessous, nous utilisons l’ensemble des éléments vu ci-dessous pour créer un diagramme en barres, pour les données suivantes :</p>
+<table>
+<thead>
+<tr class="header">
+<th align="left">Type</th>
+<th align="right">Nombre</th>
+<th align="right">Prix moyen</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">Entire home/apt</td>
+<td align="right">35185</td>
+<td align="right">106</td>
+</tr>
+<tr class="even">
+<td align="left"> Private room</td>
+<td align="right">5827</td>
+<td align="right">56</td>
+</tr>
+<tr class="odd">
+<td align="left">Shared room</td>
+<td align="right">464</td>
+<td align="right">40</td>
+</tr>
+</tbody>
+</table>
+<p>Le code est commenté pour expliquer ce que chaque partie permet de réaliser dans le graphique.</p>
+<iframe style="width: 100%; height: 600px" src="http://embed.plnkr.co/dAITTEWo4EJmYZnQjGVv" frameborder="0">
+</iframe>
+</div>
+<div id="a-realiser" class="section level2">
+<h2>A réaliser</h2>
+<div id="demande" class="section level3">
+<h3>Demande</h3>
+<p>Réaliser la courbe d’évolution des anomalies de température, par rapport à la période de référence 1961-1990 (donc de l’indice <em>HadCRUT4</em> - cf lien ci-dessous). Les données sont disponibles sur une grille mondiale, mais nous allons prendre ici la médiane globale de ces anomalies.</p>
+<ul>
+<li>Courbe sur la période 1850-2016, avec les médianes annuelles
+<ul>
+<li>Courbe de la période</li>
+<li>Ligne de référence à 0 à ajouter</li>
+<li>Intervalles de confiance à ajouter, en laissant le choix à l’utilisateur de l’intervalle à utiliser</li>
+</ul></li>
+<li><em>Heatmap</em> sur la même période, avec les médianes mensuelles
+<ul>
+<li>une colonne par année</li>
+<li>une ligne par mois</li>
+<li>couleur en fonction de la valeur de l’anomalie</li>
+</ul></li>
+</ul>
+</div>
+<div id="quelques-liens-interessants" class="section level3">
+<h3>Quelques liens intéressants</h3>
+<ul>
+<li><a href="http://www.metoffice.gov.uk/hadobs/hadcrut4/data/current/download.html">Données</a> : disponibles sur le site du <strong>Met Office</strong> (institut météorologique anglais)</li>
+<li><a href="http://www.metoffice.gov.uk/hadobs/hadcrut4/data/current/series_format.html">Explications</a> : détail des colonnes présentes dans les fichiers</li>
+<li><a href="http://www.metoffice.gov.uk/hadobs/hadcrut4/data/current/time_series/HadCRUT.4.4.0.0.annual_ns_avg.txt">Moyennes annuelles</a> : accès direct aux données annuelles (médiane sur le globe)</li>
+<li><a href="http://www.metoffice.gov.uk/hadobs/hadcrut4/data/current/time_series/HadCRUT.4.4.0.0.monthly_ns_avg.txt">Moyennes mensuelles</a> : accès direct aux données mensuelles (médiane sur le globe)</li>
+</ul>
+</div>
+</div>
+
+</div>
+<div class="footer">
+      Site créé avec <a href="http://www.r-project.org" target="_blank"><code>R</code></a> et la 
+      librairie  <a href="http://rmarkdown.rstudio.com/" target="_blank"><code>rmarkdown</code></a>.
+</div>
+<script>
+    $("#TOC").css("margin-top", "100px");
+</script>
+
+
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

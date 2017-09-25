@@ -1,0 +1,752 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Statistiques descriptives sous SAS</title>
+
+  <meta charset="utf-8">
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  <meta name="generator" content="pandoc" />
+
+
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+
+  <link rel="stylesheet" media="all" href="libs/ioslides-13.5.1/fonts/fonts.css">
+
+  <link rel="stylesheet" media="all" href="libs/ioslides-13.5.1/theme/css/default.css">
+  <link rel="stylesheet" media="only screen and (max-device-width: 480px)" href="libs/ioslides-13.5.1/theme/css/phone.css">
+
+  <base target="_blank">
+
+  <script type="text/javascript">
+    var SLIDE_CONFIG = {
+      // Slide settings
+      settings: {
+                title: 'Statistiques descriptives sous SAS',
+                        useBuilds: true,
+        usePrettify: true,
+        enableSlideAreas: true,
+        enableTouch: true,
+              },
+
+      // Author information
+      presenters: [
+            ]
+    };
+  </script>
+
+  <style type="text/css">
+
+    b, strong {
+      font-weight: bold;
+    }
+
+    em {
+      font-style: italic;
+    }
+
+    slides > slide {
+      -webkit-transition: all 0.4s ease-in-out;
+      -moz-transition: all 0.4s ease-in-out;
+      -o-transition: all 0.4s ease-in-out;
+      transition: all 0.4s ease-in-out;
+    }
+
+    .auto-fadein {
+      -webkit-transition: opacity 0.6s ease-in;
+      -webkit-transition-delay: 0.4s;
+      -moz-transition: opacity 0.6s ease-in 0.4s;
+      -o-transition: opacity 0.6s ease-in 0.4s;
+      transition: opacity 0.6s ease-in 0.4s;
+      opacity: 0;
+    }
+
+  </style>
+
+
+  <style>
+  slide img {
+  	max-width: 100%;
+  }
+  </style>
+
+</head>
+
+<body style="opacity: 0">
+
+<slides class="layout-widescreen">
+
+  <slide class="title-slide segue nobackground">
+        <!-- The content of this hgroup is replaced programmatically through the slide_config.json. -->
+    <hgroup class="auto-fadein">
+      <h1 data-config-title><!-- populated from slide_config.json --></h1>
+      <h2 data-config-subtitle><!-- populated from slide_config.json --></h2>
+      <p data-config-presenter><!-- populated from slide_config.json --></p>
+          </hgroup>
+  </slide>
+
+<slide class=''><hgroup><h2>Plan</h2></hgroup><article  id="plan">
+
+<ul>
+<li>Univarié
+
+<ul>
+<li>Variable quantitative</li>
+<li>Variable qualitative</li>
+</ul></li>
+<li>Bivarié
+
+<ul>
+<li>Var quanti vs quanti</li>
+<li>Var quali vs quali</li>
+<li>Var quali vs quanti</li>
+</ul></li>
+</ul>
+
+<p>Avec pour chaque point, les statistiques à calculer et les graphiques usuels à produire.</p>
+
+</article></slide><slide class=''><hgroup><h2>Univarié</h2></hgroup><article  id="univarie">
+
+<h3>Variable quantitative</h3>
+
+<p>Trois procédures pour produire les statistiques usuelles</p>
+
+<ul>
+<li><code>PROC MEANS</code> et <code>PROC SUMMARY</code></li>
+<li><code>PROC UNIVARIATE</code></li>
+</ul>
+
+<p>Plusieurs procédures pour produire les différents graphiques</p>
+
+<ul>
+<li><code>PROC UNIVARIATE</code></li>
+<li><code>PROC GPLOT</code> (un peu obsolète)</li>
+<li><code>PROC SGPLOT</code></li>
+</ul>
+
+</article></slide><slide class=''><hgroup><h2>Univarié - quanti</h2></hgroup><article  id="univarie---quanti">
+
+<h3><code>PROC MEANS</code> et <code>PROC SUMMARY</code></h3>
+
+<ul>
+<li><code>vardef=n</code> : changer le calcul de la variance (\(\frac{}{n}\) au lieu de \(\frac{}{(n-1)}\)) (<em>vrai dans d&#39;autres procédures aussi</em>)</li>
+<li><code>maxdec=2</code> : arrondi à 2 décimales</li>
+<li><code>mean</code>, <code>median</code>, <code>Q1</code>, <code>Q3</code>, &#8230; : statistiques à calculer</li>
+<li><code>noprint</code> : n&#39;affiche rien dans la sortie (<em>vrai dans d&#39;autres procédures aussi</em>)</li>
+</ul>
+
+<pre class = 'prettyprint lang-sas'>proc means 
+        data = sashelp.cars
+        vardef=n mean median Q1 Q3 maxdec=2;
+    var _NUMERIC_;
+run;</pre>
+
+</article></slide><slide class=''><hgroup><h2>Univarié - quanti</h2></hgroup><article  id="univarie---quanti-1">
+
+<h3><code>PROC UNIVARIATE</code></h3>
+
+<p>Plus complète que <code>MEANS</code> ou <code>SUMMARY</code></p>
+
+<ul>
+<li><code>outtable</code> : création d&#39;une table de résultats</li>
+<li><code>histogram</code> : dessine un histogramme</li>
+<li><code>qqplot</code> : dessine le QQ-plot</li>
+<li>&#8230;</li>
+</ul>
+
+<pre class = 'prettyprint lang-sas'>proc univariate 
+        data = sashelp.cars 
+        outtable = iris_univ;
+    var MPG_City;
+    histogram;
+    qqplot;
+run;</pre>
+
+</article></slide><slide class=''><hgroup><h2>Univarié - quanti</h2></hgroup><article  id="univarie---quanti-2">
+
+<h3><code>PROC SGPLOT</code> - Histogramme</h3>
+
+<ul>
+<li><code>histogram</code> pour déclarer les variables pour lesquelles produire un histogramme</li>
+<li><code>density</code> pour ajouter la densité calculée :
+
+<ul>
+<li>sur l&#39;hypothèse d&#39;une loi normale par défaut</li>
+<li>possibilité d&#39;ajouter une version par noyau</li>
+</ul></li>
+<li>toute procédure graphique doit être terminer par un <code>quit;</code></li>
+</ul>
+
+<pre class = 'prettyprint lang-sas'>proc sgplot data=sashelp.cars;
+    histogram MPG_City;
+    density MPG_City;
+    density MPG_City / type=kernel;
+    keylegend / location=inside position=topright;
+run;
+quit;</pre>
+
+</article></slide><slide class=''><hgroup><h2>Univarié - quanti</h2></hgroup><article  id="univarie---quanti-3">
+
+<h3><code>PROC SGPLOT</code> - Boxplot</h3>
+
+<ul>
+<li><code>hbox</code> ou <code>vbox</code> pour définir les variables pour lesquelles produire une boîte à moustache (resp. horizontale et verticale)</li>
+</ul>
+
+<pre class = 'prettyprint lang-sas'>proc sgplot data=sashelp.cars;
+    hbox MPG_City;
+run;
+quit;</pre>
+
+</article></slide><slide class=''><hgroup><h2>Univarié - quanti</h2></hgroup><article  id="univarie---quanti-4">
+
+<h3><code>PROC SGPLOT</code> - Boxplot</h3>
+
+<p>Pour avoir plusieurs variables sur un même graphique (à ne faire que si les variables ont même échelle - i.e. même unité ou variables standardisées)</p>
+
+<pre class = 'prettyprint lang-sas'>data temp;
+    set sashelp.iris;
+    id = _N_;
+proc transpose data=temp name=VarName out=tempbis (rename= (col1=Valeur));
+    by id;
+run;
+proc sgplot data=tempbis;
+    vbox Valeur / group=varName;
+run;
+quit;</pre>
+
+</article></slide><slide class=''><hgroup><h2>Univarié</h2></hgroup><article  id="univarie-1">
+
+<h3>Variable qualitative</h3>
+
+<p>Une procédure pour produire les statistiques usuelles</p>
+
+<ul>
+<li><code>PROC FREQ</code></li>
+</ul>
+
+<p>Deux procédures pour produire les différents graphiques</p>
+
+<ul>
+<li><code>PROC GCHART</code> (un peu obsolète)</li>
+<li><code>PROC SGPLOT</code></li>
+</ul>
+
+</article></slide><slide class=''><hgroup><h2>Univarié - quali</h2></hgroup><article  id="univarie---quali">
+
+<h3><code>PROC FREQ</code></h3>
+
+<ul>
+<li><code>tables</code> pour déterminer les variables catégorielles à utiliser</li>
+<li>quelques options utiles :
+
+<ul>
+<li><code>nocum</code> pour retirer les occurences et fréquences cumulées</li>
+<li><code>nopercent</code> pour n&#39;avoir que les occurences (nommées <em>frequency</em> en anglais - attention)</li>
+<li>&#8230;</li>
+</ul></li>
+</ul>
+
+<pre class = 'prettyprint lang-sas'>proc freq data=sashelp.cars;
+    tables Origin / nocum nopercent;
+run;</pre>
+
+</article></slide><slide class=''><hgroup><h2>Univarié - quali</h2></hgroup><article  id="univarie---quali-1">
+
+<h3><code>PROC FREQ</code> - diagramme en barres</h3>
+
+<ul>
+<li><code>plots</code> permet d&#39;afficher les diagrammes
+
+<ul>
+<li><code>freqplot</code> : diagramme en barres</li>
+<li>&#8230;</li>
+<li><code>all</code> : tous les diagrammes disponibles</li>
+</ul></li>
+</ul>
+
+<pre class = 'prettyprint lang-sas'>proc freq data=sashelp.cars;
+    tables Origin / plots=freqplot;
+run;</pre>
+
+</article></slide><slide class=''><hgroup><h2>Univarié - quali</h2></hgroup><article  id="univarie---quali-2">
+
+<h3><code>PROC SGPLOT</code> - Diagramme en barres ou équivalent</h3>
+
+<ul>
+<li><code>hbar</code> ou <code>vbar</code> pour définir les variables pour le diagramme en barres (resp. horizontales et verticales)</li>
+<li><code>dot</code> pour un diagramme avec des points</li>
+<li><code>hline</code> et <code>vline</code> pour obtenir une ligne (valable pour les variables ordinales)</li>
+</ul>
+
+<pre class = 'prettyprint lang-sas'>proc sgplot data=sashelp.cars;
+    hbar Origin;
+run;
+quit;</pre>
+
+</article></slide><slide class=''><hgroup><h2>Univarié - quali</h2></hgroup><article  id="univarie---quali-3">
+
+<h3><code>PROC GCHART</code> - Diagramme circulaire</h3>
+
+<ul>
+<li><code>pie</code> pour déterminer la variable à utiliser</li>
+<li><code>donut</code> pour la version avec un <em>trou</em> au centre</li>
+<li><code>noheading</code> pour supprimer l&#39;en-tête automatique</li>
+<li><code>percent=</code> pour indiquer où afficher le pourcentage (non affiché par défaut - ici en dehors de la part)</li>
+</ul>
+
+<pre class = 'prettyprint lang-sas'>proc gchart data=sashelp.cars;
+    pie Origin / noheading percent=outside;
+run;
+quit;</pre>
+
+</article></slide><slide class=''><hgroup><h2>Bivarié</h2></hgroup><article  id="bivarie">
+
+<h3>Variables quantitative vs quantitative</h3>
+
+<p>Une seule procédure pour les statistiques</p>
+
+<ul>
+<li><code>PROC CORR</code></li>
+</ul>
+
+<p>Plusieurs procédures pour les graphiques</p>
+
+<ul>
+<li><code>PROC GPLOT</code> (un peu obsolète)</li>
+<li><code>PROC SGPLOT</code></li>
+</ul>
+
+</article></slide><slide class=''><hgroup><h2>Bivarié - quanti vs quanti</h2></hgroup><article  id="bivarie---quanti-vs-quanti">
+
+<h3><code>PROC CORR</code></h3>
+
+<ul>
+<li><code>var</code> pour lister les variables à considérer pour le calcul des corrélations</li>
+<li><code>pearson</code>, <code>spearman</code> et <code>kendall</code> pour spécifier les différents coefficients de corrélations à calculer (et les tests, faits automatiquement)</li>
+</ul>
+
+<pre class = 'prettyprint lang-sas'>proc corr data=sashelp.cars pearson spearman kendall;
+    var Invoice  Horsepower MPG_City MPG_Highway;
+run;</pre>
+
+</article></slide><slide class=''><hgroup><h2>Bivarié - quanti vs quanti</h2></hgroup><article  id="bivarie---quanti-vs-quanti-1">
+
+<h3><code>PROC SGPLOT</code> - nuage de points</h3>
+
+<ul>
+<li><code>scatter</code> pour produire le nuage de points en déterminant les variables <code>X</code> et <code>Y</code></li>
+<li><code>ellipse</code> permet d&#39;ajouter l&#39;ellipse de densisté du couple de variables</li>
+</ul>
+
+<pre class = 'prettyprint lang-sas'>proc sgplot data=sashelp.cars;
+    scatter X=Horsepower Y=Invoice;
+    ellipse X=Horsepower Y=Invoice;
+run;
+quit;</pre>
+
+</article></slide><slide class=''><hgroup><h2>Bivarié - quanti vs quanti</h2></hgroup><article  id="bivarie---quanti-vs-quanti-2">
+
+<h3><code>PROC SGPLOT</code> - heatmap</h3>
+
+<ul>
+<li><code>heatmap</code> pour produire la carte en déterminant les variables <code>X</code> et <code>Y</code></li>
+<li><code>xbinsize</code> et <code>ybinsize</code> pour déterminer la taille des catégories créées pour chaque variable</li>
+<li>possibilité de déterminer le nombre de bins plutôt que la taille</li>
+</ul>
+
+<pre class = 'prettyprint lang-sas'>proc sgplot data=sashelp.cars;
+    heatmap X=Horsepower Y=Invoice / xbinsize=50 ybinsize=10000;
+    ellipse X=Horsepower Y=Invoice;
+run;
+quit;</pre>
+
+</article></slide><slide class=''><hgroup><h2>Bivarié - quanti vs quanti</h2></hgroup><article  id="bivarie---quanti-vs-quanti-3">
+
+<h3><code>PROC SGPLOT</code> - régression</h3>
+
+<ul>
+<li>ajout de la courbe de régression (linéaire par défaut)</li>
+<li><code>reg</code> pour produire le nuage de points en déterminant les variables <code>X</code> et <code>Y</code>, avec la courbe</li>
+<li><code>degree</code> permet de déterminer le degré de la régression</li>
+</ul>
+
+<pre class = 'prettyprint lang-sas'>proc sgplot data=sashelp.cars;
+    reg X=Horsepower Y=Invoice;
+run;
+quit;</pre>
+
+</article></slide><slide class=''><hgroup><h2>Bivarié - quanti vs quanti</h2></hgroup><article  id="bivarie---quanti-vs-quanti-4">
+
+<h3><code>PROC SGPLOT</code> - loess plot</h3>
+
+<ul>
+<li>approximation du lien non-linéaire entre les deux variables</li>
+<li><code>loess</code> pour produire le nuage de points en déterminant les variables <code>X</code> et <code>Y</code>, avec la courbe <code>loess</code></li>
+<li><code>smooth</code> permet de lisser la courbe (faible valeur, proche de 0) ou de la faire la plus proche des données (forte valeur, proche de 1)</li>
+</ul>
+
+<pre class = 'prettyprint lang-sas'>proc sgplot data=sashelp.cars;
+    loess X=Horsepower Y=Invoice / smooth=.1;
+run;
+quit;</pre>
+
+<p>Existe aussi en version \(B\)-spline pénalisé (avec <code>pbspline</code>)</p>
+
+</article></slide><slide class=''><hgroup><h2>Bivarié - quanti vs quanti</h2></hgroup><article  id="bivarie---quanti-vs-quanti-5">
+
+<h3><code>PROC SGPLOT</code> - needle plot</h3>
+
+<ul>
+<li>variation des valeurs de \(Y\) autour d&#39;une valeur à définir, le tout en fonction des valeurs de \(X\)</li>
+<li><code>needle</code> pour produire le graphique en déterminant les variables <code>X</code> et <code>Y</code></li>
+</ul>
+
+<pre class = 'prettyprint lang-sas'>proc sgplot data=sashelp.cars;
+    needle X=Horsepower Y=Invoice / baseline= 50000;
+run;
+quit;</pre>
+
+</article></slide><slide class=''><hgroup><h2>Bivarié</h2></hgroup><article  id="bivarie-1">
+
+<h3>Variables qualitative vs qualitative</h3>
+
+<p>Une seule procédure pour les statistiques</p>
+
+<ul>
+<li><code>PROC FREQ</code></li>
+</ul>
+
+<p>Plusieurs procédures pour les graphiques</p>
+
+<ul>
+<li><code>PROC FREQ</code></li>
+<li><code>PROC GCHART</code> (un peu obsolète)</li>
+<li><code>PROC SGPLOT</code> et <code>PROC SGPANEL</code></li>
+</ul>
+
+</article></slide><slide class=''><hgroup><h2>Bivarié - quali vs quali</h2></hgroup><article  id="bivarie---quali-vs-quali">
+
+<h3><code>PROC FREQ</code></h3>
+
+<ul>
+<li><code>tables</code> permet de définir les deux variables qualitatives à croiser</li>
+<li><code>nopercent</code>, <code>norow</code>, <code>nocol</code>, <code>nofreq</code> permettent du supprimer l&#39;affichage de respectivement : les pourcentages globaux, les profils lignes, les profils colonnes et les occurences</li>
+</ul>
+
+<pre class = 'prettyprint lang-sas'>proc freq data = sashelp.cars;
+    tables Type * Origin / nofreq nopercent norow;
+run;</pre>
+
+</article></slide><slide class=''><hgroup><h2>Bivarié - quali vs quali</h2></hgroup><article  id="bivarie---quali-vs-quali-1">
+
+<h3><code>PROC FREQ</code> - diagramme en barres</h3>
+
+<ul>
+<li><code>plots</code> permet de définir les graphiques à produire</li>
+<li><code>freqplot</code> est par défaut un diagramme en barres séparées</li>
+<li><code>mosaicplot</code> produit un diagramme proche d&#39;un diagramme en barres empilées</li>
+</ul>
+
+<pre class = 'prettyprint lang-sas'>proc freq data = sashelp.cars;
+    tables Origin * Type / plots = freqplot;
+    tables Type * Origin / 
+        plots = (
+            mosaicplot 
+            freqplot(twoway=stacked scale=grouppct)
+        ); 
+run;</pre>
+
+</article></slide><slide class=''><hgroup><h2>Bivarié - quali vs quali</h2></hgroup><article  id="bivarie---quali-vs-quali-2">
+
+<h3><code>PROC SGPLOT</code> - Diagramme en barres séparées</h3>
+
+<ul>
+<li><code>hbar</code> ou <code>vbar</code> comme précédemment</li>
+<li><code>group</code>, option de <code>hbar</code>|<code>vbar</code>, permet de spécifier la variable supplémentaire de regroupement</li>
+</ul>
+
+<pre class = 'prettyprint lang-sas'>proc sgplot data = sashelp.cars;
+    vbar Origin / group=Type groupdisplay=cluster;
+run;
+quit;</pre>
+
+</article></slide><slide class=''><hgroup><h2>Bivarié - quali vs quali</h2></hgroup><article  id="bivarie---quali-vs-quali-3">
+
+<h3><code>PROC SGPANEL</code> - Diagramme en barres séparées</h3>
+
+<ul>
+<li><code>hbar</code> ou <code>vbar</code> comme pour <code>PROC SGPLOT</code></li>
+<li><code>panelby</code> permet de créer des graphiques séparées dans différents panneaux</li>
+</ul>
+
+<pre class = 'prettyprint lang-sas'>proc sgpanel data = sashelp.cars;
+    panelby Origin;
+    vbar Type;
+run;
+quit;</pre>
+
+</article></slide><slide class=''><hgroup><h2>Bivarié - quali vs quali</h2></hgroup><article  id="bivarie---quali-vs-quali-4">
+
+<h3><code>PROC SGPLOT</code> - Diagramme en barres empilées</h3>
+
+<ul>
+<li><code>proc freq</code> permettant de stocker les profils colonnes dans une table</li>
+<li><code>hbar</code> ou <code>vbar</code>, avec <code>group</code> comme précédemment</li>
+<li><code>response</code> permet de définir comment calculer la taille des blocs (ici les pourcentages en colonnes donc)</li>
+</ul>
+
+<pre class = 'prettyprint lang-sas'>proc freq data = sashelp.cars noprint;
+    tables Type * Origin / out=cars_temp outpct;  
+proc sgplot data = cars_temp;
+    vbar Origin / response=pct_col group=Type;
+run;
+quit;</pre>
+
+</article></slide><slide class=''><hgroup><h2>Bivarié - quali vs quali</h2></hgroup><article  id="bivarie---quali-vs-quali-5">
+
+<h3><code>PROC SGPLOT</code> - heatmap</h3>
+
+<ul>
+<li>représentation graphique directe de la table de contingence</li>
+</ul>
+
+<pre class = 'prettyprint lang-sas'>proc sgplot data=sashelp.cars;
+    heatmap X=Type Y=Origin;
+run;
+quit;</pre>
+
+<ul>
+<li><code>colorresponse</code> permet de spécifier la variable pour la couleur : ici, on représente donc les profils colonnes</li>
+</ul>
+
+<pre class = 'prettyprint lang-sas'>proc freq data = sashelp.cars noprint;
+    tables Origin * Type / out=cars_temp outpct;  
+proc sgplot data = cars_temp;
+    heatmap X=Origin Y=Type / colorresponse=pct_col colormodel=TwoColorRamp;
+run;
+quit;</pre>
+
+</article></slide><slide class=''><hgroup><h2>Bivarié - quali vs quali</h2></hgroup><article  id="bivarie---quali-vs-quali-6">
+
+<h3><code>PROC SGPLOT</code> - bubble plot</h3>
+
+<ul>
+<li>représentation graphique directe de la table de contingence</li>
+</ul>
+
+<pre class = 'prettyprint lang-sas'>proc freq data = sashelp.cars noprint;
+    tables Origin * Type / out=cars_temp outpct;  
+proc sgplot data = cars_temp;
+    bubble X=Origin Y=Type size=count;
+run; quit;</pre>
+
+<ul>
+<li>ici des profils colonnes</li>
+</ul>
+
+<pre class = 'prettyprint lang-sas'>proc freq data = sashelp.cars noprint;
+    tables Origin * Type / out=cars_temp outpct;  
+proc sgplot data = cars_temp;
+    bubble X=Origin Y=Type size=pct_col / 
+        colorresponse=pct_col colormodel=TwoColorRamp;
+run; quit;</pre>
+
+</article></slide><slide class=''><hgroup><h2>Bivarié - quali vs quali</h2></hgroup><article  id="bivarie---quali-vs-quali-7">
+
+<h3><code>PROC SGPLOT</code> - needle plot</h3>
+
+<ul>
+<li>la variable <code>Y</code> est ici les profils colonnes, <code>group</code> permettant de spécifier la deuxième variable qualitative</li>
+<li>le choix de 33.33 % pour <code>baseline</code> vient du fait qu&#39;<code>Origin</code> a trois modalités possibles</li>
+</ul>
+
+<pre class = 'prettyprint lang-sas'>proc freq data = sashelp.cars noprint;
+    tables Origin * Type / out=cars_temp outpct;  
+proc sgplot data = cars_temp;
+    needle X=Type Y=pct_col / group=Origin groupdisplay=cluster baseline=33.33;
+run; quit;</pre>
+
+</article></slide><slide class=''><hgroup><h2>Bivarié</h2></hgroup><article  id="bivarie-2">
+
+<h3>Variables quantitative vs qualitative</h3>
+
+<p>Plusieurs procédures pour les statistiques</p>
+
+<ul>
+<li><code>PROC MEANS</code> ou <code>PROC SUMMARY</code></li>
+<li><code>PROC UNIVARIATE</code></li>
+</ul>
+
+<p>Plusieurs procédures pour les graphiques</p>
+
+<ul>
+<li><code>PROC GPLOT</code> ou <code>GCHART</code> (un peu obsolète)</li>
+<li><code>PROC SGPLOT</code> et <code>PROC SGPANEL</code></li>
+</ul>
+
+</article></slide><slide class=''><hgroup><h2>Bivarié - quanti vs quali</h2></hgroup><article  id="bivarie---quanti-vs-quali">
+
+<h3><code>PROC MEANS</code>, <code>SUMMARY</code> et <code>UNIVARIATE</code></h3>
+
+<ul>
+<li>L&#39;ajout de la clause <code>class</code> permet de déterminer la variable qualitative à utiliser, afin de calculer les statistiques pour chaque modalité</li>
+</ul>
+
+<pre class = 'prettyprint lang-sas'>proc means data = sashelp.cars;
+    class Origin;
+    var Invoice;
+run;
+
+proc univariate data = sashelp.cars;
+    class Origin;
+    var Invoice;
+    histogram;
+    qqplot;
+run;</pre>
+
+</article></slide><slide class=''><hgroup><h2>Bivarié - quanti vs quali</h2></hgroup><article  id="bivarie---quanti-vs-quali-1">
+
+<h3><code>PROC SGPLOT</code> et <code>PROC SGPANEL</code> - Histogrammes et densités</h3>
+
+<ul>
+<li>Utilisation de <code>sgplot</code> plutôt pour les densités</li>
+</ul>
+
+<pre class = 'prettyprint lang-sas'>proc sgplot data = sashelp.cars;
+    density Invoice / group=Origin;
+run; quit;</pre>
+
+<ul>
+<li>Utilisation de <code>sgpanel</code> pour les histogrammes</li>
+<li><code>panelby</code> pour spécifier la variable qualitative</li>
+</ul>
+
+<pre class = 'prettyprint lang-sas'>proc sgpanel data = sashelp.cars;
+    panelby Origin;
+    histogram Invoice;
+run; quit;</pre>
+
+</article></slide><slide class=''><hgroup><h2>Bivarié - quanti vs quali</h2></hgroup><article  id="bivarie---quanti-vs-quali-2">
+
+<h3><code>PROC SGPLOT</code> - Boîtes à moustache</h3>
+
+<ul>
+<li><code>hbox</code> et <code>vbox</code> comme précédemment</li>
+<li><code>group</code> pour spécifier la variable qualitative</li>
+<li><code>sgpanel</code> peut aussi être utilisé, mais la comparaison entre les boîtes est moins facile</li>
+</ul>
+
+<pre class = 'prettyprint lang-sas'>proc sgplot data = sashelp.cars;
+    hbox Invoice / group=Origin;
+run; quit;</pre>
+
+</article></slide><slide class=''><hgroup><h2>Bivarié - quanti vs quali</h2></hgroup><article  id="bivarie---quanti-vs-quali-3">
+
+<h3><code>PROC SGPLOT</code> - needle plot</h3>
+
+<ul>
+<li>Calcul des moyennes par modalité de la variable qualitative en premier</li>
+<li>Choix de <code>baseline</code> : moyenne générale de la variable quantitative</li>
+<li><code>Y</code> doit absolument être la variable quantitative</li>
+</ul>
+
+<pre class = 'prettyprint lang-sas'>proc summary data = sashelp.cars;
+    class Origin;
+    var Invoice;
+    output out=cars_temp(where=(_TYPE_=1)) mean=Invoice;
+proc sgplot data = cars_temp;
+    needle X=Origin Y=Invoice / baseline=30014.70;
+run;quit;</pre>
+
+</article></slide><slide class=''><hgroup><h2>Bivarié - quanti vs quali</h2></hgroup><article  id="bivarie---quanti-vs-quali-4">
+
+<h3><code>PROC SGPLOT</code> - waterfall plot</h3>
+
+<ul>
+<li>intéressant dans le cas d&#39;une variable qualitative ayant du sens lorsqu&#39;elle est cumulée</li>
+<li><code>category</code> pour la variable qualitative et <code>response</code> pour la variable quantitative</li>
+</ul>
+
+<pre class = 'prettyprint lang-sas'>proc sgplot data = sashelp.cars;
+    waterfall category=Origin response=Invoice;
+run; quit;</pre>
+
+</article></slide><slide class=''><hgroup><h2>Bivarié - quanti vs quali</h2></hgroup><article  id="bivarie---quanti-vs-quali-5">
+
+<h3><code>PROC SGPLOT</code> - nuage de points jitter</h3>
+
+<ul>
+<li><code>jitter</code> : randomisation légère</li>
+</ul>
+
+<pre class = 'prettyprint lang-sas'>proc sgplot data = sashelp.cars;
+    scatter X=Origin Y=Invoice / jitter;
+run; quit;</pre>
+
+<ul>
+<li>Résultat améliorable, en le faisant manuellement</li>
+</ul>
+
+<pre class = 'prettyprint lang-sas'>data cars_temp;
+    set sashelp.cars;
+    jitter = rand(&#39;uniform&#39;)*.3 +
+        1*(Origin=&quot;Asia&quot;) + 2*(Origin=&quot;Europe&quot;) + 3*(Origin=&quot;USA&quot;);
+proc sgplot data = cars_temp;
+    scatter X=jitter Y=Invoice / group=Origin groupdisplay=cluster;
+    xaxis display=none;
+run; quit;</pre>
+
+</article></slide><slide class=''><hgroup><h2>Trivarié voire plus</h2></hgroup><article  id="trivarie-voire-plus">
+
+<p>Différents graphiques sont adaptés pour représentés plus de deux variables :</p>
+
+<ul>
+<li><em>bubble plot</em> : taille des bulles fonction d&#39;une variable quantitative (résumée)</li>
+<li><em>scatter plot</em> : double axe des ordonnés (un à gauche et un autre à droite)</li>
+<li><em>heatmap</em> : couleur en fonction d&#39;une variable quantitative</li>
+<li>utilisation de <code>sgpanel</code> pour avoir plusieurs représentations</li>
+</ul></article></slide>
+
+
+  <slide class="backdrop"></slide>
+
+</slides>
+
+<script src="libs/ioslides-13.5.1/js/modernizr.custom.45394.js"></script>
+<script src="libs/ioslides-13.5.1/js/prettify/prettify.js"></script>
+<script src="libs/ioslides-13.5.1/js/prettify/lang-r.js"></script>
+<script src="libs/ioslides-13.5.1/js/prettify/lang-yaml.js"></script>
+<script src="libs/ioslides-13.5.1/js/hammer.js"></script>
+<script src="libs/ioslides-13.5.1/js/slide-controller.js"></script>
+<script src="libs/ioslides-13.5.1/js/slide-deck.js"></script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+<!-- map slide visiblity events into shiny -->
+<script>
+  (function() {
+    if (window.jQuery) {
+       window.jQuery(document).on('slideleave', function(e) {
+         window.jQuery(e.target).trigger('hidden');
+      });
+       window.jQuery(document).on('slideenter', function(e) {
+         window.jQuery(e.target).trigger('shown');
+      });
+    }
+  })();
+</script>
+
+</body>
+</html>

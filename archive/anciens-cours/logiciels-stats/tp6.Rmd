@@ -1,0 +1,205 @@
+---
+title: "TP 6 - correction"
+author: "FX Jollois"
+date: "24 mai 2016"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(reshape2)
+library(ggplot2)
+library(FactoMineR)
+```
+
+## Importation  (2 points)
+
+Importer les données dans quatre tables - une table par fichier donc.
+
+**Bonus** : écrire une fonction simplifiant cette étape d’importation (1 point)
+
+```{r}
+import <- function (table) {
+    nom = paste("ca/", table, ".csv", sep = "")
+    assign(table, read.table(nom, header = T, sep = ";", quote = "\""), envir = .GlobalEnv)
+}
+import("ca")
+import("mois")
+import("provenance")
+import("groupe")
+rm(import)
+
+t(sapply(ls(), function (tab) {
+    data = get(tab)
+    return (list(lignes = nrow(data), colonnes = ncol(data)))
+}))
+
+ca_all = merge(
+    merge(
+        merge(
+            ca, 
+            groupe, 
+            by.x = "groupe_no", by.y = "no"
+        ), 
+        mois, 
+        by.x = "mois_no", by.y = "no"
+    ), 
+    provenance, 
+    by.x = "prov_no", by.y = "no"
+)
+```
+
+## Manipulation de données (10 points)
+
+Traiter les demandes suivantes en créant les data.frames demandeX (avec X étant le numéro de la demande), en créant tous les objets intermédiaires qu’ils vous semblent nécessaires :
+
+1. Somme, Moyenne, médiane, minimum, maximum, premier et troisième quartile du CA (au global donc) - 1 point
+2. Somme des CA par provenance - 1 point
+3. Somme des CA par département et par groupe - 1 point
+4. Somme des CA par provenance, pour 2004 uniquement - 2 point
+5. Somme des CA par département, pour 2003 d’un côté et pour 2004 de l’autre (2 colonnes à avoir donc) - 2 points
+    - Table résultante avec
+        - en ligne : les départements
+        - en colonne : somme CA 2003 et somme CA 2004
+6. Différence des sommes de CA entre 2003 et 2004, pour chaque mois et pour chaque provenance - 3 points
+    - Table résultante avec
+        - en ligne : les provenance
+        - en colonne : les mois
+        - une cellule : différence entre 2003 et 2004 pour un mois et une provenance précise
+
+### Demande 1
+
+```{r}
+demande1 = data.frame(
+    statistique = c("Somme", "Moyenne", "Médiane", "Minimum", "Maximum", "Q1",  "Q3"),
+    valeur = as.character(round(c(sum(ca$ca, na.rm = TRUE), mean(ca$ca, na.rm = TRUE),
+               median(ca$ca, na.rm = TRUE), min(ca$ca, na.rm = TRUE),
+               max(ca$ca, na.rm = TRUE), quantile(ca$ca, na.rm = TRUE, .25),
+               quantile(ca$ca, na.rm = TRUE, .75)), 2))
+)
+print(demande1)
+```
+
+### Demande 2
+
+```{r}
+demande2 = aggregate(ca ~ provenance, ca_all, sum)
+print(demande2)
+```
+
+### Demande 3
+
+```{r}
+demande3 = aggregate(ca ~ departement + groupe, ca_all, sum)
+print(demande3)
+```
+
+### Demande 4
+
+```{r}
+demande4 = aggregate(ca ~ provenance, subset(ca_all, annee == 2004), sum)
+print(demande4)
+```
+
+### Demande 5
+
+```{r}
+demande5 = merge(
+    setNames(aggregate(ca ~ departement, subset(ca_all, annee == 2003), sum), c("departement", "ca2003")),
+    setNames(aggregate(ca ~ departement, subset(ca_all, annee == 2004), sum), c("departement", "ca2004"))
+)
+print(demande5)
+```
+
+### Demande 6
+
+```{r}
+demande6a = transform(
+    merge(
+        setNames(aggregate(ca ~ provenance + mois_numero, subset(ca_all, annee == 2003), sum), c("provenance", "mois", "ca2003")),
+        setNames(aggregate(ca ~ provenance + mois_numero, subset(ca_all, annee == 2004), sum), c("provenance", "mois", "ca2004"))
+    ),
+    evol = ca2004 - ca2003,
+    ca2003 = NULL,
+    ca2004 = NULL
+)
+demande6 = acast(demande6a, provenance ~ mois, value.var = "evol")
+rm(demande6a)
+print(demande6)
+```
+
+
+## Statistiques descriptives (5 points)
+
+Traiter les demandes suivantes en créant les graphiques ayant pour titre graphiqueX (avec X étant le numéro du graphique), en créant tous les objets intermédiaires qu’ils vous semblent nécessaires :
+
+1. Evolution par mois de la somme des CA pour 2003 et pour 2004, globalement - 1 point
+2. Idem, mais pour chaque département - 1.5 point
+3. Carte de couleur (heatmap) pour les mois de 2004 (en abcisse), et pour les provenances (en ordonnée), représentant les sommes de CA dans chaque cellule - 1.5 points
+
+### Graphique 1
+
+```{r}
+graphique1 = aggregate(ca ~ mois_numero + annee, ca_all, sum)
+ggplot(graphique1, aes(mois_numero, ca, color = factor(annee))) + 
+    geom_line() + scale_x_discrete()
+```
+
+### Graphique 2
+
+```{r}
+graphique2 = aggregate(ca ~ mois_numero + annee + departement, ca_all, sum)
+ggplot(graphique2, aes(mois_numero, ca, color = factor(annee))) + 
+    geom_line() + scale_x_discrete() +
+    facet_wrap(~ departement)
+```
+
+### Graphique 3
+
+```{r}
+graphique3 = aggregate(ca ~ mois_numero + provenance, ca_all, sum)
+ggplot(graphique3, aes(factor(mois_numero), provenance, fill = ca)) + geom_bin2d()
+```
+
+## Statistiques exploratoires (3 points)
+
+Sur le data.frame `demande6` :
+
+1. Faire une ACP et une AFC, et produire les premiers plans factoriel de chaque analyse - 1.5 point
+2. Faire une CAH sur les provenances et afficher les graphiques permettant de choisir du nombre de classes - 1.5 point
+
+### Analyse de données
+
+#### ACP 
+
+```{r}
+PCA(demande6)
+```
+
+#### AFC
+
+Ici, on passe en *base 100* : on considère que la valeur en 2003 était à 100, et on calcule la valeur en 2004 par rapport à cette base. On a donc des valeurs positives.
+
+```{r}
+afca = transform(
+    merge(
+        setNames(aggregate(ca ~ provenance + mois_numero, subset(ca_all, annee == 2003), sum), c("provenance", "mois", "ca2003")),
+        setNames(aggregate(ca ~ provenance + mois_numero, subset(ca_all, annee == 2004), sum), c("provenance", "mois", "ca2004"))
+    ),
+    evol = (100 * ca2004) / ca2003,
+    ca2003 = NULL,
+    ca2004 = NULL
+)
+afc = acast(afca, provenance ~ mois, value.var = "evol")
+CA(afc)
+```
+
+### Classification 
+
+```{r}
+cah = hclust(dist(demande6), "ward.D2")
+par(mar = c(0, 0, 2, 0) + .1)
+plot(cah, main = "", axes = FALSE)
+abline(h = mean(cah$height[50:51]), lty = 2, col = "gray50")
+abline(h = mean(cah$height[48:49]), lty = 2, col = "gray50")
+```

@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+<meta charset="utf-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="pandoc" />
+
+
+
+
+<title>Test de différents inputs - correction</title>
+
+<script src="libs/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="libs/bootstrap-3.3.5/css/journal.min.css" rel="stylesheet" />
+<script src="libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<script src="libs/navigation-1.1/tabsets.js"></script>
+<link href="libs/highlightjs-1.1/default.css" rel="stylesheet" />
+<script src="libs/highlightjs-1.1/highlight.js"></script>
+<!--
+    Font Awesome
+-->
+<script src="https://use.fontawesome.com/32d8325004.js"></script>
+<link rel="stylesheet" href="libs/font-awesome-4.7.0/css/font-awesome.min.css">
+
+<!--
+    CSS perso
+-->
+<style>
+    .contenu {
+        margin-bottom: 50px;
+    }
+
+    .contact-liens {
+        text-align: center;
+    }
+    .contact-liens:hover {
+        text-decoration: none;
+    }
+    .contact-icones {
+        height: 30px;
+    }
+
+    /* Espacement pour barre du haut et pied de page */
+    #header, .section.level1 {
+        margin-top: 60px;
+        margin-bottom: 60px;
+    }
+    /* Espacement pour table des matières */
+    #TOC {
+        margin-top: 100px;
+    }
+    
+    .footer {
+        position: fixed;
+        width: 100%;
+        text-align: center;
+        bottom: 0;
+        left: 0;
+        background-color: #E6E6E6;
+    }
+</style>
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
+<script type="text/javascript">
+if (window.hljs && document.readyState && document.readyState === "complete") {
+   window.setTimeout(function() {
+      hljs.initHighlighting();
+   }, 0);
+}
+</script>
+
+
+
+<style type="text/css">
+h1 {
+  font-size: 34px;
+}
+h1.title {
+  font-size: 38px;
+}
+h2 {
+  font-size: 30px;
+}
+h3 {
+  font-size: 24px;
+}
+h4 {
+  font-size: 18px;
+}
+h5 {
+  font-size: 16px;
+}
+h6 {
+  font-size: 12px;
+}
+.table th:not([align]) {
+  text-align: left;
+}
+</style>
+
+<link rel="stylesheet" href="libs/bootstrap-journal.min.css" type="text/css" />
+
+</head>
+
+<body>
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img {
+  max-width:100%;
+  height: auto;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+</style>
+
+
+
+<div class="container-fluid main-container">
+
+<!-- tabsets -->
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+</script>
+
+<!-- code folding -->
+
+
+
+
+
+<div class="navbar navbar-default navbar-fixed-top">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-main">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">FX Jollois</a>
+    </div>
+    <div id="navbar-main" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button">Données <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+              <li><a href="accesdonnees.html">A télécharger</a></li>
+              <li><a href="donnees-integrees-r.html">Sous R</a></li>
+          </ul>
+        </li>
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button">Enseignement <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li class="dropdown-header">DUT 1ère année</li>
+            <li><a href="exploitation-donnees.html">Exploitation de données</a></li>
+            <li><a href="initiation-a-r.html">Initiation à R</a></li>
+            <li><a href="reporting.html">Reporting</a></li>
+            <li><a href="complements-r.html">Compléments sur R</a></li>
+            <li class="dropdown-header">DUT 2ème année</li>
+            <li><a href="prog-stat-r.html">Programmation statistique avec R</a></li>
+            <li class="dropdown-header">LP MDS Santé</li>
+            <li><a href="info-dec-sante.html">Informatique décisionnelle</a></li>
+            <li class="dropdown-header">DU Analyste Big Data</li>
+            <li><a href="initiation-r-du.html">Initiation à R</a></li>
+            <li><a href="connexion-r-mongodb.html">Connexion entre R et MongoDB</a></li>
+            <li class="dropdown-header">DU Dataviz</li>
+            <li><a href="analyse-donnees.html">Analyse de données</a></li>
+            <li><a href="visualisation-donnees.html">Visualisation de données - R</a></li>
+            <li><a href="visualisation-donnees-tableau.html">Visualisation de données - Tableau</a></li>
+            <li><a href="visualisation-donnees-d3.html">Visualisation de données - D3</a></li>
+            <li role="separator" class="divider"></li>
+            <li class="dropdown-header">Master</li>
+            <li><a href="slides/cnam-classif-modeles.html">Classification et Modèles de mélange</a></li>
+            <li><a href="analyse-donnees-massives.html">Analyse de Données Massives</a></li>
+            <li class="dropdown-header">Iran</li>
+            <li><a href="stat-prog-R.html">Statistical Programming using R</a></li>
+          </ul>
+        </li>
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button">Recherche <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li><a href="recherche.html">Sujets</a></li>
+            <li><a href="publications.html">Publications</a></li>
+          </ul>
+        </li>
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button">Réalisations <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li><a href="realisations.html">Détail</a></li>
+            <li role="separator" class="divider"></li>
+            <li><a href="http://up5.fr/explore-data" target="_blank">explore-data</a></li>
+            <li><a href="http://fxjollois.github.io/cours-sql/" target="_blank">Appli web de cours pour SQL</a></li>
+          </ul>
+        </li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container-fluid -->
+</div>
+<div class="contenu">
+
+<div class="fluid-row" id="header">
+
+
+
+<h1 class="title toc-ignore">Test de différents <em>inputs</em> - <em>correction</em></h1>
+<h3 class="subtitle"><em>Compléments sur R - STID 1ère année</em></h3>
+
+</div>
+
+
+<div id="demande" class="section level2">
+<h2>Demande</h2>
+<blockquote>
+<p>Créer une application présentant l’évolution du <code>co2</code> et permettant les différents choix indiqués ci-dessous. Celle-ci doit avoir une zone à droite permettant la saisie par l’utilisateur des options possibles. Le graphique et la table résumée doit ainsi être dans une zone à gauche.</p>
+</blockquote>
+<div id="initialisation" class="section level3">
+<h3>Initialisation</h3>
+<p>Nous commençons par créer la structure de l’application avec un <code>sidebarLayout()</code>, dans lequel la partie de contrôle (<code>sidebarPanel()</code>) est à droite et vide pour le moment. Et la partie pinricpale (<code>mainPanel()</code>) contient uniquement un <code>plotOutput()</code> (nommé <code>graphique</code>).</p>
+<p>le contenu des fichiers indiqués ci-dessous :</p>
+<div id="ui" class="section level4">
+<h4><em>UI</em></h4>
+<pre class="r"><code>library(shiny)
+
+shinyUI(fluidPage(
+    title = &quot;TP5&quot;,
+    titlePanel(&quot;Evolution du CO2&quot;),
+    sidebarLayout(
+        position = &quot;right&quot;,
+        sidebarPanel(
+        ),
+        mainPanel(
+            plotOutput(&quot;graphique&quot;)
+        )
+    )
+))</code></pre>
+</div>
+<div id="server" class="section level4">
+<h4><em>Server</em></h4>
+<pre class="r"><code>library(shiny)
+library(ggplot2)
+
+co2_df = data.frame(
+    date = unclass(time(co2)),
+    mesure = unclass(co2)
+)
+
+shinyServer(function(input, output) {
+    output$graphique = renderPlot({
+        graphique = ggplot(co2_df, aes(date, mesure)) + geom_line()
+
+        graphique
+    })
+})</code></pre>
+</div>
+</div>
+<div id="decoupage-en-variable-ordinale" class="section level3">
+<h3>Découpage en variable ordinale</h3>
+<blockquote>
+<p>L’utilisateur doit saisir une valeur entre 2 et 10 (5 par défaut). Celle-ci représente le nombre d’intervalles à utiliser pour transformer la variable <code>co2</code> en variable qualitative (à l’aide la fonction <code>cut()</code>). L’application affichera un tableau avec les intervalles ainsi créés et le nombre de valeurs correspondant à chacune.</p>
+</blockquote>
+<p>On doit donc ajouter les éléments suivants :</p>
+<div id="ui-1" class="section level4">
+<h4><em>UI</em> :</h4>
+<ul>
+<li>une sortie de type <code>data.frame</code>, dans le <code>mainPanel()</code> en dessous du <code>plotOutput()</code>, nommé <code>tableau</code></li>
+</ul>
+<pre class="r"><code>tableOutput(&quot;tableau&quot;)</code></pre>
+<ul>
+<li>une entrée numérique, dans le <code>sidebarPanel()</code>, nommé <code>nbIntervalles</code>, avec des valeurs possibles de 2 à 10, et 5 par défaut</li>
+</ul>
+<pre class="r"><code>numericInput(&quot;nbIntervalles&quot;, &quot;Nombre d&#39;intervalles&quot;, min = 2, max = 10, value = 5)</code></pre>
+</div>
+<div id="server-1" class="section level4">
+<h4><em>Server</em> :</h4>
+<ul>
+<li>l’affection d’un <code>renderTable()</code> à la variable <code>tableau</code> de l’<code>output</code></li>
+</ul>
+<pre class="r"><code>output$tableau &lt;- renderTable({ 
+    #cf code ci-dessous 
+}, rownames = TRUE)</code></pre>
+<ul>
+<li>on reprend le code du TP, en remplaçant la valeur <code>5</code> par l’<code>input</code> nommé <code>nbIntervalles</code></li>
+</ul>
+<pre class="r"><code>co2_ordinale &lt;- cut(co2_df$mesure, input$nbIntervalles)
+summary(co2_ordinale)</code></pre>
+</div>
+</div>
+<div id="titre-du-graphique" class="section level3">
+<h3>Titre du graphique</h3>
+<blockquote>
+<p>L’utilisateur doit rentrer un texte, celui-ci sera le titre du graphique représentant l’évolution de la variable <code>co2</code> dans le temps. L’application doit donc afficher le graphique avec le titre mis à jour (fonction <code>ggtitle()</code>).</p>
+</blockquote>
+<div id="ui-2" class="section level4">
+<h4><em>UI</em></h4>
+<ul>
+<li>une entrée de type texte, dans le <code>sidebarPanel()</code>, nommé <code>titre</code>, avec un texte en fond grâce au paramètre <code>placeholder</code></li>
+</ul>
+<pre class="r"><code>textInput(&quot;titre&quot;, &quot;Titre du graphique&quot;, placeholder = &quot;Ecrire votre titre ici&quot;)</code></pre>
+</div>
+<div id="server-2" class="section level4">
+<h4><em>Server</em></h4>
+<ul>
+<li>ajout du titre au <code>graphique</code>, avant son affichage</li>
+</ul>
+<pre class="r"><code>graphique = graphique + ggtitle(input$titre)</code></pre>
+</div>
+</div>
+<div id="moyennes-mobiles" class="section level3">
+<h3>Moyennes mobiles</h3>
+<blockquote>
+<p>L’utilisateur doit choisir une valeur entre 1 et 100 pour déterminer la taille de la fenêtre glissante pour le calcul de la moyenne mobile. Ce calcul sera fait grâce à la fonction <code>movingFun()</code> du package <code>raster</code> (à installer donc). La courbe des moyennes mobiles sera affichée en couleur (à choisir, cf la fonction <code>colors()</code> pour la liste des couleurs possibles) sur le graphique.</p>
+</blockquote>
+<div id="ui-3" class="section level4">
+<h4><em>UI</em></h4>
+<ul>
+<li>une entrée de type <code>slider</code>, nommé <code>taille</code>, avec des valeurs possibles de 1 à 100, et 10 par défaut</li>
+</ul>
+<pre class="r"><code>sliderInput(&quot;taille&quot;, &quot;Taille de la fenêtre glissante&quot;, min = 1, max = 100, value = 10)</code></pre>
+</div>
+<div id="server-3" class="section level4">
+<h4><em>Server</em></h4>
+<ul>
+<li>chargement de la librairie <code>raster</code> en début de fichier</li>
+</ul>
+<pre class="r"><code>library(raster)</code></pre>
+<ul>
+<li>modification du <code>data.frame</code>, avec l’ajout d’une variable <code>moymob</code> qui contiendra les moyennes mobiles, en début du <code>renderPlot()</code></li>
+</ul>
+<pre class="r"><code>co2_df = transform(co2_df,
+                   moymob = movingFun(mesure, input$taille))</code></pre>
+<ul>
+<li>ajout de la courbe des moyennes mobiles au graphique</li>
+</ul>
+<pre class="r"><code>graphique = graphique + 
+    geom_line(aes(y = moymob), col = &quot;red&quot;)</code></pre>
+</div>
+</div>
+<div id="couleur-de-la-courbe" class="section level3">
+<h3>Couleur de la courbe</h3>
+<blockquote>
+<p>L’utilisateur a le choix entre 3 couleurs (à définir par vous-même) pour la courbe de l’évolution du <code>co2</code>. On utilisera donc la couleur choisie pour le graphique. Vous devez définir une des couleurs par défaut.</p>
+</blockquote>
+<div id="ui-4" class="section level4">
+<h4><em>UI</em></h4>
+<ul>
+<li>un choix simple (via boutons <em>radios</em>) entre trois couleurs, nommé <code>couleur</code></li>
+</ul>
+<pre class="r"><code>radioButtons(&quot;couleur&quot;, &quot;Couleur de la courbe&quot;, c(&quot;blue&quot;, &quot;green&quot;, &quot;orange&quot;))</code></pre>
+</div>
+<div id="server-4" class="section level4">
+<h4><em>Server</em></h4>
+<ul>
+<li>modification de la création initiale du graphique, avec mention de la couleur choisie</li>
+</ul>
+<pre class="r"><code>graphique = ggplot(co2_df, aes(date, mesure)) + geom_line(col = input$couleur)</code></pre>
+</div>
+</div>
+<div id="moyennes-mobiles-a-afficher" class="section level3">
+<h3>Moyennes mobiles à afficher ?</h3>
+<blockquote>
+<p>L’utilisateur doit cocher pour avoir la courbe des moyennes mobiles affichées ou non (par défaut, elle sera affichée). Le graphique doit donc prendre en compte le choix de l’utilisateur.</p>
+</blockquote>
+<div id="ui-5" class="section level4">
+<h4><em>UI</em></h4>
+<ul>
+<li>une case à cocher, nommé <code>afficheMoyMob</code>, coché par défaut</li>
+</ul>
+<pre class="r"><code>checkboxInput(&quot;afficheMoyMob&quot;, &quot;Affichier les moyennes mobiles&quot;, value = TRUE)</code></pre>
+</div>
+<div id="server-5" class="section level4">
+<h4><em>Server</em></h4>
+<ul>
+<li>Test de la valeur de la case à cocher pour l’ajout de la courbe des moyennes mobiles (attention, on modifie le code déjà présent)</li>
+</ul>
+<pre class="r"><code>if (input$afficheMoyMob) {
+    graphique = graphique + 
+        geom_line(aes(y = moymob), col = &quot;red&quot;)
+}</code></pre>
+</div>
+</div>
+<div id="affichage-des-titres-et-labels" class="section level3">
+<h3>Affichage des titres et labels</h3>
+<blockquote>
+<p>L’utilisateur va pouvoir choisir s’il veut le label des <span class="math inline">\(x\)</span>, le label des <span class="math inline">\(y\)</span>, et/ou le titre. Par défaut, seul le titre sera visible.</p>
+</blockquote>
+<div id="ui-6" class="section level4">
+<h4><em>UI</em></h4>
+<ul>
+<li>Ajout d’un ensemble de case à cocher, nommé <code>choix</code>, avec les trois valeurs possibles et la case concernant le titre coché</li>
+</ul>
+<pre class="r"><code>checkboxGroupInput(&quot;choix&quot;, &quot;Paramètres d&#39;affichage&quot;,
+                   c(&quot;Titre&quot;, &quot;Label en X&quot;, &quot;Label en Y&quot;),
+                   &quot;Titre&quot;)</code></pre>
+</div>
+<div id="server-6" class="section level4">
+<h4><em>Server</em></h4>
+<ul>
+<li>Suppression des labels des axes lors de la création du graphique</li>
+</ul>
+<pre class="r"><code>graphique = ggplot(co2_df, aes(date, mesure)) + 
+    geom_line(col = input$couleur) +
+    xlab(&quot;&quot;) + ylab(&quot;&quot;)</code></pre>
+<ul>
+<li>Test du choix pour chaque option possible, et ajout de l’élément correspondant</li>
+</ul>
+<pre class="r"><code>if (&quot;Titre&quot; %in% input$choix) {
+    graphique = graphique + ggtitle(input$titre)
+}
+if (&quot;Label en X&quot; %in% input$choix) {
+    graphique = graphique + xlab(&quot;Date&quot;)
+}
+if (&quot;Label en Y&quot; %in% input$choix) {
+    graphique = graphique +ylab(&quot;Mesure du CO2&quot;)
+}</code></pre>
+</div>
+</div>
+<div id="marquage-dune-date" class="section level3">
+<h3>Marquage d’une date</h3>
+<blockquote>
+<p>L’utilisateur doit choisir une date sur la période de mesure du <code>co2</code> (regardez l’aide pour plus d’informations). De cette date, nous ne retenons que le mois et l’année pour ajouter une ligne verticale correspondante sur le graphique.</p>
+</blockquote>
+<div id="ui-7" class="section level4">
+<h4><em>UI</em></h4>
+<ul>
+<li>une entrée de date, nommée <code>date</code>, avec des valeurs entre le 1er janvier 1959 et le 31 décembre 1997</li>
+</ul>
+<pre class="r"><code>dateInput(&quot;date&quot;, &quot;Date à marquer&quot;, min = &quot;1959-01-01&quot;, max = &quot;1997-12-31&quot;,
+                      &quot;1980-01-01&quot;)</code></pre>
+</div>
+<div id="server-7" class="section level4">
+<h4><em>Server</em></h4>
+<ul>
+<li>Ajout de la ligne à marquer, en récupérant le mois et l’année choisie</li>
+</ul>
+<pre class="r"><code>annee = as.numeric(format(input$date, &quot;%Y&quot;))
+mois = as.numeric(format(input$date, &quot;%m&quot;))
+date_calculee = annee + (mois - 1) / 12
+graphique = graphique + 
+    geom_vline(xintercept = date_calculee, lty = 2, col = &quot;gray50&quot;)</code></pre>
+</div>
+</div>
+</div>
+<div id="si-vous-avez-tout-compris" class="section level2">
+<h2>Si vous avez tout compris</h2>
+<ul>
+<li>Intégration du choix de l’afficahge des moyennes mobiles dans le groupe de choix des options d’affichage (avec le titre et les labels)</li>
+<li>Ajout du choix de l’affichage (ou non) de la date à marquer</li>
+<li>Modification du format de saisie de la date :
+<ul>
+<li>On va indiquer le mois et l’année séparemment (utiliser des listes de choix)</li>
+</ul></li>
+</ul>
+</div>
+
+</div>
+<div class="footer">
+      Site créé avec <a href="http://www.r-project.org" target="_blank"><code>R</code></a> et la 
+      librairie  <a href="http://rmarkdown.rstudio.com/" target="_blank"><code>rmarkdown</code></a>.
+</div>
+<script>
+    $("#TOC").css("margin-top", "100px");
+</script>
+
+
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

@@ -1,0 +1,296 @@
+---
+title: Base de données Médicaments
+subtitle: Informatique Décisionnelle - LP MDS Santé
+---
+
+Dans ce TP, nous allons utilier la [base de données publique des médicaments](http://base-donnees-publique.medicaments.gouv.fr/). Dans la page *Téléchargement* (lien situé tout en bas du site), vous trouverez les liens vers un fichier explicatif (en PDF) et les fichiers de données (au format texte). 
+
+Vous devez déjà tous les télécharger (9 fichiers au total), et les placer idéalement dans un répertoire dédié.
+
+## Importation de données texte
+
+Il est possible d'importer des données provenannt de fichiers texte avec la commande `read.table()`, qui a les paramètres principaux suivants (avec `valeur` par défaut éventuelle) :
+
+- `file` : nom du fichier
+- `header` : présence ou non des noms de variables (`FALSE`)
+- `sep` : séparateur de variable (` `)
+- `na.strings` : chaîne(s) pour valeurs manquantes (`NA`)
+- `skip` : nombre de lignes à ne pas prendre en compte en début de fichier (`0`)
+- `nrow` : nombre de lignes à lire (`-1` : toutes les lignes)
+- `stringsAsFactors` : transformations des chaînes en `factor` ou non (`TRUE`)
+- `quote` : symbole(s) pour les chaînes de caractères (`'"` - attention aux apostrophes en français donc)
+- ...
+
+Cette fonction renvoie un objet de type `data.frame`.
+
+Il existe quelques fonctions dérivés avec des valeurs par défaut différentes
+
+- `read.csv()`, `read.csv2()`
+- `read.delim()`, `read.delim2()`
+
+Par exemple, nous disposons du fichier [`heart.txt`](donnees/heart.txt), contenant les données de 270 personnes.
+
+<object data="donnees/heart.txt" type="text/plain" style="width: 100%">
+    impossible à afficher
+</object>
+      
+Nous remarquons les points suivants :
+
+- le nom des colonnes est présent dans la première ligne
+- le séparateur de colonnes est la tabulation (`"\t"`)
+
+Pour importer ce fichier, nous devons donc utiliser le code suivant. Vous devez d'abord télécharger le fichier. **Attention** : il est supposé ici que le fichier est dans un sous-répertoire `donnees` du répertoire de travail.
+
+```{r}
+heart = read.table("donnees/heart.txt", header = T, sep = "\t")
+head(heart)
+```
+
+Il est aussi possible d'écrire un fichier texte à partir d'un `data.frame`, en spécifiant aussi les paramètres d'écriture. Par exemple, le code suivant écrit les données `heart_bis` dans un autre formalisme.
+
+- le séparateur de colonnes est le `"%"`
+- les noms des colonnes sont bien écrits
+- le nom des lignes ne sont incluses
+- le séparateur de décimales est la virgule (`","`), comme en français
+- il n'y a pas de `""` ou de `''` autour des chaînes de caractères
+
+```{r}
+write.table(heart, file = "donnees/heart_bis.txt", sep = "%", 
+            row.names = FALSE, col.names = TRUE, dec = ",", quote = FALSE)
+```
+
+<object data="donnees/heart_bis.txt" type="text/plain" style="width: 100%">
+    impossible à afficher
+</object>
+
+Il est parfois difficile de lire directement avec la commande `read.table()` ou ses dérivés. On peut utiliser dans ce cas la commande `readLines()`, qui comme son nom l'indique, lit les lignes les unes après les autres. Elle renvoie un tableau de chaîne de caractères, chaque valeur du tableau correspondant à une ligne.
+
+```{r}
+heart_lignes = readLines("donnees/heart.txt")
+length(heart_lignes)
+heart_lignes[1]
+heart_lignes[2]
+```
+
+## Attributs d'un objet
+
+Dans `R`, tout objet peut avoir un ou plusieurs attributs, en particulier les `data.frame`s, comme par exemple la classe de l'objet, le nom des colonnes, et le nom des lignes. On peut avoir la liste des attributs avec la commande `attributes()`. Celle-ci nous renvoie une `list` contenant des objets nommés.
+
+```{r}
+attributes(mtcars)
+```
+
+On peut accéder à chaque objet de cette liste via le nom de l'objet, de deux façons différentes, comme présenté ci-dessous.
+
+```{r}
+attributes(mtcars)$names
+attr(mtcars, "names")
+```
+
+Il est aussi possible de définir de nouveaux attributs à un `data.frame`, via la commande `attr()`. Celui-ci ne sera pas visible lorsqu'on l'affichera, mais auquel on pourra accéder directement avec les commandes ci-dessus.
+
+```{r}
+attr(mtcars, "info") = "Ce jeu de données présentes des informations sur 32 voitures, décrites par 11 variables"
+mtcars$info
+attributes(mtcars)
+attr(mtcars, "info")
+```
+
+## Dates
+
+Comme dans tous les systèmes, les dates sous `R` sont stockées sous forme d'entiers représentant un nombre de jours depuis une certaine date, sous le format `Date`. Ci-dessous, nous voyons comment récupérer la date du jour, le nombre de jour depuis l'origine, et le calcul de la date d'origine. Il y a aussi deux exemples d'affichage amélioré d'une date (la date du jour ici).
+
+```{r}
+# Date du jour
+Sys.Date()
+# Entier stocké
+as.numeric(Sys.Date())
+# Date d'origine (et exemple de soustraction de jours d'une date)
+Sys.Date() - as.numeric(Sys.Date())
+# Affichage d'une date avec un format spécifique
+format(Sys.Date(), "jour : %d ou %e, mois : %m, année :  %y ou %Y")
+# Affichage d'une date dépendant de la langue locale
+format(Sys.Date(), "%a %e %b ou %A %e %B")
+```
+
+Il est aussi possible de transformer une chaîne de caractère en `Date` avec la fonction `as.Date()`. Celle-ci prend en paramètre obligatoire un vecteur de chaînes (éventuellement avec une seule valeur), et de façon optionnelle le format de la date. Voici quelques exemples d'utilisations de cette fonction, avec la présentation des fonctions `weekdays()`, `months()`, `quarters()` et `julian()`.
+
+```{r}
+# Tentative de conversion d'une date écrite en "français"
+as.Date("09/11/2016")
+# En spécifiant le format, tout est ok
+as.Date("09/11/2016", "%d/%m/%Y")
+# Récupération d'informations de cette date
+d = as.Date("09/11/2016", "%d/%m/%Y")
+weekdays(d) # jour de la semaine
+months(d)   # mois dans l'année
+quarters(d) # trimestre dans l'année
+julian(d)   # nombre de jour depuis l'origine (éventuellement spécifié, cf ci-dessous)
+julian(d, as.Date("1900-01-01"))
+```
+
+
+
+## Interrogation de données
+
+Nous allons voir ici comment réaliser les opérations classiques faites en `SQL` au moyen de fonctions `R`.
+
+### Fonction `subset()`
+
+Cette fonction permet de réaliser au moins deux opérations classiques en `SQL :
+
+- **Restriction** : limitation aux lignes respectant un critère 
+- **Projection** : limitation à certaines colonnes
+
+#### Restriction
+
+La fonction `subset()` prend en premier paramètre le `data.frame` sur lequel faire l'opération. Le deuxième paramètre à définir ici est celui pour la restriction (`subset =`). Voici comment se restreindre par exemple aux voitures (données `mtcars`) avec une consommation strictement inférieure à 15 (`mpg < 15`).
+
+```{r}
+subset(mtcars, subset = mpg < 15)
+```
+
+#### Projection
+
+Ici, c'est le paramètre pour la projection qu'il faut définir (`select =`). On peut lui passer un ou plusieurs noms de colonnes. On veut par exemple ne récupérer que la puissance (`hp`) et la cylindrée (`disp`).
+
+```{r}
+subset(mtcars, select = c(hp, disp))
+```
+
+Mais il est aussi possible d'exclure des colonnes dans le résultat. C'est-à-dire que plutôt de dire celles qu'on veut, on va indiquer celles dont on ne veut pas.
+
+```{r}
+subset(mtcars, select = -c(hp, disp))
+```
+
+#### Combinaison des deux
+
+Bien évidemment, il est possible de combiner les deux paramètres pour réaliser une opération de restriction et une opération de projection dans la même commande. Nous récupérons ici la puissance (`hp`) et la cylindrée (`disp`) des voitures (données `mtcars`) avec une consommation strictement inférieure à 15 (`mpg < 15`).
+
+```{r}
+subset(mtcars, subset = mpg < 15, select = c(hp, disp))
+```
+
+### Fonction `transform()`
+
+Cette fonction permet elle de créer de nouvelles variables, basées sur des calculs à partir d'autres variables. Elle renvoie le `data.frame`, passé en premier paramètre, complété des nouvelles variables. On calcule ici par exemple le rapport poids (`wt`) / puissance (`hp`). Et on calcule aussi la consommation en litres pour 100 km.
+
+```{r, eval = FALSE}
+transform(mtcars, 
+          rapport = round(1000 * wt / hp), 
+          conso = round(236 / mpg, 2))
+```
+
+Ici, toute fonction existante applicable sur un vecteur est utilisable.
+
+### Fonction `aggregate()`
+
+On va pouvoir réaliser ici tous les calculs d'agrégats possibles sur une table, avec ou sans regroupement. Le premier paramètre sera la formule (sous la forme `... ~ ...`) permettant de déterminer sur quelles variables faire le calcul (à gauche du `~`) et quelles variables utiliser pour le regroupement (à droite du `~`). Le deuxième sera le jeu de données à utiliser. Et le troisième sera la fonction à appliquer.
+
+```{r}
+# Calcul de la moyenne de mpg pour tous
+aggregate(mpg ~ 1, mtcars, mean)
+# Calcul de la moyenne de mpg et de hp pour tous
+aggregate(cbind(mpg, hp) ~ 1, mtcars, mean)
+# Calcul de la moyenne de toutes les variables pour tous
+aggregate(. ~ 1, mtcars, mean)
+# Calcul de la moyenne de mpg pour chaque modalité de am
+aggregate(mpg ~ am, mtcars, mean)
+# Calcul de la moyenne de mpg en fonction de am et de cyl
+aggregate(mpg ~ am + cyl, mtcars, mean)
+# Calcul de la moyenne de mpg et de hp en fonction de am et de cyl
+aggregate(cbind(mpg, hp) ~ am + cyl, mtcars, mean)
+```
+
+### Fonction `merge()`
+
+Cette fonction permet elle de réaliser des jointures entre deux tables. Pour présenter le fonctionnement, nous allons créer une table avec le type de moteur selon le nombre de cylindres (`cyl` dans `mtcars`). Vous remarquerez que la valeur `4` n'est pas présente dans ce tableau, alors qu'elle l'est dans `mtcars`. Inversement, `12` est présent ici mais pas dans `mtcars`.
+
+```{r}
+types = data.frame(
+    cyl = c(6, 8, 12),
+    type = c("moyen", "gros", "très gros")
+)
+types
+unique(mtcars$cyl)
+```
+
+La fonction `merge()` prend, au minimum, deux paramètres que sont les deux tables à fusionner. Par défaut, c'est une jointure naturelle qui est réalisée (i.e. on recherche l'égalité des variables ayant le même nom).
+
+```{r}
+merge(mtcars, types)
+```
+
+Si le nom des colonnes diffère ou que vous ne voulez pas regarder l'égalité entre toutes les variables ayant même nom, il faut le préciser dans les paramètres `by` (même noms de colonnes dans les deux tables), ou `by.x` et `by.y` pour dire quelles variables prendre dans la première table (`by.x`) et dans la deuxième table (`by.y`).
+
+```{r}
+names(types)[1] = "nbcyl"
+types
+merge(mtcars, types, by.x = "cyl", by.y = "nbcyl")
+```
+
+Vous remarquerez, en le testant, que si on ne précise pas sur quelles variables faire la jointure, en l'absence de variables identiques entre les tables, la fonction `merge()` réalise le produit cartésien.
+
+Dans les deux exemples ci-dessus, vous avez du voir que toutes les lignes ne son pas retournées. En effet, les voitures de `mtcars` avec `cyl == 4` ne sont pas intégrées. De même que la dernière ligne de `types`. Pour avoir toutes les lignes, il faut ajouter le paramètre `all = TRUE`, pour lui dire de faire la jointure complète (i.e. `FULL OUTER JOIN`). Dans ce cas, on aura donc 33 lignes, avec des `NA` pour les cellules dont il n'a pas l'information.
+
+```{r}
+names(types)[1] = "cyl"
+merge(mtcars, types, all = TRUE)
+```
+
+On peut bien évidemment faire les jointures externes gauches (`LEFT OUTER JOIN`) ou droite (`RIGHT OUTER JOIN`) avec respectivement les paramètres `all.x` et `all.y`.
+
+```{r}
+merge(mtcars, types, all.x = TRUE)
+merge(mtcars, types, all.y = TRUE)
+```
+
+### Fonction `setNames()`
+
+Cette fonction permet de renommer les colonnes d'un `data.frame` et de le renvoyer. Reprenons un exemple de calcul d'agrégat vu précédemment. Quelque soit le calcul indiqué, le nom de la colonne est toujours le même.
+
+```{r}
+aggregate(mpg ~ am, mtcars, mean)
+```
+
+Si nous voulons avoir dans un même tableau, la moyenne et l'écart-type, il nous faudrait faire une jointure. Mais l'idéal serait de renommer les tableaux correctement. On peut donc le faire avec `setNames()` dont voici un exemple de fonctionnement.
+
+```{r}
+setNames(aggregate(mpg ~ am, mtcars, mean), c("am", "Moyenne"))
+```
+
+## Exercices
+
+### Importation
+
+La première étape ici est donc d'importer les données. Il faut pour cela utiliser la fonction `read.table()`, en évitant que les variables textuelles deviennent des `factors`. Il faut aussi renommer les variables pour chaque table, selon les informations fournies dans le PDF associé aux données. Il faut aussi gérer les dates pour qu'elles soient correctement représentées. Pour certaines variables, nous avons le descriptif des modalités dans ce document. Enfin, il faudrait ajouter le court descriptif de chaque table comme attribut de celles-ci.
+
+```{r, include=FALSE}
+# readLines("donnees/medicaments/2016-11-09/CIS_bdpm.txt", 10)
+CIS_bdpm = read.table("donnees/medicaments/2016-11-09/CIS_bdpm.txt",
+                      quote = NULL, sep = "\t", encoding = "latin1",
+                      stringsAsFactors = FALSE)
+```
+
+
+### Interrogation
+
+1. On veut les informations suivantes dans une table à deux colonnes (`statistique`, `valeur`) :
+    - Nombre de médicaments
+    - Nombre de médicaments avec autorisation active
+    - Nombre de médicaments avec surveillance renforcée
+    - Taux moyen de remboursement (pour ceux avec autorisation active)
+    - Prix moyen (idem que le taux)
+    - Durée moyenne de leur mise sur le marché (en nombre de jours - idem que le taux)
+2. Quels sont les dix médicaments avec le plus de composants (Code CIS, Dénomination et nombre de composants) ?
+3. Pour chaque type de générique, on veut savoir le nombre de médicaments associés, ainsi que leur taux de remboursement moyen et leur prix moyen.
+4. Quelles sont les voies d'administration possibles ? Et combien de médicaments sont concernés pour chaque voie ?
+5. Quels sont les médicaments dont le service médical rendu (ou **SMR**) est jugé insuffisant ? Indiquez leur taux de remboursement et leur prix, en les classant par prix décroissant.
+
+**NB** : 
+
+- les taux et les prix sont dans au format chaîne de caractères (resp. `"xx %"` et `"xx,xx"`) et donc à modifier avant calcul.
+- les voies d'administration sont listées dans une seule variable, et séparées par des ";" (par exemple `"cutanée;orale;sublinguale"`). Il faut donc ici aussi faire un pré-traitement.
+
+

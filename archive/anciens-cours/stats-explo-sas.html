@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Statistiques exploratoires sous SAS</title>
+
+  <meta charset="utf-8">
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  <meta name="generator" content="pandoc" />
+
+
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+
+  <link rel="stylesheet" media="all" href="libs/ioslides-13.5.1/fonts/fonts.css">
+
+  <link rel="stylesheet" media="all" href="libs/ioslides-13.5.1/theme/css/default.css">
+  <link rel="stylesheet" media="only screen and (max-device-width: 480px)" href="libs/ioslides-13.5.1/theme/css/phone.css">
+
+  <base target="_blank">
+
+  <script type="text/javascript">
+    var SLIDE_CONFIG = {
+      // Slide settings
+      settings: {
+                title: 'Statistiques exploratoires sous SAS',
+                        useBuilds: true,
+        usePrettify: true,
+        enableSlideAreas: true,
+        enableTouch: true,
+              },
+
+      // Author information
+      presenters: [
+            ]
+    };
+  </script>
+
+  <style type="text/css">
+
+    b, strong {
+      font-weight: bold;
+    }
+
+    em {
+      font-style: italic;
+    }
+
+    slides > slide {
+      -webkit-transition: all 0.4s ease-in-out;
+      -moz-transition: all 0.4s ease-in-out;
+      -o-transition: all 0.4s ease-in-out;
+      transition: all 0.4s ease-in-out;
+    }
+
+    .auto-fadein {
+      -webkit-transition: opacity 0.6s ease-in;
+      -webkit-transition-delay: 0.4s;
+      -moz-transition: opacity 0.6s ease-in 0.4s;
+      -o-transition: opacity 0.6s ease-in 0.4s;
+      transition: opacity 0.6s ease-in 0.4s;
+      opacity: 0;
+    }
+
+  </style>
+
+
+  <style>
+  slide img {
+  	max-width: 100%;
+  }
+  </style>
+
+</head>
+
+<body style="opacity: 0">
+
+<slides class="layout-widescreen">
+
+  <slide class="title-slide segue nobackground">
+        <!-- The content of this hgroup is replaced programmatically through the slide_config.json. -->
+    <hgroup class="auto-fadein">
+      <h1 data-config-title><!-- populated from slide_config.json --></h1>
+      <h2 data-config-subtitle><!-- populated from slide_config.json --></h2>
+      <p data-config-presenter><!-- populated from slide_config.json --></p>
+          </hgroup>
+  </slide>
+
+<slide class=''><hgroup><h2>Statistiques exploratoires</h2></hgroup><article  id="statistiques-exploratoires">
+
+<ul>
+<li>Analyse de données
+
+<ul>
+<li>Analyse en composantes principales (ACP)</li>
+<li>Analyse factorielle des correspondances (AFC)</li>
+<li>Analyse factorielle des correspondances multiples (AFCM ou ACM)</li>
+</ul></li>
+<li>Classification
+
+<ul>
+<li>Classification hiérarchique (CAH)</li>
+<li>Classification directe (\(k\)-means)</li>
+</ul></li>
+</ul>
+
+</article></slide><slide class=''><hgroup><h2>Analyse de données</h2></hgroup><article  id="analyse-de-donnees">
+
+<h3>Analyse en composantes principales (ACP)</h3>
+
+<ul>
+<li>Utilisation de la <code>PROC PRINCOMP</code></li>
+<li>Deux tables en sorties
+
+<ul>
+<li><code>out=</code> pour récupérer les coordonnées des individus sur les composantes principales</li>
+<li><code>outstat=</code> pour récupérer les informations autres (sur les variables, matrice de variance/covariance, et valeurs et vecteurs propres)</li>
+</ul></li>
+<li>Plusieurs graphiques directement disponibles dans la version classique de SAS (et pas disponible dans SAS Studio)</li>
+</ul>
+
+</article></slide><slide class=''><hgroup><h2>Analyse de données</h2></hgroup><article  id="analyse-de-donnees-1">
+
+<h3>ACP - code</h3>
+
+<ul>
+<li>ACP en elle-même</li>
+</ul>
+
+<pre class = 'prettyprint lang-sas'>proc princomp data = sashelp.iris out=iris_pca outstat=iris_pca_stat;
+    var _NUMERIC_;
+run;</pre>
+
+<ul>
+<li>Pour représenter le premier plan factoriel</li>
+</ul>
+
+<pre class = 'prettyprint lang-sas'>proc sgplot data = iris_pca;
+    scatter x=Prin1 y=Prin2 / 
+        group=Species markerattrs=(SYMBOL=CircleFilled);
+run; quit;</pre>
+
+</article></slide><slide class=''><hgroup><h2>Analyse de données</h2></hgroup><article  id="analyse-de-donnees-2">
+
+<h3>Analyse factorielle des correspondances (AFC)</h3>
+
+<ul>
+<li>Utilisation de la <code>PROC CORRESP</code></li>
+<li>Indication dans <code>tables</code> du couple de variables à utiliser pour la table de contingence (séparée par une <code>,</code>)</li>
+<li>Spécification des stats de sorties : <code>all</code> pour tout, sinon voir aide de SAS</li>
+<li>Deux tables en sortie :
+
+<ul>
+<li><code>out=</code> (ou <code>outc=</code>) pour récupérer les coordonnées des points sur les axes factoriels (avec contribution et qualité de représentation)</li>
+<li><code>outf=</code> pour récupérer les fréquences observées, attendues, et autres statistiques</li>
+</ul></li>
+</ul>
+
+</article></slide><slide class=''><hgroup><h2>Analyse de données</h2></hgroup><article  id="analyse-de-donnees-3">
+
+<h3>AFC - code</h3>
+
+<ul>
+<li>AFC en elle-même
+
+<ul>
+<li>produit par défaut les graphiques nécessaires</li>
+</ul></li>
+</ul>
+
+<pre class = 'prettyprint lang-sas'>proc corresp data = sashelp.cars all 
+        out = cars_afc_1 outf = cars_afc_2;
+    tables type, origin;
+run;</pre>
+
+</article></slide><slide class=''><hgroup><h2>Analyse de données</h2></hgroup><article  id="analyse-de-donnees-4">
+
+<h3>Analyse factorielle des correspondances multiples (AFCM)</h3>
+
+<ul>
+<li>Utilisation de la <code>PROC CORRESP</code> avec l&#39;option <code>mca</code></li>
+<li>Indication dans <code>tables</code> ds variables à utiliser (sans <code>,</code>)</li>
+<li>Spécification des stats de sorties : <code>all</code> pour tout, sinon voir aide de SAS</li>
+<li>Deux tables en sortie :
+
+<ul>
+<li><code>out=</code> (ou <code>outc=</code>) pour récupérer les coordonnées des points sur les axes factoriels (avec contribution et qualité de représentation)</li>
+<li><code>outf=</code> pour récupérer les fréquences observées, attendues, et autres statistiques</li>
+</ul></li>
+</ul>
+
+</article></slide><slide class=''><hgroup><h2>Analyse de données</h2></hgroup><article  id="analyse-de-donnees-5">
+
+<h3>AFCM - code</h3>
+
+<ul>
+<li>AFCM en elle-même
+
+<ul>
+<li>produit par défaut les graphiques nécessaires</li>
+</ul></li>
+</ul>
+
+<pre class = 'prettyprint lang-sas'>proc corresp data = sashelp.cars mca all 
+        out = cars_afcm_1 outf = cars_afcm_2;
+    tables type origin DriveTrain Cylinders;
+run;</pre>
+
+</article></slide><slide class=''><hgroup><h2>Classification</h2></hgroup><article  id="classification">
+
+<h3>Classification hiérarchique (CAH)</h3>
+
+<ul>
+<li><code>PROC CLUSTER</code> pour créer le dendrogramme
+
+<ul>
+<li><code>method=</code> pour spécifier la méthode (<code>ward</code>, <code>single</code>, &#8230;)</li>
+<li><code>rsquare</code>, <code>pseudo</code>, <code>ccc</code> pour représenter graphiquement ces critères de choix du nombre de classes</li>
+<li><code>outree</code> pour récupérer le dengramme et les statistiques associées</li>
+<li>présentation du dendogramme par défaut</li>
+</ul></li>
+<li><code>PROC TREE</code> pour représenter le dendrogramme
+
+<ul>
+<li><code>ncl=</code> pour découper le dendrogramme en \(k\) classes</li>
+<li><code>out=</code> pour récupérer la partition ainsi créée</li>
+</ul></li>
+</ul>
+
+</article></slide><slide class=''><hgroup><h2>Classification</h2></hgroup><article  id="classification-1">
+
+<h3>CAH - code</h3>
+
+<pre class = 'prettyprint lang-sas'>proc cluster data = sashelp.iris 
+        method = ward 
+        rsquare ccc pseudo 
+        outtree = iris_tree;
+    var _NUMERIC_;
+run;
+
+proc tree data = iris_tree ncl = 3 out = iris_clust_cah;
+    copy Petal: Sepal:;
+run;
+
+proc sgscatter data = iris_clust_cah;
+    matrix Petal: Sepal: / 
+        group = cluster markerattrs=(SYMBOL=CircleFilled) ;
+run; quit;</pre>
+
+</article></slide><slide class=''><hgroup><h2>Classification</h2></hgroup><article  id="classification-2">
+
+<h3>Classification directe (\(k\)-means)</h3>
+
+<ul>
+<li><code>PROC FASTCLUS</code> pour appliquer l&#39;algorithme \(k\)-means
+
+<ul>
+<li><code>maxc=</code> pour définir le nombre de classes</li>
+<li><code>maxiter=</code> pour définir le nombre d&#39;itérations maximal</li>
+<li><code>converge=</code> pour spécifier le seuil de convergence</li>
+<li><code>out=</code> pour récupérer les données augmentées de la partition</li>
+<li><code>mean=</code> pour récupérer les centres des classes</li>
+<li><code>outstat=</code> pour récupérer tout un ensemble de statistiques, dont les critères de choix du nombre de classes</li>
+</ul></li>
+</ul>
+
+</article></slide><slide class=''><hgroup><h2>Classification</h2></hgroup><article  id="classification-3">
+
+<h3>\(k\)-means - code</h3>
+
+<pre class = 'prettyprint lang-sas'>proc fastclus data = sashelp.iris 
+    maxc = 3 maxiter = 20 converge = 0 vardef = n
+    out = iris_km 
+    mean = iris_km_mean 
+    outstat = iris_km_stat;
+    var _NUMERIC_;
+run;
+
+proc sgscatter data = iris_km;
+    matrix Petal: Sepal: / 
+        group = cluster markerattrs=(SYMBOL=CircleFilled) ;
+run; quit;</pre>
+
+</article></slide><slide class=''><hgroup><h2>Liens intéressants</h2></hgroup><article  id="liens-interessants">
+
+<p>Programmes disponibles :</p>
+
+<ul>
+<li><a href='http://www.math.univ-toulouse.fr/~besse/pub/sas/' title=''>Macros de P. Besse</a> sur <a href='http://wikistat.fr/' title=''>WikiStat</a></li>
+<li><a href='http://www.insee.fr/fr/methodes/default.asp?page=outils/analyse_donnees/accueil_analyse.htm' title=''>Macros de l&#39;INSEE</a></li>
+</ul></article></slide>
+
+
+  <slide class="backdrop"></slide>
+
+</slides>
+
+<script src="libs/ioslides-13.5.1/js/modernizr.custom.45394.js"></script>
+<script src="libs/ioslides-13.5.1/js/prettify/prettify.js"></script>
+<script src="libs/ioslides-13.5.1/js/prettify/lang-r.js"></script>
+<script src="libs/ioslides-13.5.1/js/prettify/lang-yaml.js"></script>
+<script src="libs/ioslides-13.5.1/js/hammer.js"></script>
+<script src="libs/ioslides-13.5.1/js/slide-controller.js"></script>
+<script src="libs/ioslides-13.5.1/js/slide-deck.js"></script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+<!-- map slide visiblity events into shiny -->
+<script>
+  (function() {
+    if (window.jQuery) {
+       window.jQuery(document).on('slideleave', function(e) {
+         window.jQuery(e.target).trigger('hidden');
+      });
+       window.jQuery(document).on('slideenter', function(e) {
+         window.jQuery(e.target).trigger('shown');
+      });
+    }
+  })();
+</script>
+
+</body>
+</html>

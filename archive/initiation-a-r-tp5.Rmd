@@ -1,0 +1,119 @@
+---
+title: TP5 - Récapitulatif
+subtitle: Initiation a `R` - STID 1ère année
+---
+
+```{r, include=FALSE}
+knitr::opts_chunk$set(comment = "")
+library(sqldf)
+```
+
+Nous allons utiliser la base de données `Comptoir2000`, stockée sous forme de fichiers textes, dont voici les liens :
+
+```{r, echo=FALSE, results='asis'}
+rep = "donnees/Comptoir2000/Comptoir2000-csv/"
+liste = dir(path = rep, pattern = "*.txt")
+for (f in liste) cat("- [", f, "](", rep, f, ")\n", sep = "")
+```
+
+## Quelques rappels et informations
+
+Il est possible de faire l'équivalent d'un `COUNT(*)` avec la commande `aggregate()` en utilisant la fonction `length`. Voici un exemple, dans `mtcars`, pour calculer le nombre de voitures pour chaque modalité de `am`. Dans ce cas, la variable à gauche du tilde (`~`) n'a pas d'importance mais il est nécessaire de la mettre.
+
+```{r}
+tab = aggregate(mpg ~ am, mtcars, length)
+tab
+```
+
+Voici le même résultat en `SQL`.
+
+```{r}
+sqldf("
+SELECT am, COUNT(*)
+    FROM mtcars
+    GROUP BY am
+      ")
+```
+
+
+Pour réaliser l'équivalent d'un `COUNT(DISTINCT var)`, il est nécessaire d'utiliser une fonction personnalisée. Voici la définition de cette fonction et un exemple d'utilisation.
+
+```{r}
+length_distinct <- function(x) {
+    return (length(unique(x)))
+}
+tab = aggregate(carb ~ am, mtcars, length_distinct)
+tab
+```
+
+Et en `SQL`
+
+```{r}
+sqldf("
+SELECT am, COUNT(DISTINCT carb)
+    FROM mtcars
+    GROUP BY am
+")
+```
+
+Pour information, si on veut avoir une table triée, il faut utiliser la fonction `order()` dont voici un exemple de fonctionnement.
+
+```{r}
+# Création d'un vecteur
+a = c(5, 1, 4, 3)
+# Affichage de celui-ci
+a
+# Tri de ce vecteur (ordre par défaut = croissant)
+sort(a)
+# Tri de ce vecteur par ordre décroissant
+sort(a, decreasing = TRUE)
+# Indices des valeurs triées dans l'ordre croissant par défaut
+order(a)
+# Indices des valeurs triées dans l'ordre décroissant
+order(a, decreasing = TRUE)
+```
+
+
+Nous calculons ici, dans `mtcars`, la consommation moyenne pour chaque modalité de `gear`.
+
+```{r}
+tab = aggregate(mpg ~ gear, mtcars, mean)
+tab
+```
+
+Nous pouvons obenir cette table triée sur la consommation (variable `mpg`). L'ordre par défaut est bien évidemment l'ordre croissant.
+
+```{r}
+tab_tri = tab[order(tab$mpg),]
+tab_tri
+```
+
+Il est possible d'avoir l'ordre décroissant avec l'option `decreasing = TRUE`. Et on peut limiter les décimales dans la fonction `kable()` avec l'option `digits = 2`.
+
+```{r}
+tab_tri2 = tab[order(tab$mpg, decreasing = TRUE),]
+tab_tri2
+```
+
+
+## Exercice
+
+Créer un document `html` en `R markdown`, contenant les éléments suivants. Vous devez faire un chapitre (avec titre de niveau 2 donc), pour chaque item de la liste suivante. N'hésitez pas à faire des sous-partie pour chaque sous-item. Vous devez utiliser le langage `R`, et pas de `SQL`.
+
+1. Importer les données dans `R`, à l'aide de `read.table()`
+1. Employés 
+    1. Lister les employés (nom et prénom) situés au `"Royaume-Uni"`
+    1. Lister les différentes fonctions occupées par les employés
+    1. Indiquer le nombre d'employés par pays
+1. Produits
+    1. Lister le nombre de produits par pays des fournisseurs
+    1. Lister le nombre de produits par catégorie
+    1. Ajouter le prix moyen, le prix minimum (`min`) et le prix maximum (`max`)
+1. Créer une table `MontantCommande` qui contient, pour chaque commande, les informations suivantes 
+    - Numéro de commande
+    - Montant total de la commande 
+    - Frais de port 
+    - Montant total des produits
+    - Nombre de produits différents dans la commande
+1. Calculer le montant total des commandes de chaque client
+1. Calculer le montant total des commandes pour chaque pays des clients
