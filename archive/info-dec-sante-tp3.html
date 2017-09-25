@@ -1,0 +1,607 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+<meta charset="utf-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="pandoc" />
+
+
+
+
+<title>NoSQL</title>
+
+<script src="libs/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="libs/bootstrap-3.3.5/css/journal.min.css" rel="stylesheet" />
+<script src="libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<script src="libs/navigation-1.1/tabsets.js"></script>
+<link href="libs/highlightjs-1.1/default.css" rel="stylesheet" />
+<script src="libs/highlightjs-1.1/highlight.js"></script>
+<!--
+    Font Awesome
+-->
+<script src="https://use.fontawesome.com/32d8325004.js"></script>
+<link rel="stylesheet" href="libs/font-awesome-4.7.0/css/font-awesome.min.css">
+
+<!--
+    CSS perso
+-->
+<style>
+    .contenu {
+        margin-bottom: 50px;
+    }
+
+    .contact-liens {
+        text-align: center;
+    }
+    .contact-liens:hover {
+        text-decoration: none;
+    }
+    .contact-icones {
+        height: 30px;
+    }
+
+    /* Espacement pour barre du haut et pied de page */
+    #header, .section.level1 {
+        margin-top: 60px;
+        margin-bottom: 60px;
+    }
+    /* Espacement pour table des matières */
+    #TOC {
+        margin-top: 100px;
+    }
+    
+    .footer {
+        position: fixed;
+        width: 100%;
+        text-align: center;
+        bottom: 0;
+        left: 0;
+        background-color: #E6E6E6;
+    }
+</style>
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
+<script type="text/javascript">
+if (window.hljs && document.readyState && document.readyState === "complete") {
+   window.setTimeout(function() {
+      hljs.initHighlighting();
+   }, 0);
+}
+</script>
+
+
+
+<style type="text/css">
+h1 {
+  font-size: 34px;
+}
+h1.title {
+  font-size: 38px;
+}
+h2 {
+  font-size: 30px;
+}
+h3 {
+  font-size: 24px;
+}
+h4 {
+  font-size: 18px;
+}
+h5 {
+  font-size: 16px;
+}
+h6 {
+  font-size: 12px;
+}
+.table th:not([align]) {
+  text-align: left;
+}
+</style>
+
+<link rel="stylesheet" href="libs/bootstrap-journal.min.css" type="text/css" />
+
+</head>
+
+<body>
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img {
+  max-width:100%;
+  height: auto;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+</style>
+
+
+
+<div class="container-fluid main-container">
+
+<!-- tabsets -->
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+</script>
+
+<!-- code folding -->
+
+
+
+
+
+<div class="navbar navbar-default navbar-fixed-top">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-main">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">FX Jollois</a>
+    </div>
+    <div id="navbar-main" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button">Données <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+              <li><a href="accesdonnees.html">A télécharger</a></li>
+              <li><a href="donnees-integrees-r.html">Sous R</a></li>
+          </ul>
+        </li>
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button">Enseignement <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li class="dropdown-header">DUT 1ère année</li>
+            <li><a href="exploitation-donnees.html">Exploitation de données</a></li>
+            <li><a href="initiation-a-r.html">Initiation à R</a></li>
+            <li><a href="reporting.html">Reporting</a></li>
+            <li><a href="complements-r.html">Compléments sur R</a></li>
+            <li class="dropdown-header">DUT 2ème année</li>
+            <li><a href="prog-stat-r.html">Programmation statistique avec R</a></li>
+            <li class="dropdown-header">LP MDS Santé</li>
+            <li><a href="info-dec-sante.html">Informatique décisionnelle</a></li>
+            <li class="dropdown-header">DU Analyste Big Data</li>
+            <li><a href="initiation-r-du.html">Initiation à R</a></li>
+            <li><a href="connexion-r-mongodb.html">Connexion entre R et MongoDB</a></li>
+            <li class="dropdown-header">DU Dataviz</li>
+            <li><a href="analyse-donnees.html">Analyse de données</a></li>
+            <li><a href="visualisation-donnees.html">Visualisation de données - R</a></li>
+            <li><a href="visualisation-donnees-tableau.html">Visualisation de données - Tableau</a></li>
+            <li><a href="visualisation-donnees-d3.html">Visualisation de données - D3</a></li>
+            <li role="separator" class="divider"></li>
+            <li class="dropdown-header">Master</li>
+            <li><a href="slides/cnam-classif-modeles.html">Classification et Modèles de mélange</a></li>
+            <li><a href="analyse-donnees-massives.html">Analyse de Données Massives</a></li>
+            <li class="dropdown-header">Iran</li>
+            <li><a href="stat-prog-R.html">Statistical Programming using R</a></li>
+          </ul>
+        </li>
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button">Recherche <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li><a href="recherche.html">Sujets</a></li>
+            <li><a href="publications.html">Publications</a></li>
+          </ul>
+        </li>
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button">Réalisations <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li><a href="realisations.html">Détail</a></li>
+            <li role="separator" class="divider"></li>
+            <li><a href="http://up5.fr/explore-data" target="_blank">explore-data</a></li>
+            <li><a href="http://fxjollois.github.io/cours-sql/" target="_blank">Appli web de cours pour SQL</a></li>
+          </ul>
+        </li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container-fluid -->
+</div>
+<div class="contenu">
+
+<div class="fluid-row" id="header">
+
+
+
+<h1 class="title toc-ignore">NoSQL</h1>
+<h3 class="subtitle"><em>Informatique Décisionnelle - LP MDS Santé</em></h3>
+
+</div>
+
+
+<div id="nosql" class="section level2">
+<h2>NoSQL</h2>
+<p><em>MongoDB</em> est une base de données NoSQL distribué de type <em>Document Store</em> (<a href="http://www.mongodb.com/">site web</a>)</p>
+<p>Objectifs :</p>
+<ul>
+<li>Gérer de gros volumes</li>
+<li>Facilité de déploiement et d’utilisation</li>
+<li>Possibilité de faire des choses complexes tout de même</li>
+</ul>
+<div id="modele-des-donnees" class="section level3">
+<h3>Modèle des données</h3>
+<p>Principe de base : les données sont des <code>documents</code></p>
+<ul>
+<li>stocké en <em>Binary JSON</em> (`BSON)</li>
+<li>documents similaires rassemblés dans des <code>collections</code></li>
+<li>pas de schéma des documents définis en amont
+<ul>
+<li>contrairement à un BD relationnel ou NoSQL de type <em>Column Store</em></li>
+</ul></li>
+<li>les documents peuvent n’avoir aucun point commun entre eux</li>
+<li>un document contient (généralement) l’ensemble des informations
+<ul>
+<li>pas (ou très peu) de jointure à faire</li>
+</ul></li>
+<li>BD respectant <strong>CP</strong> (dans le théorème <em>CAP</em>)
+<ul>
+<li>propriétés ACID au niveau d’un document</li>
+</ul></li>
+</ul>
+</div>
+<div id="point-sur-json" class="section level3">
+<h3>Point sur <code>JSON</code></h3>
+<ul>
+<li><code>JavaScript Object Notation</code></li>
+<li>Créé en 2005</li>
+<li>On parle de <strong>littéral</strong></li>
+<li>Format d’échange de données structurées léger</li>
+<li>Schéma des données non connu
+<ul>
+<li>contenu dans les données</li>
+</ul></li>
+<li>Basé sur deux notions :
+<ul>
+<li>collection de couples clé/valeur</li>
+<li>liste de valeurs ordonnées</li>
+</ul></li>
+<li>Structures possibles :
+<ul>
+<li>objet (couples clé/valeur) :</li>
+<li><code>{}</code></li>
+<li><code>{ &quot;nom&quot;: &quot;jollois&quot;, &quot;prenom&quot;: &quot;fx&quot; }</code></li>
+<li>tableau (collection de valeurs) :</li>
+<li><code>[]</code></li>
+<li><code>[ 1, 5, 10]</code></li>
+<li>une valeur dans un objet ou dans un tableau peut être elle-même un littéral</li>
+</ul></li>
+<li>Deux types atomiques (<code>string</code> et <code>number</code>) et trois constantes (<code>true</code>, <code>false</code>, <code>null</code>)</li>
+</ul>
+<p>Validation possible du JSON sur <a href="http://jsonlint.com/">jsonlint.com/</a></p>
+<pre class="json"><code>{
+    &quot;tubd&quot;: {
+        &quot;formation&quot;: &quot;DU Analyste Big Data&quot;,
+        &quot;responsable&quot;: { &quot;nom&quot;: &quot;Poggi&quot;, &quot;prenom&quot;: &quot;JM&quot; },
+        &quot;etudiants&quot; : [
+            { &quot;id&quot;: 1, &quot;nom&quot;: &quot;jollois&quot;, &quot;prenom&quot;: &quot;fx&quot; },
+            { &quot;id&quot;: 2, &quot;nom&quot;: &quot;aristote&quot;, &quot;details&quot;: &quot;délégué&quot; },
+            { &quot;id&quot;: 5, &quot;nom&quot;: &quot;platon&quot; }
+        ],
+        &quot;ouverte&quot;: true
+    },
+    &quot;tudv&quot;: {
+        &quot;formation&quot;: &quot;DU Data Visualisation&quot;,
+        &quot;ouverte&quot;: false,
+        &quot;todo&quot;: [
+            &quot;Creation de la maquette&quot;,
+            &quot;Validation par le conseil&quot;
+            ],
+        &quot;responsable&quot;: { &quot;nom&quot;: &quot;Métivier&quot; }
+    }
+}</code></pre>
+</div>
+<div id="complements" class="section level3">
+<h3>Compléments</h3>
+<p><code>BSON</code> : extension de <code>JSON</code></p>
+<ul>
+<li>Quelques types supplémentaires (identifiant spécifique, binaire, date, …)</li>
+<li>Distinction entier et réel</li>
+</ul>
+<p><strong>Schéma dynamique</strong></p>
+<ul>
+<li>Documents variant très fortement entre eux, même dans une même collection</li>
+<li>On parle de <strong>self-describing documents</strong></li>
+<li>Ajout très facile d’un nouvel élément pour un document, même si cet élément est inexistant pour les autres</li>
+<li>Pas de <code>ALTER TABLE</code> ou de redesign de la base</li>
+</ul>
+<p><strong>Pas de jointures entre les collections</strong></p>
+</div>
+<div id="langage-dinterrogation" class="section level3">
+<h3>Langage d’interrogation</h3>
+<ul>
+<li>Pas de SQL (bien évidemment), ni de langage proche</li>
+<li>Définition d’un langage propre</li>
+<li>Langage permettant plus que les accès aux données
+<ul>
+<li>définition de variables</li>
+<li>boucles</li>
+<li>…</li>
+</ul></li>
+</ul>
+<p>Commandes suivantes réalisables à partir du <code>shell</code></p>
+</div>
+</div>
+<div id="utilisation-avec-r" class="section level2">
+<h2>Utilisation avec <code>R</code></h2>
+<p>On peut interroger une base de données de ce type via le package <code>mongolite</code> dans <code>R</code>. Dans la suite, nous allons nous connecter sur un serveur distant, et travailler pour l’exemple sur une base des pays du monde (datant de fin 99).</p>
+<pre class="r"><code>library(mongolite)
+m = mongo(url = &quot;mongodb://193.51.82.104:2231&quot;,
+          db = &quot;world&quot;,
+          collection = &quot;country&quot;)</code></pre>
+<p>Le premier document est présenté ci-dessous. La base contient les informations de 239 pays.</p>
+<pre class="json"><code>{
+    &quot;_id&quot; : ObjectId(&quot;586a0f9e9a4df5e90a24d1ed&quot;),
+    &quot;Code&quot; : &quot;ABW&quot;,
+    &quot;Name&quot; : &quot;Aruba&quot;,
+    &quot;Continent&quot; : &quot;North America&quot;,
+    &quot;Region&quot; : &quot;Caribbean&quot;,
+    &quot;SurfaceArea&quot; : 193,
+    &quot;IndepYear&quot; : &quot;NA&quot;,
+    &quot;Population&quot; : 103000,
+    &quot;LifeExpectancy&quot; : 78.4,
+    &quot;GNP&quot; : 828,
+    &quot;GNPOld&quot; : 793,
+    &quot;LocalName&quot; : &quot;Aruba&quot;,
+    &quot;GovernmentForm&quot; : &quot;Nonmetropolitan Territory of The Netherlands&quot;,
+    &quot;HeadOfState&quot; : &quot;Beatrix&quot;,
+    &quot;Capital&quot; : {
+        &quot;ID&quot; : 129,
+        &quot;Name&quot; : &quot;Oranjestad&quot;,
+        &quot;District&quot; : &quot;–&quot;,
+        &quot;Population&quot; : 29034
+    },
+    &quot;Code2&quot; : &quot;AW&quot;,
+    &quot;OffLang&quot; : [
+        {
+            &quot;Language&quot; : &quot;Dutch&quot;,
+            &quot;Percentage&quot; : 5.3
+        }
+    ],
+    &quot;NotOffLang&quot; : [
+        {
+            &quot;Language&quot; : &quot;English&quot;,
+            &quot;Percentage&quot; : 9.5
+        },
+        {
+            &quot;Language&quot; : &quot;Papiamento&quot;,
+            &quot;Percentage&quot; : 76.7
+        },
+        {
+            &quot;Language&quot; : &quot;Spanish&quot;,
+            &quot;Percentage&quot; : 7.4
+        }
+    ]
+}</code></pre>
+<div id="document-dans-r" class="section level3">
+<h3>Document dans <code>R</code></h3>
+<p><code>R</code> ne gérant pas nativement les données <code>JSON</code>, les documents sont traduits, pour la librairie <code>mongolite</code>, en <code>data.frame</code>. Pour récupérer le premier document, nous utilisons la fonction <code>find()</code> de l’objet créé <code>m</code>.</p>
+<pre class="r"><code>d = m$find(limit = 1)
+d
+class(d)</code></pre>
+<p>Les objets <code>Capital</code>, <code>OffLang</code> et <code>NotOffLang</code> sont particuliers, comme on peut le voir dans le <code>JSON</code>. <code>Capital</code> est une liste, et les deux autres sont des tableaux de listes. Voila leur classe en <code>R</code>.</p>
+<pre class="r"><code>class(d$Capital)
+d$Capital
+class(d$OffLang)
+d$OffLang
+class(d$NotOffLang)
+d$NotOffLang</code></pre>
+</div>
+<div id="restriction-et-projection" class="section level3">
+<h3>Restriction et Projection</h3>
+<p>La fonction <code>find()</code> de l’objet <code>m</code> permet de retourner tous les documents. On peut se limiter à un certain nombre de documents avec l’option <code>limit</code>, comme précédemment.</p>
+<p>Pour faire une <em>restriction</em> sur la valeur d’un attribut, il faut utiliser l’option <code>query</code>, avec un formalisme particulier. Il faut écrire au format <code>JSON</code> dans une chaîne, avec pour les champs à comparer leur nom suivi de la valeur (pour l’égalité) ou d’un objet complexe pour les autres tests (infériorité, supériorité, présence dans une liste).</p>
+<p>Pour une <em>projection</em>, c’est l’option <code>fields</code> à renseigner. On écrit au format <code>JSON</code>, avec la valeur <code>1</code> pour les champs qu’on souhaite avoir en retour. Par défaut, l’identifiant (<code>_id</code>) est toujours présent, mais on peut le supprimer en indiquant <code>0</code>.</p>
+<p>Dans cet exemple, on recherche le document dont l’attribut <code>&quot;Name&quot;</code> est égal à <code>&quot;France&quot;</code>, et on affiche uniquement les attributs <code>&quot;Name&quot;</code> et <code>&quot;Population&quot;</code>. Dans la deuxième expression, on supprime l’affichage de l’identifiant interne à <em>MongoDB</em>.</p>
+<pre class="r"><code>m$find(query = &#39;{&quot;Name&quot;: &quot;France&quot;}&#39;, 
+       fields = &#39;{&quot;Name&quot;: 1, &quot;Population&quot;: 1}&#39;)
+m$find(query = &#39;{&quot;Name&quot;: &quot;France&quot;}&#39;, 
+       fields = &#39;{&quot;_id&quot;: 0, &quot;Name&quot;: 1, &quot;Population&quot;: 1}&#39;)</code></pre>
+<p>Ici, on recherche les pays du continent <code>&quot;Europe&quot;</code> dont la population est supérieur à 50M d’habitants.</p>
+<pre class="r"><code>m$find(query = &#39;{&quot;Continent&quot;: &quot;Europe&quot;, &quot;Population&quot;: {&quot;$gt&quot;: 50000000}}&#39;,
+       fields = &#39;{&quot;_id&quot;: 0, &quot;Name&quot;: 1, &quot;Population&quot;: 1}&#39;)
+m$find(query = &#39;{&quot;Continent&quot;: {&quot;$in&quot;: [&quot;Antarctica&quot;, &quot;South America&quot;]}}&#39;, 
+       fields = &#39;{&quot;_id&quot;: 0, &quot;Name&quot;: 1, &quot;Continent&quot;: 1}&#39;)</code></pre>
+<p>Dans ces exemples, nous cherchons en premier les pays avec comme capital <code>&quot;Paris&quot;</code>, et ensuite les pays dont une des langues officielles est le français.</p>
+<pre class="r"><code>m$find(query = &#39;{&quot;Capital.Name&quot;: &quot;Paris&quot;}&#39;,
+       fields = &#39;{&quot;_id&quot;: 0, &quot;Name&quot;: 1, &quot;Capital&quot;: 1}&#39;)
+m$find(query = &#39;{&quot;OffLang.Language&quot;: &quot;French&quot;}&#39;,
+       fields = &#39;{&quot;_id&quot;: 0, &quot;Name&quot;: 1, &quot;OffLang.Percentage&quot;: 1}&#39;)</code></pre>
+<p>Il est aussi posible de trier les documents retournés, via l’option <code>sort</code>. Toujours en <code>JSON</code>, on indique <code>1</code> pour un tri croissant et <code>-1</code> pour un tri décroissant.</p>
+<pre class="r"><code>m$find(fields = &#39;{&quot;_id&quot;: 0, &quot;Name&quot;: 1}&#39;, 
+       sort = &#39;{&quot;Population&quot;: -1}&#39;, 
+       limit = 10)</code></pre>
+</div>
+<div id="agregat" class="section level3">
+<h3>Agrégat</h3>
+<div id="denombrement" class="section level4">
+<h4>Dénombrement</h4>
+<p>On peut déjà faire un dénombrement avec la fonction <code>count()</code> de l’objet <code>m</code>. Sans option, on obtient le nombre de documents de la collection. On peut aussi ajouter une restriction pour avoir le nombre de documents respectant ces conditions. Les requêtes s’écrivent de la même manière que pour la fonction <code>find()</code>.</p>
+<pre class="r"><code>m$count()
+m$count(query = &#39;{&quot;Name&quot;: &quot;France&quot;}&#39;)
+m$count(query = &#39;{&quot;Continent&quot;: &quot;Europe&quot;}&#39;)</code></pre>
+</div>
+<div id="autre" class="section level4">
+<h4>Autre</h4>
+<p>Il existe la fonction <code>aggregate()</code> pour tous les calculs d’agrégat (et même plus). Il faut passer dans le paramètre <code>pipeline</code> un tableau d’actions, pouvant contenir les éléments suivants :</p>
+<ul>
+<li><code>$project</code> : redéfinition des documents (si nécessaire)</li>
+<li><code>$match</code> : restriction sur les documents à utiliser</li>
+<li><code>$group</code> : regroupements et calculs à effectuer</li>
+<li><code>$sort</code> : tri sur les agrégats</li>
+<li><code>$unwind</code> : découpage de tableaux</li>
+<li>…</li>
+</ul>
+<p>group by NULL</p>
+<pre class="r"><code>m$aggregate(pipeline = &#39;[
+    {&quot;$group&quot;: {&quot;_id&quot;: &quot;$Continent&quot;, &quot;NbPays&quot;: {&quot;$sum&quot;: 1}}}
+]&#39;)
+m$aggregate(pipeline = &#39;[
+    {&quot;$group&quot;: {&quot;_id&quot;: &quot;$Continent&quot;, &quot;NbPays&quot;: {&quot;$sum&quot;: 1}, &quot;Population&quot;: {&quot;$sum&quot;: &quot;$Population&quot;}}}, 
+    {&quot;$sort&quot;: { &quot;NbPays&quot;: -1}}
+]&#39;)</code></pre>
+<p>Si on veut avoir le pourcentage de population parlant une langue spécifique officiellement, il faut utiliser cette fonction, avec l’action <code>$unwind</code>. Celle-ci permet de dupliquer les lignes de chaque document, avec chaque valeur du tableau indiqué dans <code>$unwind</code>. Ensuite, on se retreint aux pays dont une langue officielle est le français avec <code>$match</code>. Enfin, on n’affiche que le nom du pays et le pourcentage de la population parlant le français.</p>
+<pre class="r"><code>m$aggregate(&#39;[
+    { &quot;$unwind&quot;: &quot;$OffLang&quot; },
+    { &quot;$match&quot;: { &quot;OffLang.Language&quot;: &quot;French&quot;}},
+    { &quot;$project&quot;: { &quot;_id&quot;: 0, &quot;Name&quot;: 1, &quot;OffLang.Percentage&quot;: 1 }}
+]&#39;)</code></pre>
+<pre class="r"><code>m$aggregate(&#39;[
+    { &quot;$unwind&quot;: &quot;$OffLang&quot; },
+    { &quot;$project&quot;: { &quot;Language&quot;: &quot;$OffLang.Language&quot;, &quot;Percentage&quot;: &quot;$OffLang.Percentage&quot;}},
+    { &quot;$group&quot;: { &quot;_id&quot;: &quot;$Language&quot;, &quot;NbPays&quot;: {&quot;$sum&quot;: 1}, &quot;PctMoyen&quot;: { &quot;$avg&quot;: &quot;$Percentage&quot; } }},
+    { &quot;$sort&quot;: { &quot;NbPays&quot;: -1}}
+]&#39;)</code></pre>
+</div>
+</div>
+<div id="map-reduce" class="section level3">
+<h3>Map-Reduce</h3>
+<p>Le paradigme <strong>Map-Reduce</strong> permet de décomposer une tâche en deux étapes :</p>
+<ol style="list-style-type: decimal">
+<li><strong>Map</strong> : application d’un algorithme sur chaque document, celui-ci renvoyant un résultat ou une série de résultat</li>
+<li><strong>Reduce</strong> : synthèse des résultats renvoyés dans l’étape précédente selon certains critères</li>
+</ol>
+<p>Exemple classique : <em>décompte des mots présents dans un ensemble de texte</em></p>
+<ul>
+<li><em>Map</em> : pour chaque texte, à chaque mot rencontré, on créé un couple <code>&lt;mot, 1&gt;</code> (un document = beaucoup de résultats générés)</li>
+<li><em>Reduce</em> : pour chaque mot, on fait la somme des valeurs pour obtenir le nombre de fois où chaque mot apparaît dans l’ensemble des textes à disposition</li>
+</ul>
+<p>On utilise la fonction <code>mapreduce()</code> de <code>m</code> pour appliquer l’algorithme Map-Reduce sur les documents de la collection, avec les paramètres suivants :</p>
+<ul>
+<li><code>map</code> : fonction JavaScript
+<ul>
+<li>aucun paramètre</li>
+<li><code>emit(key, value)</code> pour créer un couple résultat</li>
+</ul></li>
+<li><code>reduce</code> : fonction JavaScript
+<ul>
+<li>deux paramètres : <code>key</code> et <code>values</code> (tableau des valeurs créés à l’étape précédente)</li>
+<li><code>return result</code> pour renvoyer le résultat</li>
+</ul></li>
+<li><code>out</code> : collection éventuelle dans laquelle stocker les résultats dans <em>MongoDB</em></li>
+<li>…</li>
+</ul>
+<p>Dans la fonction concernant l’étape <em>Map</em>, on utilise l’objet <code>this</code> pour accéder aux attributs du document. Le langage utilisé est le <code>JavaScript</code>.</p>
+<p>Dans l’exemple ci-dessous, nous calculons pour chaque continent la population de celui-ci.</p>
+<pre class="r"><code>m$mapreduce(
+    map = &#39;function() { emit(this.Continent, this.Population)}&#39;,
+    reduce = &#39;function(cont, nb) { return Array.sum(nb) }&#39;
+)</code></pre>
+<p>On peut utiliser ce paradigme pour calculer le pourcentage médian de la population parlant cette langue.</p>
+<pre class="r"><code>m$mapreduce(
+    map = &#39;function() {
+        if (this.OffLang) {
+            for (i = 0; i &lt; this.OffLang.length; i++) {
+                emit(this.OffLang[i].Language, this.OffLang[i].Percentage);
+            }
+        }
+    }&#39;,
+    reduce = &#39;function(id, values) { 
+        values.sort( function(a,b) {return a - b;} );
+        var half = Math.floor(values.length/2);
+        if(values.length % 2)
+            return values[half];
+        else
+            return (values[half-1] + values[half]) / 2.0;
+    }&#39;
+)</code></pre>
+</div>
+</div>
+<div id="exercices" class="section level2">
+<h2>Exercices</h2>
+<p>Les données de la base médicaments ont été importées dans <em>MongoDB</em> via ce <a href="info-dec-sante-tp3-importation-MongoDB.html">script</a> (merci de ne pas l’exécuter).</p>
+<p>Vous pouvez vous connecter à cette base à l’aide du code suivant.</p>
+<pre class="r"><code>library(mongolite)
+bd = mongo(url = &quot;mongodb://193.51.82.104:2231&quot;,
+           db = &quot;medicaments&quot;,
+           collection = &quot;import20161109&quot;)</code></pre>
+<p>Trouver les informations suivantes :</p>
+<ol style="list-style-type: decimal">
+<li>Le médicament dont le <code>CodeCIS</code> est <code>60051234</code></li>
+<li>Les médicaments dont le titulaire est <code>&quot;MEDICE&quot;</code></li>
+<li>Les médicaments correspondant au générique <code>&quot;IBUPROFENE 400 mg - BRUFEN 400 mg, comprimé pelliculé.&quot;</code> (Afficher seulement la dénomination et le titulaire)</li>
+<li>Le nombre de médicament au total</li>
+<li>Le nombre de médicament avec <code>&quot;Autorisation active&quot;</code> comme <code>StatutAMM</code></li>
+<li>Le nombre de médicaments avec surveillance renforcée (cf <code>Surveillance</code>)</li>
+<li>Le taux moyen de remboursement (pour ceux avec autorisation active)</li>
+<li>Le prix moyen (idem que le taux)</li>
+<li>Le nombre de médicaments par laboratoire titulaire, classés dans l’ordre décroissant du nombre de médicaments</li>
+<li>Le nombre de présentation (cf <code>CIP</code>) des médicaments qui sont à <code>&quot;prescription hospitalière&quot;</code> (cf <code>CPD</code>)</li>
+</ol>
+<p>Essayer de faire les exercices du TP1 :</p>
+<ol start="2" style="list-style-type: decimal">
+<li>Quels sont les dix médicaments avec le plus de composants (Code CIS, Dénomination et nombre de composants) ?</li>
+<li>Pour chaque type de générique, on veut savoir le nombre de médicaments associés, ainsi que leur taux de remboursement moyen et leur prix moyen.</li>
+<li>Quelles sont les voies d’administration possibles ? Et combien de médicaments sont concernés pour chaque voie ?</li>
+<li>Quels sont les médicaments dont le service médical rendu (ou <strong>SMR</strong>) est jugé insuffisant ? Indiquez leur taux de remboursement et leur prix, en les classant par prix décroissant.</li>
+</ol>
+<p><strong>NB</strong> :</p>
+<ul>
+<li>les voies d’administration sont listées dans une seule variable, et séparées par des “;” (par exemple <code>&quot;cutanée;orale;sublinguale&quot;</code>). Il faut donc ici aussi faire un pré-traitement.</li>
+</ul>
+</div>
+
+</div>
+<div class="footer">
+      Site créé avec <a href="http://www.r-project.org" target="_blank"><code>R</code></a> et la 
+      librairie  <a href="http://rmarkdown.rstudio.com/" target="_blank"><code>rmarkdown</code></a>.
+</div>
+<script>
+    $("#TOC").css("margin-top", "100px");
+</script>
+
+
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

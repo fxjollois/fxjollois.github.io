@@ -84,9 +84,11 @@ criterion = data.frame(G = rep(G, length(modelNames)),
 for (i in 1:nrow(criterion)) {
     m = Mclust(iris[-5], G = criterion$G[i], 
                modelNames = criterion$model[i])
-    p = nMclustParams(criterion$model[i], d, criterion$G[i])
-    criterion[i, "AIC"] = -2 * m$loglik + 2 * p
-    criterion[i, "AIC3"] = -2 * m$loglik + 3 * p
+    if (!is.null(m)) {
+      p = nMclustParams(criterion$model[i], d, criterion$G[i])
+      criterion[i, "AIC"] = -2 * m$loglik + 2 * p
+      criterion[i, "AIC3"] = -2 * m$loglik + 3 * p
+    }
 }
 head(criterion[order(criterion$AIC),], 3)
 ggplot(criterion, aes(G, AIC, color = model)) +

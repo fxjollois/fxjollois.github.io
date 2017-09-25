@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+<meta charset="utf-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="pandoc" />
+
+
+
+
+<title>Reporting</title>
+
+<script src="libs/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="libs/bootstrap-3.3.5/css/journal.min.css" rel="stylesheet" />
+<script src="libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<script src="libs/navigation-1.1/tabsets.js"></script>
+<link href="libs/highlightjs-1.1/default.css" rel="stylesheet" />
+<script src="libs/highlightjs-1.1/highlight.js"></script>
+<!--
+    Font Awesome
+-->
+<script src="https://use.fontawesome.com/32d8325004.js"></script>
+<link rel="stylesheet" href="libs/font-awesome-4.7.0/css/font-awesome.min.css">
+
+<!--
+    CSS perso
+-->
+<style>
+    .contenu {
+        margin-bottom: 50px;
+    }
+
+    .contact-liens {
+        text-align: center;
+    }
+    .contact-liens:hover {
+        text-decoration: none;
+    }
+    .contact-icones {
+        height: 30px;
+    }
+
+    /* Espacement pour barre du haut et pied de page */
+    #header, .section.level1 {
+        margin-top: 60px;
+        margin-bottom: 60px;
+    }
+    /* Espacement pour table des matières */
+    #TOC {
+        margin-top: 100px;
+    }
+    
+    .footer {
+        position: fixed;
+        width: 100%;
+        text-align: center;
+        bottom: 0;
+        left: 0;
+        background-color: #E6E6E6;
+    }
+</style>
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
+<script type="text/javascript">
+if (window.hljs && document.readyState && document.readyState === "complete") {
+   window.setTimeout(function() {
+      hljs.initHighlighting();
+   }, 0);
+}
+</script>
+
+
+
+<style type="text/css">
+h1 {
+  font-size: 34px;
+}
+h1.title {
+  font-size: 38px;
+}
+h2 {
+  font-size: 30px;
+}
+h3 {
+  font-size: 24px;
+}
+h4 {
+  font-size: 18px;
+}
+h5 {
+  font-size: 16px;
+}
+h6 {
+  font-size: 12px;
+}
+.table th:not([align]) {
+  text-align: left;
+}
+</style>
+
+<link rel="stylesheet" href="libs/bootstrap-journal.min.css" type="text/css" />
+
+</head>
+
+<body>
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img {
+  max-width:100%;
+  height: auto;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+</style>
+
+
+
+<div class="container-fluid main-container">
+
+<!-- tabsets -->
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+</script>
+
+<!-- code folding -->
+
+
+
+
+
+<div class="navbar navbar-default navbar-fixed-top">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-main">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">FX Jollois</a>
+    </div>
+    <div id="navbar-main" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button">Données <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+              <li><a href="accesdonnees.html">A télécharger</a></li>
+              <li><a href="donnees-integrees-r.html">Sous R</a></li>
+          </ul>
+        </li>
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button">Enseignement <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li class="dropdown-header">DUT 1ère année</li>
+            <li><a href="exploitation-donnees.html">Exploitation de données</a></li>
+            <li><a href="initiation-a-r.html">Initiation à R</a></li>
+            <li><a href="reporting.html">Reporting</a></li>
+            <li><a href="complements-r.html">Compléments sur R</a></li>
+            <li class="dropdown-header">DUT 2ème année</li>
+            <li><a href="prog-stat-r.html">Programmation statistique avec R</a></li>
+            <li class="dropdown-header">LP MDS Santé</li>
+            <li><a href="info-dec-sante.html">Informatique décisionnelle</a></li>
+            <li class="dropdown-header">DU Analyste Big Data</li>
+            <li><a href="initiation-r-du.html">Initiation à R</a></li>
+            <li><a href="connexion-r-mongodb.html">Connexion entre R et MongoDB</a></li>
+            <li class="dropdown-header">DU Dataviz</li>
+            <li><a href="analyse-donnees.html">Analyse de données</a></li>
+            <li><a href="visualisation-donnees.html">Visualisation de données - R</a></li>
+            <li><a href="visualisation-donnees-tableau.html">Visualisation de données - Tableau</a></li>
+            <li><a href="visualisation-donnees-d3.html">Visualisation de données - D3</a></li>
+            <li role="separator" class="divider"></li>
+            <li class="dropdown-header">Master</li>
+            <li><a href="slides/cnam-classif-modeles.html">Classification et Modèles de mélange</a></li>
+            <li><a href="analyse-donnees-massives.html">Analyse de Données Massives</a></li>
+            <li class="dropdown-header">Iran</li>
+            <li><a href="stat-prog-R.html">Statistical Programming using R</a></li>
+          </ul>
+        </li>
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button">Recherche <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li><a href="recherche.html">Sujets</a></li>
+            <li><a href="publications.html">Publications</a></li>
+          </ul>
+        </li>
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button">Réalisations <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li><a href="realisations.html">Détail</a></li>
+            <li role="separator" class="divider"></li>
+            <li><a href="http://up5.fr/explore-data" target="_blank">explore-data</a></li>
+            <li><a href="http://fxjollois.github.io/cours-sql/" target="_blank">Appli web de cours pour SQL</a></li>
+          </ul>
+        </li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container-fluid -->
+</div>
+<div class="contenu">
+
+<div class="fluid-row" id="header">
+
+
+
+<h1 class="title toc-ignore">Reporting</h1>
+<h3 class="subtitle"><em>Programmation statistique avec <code>R</code> - STID 2ème année</em></h3>
+
+</div>
+
+
+<p>Dans ce TP, nous allons voir comment utiliser la librairie <a href="http://rmarkdown.rstudio.com/flexdashboard"><code>flexdashboard</code></a> (basée entre autres sur <code>rmarkdown</code>) pour générer des tableaux de bords automatisés. Nous allons voir ici quelques éléments de base, vous trouverez beaucoup d’autres informations sur le site indiqué.</p>
+<div id="fichiers-.rdata" class="section level2">
+<h2>Fichiers <code>.RData</code></h2>
+<p>Plutôt que de devoir importer plusieurs fois des données, il est possible d’utiliser le format de données <code>.RData</code>, qui permet de sauvegarder tout ou partie de l’environnement de travail. Pour cela, nous allons utiliser les fonctions <code>save()</code> et <code>save.image()</code> pour sauvegarder, et la fonction <code>load()</code> pour charger les variables sauvegardées.</p>
+<div id="sauvegarde-de-variables" class="section level3">
+<h3>Sauvegarde de variable(s)</h3>
+<p>En premier lieu, il est possible de sauvegarder uniquement une variable créée dans un fichier <code>.RData</code>. Ci-dessous, nous créons l’objet <code>a</code>, qui est une chaîne simple, puis nous la sauvegardons dans le fichier <code>a.RData</code>. Enfin, nous la supprimons (et l’affichons pour bien voir qu’elle n’existe plus).</p>
+<pre class="r"><code>a = &quot;test de RData&quot;
+print(a)</code></pre>
+<pre><code>## [1] &quot;test de RData&quot;</code></pre>
+<pre class="r"><code>save(a, file = &quot;a.RData&quot;)
+rm(a)
+print(a)</code></pre>
+<pre><code>## Error in print(a): objet &#39;a&#39; introuvable</code></pre>
+<p>L’intérêt est donc que la variable <code>a</code> est dans le fichier <code>.RData</code>, qu’il est possible de charger dans <code>R</code> comme suit.</p>
+<pre class="r"><code>load(&quot;a.RData&quot;)
+print(a)</code></pre>
+<pre><code>## [1] &quot;test de RData&quot;</code></pre>
+<p>Pour sauvegarder plusieurs variables, il faut juste les lister dans la fonction <code>save()</code>.</p>
+<pre class="r"><code>b = &quot;deuxième test de RData&quot;
+c = 123456789
+save(b, c, file = &quot;bc.RData&quot;)
+rm(b, c)
+print(b, c)</code></pre>
+<pre><code>## Error in print(b, c): objet &#39;b&#39; introuvable</code></pre>
+<p>Et on les charge de la même façon.</p>
+<pre class="r"><code>load(&quot;bc.RData&quot;)
+print(b)</code></pre>
+<pre><code>## [1] &quot;deuxième test de RData&quot;</code></pre>
+<pre class="r"><code>print(c)</code></pre>
+<pre><code>## [1] 123456789</code></pre>
+</div>
+<div id="sauvegarde-de-lenvironnement" class="section level3">
+<h3>Sauvegarde de l’environnement</h3>
+<p>Quand on lance la fonction <code>ls()</code>, on liste l’ensemble des objets créés dans l’environnement de travail. La fonction <code>save.image()</code> va tous les sauvegarder dans un même fichier <code>.RData</code>.</p>
+<pre class="r"><code>ls()</code></pre>
+<pre><code>## [1] &quot;a&quot;          &quot;b&quot;          &quot;c&quot;          &quot;f&quot;          &quot;liste_html&quot;
+## [6] &quot;liste_md&quot;   &quot;M&quot;</code></pre>
+<pre class="r"><code>save.image(&quot;env.RData&quot;)</code></pre>
+<p>Ensuite, nous allons nettoyer l’environnement de travail, en supprimant tous les objets (1ère ligne ci-dessous). Ainsi, en listant les variables avec <code>ls()</code>, on s’aperçoit qu’il n’y a plus rien.</p>
+<pre class="r"><code>rm(list = ls()) # Pour tout supprimer de l&#39;environnement
+ls()</code></pre>
+<pre><code>## character(0)</code></pre>
+<p>Enfin, toujours avec la fonction <code>load()</code>, on charge les variables présentes dans le fichier, qu’on retrouve bien en faisant un <code>ls()</code>.</p>
+<pre class="r"><code>load(&quot;env.RData&quot;)
+ls()</code></pre>
+<pre><code>## [1] &quot;a&quot;          &quot;b&quot;          &quot;c&quot;          &quot;f&quot;          &quot;liste_html&quot;
+## [6] &quot;liste_md&quot;   &quot;M&quot;</code></pre>
+</div>
+<div id="donnees-utilisees" class="section level3">
+<h3>Données utilisées</h3>
+<p>Nous allons donc utiliser les données du <em>data-mart</em> utilisé dans le TP6, contenues dans le fichier <a href="donnees/ca/ca.RData"><code>ca.RData</code></a>. Pour ce faire, nous allons utiliser la commande <code>load()</code>. Nous vérifions ensuite qu’on a bien toutes les données voulues (en ayant supprimé en premier les objets existants).</p>
+<pre class="r"><code>rm(list = ls())
+load(&quot;donnees/ca/ca.RData&quot;)
+ls()</code></pre>
+<pre><code>## [1] &quot;ca&quot;         &quot;ca_evol&quot;    &quot;ca_tout&quot;    &quot;groupe&quot;     &quot;mois&quot;      
+## [6] &quot;provenance&quot;</code></pre>
+</div>
+</div>
+<div id="package-flexdashboard" class="section level2">
+<h2>Package <code>flexdashboard</code></h2>
+<div id="installation" class="section level3">
+<h3>Installation</h3>
+<p>Vous devez d’abord installer le package via la commande <code>install.packages()</code>. Pour rappel, voici les étapes à suivre (non exécutées dans ce document).</p>
+<pre class="r"><code>.libPaths(&quot;z:/Rlib&quot;)    # ou un autre chemin en fonction de vos choix précédents
+install.packages(&quot;flexdashboard&quot;)
+library(flexdashboard)</code></pre>
+</div>
+<div id="creation-dun-premier-document" class="section level3">
+<h3>Création d’un premier document</h3>
+<p>Une fois que vous avez chargé la librairie, il est possible de créer un document de base de type <code>flexdashboard</code> en suivant les étapes suivantes :</p>
+<ol style="list-style-type: decimal">
+<li>Cliquer la création d’un nouveau document (<img src="icon_Rstudio_plus.jpg" alt="img + RStudio" />)</li>
+<li>Choisir <strong>R markdown…</strong></li>
+<li>Choisir ensuite <strong>From Template</strong> et sélection <strong>Flex Dashboard</strong></li>
+</ol>
+<p>Vous devez obtenir un document commençant par</p>
+<pre class="r"><code>---
+title: &quot;Untitled&quot;
+output: 
+  flexdashboard::flex_dashboard:
+    orientation: columns
+    vertical_layout: fill
+---
+
+...</code></pre>
+<p>En cliquant sur <strong>Knit</strong>, vous devez obtenir le <a href="__specifique/prog-stat-r-tp7-etape1.html">document suivant</a>. Vous remarquerez qu’il y a de la place pour mettre des graphiques et/ou des tableaux. Nous allons agrémenter ce tableau de bord à l’aide de graphiques et de pastilles d’informations.</p>
+<div id="modification-du-titre" class="section level4">
+<h4>Modification du titre</h4>
+<p>En premier lieu, il faut changer le titre du reporting, en mettant par exemple <code>&quot;Evolution CA&quot;</code>.</p>
+</div>
+<div id="importation-de-donnees" class="section level4">
+<h4>Importation de données</h4>
+<p>Nous allons commencer par importer les données dans ce tableau de bord, grâce au code ci-dessus. Ceci permettra donc de ne pas avoir d’étapes de chargement des fichiers texte et de jointures, pouvant prendre du temps et inutiles puisque les données n’évoluent pas en temps réel.</p>
+<p>Vous devez donc introduire le code suivant dans le premier <em>chunck</em> (en dessous du chargement de la librairie <code>flexdashboard</code>), nommé <code>setup</code> et ayant l’option <code>include=FALSE</code>. Ceci permettra donc d’avoir les données à disposition, mais que le code ne s’affiche pas dans le document final.</p>
+<pre class="r"><code>load(&quot;donnees/ca/ca.RData&quot;)</code></pre>
+</div>
+<div id="premier-graphique" class="section level4">
+<h4>Premier graphique</h4>
+<p>Pour le premier graphique (<code>Chart A</code>), nous allons représenter l’évolution du chiffre d’affaires sur la période 2003-2004, mois par mois. Dans la partie <code>### Chart A</code>, nous allons d’abord modifier le titre en <code>&quot;Evolution mois par mois&quot;</code>, par exemple (au lieu de <code>&quot;Chart A&quot;</code> donc). Ensuite, il faut mettre le code suivant dans le <em>chunck</em> correspondant.</p>
+<pre class="r"><code>d = setNames(aggregate(ca / 1000000 ~ mois_no, ca_tout, sum), c(&quot;mois&quot;, &quot;ca&quot;))
+par(mar = c(4, 4, 0, 0) + .1)
+plot(ca ~ mois, d, type = &quot;b&quot;,
+     xlab = &quot;Mois&quot;, ylab = &quot;Chiffre d&#39;affaires (M€)&quot;)
+abline(h = mean(d$ca), lty = 3, col = &quot;gray50&quot;)</code></pre>
+<p>Une fois que vous compilez votre document, vous devez obtenir la <a href="__specifique/prog-stat-r-tp7-etape2.html">page suivante</a>.</p>
+</div>
+<div id="deuxieme-graphique" class="section level4">
+<h4>Deuxième graphique</h4>
+<p>Dans la fenêtre en haut à gauche (<code>Chart B</code>), nous allons placer un tableau, indiquant le chiffre d’affaires pour 2003 et pour 2004, mois par mois. Pour cela, nous allons d’abord renommer le titre en <code>&quot;Comparaison mois par mois (en k€)&quot;</code>. Puis nous allons mettre le code suivant dans le <em>chunk</em> correspondant.</p>
+<pre class="r"><code>d = aggregate(cbind(ca2003, ca2004, evolution) / 1000 ~ mois + mois_numero, 
+              ca_evol, sum)
+d = subset(d, select = -mois_numero)
+names(d) = c(&quot;Mois&quot;, &quot;2003&quot;, &quot;2004&quot;, &quot;Evolution&quot;)
+knitr::kable(d, digits = 0)</code></pre>
+<p>Une fois exécuté, vous obtenez le <a href="__specifique/prog-stat-r-tp7-etape3.html">document suivant</a>. Il est possible de naviguer dans le tableau avec la souris pour voir les mois caché.</p>
+</div>
+<div id="troisieme-graphique" class="section level4">
+<h4>Troisième graphique</h4>
+<p>Nous allons utiliser ici ce qu’on pourrait appeler une <em>pastille</em>, avec la fonction <code>valueBox()</code> du package <code>flewdashboard</code>. Celle-ci prend en paramètre une valeur à afficher (numérique ou textuelle), une icône, et éventuellement une couleur. Elle affichera aussi le titre (de niveau 3, <code>###</code>) mis avant le <em>chunk</em> la contenant.</p>
+<p>Il faut tout d’abord remplacer le titre par <code>&quot;Augmentation entre 2003 et 2004&quot;</code>. Ensuite, on va placer le code suivant dans le <em>chunk</em>.</p>
+<pre class="r"><code>d = aggregate(ca ~ annee, ca_tout, sum)
+v = paste(round((d$ca[2] / d$ca[1] - 1) * 100, 2), &quot;%&quot;)
+valueBox(v, icon = &quot;fa-arrow-circle-up&quot;, color = &quot;green&quot;)</code></pre>
+<p>Vous devriez avoir cette <a href="__specifique/prog-stat-r-tp7-etape4.html">page</a> une fois le document <code>Rmd</code> compilé.</p>
+</div>
+<div id="plusieurs-onglets" class="section level4">
+<h4>Plusieurs onglets</h4>
+<p>Il est possible de créer un système d’onglet pour avoir plusieurs pages dans le reporting. Pour cela, vous devez d’abord créer un titre de niveau 1 (<code>#</code>) pour la première page (en la nommant par exemple <code>&quot;Synthèse&quot;</code>). Ce titre doit être placé avant la ligne <code>Column...</code>.</p>
+<p>Vous devriez avoir <a href="__specifique/prog-stat-r-tp7-etape5.html">cette page</a> comme résultat.</p>
+<p>Créer un deuxième onglet, nommé <code>&quot;Détail&quot;</code>, dans lequel nous allons mettre deux tables : une pour les départements et une pour les provenances. Voici les codes des deux <em>chunks</em> pour créer ces tableaux.</p>
+<pre class="r"><code>evol.dpt = aggregate(cbind(ca2003, ca2004, evolution) / 1000 ~ departement, 
+                     ca_evol, sum)
+names(evol.dpt) = c(&quot;Département&quot;, &quot;2003&quot;, &quot;2004&quot;, &quot;Evolution&quot;)
+knitr::kable(evol.dpt, digits = 0)</code></pre>
+<pre class="r"><code>evol.prov = aggregate(cbind(ca2003, ca2004, evolution) / 1000 ~ provenance, 
+                      ca_evol, sum)
+names(evol.prov) = c(&quot;Provenance&quot;, &quot;2003&quot;, &quot;2004&quot;, &quot;Evolution&quot;)
+knitr::kable(evol.prov, digits = 0)</code></pre>
+<p>Une fois compilé, vous devriez avoir le <a href="__specifique/prog-stat-r-tp7-etape6.html">tableau de bord</a> suivant.</p>
+</div>
+</div>
+<div id="modification-de-lorientation" class="section level3">
+<h3>Modification de l’orientation</h3>
+<p>Dans la première page, nous avions disposer les différents éléments par colonnes (un élément dans la première et deux dans la deuxième). Il est possible de modifier cela pour une page spécifique. Dans la deuxième, à la suite du titre et sur la même ligne, il est possible d’ajouter <code>{data-orientation=rows}</code>.</p>
+<p>Ainsi, le tableau devient <a href="__specifique/prog-stat-r-tp7-etape7.html">celui-ci</a>.</p>
+<p>Nous allons maintenant utiliser une jauge, avec la fonction <code>gauge()</code> du package <code>flexdashboard</code>. Celle-ci prend au minimum en paramètre une valeur, un minimum et un maximum.</p>
+<p>Et pour avoir des graphiques prenant toute la page en bas, il faut réaliser deux étapes :</p>
+<ul>
+<li>Insérer un titre de niveau 2 avant les deux <em>chunks</em> créés</li>
+<li>Insérer un nouveau titre de niveau 2 puis les <em>chunk</em> contenant le code pour les graphiques</li>
+</ul>
+<div id="nombre-de-departement-en-hausse" class="section level5">
+<h5>Nombre de département en hausse</h5>
+<pre class="r"><code>gauge(sum(evol.dpt$Evolution &gt; 0), 0, nrow(evol.dpt))</code></pre>
+</div>
+<div id="departement-avec-la-plus-grosse-evolution" class="section level5">
+<h5>Département avec la plus grosse évolution</h5>
+<pre class="r"><code>valueBox(evol.dpt$Département[which.max(evol.dpt$Evolution)], icon = &quot;fa-level-up&quot;)</code></pre>
+</div>
+<div id="nombre-de-provenance-en-hausse" class="section level5">
+<h5>Nombre de provenance en hausse</h5>
+<pre class="r"><code>gauge(sum(evol.prov$Evolution &gt; 0), 0, nrow(evol.prov))</code></pre>
+</div>
+<div id="provenance-avec-la-plus-grosse-evolution" class="section level5">
+<h5>Provenance avec la plus grosse évolution</h5>
+<pre class="r"><code>valueBox(evol.prov$Provenance[which.max(evol.prov$Evolution)], icon = &quot;fa-level-up&quot;)</code></pre>
+<p>Au final, nous obtenons donc le <a href="__specifique/prog-stat-r-tp7-etape8.html">tableau de bord</a> suivant.</p>
+</div>
+</div>
+<div id="publication" class="section level3">
+<h3>Publication</h3>
+<p>Pour inforation, pour publier un tableau de bord ainsi créé, il faut juste placer le document <code>.Rmd</code>, ainsi que les données si besoin, sur un serveur dédié ayant l’application <code>shiny server</code> dessus. C’est une opération simple, mais que souvent seul le service informatique pourra effectué.</p>
+<p>Vous pouvez voir un exemple avec <a href="http://193.51.82.116:3838/demo/prog-stat-r-tp7/">ce lien</a>.</p>
+</div>
+</div>
+<div id="exercice" class="section level2">
+<h2>Exercice</h2>
+<p>Créer un troisième onglet, nommé <strong>Performance</strong>, ayant les informations suivantes :</p>
+<ul>
+<li>trois lignes, chacune pour respectivement les départements, les provenances et les mois</li>
+<li>chaque ligne avec 3 informations
+<ul>
+<li>une <code>valueBox()</code> du meilleur</li>
+<li>une <code>gauge()</code>, représentant la partie du CA représenté par le meilleur obtenu ci-dessus</li>
+<li>un <em>top 3</em>
+<ul>
+<li>vous pouvez utiliser la librairie <code>sqldf</code> pour réaliser les requêtes, ou utiliser la fonction <code>order()</code></li>
+<li>on ne veut pas le numéro des lignes dans le résultat</li>
+</ul></li>
+</ul></li>
+<li>chaque ligne doit avoir une hauteur de 200 px. Pour cela, il faut ajouter le paramètre <code>data-height</code> à la suite de la déclaration de la nouvelle ligne
+<ul>
+<li>vous pouvez regarder les déclarations de colonnes créées automatique dans le premier onglet (cf <code>Column 1...</code>)</li>
+</ul></li>
+</ul>
+<p>Vous devriez avoir le <a href="__specifique/prog-stat-r-tp7-correction.html">résultat suivant</a></p>
+</div>
+
+</div>
+<div class="footer">
+      Site créé avec <a href="http://www.r-project.org" target="_blank"><code>R</code></a> et la 
+      librairie  <a href="http://rmarkdown.rstudio.com/" target="_blank"><code>rmarkdown</code></a>.
+</div>
+<script>
+    $("#TOC").css("margin-top", "100px");
+</script>
+
+
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

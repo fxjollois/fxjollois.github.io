@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+<meta charset="utf-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="pandoc" />
+
+
+
+
+<title>Reporting - TP1</title>
+
+<script src="libs/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="libs/bootstrap-3.3.5/css/journal.min.css" rel="stylesheet" />
+<script src="libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<script src="libs/navigation-1.1/tabsets.js"></script>
+<link href="libs/highlightjs-1.1/default.css" rel="stylesheet" />
+<script src="libs/highlightjs-1.1/highlight.js"></script>
+<!--
+    Font Awesome
+-->
+<script src="https://use.fontawesome.com/32d8325004.js"></script>
+<link rel="stylesheet" href="libs/font-awesome-4.7.0/css/font-awesome.min.css">
+
+<!--
+    CSS perso
+-->
+<style>
+    .contenu {
+        margin-bottom: 50px;
+    }
+
+    .contact-liens {
+        text-align: center;
+    }
+    .contact-liens:hover {
+        text-decoration: none;
+    }
+    .contact-icones {
+        height: 30px;
+    }
+
+    /* Espacement pour barre du haut et pied de page */
+    #header, .section.level1 {
+        margin-top: 60px;
+        margin-bottom: 60px;
+    }
+    /* Espacement pour table des matières */
+    #TOC {
+        margin-top: 100px;
+    }
+    
+    .footer {
+        position: fixed;
+        width: 100%;
+        text-align: center;
+        bottom: 0;
+        left: 0;
+        background-color: #E6E6E6;
+    }
+</style>
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
+<script type="text/javascript">
+if (window.hljs && document.readyState && document.readyState === "complete") {
+   window.setTimeout(function() {
+      hljs.initHighlighting();
+   }, 0);
+}
+</script>
+
+
+
+<style type="text/css">
+h1 {
+  font-size: 34px;
+}
+h1.title {
+  font-size: 38px;
+}
+h2 {
+  font-size: 30px;
+}
+h3 {
+  font-size: 24px;
+}
+h4 {
+  font-size: 18px;
+}
+h5 {
+  font-size: 16px;
+}
+h6 {
+  font-size: 12px;
+}
+.table th:not([align]) {
+  text-align: left;
+}
+</style>
+
+<link rel="stylesheet" href="libs/bootstrap-journal.min.css" type="text/css" />
+
+</head>
+
+<body>
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img {
+  max-width:100%;
+  height: auto;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+</style>
+
+
+
+<div class="container-fluid main-container">
+
+<!-- tabsets -->
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+</script>
+
+<!-- code folding -->
+
+
+
+
+
+<div class="navbar navbar-default navbar-fixed-top">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-main">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">FX Jollois</a>
+    </div>
+    <div id="navbar-main" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button">Données <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+              <li><a href="accesdonnees.html">A télécharger</a></li>
+              <li><a href="donnees-integrees-r.html">Sous R</a></li>
+          </ul>
+        </li>
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button">Enseignement <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li class="dropdown-header">DUT 1ère année</li>
+            <li><a href="exploitation-donnees.html">Exploitation de données</a></li>
+            <li><a href="initiation-a-r.html">Initiation à R</a></li>
+            <li><a href="reporting.html">Reporting</a></li>
+            <li><a href="complements-r.html">Compléments sur R</a></li>
+            <li class="dropdown-header">DUT 2ème année</li>
+            <li><a href="prog-stat-r.html">Programmation statistique avec R</a></li>
+            <li class="dropdown-header">LP MDS Santé</li>
+            <li><a href="info-dec-sante.html">Informatique décisionnelle</a></li>
+            <li class="dropdown-header">DU Analyste Big Data</li>
+            <li><a href="initiation-r-du.html">Initiation à R</a></li>
+            <li><a href="connexion-r-mongodb.html">Connexion entre R et MongoDB</a></li>
+            <li class="dropdown-header">DU Dataviz</li>
+            <li><a href="analyse-donnees.html">Analyse de données</a></li>
+            <li><a href="visualisation-donnees.html">Visualisation de données - R</a></li>
+            <li><a href="visualisation-donnees-tableau.html">Visualisation de données - Tableau</a></li>
+            <li><a href="visualisation-donnees-d3.html">Visualisation de données - D3</a></li>
+            <li role="separator" class="divider"></li>
+            <li class="dropdown-header">Master</li>
+            <li><a href="slides/cnam-classif-modeles.html">Classification et Modèles de mélange</a></li>
+            <li><a href="analyse-donnees-massives.html">Analyse de Données Massives</a></li>
+            <li class="dropdown-header">Iran</li>
+            <li><a href="stat-prog-R.html">Statistical Programming using R</a></li>
+          </ul>
+        </li>
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button">Recherche <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li><a href="recherche.html">Sujets</a></li>
+            <li><a href="publications.html">Publications</a></li>
+          </ul>
+        </li>
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button">Réalisations <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li><a href="realisations.html">Détail</a></li>
+            <li role="separator" class="divider"></li>
+            <li><a href="http://up5.fr/explore-data" target="_blank">explore-data</a></li>
+            <li><a href="http://fxjollois.github.io/cours-sql/" target="_blank">Appli web de cours pour SQL</a></li>
+          </ul>
+        </li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container-fluid -->
+</div>
+<div class="contenu">
+
+<div class="fluid-row" id="header">
+
+
+
+<h1 class="title toc-ignore">Reporting - TP1</h1>
+
+</div>
+
+
+<style>
+img {
+    margin: 10px auto;
+}
+em {
+    background-color: #f4f4f4;
+    padding: 0 5px;
+    font-style: normal;
+}
+</style>
+<p>Vous trouverez le logiciel <strong>Tableau Public</strong> dans la liste des programmes, dans la partie <em>Outils Math et Stat</em>. Vous devriez avoir l’écran suivant.</p>
+<div class="figure">
+<img src="reporting/tp1/00-ouverture-tableau.png" alt="Ecran d’ouverture de Tableau Public" />
+<p class="caption">Ecran d’ouverture de Tableau Public</p>
+</div>
+<div id="importation-des-donnees" class="section level2">
+<h2>Importation des données</h2>
+<p>Une fois le logiciel <strong>Tableau Public</strong> ouvert, vous devez vous connecter à des données pour commencer à travailler (ou ouvrir un projet précédemment créé). Nous allons utiliser ici les résultats de l’enquête national effectuée 2,5 ans après l’obtention du DUT auprès des étudiants diplômés en 2011 (cette enquête est faite tous les ans pour information). Nous n’avons à disposition que les étudiants de l’IUT Paris Descartes . Vous trouverez le fichier Excel <a href="reporting/tp1/Enquete_DUT-2011-Paris.xlsx">ici</a>.</p>
+<p>Lorsque vous avez choisi votre fichier Excel, vous devriez voir apparaître l’écran suivant.</p>
+<div class="figure">
+<img src="reporting/tp1/01-importation-donnees.png" alt="Ecran visualisation des données" />
+<p class="caption">Ecran visualisation des données</p>
+</div>
+</div>
+<div id="verification-des-donnees" class="section level2">
+<h2>Vérification des données</h2>
+<p>Une fois les données importées, on peut vérifier si les types associés sont les bons. Ici, il n’y a aucun problème (a priori).</p>
+<p>Par contre, nous avons deux champs (<code>Code postal résidence</code> et <code>Département résidence</code>) qui peuvent avoir un rôle spécifique dans le logiciel. En effet, ce sont des indications géographiques et il est possible de leur définir un rôle géographique correspondant à leur définition (cf écrans suivants).</p>
+<p>Cela permettra de créer des cartes géographiques avec ajout d’informations statistiques.</p>
+<div id="code-postal" class="section level3">
+<h3>Code Postal</h3>
+<div class="figure">
+<img src="reporting/tp1/02-verification-donnees--code-postal.png" alt="Modification du rôle pour le code postal" />
+<p class="caption">Modification du rôle pour le code postal</p>
+</div>
+</div>
+<div id="departement" class="section level3">
+<h3>Département</h3>
+<div class="figure">
+<img src="reporting/tp1/02-verification-donnees--departement.png" alt="Modification du rôle pour le département" />
+<p class="caption">Modification du rôle pour le département</p>
+</div>
+</div>
+</div>
+<div id="premiere-feuille-ou-sheet" class="section level2">
+<h2>Première feuille (ou <em>Sheet</em>)</h2>
+<p>La logique de <em>Tableau</em> est de créer d’abord les représentations (tableaux ou graphiques) que l’on désire dans des <em>Worksheet</em> (ou <em>Feuille</em>), puis de les assembler (avec du texte aussi) dans un <em>Dashboard</em> (ou <em>Tableau de Bord</em>) ou une <em>Story</em> (pas de traduction spécifique pour le moment).</p>
+<p>On va d’abord créer une représentation de la distribution du diplôme de DUT dans les réponses. Voici les étapes à suivre pour créer une nouvelle feuille :</p>
+<ol style="list-style-type: decimal">
+<li>Tout d’abord, vous devez cliquer sur <em>Sheet 1</em> (ou aussi <em>Go To Worksheet</em>. Vous obtenez l’écran suivant :<br> <img src="reporting/tp1/03-premiere-feuille--vide.png" alt="Nouvelle feuille" /></li>
+<li>Le logiciel <em>Tableau</em> fonctionne essentiellement sur le <em>Drag&amp;Drop</em> (ou <em>Glisser/Déplacer</em>). Vous devez sélectionner <code>DUT</code> dans la liste à gauche (dans les <em>Dimensions</em>) et le placer dans la cellule à côté de <em>Rows</em> :<br> <img src="reporting/tp1/03-premiere-feuille--glisser-DUT-lignes.png" alt="Choix des DUT" /></li>
+<li>Ensuite, dans la partie <em>Measures</em> à gauche, sélectionner <em># Number of Records</em>, puis placer le dans le tableau (où il doit y avoir les valeurs <code>Abc</code>)<br> <img src="reporting/tp1/03-premiere-feuille--number-of-records.png" alt="Choix Number of Records" /></li>
+<li>Vous devez obtenir le résultat suivant : la répartition des répondants selon leur DUT d’origine<br> <img src="reporting/tp1/03-premiere-feuille--number-of-records--bis.png" alt="Résultat table de répartition" /></li>
+<li>Pour avoir un rendu plus visuel, on peut aussi placer ce nombre d’enregistrements (ou de lignes) sur l’icône <em>Color</em> (en le prenant dans le module <em>Marks</em>), et obtenir cette représentation (une légende des couleurs est apparue entre-temps) :<br> <img src="reporting/tp1/03-premiere-feuille--glisser-number-color.png" alt="Choix de couleurs" /></li>
+<li>Idem, on le place maintenant sur <em>Size</em> pour voir apparaître des carrés de tailles proportionnelles aux valeurs (idem, une légende a été créée) :<br> <img src="reporting/tp1/03-premiere-feuille--glisser-number-size.png" alt="Choix de size (taille)" /></li>
+<li>En le plaçant sur <em>Tooltip</em>, rien ne s’affiche dans le tableau, sauf quand on place le curseur de la souris sur une des cases. On voit apparaître la valeur (i.e. le nombre d’enregistrements ayant cette modalité) :<br> <img src="reporting/tp1/03-premiere-feuille--glisser-number-tooltip.png" alt="Choix de tooltip (info-bulle)" /></li>
+<li>En prenant plusieurs fois la mesure <em># Number of Records</em> de la partie <em>Measures</em> à gauche, il est possible de combiner les représentations, et on obtient ceci :<br> <img src="reporting/tp1/03-premiere-feuille--glisser-number-combinaison.png" alt="Combinaison de spécifications d’informations" /></li>
+<li>On peut aussi changer la façon de représenter les valeurs dans le tableau, en choississant par exemple <em>Bar</em> dans le module <em>Marks</em> :<br> <img src="reporting/tp1/03-premiere-feuille--choix-marks.png" alt="Passage à un diagramme en barres" /></li>
+<li>Le résultat final de toutes ces manipulations devraient aboutir à cette représentation finale :<br> <img src="reporting/tp1/03-premiere-feuille--marks-bar.png" alt="Résultat final" /></li>
+</ol>
+<p>Il est possible de modifier le nom de la feuille (par défaut <em>Sheet1</em>) en double-cliquant sur son nom en bas du logiciel (un peu comme dans <em>Excel</em> par exemple). Appeler cette feuille <em>Répartition DUT</em>.</p>
+</div>
+<div id="deuxieme-feuille" class="section level2">
+<h2>Deuxième feuille</h2>
+<p>Nous allons maintenant nous intéresser à la répartition du sexe dans nos réponses, en suivant les instructions suivantes :</p>
+<ol style="list-style-type: decimal">
+<li>Créer donc une nouvelle feuille. Pour créer une deuxième feuille, vous devez aller dans le menu <em>Worksheet</em> puis <em>New Worksheet</em>.</li>
+<li>Glisser la colonne <em>Sexe</em> dans <em>Rows</em> (ou sur le tableau vide).</li>
+<li>Glisser <em># Number of Records</em> dans <em>Text</em> ou dans le tableau vide aussi. Vous devriez avoir un tableau de répartition du sexe dans les répondants.</li>
+<li>Dans le module <em>Show Me</em> (à droite de votre écran normalement), il est possible de choisir la représentation et donc de changer le type de graphique. Cliquer sur le diagramme circulaire :<br> <img src="reporting/tp1/04-deuxieme-feuille--diagramme-circulaire.png" alt="Choix du diagramme circulaire" /></li>
+<li>Il est possible de spécifier les couleurs pour chaque modalité. Pour cela, cliquer sur la petite flèche à droite de <em>Sexe</em> dans la légende, puis <em>Edit Colors</em>. On peut soit directement changer la couleur (en en sélectionnant une), soit changer la palette de couleurs de base.<br> <img src="reporting/tp1/04-deuxieme-feuille--edition-couleur-sexe.png" alt="Changement des couleurs" /></li>
+<li>Prenez la colonne <em>Sexe</em> dans <em>Dimensions</em> et placer la sur <em>Label</em> pour voir apparaître les modalités.</li>
+<li>Enfin, renommez la feuille en <em>Répartition Sexe</em>.</li>
+</ol>
+</div>
+<div id="troisieme-feuille" class="section level2">
+<h2>Troisième feuille</h2>
+<p>On veut maintenant connaître le montant du salaire mensuel des répondants (colonne <em>Salaire Net Mensuel</em>), en fonction de leur diplôme, en réalisant les opérations suivantes :</p>
+<ol style="list-style-type: decimal">
+<li>Créer une nouvelle feuille.</li>
+<li>Glisser <em>DUT</em> sur <em>Rows</em>.</li>
+<li>Glisser <em>Salaire Net Mensuel</em> (dans <em>Measures</em>) sur <em>Size</em> et changeant en diagramme en barre en changeant dans <em>Marks</em> pour mettre <em>Bar</em> (au lieu de <em>Automatic</em>).</li>
+<li>Vous remarquerez que, par défaut, l’agrégat fait est une somme (<em>SUM</em>). On peut changer ceci en cliquant sur la petite flèche sur l’agrégat, puis sur <em>Measure (Sum)</em>, puis <em>Average</em> ou <em>Median</em> (ou autre) en fonction de ce qu’on veut avoir (ici, on va prendre la médiane).<br> <img src="reporting/tp1/05-troisieme-feuille--changement-agregat.png" alt="Changement d’agrégat" /></li>
+<li>Renommer la feuille en <em>Salaire par DUT</em></li>
+</ol>
+</div>
+<div id="quatrieme-feuille" class="section level2">
+<h2>Quatrième feuille</h2>
+<p>On désire maintenant connaître l’origine géographique des répondants, et particulièrement leur département de résidence (colonne <em>Département résidence</em>), avec les opérations suivantes :</p>
+<ol style="list-style-type: decimal">
+<li>Créer une nouvelle feuille.</li>
+<li>Double-cliquer sur <em>Département résidence</em> dans <em>Dimensions</em>. Ceci se fait automatiquement car, dans l’importation des données, nous avons bien spécifier que cette variable avait un rôle géographique (et plus spécifiquement un nom de département français). On voit apparaître une carte avec des points au centre de chaque région.</li>
+<li>Dans <em>Show Me</em>, on choisit la carte avec couleur (cf image suivante) :<br> <img src="reporting/tp1/06-quatrieme-feuille--changement-carte.png" alt="Choix du type de carte" /></li>
+<li>On a maintenant une carte avec la même couleur pour chaque département dont au moins un répondant vient. Pour spécifier la couleur en fonction d’une variable, vous pouvez glisser <em># Number of Records</em> sur <em>Color</em>.</li>
+<li>On peut agrémenter la carte en ajoutant <em>Salaire Net Mensuel</em> (en indiquant la médiane) et <em># Number of Records</em> sur <em>Tooltip</em> pour voir ces informations lorsque on cliquera sur un département.</li>
+<li>Renommer cette feuille en <em>Origine Etudiants</em>.</li>
+</ol>
+</div>
+<div id="premier-tableau-de-bord-ou-dashboard" class="section level2">
+<h2>Premier tableau de bord (ou <em>Dashboard</em>)</h2>
+<p>L’idée d’un tableau de bord (ou <strong>dashboard</strong> en anglais) est de regrouper plusieurs représentations concernant un sujet sur une même page, afin de synthétiser les résultats. Nous allons ici faire un tableau de bord sur l’<strong>origine des étudiants</strong> :</p>
+<ol style="list-style-type: decimal">
+<li>Aller dans le menu <em>Dashboard</em> puis <em>New Dashboard</em>.</li>
+<li>Renommer le en <em>Reporting 1</em></li>
+<li>Glisser <em>Text</em> en haut (écrivez <code>&quot;Origine des étudiants&quot;</code>, et, en sélectionnant le texte, choississez la police d’écriture <em>Calibri</em>, une taille de 18, un style en gras, et un alignement centré).</li>
+<li>Ensuite, pour assembler les éléments (<em>Sheets</em> ou autre : texte, image, page web, …), il faut jouer sur les répartitions disponibles (<em>Horizontal</em> ou <em>Vertical</em>) et en bougeant les éléments.</li>
+<li>En intégrant les feuilles <em>Répartition DUT</em>, <em>Répartition Sexe</em> et <em>Origine Etudiants</em>, et en jouant sur la position et la taille des éléments et des légendes, vous pouvez obtenir un tableau de bord comme celui-ci :<br> <img src="reporting/tp1/07-tableau1-resultat.png" alt="Résultat final du tableau de bord sur l’origine des étudiants" /></li>
+</ol>
+</div>
+<div id="sauvegarde-de-votre-travail" class="section level2">
+<h2>Sauvegarde de votre travail</h2>
+<p>Pour sauvegarder votre travail, vous devez avoir un compte (cf présentation).</p>
+<p>Une fois connecté, vous devez donner un nom à votre travail (par exemple <em>Reporting - TP1</em>). Il sera sauvegardé sur votre compte hébergé par <strong>Tableau Public</strong>.</p>
+<p>Ceci a pour effet que vous pourrez ouvrir votre travail sur n’importe quel autre ordinateur en pouvant le reprendre la où vous en êtes. Vous pourrez aussi partager votre tableau de bord via un lien disponible en bas de la fenêtre de votre navigateur qui vient de s’ouvrir. On peut le partager via <a href="https://public.tableau.com/views/Reporting-TP1/Reporting1?:embed=y&amp;:display_count=yes&amp;:showTabs=y">un lien</a> ou en l’intégrant dans une page web :</p>
+<script type='text/javascript' src='https://public.tableau.com/javascripts/api/viz_v1.js'></script>
+<div class="tableauPlaceholder" style="width: 654px; height: 742px;">
+<noscript>
+<a href='#'><img alt='Reporting 1 ' src='https:&#47;&#47;public.tableau.com&#47;static&#47;images&#47;Re&#47;Reporting-TP1&#47;Reporting1&#47;1_rss.png' style='border: none' /></a>
+</noscript>
+<object class="tableauViz" width="654" height="742" style="display:none;">
+<param name='host_url' value='https%3A%2F%2Fpublic.tableau.com%2F' /> <param name='site_root' value='' /><param name='name' value='Reporting-TP1&#47;Reporting1' /><param name='tabs' value='no' /><param name='toolbar' value='yes' /><param name='static_image' value='https:&#47;&#47;public.tableau.com&#47;static&#47;images&#47;Re&#47;Reporting-TP1&#47;Reporting1&#47;1.png' /> <param name='animate_transition' value='yes' /><param name='display_static_image' value='yes' /><param name='display_spinner' value='yes' /><param name='display_overlay' value='yes' /><param name='display_count' value='yes' /><param name='showVizHome' value='no' /><param name='showTabs' value='y' /><param name='bootstrapWhenNotified' value='true' />
+</object>
+</div>
+</div>
+<div id="a-faire" class="section level2">
+<h2>A FAIRE</h2>
+<p>Vous devez réaliser un tableau de bord sur le <strong>devenir des étudiants</strong> intégrant les éléments suivants en général et en fonction du DUT obtenu :</p>
+<ul>
+<li><em>Salaire Net Mensuel</em> médian</li>
+<li><em>Type d’emploi</em> (<code>null</code> indique nue valeur manquante - en faisant un clic-droit sur cette modalité, il est possible de l’exclure)</li>
+<li><em>Travail</em></li>
+<li><em>Parcours Libellé</em> (on peut faire un tri manuel des modalités dans la partie des propriétés)</li>
+</ul>
+<p>Voici une proposition de résultat :</p>
+<script type='text/javascript' src='https://public.tableau.com/javascripts/api/viz_v1.js'></script>
+<div class="tableauPlaceholder" style="width: 1004px; height: 1136px;">
+<noscript>
+<a href='#'><img alt='Reporting 2 ' src='https:&#47;&#47;public.tableau.com&#47;static&#47;images&#47;Re&#47;Reporting-TP1&#47;Reporting2&#47;1_rss.png' style='border: none' /></a>
+</noscript>
+<object class="tableauViz" width="1004" height="1136" style="display:none;">
+<param name='host_url' value='https%3A%2F%2Fpublic.tableau.com%2F' /> <param name='site_root' value='' /><param name='name' value='Reporting-TP1&#47;Reporting2' /><param name='tabs' value='no' /><param name='toolbar' value='yes' /><param name='static_image' value='https:&#47;&#47;public.tableau.com&#47;static&#47;images&#47;Re&#47;Reporting-TP1&#47;Reporting2&#47;1.png' /> <param name='animate_transition' value='yes' /><param name='display_static_image' value='yes' /><param name='display_spinner' value='yes' /><param name='display_overlay' value='yes' /><param name='display_count' value='yes' /><param name='showVizHome' value='no' /><param name='showTabs' value='y' /><param name='bootstrapWhenNotified' value='true' />
+</object>
+</div>
+</div>
+
+</div>
+<div class="footer">
+      Site créé avec <a href="http://www.r-project.org" target="_blank"><code>R</code></a> et la 
+      librairie  <a href="http://rmarkdown.rstudio.com/" target="_blank"><code>rmarkdown</code></a>.
+</div>
+<script>
+    $("#TOC").css("margin-top", "100px");
+</script>
+
+
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

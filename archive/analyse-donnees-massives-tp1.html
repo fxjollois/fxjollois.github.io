@@ -1,0 +1,587 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+<meta charset="utf-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="pandoc" />
+
+
+
+
+<title>TP1 - Introduction à MongoDB</title>
+
+<script src="libs/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="libs/bootstrap-3.3.5/css/journal.min.css" rel="stylesheet" />
+<script src="libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<script src="libs/navigation-1.1/tabsets.js"></script>
+<link href="libs/highlightjs-1.1/default.css" rel="stylesheet" />
+<script src="libs/highlightjs-1.1/highlight.js"></script>
+<!--
+    Font Awesome
+-->
+<script src="https://use.fontawesome.com/32d8325004.js"></script>
+<link rel="stylesheet" href="libs/font-awesome-4.7.0/css/font-awesome.min.css">
+
+<!--
+    CSS perso
+-->
+<style>
+    .contenu {
+        margin-bottom: 50px;
+    }
+
+    .contact-liens {
+        text-align: center;
+    }
+    .contact-liens:hover {
+        text-decoration: none;
+    }
+    .contact-icones {
+        height: 30px;
+    }
+
+    /* Espacement pour barre du haut et pied de page */
+    #header, .section.level1 {
+        margin-top: 60px;
+        margin-bottom: 60px;
+    }
+    /* Espacement pour table des matières */
+    #TOC {
+        margin-top: 100px;
+    }
+    
+    .footer {
+        position: fixed;
+        width: 100%;
+        text-align: center;
+        bottom: 0;
+        left: 0;
+        background-color: #E6E6E6;
+    }
+</style>
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
+<script type="text/javascript">
+if (window.hljs && document.readyState && document.readyState === "complete") {
+   window.setTimeout(function() {
+      hljs.initHighlighting();
+   }, 0);
+}
+</script>
+
+
+
+<style type="text/css">
+h1 {
+  font-size: 34px;
+}
+h1.title {
+  font-size: 38px;
+}
+h2 {
+  font-size: 30px;
+}
+h3 {
+  font-size: 24px;
+}
+h4 {
+  font-size: 18px;
+}
+h5 {
+  font-size: 16px;
+}
+h6 {
+  font-size: 12px;
+}
+.table th:not([align]) {
+  text-align: left;
+}
+</style>
+
+<link rel="stylesheet" href="libs/bootstrap-journal.min.css" type="text/css" />
+
+</head>
+
+<body>
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img {
+  max-width:100%;
+  height: auto;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+</style>
+
+
+
+<div class="container-fluid main-container">
+
+<!-- tabsets -->
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+</script>
+
+<!-- code folding -->
+
+
+
+
+
+<div class="navbar navbar-default navbar-fixed-top">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-main">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">FX Jollois</a>
+    </div>
+    <div id="navbar-main" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button">Données <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+              <li><a href="accesdonnees.html">A télécharger</a></li>
+              <li><a href="donnees-integrees-r.html">Sous R</a></li>
+          </ul>
+        </li>
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button">Enseignement <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li class="dropdown-header">DUT 1ère année</li>
+            <li><a href="exploitation-donnees.html">Exploitation de données</a></li>
+            <li><a href="initiation-a-r.html">Initiation à R</a></li>
+            <li><a href="reporting.html">Reporting</a></li>
+            <li><a href="complements-r.html">Compléments sur R</a></li>
+            <li class="dropdown-header">DUT 2ème année</li>
+            <li><a href="prog-stat-r.html">Programmation statistique avec R</a></li>
+            <li class="dropdown-header">LP MDS Santé</li>
+            <li><a href="info-dec-sante.html">Informatique décisionnelle</a></li>
+            <li class="dropdown-header">DU Analyste Big Data</li>
+            <li><a href="initiation-r-du.html">Initiation à R</a></li>
+            <li><a href="connexion-r-mongodb.html">Connexion entre R et MongoDB</a></li>
+            <li class="dropdown-header">DU Dataviz</li>
+            <li><a href="analyse-donnees.html">Analyse de données</a></li>
+            <li><a href="visualisation-donnees.html">Visualisation de données - R</a></li>
+            <li><a href="visualisation-donnees-tableau.html">Visualisation de données - Tableau</a></li>
+            <li><a href="visualisation-donnees-d3.html">Visualisation de données - D3</a></li>
+            <li role="separator" class="divider"></li>
+            <li class="dropdown-header">Master</li>
+            <li><a href="slides/cnam-classif-modeles.html">Classification et Modèles de mélange</a></li>
+            <li><a href="analyse-donnees-massives.html">Analyse de Données Massives</a></li>
+            <li class="dropdown-header">Iran</li>
+            <li><a href="stat-prog-R.html">Statistical Programming using R</a></li>
+          </ul>
+        </li>
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button">Recherche <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li><a href="recherche.html">Sujets</a></li>
+            <li><a href="publications.html">Publications</a></li>
+          </ul>
+        </li>
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button">Réalisations <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li><a href="realisations.html">Détail</a></li>
+            <li role="separator" class="divider"></li>
+            <li><a href="http://up5.fr/explore-data" target="_blank">explore-data</a></li>
+            <li><a href="http://fxjollois.github.io/cours-sql/" target="_blank">Appli web de cours pour SQL</a></li>
+          </ul>
+        </li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container-fluid -->
+</div>
+<div class="contenu">
+
+<div class="fluid-row" id="header">
+
+
+
+<h1 class="title toc-ignore">TP1 - Introduction à MongoDB</h1>
+<h3 class="subtitle"><em>Analyse de Données Massives - Master 1ère année</em></h3>
+
+</div>
+
+
+<p>Dans ce TP, nous allons aborder l’utilisation de MongoDB, via l’interrogation de données dans le <code>shell</code>. MongoDB utilise le langage <code>JavaScript</code>.</p>
+<div id="mongodb" class="section level2">
+<h2>MongoDB</h2>
+<p><em>MongoDB</em> est une base de données NoSQL distribué de type <em>Document Store</em> (<a href="http://www.mongodb.com/">site web</a>)</p>
+<p>Objectifs :</p>
+<ul>
+<li>Gérer de gros volumes</li>
+<li>Facilité de déploiement et d’utilisation</li>
+<li>Possibilité de faire des choses complexes tout de même</li>
+</ul>
+<div id="modele-des-donnees" class="section level3">
+<h3>Modèle des données</h3>
+<p>Principe de base : les données sont des <code>documents</code></p>
+<ul>
+<li>stocké en <em>Binary JSON</em> (<code>BSON</code>)</li>
+<li>documents similaires rassemblés dans des <code>collections</code></li>
+<li>pas de schéma des documents définis en amont
+<ul>
+<li>contrairement à un BD relationnel ou NoSQL de type <em>Column Store</em></li>
+</ul></li>
+<li>les documents peuvent n’avoir aucun point commun entre eux</li>
+<li>un document contient (généralement) l’ensemble des informations
+<ul>
+<li>pas (ou très peu) de jointure à faire</li>
+</ul></li>
+<li>BD respectant <strong>CP</strong> (dans le théorème <em>CAP</em>)
+<ul>
+<li>propriétés ACID au niveau d’un document</li>
+</ul></li>
+</ul>
+</div>
+<div id="point-sur-json" class="section level3">
+<h3>Point sur <code>JSON</code></h3>
+<ul>
+<li><code>JavaScript Object Notation</code></li>
+<li>Créé en 2005</li>
+<li>On parle de <strong>littéral</strong></li>
+<li>Format d’échange de données structurées léger</li>
+<li>Schéma des données non connu
+<ul>
+<li>contenu dans les données</li>
+</ul></li>
+<li>Basé sur deux notions :
+<ul>
+<li>collection de couples clé/valeur</li>
+<li>liste de valeurs ordonnées</li>
+</ul></li>
+<li>Structures possibles :
+<ul>
+<li>objet (couples clé/valeur) :</li>
+<li><code>{}</code></li>
+<li><code>{ &quot;nom&quot;: &quot;jollois&quot;, &quot;prenom&quot;: &quot;fx&quot; }</code></li>
+<li>tableau (collection de valeurs) :</li>
+<li><code>[]</code></li>
+<li><code>[ 1, 5, 10]</code></li>
+<li>une valeur dans un objet ou dans un tableau peut être elle-même un littéral</li>
+</ul></li>
+<li>Deux types atomiques (<code>string</code> et <code>number</code>) et trois constantes (<code>true</code>, <code>false</code>, <code>null</code>)</li>
+</ul>
+<p>Validation possible du JSON sur <a href="http://jsonlint.com/">jsonlint.com/</a></p>
+<pre class="json"><code>{
+    &quot;tubd&quot;: {
+        &quot;formation&quot;: &quot;DU Analyste Big Data&quot;,
+        &quot;responsable&quot;: { &quot;nom&quot;: &quot;Poggi&quot;, &quot;prenom&quot;: &quot;JM&quot; },
+        &quot;etudiants&quot; : [
+            { &quot;id&quot;: 1, &quot;nom&quot;: &quot;jollois&quot;, &quot;prenom&quot;: &quot;fx&quot; },
+            { &quot;id&quot;: 2, &quot;nom&quot;: &quot;aristote&quot;, &quot;details&quot;: &quot;délégué&quot; },
+            { &quot;id&quot;: 5, &quot;nom&quot;: &quot;platon&quot; }
+        ],
+        &quot;ouverte&quot;: true
+    },
+    &quot;tudv&quot;: {
+        &quot;formation&quot;: &quot;DU Data Visualisation&quot;,
+        &quot;ouverte&quot;: false,
+        &quot;todo&quot;: [
+            &quot;Creation de la maquette&quot;,
+            &quot;Validation par le conseil&quot;
+            ],
+        &quot;responsable&quot;: { &quot;nom&quot;: &quot;Métivier&quot; }
+    }
+}</code></pre>
+</div>
+<div id="complements" class="section level3">
+<h3>Compléments</h3>
+<p><code>BSON</code> : extension de <code>JSON</code></p>
+<ul>
+<li>Quelques types supplémentaires (identifiant spécifique, binaire, date, …)</li>
+<li>Distinction entier et réel</li>
+</ul>
+<p><strong>Schéma dynamique</strong></p>
+<ul>
+<li>Documents variant très fortement entre eux, même dans une même collection</li>
+<li>On parle de <strong>self-describing documents</strong></li>
+<li>Ajout très facile d’un nouvel élément pour un document, même si cet élément est inexistant pour les autres</li>
+<li>Pas de <code>ALTER TABLE</code> ou de redesign de la base</li>
+</ul>
+<p><strong>Pas de jointures entre les collections</strong></p>
+</div>
+<div id="langage-dinterrogation" class="section level3">
+<h3>Langage d’interrogation</h3>
+<ul>
+<li>Pas de SQL (bien évidemment), ni de langage proche</li>
+<li>Définition d’un langage propre (basé sur <code>JS</code>)</li>
+<li>Langage permettant plus que les accès aux données
+<ul>
+<li>définition de variables</li>
+<li>boucles</li>
+<li>…</li>
+</ul></li>
+</ul>
+</div>
+</div>
+<div id="connection-au-serveur-distant" class="section level2">
+<h2>Connection au serveur distant</h2>
+<p>Pour pouvoir accéder au <code>shell</code> de Mongo, il faut se connecter en <em>SSH</em> au serveur distant. Voici la commande à réaliser dans un terminal de commande. Le <code>login</code> est à remplacer par le vôtre, fourni en début de cours.</p>
+<pre class="sh"><code>ssh login@193.51.82.104 -p2342</code></pre>
+</div>
+<div id="acces-a-mongodb" class="section level2">
+<h2>Accès à MongoDB</h2>
+<p>Pour lancer le <code>shell</code> de Mongo, il suffit d’exécuter la commande suivante dans le terminal de commande.</p>
+<pre class="sh"><code>mongo</code></pre>
+<p>Vous devriez voir apparaître des avertissements diverses. Il ne faut pas en tenir compte.</p>
+<p>Une fois connecté au <code>shell</code>, il est possible de connaître l’ensemble des bases de données présentes sur le serveur. Pour ceci, vous devez utiliser la commande <code>show dbs</code> comme ci-dessous.</p>
+<pre class="js"><code>show dbs </code></pre>
+<p>Pour choisir la base sur laquelle vous voulez travailler, il faut la sélectionner à l’aide de la commande <code>use db</code> (<code>db</code> étant à remplacé par le nom de la base de données choisie - ici <code>gym</code>).</p>
+<pre class="js"><code>use gym</code></pre>
+<p>Une base de données est constitué d’une ou plusieurs collections. Chacune de celles-ci contient un ensemble de documents. Pour lister celles-ci, on utilise la commande <code>show collections</code>.</p>
+<pre class="js"><code>show collections</code></pre>
+<p>Vous devriez avoir une liste à deux éléments : <code>Gymnases</code> et <code>Sportifs</code>.</p>
+<p>Dans MongoDB, comme nous le verrons par la suite, nous utilisons un formalisme de type <code>db.collection.fonction()</code> :</p>
+<ul>
+<li><code>db</code> représente la base de données choisie grâce à la commande <code>use</code> (ce mot clé est non modifiable)</li>
+<li><code>collection</code> représente la colletion dans laquelle nous allons effectuer l’opération, et doit donc correspondre à une des collections présentes dans la base</li>
+<li><code>fonction()</code> détermine l’opération à effectuer sur la collection.</li>
+</ul>
+<p>En premier lieu, on peut dénombrer le nombre de documents de chaque collection, grâce à la fonction <code>count()</code>.</p>
+<pre class="js"><code>db.Gymnases.count()
+db.Sportifs.count()</code></pre>
+<p>Les documents présents dans une collection n’ont pas de schémas prédéfinis. Si nous souhaitons avoir une idée de ce que contient la collection, il est possible d’afficher un document (le premier trouvé), avec <code>findOne()</code>. Cette opération permet de comprendre la structure global d’un document, même s’il peut y avoir des différences entre documents.</p>
+<pre class="js"><code>db.Gymnases.findOne()
+db.Sportifs.findOne()</code></pre>
+<p>Il est possible d’inclure des critères de sélection dans cette fonction, que nous verrons dans la suite. De même pour la sélection des items à afficher.</p>
+<p>Une autre fonction très utile pour mieux appréhender les données est de lister les valeurs prises par les différents items de la collection, grâce à <code>distinct()</code>. Pour spécifier un sous-item d’un item, il est nécessaire d’utiliser le formalisme <code>item.sousitem</code>.</p>
+<pre class="js"><code>db.Gymnases.distinct(&quot;Ville&quot;)
+db.Gymnases.distinct(&quot;Surface&quot;)
+db.Gymnases.distinct(&quot;Seances.Libelle&quot;)
+db.Gymnases.distinct(&quot;Seances.Jour&quot;)
+db.Sportifs.distinct(&quot;Sexe&quot;)
+db.Sportifs.distinct(&quot;Sports.Jouer&quot;)</code></pre>
+</div>
+<div id="recherche-dinformations" class="section level2">
+<h2>Recherche d’informations</h2>
+<p>Pour faire des recherches, il existe la fonction <code>find()</code>. Sans paramètre, elle renvoie l’ensemble des documents. Il faut donc l’utiliser avec précautions. Mais celle-ci peut aussi prendre deux paramètres :</p>
+<ul>
+<li>les critères de sélection des documents</li>
+<li>les choix d’items des documents à afficher</li>
+</ul>
+<p>Ces deux paramètres doivent être écrits sous la forme d’objets <code>JSON</code>.</p>
+<p>Dans ce premier exemple, on cherche le (ou les) conseiller s’appelant <code>&quot;KERVADEC&quot;</code>.</p>
+<pre class="js"><code>db.Sportifs.find({ &quot;Nom&quot;: &quot;KERVADEC&quot; })</code></pre>
+<p>L’affichage rendu par <code>find()</code> est compact et peu lisible directement. On peut <em>aérer</em> ce rendu en ajoutant la fonction <code>pretty()</code> pour avoir une présentation propre.</p>
+<pre class="js"><code>db.Sportifs.find({ &quot;Nom&quot;: &quot;KERVADEC&quot; }).pretty()</code></pre>
+<p>Si l’on désire n’afficher que certains éléments, il est possible d’ajouter un deuxième argument spécifiant les items que l’on veut (avec <code>1</code>) ou qu’on ne veut pas (avec <code>0</code>).</p>
+<pre class="js"><code>db.Sportifs.find({ &quot;Nom&quot;: &quot;KERVADEC&quot; }, { &quot;Nom&quot;: 1 })</code></pre>
+<p>Par défaut, l’identifiant du document, toujours nommé <code>_id</code>, est renvoyé. Pour ne pas l’avoir, il faut ainsi le préciser avec <code>&quot;_id&quot;: 0</code>.</p>
+<pre class="js"><code>db.Sportifs.find({ &quot;Nom&quot;: &quot;KERVADEC&quot; }, { &quot;_id&quot;: 0, &quot;Nom&quot;: 1 })</code></pre>
+<p>JavaScript étant un langage comme un autre, il est possible de définir une variable stockant les choix d’affichage en sortie, comme ci-dessous. Cela pourra permettre d’avoir un code plus lisible.</p>
+<pre class="js"><code>sortie = { &quot;_id&quot;: 0, &quot;Nom&quot;: 1 }
+db.Sportifs.find({ &quot;Nom&quot;: &quot;KERVADEC&quot; }, sortie)</code></pre>
+<p>Le test d’égalité est aussi réalisable avec une variable numérique, comme ici où on cherche les sportifs de 32 ans.</p>
+<pre class="js"><code>db.Sportifs.find({ &quot;Age&quot;: 32 }, sortie)</code></pre>
+<p>Pour les comparaisons, nous disposons des opérateurs <code>$eq</code>(<em>equal</em>), <code>$gt</code> (<em>greater than</em>), <code>$gte</code> (<em>greater than or equal</em>), <code>$lt</code> (<em>less than</em>), <code>$lte</code> (<em>less than or equal</em>) et <code>$ne</code> (<em>not equal</em>). Voici un exemple d’utilisation pour la recherche de sportifs de plus de 32 ans.</p>
+<pre class="js"><code>db.Sportifs.find({ &quot;Age&quot;: { &quot;$gte&quot;: 32} }, { &quot;_id&quot;: 0, &quot;Nom&quot;: 1, &quot;Age&quot;: 1 })</code></pre>
+<p>En plus de ces comparaisons simples, nous disposons d’opérateurs de comparaisons à une liste : <code>$in</code> (présent dans la liste) et <code>$nin</code> (non présent dans la liste). Ici, nous cherchons les sportifs qui ont soit 32 ans, soit 40 ans.</p>
+<pre class="js"><code>db.Sportifs.find({ &quot;Age&quot;: { &quot;$in&quot;: [ 32, 40 ]} }, { &quot;_id&quot;: 0, &quot;Nom&quot;: 1, &quot;Age&quot;: 1 })</code></pre>
+<p>Les documents peuvent être complexes (c’est même le but), et les critères portent donc souvent sur des sous-items. Il faut utiliser le même formalisme que précédemment (<code>item.sousitem</code>). Il faut noter qu’on peut aller aussi loin que nécessaire dans l’utilisation du <code>.</code>. Voici donc les sportifs jouant au Basket.</p>
+<pre class="js"><code>db.Sportifs.find({ &quot;Sports.Jouer&quot; : &quot;Basket ball&quot; }, sortie)</code></pre>
+<p>Ce formalisme est le même pour indiquer un sous-item à afficher. Nous ajoutons à la requête précédent l’affichage des sports joués. Nous voyons que le résultat inclu tous les sports joués par le sportif.</p>
+<pre class="js"><code>db.Sportifs.find({ &quot;Sports.Jouer&quot; : &quot;Basket ball&quot; }, { &quot;_id&quot;: 0, &quot;Nom&quot;: 1, &quot;Sports.Jouer&quot;: 1 })</code></pre>
+<p>Par défaut, si on ajoute des critères de restriction dans le premier paramètre, la recherche se fait avec un <em>ET</em> entre les critères. Nous cherchons ici les joueuses de Basket.</p>
+<pre class="js"><code>db.Sportifs.find({ &quot;Sports.Jouer&quot; : &quot;Basket ball&quot;, &quot;Sexe&quot; : &quot;F&quot; }, sortie)</code></pre>
+<p>Mais si on veut faire des combinaisons autres, il existe des opérateurs logiques : <code>$and</code>, <code>$or</code> et <code>$nor</code>. Ces trois opérations prennent un tableau de critères comme valeur. Nous cherchons ci-dessous les sportifs soit ayant au moins 32 ans, soit de sexe féminin.</p>
+<pre class="js"><code>db.Sportifs.find({ &quot;$or&quot;: [ { &quot;Age&quot; : { &quot;$gte&quot; : 32 } }, { &quot;Sexe&quot;: &quot;F&quot; } ] }, { &quot;_id&quot; : 0, &quot;Nom&quot; : 1, &quot;Age&quot; : 1, &quot;Sexe&quot; : 1 })</code></pre>
+<p>Comme précédemment indiqué, il est courant qu’un document ne contienne pas tous les items possibles. Si l’on cherche à tester la présence ou non d’un item, on utilise l’opérateur <code>$exists</code> (avec <code>true</code> si on teste la présence, et <code>false</code> l’absence). Dans l’exemple qui suit, nous cherchons les sportifs qui arbitre un sport.</p>
+<pre class="js"><code>db.Sportifs.find({ &quot;Sports.Arbitrer&quot; : { &quot;$exists&quot; : true } }, sortie)</code></pre>
+<p>Il est souvent nécessaire de faire des dénombrements suite à des sélections, pour faire des vérifications de code ou des estimations de charge (ou autre). La fonction <code>count()</code> peut ainsi s’ajouter à la suite d’une fonction <code>find()</code> pour connaître la taille du résultat. Nous cherchons ici le nombre de sportifs de sexe féminin dans la base.</p>
+<pre class="js"><code>db.Sportifs.find({ &quot;Sexe&quot; : &quot;F&quot; }).count()</code></pre>
+<p>On peut aussi limiter le nombre de documents renvoyés par la fonction <code>find()</code> en lui ajoutant la fonction <code>limit()</code>, comme ici où nous nous restreignons aux 5 premiers résultats.</p>
+<pre class="js"><code>db.Sportifs.find({ &quot;Sexe&quot; : &quot;F&quot; }).limit(5)</code></pre>
+<p>Une autre opération classique est le tri des résultats, réalisable avec la fonction <code>sort()</code>. On doit indiquer les items de tri et leur attribuer une valeur de <code>1</code> pour un tri ascendant et une valeur de <code>-1</code> pour un tri descendant. On affiche ici les sportifs d’au moins 32 ans dans l’ordre croissant de leur âge.</p>
+<pre class="js"><code>db.Sportifs.find({ &quot;Age&quot;: { &quot;$gte&quot;: 32} }, { &quot;_id&quot;: 0, &quot;Nom&quot;: 1, &quot;Age&quot;: 1 }).sort({ &quot;Age&quot; : 1 })</code></pre>
+<p>Idem que précédemment, mais dans l’ordre décroissant.</p>
+<pre class="js"><code>db.Sportifs.find({ &quot;Age&quot;: { &quot;$gte&quot;: 32} }, { &quot;_id&quot;: 0, &quot;Nom&quot;: 1, &quot;Age&quot;: 1 }).sort({ &quot;Age&quot; : -1 })</code></pre>
+<p>Bien évidemment, il est possible de mettre plusieurs critères de tri, comme ci-dessous avec un tri par âge décroissant, et un tri alphabétique des noms (pour les sportifs de même âge).</p>
+<pre class="js"><code>db.Sportifs.find({ &quot;Age&quot;: { &quot;$gte&quot;: 32} }, { &quot;_id&quot;: 0, &quot;Nom&quot;: 1, &quot;Age&quot;: 1 }).sort({ &quot;Age&quot; : -1, &quot;Nom&quot;: 1 })</code></pre>
+<p>Enfin, il est possible d’écrire les commandes sur plusieurs lignes, avec des indentations, afin de rendre les commandes plus lisibles, tel que ci-dessous.</p>
+<pre class="js"><code>db.Sportifs.find(
+        { &quot;Age&quot;: { &quot;$gte&quot;: 32} }, 
+        { &quot;_id&quot;: 0, &quot;Nom&quot;: 1, &quot;Age&quot;: 1 }
+    ).sort(
+        { &quot;Age&quot; : 1, &quot;Nom&quot;: 1 }
+    )</code></pre>
+</div>
+<div id="agregats" class="section level2">
+<h2>Agrégats</h2>
+<p>En plus des recherches classiques d’informations, le calcul d’agrégat est très utilisé, pour l’analyse, la modélisation ou la visualisation de données. Ce calcul s’effectue avec la fonction <code>aggregate()</code>. Celle-ci prend en paramètre un tableau d’opérations (appelé aussi <code>pipeline</code>), pouvant contenir les éléments suivants :</p>
+<ul>
+<li><code>$project</code> : redéfinition des documents (si nécessaire)</li>
+<li><code>$match</code> : restriction sur les documents à utiliser</li>
+<li><code>$group</code> : regroupements et calculs à effectuer</li>
+<li><code>$sort</code> : tri sur les agrégats</li>
+<li><code>$unwind</code> : découpage de tableaux</li>
+<li>…</li>
+</ul>
+<p>Voici un premier exemple permettant un calcul pour toute la base. Ici, nous réalisons un dénombrement (il fait la somme de la valeur 1 pour chaque document).</p>
+<pre class="js"><code>db.Gymnases.aggregate([ 
+    { $group: { &quot;_id&quot;: null, &quot;nb&quot;: { $sum: 1 }}}
+])</code></pre>
+<p>Bien évidemment, les calculs peuvent être plus complexes. Par exemple, nous cherchons ici la surface moyenne des gymnases.</p>
+<pre class="js"><code>db.Gymnases.aggregate([ 
+    { $group: { &quot;_id&quot;: null, &quot;surfmoy&quot;: { $avg: &quot;$Surface&quot; }}}
+])</code></pre>
+<p>Bien évidemment, ces calculs d’agrégats peuvent se faire aussi en ajoutant des critères de regroupement. Ici, nous cherchons le nombre de gymnases par ville.</p>
+<pre class="js"><code>db.Gymnases.aggregate([ 
+    { $group: { &quot;_id&quot;: &quot;$Ville&quot;, &quot;nb&quot;: { $sum: 1 }}}
+])</code></pre>
+<p>Ce résultat peut être trié en ajoutant l’acion <code>$sort</code> dans le tableau, avec le même mécanismes que précédemment (1 : ascendant, -1 : descandant).</p>
+<pre class="js"><code>db.Gymnases.aggregate([ 
+    { $group: { &quot;_id&quot;: &quot;$Ville&quot;, &quot;nb&quot;: { $sum: 1 }}},
+    { $sort: { &quot;nb&quot;: -1 }}
+])</code></pre>
+<p>Comme vu précédemment, on peut faire tous les calculs d’agrégats classiques, comme ici avec la somme (<code>$sum</code>), la moyenne (<code>$avg</code>), le minimum (<code>$min</code>) et le maximum (<code>$max</code>).</p>
+<pre class="js"><code>db.Gymnases.aggregate([ 
+    { $group: { 
+        &quot;_id&quot;: &quot;$Ville&quot;, 
+        &quot;nb&quot;: { $sum: 1 }, 
+        &quot;surfaceTotale&quot;: { $sum: &quot;$Surface&quot; },
+        &quot;surfaceMoyenne&quot;: { $avg: &quot;$Surface&quot; },
+        &quot;surfaceMinimum&quot;: { $min: &quot;$Surface&quot; },
+        &quot;surfaceMaximum&quot;: { $max: &quot;$Surface&quot; }
+    }}
+])</code></pre>
+<p>On peut aussi faire une restriction avant le calcul, avec l’opération <code>$match</code>. Ici, nous nous restreignons aux gymnases dans lesquels il y a (au moins) une séance de Volley.</p>
+<pre class="js"><code>db.Gymnases.aggregate([ 
+    { $match: { &quot;Seances.Libelle&quot; : &quot;Volley ball&quot; }},
+    { $group: { &quot;_id&quot;: &quot;$Ville&quot;, &quot;nb&quot;: { $sum: 1 }}}
+])</code></pre>
+<p>Imaginons maintenant que nous souhaitons calculer le nombre de séances journalières. La première idée serait de réaliser l’opération suivante.</p>
+<pre class="js"><code>db.Gymnases.aggregate([ 
+    { $group: { &quot;_id&quot;: &quot;$Seances.Jour&quot;, &quot;nb&quot;: { $sum: 1 }}}
+])</code></pre>
+<p>Malheureusement, nous voyons que le regroupement se fait par couple de jours existant dans la base. Il faut donc faire un découpage des tableaux <code>Seances</code> dans chaque document. Pour cela, il existe l’opération <code>$unwind</code>.</p>
+<p>Pour montrer comment fonctionne cette opération, voici les 5 premières lignes renvoyées lorsqu’on l’applique directement sur les données. On s’apercoit que chaque document ne contient plus qu’une seule séance.</p>
+<pre class="js"><code>db.Gymnases.aggregate([
+    { $unwind: &quot;$Seances&quot; }, 
+    { $limit: 5 }
+]).pretty()</code></pre>
+<p>Par ce biais, nous pouvons donc maintenant faire l’opération de regroupement par jour de la semaine.</p>
+<pre class="js"><code>db.Gymnases.aggregate([
+    { $unwind: &quot;$Seances&quot; }, 
+    { $group: { &quot;_id&quot;: &quot;$Seances.Jour&quot;, &quot;nb&quot;: { $sum: 1 }} }
+])</code></pre>
+<p>Nous remarquons qu’il y a des différences dans la casse des jours de la semaine. Pour gérer cela, nous transformons les jours de la semaine en <em>minuscule</em> avec la fonction <code>toLower</code>.</p>
+<pre class="js"><code>db.Gymnases.aggregate([
+    { $unwind: &quot;$Seances&quot; }, 
+    { $group: { &quot;_id&quot;: { $toLower: &quot;$Seances.Jour&quot; }, &quot;nb&quot;: { $sum: 1 }} }
+])</code></pre>
+<p>Une autre façon de faire est de redéfinir les documents, pour ne garder que le jour de la semaine (en minuscule), dans celui-ci.</p>
+<pre class="js"><code>db.Gymnases.aggregate([
+    { $unwind: &quot;$Seances&quot; }, 
+    { $project: { &quot;Jour&quot;: { $toLower: &quot;$Seances.Jour&quot; } }}
+])</code></pre>
+<p>Avec ce code, il est facilement possible de passer à un décompte par jour de la semaine, comme ci-dessous.</p>
+<pre class="js"><code>db.Gymnases.aggregate([
+    { $unwind: &quot;$Seances&quot; }, 
+    { $project: { &quot;Jour&quot;: { $toLower: &quot;$Seances.Jour&quot; } }},
+    { $group: { &quot;_id&quot;: &quot;$Jour&quot;, &quot;nb&quot;: { $sum: 1 }} }
+])</code></pre>
+</div>
+<div id="a-faire" class="section level2">
+<h2>A faire</h2>
+<p>Répondre aux questions suivantes</p>
+<ol style="list-style-type: decimal">
+<li>Quels sont les sportifs (identifiant, nom et prénom) qui ont entre 20 et 30 ans ?</li>
+<li>Quels sont les gymnases de “Villetaneuse” ou de “Sarcelles” qui ont une surface de plus de 400 m2 ?</li>
+<li>Quels sont les sportifs (identifiant et nom) qui pratiquent du hand ball ?</li>
+<li>Dans quels gymnases et quels jours y a t-il des séances de hand ball ?</li>
+<li>Dans quels gymnases peut-on jouer au hockey le mercredi apres 15H ?</li>
+<li>Quels sportifs (identifiant et nom) ne pratiquent aucun sport ?</li>
+<li>Quels gymnases n’ont pas de séances le dimanche ?</li>
+<li>Quels gymnases ne proposent que des séances de basket ball ou de volley ball ?</li>
+<li>Quels sont les entraîneurs qui sont aussi joueurs ?</li>
+<li>Quels sont les sportifs qui sont des conseillers ?</li>
+<li>Pour le sportif “Kervadec” quel est le nom de son conseiller ?</li>
+<li>Quels entraîneurs entraînent du hand ball et du basket ball ?</li>
+<li>Quels sont les couples de sportifs (identifiant et nom et prénom de chaque) de même age ?</li>
+<li>Quelle est la moyenne d’âge des sportives qui pratiquent du basket ball ?</li>
+<li>Quels sont les sportifs les plus jeunes ?</li>
+<li>Quels sont les gymnases de “Stains” ou de “Montmorency” qui ont la plus grande surface ?</li>
+<li>Quels entraîneurs n’entraînent que du hand ball ou du basket ball ?</li>
+<li>Quels sont les couples de sportifs (identifiant et nom et prénom de chaque) de même âge avec le même conseiller ?</li>
+<li>Quels sportifs n’ont pas de conseillers ?</li>
+<li>Pour chaque sportif donner le nombre de sports qu’il arbitre</li>
+<li>Pour chaque gymnase de Stains donner par jour d’ouverture les horaires des premières et dernières séances</li>
+<li>Pour chaque entraîneurs de hand ball quel est le nombre de séances journalières qu’il assure ?</li>
+<li>Quels sont les gymnases ayant plus de 15 séances le mercredi ?</li>
+<li>Pour chaque gymnase de Montmorency : quel est le nombre de séances journalières de chaque sport propose ?</li>
+<li>Dans quels gymnases et quels jours y a t-il au moins 4 séances de volley ball dans la journée ?</li>
+</ol>
+</div>
+
+</div>
+<div class="footer">
+      Site créé avec <a href="http://www.r-project.org" target="_blank"><code>R</code></a> et la 
+      librairie  <a href="http://rmarkdown.rstudio.com/" target="_blank"><code>rmarkdown</code></a>.
+</div>
+<script>
+    $("#TOC").css("margin-top", "100px");
+</script>
+
+
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>
