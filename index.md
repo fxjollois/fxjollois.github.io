@@ -1,25 +1,19 @@
 ---
-layout: default
 title: FX Jollois
 ---
 
 ## Présentation
 
-Enseignant-chercheur en informatique, mon domaine de compétence se situe à la frontière 
-entre l'informatique et la statistique. J'enseigne dans le département 
-[STID](http://www.stid-paris.fr/) de l'[IUT Paris Descartes](http://www.iut.parisdescartes.fr). 
+Enseignant-chercheur en informatique, mon domaine de compétence se situe à la frontière entre l'informatique et la statistique. J'enseigne dans le département [STID](http://www.stid-paris.fr/) de l'[IUT Paris Descartes](http://www.iut.parisdescartes.fr). 
+
 J'effectue ma recherche au [LIPADE](http://www.lipade.fr), dans l'équipe [MLDS](http://www.math-info.univ-paris5.fr/~nadifmoh/Accueil.html#). Je suis aussi membre associé du [CEDRIC](http://cedric.cnam.fr) (dans l'équipe MSDMA) du [CNAM](http://www.cnam.fr).
 
-Pour votre information, ce site étant encore **en construction**, certains liens peuvent ne pas être
-accessibles, et certaines pages sont encore en cours de réalisation.
+Pour votre information, ce site étant encore **en construction**, certains liens peuvent ne pas être accessibles, et certaines pages sont encore en cours de réalisation.
 
 ## Informations sur le contenu du site
 
-- Dans la partie [**Enseignement**](enseignement), vous trouverez un ensemble de documents 
-de cours
-- Dans la partie [Recherche](recherche.html), vous trouverez mes thématiques de recherche, 
-ainsi que mes [publications](publications.html).
-
+- Dans la partie [**Enseignement**](enseignement), vous trouverez un ensemble de documents de cours
+- Dans la partie [Recherche](recherche.html), vous trouverez mes thématiques de recherche, ainsi que mes [publications](publications.html)
 - [**Statistical Programming using `R`**](stat-prog-R.html), *Amirkabir University*
 
 ## Quelques liens intéressants 
