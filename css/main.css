@@ -58,10 +58,11 @@ footer a:hover {
 /* container */
 .container a {
   text-decoration: none;
-  color: #999;
+  color: tomato;
+    font-weight: 500;
 }
 .container a:hover {
-  color: #666;
+  color: orangered;
 }
 h1,
 h2,
