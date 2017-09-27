@@ -2,7 +2,7 @@
 title: Contact
 ---
 
-<img src="image_perso_FX.JPG">
+<img src="image_perso_FX.JPG" height="160">
 
 Vous pouvez me joindre sur cette adresse courriel (enlever les espaces et les crochets, et remplacer # par @) :
 
