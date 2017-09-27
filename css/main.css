@@ -1,34 +1,83 @@
-body {
-    margin: 60px auto;
-    width: 70%;
+/* structure global */
+* {
+  font-family: "Open Sans", sans-serif;
+  margin: 0;
+  padding: 0;
 }
-nav ul, footer ul {
-    font-family: 'Helvetica', 'Arial', 'Sans-Serif';
-    padding: 0px;
-    list-style: none;
-    font-weight: bold;
+
+nav ul,
+footer ul,
+.container {
+  margin: 0px auto;
+  width: 70%;
 }
-nav ul li, footer ul li {
-    display: inline;
-    margin-right: 20px;
+
+/* liste de nav et footer */
+nav ul,
+footer ul {
+  list-style: none;
+  font-weight: bold;
 }
-a {
-    text-decoration: none;
-    color: #999;
+nav ul li,
+footer ul li {
+  display: inline;
+  margin-right: 20px;
 }
-a:hover {
-    text-decoration: underline;
+
+/* nav */
+nav {
+  background-color: #333;
+  height: 50px;
+  line-height: 50px;
+}
+nav a {
+  font-family: "Arvo", serif;
+  text-decoration: none;
+  color: white;
+}
+nav a:hover {
+  color: #ddd;
+}
+
+/* footer */
+footer {
+  border-top: 1px solid #d5d5d5;
+  margin-top: 10px;
+  padding-top: 10px;
+  font-size: 0.8em;
+}
+footer a {
+  text-decoration: none;
+  color: black;
+}
+footer a:hover {
+  color: #555;
+}
+
+/* container */
+.container a {
+  text-decoration: none;
+  color: #999;
+}
+.container a:hover {
+  color: #666;
+}
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: "Arvo", serif;
+  margin-top: 10px;
+  margin-bottom: 5px;
 }
 h1 {
-    font-size: 3em;
-    font-family: 'Helvetica', 'Arial', 'Sans-Serif';
+  margin-top: 20px;
+}
+h2 {
+  margin-top: 15px;
 }
 p {
-    font-size: 1.5em;
-    line-height: 1.4em;
-    color: #333;
-}
-footer {
-    border-top: 1px solid #d5d5d5;
-    font-size: .8em;
+  margin-bottom: 5px;
 }
