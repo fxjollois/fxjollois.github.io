@@ -80,8 +80,8 @@ h2 {
   margin-top: 15px;
 }
 p {
-  margin-bottom: 5px;
+  margin-bottom: 10px;
 }
-ul {
+ul, ol {
   margin-left: 20px;
 }
