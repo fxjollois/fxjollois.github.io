@@ -29,6 +29,7 @@ nav {
   background-color: #333;
   height: 50px;
   line-height: 50px;
+    margin-bottom: 50px;
 }
 nav a {
   font-family: "Arvo", serif;
@@ -42,7 +43,7 @@ nav a:hover {
 /* footer */
 footer {
   border-top: 1px solid #d5d5d5;
-  margin-top: 10px;
+  margin-top: 30px;
   padding-top: 10px;
   font-size: 0.8em;
 }
@@ -80,4 +81,7 @@ h2 {
 }
 p {
   margin-bottom: 5px;
+}
+ul {
+  margin-left: 20px;
 }
