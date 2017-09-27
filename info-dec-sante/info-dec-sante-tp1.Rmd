@@ -28,9 +28,9 @@ Il existe quelques fonctions dérivés avec des valeurs par défaut différentes
 - `read.csv()`, `read.csv2()`
 - `read.delim()`, `read.delim2()`
 
-Par exemple, nous disposons du fichier [`heart.txt`](donnees/heart.txt), contenant les données de 270 personnes.
+Par exemple, nous disposons du fichier [`heart.txt`](../donnees/heart.txt), contenant les données de 270 personnes.
 
-<object data="donnees/heart.txt" type="text/plain" style="width: 100%">
+<object data="../donnees/heart.txt" type="text/plain" style="width: 100%">
     impossible à afficher
 </object>
       
@@ -42,7 +42,7 @@ Nous remarquons les points suivants :
 Pour importer ce fichier, nous devons donc utiliser le code suivant. Vous devez d'abord télécharger le fichier. **Attention** : il est supposé ici que le fichier est dans un sous-répertoire `donnees` du répertoire de travail.
 
 ```{r}
-heart = read.table("donnees/heart.txt", header = T, sep = "\t")
+heart = read.table("../donnees/heart.txt", header = T, sep = "\t")
 head(heart)
 ```
 
@@ -55,18 +55,18 @@ Il est aussi possible d'écrire un fichier texte à partir d'un `data.frame`, en
 - il n'y a pas de `""` ou de `''` autour des chaînes de caractères
 
 ```{r}
-write.table(heart, file = "donnees/heart_bis.txt", sep = "%", 
+write.table(heart, file = "../donnees/heart_bis.txt", sep = "%", 
             row.names = FALSE, col.names = TRUE, dec = ",", quote = FALSE)
 ```
 
-<object data="donnees/heart_bis.txt" type="text/plain" style="width: 100%">
+<object data="../donnees/heart_bis.txt" type="text/plain" style="width: 100%">
     impossible à afficher
 </object>
 
 Il est parfois difficile de lire directement avec la commande `read.table()` ou ses dérivés. On peut utiliser dans ce cas la commande `readLines()`, qui comme son nom l'indique, lit les lignes les unes après les autres. Elle renvoie un tableau de chaîne de caractères, chaque valeur du tableau correspondant à une ligne.
 
 ```{r}
-heart_lignes = readLines("donnees/heart.txt")
+heart_lignes = readLines("../donnees/heart.txt")
 length(heart_lignes)
 heart_lignes[1]
 heart_lignes[2]
@@ -268,7 +268,7 @@ La première étape ici est donc d'importer les données. Il faut pour cela util
 
 ```{r, include=FALSE}
 # readLines("donnees/medicaments/2016-11-09/CIS_bdpm.txt", 10)
-CIS_bdpm = read.table("donnees/medicaments/2016-11-09/CIS_bdpm.txt",
+CIS_bdpm = read.table("../donnees/medicaments/2016-11-09/CIS_bdpm.txt",
                       quote = NULL, sep = "\t", encoding = "latin1",
                       stringsAsFactors = FALSE)
 ```

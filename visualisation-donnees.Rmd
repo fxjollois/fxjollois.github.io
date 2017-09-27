@@ -562,14 +562,14 @@ Pour cela, il faut faire deux opérations :
 - la première pour récupérer les tuiles de représentation des cartes (avec `get_map`())
 - la seconde pour afficher ces tuiles (avec `ggmap()`), ce qui créé un objet 
 
-```{r-ggmap}
-m = get_map("Paris,France")
+```{r ggmap}
+m = get_map("Paris, France")
 ggmap(m) 
 ```
 
 La fonction `qmplot()` permet de rendre invisible l'étape de récupération des tuiles, et est l'équivalent de `qplot` par rapport à `ggmap()`.
 
-```{r-qmplot}
+```{r qmplot}
 qmplot(x, y, data = ozone, color = median)
 ```
 
@@ -578,7 +578,7 @@ On peut aussi vouloir spécifier nous-même les différentes étapes, comme ci-d
 - récupération des tuiles de la carte, en spécifiant les limites de la zone
 - affichage de la carte et ajout des représentations géographiques comme avec `ggplot()` vu précédemment.
 
-```{r-ggmap-data}
+```{r ggmap-data}
 left = min(ozone$x) - .5
 bottom = min(ozone$y) - .5
 right = max(ozone$x) + .5
