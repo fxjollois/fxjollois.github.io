@@ -1,4 +1,5 @@
 ---
+layout: souspage
 title: Analyse de Données Massives
 ---
 
