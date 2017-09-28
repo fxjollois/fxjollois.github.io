@@ -81,6 +81,10 @@ load("a.RData")
 print(a)
 ```
 
+```{r, include=FALSE}
+file.remove("a.RData")
+```
+
 Pour sauvegarder plusieurs variables, il faut juste les lister dans la fonction `save()`.
 
 ```{r, error=TRUE}
@@ -97,6 +101,10 @@ Et on les charge de la même façon.
 load("bc.RData")
 print(b)
 print(c)
+```
+
+```{r, include=FALSE}
+file.remove("bc.RData")
 ```
 
 ### Sauvegarde de l'environnement
@@ -122,13 +130,18 @@ load("env.RData")
 ls()
 ```
 
+```{r, include=FALSE}
+file.remove("env.RData")
+```
+
+
 ### Données utilisées
 
-Nous allons donc utiliser pour la suite les données d'un *data-mart* contenues dans le fichier [`ca.RData`](donnees/ca/ca.RData). Pour ce faire, nous allons utiliser la commande `load()`. Nous vérifions ensuite qu'on a bien toutes les données voulues (en ayant supprimé en premier les objets existants).
+Nous allons donc utiliser pour la suite les données d'un *data-mart* contenues dans le fichier [`ca.RData`](../donnees/ca/ca.RData). Pour ce faire, nous allons utiliser la commande `load()`. Nous vérifions ensuite qu'on a bien toutes les données voulues (en ayant supprimé en premier les objets existants).
 
 ```{r}
 rm(list = ls())
-load("donnees/ca/ca.RData")
+load("../donnees/ca/ca.RData")
 ls()
 ```
 
@@ -183,12 +196,12 @@ Pour intégrer des images dans un document `markdown`, on utilise un formalisme 
 
 - `![texte](lien "texte optionnel")` : le texte sert à contextualiser l'image 
 
-	![bla bla bla](Rpubs.jpg "bla bla quand souris sur image")
+	![bla bla bla](plot.jpg "bla bla quand souris sur image")
 - `![texte][label]` : on définit le label par la suite avec `[label]: lien "texte optionnel"`
 
 	![re bla][img_rpubs]
 
-[img_rpubs]: Rpubs.jpg "re bla bla bla bla qui s'affiche lorsque la souris est sur l'image"
+[img_rpubs]: plot.jpg "re bla bla bla bla qui s'affiche lorsque la souris est sur l'image"
 
 On peut aussi ajouter des lignes horizontales, pour découper le texte. Pour cela, il est nécessaire d'écrire une ligne avec
 
@@ -345,7 +358,7 @@ Dans la suite, voici quelques exemples de *chuncks* avec options. Regardez le so
 Tout d'abord, on importe les données `heart.txt`, mais ce genre de code n'est souvent pas à inclure, dans le sens où l'on ne veut ni l'afficher, ni voir de résultat.
 
 ```{r import, include = FALSE}
-heart = read.table("donnees/heart.txt", header = TRUE)
+heart = read.table("../donnees/heart.txt", header = TRUE)
 ```
 
 Ensuite, la librairie `knitr` contient une fonction `kable()` permettant d'afficher un `data.frame` au format `markdown`. Cela permet d'avoir un résultat plus lisible qu'une sortie de console `R` classique.
@@ -421,7 +434,7 @@ output:
 ...
 ```
 
-En cliquant sur **Knit**, vous devez obtenir le [document suivant](__specifique/prog-stat-r-tp7-etape1.html). Vous remarquerez qu'il y a de la place pour mettre des graphiques et/ou des tableaux. Nous allons agrémenter ce tableau de bord à l'aide de graphiques et de pastilles d'informations.
+En cliquant sur **Knit**, vous devez obtenir le [document suivant](etapes-reporting/etape-reporting-1.html). Vous remarquerez qu'il y a de la place pour mettre des graphiques et/ou des tableaux. Nous allons agrémenter ce tableau de bord à l'aide de graphiques et de pastilles d'informations.
 
 #### Modification du titre
 
@@ -434,7 +447,7 @@ Nous allons commencer par importer les données dans ce tableau de bord, grâce 
 Vous devez donc introduire le code suivant dans le premier *chunck* (en dessous du chargement de la librairie `flexdashboard`), nommé `setup` et ayant l'option `include=FALSE`. Ceci permettra donc d'avoir les données à disposition, mais que le code ne s'affiche pas dans le document final.
 
 ```{r}
-load("donnees/ca/ca.RData")
+load("../donnees/ca/ca.RData")
 ```
 
 #### Premier graphique
@@ -449,7 +462,7 @@ plot(ca ~ mois, d, type = "b",
 abline(h = mean(d$ca), lty = 3, col = "gray50")
 ```
 
-Une fois que vous compilez votre document, vous devez obtenir la [page suivante](__specifique/prog-stat-r-tp7-etape2.html). 
+Une fois que vous compilez votre document, vous devez obtenir la [page suivante](etapes-reporting/etape-reporting-2.html). 
 
 #### Deuxième graphique
 
@@ -463,7 +476,7 @@ names(d) = c("Mois", "2003", "2004", "Evolution")
 knitr::kable(d, digits = 0)
 ```
 
-Une fois exécuté, vous obtenez le [document suivant](__specifique/prog-stat-r-tp7-etape3.html). Il est possible de naviguer dans le tableau avec la souris pour voir les mois caché.
+Une fois exécuté, vous obtenez le [document suivant](etapes-reporting/etape-reporting-3.html). Il est possible de naviguer dans le tableau avec la souris pour voir les mois caché.
 
 #### Troisième graphique
 
@@ -477,13 +490,13 @@ v = paste(round((d$ca[2] / d$ca[1] - 1) * 100, 2), "%")
 valueBox(v, icon = "fa-arrow-circle-up", color = "green")
 ```
 
-Vous devriez avoir cette [page](__specifique/prog-stat-r-tp7-etape4.html) une fois le document `Rmd` compilé.
+Vous devriez avoir cette [page](etapes-reporting/etape-reporting-4.html) une fois le document `Rmd` compilé.
 
 #### Plusieurs onglets
 
 Il est possible de créer un système d'onglet pour avoir plusieurs pages dans le reporting. Pour cela, vous devez d'abord créer un titre de niveau 1 (`#`) pour la première page (en la nommant par exemple `"Synthèse"`). Ce titre doit être placé avant la ligne `Column...`.
 
-Vous devriez avoir [cette page](__specifique/prog-stat-r-tp7-etape5.html) comme résultat.
+Vous devriez avoir [cette page](etapes-reporting/etape-reporting-5.html) comme résultat.
 
 Créer un deuxième onglet, nommé `"Détail"`, dans lequel nous allons mettre deux tables : une pour les départements et une pour les provenances. Voici les codes des deux *chunks* pour créer ces tableaux.
 
@@ -501,13 +514,13 @@ names(evol.prov) = c("Provenance", "2003", "2004", "Evolution")
 knitr::kable(evol.prov, digits = 0)
 ```
 
-Une fois compilé, vous devriez avoir le [tableau de bord](__specifique/prog-stat-r-tp7-etape6.html) suivant.
+Une fois compilé, vous devriez avoir le [tableau de bord](etapes-reporting/etape-reporting-6.html) suivant.
 
 ### Modification de l'orientation
 
 Dans la première page, nous avions disposer les différents éléments par colonnes (un élément dans la première et deux dans la deuxième). Il est possible de modifier cela pour une page spécifique. Dans la deuxième, à la suite du titre et sur la même ligne, il est possible d'ajouter `{data-orientation=rows}`. 
 
-Ainsi, le tableau devient [celui-ci](__specifique/prog-stat-r-tp7-etape7.html).
+Ainsi, le tableau devient [celui-ci](etapes-reporting/etape-reporting-7.html).
 
 Nous allons maintenant utiliser une jauge, avec la fonction `gauge()` du package `flexdashboard`. Celle-ci prend au minimum en paramètre une valeur, un minimum et un maximum.
 
@@ -536,7 +549,7 @@ gauge(sum(evol.prov$Evolution > 0), 0, nrow(evol.prov))
 valueBox(evol.prov$Provenance[which.max(evol.prov$Evolution)], icon = "fa-level-up")
 ```
 
-Au final, nous obtenons donc le [tableau de bord](__specifique/prog-stat-r-tp7-etape8.html) suivant.
+Au final, nous obtenons donc le [tableau de bord](etapes-reporting/etape-reporting-8.html) suivant.
 
 
 ### Publication
