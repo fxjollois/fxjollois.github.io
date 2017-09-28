@@ -18,6 +18,8 @@ Pour votre information, ce site étant encore **en construction**, certains lien
 
 Vous trouverez dans la page [Données](accesdonnees) des données à télécharger, que j'utilise régulièrement dans mes cours. Et dans la page [données intégrées](donnees-integrees-r.html) des informations sur des données présentes dans R.
 
+Et dans la page [Réalisations](realisations), vous trouverez des liens vers quelques applications que j'ai développé, pour l'enseignement particulièrement.
+
 ## Quelques liens intéressants 
 
 - [ECAIS](https://sites.google.com/site/groupeecais/) : groupe de travail de l'IUT Paris
