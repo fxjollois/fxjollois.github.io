@@ -2,7 +2,7 @@
 <html>
 	<head>
 		<meta charset = "UTF-8">
-		<link rel = "stylesheet" type = "text/css" href = {{ "css/slides.css" | absolute_url }}>
+		<link rel = "stylesheet" type = "text/css" href = {{ "/css/slides.css" | absolute_url }}>
 	</head>
 	<body>
 		<textarea id="source">
@@ -10,7 +10,7 @@
             {{ content }}
             
 		</textarea>
-		<script src={{ "libs/remark.min.js" | relative_url }}></script>
+		<script src="{{ "/libs/remark.min.js" | relative_url }}"></script>
 		<script>
 			var slideshow = remark.create({
 				countIncrementalSlides: false,
