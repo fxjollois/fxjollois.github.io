@@ -1,4 +1,5 @@
 ---
+layout: default
 title: Enseignement
 ---
 
@@ -7,7 +8,7 @@ title: Enseignement
 - DUT STID 1ère année
     - [Exploitation de données](exploitation-donnees)
 - DUT STID 2ème année (en alternance)
-    - [Analyse de données]()
+    - [Analyse de données](analyse-donnees/)
 - LP Santé
     - [R avancé](info-dec-sante/)
 - LP Data-Mining

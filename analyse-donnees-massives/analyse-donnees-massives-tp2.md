@@ -1,4 +1,5 @@
 ---
+layout: default
 title: TP2 - MapReduce sur MongoDB
 subtitle: Analyse de Données Massives - Master 1ère année
 ---

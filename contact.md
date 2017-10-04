@@ -1,4 +1,5 @@
 ---
+layout: default
 title: Contact
 ---
 
@@ -7,7 +8,7 @@ title: Contact
 Vous pouvez me joindre sur cette adresse courriel (enlever les espaces et les crochets, et remplacer # par @) :
 
     francois - xavier . jollois [#] parisdescartes . fr
-	
+
 Vous pourrez aussi me trouver physiquement :
 
 - à l'[IUT Paris Descartes](http://www.iut.parisdescartes.fr)

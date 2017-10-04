@@ -1,4 +1,5 @@
 ---
+layout: default
 title: Données à disposition
 ---
 

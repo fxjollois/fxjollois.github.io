@@ -1,4 +1,5 @@
 ---
+layout: default
 title: TP1 - Introduction à MongoDB - *correction*
 subtitle: Analyse de Données Massives - Master 1ère année
 ---

@@ -1,4 +1,5 @@
 ---
+layout: default
 title: TP1 - Introduction à MongoDB
 subtitle: Analyse de Données Massives - Master 1ère année
 ---
@@ -253,7 +254,8 @@ db.Sportifs.find({ "Sports.Jouer" : "Basket ball", "Sexe" : "F" }, sortie)
 Mais si on veut faire des combinaisons autres, il existe des opérateurs logiques : `$and`, `$or` et `$nor`. Ces trois opérations prennent un tableau de critères comme valeur. Nous cherchons ci-dessous les sportifs soit ayant au moins 32 ans, soit de sexe féminin.
 
 ```js
-db.Sportifs.find({ "$or": [ { "Age" : { "$gte" : 32 } }, { "Sexe": "F" } ] }, { "_id" : 0, "Nom" : 1, "Age" : 1, "Sexe" : 1 })
+db.Sportifs.find({ "$or": [ { "Age" : { "$gte" : 32 } }, { "Sexe": "F" } ] }, 
+                 { "_id" : 0, "Nom" : 1, "Age" : 1, "Sexe" : 1 })
 ```
 
 Comme précédemment indiqué, il est courant qu'un document ne contienne pas tous les items possibles. Si l'on cherche à tester la présence ou non d'un item, on utilise l'opérateur `$exists` (avec `true` si on teste la présence, et `false` l'absence). Dans l'exemple qui suit, nous cherchons les sportifs qui arbitre un sport.

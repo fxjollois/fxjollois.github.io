@@ -1,4 +1,5 @@
 ---
+layout: default
 title: FX Jollois
 ---
 
@@ -13,7 +14,7 @@ Pour votre information, ce site étant encore **en construction**, certains lien
 ## Informations sur le contenu du site
 
 - Dans la partie [**Enseignement**](enseignement), vous trouverez un ensemble de documents de cours
-- Dans la partie [Recherche](recherche.html), vous trouverez mes thématiques de recherche, ainsi que mes [publications](publications.html)
+- Dans la partie [**Recherche**](recherche.html), vous trouverez mes thématiques de recherche, ainsi que mes [publications](publications.html)
 - [**Statistical Programming using `R`**](stat-prog-R.html), *Amirkabir University*
 
 Vous trouverez dans la page [Données](accesdonnees) des données à télécharger, que j'utilise régulièrement dans mes cours. Et dans la page [données intégrées](donnees-integrees-r.html) des informations sur des données présentes dans R.

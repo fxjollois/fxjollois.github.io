@@ -1,4 +1,5 @@
 ---
+layout: default
 title: Visualisation de données - D3.js
 subtitle: Data-Driven Documents
 ---

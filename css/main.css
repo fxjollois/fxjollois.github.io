@@ -1,8 +1,10 @@
 /* structure global */
 * {
-  font-family: "Open Sans", sans-serif;
   margin: 0;
   padding: 0;
+}
+body {
+    font-family: "Open Sans", sans-serif;
 }
 
 nav ul,
@@ -85,4 +87,13 @@ p {
 }
 ul, ol {
   margin-left: 20px;
+}
+pre {
+    margin-bottom: 10px;
+    background-color: ghostwhite;
+    padding: 10px;
+}
+code {
+    background-color: ghostwhite;
+    font-family: 'Source Code Pro', monospace;
 }

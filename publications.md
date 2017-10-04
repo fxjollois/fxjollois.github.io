@@ -1,11 +1,15 @@
 ---
+layout: default
 title: Publications
 ---
 
 [Liste de publications sous Google Scholar](https://scholar.google.fr/citations?hl=fr&user=aW4afqQAAAAJ&view_op=list_works)
 
 - **2017** :
-    -  C. Bouveyron, L. Bozzi, J. Jacques and F.-X. Jollois, The Functional Latent Block Model for the Co-Clustering of Electricity Consumption Curves, Preprint HAL n°01533438, Université Paris Descartes, 2017: [pdf](http://hal.archives-ouvertes.fr/hal-01533438).
+    -  C. Bouveyron, L. Bozzi, J. Jacques and F.-X. Jollois. The Functional Latent Block Model for the Co-Clustering of Electricity Consumption Curves, Preprint HAL n°01533438, Université Paris Descartes, 2017: [pdf](http://hal.archives-ouvertes.fr/hal-01533438).
+    - F.-X. JOLLOIS. Outils de dataviz pour l'enseignement. Journées de Statistique 2017, Avignon, France. [pdf](http://jds2017.sfds.asso.fr/program/Soumissions/subm132.pdf)
+    - F.-X. JOLLOIS. explore-data : Un outil d'enseignement de la statistique descriptive. CFIES 2017, Grenoble, France. [pdf](https://toltex.u-ga.fr/users/RCqls/Workshop/cfies2017/Submissions/subm52.pdf)
+    - F.-X. JOLLOIS, F. MURI, E. OTTENWAELTER, A. ROLLAND, S. VIGUIER. Concours DATAVIZ. CFIES 2017, Grenoble, France. [pdf](https://toltex.u-ga.fr/users/RCqls/Workshop/cfies2017/Submissions/subm40.pdf)
 - **2016** :
     - J-M. Poggi, C. Bouveyron, G. Hébrail, et F-X. Jollois, Un DU d’Analyste Big Data en formation continue courte, au niveau L3, Statistique et Enseignement, vol. 7 (1), pp. 127-134, 2016: [web](http://publications-sfds.math.cnrs.fr/index.php/StatEns/article/view/549)
 - **2015** :
