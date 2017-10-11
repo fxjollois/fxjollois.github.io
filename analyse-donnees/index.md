@@ -7,6 +7,6 @@ subtitle: DUT STID 2ème Année en alternance
 ## Analyse de données
 
 - Analyse en Composantes Principales (ou **ACP**)
-    - [cours](acp-cours)
-    - [TD](acp-td)
-    - [TP](acp-tp)
+    - [cours](acp-cours.html)
+    - [TD](acp-td.html)
+    - [TP](acp-tp.html)

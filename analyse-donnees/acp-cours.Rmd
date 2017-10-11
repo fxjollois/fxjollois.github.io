@@ -1,0 +1,57 @@
+---
+layout: slide
+title: Analyse en Composantes Principales (ACP)
+subtitle: DUT STID 2AFA
+author: FX Jollois
+output: 
+  revealjs::revealjs_presentation:
+    theme: black
+    highlight: pygments
+    transition: fade
+---
+
+## Problème
+
+**Données** : matrice de $n$ individus décrits par $p$ variables
+
+Liens entre les variables :
+
+- $p = 2$ : nuage de points et corrélation
+- $p = 3$ : nuage 3D et matrice de corrélation
+- $p \ge 3$ : ca se complique
+    - Pas de méthodes de visualisation de données
+    - Utilisation de la matrice de corrélation, mais analyse limitée...
+
+
+## Objectifs
+
+Construction de **$q$ nouvelles variables** (*facteurs*, *composantes*) 
+
+- $q$ plus petit que $p$ (idéalement 2 ou 3)
+- minimisant la perte d'informations
+
+Que peut-on faire avec ?
+
+- Représentation graphique
+    - des individus
+    - des variables
+- Compression
+    - approximation de la matrice initiale
+
+## Principes
+
+- **Facteurs** : 
+    - combinaisons linéaires des variables initiales
+    - non corrélées deux à deux
+
+- *1ère composante* : 
+    - explique le mieux la variabilité des données
+    - droite minimisant la distance à tous les points
+- *2ème composante* :
+    - explique la variabilité résiduelle
+    - orthogonale à la 1ère
+- ...
+
+## 
+
+
