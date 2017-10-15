@@ -1,0 +1,119 @@
+---
+title: "ACP - TD"
+output: html_document
+---
+
+
+## Utilisation dans R
+
+Package [`FactoMineR`](http://factominer.free.fr/)
+
+```{r}
+library(FactoMineR)
+data(decathlon)
+```
+
+```{r, echo=FALSE}
+knitr::kable(head(decathlon, 10))
+```
+
+## Calcul de l'ACP
+
+Fonction `PCA`, dont voici les options principales
+
+- `graph` : affiche ou non les deux graphiques (oui par défaut)
+- `scale.unit` : travaille sur la matrice centrée par défaut (`FALSE` si on ne veut pas)
+- `ncp` : nombre de composantes à retenir (5 par défaut)
+
+```{r}
+acp = PCA(decathlon[,1:10], graph = FALSE)
+```
+
+Renvoie une liste avec toutes les informations importantes
+
+```{r}
+names(acp)
+```
+
+## Variance expliquée
+
+Objet `eig` contenant, pour chaque composante :
+
+- la valeur propre
+- le pourcentage de variance expliquée
+- le pourcentage cumulé de variance expliquée
+
+```{r}
+acp$eig
+```
+
+## Graphique de la variance expliquée
+
+```{r}
+barplot(acp$eig[,1])
+```
+
+
+## Représentation des individus
+
+2 premières composantes par défaut
+
+```{r}
+plot(acp)
+```
+
+## Représentation des individus
+
+Choix des composantes
+
+```{r}
+plot(acp, axes = c(1, 3))
+```
+
+## Représentation des variables
+
+2 premières composantes par défaut
+
+```{r}
+plot(acp, choix = "var")
+```
+
+## Représentation des variables
+
+Choix des composantes
+
+```{r}
+plot(acp, axes = c(1, 3), choix = "var")
+```
+
+## Individus *contributeurs*
+
+```{r}
+acp$ind$contrib
+```
+
+## Individus *bien représentés*
+
+```{r}
+acp$ind$cos2
+```
+
+
+## Variables *contributrices*
+
+```{r}
+acp$var$contrib
+```
+
+## Variables *bien représentées*
+
+```{r}
+acp$var$cos2
+```
+
+
+
+
+
+
+

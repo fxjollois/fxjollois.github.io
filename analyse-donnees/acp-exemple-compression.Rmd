@@ -1,29 +1,27 @@
 ---
 title: "ACP - exemple en compression d'image"
-output: 
-  html_notebook: 
-    code_folding: hide
+output: html_document
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE, fig.align = "center")
+knitr::opts_chunk$set(echo = FALSE, fig.align = "center")
 library(ggplot2)
 ```
 
-Dans cet exemple d'utilisation de l'ACP, nous partons d'une image quelconque (quoique...), pour la compresser en utilisant l'ACP. Pour Ã©valuer l'intÃ©rÃªt de la mÃ©thode, pour diffÃ©rents nombres d'axes, l'image reconstruite ainsi que la taille des Ã©lÃ©ments nÃ©cessaire Ã  la reconstruction sont affichÃ©es.
+Dans cet exemple d'utilisation de l'ACP, nous partons d'une image quelconque (quoique...), pour la compresser en utilisant l'ACP. Pour évaluer l'intérêt de la méthode, pour différents nombres d'axes, l'image reconstruite ainsi que la taille des éléments nécessaire à la reconstruction sont affichées.
 
 Le code est visible afin de reproduire l'exemple avec une autre photo.
 
 ## Image initiale
 
-Comme indiquÃ©e, l'image prise ici est simplement ma photo disponible sur la page [contact](../contact). La librairie `jpeg` permet d'importer et d'exporter des fichiers JPG, grÃ¢ce entre autres Ã  la fonction `readJPEG()`.
+Comme indiquée, l'image prise ici est simplement ma photo disponible sur la page [contact](../contact). La librairie `jpeg` permet d'importer et d'exporter des fichiers JPG, grâce entre autres à la fonction `readJPEG()`.
 
 ```{r import-jpeg}
 library(jpeg)
 fxj = readJPEG("../image_perso_FX.JPG")
 ```
 
-Il est possible d'afficher cette photo, grÃ¢ce Ã  la fonction `rasterImage()`. On retrouve bien l'image originale. Sa taille est non nÃ©gligeable (`r format(object.size(fxj), "auto")`). On en profite pour crÃ©er une fonction qui sera utile par la suite pour afficher les images reconstruite.
+Il est possible d'afficher cette photo, grâce à la fonction `rasterImage()`. On retrouve bien l'image originale. Sa taille est non négligeable (`r format(object.size(fxj), "auto")`). On en profite pour créer une fonction qui sera utile par la suite pour afficher les images reconstruite.
 
 ```{r affiche-jpeg}
 afficheJPEG = function(mat, titre = NULL) {
@@ -35,9 +33,9 @@ afficheJPEG = function(mat, titre = NULL) {
 afficheJPEG(fxj, paste0("Originale (= ", format(object.size(fxj), "auto"), ")"))
 ```
 
-## DÃ©coupage en rouge, vert et bleu
+## Découpage en rouge, vert et bleu
 
-Pour compresser cette image, nous allons dÃ©couper celle-ci dans les trois composantes classiques d'une image : rouge, vert et bleu. Chaque pixel est reprÃ©sentÃ© par une triplet de valeurs entre 0 et 1, reprÃ©sentant la quantitÃ© de chaque couleur de base Ã  afficher.
+Pour compresser cette image, nous allons découper celle-ci dans les trois composantes classiques d'une image : rouge, vert et bleu. Chaque pixel est représenté par une triplet de valeurs entre 0 et 1, représentant la quantité de chaque couleur de base à afficher.
 
 ```{r decoupe-jpeg}
 fxj.r = fxj[,,1]
@@ -45,7 +43,7 @@ fxj.g = fxj[,,2]
 fxj.b = fxj[,,3]
 ```
 
-Il est donc possible de reprÃ©senter ces trois composantes d'une image sÃ©paremment, tel que ci-dessous.
+Il est donc possible de représenter ces trois composantes d'une image séparemment, tel que ci-dessous.
 
 ```{r affiche-rgb, fig.width=50, fig.height=10}
 par(mar = c(0, 0, 3, 0), mfrow = c(1, 3), cex.main = 5)
@@ -78,8 +76,8 @@ acp.b = prcomp(fxj.b, center = FALSE)
 acp = list(acp.r, acp.g, acp.b)
 ```
 
-On crÃ©Ã©e trois fonctions permettant, Ã  partir d'un nombre d'axes passÃ© en paramÃ¨tre :
-- de calculer la taille des objets utilisÃ©s pour recrÃ©er l'image, 
+On créée trois fonctions permettant, à partir d'un nombre d'axes passé en paramètre :
+- de calculer la taille des objets utilisés pour recréer l'image, 
 - de reconstruire l'image,
 - d'afficher l'image reconstruite.
 
@@ -105,39 +103,39 @@ afficheCOMP = function(nbaxes) {
 }
 ```
 
-Lorsque nous utilisons uniquement 1 axe, l'image reconstruite est bien Ã©videmment assez loin de l'image de dÃ©part.
+Lorsque nous utilisons uniquement 1 axe, l'image reconstruite est bien évidemment assez loin de l'image de départ.
 
 ```{r}
 afficheCOMP(1)
 ```
 
-Avec 3 axes, on se rapproche , au moins de l'idÃ©e gÃ©nÃ©rale de l'image de base.
+Avec 3 axes, on se rapproche , au moins de l'idée générale de l'image de base.
 
 ```{r}
 afficheCOMP(3)
 ```
 
-Avec 20 axes, l'image est clairement reconnaissable, avec une taille trÃ¨s raisonnable par rapport Ã  la taille initiale.
+Avec 20 axes, l'image est clairement reconnaissable, avec une taille très raisonnable par rapport à la taille initiale.
 
 ```{r}
 afficheCOMP(20)
 ```
 
-Bien Ã©videmment, plus on ajoute d'axes, plus on se rapproche de l'image originale.
+Bien évidemment, plus on ajoute d'axes, plus on se rapproche de l'image originale.
 
 ```{r}
 afficheCOMP(50)
 ```
 
-Avec 320 axes, bien qu'en ayant divisÃ© presque par 4 la taille de l'image, celle reconstruite est trÃ¨s proche de l'image originale.
+Avec 320 axes, bien qu'en ayant divisé presque par 4 la taille de l'image, celle reconstruite est très proche de l'image originale.
 
 ```{r}
 afficheCOMP(320)
 ```
 
-## QualitÃ© de l'image reconstruite
+## Qualité de l'image reconstruite
 
-On peut aller plus  loin et calculer, pour chaque nombre d'axes, la distance entre l'image originale et l'image reconstruite, en sommant les Ã©carts au carrÃ© par exemple. On voit clairement que la taille augmente linÃ©airement par rapport aux nombre d'axes. Pour la diffÃ©rence par rapport Ã  l'originale, on remarque que le gain de qualitÃ© se fait trÃ¨s rapidement.
+On peut aller plus  loin et calculer, pour chaque nombre d'axes, la distance entre l'image originale et l'image reconstruite, en sommant les écarts au carré par exemple. On voit clairement que la taille augmente linéairement par rapport aux nombre d'axes. Pour la différence par rapport à l'originale, on remarque que le gain de qualité se fait très rapidement.
 
 ```{r difference}
 res = sapply(c(1:50, seq(60, 320, by = 20), 640), function(nbaxes) {
@@ -155,16 +153,16 @@ ggplot(res.df, aes(nbaxes)) +
   geom_line(aes(y = taille / coeff, colour = "Taille")) +
   scale_y_continuous(sec.axis = sec_axis(~. * coeff, name = "Taille")) +
   scale_colour_manual(values = c("red", "blue")) +
-  labs(x = "Nombre d'axes", y = "DiffÃ©rence par rapport Ã  l'original", colour = "") +
+  labs(x = "Nombre d'axes", y = "Différence par rapport à l'original", colour = "") +
   theme_minimal()
 ```
 
-Lorsqu'on zoome avec moins de 50 axes retenus, on remarque que la qualitÃ© de l'image reconstruite semble trÃ¨s bonne mÃªme avec seulement 50 axes retenus, comme vu prÃ©cÃ©demment. Cette compression permet de diviser la taille de l'image par **`r round(as.integer(object.size(fxj)) / res.df$taille[50], 1)`**.
+Lorsqu'on zoome avec moins de 50 axes retenus, on remarque que la qualité de l'image reconstruite semble très bonne même avec seulement 50 axes retenus, comme vu précédemment. Cette compression permet de diviser la taille de l'image par **`r round(as.integer(object.size(fxj)) / res.df$taille[50], 1)`**.
 
 ```{r}
 ggplot(head(res.df, 50), aes(nbaxes)) +
   geom_line(aes(y = diff), col = "red") +
-  labs(x = "Nombre d'axes", y = "DiffÃ©rence par rapport Ã  l'original") +
+  labs(x = "Nombre d'axes", y = "Différence par rapport à l'original") +
   theme_minimal()
 ```
 
