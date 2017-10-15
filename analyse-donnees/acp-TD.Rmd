@@ -3,6 +3,10 @@ title: "ACP - TD"
 output: html_document
 ---
 
+```{r, include=FALSE}
+knitr::opts_chunk$set(comment = NA)
+```
+
 
 ## Utilisation dans R
 
@@ -21,9 +25,9 @@ knitr::kable(head(decathlon, 10))
 
 Fonction `PCA`, dont voici les options principales
 
-- `graph` : affiche ou non les deux graphiques (oui par défaut)
-- `scale.unit` : travaille sur la matrice centrée par défaut (`FALSE` si on ne veut pas)
-- `ncp` : nombre de composantes à retenir (5 par défaut)
+- `graph` : affiche ou non les deux graphiques (oui par dÃ©faut)
+- `scale.unit` : travaille sur la matrice centrÃ©e par dÃ©faut (`FALSE` si on ne veut pas)
+- `ncp` : nombre de composantes Ã  retenir (5 par dÃ©faut)
 
 ```{r}
 acp = PCA(decathlon[,1:10], graph = FALSE)
@@ -35,34 +39,34 @@ Renvoie une liste avec toutes les informations importantes
 names(acp)
 ```
 
-## Variance expliquée
+## Variance expliquÃ©e
 
 Objet `eig` contenant, pour chaque composante :
 
 - la valeur propre
-- le pourcentage de variance expliquée
-- le pourcentage cumulé de variance expliquée
+- le pourcentage de variance expliquÃ©e
+- le pourcentage cumulÃ© de variance expliquÃ©e
 
 ```{r}
 acp$eig
 ```
 
-## Graphique de la variance expliquée
+## Graphique de la variance expliquÃ©e
 
 ```{r}
 barplot(acp$eig[,1])
 ```
 
 
-## Représentation des individus
+## ReprÃ©sentation des individus
 
-2 premières composantes par défaut
+2 premiÃ¨res composantes par dÃ©faut
 
 ```{r}
 plot(acp)
 ```
 
-## Représentation des individus
+## ReprÃ©sentation des individus
 
 Choix des composantes
 
@@ -70,15 +74,15 @@ Choix des composantes
 plot(acp, axes = c(1, 3))
 ```
 
-## Représentation des variables
+## ReprÃ©sentation des variables
 
-2 premières composantes par défaut
+2 premiÃ¨res composantes par dÃ©faut
 
 ```{r}
 plot(acp, choix = "var")
 ```
 
-## Représentation des variables
+## ReprÃ©sentation des variables
 
 Choix des composantes
 
@@ -92,7 +96,7 @@ plot(acp, axes = c(1, 3), choix = "var")
 acp$ind$contrib
 ```
 
-## Individus *bien représentés*
+## Individus *bien reprÃ©sentÃ©s*
 
 ```{r}
 acp$ind$cos2
@@ -105,7 +109,7 @@ acp$ind$cos2
 acp$var$contrib
 ```
 
-## Variables *bien représentées*
+## Variables *bien reprÃ©sentÃ©es*
 
 ```{r}
 acp$var$cos2

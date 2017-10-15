@@ -10,7 +10,7 @@ A TERMINER
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-L'intérêt de **`R`** réside, entre autres, dans sa possibilité à réaliser des calculs à partir de matrices et/ou de vecteurs. Nous pouvons ainsi décomposer le calcul de l'ACP directement.
+L'intÃ©rÃªt de **`R`** rÃ©side, entre autres, dans sa possibilitÃ© Ã  rÃ©aliser des calculs Ã  partir de matrices et/ou de vecteurs. Nous pouvons ainsi d?composer le calcul de l'ACP directement.
 
 ```{r, echo=FALSE}
 X = read.table(text = "Etudiant & Math & Phys & Fran & Angl
