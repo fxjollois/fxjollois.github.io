@@ -5,14 +5,16 @@ output: html_document
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(comment = NA)
-library(ggplot2)
-library(reshape2)
-library(dplyr)
 ```
 
 Dans ce TD, nous aborderons la réalisation de l'ACP sous R. Vous devez exécuter l'ensemble des commandes réalisées ici (et les comprendre), afin de pouvoir les reproduire.
 
-En plus des packages présentés ci-dessous, nous devrons utiliser d'autres packages (de type `ggplot2`) pour réaliser les graphiques et autres tableaux.
+En plus des packages présentés ci-dessous, nous devrons utiliser d'autres packages (inclus dans le chargement du package `tidyverse`) pour réaliser les graphiques et autres tableaux.
+
+```{r package}
+library(tidyverse)
+library(stringr)
+```
 
 ## Package `FactoMiner`
 
@@ -180,16 +182,17 @@ for (v in colnames(acp$var$contrib)) {
 Si nous regardons les valeurs propres, nous remarquons qu'il y en 4 supérieures à 1 (critère de Kaiser). Par contre, avec 2 composantes, nous expliquons 50% de l'information, et 64% avec 3 axes.
 
 ```{r affind, echo=FALSE}
-decat.m = melt(
-  decathlon[,c(1:10, 13)] %>% 
-    mutate(nom = row.names(decathlon)), 
-  id = c("nom", "Competition"))
-affIndividu <- function(individu, vars = as.character(unique(decat.m$variable))) {
-  df = decat.m %>% filter(variable %in% vars)
-  ggplot(df, aes("", value)) +
+decat.m = decathlon %>% 
+  select(1:10, Competition) %>% 
+  rownames_to_column(var = "Nom") %>% 
+  gather(Epreuve, Resultat, -Nom, -Competition)
+
+affIndividu <- function(individu, vars = as.character(unique(decat.m$Epreuve))) {
+  df = decat.m %>% filter(Epreuve %in% vars)
+  ggplot(df, aes("", Resultat)) +
     geom_boxplot() +
-    facet_wrap(~ variable, scales = "free") +
-    geom_point(data = df %>% filter(nom == individu), col = "red") +
+    facet_wrap(~ Epreuve, scales = "free") +
+    geom_point(data = df %>% filter(Nom == individu), col = "red") +
     ggtitle(individu)
 }
 ```
@@ -265,13 +268,12 @@ En plus du package `FactoMineR`, il existe le package [`FactoInvestigate`](http:
 
 Voila comment lancer la création du rapport.
 
-```{r investigate}
+```{r investigate, eval=FALSE}
 library(FactoInvestigate)
 Investigate(acp)
-print(Sys.getlocale())
 ```
 
-Une fois que la fonction a fini, elle affiche la page html créée dans un navigateur. Vous trouverez ici le [fichier produit](Investigate.html). Le fichier ici produit est en anglais, mais devrait être en français pour vous.
+Une fois que la fonction a fini, elle affiche la page html créée dans un navigateur. Vous trouverez ici le [fichier produit](Investigate.html).
 
 ## Package `Factoshiny`
 
@@ -288,13 +290,15 @@ Merci de produire un document `Rmarkdown` contenant l'ensemble du code et des co
 
 ### Worldwide Governance Indicators
 
-La [banque mondiale](http://www.banquemondiale.org) fournit un grand nombre de données, dont des indicateurs de gouvernance au niveau mondial (voir [ici](https://data.worldbank.org/data-catalog/worldwide-governance-indicators)). Le code ci-dessous importe les données du fichier [`WGI_Data.csv`](WGI_Data.csv) (que vous devez donc télécharger) pour les importer (en utilisant le package `reshape`). Les informations concernant la définition des indicateurs et leur source se trouvent dans le fichier [`WGI_Definition and Source.csv`](WGI_Definition and Source.csv).
+La [banque mondiale](http://www.banquemondiale.org) fournit un grand nombre de données, dont des indicateurs de gouvernance au niveau mondial (voir [ici](https://data.worldbank.org/data-catalog/worldwide-governance-indicators)). Le code ci-dessous importe les données du fichier [`WGI_Data.csv`](WGI_Data.csv) (que vous devez donc télécharger) pour les importer. Les informations concernant la définition des indicateurs et leur source se trouvent dans le fichier [`WGI_Definition and Source.csv`](WGI_Definition and Source.csv).
 
 ```{r wgi}
-wgi.m = read.table("WGI_Data.csv", 
-                   sep = ",", header = T, stringsAsFactors = FALSE, quote = '"')
-wgi.m$val = as.numeric(wgi.m$Value)
-wgi = acast(wgi.m, Country.Name ~ Series.Code, value.var = "val", fun.aggregate = sum)
+wgi.m = read_csv("WGI_Data.csv", quote = '"') %>%
+  mutate_at("Value", funs(as.numeric))
+wgi = wgi.m %>% 
+  select(`Country Name`, `Series Code`, Value) %>% 
+  spread(`Series Code`, Value) %>%
+  rename_at(vars(ends_with("EST")), funs(sub(".EST", "", .)))
 ```
 
 
@@ -316,11 +320,11 @@ Nous allons travailler ici sur les données de température mondiale **HadCRUT4*
 Le code ci-dessous télécharge directement les dernières données disponibles et les met dans un `data.frame` dont vous avez un aperçu en dessous (en supprimant l'année 2017, incomplète).
 
 ```{r temp}
-lignes = readLines("https://crudata.uea.ac.uk/cru/data/temperature/HadCRUT4-gl.dat")
-lignes.temp = lignes[seq(1, length(lignes), by = 2)]
-
-donnees = read.table(text = lignes.temp, row.names = 1)[-length(lignes.temp),]
-names(donnees) = c(month.name, "Annual")
+donnees = read_lines("https://crudata.uea.ac.uk/cru/data/temperature/HadCRUT4-gl.dat") %>% 
+  tibble() %>% 
+  slice(seq(1, n(), by = 2)) %>% 
+  transmute(val = str_replace_all(str_trim(.), "[\\s]+", " ")) %>%
+  separate(val, c("Year", month.abb, "Annual"), sep = " ", convert = TRUE)
 ```
 
 ```{r tempkable, echo=FALSE}
