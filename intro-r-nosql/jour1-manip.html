@@ -120,31 +120,100 @@ $(document).ready(function () {
 </div>
 
 
-<div id="presentation-de-r-et-de-lenvironnement" class="section level2">
-<h2>Présentation de R et de l’environnement</h2>
+<div id="presentation-de-r-et-de-son-environnement" class="section level2">
+<h2>Présentation de R et de son environnement</h2>
+<p>Le logiciel <strong>R</strong> est un langage dédié à la statistique. Celui-ci est interprété (i.e. exécuté à la volée). Pour simplifier son utilisation, il est possible d’écrire des scripts contenant plusieurs commandes à exécuter. Il a l’avantage d’être open source, et surtout d’être très utilisé par la communauté scientifique. Toute nouvelle méthode statistique a très rapidement une implémentation dans ce langage, ce qui n’est pas le cas pour d’autres langages.</p>
+<p>Pour simplifier le développement de programme R, il est nécessaire d’avoir une interface graphique (appelée aussi <em>GUI</em>). Celle offerte par R est très simpliste et beaucoup préfèrent utiliser <strong>RStudio</strong>, à juste titre. Cet outil permet de réellement fluidifier le travail avec ce langage.</p>
+<p>Enfin, R, dans l’esprit open source, offre la possibilité de charger des paquets (ou <em>packages</em> ou <em>library</em>) afin d’étendre ses possibilités. Il en existe un très grand nombre sur le site du <strong>CRAN</strong>, parfois redondants entre eux. Pour cette session, nous allons utiliser les paquets contenus dans <code>tidyverse</code>, qui est une collection de librairies très bien faites et adaptées pour la <em>Data Science</em>.</p>
+<p>Voici quelques liens intéressants pour ce cours:</p>
 <ul>
 <li><a href="http://www.r-project.org">R</a></li>
 <li><a href="http://www.rstudio.com">RStudio</a></li>
 <li><a href="https://www.tidyverse.org/">tidyverse</a></li>
 </ul>
 </div>
-<div id="structure-de-donnees" class="section level2">
-<h2>Structure de données</h2>
-<p>Tout est <code>vector</code> de base :</p>
-<pre class="r"><code>1</code></pre>
+<div id="elements-de-langages" class="section level2">
+<h2>Eléments de langages</h2>
+<p>Nous allons voir ici les différentes structures de données utilisées dans R, ainsi que les moyens de les créer et de les manipuler.</p>
+<div id="type-vector" class="section level3">
+<h3>Type <code>vector</code></h3>
+<p>Tout est <code>vector</code> de base (au minimum), il n’existe pas de type <em>scalaire</em>. La fonction <code>class()</code> renvoie la classe de l’objet passé en paramètre. Les fonction<code>is.&lt;type&gt;()</code> permet de tester si l’objet en paramètre est du type demandé.</p>
+<pre class="r"><code>a = 1
+print(a)</code></pre>
 <pre><code>## [1] 1</code></pre>
-<pre class="r"><code>class(1)</code></pre>
+<pre class="r"><code>a</code></pre>
+<pre><code>## [1] 1</code></pre>
+<pre class="r"><code>class(a)</code></pre>
 <pre><code>## [1] &quot;numeric&quot;</code></pre>
-<pre class="r"><code>is.vector(1)</code></pre>
+<pre class="r"><code>is.vector(a)</code></pre>
 <pre><code>## [1] TRUE</code></pre>
+<p>Si nous créons le vecteur <code>1 2 3 4 5</code> (grâce à la commande <code>1:5</code>), nous pouvons voir que les retours des fonctions <code>class()</code> et <code>is.vector()</code> sont les mêmes que pour la variable <code>a</code> ci-dessus.</p>
 <pre class="r"><code>1:5</code></pre>
 <pre><code>## [1] 1 2 3 4 5</code></pre>
 <pre class="r"><code>class(1:5)</code></pre>
 <pre><code>## [1] &quot;integer&quot;</code></pre>
 <pre class="r"><code>is.vector(1:5)</code></pre>
 <pre><code>## [1] TRUE</code></pre>
-<p>Il existe aussi des <code>list</code> (nommées ou non, voire partiellement) :</p>
-<pre class="r"><code>list(1:5, month.abb, pi)</code></pre>
+<p>Ci-dessous sont présentés différents moyens de créer des vecteurs.</p>
+<pre class="r"><code>c(1, 3, 5)</code></pre>
+<pre><code>## [1] 1 3 5</code></pre>
+<pre class="r"><code>c(&quot;A&quot;, &quot;b&quot;)</code></pre>
+<pre><code>## [1] &quot;A&quot; &quot;b&quot;</code></pre>
+<pre class="r"><code>c(&quot;a&quot;, 1:3)</code></pre>
+<pre><code>## [1] &quot;a&quot; &quot;1&quot; &quot;2&quot; &quot;3&quot;</code></pre>
+<pre class="r"><code>vector(&quot;numeric&quot;, 5)</code></pre>
+<pre><code>## [1] 0 0 0 0 0</code></pre>
+<pre class="r"><code>1:5</code></pre>
+<pre><code>## [1] 1 2 3 4 5</code></pre>
+<pre class="r"><code>5:1</code></pre>
+<pre><code>## [1] 5 4 3 2 1</code></pre>
+<pre class="r"><code>seq(1, 5)</code></pre>
+<pre><code>## [1] 1 2 3 4 5</code></pre>
+<pre class="r"><code>seq(1, 5, length = 9)</code></pre>
+<pre><code>## [1] 1.0 1.5 2.0 2.5 3.0 3.5 4.0 4.5 5.0</code></pre>
+<pre class="r"><code>seq(1, 5, by = .5)</code></pre>
+<pre><code>## [1] 1.0 1.5 2.0 2.5 3.0 3.5 4.0 4.5 5.0</code></pre>
+<pre class="r"><code>seq(1, 5, by = .75)</code></pre>
+<pre><code>## [1] 1.00 1.75 2.50 3.25 4.00 4.75</code></pre>
+<pre class="r"><code>rep(1:5, times = 3)</code></pre>
+<pre><code>##  [1] 1 2 3 4 5 1 2 3 4 5 1 2 3 4 5</code></pre>
+<pre class="r"><code>rep(1:5, each = 2)</code></pre>
+<pre><code>##  [1] 1 1 2 2 3 3 4 4 5 5</code></pre>
+<pre class="r"><code>rep(1:5, times = 3, each = 2)</code></pre>
+<pre><code>##  [1] 1 1 2 2 3 3 4 4 5 5 1 1 2 2 3 3 4 4 5 5 1 1 2 2 3 3 4 4 5 5</code></pre>
+<pre class="r"><code>runif(10)</code></pre>
+<pre><code>##  [1] 0.6139699 0.5657048 0.9399460 0.7541733 0.2418963 0.5036155 0.2916207
+##  [8] 0.8871776 0.9061897 0.1227859</code></pre>
+<pre class="r"><code>rnorm(10)</code></pre>
+<pre><code>##  [1] -1.8228866  0.5739649  1.1879471  1.3744012 -0.5390415  2.1975214
+##  [7]  1.6483347 -1.9792681 -0.2254450 -0.1047683</code></pre>
+<pre class="r"><code>rnorm(10, 100, 20)</code></pre>
+<pre><code>##  [1] 109.47880  83.46502 107.41655  72.19011 104.61411  92.59560 138.22441
+##  [8] 126.80846  75.16294  80.78965</code></pre>
+<p>Pour accéder aux éléments d’un vecteur, nous utilisons les <code>[]</code>. Dedans, nous pouvons soit mettre des indices, soit un vecteur booléen de même taille que le vecteur initiale. Les fonctions <code>head()</code> et <code>tail()</code> permettent d’avoir les premières ou les dernières valeurs (6 par défaut, modifiable si besoin).</p>
+<pre class="r"><code>x = rnorm(100)
+x[1]</code></pre>
+<pre><code>## [1] 0.8455804</code></pre>
+<pre class="r"><code>x[c(1, 5, 10)]</code></pre>
+<pre><code>## [1]  0.8455804  0.3067253 -0.4059391</code></pre>
+<pre class="r"><code>x[x &gt; 2]</code></pre>
+<pre><code>## [1] 2.126097</code></pre>
+<pre class="r"><code>head(x)</code></pre>
+<pre><code>## [1]  0.8455804 -1.4450773  1.3193273  0.1171166  0.3067253 -0.4757175</code></pre>
+<pre class="r"><code>head(x, 10)</code></pre>
+<pre><code>##  [1]  0.8455804 -1.4450773  1.3193273  0.1171166  0.3067253 -0.4757175
+##  [7]  0.1179782  1.3017619 -0.7000660 -0.4059391</code></pre>
+<pre class="r"><code>tail(x)</code></pre>
+<pre><code>## [1] -1.4743101  0.9059875 -0.1069225  0.5273610 -0.8667268  0.2373250</code></pre>
+<pre class="r"><code>tail(x, 10)</code></pre>
+<pre><code>##  [1]  0.2386434  1.0523249 -0.4899435  0.5067225 -1.4743101  0.9059875
+##  [7] -0.1069225  0.5273610 -0.8667268  0.2373250</code></pre>
+</div>
+<div id="type-list" class="section level3">
+<h3>Type <code>list</code></h3>
+<p>Si nous souhaitons mettre ensemble des éléments de type différents, il existe aussi des <code>list</code> (nommées ou non, voire partiellement), créées via la fonction <code>list()</code>. Ci-dessous sont présentées différentes listes et comment on accède aux élément de celle-ci (avec des <code>[[]]</code> ou l’opérateur <code>$</code> suivi du nom du sous-objet.</p>
+<pre class="r"><code>a = list(1:5, month.abb, pi)
+a</code></pre>
 <pre><code>## [[1]]
 ## [1] 1 2 3 4 5
 ## 
@@ -154,10 +223,11 @@ $(document).ready(function () {
 ## 
 ## [[3]]
 ## [1] 3.141593</code></pre>
-<pre class="r"><code>class(list(1:5, month.abb, pi))</code></pre>
+<pre class="r"><code>class(a)</code></pre>
 <pre><code>## [1] &quot;list&quot;</code></pre>
-<pre class="r"><code>list(a = 1:5, mois = month.abb, pi = pi)</code></pre>
-<pre><code>## $a
+<pre class="r"><code>b = list(b = 1:5, mois = month.abb, pi = pi)
+b</code></pre>
+<pre><code>## $b
 ## [1] 1 2 3 4 5
 ## 
 ## $mois
@@ -166,7 +236,32 @@ $(document).ready(function () {
 ## 
 ## $pi
 ## [1] 3.141593</code></pre>
-<pre class="r"><code>list(1:5, mois = month.abb, pi = pi)</code></pre>
+<pre class="r"><code>c = list(1:5, mois = month.abb, pi = pi)
+c[[1]]</code></pre>
+<pre><code>## [1] 1 2 3 4 5</code></pre>
+<pre class="r"><code>c[[2]]</code></pre>
+<pre><code>##  [1] &quot;Jan&quot; &quot;Feb&quot; &quot;Mar&quot; &quot;Apr&quot; &quot;May&quot; &quot;Jun&quot; &quot;Jul&quot; &quot;Aug&quot; &quot;Sep&quot; &quot;Oct&quot; &quot;Nov&quot;
+## [12] &quot;Dec&quot;</code></pre>
+<pre class="r"><code>c$mois</code></pre>
+<pre><code>##  [1] &quot;Jan&quot; &quot;Feb&quot; &quot;Mar&quot; &quot;Apr&quot; &quot;May&quot; &quot;Jun&quot; &quot;Jul&quot; &quot;Aug&quot; &quot;Sep&quot; &quot;Oct&quot; &quot;Nov&quot;
+## [12] &quot;Dec&quot;</code></pre>
+<pre class="r"><code>d = list(d1 = c, d2 = head(x))
+d</code></pre>
+<pre><code>## $d1
+## $d1[[1]]
+## [1] 1 2 3 4 5
+## 
+## $d1$mois
+##  [1] &quot;Jan&quot; &quot;Feb&quot; &quot;Mar&quot; &quot;Apr&quot; &quot;May&quot; &quot;Jun&quot; &quot;Jul&quot; &quot;Aug&quot; &quot;Sep&quot; &quot;Oct&quot; &quot;Nov&quot;
+## [12] &quot;Dec&quot;
+## 
+## $d1$pi
+## [1] 3.141593
+## 
+## 
+## $d2
+## [1]  0.8455804 -1.4450773  1.3193273  0.1171166  0.3067253 -0.4757175</code></pre>
+<pre class="r"><code>d$d1</code></pre>
 <pre><code>## [[1]]
 ## [1] 1 2 3 4 5
 ## 
@@ -176,7 +271,114 @@ $(document).ready(function () {
 ## 
 ## $pi
 ## [1] 3.141593</code></pre>
-<p>Le type le plus utilisé est le <code>data.frame</code> :</p>
+<pre class="r"><code>d$d2</code></pre>
+<pre><code>## [1]  0.8455804 -1.4450773  1.3193273  0.1171166  0.3067253 -0.4757175</code></pre>
+<pre class="r"><code>d$d1$mois</code></pre>
+<pre><code>##  [1] &quot;Jan&quot; &quot;Feb&quot; &quot;Mar&quot; &quot;Apr&quot; &quot;May&quot; &quot;Jun&quot; &quot;Jul&quot; &quot;Aug&quot; &quot;Sep&quot; &quot;Oct&quot; &quot;Nov&quot;
+## [12] &quot;Dec&quot;</code></pre>
+</div>
+<div id="type-matrix-etarray" class="section level3">
+<h3>Type <code>matrix</code> (et<code>array</code>)</h3>
+<p>Si on souhaite créer des tableaux à 2 dimensions, il faut utiliser la fonction <code>matrix()</code>, qui renvoie un objet <code>matrix</code>. On utilise les <code>[,]</code> pour accéder aux cellules de la matrice, avec tout ce qui est pour les lignes avant la virgule, et pour les colonnes après.</p>
+<pre class="r"><code>matrix(0, nrow = 2, ncol = 5)</code></pre>
+<pre><code>##      [,1] [,2] [,3] [,4] [,5]
+## [1,]    0    0    0    0    0
+## [2,]    0    0    0    0    0</code></pre>
+<pre class="r"><code>matrix(1:10, 2, 5)</code></pre>
+<pre><code>##      [,1] [,2] [,3] [,4] [,5]
+## [1,]    1    3    5    7    9
+## [2,]    2    4    6    8   10</code></pre>
+<pre class="r"><code>matrix(1:10, 2, 5, byrow = TRUE)</code></pre>
+<pre><code>##      [,1] [,2] [,3] [,4] [,5]
+## [1,]    1    2    3    4    5
+## [2,]    6    7    8    9   10</code></pre>
+<pre class="r"><code>m = matrix(runif(100), 20, 5)
+m</code></pre>
+<pre><code>##             [,1]        [,2]       [,3]        [,4]      [,5]
+##  [1,] 0.90066469 0.540954324 0.33218329 0.931555162 0.3935471
+##  [2,] 0.38019947 0.646894746 0.88281000 0.903122545 0.1532093
+##  [3,] 0.38006839 0.779867547 0.55091434 0.861371163 0.7553628
+##  [4,] 0.45487816 0.933977060 0.03634710 0.126453527 0.4802507
+##  [5,] 0.49180909 0.328296747 0.78985843 0.616548648 0.1604165
+##  [6,] 0.50140351 0.025273450 0.07356431 0.821960496 0.7758729
+##  [7,] 0.82006110 0.438602094 0.93168422 0.853585838 0.8817233
+##  [8,] 0.33107680 0.001691017 0.86713135 0.585186217 0.1515676
+##  [9,] 0.35212246 0.819815837 0.07297928 0.589591270 0.8414936
+## [10,] 0.58571539 0.426417988 0.30449293 0.857547098 0.5036206
+## [11,] 0.75168400 0.398478038 0.95756571 0.017057856 0.1571733
+## [12,] 0.58718713 0.954039707 0.55254264 0.671725932 0.7045497
+## [13,] 0.80453885 0.456825187 0.98641365 0.228062807 0.4878212
+## [14,] 0.90521673 0.504323250 0.48358323 0.688395317 0.3031812
+## [15,] 0.70058360 0.141710264 0.41401721 0.174078972 0.1558124
+## [16,] 0.47934243 0.917815574 0.08072725 0.806203278 0.1516491
+## [17,] 0.32227508 0.493747049 0.66109346 0.144415432 0.2692136
+## [18,] 0.81573742 0.762721024 0.49631940 0.002733144 0.3711942
+## [19,] 0.06089462 0.640001642 0.15904945 0.466714398 0.6735365
+## [20,] 0.70884667 0.419294069 0.77928300 0.914067366 0.6661164</code></pre>
+<pre class="r"><code>dim(m)</code></pre>
+<pre><code>## [1] 20  5</code></pre>
+<pre class="r"><code>head(m)</code></pre>
+<pre><code>##           [,1]       [,2]       [,3]      [,4]      [,5]
+## [1,] 0.9006647 0.54095432 0.33218329 0.9315552 0.3935471
+## [2,] 0.3801995 0.64689475 0.88281000 0.9031225 0.1532093
+## [3,] 0.3800684 0.77986755 0.55091434 0.8613712 0.7553628
+## [4,] 0.4548782 0.93397706 0.03634710 0.1264535 0.4802507
+## [5,] 0.4918091 0.32829675 0.78985843 0.6165486 0.1604165
+## [6,] 0.5014035 0.02527345 0.07356431 0.8219605 0.7758729</code></pre>
+<pre class="r"><code>m[1,]</code></pre>
+<pre><code>## [1] 0.9006647 0.5409543 0.3321833 0.9315552 0.3935471</code></pre>
+<pre class="r"><code>m[1:3,]</code></pre>
+<pre><code>##           [,1]      [,2]      [,3]      [,4]      [,5]
+## [1,] 0.9006647 0.5409543 0.3321833 0.9315552 0.3935471
+## [2,] 0.3801995 0.6468947 0.8828100 0.9031225 0.1532093
+## [3,] 0.3800684 0.7798675 0.5509143 0.8613712 0.7553628</code></pre>
+<pre class="r"><code>m[,1]</code></pre>
+<pre><code>##  [1] 0.90066469 0.38019947 0.38006839 0.45487816 0.49180909 0.50140351
+##  [7] 0.82006110 0.33107680 0.35212246 0.58571539 0.75168400 0.58718713
+## [13] 0.80453885 0.90521673 0.70058360 0.47934243 0.32227508 0.81573742
+## [19] 0.06089462 0.70884667</code></pre>
+<pre class="r"><code>m[,1:3]</code></pre>
+<pre><code>##             [,1]        [,2]       [,3]
+##  [1,] 0.90066469 0.540954324 0.33218329
+##  [2,] 0.38019947 0.646894746 0.88281000
+##  [3,] 0.38006839 0.779867547 0.55091434
+##  [4,] 0.45487816 0.933977060 0.03634710
+##  [5,] 0.49180909 0.328296747 0.78985843
+##  [6,] 0.50140351 0.025273450 0.07356431
+##  [7,] 0.82006110 0.438602094 0.93168422
+##  [8,] 0.33107680 0.001691017 0.86713135
+##  [9,] 0.35212246 0.819815837 0.07297928
+## [10,] 0.58571539 0.426417988 0.30449293
+## [11,] 0.75168400 0.398478038 0.95756571
+## [12,] 0.58718713 0.954039707 0.55254264
+## [13,] 0.80453885 0.456825187 0.98641365
+## [14,] 0.90521673 0.504323250 0.48358323
+## [15,] 0.70058360 0.141710264 0.41401721
+## [16,] 0.47934243 0.917815574 0.08072725
+## [17,] 0.32227508 0.493747049 0.66109346
+## [18,] 0.81573742 0.762721024 0.49631940
+## [19,] 0.06089462 0.640001642 0.15904945
+## [20,] 0.70884667 0.419294069 0.77928300</code></pre>
+<pre class="r"><code>m[1,1]</code></pre>
+<pre><code>## [1] 0.9006647</code></pre>
+<pre class="r"><code>m[1:3,1]</code></pre>
+<pre><code>## [1] 0.9006647 0.3801995 0.3800684</code></pre>
+<pre class="r"><code>m[1,1:3]</code></pre>
+<pre><code>## [1] 0.9006647 0.5409543 0.3321833</code></pre>
+<pre class="r"><code>m[1:3,1:3]</code></pre>
+<pre><code>##           [,1]      [,2]      [,3]
+## [1,] 0.9006647 0.5409543 0.3321833
+## [2,] 0.3801995 0.6468947 0.8828100
+## [3,] 0.3800684 0.7798675 0.5509143</code></pre>
+<p>Le type <code>array</code> est finalement une extension de <code>matrix</code> à plus de 2 dimensions. Nous ne verrons pas ce type pour le moment.</p>
+<pre class="r"><code>class(m)</code></pre>
+<pre><code>## [1] &quot;matrix&quot;</code></pre>
+<pre class="r"><code>is.array(m)</code></pre>
+<pre><code>## [1] TRUE</code></pre>
+</div>
+<div id="type-data.frame" class="section level3">
+<h3>Type <code>data.frame</code></h3>
+<p>En statistique, nous avons couramment besoin de tables d’individus (ou d’objets) décrits par des variables. En R, ce type de données est contenu, de base, dans des <code>data.frame</code>. Pour information, il existe un certain nombre de données déjà présentes dans R, dont vous pouvez obtenir la liste par la fonction <code>data()</code> exécutée dans la console. De plus, pour accéder à l’aide d’un jeu de données, vous pouvez exécuter soit <code>help(&lt;jeu&gt;)</code> ou <code>?&lt;jeu&gt;</code>. Ici, le jeu de données utilisé est <code>mtcars</code>.</p>
 <pre class="r"><code>mtcars</code></pre>
 <pre><code>##                      mpg cyl  disp  hp drat    wt  qsec vs am gear carb
 ## Mazda RX4           21.0   6 160.0 110 3.90 2.620 16.46  0  1    4    4
@@ -213,12 +415,720 @@ $(document).ready(function () {
 ## Volvo 142E          21.4   4 121.0 109 4.11 2.780 18.60  1  1    4    2</code></pre>
 <pre class="r"><code>class(mtcars)</code></pre>
 <pre><code>## [1] &quot;data.frame&quot;</code></pre>
+<pre class="r"><code>head(mtcars)</code></pre>
+<pre><code>##                    mpg cyl disp  hp drat    wt  qsec vs am gear carb
+## Mazda RX4         21.0   6  160 110 3.90 2.620 16.46  0  1    4    4
+## Mazda RX4 Wag     21.0   6  160 110 3.90 2.875 17.02  0  1    4    4
+## Datsun 710        22.8   4  108  93 3.85 2.320 18.61  1  1    4    1
+## Hornet 4 Drive    21.4   6  258 110 3.08 3.215 19.44  1  0    3    1
+## Hornet Sportabout 18.7   8  360 175 3.15 3.440 17.02  0  0    3    2
+## Valiant           18.1   6  225 105 2.76 3.460 20.22  1  0    3    1</code></pre>
+<pre class="r"><code>names(mtcars)</code></pre>
+<pre><code>##  [1] &quot;mpg&quot;  &quot;cyl&quot;  &quot;disp&quot; &quot;hp&quot;   &quot;drat&quot; &quot;wt&quot;   &quot;qsec&quot; &quot;vs&quot;   &quot;am&quot;   &quot;gear&quot;
+## [11] &quot;carb&quot;</code></pre>
+<pre class="r"><code>rownames(mtcars)</code></pre>
+<pre><code>##  [1] &quot;Mazda RX4&quot;           &quot;Mazda RX4 Wag&quot;       &quot;Datsun 710&quot;         
+##  [4] &quot;Hornet 4 Drive&quot;      &quot;Hornet Sportabout&quot;   &quot;Valiant&quot;            
+##  [7] &quot;Duster 360&quot;          &quot;Merc 240D&quot;           &quot;Merc 230&quot;           
+## [10] &quot;Merc 280&quot;            &quot;Merc 280C&quot;           &quot;Merc 450SE&quot;         
+## [13] &quot;Merc 450SL&quot;          &quot;Merc 450SLC&quot;         &quot;Cadillac Fleetwood&quot; 
+## [16] &quot;Lincoln Continental&quot; &quot;Chrysler Imperial&quot;   &quot;Fiat 128&quot;           
+## [19] &quot;Honda Civic&quot;         &quot;Toyota Corolla&quot;      &quot;Toyota Corona&quot;      
+## [22] &quot;Dodge Challenger&quot;    &quot;AMC Javelin&quot;         &quot;Camaro Z28&quot;         
+## [25] &quot;Pontiac Firebird&quot;    &quot;Fiat X1-9&quot;           &quot;Porsche 914-2&quot;      
+## [28] &quot;Lotus Europa&quot;        &quot;Ford Pantera L&quot;      &quot;Ferrari Dino&quot;       
+## [31] &quot;Maserati Bora&quot;       &quot;Volvo 142E&quot;</code></pre>
+<pre class="r"><code>dim(mtcars)</code></pre>
+<pre><code>## [1] 32 11</code></pre>
+<pre class="r"><code>str(mtcars)</code></pre>
+<pre><code>## 'data.frame':    32 obs. of  11 variables:
+##  $ mpg : num  21 21 22.8 21.4 18.7 18.1 14.3 24.4 22.8 19.2 ...
+##  $ cyl : num  6 6 4 6 8 6 8 4 4 6 ...
+##  $ disp: num  160 160 108 258 360 ...
+##  $ hp  : num  110 110 93 110 175 105 245 62 95 123 ...
+##  $ drat: num  3.9 3.9 3.85 3.08 3.15 2.76 3.21 3.69 3.92 3.92 ...
+##  $ wt  : num  2.62 2.88 2.32 3.21 3.44 ...
+##  $ qsec: num  16.5 17 18.6 19.4 17 ...
+##  $ vs  : num  0 0 1 1 0 1 0 1 1 1 ...
+##  $ am  : num  1 1 1 0 0 0 0 0 0 0 ...
+##  $ gear: num  4 4 4 3 3 3 3 4 4 4 ...
+##  $ carb: num  4 4 1 1 2 1 4 2 2 4 ...</code></pre>
+<p>Pour accéder aux données, nous pouvons soit utiliser le même procédé que pour une <code>matrix</code>, soit des moyens plus spécifiques.</p>
+<pre class="r"><code>mtcars[1,]</code></pre>
+<pre><code>##           mpg cyl disp  hp drat   wt  qsec vs am gear carb
+## Mazda RX4  21   6  160 110  3.9 2.62 16.46  0  1    4    4</code></pre>
+<pre class="r"><code>mtcars[,1]</code></pre>
+<pre><code>##  [1] 21.0 21.0 22.8 21.4 18.7 18.1 14.3 24.4 22.8 19.2 17.8 16.4 17.3 15.2
+## [15] 10.4 10.4 14.7 32.4 30.4 33.9 21.5 15.5 15.2 13.3 19.2 27.3 26.0 30.4
+## [29] 15.8 19.7 15.0 21.4</code></pre>
+<pre class="r"><code>mtcars[1]</code></pre>
+<pre><code>##                      mpg
+## Mazda RX4           21.0
+## Mazda RX4 Wag       21.0
+## Datsun 710          22.8
+## Hornet 4 Drive      21.4
+## Hornet Sportabout   18.7
+## Valiant             18.1
+## Duster 360          14.3
+## Merc 240D           24.4
+## Merc 230            22.8
+## Merc 280            19.2
+## Merc 280C           17.8
+## Merc 450SE          16.4
+## Merc 450SL          17.3
+## Merc 450SLC         15.2
+## Cadillac Fleetwood  10.4
+## Lincoln Continental 10.4
+## Chrysler Imperial   14.7
+## Fiat 128            32.4
+## Honda Civic         30.4
+## Toyota Corolla      33.9
+## Toyota Corona       21.5
+## Dodge Challenger    15.5
+## AMC Javelin         15.2
+## Camaro Z28          13.3
+## Pontiac Firebird    19.2
+## Fiat X1-9           27.3
+## Porsche 914-2       26.0
+## Lotus Europa        30.4
+## Ford Pantera L      15.8
+## Ferrari Dino        19.7
+## Maserati Bora       15.0
+## Volvo 142E          21.4</code></pre>
+<pre class="r"><code>mtcars[,&quot;mpg&quot;]</code></pre>
+<pre><code>##  [1] 21.0 21.0 22.8 21.4 18.7 18.1 14.3 24.4 22.8 19.2 17.8 16.4 17.3 15.2
+## [15] 10.4 10.4 14.7 32.4 30.4 33.9 21.5 15.5 15.2 13.3 19.2 27.3 26.0 30.4
+## [29] 15.8 19.7 15.0 21.4</code></pre>
+<pre class="r"><code>mtcars[&quot;mpg&quot;]</code></pre>
+<pre><code>##                      mpg
+## Mazda RX4           21.0
+## Mazda RX4 Wag       21.0
+## Datsun 710          22.8
+## Hornet 4 Drive      21.4
+## Hornet Sportabout   18.7
+## Valiant             18.1
+## Duster 360          14.3
+## Merc 240D           24.4
+## Merc 230            22.8
+## Merc 280            19.2
+## Merc 280C           17.8
+## Merc 450SE          16.4
+## Merc 450SL          17.3
+## Merc 450SLC         15.2
+## Cadillac Fleetwood  10.4
+## Lincoln Continental 10.4
+## Chrysler Imperial   14.7
+## Fiat 128            32.4
+## Honda Civic         30.4
+## Toyota Corolla      33.9
+## Toyota Corona       21.5
+## Dodge Challenger    15.5
+## AMC Javelin         15.2
+## Camaro Z28          13.3
+## Pontiac Firebird    19.2
+## Fiat X1-9           27.3
+## Porsche 914-2       26.0
+## Lotus Europa        30.4
+## Ford Pantera L      15.8
+## Ferrari Dino        19.7
+## Maserati Bora       15.0
+## Volvo 142E          21.4</code></pre>
+<pre class="r"><code>mtcars$mpg</code></pre>
+<pre><code>##  [1] 21.0 21.0 22.8 21.4 18.7 18.1 14.3 24.4 22.8 19.2 17.8 16.4 17.3 15.2
+## [15] 10.4 10.4 14.7 32.4 30.4 33.9 21.5 15.5 15.2 13.3 19.2 27.3 26.0 30.4
+## [29] 15.8 19.7 15.0 21.4</code></pre>
+<pre class="r"><code>mtcars[&quot;Mazda RX4&quot;,]</code></pre>
+<pre><code>##           mpg cyl disp  hp drat   wt  qsec vs am gear carb
+## Mazda RX4  21   6  160 110  3.9 2.62 16.46  0  1    4    4</code></pre>
+<pre class="r"><code>mtcars[1:5, c(&quot;mpg&quot;, &quot;hp&quot;, &quot;qsec&quot;)]</code></pre>
+<pre><code>##                    mpg  hp  qsec
+## Mazda RX4         21.0 110 16.46
+## Mazda RX4 Wag     21.0 110 17.02
+## Datsun 710        22.8  93 18.61
+## Hornet 4 Drive    21.4 110 19.44
+## Hornet Sportabout 18.7 175 17.02</code></pre>
+<pre class="r"><code>mtcars[c(&quot;Mazda RX4&quot;, &quot;Hornet Sportabout&quot;), 1:3]</code></pre>
+<pre><code>##                    mpg cyl disp
+## Mazda RX4         21.0   6  160
+## Hornet Sportabout 18.7   8  360</code></pre>
+<pre class="r"><code>mtcars[mtcars$mpg &gt; 30,]</code></pre>
+<pre><code>##                 mpg cyl disp  hp drat    wt  qsec vs am gear carb
+## Fiat 128       32.4   4 78.7  66 4.08 2.200 19.47  1  1    4    1
+## Honda Civic    30.4   4 75.7  52 4.93 1.615 18.52  1  1    4    2
+## Toyota Corolla 33.9   4 71.1  65 4.22 1.835 19.90  1  1    4    1
+## Lotus Europa   30.4   4 95.1 113 3.77 1.513 16.90  1  1    5    2</code></pre>
+</div>
+<div id="type-factor" class="section level3">
+<h3>Type <code>factor</code></h3>
+<p>Puisque R est un langage orienté statistique, il dispose d’un type particulier permettant de coder des variables qualitatives, le type <code>factor</code>. Comme nous pouvons le voir en transformant la variable en <code>numeric</code>, ce type code chaque modalité numériquement (en valeur entière de 1 à <span class="math inline">\(n_{modalité}\)</span>) et garde la liste des modalités en plus (qu’on peut obtenir avec <code>levels()</code>).</p>
+<pre class="r"><code>class(iris$Species)</code></pre>
+<pre><code>## [1] &quot;factor&quot;</code></pre>
+<pre class="r"><code>head(iris$Species)</code></pre>
+<pre><code>## [1] setosa setosa setosa setosa setosa setosa
+## Levels: setosa versicolor virginica</code></pre>
+<pre class="r"><code>levels(iris$Species)</code></pre>
+<pre><code>## [1] &quot;setosa&quot;     &quot;versicolor&quot; &quot;virginica&quot;</code></pre>
+<pre class="r"><code>as.numeric(iris$Species)</code></pre>
+<pre><code>##   [1] 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
+##  [36] 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2
+##  [71] 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 3 3 3 3 3
+## [106] 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3
+## [141] 3 3 3 3 3 3 3 3 3 3</code></pre>
+<pre class="r"><code>as.character(iris$Species)</code></pre>
+<pre><code>##   [1] &quot;setosa&quot;     &quot;setosa&quot;     &quot;setosa&quot;     &quot;setosa&quot;     &quot;setosa&quot;    
+##   [6] &quot;setosa&quot;     &quot;setosa&quot;     &quot;setosa&quot;     &quot;setosa&quot;     &quot;setosa&quot;    
+##  [11] &quot;setosa&quot;     &quot;setosa&quot;     &quot;setosa&quot;     &quot;setosa&quot;     &quot;setosa&quot;    
+##  [16] &quot;setosa&quot;     &quot;setosa&quot;     &quot;setosa&quot;     &quot;setosa&quot;     &quot;setosa&quot;    
+##  [21] &quot;setosa&quot;     &quot;setosa&quot;     &quot;setosa&quot;     &quot;setosa&quot;     &quot;setosa&quot;    
+##  [26] &quot;setosa&quot;     &quot;setosa&quot;     &quot;setosa&quot;     &quot;setosa&quot;     &quot;setosa&quot;    
+##  [31] &quot;setosa&quot;     &quot;setosa&quot;     &quot;setosa&quot;     &quot;setosa&quot;     &quot;setosa&quot;    
+##  [36] &quot;setosa&quot;     &quot;setosa&quot;     &quot;setosa&quot;     &quot;setosa&quot;     &quot;setosa&quot;    
+##  [41] &quot;setosa&quot;     &quot;setosa&quot;     &quot;setosa&quot;     &quot;setosa&quot;     &quot;setosa&quot;    
+##  [46] &quot;setosa&quot;     &quot;setosa&quot;     &quot;setosa&quot;     &quot;setosa&quot;     &quot;setosa&quot;    
+##  [51] &quot;versicolor&quot; &quot;versicolor&quot; &quot;versicolor&quot; &quot;versicolor&quot; &quot;versicolor&quot;
+##  [56] &quot;versicolor&quot; &quot;versicolor&quot; &quot;versicolor&quot; &quot;versicolor&quot; &quot;versicolor&quot;
+##  [61] &quot;versicolor&quot; &quot;versicolor&quot; &quot;versicolor&quot; &quot;versicolor&quot; &quot;versicolor&quot;
+##  [66] &quot;versicolor&quot; &quot;versicolor&quot; &quot;versicolor&quot; &quot;versicolor&quot; &quot;versicolor&quot;
+##  [71] &quot;versicolor&quot; &quot;versicolor&quot; &quot;versicolor&quot; &quot;versicolor&quot; &quot;versicolor&quot;
+##  [76] &quot;versicolor&quot; &quot;versicolor&quot; &quot;versicolor&quot; &quot;versicolor&quot; &quot;versicolor&quot;
+##  [81] &quot;versicolor&quot; &quot;versicolor&quot; &quot;versicolor&quot; &quot;versicolor&quot; &quot;versicolor&quot;
+##  [86] &quot;versicolor&quot; &quot;versicolor&quot; &quot;versicolor&quot; &quot;versicolor&quot; &quot;versicolor&quot;
+##  [91] &quot;versicolor&quot; &quot;versicolor&quot; &quot;versicolor&quot; &quot;versicolor&quot; &quot;versicolor&quot;
+##  [96] &quot;versicolor&quot; &quot;versicolor&quot; &quot;versicolor&quot; &quot;versicolor&quot; &quot;versicolor&quot;
+## [101] &quot;virginica&quot;  &quot;virginica&quot;  &quot;virginica&quot;  &quot;virginica&quot;  &quot;virginica&quot; 
+## [106] &quot;virginica&quot;  &quot;virginica&quot;  &quot;virginica&quot;  &quot;virginica&quot;  &quot;virginica&quot; 
+## [111] &quot;virginica&quot;  &quot;virginica&quot;  &quot;virginica&quot;  &quot;virginica&quot;  &quot;virginica&quot; 
+## [116] &quot;virginica&quot;  &quot;virginica&quot;  &quot;virginica&quot;  &quot;virginica&quot;  &quot;virginica&quot; 
+## [121] &quot;virginica&quot;  &quot;virginica&quot;  &quot;virginica&quot;  &quot;virginica&quot;  &quot;virginica&quot; 
+## [126] &quot;virginica&quot;  &quot;virginica&quot;  &quot;virginica&quot;  &quot;virginica&quot;  &quot;virginica&quot; 
+## [131] &quot;virginica&quot;  &quot;virginica&quot;  &quot;virginica&quot;  &quot;virginica&quot;  &quot;virginica&quot; 
+## [136] &quot;virginica&quot;  &quot;virginica&quot;  &quot;virginica&quot;  &quot;virginica&quot;  &quot;virginica&quot; 
+## [141] &quot;virginica&quot;  &quot;virginica&quot;  &quot;virginica&quot;  &quot;virginica&quot;  &quot;virginica&quot; 
+## [146] &quot;virginica&quot;  &quot;virginica&quot;  &quot;virginica&quot;  &quot;virginica&quot;  &quot;virginica&quot;</code></pre>
+</div>
+<div id="tibble" class="section level3">
+<h3><code>tibble</code></h3>
+<p>Dans l’univers <code>tidyverse</code>, c’est l’utilisation du type <a href="http://tibble.tidyverse.org/"><code>tibble</code></a> qui est privilégié. Pour information, la fonction <code>tibble()</code> sert à transformer un objet dans cette classe, ou à en créer un nouveau (pas vu ici).</p>
+<pre class="r"><code>library(tibble)
+mtt = as_tibble(mtcars)
+mtt</code></pre>
+<pre><code>## # A tibble: 32 x 11
+##      mpg   cyl  disp    hp  drat    wt  qsec    vs    am  gear  carb
+##  * &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
+##  1  21.0     6 160.0   110  3.90 2.620 16.46     0     1     4     4
+##  2  21.0     6 160.0   110  3.90 2.875 17.02     0     1     4     4
+##  3  22.8     4 108.0    93  3.85 2.320 18.61     1     1     4     1
+##  4  21.4     6 258.0   110  3.08 3.215 19.44     1     0     3     1
+##  5  18.7     8 360.0   175  3.15 3.440 17.02     0     0     3     2
+##  6  18.1     6 225.0   105  2.76 3.460 20.22     1     0     3     1
+##  7  14.3     8 360.0   245  3.21 3.570 15.84     0     0     3     4
+##  8  24.4     4 146.7    62  3.69 3.190 20.00     1     0     4     2
+##  9  22.8     4 140.8    95  3.92 3.150 22.90     1     0     4     2
+## 10  19.2     6 167.6   123  3.92 3.440 18.30     1     0     4     4
+## # ... with 22 more rows</code></pre>
+<pre class="r"><code>class(mtt)</code></pre>
+<pre><code>## [1] &quot;tbl_df&quot;     &quot;tbl&quot;        &quot;data.frame&quot;</code></pre>
+<pre class="r"><code>head(mtt)</code></pre>
+<pre><code>## # A tibble: 6 x 11
+##     mpg   cyl  disp    hp  drat    wt  qsec    vs    am  gear  carb
+##   &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
+## 1  21.0     6   160   110  3.90 2.620 16.46     0     1     4     4
+## 2  21.0     6   160   110  3.90 2.875 17.02     0     1     4     4
+## 3  22.8     4   108    93  3.85 2.320 18.61     1     1     4     1
+## 4  21.4     6   258   110  3.08 3.215 19.44     1     0     3     1
+## 5  18.7     8   360   175  3.15 3.440 17.02     0     0     3     2
+## 6  18.1     6   225   105  2.76 3.460 20.22     1     0     3     1</code></pre>
+</div>
 </div>
 <div id="importation-de-donnees" class="section level2">
 <h2>Importation de données</h2>
+<p>Le <code>tidyverse</code> inclut trois packages permettant l’importation de données externes, contenues dans des fichiers (ainsi que l’exportation). Nous allons ici importer des données classiques (150 <em>iris</em> de trois espèces différentes, décrits par 4 variable), disponibles dans trois formats : <a href="../donnees/Iris.txt">texte délimité</a>, <a href="../donnees/Iris.xlsx">Excel</a> et <a href="../donnees/Iris.sas7bdat">SAS</a>. Les trois fonctions qu’on va utiliser renvoient un objet de type <code>tibble</code>.</p>
+<div id="texte-delimite" class="section level3">
+<h3>Texte délimité</h3>
+<p>Pour cela, nous utilisons le package <a href="http://readr.tidyverse.org/"><code>readr</code></a>, qui améliore les fonctions déjà présentes. Les nouvelles fonctions sont plutôt performantes, et <em>comprennent</em> les données, ce qui permet de limiter les besoins de paramétrisation de celles-ci.</p>
+<pre class="r"><code>library(readr)
+iris_txt = read_delim(&quot;../donnees/Iris.txt&quot;, delim = &quot;\t&quot;)</code></pre>
+<pre><code>## Parsed with column specification:
+## cols(
+##   `Sepal Length` = col_double(),
+##   `Sepal Width` = col_double(),
+##   `Petal Length` = col_double(),
+##   `Petal Width` = col_double(),
+##   Species = col_character()
+## )</code></pre>
+<pre class="r"><code>iris_txt</code></pre>
+<pre><code>## # A tibble: 150 x 5
+##    `Sepal Length` `Sepal Width` `Petal Length` `Petal Width` Species
+##             &lt;dbl&gt;         &lt;dbl&gt;          &lt;dbl&gt;         &lt;dbl&gt;   &lt;chr&gt;
+##  1            5.1           3.5            1.4           0.2  setosa
+##  2            4.9           3.0            1.4           0.2  setosa
+##  3            4.7           3.2            1.3           0.2  setosa
+##  4            4.6           3.1            1.5           0.2  setosa
+##  5            5.0           3.6            1.4           0.2  setosa
+##  6            5.4           3.9            1.7           0.4  setosa
+##  7            4.6           3.4            1.4           0.3  setosa
+##  8            5.0           3.4            1.5           0.2  setosa
+##  9            4.4           2.9            1.4           0.2  setosa
+## 10            4.9           3.1            1.5           0.1  setosa
+## # ... with 140 more rows</code></pre>
 </div>
-<div id="section" class="section level2">
-<h2></h2>
+<div id="fichier-excel" class="section level3">
+<h3>Fichier Excel</h3>
+<p>Le package <a href="http://readxl.tidyverse.org/"><code>readxl</code></a> permet donc de lire des fichiers Excel (quelque soit le format : <code>xlsx</code> ou <code>xls</code>). La fonction <code>read_excel()</code> détecte justement le format du fichier.</p>
+<pre class="r"><code>library(readxl)
+iris_xlsx = read_excel(&quot;../donnees/Iris.xlsx&quot;)
+iris_xlsx</code></pre>
+<pre><code>## # A tibble: 150 x 5
+##    `Sepal Length` `Sepal Width` `Petal Length` `Petal Width` Species
+##             &lt;dbl&gt;         &lt;dbl&gt;          &lt;dbl&gt;         &lt;dbl&gt;   &lt;chr&gt;
+##  1            5.1           3.5            1.4           0.2  setosa
+##  2            4.9           3.0            1.4           0.2  setosa
+##  3            4.7           3.2            1.3           0.2  setosa
+##  4            4.6           3.1            1.5           0.2  setosa
+##  5            5.0           3.6            1.4           0.2  setosa
+##  6            5.4           3.9            1.7           0.4  setosa
+##  7            4.6           3.4            1.4           0.3  setosa
+##  8            5.0           3.4            1.5           0.2  setosa
+##  9            4.4           2.9            1.4           0.2  setosa
+## 10            4.9           3.1            1.5           0.1  setosa
+## # ... with 140 more rows</code></pre>
+</div>
+<div id="fichier-sas" class="section level3">
+<h3>Fichier SAS</h3>
+<p>Enfin, pour importer des données SAS mais aussi SPSS et Stata, il existe le package <a href="http://haven.tidyverse.org/"><code>haven</code></a>, avec la fonction <code>read_sas()</code>.</p>
+<pre class="r"><code>library(haven)
+iris_sas = read_sas(&quot;../donnees/Iris.sas7bdat&quot;)
+iris_sas</code></pre>
+<pre><code>## # A tibble: 150 x 5
+##    Sepal_Length Sepal_Width Petal_Length Petal_Width Species
+##           &lt;dbl&gt;       &lt;dbl&gt;        &lt;dbl&gt;       &lt;dbl&gt;   &lt;chr&gt;
+##  1          5.1         3.5          1.4         0.2  setosa
+##  2          4.9         3.0          1.4         0.2  setosa
+##  3          4.7         3.2          1.3         0.2  setosa
+##  4          4.6         3.1          1.5         0.2  setosa
+##  5          5.0         3.6          1.4         0.2  setosa
+##  6          5.4         3.9          1.7         0.4  setosa
+##  7          4.6         3.4          1.4         0.3  setosa
+##  8          5.0         3.4          1.5         0.2  setosa
+##  9          4.4         2.9          1.4         0.2  setosa
+## 10          4.9         3.1          1.5         0.1  setosa
+## # ... with 140 more rows</code></pre>
+</div>
+</div>
+<div id="manipulation-de-donnees" class="section level2">
+<h2>Manipulation de données</h2>
+<p>Pour tout ce qui est manipulation de données, au sens <code>SQL</code>, nous disposons du package <a href="http://dplyr.tidyverse.org/"><code>dplyr</code></a> qui fournit toutes les fonctions utilisées ici. Bien qu’il y ait aussi des fonctions de base dans R, ce package est préférable.</p>
+<p>Vous remarquerez l’utilisation de l’opérateur <code>%&gt;%</code> pour enchaîner les opérations. Celui-ci est fournit par le package <a href="http://magrittr.tidyverse.org/"><code>magrittr</code></a>, lui aussi dans le <code>tidyverse</code>. Ce formalisme permet d’avoir un code plus lisible, car déroulant les étapes les unes après les autres, contrairement à la programmation classique dans R.</p>
+<pre class="r"><code>library(dplyr)</code></pre>
+<pre><code>## 
+## Attaching package: 'dplyr'</code></pre>
+<pre><code>## The following objects are masked from 'package:stats':
+## 
+##     filter, lag</code></pre>
+<pre><code>## The following objects are masked from 'package:base':
+## 
+##     intersect, setdiff, setequal, union</code></pre>
+<div id="restriction-et-projection" class="section level3">
+<h3>Restriction et projection</h3>
+<p>Ici, les deux opérations consistent respectivement à sélectionner des lignes (<em>restriction</em>) ou des colonnes (<em>projection</em>).</p>
+<div id="restriction-par-filtre" class="section level4">
+<h4>Restriction par filtre</h4>
+<pre class="r"><code>mtcars %&gt;% filter(mpg &gt; 30)</code></pre>
+<pre><code>##    mpg cyl disp  hp drat    wt  qsec vs am gear carb
+## 1 32.4   4 78.7  66 4.08 2.200 19.47  1  1    4    1
+## 2 30.4   4 75.7  52 4.93 1.615 18.52  1  1    4    2
+## 3 33.9   4 71.1  65 4.22 1.835 19.90  1  1    4    1
+## 4 30.4   4 95.1 113 3.77 1.513 16.90  1  1    5    2</code></pre>
+<pre class="r"><code>mtcars %&gt;% filter(mpg &gt; 30 &amp; qsec &lt; 19)</code></pre>
+<pre><code>##    mpg cyl disp  hp drat    wt  qsec vs am gear carb
+## 1 30.4   4 75.7  52 4.93 1.615 18.52  1  1    4    2
+## 2 30.4   4 95.1 113 3.77 1.513 16.90  1  1    5    2</code></pre>
+<pre class="r"><code>mtcars %&gt;% filter(carb == 8)</code></pre>
+<pre><code>##   mpg cyl disp  hp drat   wt qsec vs am gear carb
+## 1  15   8  301 335 3.54 3.57 14.6  0  1    5    8</code></pre>
+<pre class="r"><code>mtcars %&gt;% filter(between(mpg, 30, 32))</code></pre>
+<pre><code>##    mpg cyl disp  hp drat    wt  qsec vs am gear carb
+## 1 30.4   4 75.7  52 4.93 1.615 18.52  1  1    4    2
+## 2 30.4   4 95.1 113 3.77 1.513 16.90  1  1    5    2</code></pre>
+</div>
+<div id="selection-de-lignes-par-indices" class="section level4">
+<h4>Sélection de lignes par indices</h4>
+<pre class="r"><code>mtcars %&gt;% slice(1:5)</code></pre>
+<pre><code>## # A tibble: 5 x 11
+##     mpg   cyl  disp    hp  drat    wt  qsec    vs    am  gear  carb
+##   &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
+## 1  21.0     6   160   110  3.90 2.620 16.46     0     1     4     4
+## 2  21.0     6   160   110  3.90 2.875 17.02     0     1     4     4
+## 3  22.8     4   108    93  3.85 2.320 18.61     1     1     4     1
+## 4  21.4     6   258   110  3.08 3.215 19.44     1     0     3     1
+## 5  18.7     8   360   175  3.15 3.440 17.02     0     0     3     2</code></pre>
+<pre class="r"><code>mtcars %&gt;% slice(25:n()) # n() indique le nombre de lignes de la table</code></pre>
+<pre><code>## # A tibble: 8 x 11
+##     mpg   cyl  disp    hp  drat    wt  qsec    vs    am  gear  carb
+##   &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
+## 1  19.2     8 400.0   175  3.08 3.845 17.05     0     0     3     2
+## 2  27.3     4  79.0    66  4.08 1.935 18.90     1     1     4     1
+## 3  26.0     4 120.3    91  4.43 2.140 16.70     0     1     5     2
+## 4  30.4     4  95.1   113  3.77 1.513 16.90     1     1     5     2
+## 5  15.8     8 351.0   264  4.22 3.170 14.50     0     1     5     4
+## 6  19.7     6 145.0   175  3.62 2.770 15.50     0     1     5     6
+## 7  15.0     8 301.0   335  3.54 3.570 14.60     0     1     5     8
+## 8  21.4     4 121.0   109  4.11 2.780 18.60     1     1     4     2</code></pre>
+<pre class="r"><code>mtcars %&gt;% slice(seq(1, n(), by = 4))</code></pre>
+<pre><code>## # A tibble: 8 x 11
+##     mpg   cyl  disp    hp  drat    wt  qsec    vs    am  gear  carb
+##   &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
+## 1  21.0     6 160.0   110  3.90 2.620 16.46     0     1     4     4
+## 2  18.7     8 360.0   175  3.15 3.440 17.02     0     0     3     2
+## 3  22.8     4 140.8    95  3.92 3.150 22.90     1     0     4     2
+## 4  17.3     8 275.8   180  3.07 3.730 17.60     0     0     3     3
+## 5  14.7     8 440.0   230  3.23 5.345 17.42     0     0     3     4
+## 6  21.5     4 120.1    97  3.70 2.465 20.01     1     0     3     1
+## 7  19.2     8 400.0   175  3.08 3.845 17.05     0     0     3     2
+## 8  15.8     8 351.0   264  4.22 3.170 14.50     0     1     5     4</code></pre>
+</div>
+<div id="projection" class="section level4">
+<h4>Projection</h4>
+<pre class="r"><code>head(mtcars) %&gt;% select(mpg)</code></pre>
+<pre><code>##                    mpg
+## Mazda RX4         21.0
+## Mazda RX4 Wag     21.0
+## Datsun 710        22.8
+## Hornet 4 Drive    21.4
+## Hornet Sportabout 18.7
+## Valiant           18.1</code></pre>
+<pre class="r"><code>head(mtcars) %&gt;% select(qsec, mpg, hp)</code></pre>
+<pre><code>##                    qsec  mpg  hp
+## Mazda RX4         16.46 21.0 110
+## Mazda RX4 Wag     17.02 21.0 110
+## Datsun 710        18.61 22.8  93
+## Hornet 4 Drive    19.44 21.4 110
+## Hornet Sportabout 17.02 18.7 175
+## Valiant           20.22 18.1 105</code></pre>
+<pre class="r"><code>head(mtcars) %&gt;% select(5, 3, 9)</code></pre>
+<pre><code>##                   drat disp am
+## Mazda RX4         3.90  160  1
+## Mazda RX4 Wag     3.90  160  1
+## Datsun 710        3.85  108  1
+## Hornet 4 Drive    3.08  258  0
+## Hornet Sportabout 3.15  360  0
+## Valiant           2.76  225  0</code></pre>
+<pre class="r"><code>head(mtcars) %&gt;% select(starts_with(&quot;c&quot;)) # d'autres possibilités de ce type existent (voir ?select_helpers)</code></pre>
+<pre><code>##                   cyl carb
+## Mazda RX4           6    4
+## Mazda RX4 Wag       6    4
+## Datsun 710          4    1
+## Hornet 4 Drive      6    1
+## Hornet Sportabout   8    2
+## Valiant             6    1</code></pre>
+</div>
+</div>
+<div id="tri" class="section level3">
+<h3>Tri</h3>
+<p>La fonction <code>arrange()</code> permet le tri sur une ou plusieurs variables, avec <code>desc()</code> pour indiquer un ordre décroissant.</p>
+<pre class="r"><code>head(mtcars) %&gt;% arrange(mpg)</code></pre>
+<pre><code>##    mpg cyl disp  hp drat    wt  qsec vs am gear carb
+## 1 18.1   6  225 105 2.76 3.460 20.22  1  0    3    1
+## 2 18.7   8  360 175 3.15 3.440 17.02  0  0    3    2
+## 3 21.0   6  160 110 3.90 2.620 16.46  0  1    4    4
+## 4 21.0   6  160 110 3.90 2.875 17.02  0  1    4    4
+## 5 21.4   6  258 110 3.08 3.215 19.44  1  0    3    1
+## 6 22.8   4  108  93 3.85 2.320 18.61  1  1    4    1</code></pre>
+<pre class="r"><code>head(mtcars) %&gt;% arrange(am, mpg)</code></pre>
+<pre><code>##    mpg cyl disp  hp drat    wt  qsec vs am gear carb
+## 1 18.1   6  225 105 2.76 3.460 20.22  1  0    3    1
+## 2 18.7   8  360 175 3.15 3.440 17.02  0  0    3    2
+## 3 21.4   6  258 110 3.08 3.215 19.44  1  0    3    1
+## 4 21.0   6  160 110 3.90 2.620 16.46  0  1    4    4
+## 5 21.0   6  160 110 3.90 2.875 17.02  0  1    4    4
+## 6 22.8   4  108  93 3.85 2.320 18.61  1  1    4    1</code></pre>
+<pre class="r"><code>head(mtcars) %&gt;% arrange(desc(mpg))</code></pre>
+<pre><code>##    mpg cyl disp  hp drat    wt  qsec vs am gear carb
+## 1 22.8   4  108  93 3.85 2.320 18.61  1  1    4    1
+## 2 21.4   6  258 110 3.08 3.215 19.44  1  0    3    1
+## 3 21.0   6  160 110 3.90 2.620 16.46  0  1    4    4
+## 4 21.0   6  160 110 3.90 2.875 17.02  0  1    4    4
+## 5 18.7   8  360 175 3.15 3.440 17.02  0  0    3    2
+## 6 18.1   6  225 105 2.76 3.460 20.22  1  0    3    1</code></pre>
+</div>
+<div id="ajout-de-variables" class="section level3">
+<h3>Ajout de variables</h3>
+<p>Comme vous avez pu le remarquer, dans les différents exemples ci-dessus, le nom des lignes est supprimé. Pour le récupérer, nous utilisons la fonction <code>rownames_to_column()</code>, qui permet de le transformer en variable.</p>
+<pre class="r"><code>head(mtcars) %&gt;% rownames_to_column(var = &quot;car&quot;)</code></pre>
+<pre><code>##                 car  mpg cyl disp  hp drat    wt  qsec vs am gear carb
+## 1         Mazda RX4 21.0   6  160 110 3.90 2.620 16.46  0  1    4    4
+## 2     Mazda RX4 Wag 21.0   6  160 110 3.90 2.875 17.02  0  1    4    4
+## 3        Datsun 710 22.8   4  108  93 3.85 2.320 18.61  1  1    4    1
+## 4    Hornet 4 Drive 21.4   6  258 110 3.08 3.215 19.44  1  0    3    1
+## 5 Hornet Sportabout 18.7   8  360 175 3.15 3.440 17.02  0  0    3    2
+## 6           Valiant 18.1   6  225 105 2.76 3.460 20.22  1  0    3    1</code></pre>
+<p>Pour ajouter une variable, il existe la fonction <code>mutate()</code>.</p>
+<pre class="r"><code>head(mtcars) %&gt;% mutate(ratio = wt / hp, zero = 0, wt = NULL, hp = NULL)</code></pre>
+<pre><code>##    mpg cyl disp drat  qsec vs am gear carb      ratio zero
+## 1 21.0   6  160 3.90 16.46  0  1    4    4 0.02381818    0
+## 2 21.0   6  160 3.90 17.02  0  1    4    4 0.02613636    0
+## 3 22.8   4  108 3.85 18.61  1  1    4    1 0.02494624    0
+## 4 21.4   6  258 3.08 19.44  1  0    3    1 0.02922727    0
+## 5 18.7   8  360 3.15 17.02  0  0    3    2 0.01965714    0
+## 6 18.1   6  225 2.76 20.22  1  0    3    1 0.03295238    0</code></pre>
+<pre class="r"><code>head(mtcars) %&gt;% mutate(n = row_number(), rang_mpg = min_rank(desc(mpg)))</code></pre>
+<pre><code>##    mpg cyl disp  hp drat    wt  qsec vs am gear carb n rang_mpg
+## 1 21.0   6  160 110 3.90 2.620 16.46  0  1    4    4 1        3
+## 2 21.0   6  160 110 3.90 2.875 17.02  0  1    4    4 2        3
+## 3 22.8   4  108  93 3.85 2.320 18.61  1  1    4    1 3        1
+## 4 21.4   6  258 110 3.08 3.215 19.44  1  0    3    1 4        2
+## 5 18.7   8  360 175 3.15 3.440 17.02  0  0    3    2 5        5
+## 6 18.1   6  225 105 2.76 3.460 20.22  1  0    3    1 6        6</code></pre>
+<p>Si l’on veut garder uniquement la variable nouvellement créée, on utilise <code>transmute()</code>.</p>
+<pre class="r"><code>head(mtcars) %&gt;% transmute(ratio = wt / hp)</code></pre>
+<pre><code>##        ratio
+## 1 0.02381818
+## 2 0.02613636
+## 3 0.02494624
+## 4 0.02922727
+## 5 0.01965714
+## 6 0.03295238</code></pre>
+</div>
+<div id="calcul-dagregat" class="section level3">
+<h3>Calcul d’agrégat</h3>
+<p>Pour résumer une ou plusieurs variables, nous utilisons la fonction <code>summarise()</code>.</p>
+<pre class="r"><code>mtcars %&gt;% summarise(
+  n = n(),
+  mpg_mean = mean(mpg),
+  nbtype_carb = n_distinct(carb)
+)</code></pre>
+<pre><code>##    n mpg_mean nbtype_carb
+## 1 32 20.09062           6</code></pre>
+<p>Et si l’on souhaite effecture par groupes déterminés par les modalités d’une variable, il existe la fonction <code>group_by()</code>.</p>
+<pre class="r"><code>mtcars %&gt;%
+  group_by(cyl) %&gt;%
+  summarise(
+  n = n(),
+  mpg_mean = mean(mpg),
+  nbtype_carb = n_distinct(carb)
+)</code></pre>
+<pre><code>## # A tibble: 3 x 4
+##     cyl     n mpg_mean nbtype_carb
+##   &lt;dbl&gt; &lt;int&gt;    &lt;dbl&gt;       &lt;int&gt;
+## 1     4    11 26.66364           2
+## 2     6     7 19.74286           3
+## 3     8    14 15.10000           4</code></pre>
+</div>
+<div id="jointure" class="section level3">
+<h3>Jointure</h3>
+<p>Pour tester les méthodes, nous créons une nouvelle table <code>engine</code>, indiquant le type en fonction de la valeur de <code>cyl</code>. Vous remarquerez que par rapport à <code>mtcars</code>, il y a une valeur en moins (4) et une valeur en plus (12).</p>
+<pre class="r"><code>engine = tibble(
+  cyl = c(6, 8, 12),
+  type = c(&quot;medium&quot;, &quot;big&quot;, &quot;very big&quot;)
+)</code></pre>
+<p>Nous pouvons maintenant utiliser les différentes fonctions de jointure disponibles.</p>
+<pre class="r"><code>mtcars %&gt;% inner_join(engine)</code></pre>
+<pre><code>## Joining, by = &quot;cyl&quot;</code></pre>
+<pre><code>##     mpg cyl  disp  hp drat    wt  qsec vs am gear carb   type
+## 1  21.0   6 160.0 110 3.90 2.620 16.46  0  1    4    4 medium
+## 2  21.0   6 160.0 110 3.90 2.875 17.02  0  1    4    4 medium
+## 3  21.4   6 258.0 110 3.08 3.215 19.44  1  0    3    1 medium
+## 4  18.7   8 360.0 175 3.15 3.440 17.02  0  0    3    2    big
+## 5  18.1   6 225.0 105 2.76 3.460 20.22  1  0    3    1 medium
+## 6  14.3   8 360.0 245 3.21 3.570 15.84  0  0    3    4    big
+## 7  19.2   6 167.6 123 3.92 3.440 18.30  1  0    4    4 medium
+## 8  17.8   6 167.6 123 3.92 3.440 18.90  1  0    4    4 medium
+## 9  16.4   8 275.8 180 3.07 4.070 17.40  0  0    3    3    big
+## 10 17.3   8 275.8 180 3.07 3.730 17.60  0  0    3    3    big
+## 11 15.2   8 275.8 180 3.07 3.780 18.00  0  0    3    3    big
+## 12 10.4   8 472.0 205 2.93 5.250 17.98  0  0    3    4    big
+## 13 10.4   8 460.0 215 3.00 5.424 17.82  0  0    3    4    big
+## 14 14.7   8 440.0 230 3.23 5.345 17.42  0  0    3    4    big
+## 15 15.5   8 318.0 150 2.76 3.520 16.87  0  0    3    2    big
+## 16 15.2   8 304.0 150 3.15 3.435 17.30  0  0    3    2    big
+## 17 13.3   8 350.0 245 3.73 3.840 15.41  0  0    3    4    big
+## 18 19.2   8 400.0 175 3.08 3.845 17.05  0  0    3    2    big
+## 19 15.8   8 351.0 264 4.22 3.170 14.50  0  1    5    4    big
+## 20 19.7   6 145.0 175 3.62 2.770 15.50  0  1    5    6 medium
+## 21 15.0   8 301.0 335 3.54 3.570 14.60  0  1    5    8    big</code></pre>
+<pre class="r"><code>mtcars %&gt;% left_join(engine)</code></pre>
+<pre><code>## Joining, by = &quot;cyl&quot;</code></pre>
+<pre><code>##     mpg cyl  disp  hp drat    wt  qsec vs am gear carb   type
+## 1  21.0   6 160.0 110 3.90 2.620 16.46  0  1    4    4 medium
+## 2  21.0   6 160.0 110 3.90 2.875 17.02  0  1    4    4 medium
+## 3  22.8   4 108.0  93 3.85 2.320 18.61  1  1    4    1   &lt;NA&gt;
+## 4  21.4   6 258.0 110 3.08 3.215 19.44  1  0    3    1 medium
+## 5  18.7   8 360.0 175 3.15 3.440 17.02  0  0    3    2    big
+## 6  18.1   6 225.0 105 2.76 3.460 20.22  1  0    3    1 medium
+## 7  14.3   8 360.0 245 3.21 3.570 15.84  0  0    3    4    big
+## 8  24.4   4 146.7  62 3.69 3.190 20.00  1  0    4    2   &lt;NA&gt;
+## 9  22.8   4 140.8  95 3.92 3.150 22.90  1  0    4    2   &lt;NA&gt;
+## 10 19.2   6 167.6 123 3.92 3.440 18.30  1  0    4    4 medium
+## 11 17.8   6 167.6 123 3.92 3.440 18.90  1  0    4    4 medium
+## 12 16.4   8 275.8 180 3.07 4.070 17.40  0  0    3    3    big
+## 13 17.3   8 275.8 180 3.07 3.730 17.60  0  0    3    3    big
+## 14 15.2   8 275.8 180 3.07 3.780 18.00  0  0    3    3    big
+## 15 10.4   8 472.0 205 2.93 5.250 17.98  0  0    3    4    big
+## 16 10.4   8 460.0 215 3.00 5.424 17.82  0  0    3    4    big
+## 17 14.7   8 440.0 230 3.23 5.345 17.42  0  0    3    4    big
+## 18 32.4   4  78.7  66 4.08 2.200 19.47  1  1    4    1   &lt;NA&gt;
+## 19 30.4   4  75.7  52 4.93 1.615 18.52  1  1    4    2   &lt;NA&gt;
+## 20 33.9   4  71.1  65 4.22 1.835 19.90  1  1    4    1   &lt;NA&gt;
+## 21 21.5   4 120.1  97 3.70 2.465 20.01  1  0    3    1   &lt;NA&gt;
+## 22 15.5   8 318.0 150 2.76 3.520 16.87  0  0    3    2    big
+## 23 15.2   8 304.0 150 3.15 3.435 17.30  0  0    3    2    big
+## 24 13.3   8 350.0 245 3.73 3.840 15.41  0  0    3    4    big
+## 25 19.2   8 400.0 175 3.08 3.845 17.05  0  0    3    2    big
+## 26 27.3   4  79.0  66 4.08 1.935 18.90  1  1    4    1   &lt;NA&gt;
+## 27 26.0   4 120.3  91 4.43 2.140 16.70  0  1    5    2   &lt;NA&gt;
+## 28 30.4   4  95.1 113 3.77 1.513 16.90  1  1    5    2   &lt;NA&gt;
+## 29 15.8   8 351.0 264 4.22 3.170 14.50  0  1    5    4    big
+## 30 19.7   6 145.0 175 3.62 2.770 15.50  0  1    5    6 medium
+## 31 15.0   8 301.0 335 3.54 3.570 14.60  0  1    5    8    big
+## 32 21.4   4 121.0 109 4.11 2.780 18.60  1  1    4    2   &lt;NA&gt;</code></pre>
+<pre class="r"><code>mtcars %&gt;% right_join(engine)</code></pre>
+<pre><code>## Joining, by = &quot;cyl&quot;</code></pre>
+<pre><code>##     mpg cyl  disp  hp drat    wt  qsec vs am gear carb     type
+## 1  21.0   6 160.0 110 3.90 2.620 16.46  0  1    4    4   medium
+## 2  21.0   6 160.0 110 3.90 2.875 17.02  0  1    4    4   medium
+## 3  21.4   6 258.0 110 3.08 3.215 19.44  1  0    3    1   medium
+## 4  18.1   6 225.0 105 2.76 3.460 20.22  1  0    3    1   medium
+## 5  19.2   6 167.6 123 3.92 3.440 18.30  1  0    4    4   medium
+## 6  17.8   6 167.6 123 3.92 3.440 18.90  1  0    4    4   medium
+## 7  19.7   6 145.0 175 3.62 2.770 15.50  0  1    5    6   medium
+## 8  18.7   8 360.0 175 3.15 3.440 17.02  0  0    3    2      big
+## 9  14.3   8 360.0 245 3.21 3.570 15.84  0  0    3    4      big
+## 10 16.4   8 275.8 180 3.07 4.070 17.40  0  0    3    3      big
+## 11 17.3   8 275.8 180 3.07 3.730 17.60  0  0    3    3      big
+## 12 15.2   8 275.8 180 3.07 3.780 18.00  0  0    3    3      big
+## 13 10.4   8 472.0 205 2.93 5.250 17.98  0  0    3    4      big
+## 14 10.4   8 460.0 215 3.00 5.424 17.82  0  0    3    4      big
+## 15 14.7   8 440.0 230 3.23 5.345 17.42  0  0    3    4      big
+## 16 15.5   8 318.0 150 2.76 3.520 16.87  0  0    3    2      big
+## 17 15.2   8 304.0 150 3.15 3.435 17.30  0  0    3    2      big
+## 18 13.3   8 350.0 245 3.73 3.840 15.41  0  0    3    4      big
+## 19 19.2   8 400.0 175 3.08 3.845 17.05  0  0    3    2      big
+## 20 15.8   8 351.0 264 4.22 3.170 14.50  0  1    5    4      big
+## 21 15.0   8 301.0 335 3.54 3.570 14.60  0  1    5    8      big
+## 22   NA  12    NA  NA   NA    NA    NA NA NA   NA   NA very big</code></pre>
+<pre class="r"><code>mtcars %&gt;% full_join(engine)</code></pre>
+<pre><code>## Joining, by = &quot;cyl&quot;</code></pre>
+<pre><code>##     mpg cyl  disp  hp drat    wt  qsec vs am gear carb     type
+## 1  21.0   6 160.0 110 3.90 2.620 16.46  0  1    4    4   medium
+## 2  21.0   6 160.0 110 3.90 2.875 17.02  0  1    4    4   medium
+## 3  22.8   4 108.0  93 3.85 2.320 18.61  1  1    4    1     &lt;NA&gt;
+## 4  21.4   6 258.0 110 3.08 3.215 19.44  1  0    3    1   medium
+## 5  18.7   8 360.0 175 3.15 3.440 17.02  0  0    3    2      big
+## 6  18.1   6 225.0 105 2.76 3.460 20.22  1  0    3    1   medium
+## 7  14.3   8 360.0 245 3.21 3.570 15.84  0  0    3    4      big
+## 8  24.4   4 146.7  62 3.69 3.190 20.00  1  0    4    2     &lt;NA&gt;
+## 9  22.8   4 140.8  95 3.92 3.150 22.90  1  0    4    2     &lt;NA&gt;
+## 10 19.2   6 167.6 123 3.92 3.440 18.30  1  0    4    4   medium
+## 11 17.8   6 167.6 123 3.92 3.440 18.90  1  0    4    4   medium
+## 12 16.4   8 275.8 180 3.07 4.070 17.40  0  0    3    3      big
+## 13 17.3   8 275.8 180 3.07 3.730 17.60  0  0    3    3      big
+## 14 15.2   8 275.8 180 3.07 3.780 18.00  0  0    3    3      big
+## 15 10.4   8 472.0 205 2.93 5.250 17.98  0  0    3    4      big
+## 16 10.4   8 460.0 215 3.00 5.424 17.82  0  0    3    4      big
+## 17 14.7   8 440.0 230 3.23 5.345 17.42  0  0    3    4      big
+## 18 32.4   4  78.7  66 4.08 2.200 19.47  1  1    4    1     &lt;NA&gt;
+## 19 30.4   4  75.7  52 4.93 1.615 18.52  1  1    4    2     &lt;NA&gt;
+## 20 33.9   4  71.1  65 4.22 1.835 19.90  1  1    4    1     &lt;NA&gt;
+## 21 21.5   4 120.1  97 3.70 2.465 20.01  1  0    3    1     &lt;NA&gt;
+## 22 15.5   8 318.0 150 2.76 3.520 16.87  0  0    3    2      big
+## 23 15.2   8 304.0 150 3.15 3.435 17.30  0  0    3    2      big
+## 24 13.3   8 350.0 245 3.73 3.840 15.41  0  0    3    4      big
+## 25 19.2   8 400.0 175 3.08 3.845 17.05  0  0    3    2      big
+## 26 27.3   4  79.0  66 4.08 1.935 18.90  1  1    4    1     &lt;NA&gt;
+## 27 26.0   4 120.3  91 4.43 2.140 16.70  0  1    5    2     &lt;NA&gt;
+## 28 30.4   4  95.1 113 3.77 1.513 16.90  1  1    5    2     &lt;NA&gt;
+## 29 15.8   8 351.0 264 4.22 3.170 14.50  0  1    5    4      big
+## 30 19.7   6 145.0 175 3.62 2.770 15.50  0  1    5    6   medium
+## 31 15.0   8 301.0 335 3.54 3.570 14.60  0  1    5    8      big
+## 32 21.4   4 121.0 109 4.11 2.780 18.60  1  1    4    2     &lt;NA&gt;
+## 33   NA  12    NA  NA   NA    NA    NA NA NA   NA   NA very big</code></pre>
+<pre class="r"><code>mtcars %&gt;% semi_join(engine)</code></pre>
+<pre><code>## Joining, by = &quot;cyl&quot;</code></pre>
+<pre><code>##     mpg cyl  disp  hp drat    wt  qsec vs am gear carb
+## 1  21.0   6 160.0 110 3.90 2.620 16.46  0  1    4    4
+## 2  21.0   6 160.0 110 3.90 2.875 17.02  0  1    4    4
+## 3  21.4   6 258.0 110 3.08 3.215 19.44  1  0    3    1
+## 4  18.7   8 360.0 175 3.15 3.440 17.02  0  0    3    2
+## 5  18.1   6 225.0 105 2.76 3.460 20.22  1  0    3    1
+## 6  14.3   8 360.0 245 3.21 3.570 15.84  0  0    3    4
+## 7  19.2   6 167.6 123 3.92 3.440 18.30  1  0    4    4
+## 8  17.8   6 167.6 123 3.92 3.440 18.90  1  0    4    4
+## 9  16.4   8 275.8 180 3.07 4.070 17.40  0  0    3    3
+## 10 17.3   8 275.8 180 3.07 3.730 17.60  0  0    3    3
+## 11 15.2   8 275.8 180 3.07 3.780 18.00  0  0    3    3
+## 12 10.4   8 472.0 205 2.93 5.250 17.98  0  0    3    4
+## 13 10.4   8 460.0 215 3.00 5.424 17.82  0  0    3    4
+## 14 14.7   8 440.0 230 3.23 5.345 17.42  0  0    3    4
+## 15 15.5   8 318.0 150 2.76 3.520 16.87  0  0    3    2
+## 16 15.2   8 304.0 150 3.15 3.435 17.30  0  0    3    2
+## 17 13.3   8 350.0 245 3.73 3.840 15.41  0  0    3    4
+## 18 19.2   8 400.0 175 3.08 3.845 17.05  0  0    3    2
+## 19 15.8   8 351.0 264 4.22 3.170 14.50  0  1    5    4
+## 20 19.7   6 145.0 175 3.62 2.770 15.50  0  1    5    6
+## 21 15.0   8 301.0 335 3.54 3.570 14.60  0  1    5    8</code></pre>
+<pre class="r"><code>mtcars %&gt;% anti_join(engine)</code></pre>
+<pre><code>## Joining, by = &quot;cyl&quot;</code></pre>
+<pre><code>##     mpg cyl  disp  hp drat    wt  qsec vs am gear carb
+## 1  22.8   4 108.0  93 3.85 2.320 18.61  1  1    4    1
+## 2  24.4   4 146.7  62 3.69 3.190 20.00  1  0    4    2
+## 3  22.8   4 140.8  95 3.92 3.150 22.90  1  0    4    2
+## 4  32.4   4  78.7  66 4.08 2.200 19.47  1  1    4    1
+## 5  30.4   4  75.7  52 4.93 1.615 18.52  1  1    4    2
+## 6  33.9   4  71.1  65 4.22 1.835 19.90  1  1    4    1
+## 7  21.5   4 120.1  97 3.70 2.465 20.01  1  0    3    1
+## 8  27.3   4  79.0  66 4.08 1.935 18.90  1  1    4    1
+## 9  26.0   4 120.3  91 4.43 2.140 16.70  0  1    5    2
+## 10 30.4   4  95.1 113 3.77 1.513 16.90  1  1    5    2
+## 11 21.4   4 121.0 109 4.11 2.780 18.60  1  1    4    2</code></pre>
+</div>
+</div>
+<div id="a-faire" class="section level2">
+<h2>A Faire</h2>
+<p>La base de données <code>Gymnase2000</code> contient les informations d’e sportifs, de gymnases et de séances de sport’un club de sport. Elle contient les tables suivantes (au format SAS ici) :</p>
+<ul>
+<li><a href="../donnees/Gymnase%202000/Gymnase2000-sas/sports.sas7bdat">Sports</a> : sports pratiqués</li>
+<li><a href="../donnees/Gymnase%202000/Gymnase2000-sas/sportifs.sas7bdat">Sportifs</a> : sportifs inscrits</li>
+<li><a href="../donnees/Gymnase%202000/Gymnase2000-sas/gymnases.sas7bdat">Gymnases</a> : gymnases utilisés</li>
+<li><a href="../donnees/Gymnase%202000/Gymnase2000-sas/seances.sas7bdat">Séances</a> : séances prévues (pour un sport, et entraînées chacune par un sportif)</li>
+<li><a href="../donnees/Gymnase%202000/Gymnase2000-sas/jouer.sas7bdat">Jouer</a> : qui joue à quoi ?</li>
+<li><a href="../donnees/Gymnase%202000/Gymnase2000-sas/arbitrer.sas7bdat">Arbitrer</a> : qui arbitre quoi ?</li>
+<li><a href="../donnees/Gymnase%202000/Gymnase2000-sas/entrainer.sas7bdat">Entrainer</a> : qui entraîne quoi ?</li>
+</ul>
+<div class="figure">
+<img src="data:image/png;base64,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" alt="Schéma de Gymnase2000" />
+<p class="caption">Schéma de Gymnase2000</p>
+</div>
+<p>Vous devez d’abord importer les données dans R, puis répondre aux demandes suivantes :</p>
+<ol style="list-style-type: decimal">
+<li>Joueurs de moins de 30 ans</li>
+<li>Gymnases d’au moins 500 <span class="math inline">\(m^2\)</span></li>
+<li>Gymnases avec des séances le mercredi</li>
+<li>Sports joués par les moins de 30 ans</li>
+<li>Sports avec séances de l’entraineur “BOUTAHAR”</li>
+<li>Gymnases avec des séances de “Hand ball”</li>
+<li>Sportifs artbitre et entraineur du même sport</li>
+<li>Par ville, nombre et surface moyenne des gymnases</li>
+<li>Quels sports sont pratiqués à “Stains” ?</li>
+<li>Quelle est le nombre et la surface moyenne des gymnases ?</li>
+<li>Idem, en détaillant pour chaque ville.</li>
+<li>Avec ces deux requêtes, faire une seule table résultat où le global sera indiqué avec le terme “Total”, en lieu et place de la ville.</li>
+<li>Quelle est la moyenne d’âge des arbitres pour chaque sport, trié par ordre décroissant de la moyenne d’âge ?</li>
+<li>Dans quels gymnases peut-on jouer au hockey le mercredi après 15H ?</li>
+<li>Quels sportifs (Identifiant et nom) ne jouent aucun sport ?</li>
+<li>Quels gymnases n’ont pas de séances le dimanche ?</li>
+<li>Quels gymnases ne proposent que des séances de basket-ball ou de volley-ball?</li>
+<li>Quels sont les gymnases de “Stains” ou de “Montmorency” qui ont la plus grande surface?</li>
+<li>Quels entraineurs n’entrainent que du hand-ball ou du basket-ball (ou les deux) ?</li>
+<li>Quelle est la liste des conseillers des joueurs de basket-ball ?</li>
+<li>Pour chaque gymnase de “Stains” donner par jour d’ouverture les horaires des premières et dernières séances</li>
+<li>Quels sont les gymnases ayant strictement plus de 1 séance le mercredi ?</li>
+<li>Dans quels gymnases et quels jours y a-t-il au moins 4 séances de volley-ball (dans la journée) ?</li>
+</ol>
+<p>Questions subsidiaires :</p>
+<ol style="list-style-type: decimal">
+<li>Sportifs (id, nom, prenom) avec 3 indicateurs : le nombre de sports qu’ils jouent (table Jouer), le nombre de sports qu’ils entraînent (table Entrainer), et le nombre de sports qu’ils arbitrent (table Arbitrer) ;</li>
+<li>Gymnases (id, nom, ville) avec, pour chaque jour de la semaine (un jour = une colonne du tableau résultat), le nombre de séances prévues.</li>
+</ol>
 </div>
 
 

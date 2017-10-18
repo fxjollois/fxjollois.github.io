@@ -5,11 +5,19 @@ title: Intro à R et NoSQL
 
 ## Introduction à R et au NoSQL
 
-- [Journée 1](jour1-manip.html) : Manipulation de données avec R
-- [Journée 2](jour2-visu.html) : Visualisation de données avec R
+Ce cours n'est pas exhaustif et ne vous soustrait pas à une exploration de l'aide et/ou de la toile pour approfondir vos connaissances (bien au contraire).
 
-_ [Journée 3](jour3-prog.html) : Programmation avec R
-- [Journée 4](jour4-web.html) : Application web sous R
+### Premier pas sous R
 
-- [Journée 5](jour5-mongo) : Données NoSQL sous MongoDB
-- [Journée 6](jour6-Rmongo) : Interrogation MongoDB dans R
+- [Manipulation de données](jour1-manip.html)
+- [Visualisation de données](jour2-visu.html)
+
+### Développement d'une application sous R
+
+- [Programmation](jour3-prog.html)
+- [Application web](jour4-web.html)
+
+### NoSQL et R
+
+- [Données NoSQL sous MongoDB](jour5-mongo)
+- [Interrogation MongoDB dans R](jour6-Rmongo)
