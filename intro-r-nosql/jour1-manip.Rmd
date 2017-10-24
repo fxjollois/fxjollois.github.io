@@ -101,7 +101,7 @@ d$d2
 d$d1$mois
 ```
 
-### Type `matrix` (et`array`)
+### Type `matrix` (et `array`)
 
 Si on souhaite créer des tableaux à 2 dimensions, il faut utiliser la fonction `matrix()`, qui renvoie un objet `matrix`. On utilise les `[,]` pour accéder aux cellules de la matrice, avec tout ce qui est pour les lignes avant la virgule, et pour les colonnes après.
 
@@ -343,7 +343,7 @@ mtcars %>% anti_join(engine)
 
 ## A Faire
 
-La base de données `Gymnase2000` contient les informations d'e sportifs, de gymnases et de séances de sport'un club de sport. Elle contient les tables suivantes (au format SAS ici) :
+La base de données `Gymnase2000` contient les informations d'un (petit) club de sport. Elle contient les tables suivantes (au format SAS ici) :
 
 - [Sports](../donnees/Gymnase 2000/Gymnase2000-sas/sports.sas7bdat) : sports pratiqués
 - [Sportifs](../donnees/Gymnase 2000/Gymnase2000-sas/sportifs.sas7bdat) : sportifs inscrits
