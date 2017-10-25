@@ -1,0 +1,107 @@
+---
+title: "ACP - TD - *correction*"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(comment = NA)
+```
+
+```{r package}
+library(tidyverse)
+library(stringr)
+library(FactoMineR)
+```
+
+
+## Worldwide Governance Indicators
+
+La [banque mondiale](http://www.banquemondiale.org) fournit un grand nombre de données, dont des indicateurs de gouvernance au niveau mondial (voir [ici](https://data.worldbank.org/data-catalog/worldwide-governance-indicators)). Le code ci-dessous importe les données du fichier [`WGI_Data.csv`](WGI_Data.csv) (que vous devez donc télécharger) pour les importer. Les informations concernant la définition des indicateurs et leur source se trouvent dans le fichier [`WGI_Definition and Source.csv`](WGI_Definition and Source.csv).
+
+```{r wgi}
+wgi.m = read_csv("WGI_Data.csv", quote = '"') %>%
+  mutate_at("Value", funs(as.numeric))
+wgi = wgi.m %>% 
+  select(`Country Name`, `Series Code`, Value) %>% 
+  spread(`Series Code`, Value) %>%
+  rename_at(vars(ends_with("EST")), funs(sub(".EST", "", .)))
+```
+
+
+```{r wgikable, echo=FALSE}
+knitr::kable(head(wgi), digits = 2)
+```
+
+### Décrire rapidement les données
+
+Est-ce bien nécessaire ?
+
+### ACP
+
+Réaliser une ACP centrée ou normée (choix à justifier), sur les données 
+
+#### ACP normée
+
+```{r}
+wgi_acp_n = PCA(wgi[,-1])
+knitr::kable(wgi_acp_n$eig)
+```
+
+90.9% de variance expliquée sur les deux premières dimensions. Axe 1 qui sépare les pays à fortes valeurs sur les indicateurs (à droite) et les pays à faibles valeurs. Axe 2 qui oppose (un peu) les pays à fortes valeurs pour `PV` et `VA` (en haut) et les autres.
+
+```{r}
+wgi.coord_acp_n = cbind(wgi, wgi_acp_n$ind$coord)
+wgi.coord_acp_n$contrib = apply(wgi_acp_n$ind$contrib[,1:2], 1, max)
+ggplot(wgi.coord_acp_n, aes(Dim.1, Dim.2)) +
+  geom_text(aes(label = `Country Name`, 
+                size = contrib, col = contrib)) +
+  xlim(-7, 6) +
+  scale_color_continuous(low = "#ffffff", high = "#000000")
+  theme_minimal()
+```
+
+
+#### ACP centrée
+
+```{r}
+wgi_acp_c = PCA(wgi[,-1], scale.unit = FALSE)
+knitr::kable(wgi_acp_c$eig)
+```
+
+Même conclusion entre les deux. Ici le choix importe peu, car les variables ont toutes la même variance.
+
+```{r}
+apply(wgi[,-1], 2, var, na.rm = T)
+```
+
+
+## Température mondiale
+
+Nous allons travailler ici sur les données de température mondiale **HadCRUT4**, fournies par [Climate Research Unit](https://crudata.uea.ac.uk/). Vous trouverez plus d'informations sur ces données sur ce [lien](https://crudata.uea.ac.uk/cru/data/temperature/). Nous avons ici l'historique des anomalies moyennes mensuelles et annuelles depuis 1850, au niveau mondial, par rapport à la période 1961-1990.
+
+Le code ci-dessous télécharge directement les dernières données disponibles et les met dans un `data.frame` dont vous avez un aperçu en dessous (en supprimant l'année 2017, incomplète).
+
+```{r temp}
+donnees = read_lines("https://crudata.uea.ac.uk/cru/data/temperature/HadCRUT4-gl.dat") %>% 
+  tibble() %>% 
+  slice(seq(1, n(), by = 2)) %>% 
+  transmute(val = str_replace_all(str_trim(.), "[\\s]+", " ")) %>%
+  separate(val, c("Year", month.abb, "Annual"), sep = " ", convert = TRUE)
+```
+
+```{r tempkable, echo=FALSE}
+knitr::kable(head(donnees), digits = 2)
+```
+
+Vous devez donc réaliser les étapes suivantes :
+
+- Décrire rapidement les données
+- Réaliser une ACP centrée ou normée (choix à justifier), sur les données mensuelles
+- Ajouter la moyenne annuelle en variable supplémentaire
+- Produire les graphiques nécessaires à l'interprétation
+- Identifier des années particulières
+    - Refaire l'ACP en les indiquant comme individus supplémentaires
+    - Comparer les résultats pour voir s'il est opportun ou non de les garder dans l'analyse
+- Que peut-on dire globalement ?
+
+
