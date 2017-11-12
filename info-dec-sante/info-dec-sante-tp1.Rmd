@@ -7,257 +7,225 @@ Dans ce TP, nous allons utilier la [base de données publique des médicaments](
 
 Vous devez déjà tous les télécharger (9 fichiers au total), et les placer idéalement dans un répertoire dédié.
 
-## Importation de données texte
+Nous allons utiliser dans ce TP certains packages de [`tidyverse`]() - ensemble de paquets **R** pour la *Data Science*. Vous pouvez les installer avec la commande suivante :
 
-Il est possible d'importer des données provenannt de fichiers texte avec la commande `read.table()`, qui a les paramètres principaux suivants (avec `valeur` par défaut éventuelle) :
-
-- `file` : nom du fichier
-- `header` : présence ou non des noms de variables (`FALSE`)
-- `sep` : séparateur de variable (` `)
-- `na.strings` : chaîne(s) pour valeurs manquantes (`NA`)
-- `skip` : nombre de lignes à ne pas prendre en compte en début de fichier (`0`)
-- `nrow` : nombre de lignes à lire (`-1` : toutes les lignes)
-- `stringsAsFactors` : transformations des chaînes en `factor` ou non (`TRUE`)
-- `quote` : symbole(s) pour les chaînes de caractères (`'"` - attention aux apostrophes en français donc)
-- ...
-
-Cette fonction renvoie un objet de type `data.frame`.
-
-Il existe quelques fonctions dérivés avec des valeurs par défaut différentes
-
-- `read.csv()`, `read.csv2()`
-- `read.delim()`, `read.delim2()`
-
-Par exemple, nous disposons du fichier [`heart.txt`](../donnees/heart.txt), contenant les données de 270 personnes.
-
-<object data="../donnees/heart.txt" type="text/plain" style="width: 100%">
-    impossible à afficher
-</object>
-      
-Nous remarquons les points suivants :
-
-- le nom des colonnes est présent dans la première ligne
-- le séparateur de colonnes est la tabulation (`"\t"`)
-
-Pour importer ce fichier, nous devons donc utiliser le code suivant. Vous devez d'abord télécharger le fichier. **Attention** : il est supposé ici que le fichier est dans un sous-répertoire `donnees` du répertoire de travail.
-
-```{r}
-heart = read.table("../donnees/heart.txt", header = T, sep = "\t")
-head(heart)
+```{r, eval = FALSE}
+install.packages("tidyverse")
 ```
 
-Il est aussi possible d'écrire un fichier texte à partir d'un `data.frame`, en spécifiant aussi les paramètres d'écriture. Par exemple, le code suivant écrit les données `heart_bis` dans un autre formalisme.
-
-- le séparateur de colonnes est le `"%"`
-- les noms des colonnes sont bien écrits
-- le nom des lignes ne sont incluses
-- le séparateur de décimales est la virgule (`","`), comme en français
-- il n'y a pas de `""` ou de `''` autour des chaînes de caractères
+Pour les charger, il est nécessaire de les appeler :
 
 ```{r}
-write.table(heart, file = "../donnees/heart_bis.txt", sep = "%", 
-            row.names = FALSE, col.names = TRUE, dec = ",", quote = FALSE)
+library(lubridate)  # Gestion des dates
+library(readr)      # Importation de fichiers texte
+library(dplyr)      # Manipulation des données
+library(tibble)     # Format de données
 ```
 
-<object data="../donnees/heart_bis.txt" type="text/plain" style="width: 100%">
-    impossible à afficher
-</object>
-
-Il est parfois difficile de lire directement avec la commande `read.table()` ou ses dérivés. On peut utiliser dans ce cas la commande `readLines()`, qui comme son nom l'indique, lit les lignes les unes après les autres. Elle renvoie un tableau de chaîne de caractères, chaque valeur du tableau correspondant à une ligne.
-
-```{r}
-heart_lignes = readLines("../donnees/heart.txt")
-length(heart_lignes)
-heart_lignes[1]
-heart_lignes[2]
-```
-
-## Attributs d'un objet
-
-Dans `R`, tout objet peut avoir un ou plusieurs attributs, en particulier les `data.frame`s, comme par exemple la classe de l'objet, le nom des colonnes, et le nom des lignes. On peut avoir la liste des attributs avec la commande `attributes()`. Celle-ci nous renvoie une `list` contenant des objets nommés.
-
-```{r}
-attributes(mtcars)
-```
-
-On peut accéder à chaque objet de cette liste via le nom de l'objet, de deux façons différentes, comme présenté ci-dessous.
-
-```{r}
-attributes(mtcars)$names
-attr(mtcars, "names")
-```
-
-Il est aussi possible de définir de nouveaux attributs à un `data.frame`, via la commande `attr()`. Celui-ci ne sera pas visible lorsqu'on l'affichera, mais auquel on pourra accéder directement avec les commandes ci-dessus.
-
-```{r}
-attr(mtcars, "info") = "Ce jeu de données présentes des informations sur 32 voitures, décrites par 11 variables"
-mtcars$info
-attributes(mtcars)
-attr(mtcars, "info")
-```
 
 ## Dates
 
-Comme dans tous les systèmes, les dates sous `R` sont stockées sous forme d'entiers représentant un nombre de jours depuis une certaine date, sous le format `Date`. Ci-dessous, nous voyons comment récupérer la date du jour, le nombre de jour depuis l'origine, et le calcul de la date d'origine. Il y a aussi deux exemples d'affichage amélioré d'une date (la date du jour ici).
+Comme dans tous les systèmes, les dates sous `R` sont stockées sous forme d'entiers représentant un nombre de jours depuis une certaine date, sous le format `Date`. Le package [`lubridate`](http://lubridate.tidyverse.org/) permet de manipuler facilement ces dates. Ci-dessous, nous récupérons la date du jour, nous l'affichons, et nous la décomposons.
+
 
 ```{r}
 # Date du jour
-Sys.Date()
-# Entier stocké
-as.numeric(Sys.Date())
+auj = today()
+auj
+# Nombre de jours depuis la date d'origine
+as.numeric(auj)
 # Date d'origine (et exemple de soustraction de jours d'une date)
-Sys.Date() - as.numeric(Sys.Date())
-# Affichage d'une date avec un format spécifique
-format(Sys.Date(), "jour : %d ou %e, mois : %m, année :  %y ou %Y")
-# Affichage d'une date dépendant de la langue locale
-format(Sys.Date(), "%a %e %b ou %A %e %B")
+auj - as.numeric(auj)
+
+# Décomposition
+year(auj)
+month(auj)
+day(auj)
+yday(auj)
+mday(auj)
+wday(auj)
+week(auj)
 ```
 
-Il est aussi possible de transformer une chaîne de caractère en `Date` avec la fonction `as.Date()`. Celle-ci prend en paramètre obligatoire un vecteur de chaînes (éventuellement avec une seule valeur), et de façon optionnelle le format de la date. Voici quelques exemples d'utilisations de cette fonction, avec la présentation des fonctions `weekdays()`, `months()`, `quarters()` et `julian()`.
+Il est aussi possible de traduire une date écrite en *jour/mois/année*, avec la fonction `dmy()` (`d` pour jour, `m` pour mois et `y` pour année). Il existe aussi les fonctions `ymd()`, `ydm()`, `myd()`, ...
 
 ```{r}
-# Tentative de conversion d'une date écrite en "français"
-as.Date("09/11/2016")
-# En spécifiant le format, tout est ok
-as.Date("09/11/2016", "%d/%m/%Y")
-# Récupération d'informations de cette date
-d = as.Date("09/11/2016", "%d/%m/%Y")
-weekdays(d) # jour de la semaine
-months(d)   # mois dans l'année
-quarters(d) # trimestre dans l'année
-julian(d)   # nombre de jour depuis l'origine (éventuellement spécifié, cf ci-dessous)
-julian(d, as.Date("1900-01-01"))
+# Conversion de dates classiques
+dmy("13/11/2016")
+dmy("13/11-17")
+```
+
+Enfin, pour des dates écrites dans des formats plus exotiques, il existe la fonction `parse_date_time()`.
+
+```{r}
+# Conversion de dates spécifiques
+parse_date_time("13 nov 2017", "d b! y")
 ```
 
 
+## Importation de données
 
-## Interrogation de données
+Le `tidyverse` inclut trois packages permettant l'importation de données externes, contenues dans des fichiers (ainsi que l'exportation). Nous allons ici importer des données classiques (150 *iris* de trois espèces différentes, décrits par 4 variable), disponibles dans trois formats : [texte délimité](../donnees/Iris.txt), [Excel](../donnees/Iris.xlsx) et [SAS](../donnees/Iris.sas7bdat). Les trois fonctions qu'on va utiliser renvoient un objet de type `tibble`.
 
-Nous allons voir ici comment réaliser les opérations classiques faites en `SQL` au moyen de fonctions `R`.
+### Texte délimité
 
-### Fonction `subset()`
-
-Cette fonction permet de réaliser au moins deux opérations classiques en `SQL :
-
-- **Restriction** : limitation aux lignes respectant un critère 
-- **Projection** : limitation à certaines colonnes
-
-#### Restriction
-
-La fonction `subset()` prend en premier paramètre le `data.frame` sur lequel faire l'opération. Le deuxième paramètre à définir ici est celui pour la restriction (`subset =`). Voici comment se restreindre par exemple aux voitures (données `mtcars`) avec une consommation strictement inférieure à 15 (`mpg < 15`).
+Pour cela, nous utilisons le package [`readr`](http://readr.tidyverse.org/), qui améliore les fonctions déjà présentes. Les nouvelles fonctions sont plutôt performantes, et *comprennent* les données, ce qui permet de limiter les besoins de paramétrisation de celles-ci.
 
 ```{r}
-subset(mtcars, subset = mpg < 15)
+library(readr)
+iris_txt = read_delim("../donnees/Iris.txt", delim = "\t")
+iris_txt
+```
+
+### Fichier Excel
+
+Le package [`readxl`](http://readxl.tidyverse.org/) permet donc de lire des fichiers Excel (quelque soit le format : `xlsx` ou `xls`). La fonction `read_excel()` détecte justement le format du fichier.
+
+```{r}
+library(readxl)
+iris_xlsx = read_excel("../donnees/Iris.xlsx")
+iris_xlsx
+```
+
+### Fichier SAS
+
+Enfin, pour importer des données SAS mais aussi SPSS et Stata, il existe le package [`haven`](http://haven.tidyverse.org/), avec la fonction `read_sas()`.
+
+```{r}
+library(haven)
+iris_sas = read_sas("../donnees/Iris.sas7bdat")
+iris_sas
+```
+
+
+## Manipulation de données
+
+Pour tout ce qui est manipulation de données, au sens `SQL`, nous disposons du package [`dplyr`](http://dplyr.tidyverse.org/) qui fournit toutes les fonctions utilisées ici. Bien qu'il y ait aussi des fonctions de base dans R, ce package est préférable.
+
+Vous remarquerez l'utilisation de l'opérateur `%>%` pour enchaîner les opérations. Celui-ci est fournit par le package [`magrittr`](http://magrittr.tidyverse.org/), lui aussi dans le `tidyverse`. Ce formalisme permet d'avoir un code plus lisible, car déroulant les étapes les unes après les autres, contrairement à la programmation classique dans R.
+
+```{r}
+library(dplyr)
+```
+
+
+### Restriction et projection
+
+Ici, les deux opérations consistent respectivement à sélectionner des lignes (*restriction*) ou des colonnes (*projection*).
+
+#### Restriction par filtre
+
+```{r}
+mtcars %>% filter(mpg > 30)
+mtcars %>% filter(mpg > 30 & qsec < 19)
+mtcars %>% filter(carb == 8)
+mtcars %>% filter(between(mpg, 30, 32))
+```
+
+#### Sélection de lignes par indices
+
+```{r}
+mtcars %>% slice(1:5)
+mtcars %>% slice(25:n()) # n() indique le nombre de lignes de la table
+mtcars %>% slice(seq(1, n(), by = 4))
 ```
 
 #### Projection
 
-Ici, c'est le paramètre pour la projection qu'il faut définir (`select =`). On peut lui passer un ou plusieurs noms de colonnes. On veut par exemple ne récupérer que la puissance (`hp`) et la cylindrée (`disp`).
-
 ```{r}
-subset(mtcars, select = c(hp, disp))
+head(mtcars) %>% select(mpg)
+head(mtcars) %>% select(qsec, mpg, hp)
+head(mtcars) %>% select(5, 3, 9)
+head(mtcars) %>% select(starts_with("c")) # d'autres possibilités de ce type existent (voir ?select_helpers)
 ```
 
-Mais il est aussi possible d'exclure des colonnes dans le résultat. C'est-à-dire que plutôt de dire celles qu'on veut, on va indiquer celles dont on ne veut pas.
+#### Suppression des doublons
 
 ```{r}
-subset(mtcars, select = -c(hp, disp))
+head(mtcars) %>% select(cyl)
 ```
-
-#### Combinaison des deux
-
-Bien évidemment, il est possible de combiner les deux paramètres pour réaliser une opération de restriction et une opération de projection dans la même commande. Nous récupérons ici la puissance (`hp`) et la cylindrée (`disp`) des voitures (données `mtcars`) avec une consommation strictement inférieure à 15 (`mpg < 15`).
 
 ```{r}
-subset(mtcars, subset = mpg < 15, select = c(hp, disp))
+head(mtcars) %>% select(cyl) %>% distinct()
 ```
 
-### Fonction `transform()`
+### Tri
 
-Cette fonction permet elle de créer de nouvelles variables, basées sur des calculs à partir d'autres variables. Elle renvoie le `data.frame`, passé en premier paramètre, complété des nouvelles variables. On calcule ici par exemple le rapport poids (`wt`) / puissance (`hp`). Et on calcule aussi la consommation en litres pour 100 km.
-
-```{r, eval = FALSE}
-transform(mtcars, 
-          rapport = round(1000 * wt / hp), 
-          conso = round(236 / mpg, 2))
-```
-
-Ici, toute fonction existante applicable sur un vecteur est utilisable.
-
-### Fonction `aggregate()`
-
-On va pouvoir réaliser ici tous les calculs d'agrégats possibles sur une table, avec ou sans regroupement. Le premier paramètre sera la formule (sous la forme `... ~ ...`) permettant de déterminer sur quelles variables faire le calcul (à gauche du `~`) et quelles variables utiliser pour le regroupement (à droite du `~`). Le deuxième sera le jeu de données à utiliser. Et le troisième sera la fonction à appliquer.
+La fonction `arrange()` permet le tri sur une ou plusieurs variables, avec `desc()` pour indiquer un ordre décroissant.
 
 ```{r}
-# Calcul de la moyenne de mpg pour tous
-aggregate(mpg ~ 1, mtcars, mean)
-# Calcul de la moyenne de mpg et de hp pour tous
-aggregate(cbind(mpg, hp) ~ 1, mtcars, mean)
-# Calcul de la moyenne de toutes les variables pour tous
-aggregate(. ~ 1, mtcars, mean)
-# Calcul de la moyenne de mpg pour chaque modalité de am
-aggregate(mpg ~ am, mtcars, mean)
-# Calcul de la moyenne de mpg en fonction de am et de cyl
-aggregate(mpg ~ am + cyl, mtcars, mean)
-# Calcul de la moyenne de mpg et de hp en fonction de am et de cyl
-aggregate(cbind(mpg, hp) ~ am + cyl, mtcars, mean)
+head(mtcars) %>% arrange(mpg)
+head(mtcars) %>% arrange(am, mpg)
+head(mtcars) %>% arrange(desc(mpg))
 ```
 
-### Fonction `merge()`
+### Ajout de variables
 
-Cette fonction permet elle de réaliser des jointures entre deux tables. Pour présenter le fonctionnement, nous allons créer une table avec le type de moteur selon le nombre de cylindres (`cyl` dans `mtcars`). Vous remarquerez que la valeur `4` n'est pas présente dans ce tableau, alors qu'elle l'est dans `mtcars`. Inversement, `12` est présent ici mais pas dans `mtcars`.
+Comme vous avez pu le remarquer, dans les différents exemples ci-dessus, le nom des lignes est supprimé. Pour le récupérer, nous utilisons la fonction `rownames_to_column()`, qui permet de le transformer en variable.
 
 ```{r}
-types = data.frame(
-    cyl = c(6, 8, 12),
-    type = c("moyen", "gros", "très gros")
+head(mtcars) %>% rownames_to_column(var = "car")
+```
+
+Pour ajouter une variable, il existe la fonction `mutate()`.
+
+```{r}
+head(mtcars) %>% mutate(ratio = wt / hp, zero = 0, wt = NULL, hp = NULL)
+head(mtcars) %>% mutate(n = row_number(), rang_mpg = min_rank(desc(mpg)))
+```
+
+Si l'on veut garder uniquement la variable nouvellement créée, on utilise `transmute()`.
+
+```{r}
+head(mtcars) %>% transmute(ratio = wt / hp)
+```
+
+
+### Calcul d'agrégat
+
+Pour résumer une ou plusieurs variables, nous utilisons la fonction `summarise()`.
+
+```{r}
+mtcars %>% summarise(
+  n = n(),
+  mpg_mean = mean(mpg),
+  nbtype_carb = n_distinct(carb)
 )
-types
-unique(mtcars$cyl)
 ```
 
-La fonction `merge()` prend, au minimum, deux paramètres que sont les deux tables à fusionner. Par défaut, c'est une jointure naturelle qui est réalisée (i.e. on recherche l'égalité des variables ayant le même nom).
+Et si l'on souhaite effecture par groupes déterminés par les modalités d'une variable, il existe la fonction `group_by()`.
 
 ```{r}
-merge(mtcars, types)
+mtcars %>%
+  group_by(cyl) %>%
+  summarise(
+  n = n(),
+  mpg_mean = mean(mpg),
+  nbtype_carb = n_distinct(carb)
+)
 ```
 
-Si le nom des colonnes diffère ou que vous ne voulez pas regarder l'égalité entre toutes les variables ayant même nom, il faut le préciser dans les paramètres `by` (même noms de colonnes dans les deux tables), ou `by.x` et `by.y` pour dire quelles variables prendre dans la première table (`by.x`) et dans la deuxième table (`by.y`).
+
+### Jointure
+
+Pour tester les méthodes, nous créons une nouvelle table `engine`, indiquant le type en fonction de la valeur de `cyl`. Vous remarquerez que par rapport à `mtcars`, il y a une valeur en moins (4) et une valeur en plus (12).
 
 ```{r}
-names(types)[1] = "nbcyl"
-types
-merge(mtcars, types, by.x = "cyl", by.y = "nbcyl")
+engine = tibble(
+  cyl = c(6, 8, 12),
+  type = c("medium", "big", "very big")
+)
 ```
 
-Vous remarquerez, en le testant, que si on ne précise pas sur quelles variables faire la jointure, en l'absence de variables identiques entre les tables, la fonction `merge()` réalise le produit cartésien.
-
-Dans les deux exemples ci-dessus, vous avez du voir que toutes les lignes ne son pas retournées. En effet, les voitures de `mtcars` avec `cyl == 4` ne sont pas intégrées. De même que la dernière ligne de `types`. Pour avoir toutes les lignes, il faut ajouter le paramètre `all = TRUE`, pour lui dire de faire la jointure complète (i.e. `FULL OUTER JOIN`). Dans ce cas, on aura donc 33 lignes, avec des `NA` pour les cellules dont il n'a pas l'information.
+Nous pouvons maintenant utiliser les différentes fonctions de jointure disponibles.
 
 ```{r}
-names(types)[1] = "cyl"
-merge(mtcars, types, all = TRUE)
-```
-
-On peut bien évidemment faire les jointures externes gauches (`LEFT OUTER JOIN`) ou droite (`RIGHT OUTER JOIN`) avec respectivement les paramètres `all.x` et `all.y`.
-
-```{r}
-merge(mtcars, types, all.x = TRUE)
-merge(mtcars, types, all.y = TRUE)
-```
-
-### Fonction `setNames()`
-
-Cette fonction permet de renommer les colonnes d'un `data.frame` et de le renvoyer. Reprenons un exemple de calcul d'agrégat vu précédemment. Quelque soit le calcul indiqué, le nom de la colonne est toujours le même.
-
-```{r}
-aggregate(mpg ~ am, mtcars, mean)
-```
-
-Si nous voulons avoir dans un même tableau, la moyenne et l'écart-type, il nous faudrait faire une jointure. Mais l'idéal serait de renommer les tableaux correctement. On peut donc le faire avec `setNames()` dont voici un exemple de fonctionnement.
-
-```{r}
-setNames(aggregate(mpg ~ am, mtcars, mean), c("am", "Moyenne"))
+mtcars %>% inner_join(engine)
+mtcars %>% left_join(engine)
+mtcars %>% right_join(engine)
+mtcars %>% full_join(engine)
+mtcars %>% semi_join(engine)
+mtcars %>% anti_join(engine)
 ```
 
 ## Exercices
@@ -265,13 +233,6 @@ setNames(aggregate(mpg ~ am, mtcars, mean), c("am", "Moyenne"))
 ### Importation
 
 La première étape ici est donc d'importer les données. Il faut pour cela utiliser la fonction `read.table()`, en évitant que les variables textuelles deviennent des `factors`. Il faut aussi renommer les variables pour chaque table, selon les informations fournies dans le PDF associé aux données. Il faut aussi gérer les dates pour qu'elles soient correctement représentées. Pour certaines variables, nous avons le descriptif des modalités dans ce document. Enfin, il faudrait ajouter le court descriptif de chaque table comme attribut de celles-ci.
-
-```{r, include=FALSE}
-# readLines("donnees/medicaments/2016-11-09/CIS_bdpm.txt", 10)
-CIS_bdpm = read.table("../donnees/medicaments/2016-11-09/CIS_bdpm.txt",
-                      quote = NULL, sep = "\t", encoding = "latin1",
-                      stringsAsFactors = FALSE)
-```
 
 
 ### Interrogation

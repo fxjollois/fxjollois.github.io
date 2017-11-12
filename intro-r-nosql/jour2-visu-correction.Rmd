@@ -1,0 +1,160 @@
+---
+title: "Visualisation de données - *correction*"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE, fig.alin = "center")
+library(ggplot2)
+library(ggmap)
+library(geojsonio)
+library(dplyr)
+```
+
+```{r import, include=FALSE}
+airbnb.summ = read.table("../donnees/airBnB-2015-09-02/airbnb-paris-2015-09-02-summary.csv", 
+                         sep = ",", header = T, 
+                         quote = "\"", comment.char = "",
+                         encoding = "UTF-8")
+airbnb.comp = read.table("../donnees/airBnB-2015-09-02/airbnb-paris-2015-09-02.csv", 
+                         sep = ",", header = T, 
+                         quote = "\"", comment.char = "")
+
+airbnb.neigh = geojson_read("../donnees/airBnB-2015-09-02/airbnb-paris-2015-09-02-neighbourhoods.geojson", 
+                            what = "sp")
+airbnb.neigh.for = fortify(airbnb.neigh)
+ggplot(airbnb.neigh.for, aes(long, lat, group=group)) +
+    geom_polygon()  + theme_void()
+
+airbnb.neigh.ord = data.frame(
+    id = as.character(0:19),
+    neighbourhood = unlist(lapply(geojson_read("../donnees/airBnB-2015-09-02/airbnb-paris-2015-09-02-neighbourhoods.geojson")$features, function(f) return(f$properties$neighbourhood)))
+)
+
+airbnb.neigh.cen = merge(airbnb.neigh.ord, 
+                         aggregate(cbind(long, lat) ~ id, airbnb.neigh.for,
+                                   function (c) return(mean(range(c))))
+                         )
+```
+
+
+## Données
+
+Nous avons l'ensemble des locations [AirBnB](http://www.airbnb.com) sur la ville de Paris pour le 2 semptebre 2015. Voici l'ensemble des logements, répartis par arrondissement.
+
+```{r}
+ggplot(airbnb.neigh.for) +
+    geom_polygon(aes(long, lat, group=group, fill=id),
+                 color = "gray50") +
+    geom_point(data = airbnb.summ, 
+               aes(longitude, latitude), 
+               col="gray30", alpha=.25) +
+    geom_text(data = airbnb.neigh.cen, 
+              aes(long, lat, label=neighbourhood, group=id)) + 
+    theme_void() + theme(legend.position="none")
+```
+
+
+## Représenter les logements sur la carte de Paris
+
+```{r carteParis, echo=FALSE}
+m = get_map("Paris, France", zoom = 11,
+            maptype = "toner-lite")
+```
+
+
+```{r}
+ggmap(m) +
+  geom_point(data = airbnb.summ, 
+             aes(longitude, latitude), 
+             col="gray30", alpha=.25) + 
+  theme_void()
+```
+
+## Représenter les quartiers sur la carte de Paris
+
+```{r}
+ggmap(m) +
+  geom_polygon(data = airbnb.neigh.for,
+               aes(long, lat, group=group, fill=id),
+               color = "gray50") +
+  geom_text(data = airbnb.neigh.cen, 
+            aes(long, lat, label=neighbourhood, group=id)) + 
+  theme_void() + theme(legend.position="none")
+```
+
+## Représenter ces deux informations sur la carte de Paris
+
+### soit du point par point
+
+```{r}
+ggmap(m) +
+  geom_polygon(data = airbnb.neigh.for,
+               aes(long, lat, group=group, fill=id),
+               color = "gray50") +
+  geom_point(data = airbnb.summ, 
+             aes(longitude, latitude), 
+             col="gray30", alpha=.25) +
+  geom_text(data = airbnb.neigh.cen, 
+            aes(long, lat, label=neighbourhood, group=id)) + 
+  theme_void() + theme(legend.position="none")
+```
+
+
+### soit avec une heatmap
+
+```{r}
+ggmap(m) +
+  geom_bin2d(data = airbnb.summ, 
+             aes(longitude, latitude)) +
+  geom_polygon(data = airbnb.neigh.for,
+               aes(long, lat, group = group),
+               color = "gray90", alpha = .1) +
+  geom_text(data = airbnb.neigh.cen, 
+            aes(long, lat, label=neighbourhood, group=id)) + 
+  theme_void() + theme(legend.position="none")
+```
+
+
+## Représenter le nombre de logements par quartier
+
+```{r}
+resume = airbnb.summ %>%
+  group_by(neighbourhood) %>%
+  summarise(nblogement = n(), 
+            prixmoyen = mean(price, na.rm = T))
+```
+
+```{r, echo = FALSE}
+knitr::kable(resume, digits = 2)
+```
+
+```{r}
+airbnb.resume = resume %>%
+  full_join(airbnb.neigh.ord) %>%
+  inner_join(airbnb.neigh.for)
+```
+
+```{r}
+ggmap(m) +
+  geom_polygon(data = airbnb.resume,
+               aes(long, lat, group=group, fill=nblogement),
+               color = "gray50") +
+  geom_text(data = airbnb.neigh.cen, 
+            aes(long, lat, label=neighbourhood, group=id)) + 
+  theme_void() 
+```
+
+
+## Idem pour le prix moyen
+
+```{r}
+ggmap(m) +
+  geom_polygon(data = airbnb.resume,
+               aes(long, lat, group=group, fill=prixmoyen),
+               color = "gray50") +
+  geom_text(data = airbnb.neigh.cen, 
+            aes(long, lat, label=neighbourhood, group=id)) + 
+  theme_void() 
+```
+
