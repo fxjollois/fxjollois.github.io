@@ -270,10 +270,10 @@ Voila comment lancer la création du rapport.
 
 ```{r investigate, eval=FALSE}
 library(FactoInvestigate)
-Investigate(acp)
+Investigate(acp, file = "Investigate-ACP.Rmd")
 ```
 
-Une fois que la fonction a fini, elle affiche la page html créée dans un navigateur. Vous trouverez ici le [fichier produit](Investigate.html).
+Une fois que la fonction a fini, elle affiche la page html créée dans un navigateur. Vous trouverez ici le [fichier produit](Investigate-ACP.html).
 
 ## Package `Factoshiny`
 

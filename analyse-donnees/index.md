@@ -11,3 +11,11 @@ subtitle: DUT STID 2ème Année en alternance
     - [TD](acp-td.html)
         - [Correction TD, 1ère partie](acp-td-correction.html)
     - [TP](acp-tp.html)
+        - Correction TP : [HTML](acp-td-correction.html) et [Rmd](acp-tp-correction.Rmd)
+- Analyse Factorielle des Correspondances (ou **AFC**)
+    - [Cours](afc-cours.html)
+    - [TD](afc-td.html)
+    - [TP](afc-tp.html)
+
+
+
