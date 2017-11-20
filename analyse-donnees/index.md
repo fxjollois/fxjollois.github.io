@@ -15,6 +15,7 @@ subtitle: DUT STID 2ème Année en alternance
 - Analyse Factorielle des Correspondances (ou **AFC**)
     - [Cours](afc-cours.html)
     - [TD](afc-td.html)
+        - [Correction TD](afc-td-correction.html)
     - [TP](afc-tp.html)
 
 

@@ -300,7 +300,7 @@ Il est aussi possible d'écrire du code (par exemple un nom de fonction ou autre
 
 Un document `R markdown` (généralement enregistré avec l'extension `.rmd` ou `.Rmd`) permet d'une part d'utiliser la syntaxe `markdown` pour écrire du texte, mais aussi d'inclure des commandes `R` directement dans le document. Ainsi, un seul document contient le code et le commentaire, ce qui est un atout non négligeable pour des rapports ou présentations devant être mises à jour ou refaits régulièrement.
 
-Il est possible d'inclure les commandes `R` soit dans un bloc de code, appelé *chunck* dans **R Studio**, ou en ligne, appelé *inline chunck*.
+Il est possible d'inclure les commandes `R` soit dans un bloc de code, appelé *chunk* dans **R Studio**, ou en ligne, appelé *inline chunk*.
 
 Pour créer un document `R markdown` dans **R Studio**, vous pouvez cliquer sur l'icône ![bouton nouveau document RStudio][bout_Rstudio_plus], puis sur *R markdown...*. Vous devez voir apparaître une interface vous demandant de choisir entre un document, une présentation, une application *Shiny* ou de choisir un *template* prédéfini. Nous allons rester sur le *document* pour le moment. De plus, vous pouvez indiquer le titre et l'auteur, ainsi que choisir le format de sortie (HTML, PDF ou Word). Nous allons garder HTML pour le moment.
 
@@ -323,9 +323,9 @@ Dans cette en-tête, nous pouvons donc définir le titre, éventuellement un sou
 
 Il y a d'autres possibilités de sortie, ainsi que la possibilité d'ajouter d'autres paramètres de sortie, que nous ne verrons pas ici.
 
-### *Chunck*
+### *Chunk*
 
-Un *chunck* sera donc un bloc de commande `R` (ou autre langage possible) qui sera exécuté par **R Studio**. Pour cela, il faut indiquer sur la première ligne le langage utilisé. Pour `R`, voici donc un exemple simple
+Un *chunk* sera donc un bloc de commande `R` (ou autre langage possible) qui sera exécuté par **R Studio**. Pour cela, il faut indiquer sur la première ligne le langage utilisé. Pour `R`, voici donc un exemple simple
 
 <pre><code>&#96;&#96;&#96;{r}
 # code R
@@ -339,9 +339,9 @@ Dans le document sera donc intégré à la fois le code, ainsi que le résultat 
 summary(iris)
 ```
 
-Il est possible de nommer le *chunck* en lui donnant un label (sans espace, sans accent) après `r` dans les `{}`. Ceci est intéressant surtout dans l'étape de développement, car si une erreur arrive lors de l'exécution, il sera plus facile de retrouver dans quel *chunck* est l'erreur (indiqué lors de l'affichage de l'erreur).
+Il est possible de nommer le *chunk* en lui donnant un label (sans espace, sans accent) après `r` dans les `{}`. Ceci est intéressant surtout dans l'étape de développement, car si une erreur arrive lors de l'exécution, il sera plus facile de retrouver dans quel *chunk* est l'erreur (indiqué lors de l'affichage de l'erreur).
 
-De plus, il est possible de mettre des options dans le *chunck*, toujours dans les `{}`, après une `","`. Voici quelques options classiques et utiles (avec leur valeur par défaut indiquée, si elle existe) :
+De plus, il est possible de mettre des options dans le *chunk*, toujours dans les `{}`, après une `","`. Voici quelques options classiques et utiles (avec leur valeur par défaut indiquée, si elle existe) :
 
 - `include = TRUE` : si `FALSE`, le code est exécuté mais il n'est pas inclus dans le document (ni le code, ni son résultat)
 - `echo = TRUE` : si `FALSE`, le code n'est pas affiché mais bien exécuté
@@ -353,7 +353,7 @@ Il est possible de mettre plusieurs options, toutes séparées par des `","`.
 
 #### Quelques exemples
 
-Dans la suite, voici quelques exemples de *chuncks* avec options. Regardez le source pour mieux comprendre le fonctionnement.
+Dans la suite, voici quelques exemples de *chunks* avec options. Regardez le source pour mieux comprendre le fonctionnement.
 
 Tout d'abord, on importe les données `heart.txt`, mais ce genre de code n'est souvent pas à inclure, dans le sens où l'on ne veut ni l'afficher, ni voir de résultat.
 
@@ -381,13 +381,13 @@ barplot(prop.table(table(heart$sexe, heart$coeur), margin = 2) * 100,
 legend("right", legend = levels(heart$sexe), fill = couleurs, bty = "n", text.width = .8, title = "Sexe")
 ```
 
-### *Inline chunck* 
+### *Inline chunk* 
 
-On peut faire des *chuncks* en ligne en encadrant le code avec des `` ` `` et en commencant le code par un `r`. Par exemple, on peut dire que dans le jeu de données `heart` sont présentés `r nrow(heart)` individus et `r ncol(heart)` variables.
+On peut faire des *chunks* en ligne en encadrant le code avec des `` ` `` et en commencant le code par un `r`. Par exemple, on peut dire que dans le jeu de données `heart` sont présentés `r nrow(heart)` individus et `r ncol(heart)` variables.
 
-### Paramètres globaux des *chuncks*
+### Paramètres globaux des *chunks*
 
-Il est possible de déterminer des paramètres globaux pour tous les blocs *chuncks* du document (sauf paramètres locaux précisés). Ceci doit se faire comme suit, avec la fonction `set()` de l'objet `opts_chunck` de la librairie `knitr`. Il est par exemple possible de définir `echo=FALSE` pour n'avoir aucun code apparaissant dans le document.
+Il est possible de déterminer des paramètres globaux pour tous les blocs *chunks* du document (sauf paramètres locaux précisés). Ceci doit se faire comme suit, avec la fonction `set()` de l'objet `opts_chunk` de la librairie `knitr`. Il est par exemple possible de définir `echo=FALSE` pour n'avoir aucun code apparaissant dans le document.
 
 ```{r, eval=FALSE}
 knitr::opts_chunk$set(...)
@@ -444,7 +444,7 @@ En premier lieu, il faut changer le titre du reporting, en mettant par exemple `
 
 Nous allons commencer par importer les données dans ce tableau de bord, grâce au code ci-dessus. Ceci permettra donc de ne pas avoir d'étapes de chargement des fichiers texte et de jointures, pouvant prendre du temps et inutiles puisque les données n'évoluent pas en temps réel.
 
-Vous devez donc introduire le code suivant dans le premier *chunck* (en dessous du chargement de la librairie `flexdashboard`), nommé `setup` et ayant l'option `include=FALSE`. Ceci permettra donc d'avoir les données à disposition, mais que le code ne s'affiche pas dans le document final.
+Vous devez donc introduire le code suivant dans le premier *chunk* (en dessous du chargement de la librairie `flexdashboard`), nommé `setup` et ayant l'option `include=FALSE`. Ceci permettra donc d'avoir les données à disposition, mais que le code ne s'affiche pas dans le document final.
 
 ```{r}
 load("../donnees/ca/ca.RData")
@@ -452,7 +452,7 @@ load("../donnees/ca/ca.RData")
 
 #### Premier graphique
 
-Pour le premier graphique (`Chart A`), nous allons représenter l'évolution du chiffre d'affaires sur la période 2003-2004, mois par mois. Dans la partie `### Chart A`, nous allons d'abord modifier le titre en `"Evolution mois par mois"`, par exemple (au lieu de `"Chart A"` donc). Ensuite, il faut mettre le code suivant dans le *chunck* correspondant.
+Pour le premier graphique (`Chart A`), nous allons représenter l'évolution du chiffre d'affaires sur la période 2003-2004, mois par mois. Dans la partie `### Chart A`, nous allons d'abord modifier le titre en `"Evolution mois par mois"`, par exemple (au lieu de `"Chart A"` donc). Ensuite, il faut mettre le code suivant dans le *chunk* correspondant.
 
 ```{r, fig.align="center"}
 d = setNames(aggregate(ca / 1000000 ~ mois_no, ca_tout, sum), c("mois", "ca"))
