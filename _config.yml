@@ -1,1 +1,4 @@
-name: FX Jollois
+title: FX Jollois
+description: Enseignant-chercheur en <strong>Data Science</strong>
+theme: jekyll-theme-dinky
+favicon: "/favicon-code.ico"

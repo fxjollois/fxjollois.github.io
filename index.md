@@ -1,7 +1,4 @@
----
-layout: default
-title: FX Jollois
----
+# FX Jollois
 
 ## Présentation
 
@@ -9,17 +6,23 @@ Enseignant-chercheur en informatique, mon domaine de compétence se situe à la 
 
 J'effectue ma recherche au [LIPADE](http://www.lipade.fr), dans l'équipe [MLDS](http://www.math-info.univ-paris5.fr/~nadifmoh/Accueil.html#). Je suis aussi membre associé du [CEDRIC](http://cedric.cnam.fr) (dans l'équipe MSDMA) du [CNAM](http://www.cnam.fr).
 
-Pour votre information, ce site étant encore **en construction**, certains liens peuvent ne pas être accessibles, et certaines pages sont encore en cours de réalisation.
+- [**Enseignement**](http://fxjollois.github.io/cours-2017-2018) : documents de cours
+- [**Recherche**](recherche.html) et [publications](publications.html)
 
-## Informations sur le contenu du site
+- [Données](accesdonnees) : données à télécharger
+- [Données intégrées](donnees-integrees-r.html) : informations sur des données présentes dans R
 
-- Dans la partie [**Enseignement**](enseignement), vous trouverez un ensemble de documents de cours
-- Dans la partie [**Recherche**](recherche.html), vous trouverez mes thématiques de recherche, ainsi que mes [publications](publications.html)
-- [**Statistical Programming using `R`**](stat-prog-R.html), *Amirkabir University*
+## explore-data
 
-Vous trouverez dans la page [Données](accesdonnees) des données à télécharger, que j'utilise régulièrement dans mes cours. Et dans la page [données intégrées](donnees-integrees-r.html) des informations sur des données présentes dans R.
+Interface web dédiée à l'enseignement de la **Statistique descriptive**, créée avec [`R`](http://www.r-project.org) et [`shiny`](http://shiny.rstudio.com).
 
-Et dans la page [Réalisations](realisations), vous trouverez des liens vers quelques applications que j'ai développé, pour l'enseignement particulièrement.
+[Page Github](http://github.com/fxjollois/explore-data) du projet. [Application](http://fxjollois.shinyapps.io/explore-data).
+
+## cours-sql
+
+Interface web dédiée à l'enseignement du langage **`SQL`**, crée en `JavaScript`.
+
+[Page Github](http://github.com/fxjollois/cours-sql) du projet. [Application](http://fxjollois.github.io/cours-sql).
 
 ## Quelques liens intéressants 
 

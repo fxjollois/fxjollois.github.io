@@ -1,7 +1,4 @@
----
-layout: default
-title: Données à disposition
----
+# Données à disposition
 
 Voici les liens vers des données sous différents formats que j'utilise pendant mes cours :
 

@@ -1,7 +1,4 @@
----
-layout: default
-title: Publications
----
+# Publications
 
 [Liste de publications sous Google Scholar](https://scholar.google.fr/citations?hl=fr&user=aW4afqQAAAAJ&view_op=list_works)
 

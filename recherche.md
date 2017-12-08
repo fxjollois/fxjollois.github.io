@@ -1,7 +1,4 @@
----
-layout: default
-title: Recherche
----
+# Recherche
 
 Mes travaux de recherche se placent dans une optique d'**Apprentissage non-supervisée** 
 et concernent principalement la classification automatique (ou **clustering**) sur des 
