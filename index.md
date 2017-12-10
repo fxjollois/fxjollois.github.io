@@ -1,6 +1,4 @@
----
-layout: default
----
+<script src="https://use.fontawesome.com/32d8325004.js"></script>
 
 ## Présentation
 
@@ -8,30 +6,46 @@ Enseignant-chercheur en informatique, mon domaine de compétence se situe à la 
 
 J'effectue ma recherche au [LIPADE](http://www.lipade.fr), dans l'équipe [MLDS](http://www.math-info.univ-paris5.fr/~nadifmoh/Accueil.html#). Je suis aussi membre associé du [CEDRIC](http://cedric.cnam.fr) (dans l'équipe MSDMA) du [CNAM](http://www.cnam.fr).
 
-<li><a class="buttons graduation-cap" href="http://fxjollois.github.io/cours-2017-2018">Enseignement 2017-2018</a></li>
+<a href="http://fxjollois.github.io/cours-2017-2018" target="_blank">
+    <button>
+        <i class="fa fa-graduation-cap"></i>Enseignement 2017-2018
+    </button>
+</a>
 
-<a href="https://github.com/fxjollois" target="_blank"><i class="fa fa-graduation-cap fa-2x"></i>Enseignement 2017-2018</a>
-
-
-- [**Recherche**](recherche.html) et [publications](publications.html)
-- [Données](accesdonnees) : données à télécharger
-- [Données intégrées](donnees-integrees-r.html) : informations sur des données présentes dans R
+<a href="recherche.html"><button><i class="fa fa-institution"></i>Recherche</button></a>
 
 ## explore-data
 
 Interface web dédiée à l'enseignement de la **Statistique descriptive**, créée avec [`R`](http://www.r-project.org) et [`shiny`](http://shiny.rstudio.com).
 
-<li><a class="buttons github" href="https://github.com/fxjollois/explore-data">View On GitHub</a></li>
-<li><a class="buttons desktop" href="http://up5.fr/explore-data">Application (sur serveur UP5)</a></li>
-<li><a class="buttons desktop" href="http://fxjollois.shinyapps.io/explore-data">Application (sur serveur Shinyapps)</a></li>
+<a href="https://github.com/fxjollois/explore-data" target="_blank">
+    <button>
+        <i class="fa fa-github"></i>Voir sur Github
+    </button>
+</a>
+<a href="http://up5.fr/explore-data" target="_blank">
+    <button>
+        <i class="fa fa-desktop"></i>Application (sur serveur UP5)
+    </button>
+</a>
+<a href="http://fxjollois.shinyapps.io/explore-data" target="_blank">
+    <button>
+        <i class="fa fa-desktop"></i>Application (sur serveur Shinyapps)
+    </button>
+</a>
 
 ## cours-sql
 
-Interface web dédiée à l'enseignement du langage **`SQL`**, crée en `JavaScript`.
-
-<li><a class="buttons github" href="https://github.com/fxjollois/cours-sql">View On GitHub</a></li>
-<li><a class="buttons desktop" href="http://fxjollois.github.io/cours-sql">Application</a></li>
-
+<a href="https://github.com/fxjollois/cours-sql" target="_blank">
+    <button>
+        <i class="fa fa-github"></i>Voir sur Github
+    </button>
+</a>
+<a href="http://fxjollois.github.io/cours-sql" target="_blank">
+    <button>
+        <i class="fa fa-desktop"></i>Application
+    </button>
+</a>
 
 ## WikipediaR
 
@@ -40,6 +54,9 @@ Package `R` permettant d'accéder aux données de [Wikipedia](http://www.wikiped
 Lien sur le CRAN : [WikipediaR](https://cran.r-project.org/package=WikipediaR)
 
 ## Quelques liens intéressants 
+
+- [Données](accesdonnees) : données à télécharger
+- [Données intégrées](donnees-integrees-r.html) : informations sur des données présentes dans R
 
 - [ECAIS](https://sites.google.com/site/groupeecais/) : groupe de travail de l'IUT Paris
 Descartes, regroupant des informaticiens et des statisticiens
