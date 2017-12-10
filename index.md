@@ -4,7 +4,7 @@ Enseignant-chercheur en informatique, mon domaine de compétence se situe à la 
 
 J'effectue ma recherche au [LIPADE](http://www.lipade.fr), dans l'équipe [MLDS](http://www.math-info.univ-paris5.fr/~nadifmoh/Accueil.html#). Je suis aussi membre associé du [CEDRIC](http://cedric.cnam.fr) (dans l'équipe MSDMA) du [CNAM](http://www.cnam.fr).
 
-<a class="buttons graduation-cap" href="http://fxjollois.github.io/cours-2017-2018">Enseignement 2017-2018</a>
+<li><a class="buttons graduation-cap" href="http://fxjollois.github.io/cours-2017-2018">Enseignement 2017-2018</a></li>
 
 
 - [**Recherche**](recherche.html) et [publications](publications.html)
@@ -15,16 +15,16 @@ J'effectue ma recherche au [LIPADE](http://www.lipade.fr), dans l'équipe [MLDS]
 
 Interface web dédiée à l'enseignement de la **Statistique descriptive**, créée avec [`R`](http://www.r-project.org) et [`shiny`](http://shiny.rstudio.com).
 
-<a class="buttons github" href="https://github.com/fxjollois/explore-data">View On GitHub</a>
-<a class="buttons desktop" href="http://up5.fr/explore-data">Application (sur serveur UP5)</a>
-<a class="buttons desktop" href="http://fxjollois.shinyapps.io/explore-data">Application (sur serveur Shinyapps)</a>
+<li><a class="buttons github" href="https://github.com/fxjollois/explore-data">View On GitHub</a></li>
+<li><a class="buttons desktop" href="http://up5.fr/explore-data">Application (sur serveur UP5)</a></li>
+<li><a class="buttons desktop" href="http://fxjollois.shinyapps.io/explore-data">Application (sur serveur Shinyapps)</a></li>
 
 ## cours-sql
 
 Interface web dédiée à l'enseignement du langage **`SQL`**, crée en `JavaScript`.
 
-<a class="buttons github" href="https://github.com/fxjollois/cours-sql">View On GitHub</a>
-<a class="buttons desktop" href="http://fxjollois.github.io/cours-sql">Application</a>
+<li><a class="buttons github" href="https://github.com/fxjollois/cours-sql">View On GitHub</a></li>
+<li><a class="buttons desktop" href="http://fxjollois.github.io/cours-sql">Application</a></li>
 
 
 ## WikipediaR
