@@ -22,10 +22,3 @@ ou
     45 rue des Saints-Pères
     75006 Paris
 
-<script src = "https://use.fontawesome.com/0b43a1d440.js"></script>
-<a href="https://github.com/fxjollois" target="_blank"><i class="fa fa-github fa-2x"></i></a>
-<a href="http://fr.linkedin.com/in/fxjollois" target="_blank"><i class="fa fa-linkedin fa-2x"></i></a>
-<a href="https://twitter.com/fxjollois" target="_blank"><i class="fa fa-twitter fa-2x"></i></a>
-<a href="http://rpubs.com/fxjolloisUPD" target="_blank"><i class="fa fa-user fa-2x"></i></a>
-
-
