@@ -1,3 +1,7 @@
+---
+layout: default
+---
+
 ## Présentation
 
 Enseignant-chercheur en informatique, mon domaine de compétence se situe à la frontière entre l'informatique et la statistique. J'enseigne dans le département [STID](http://www.stid-paris.fr/) de l'[IUT Paris Descartes](http://www.iut.parisdescartes.fr). 
