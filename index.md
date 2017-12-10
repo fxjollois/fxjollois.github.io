@@ -11,8 +11,11 @@ J'effectue ma recherche au [LIPADE](http://www.lipade.fr), dans l'équipe [MLDS]
         <i class="fa fa-graduation-cap"></i>Enseignement 2017-2018
     </button>
 </a>
-
-<a href="recherche.html"><button><i class="fa fa-institution"></i>Recherche</button></a>
+<a href="recherche.html">
+    <button>
+        <i class="fa fa-institution"></i>Recherche
+    </button>
+</a>
 
 ## explore-data
 
