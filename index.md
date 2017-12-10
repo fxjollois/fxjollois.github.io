@@ -6,6 +6,8 @@ J'effectue ma recherche au [LIPADE](http://www.lipade.fr), dans l'équipe [MLDS]
 
 <li><a class="buttons graduation-cap" href="http://fxjollois.github.io/cours-2017-2018">Enseignement 2017-2018</a></li>
 
+<a href="https://github.com/fxjollois" target="_blank"><i class="fa fa-graduation-cap fa-2x"></i>Enseignement 2017-2018</a>
+
 
 - [**Recherche**](recherche.html) et [publications](publications.html)
 - [Données](accesdonnees) : données à télécharger
