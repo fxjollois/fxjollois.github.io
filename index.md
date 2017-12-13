@@ -1,5 +1,10 @@
 <script src="https://use.fontawesome.com/32d8325004.js"></script>
 
+<a href="https://github.com/fxjollois" target="_blank"><i class="fa fa-github"></i></a>
+<a href="http://fr.linkedin.com/in/fxjollois" target="_blank"><i class="fa fa-linkedin"></i></a>
+<a href="https://twitter.com/fxjollois" target="_blank"><i class="fa fa-twitter"></i></a>
+<a href="http://rpubs.com/fxjolloisUPD" target="_blank"><i class="fa fa-user-circle"></i></a>
+
 ## Présentation
 
 Enseignant-chercheur en informatique, mon domaine de compétence se situe à la frontière entre l'informatique et la statistique. J'enseigne dans le département [STID](http://www.stid-paris.fr/) de l'[IUT Paris Descartes](http://www.iut.parisdescartes.fr). 
@@ -14,6 +19,16 @@ J'effectue ma recherche au [LIPADE](http://www.lipade.fr), dans l'équipe [MLDS]
 <a href="recherche.html">
     <button>
         <i class="fa fa-institution"></i>Recherche
+    </button>
+</a>
+<a href="publications.html">
+    <button>
+        <i class="fa fa-file-text"></i>Publications
+    </button>
+</a>
+<a href="contact.html">
+    <button>
+        <i class="fa fa-user"></i>Contact
     </button>
 </a>
 
@@ -39,6 +54,8 @@ Interface web dédiée à l'enseignement de la **Statistique descriptive**, cré
 
 ## cours-sql
 
+Interface web dédiée à l'enseignement de **`SQL`**, créée en en `JavaScript`.
+
 <a href="https://github.com/fxjollois/cours-sql" target="_blank">
     <button>
         <i class="fa fa-github"></i>Voir sur Github
@@ -54,7 +71,11 @@ Interface web dédiée à l'enseignement de la **Statistique descriptive**, cré
 
 Package `R` permettant d'accéder aux données de [Wikipedia](http://www.wikipedia.org/)
 
-Lien sur le CRAN : [WikipediaR](https://cran.r-project.org/package=WikipediaR)
+<a href="https://cran.r-project.org/package=WikipediaR" target="_blank">
+    <button>
+        <i class="fa fa-external-link"></i>Voir sur le CRAN
+    </button>
+</a>
 
 ## Quelques liens intéressants 
 
