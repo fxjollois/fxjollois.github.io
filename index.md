@@ -1,9 +1,11 @@
 <script src="https://use.fontawesome.com/32d8325004.js"></script>
 
-<a href="https://github.com/fxjollois" target="_blank"><i class="fa fa-github"></i></a>
-<a href="http://fr.linkedin.com/in/fxjollois" target="_blank"><i class="fa fa-linkedin"></i></a>
-<a href="https://twitter.com/fxjollois" target="_blank"><i class="fa fa-twitter"></i></a>
-<a href="http://rpubs.com/fxjolloisUPD" target="_blank"><i class="fa fa-user-circle"></i></a>
+<a href="https://github.com/fxjollois" target="_blank" alt="Profil Github"><i class="fa fa-github"></i></a>
+<a href="http://fr.linkedin.com/in/fxjollois" target="_blank" alt="profil LinkedIn"><i class="fa fa-linkedin"></i></a>
+<a href="https://twitter.com/fxjollois" target="_blank" alt="profil Twitter"><i class="fa fa-twitter"></i></a>
+<a href="http://rpubs.com/fxjolloisUPD" target="_blank" alt="profil RPubs"><i class="fa fa-user-circle"></i></a>
+<a href="https://codepen.io/fxjollois/" target="_blank" alt="profil CodePen"><i class="fa fa-codepen"></i></a>
+<a href="https://plnkr.co/users/fxjollois" target="_blank" alt="profil Plnkr"><i class="fa fa-arrow-down"></i></a>
 
 ## Présentation
 
