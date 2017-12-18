@@ -1,23 +1,41 @@
 <script src="https://use.fontawesome.com/32d8325004.js"></script>
 
-<a href="https://github.com/fxjollois" target="_blank" alt="Profil Github"><i class="fa fa-github"></i></a>
-<a href="http://fr.linkedin.com/in/fxjollois" target="_blank" alt="profil LinkedIn"><i class="fa fa-linkedin"></i></a>
-<a href="https://twitter.com/fxjollois" target="_blank" alt="profil Twitter"><i class="fa fa-twitter"></i></a>
-<a href="http://rpubs.com/fxjolloisUPD" target="_blank" alt="profil RPubs"><i class="fa fa-user-circle"></i></a>
-<a href="https://codepen.io/fxjollois/" target="_blank" alt="profil CodePen"><i class="fa fa-codepen"></i></a>
-<a href="https://plnkr.co/users/fxjollois" target="_blank" alt="profil Plnkr"><i class="fa fa-arrow-down"></i></a>
+<a href="https://github.com/fxjollois" target="_blank" alt="profil Github"><i class="fa fa-github fa-3x"></i></a>
+<a href="http://fr.linkedin.com/in/fxjollois" target="_blank" alt="profil LinkedIn"><i class="fa fa-linkedin fa-3x"></i></a>
+<a href="https://twitter.com/fxjollois" target="_blank" alt="profil Twitter"><i class="fa fa-twitter fa-3x"></i></a>
+<a href="http://rpubs.com/fxjolloisUPD" target="_blank" alt="profil RPubs"><i class="fa fa-user-circle fa-3x"></i></a>
+<a href="https://codepen.io/fxjollois/" target="_blank" alt="profil CodePen"><i class="fa fa-codepen fa-3x"></i></a>
+<a href="https://plnkr.co/users/fxjollois" target="_blank" alt="profil Plnkr"><i class="fa fa-arrow-down fa-3x"></i></a>
 
 ## Présentation
 
-Enseignant-chercheur en informatique, mon domaine de compétence se situe à la frontière entre l'informatique et la statistique. J'enseigne dans le département [STID](http://www.stid-paris.fr/) de l'[IUT Paris Descartes](http://www.iut.parisdescartes.fr). 
+Enseignant-chercheur en informatique, mon domaine de compétence se situe à la frontière entre l'informatique et la statistique.
 
-J'effectue ma recherche au [LIPADE](http://www.lipade.fr), dans l'équipe [MLDS](http://www.math-info.univ-paris5.fr/~nadifmoh/Accueil.html#). Je suis aussi membre associé du [CEDRIC](http://cedric.cnam.fr) (dans l'équipe MSDMA) du [CNAM](http://www.cnam.fr).
+<a href="contact.html">
+    <button>
+        <i class="fa fa-user"></i>Contact
+    </button>
+</a>
+
+### Enseignement
+
+J'enseigne dans le département [STID](http://www.stid-paris.fr/) de l'[IUT Paris Descartes](http://www.iut.parisdescartes.fr).
 
 <a href="http://fxjollois.github.io/cours-2017-2018" target="_blank">
     <button>
         <i class="fa fa-graduation-cap"></i>Enseignement 2017-2018
     </button>
 </a>
+<a href="http://fxjollois.github.io/cours-2016-2017" target="_blank">
+    <button>
+        <i class="fa fa-graduation-cap"></i>Enseignement 2016-2017
+    </button>
+</a>
+
+### Recherche
+
+J'effectue ma recherche au [LIPADE](http://www.lipade.fr), dans l'équipe [MLDS](http://www.math-info.univ-paris5.fr/~nadifmoh/Accueil.html#). Je suis aussi membre associé du [CEDRIC](http://cedric.cnam.fr) (dans l'équipe MSDMA) du [CNAM](http://www.cnam.fr).
+
 <a href="recherche.html">
     <button>
         <i class="fa fa-institution"></i>Recherche
@@ -28,11 +46,7 @@ J'effectue ma recherche au [LIPADE](http://www.lipade.fr), dans l'équipe [MLDS]
         <i class="fa fa-file-text"></i>Publications
     </button>
 </a>
-<a href="contact.html">
-    <button>
-        <i class="fa fa-user"></i>Contact
-    </button>
-</a>
+
 
 ## explore-data
 
@@ -79,7 +93,7 @@ Package `R` permettant d'accéder aux données de [Wikipedia](http://www.wikiped
     </button>
 </a>
 
-## Quelques liens intéressants 
+## Quelques liens intéressants
 
 - [Données](accesdonnees) : données à télécharger
 - [Données intégrées](donnees-integrees-r.html) : informations sur des données présentes dans R
@@ -90,4 +104,3 @@ Descartes, regroupant des informaticiens et des statisticiens
 - [Groupe Méthodes & Logiciels](http://methodes-et-logiciels.sfds.asso.fr/) :
 séminaires d'échanges sur différentes thématiques autour de la statistique, intégrant des
 aspects méthodologiques et pratiques
-
