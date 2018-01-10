@@ -1,11 +1,11 @@
 <script src="https://use.fontawesome.com/32d8325004.js"></script>
 
-<a href="https://github.com/fxjollois" target="_blank" alt="profil Github"><i class="fa fa-github fa-3x"></i></a>
-<a href="http://fr.linkedin.com/in/fxjollois" target="_blank" alt="profil LinkedIn"><i class="fa fa-linkedin fa-3x"></i></a>
-<a href="https://twitter.com/fxjollois" target="_blank" alt="profil Twitter"><i class="fa fa-twitter fa-3x"></i></a>
-<a href="http://rpubs.com/fxjolloisUPD" target="_blank" alt="profil RPubs"><i class="fa fa-user-circle fa-3x"></i></a>
-<a href="https://codepen.io/fxjollois/" target="_blank" alt="profil CodePen"><i class="fa fa-codepen fa-3x"></i></a>
-<a href="https://plnkr.co/users/fxjollois" target="_blank" alt="profil Plnkr"><i class="fa fa-arrow-down fa-3x"></i></a>
+<a href="https://github.com/fxjollois" target="_blank" alt="profil Github"><i class="fa fa-github fa-2x"></i></a>
+<a href="http://fr.linkedin.com/in/fxjollois" target="_blank" alt="profil LinkedIn"><i class="fa fa-linkedin fa-2x"></i></a>
+<a href="https://twitter.com/fxjollois" target="_blank" alt="profil Twitter"><i class="fa fa-twitter fa-2x"></i></a>
+<a href="http://rpubs.com/fxjolloisUPD" target="_blank" alt="profil RPubs"><i class="fa fa-user-circle fa-2x"></i></a>
+<a href="https://codepen.io/fxjollois/" target="_blank" alt="profil CodePen"><i class="fa fa-codepen fa-2x"></i></a>
+<a href="https://plnkr.co/users/fxjollois" target="_blank" alt="profil Plnkr"><i class="fa fa-arrow-down fa-2x"></i></a>
 
 ## Présentation
 
@@ -13,7 +13,12 @@ Enseignant-chercheur en informatique, mon domaine de compétence se situe à la 
 
 <a href="contact.html">
     <button>
-        <i class="fa fa-user"></i>Contact
+        <i class="fa fa-user"></i> Contact
+    </button>
+</a>
+<a href="http://fxjollois.github.io/talks" target="_blank">
+    <button>
+        <i class="fa fa-desktop"></i> Slides
     </button>
 </a>
 
@@ -23,12 +28,12 @@ J'enseigne dans le département [STID](http://www.stid-paris.fr/) de l'[IUT Pari
 
 <a href="http://fxjollois.github.io/cours-2017-2018" target="_blank">
     <button>
-        <i class="fa fa-graduation-cap"></i>Enseignement 2017-2018
+        <i class="fa fa-graduation-cap"></i> Enseignement 2017-2018
     </button>
 </a>
 <a href="http://fxjollois.github.io/cours-2016-2017" target="_blank">
     <button>
-        <i class="fa fa-graduation-cap"></i>Enseignement 2016-2017
+        <i class="fa fa-graduation-cap"></i> Enseignement 2016-2017
     </button>
 </a>
 
@@ -38,12 +43,12 @@ J'effectue ma recherche au [LIPADE](http://www.lipade.fr), dans l'équipe [MLDS]
 
 <a href="recherche.html">
     <button>
-        <i class="fa fa-institution"></i>Recherche
+        <i class="fa fa-institution"></i> Recherche
     </button>
 </a>
 <a href="publications.html">
     <button>
-        <i class="fa fa-file-text"></i>Publications
+        <i class="fa fa-file-text"></i> Publications
     </button>
 </a>
 
@@ -54,17 +59,17 @@ Interface web dédiée à l'enseignement de la **Statistique descriptive**, cré
 
 <a href="https://github.com/fxjollois/explore-data" target="_blank">
     <button>
-        <i class="fa fa-github"></i>Voir sur Github
+        <i class="fa fa-github"></i> Voir sur Github
     </button>
 </a>
 <a href="http://up5.fr/explore-data" target="_blank">
     <button>
-        <i class="fa fa-desktop"></i>Application (sur serveur UP5)
+        <i class="fa fa-desktop"></i> Application (sur serveur UP5)
     </button>
 </a>
 <a href="http://fxjollois.shinyapps.io/explore-data" target="_blank">
     <button>
-        <i class="fa fa-desktop"></i>Application (sur serveur Shinyapps)
+        <i class="fa fa-desktop"></i> Application (sur serveur Shinyapps)
     </button>
 </a>
 
@@ -74,12 +79,27 @@ Interface web dédiée à l'enseignement de **`SQL`**, créée en en `JavaScript
 
 <a href="https://github.com/fxjollois/cours-sql" target="_blank">
     <button>
-        <i class="fa fa-github"></i>Voir sur Github
+        <i class="fa fa-github"></i> Voir sur Github
     </button>
 </a>
 <a href="http://fxjollois.github.io/cours-sql" target="_blank">
     <button>
-        <i class="fa fa-desktop"></i>Application
+        <i class="fa fa-desktop"></i> Application
+    </button>
+</a>
+
+## compare-dataviz-méthodologiques
+
+Comparaison de différents outils (`R`, `Python`, `JavaScript`, ...) pour la réalisation d'une même dataviz.
+
+<a href="https://github.com/fxjollois/compare-dataviz-tools" target="_blank">
+    <button>
+        <i class="fa fa-github"></i> Voir sur Github
+    </button>
+</a>
+<a href="http://fxjollois.github.io/compare-dataviz-tools" target="_blank">
+    <button>
+        <i class="fa fa-desktop"></i> Page web
     </button>
 </a>
 
