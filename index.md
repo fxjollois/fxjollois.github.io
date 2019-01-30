@@ -88,7 +88,32 @@ Interface web dédiée à l'enseignement de **`SQL`**, créée en en `JavaScript
     </button>
 </a>
 
-## compare-dataviz-méthodologiques
+## 50 ans pour STID Paris
+
+Dans le cadre des 50 ans de l'IUT Paris Descartes, j'ai réalisé quelques dataviz concernant le département STID
+
+<a href="https://github.com/fxjollois/50ans-stid-paris" target="_blank">
+    <button>
+        <i class="fa fa-github"></i> Voir sur Github
+    </button>
+</a>
+<a href="http://fxjollois.github.io/50ans-stid-paris" target="_blank">
+    <button>
+        <i class="fa fa-chart-line"></i> Site web avec les dataviz
+    </button>
+</a>
+
+## WikipediaR
+
+Package `R` permettant d'accéder aux données de [Wikipedia](http://www.wikipedia.org/)
+
+<a href="https://cran.r-project.org/package=WikipediaR" target="_blank">
+    <button>
+        <i class="fa fa-external-link"></i>Voir sur le CRAN
+    </button>
+</a>
+
+## compare-dataviz-méthodologiques (en cours)
 
 Comparaison de différents outils (`R`, `Python`, `JavaScript`, ...) pour la réalisation d'une même dataviz.
 
@@ -100,16 +125,6 @@ Comparaison de différents outils (`R`, `Python`, `JavaScript`, ...) pour la ré
 <a href="http://fxjollois.github.io/compare-dataviz-tools" target="_blank">
     <button>
         <i class="fa fa-desktop"></i> Page web
-    </button>
-</a>
-
-## WikipediaR
-
-Package `R` permettant d'accéder aux données de [Wikipedia](http://www.wikipedia.org/)
-
-<a href="https://cran.r-project.org/package=WikipediaR" target="_blank">
-    <button>
-        <i class="fa fa-external-link"></i>Voir sur le CRAN
     </button>
 </a>
 
