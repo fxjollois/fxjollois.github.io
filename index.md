@@ -105,7 +105,7 @@ Dans le cadre des 50 ans de l'IUT Paris Descartes, j'ai réalisé quelques datav
 </a>
 <a href="http://fxjollois.github.io/50ans-stid-paris" target="_blank">
     <button>
-        <i class="fa fa-chart-line"></i> Site web avec les dataviz
+        <i class="fa fa-external-link"></i> Site web avec les dataviz
     </button>
 </a>
 
