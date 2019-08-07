@@ -5,7 +5,8 @@
 <a href="https://twitter.com/fxjollois" target="_blank" alt="profil Twitter"><i class="fa fa-twitter fa-2x"></i></a>
 <a href="http://rpubs.com/fxjolloisUPD" target="_blank" alt="profil RPubs"><i class="fa fa-user-circle fa-2x"></i></a>
 <a href="https://codepen.io/fxjollois/" target="_blank" alt="profil CodePen"><i class="fa fa-codepen fa-2x"></i></a>
-<a href="https://plnkr.co/users/fxjollois" target="_blank" alt="profil Plnkr"><i class="fa fa-arrow-down fa-2x"></i></a>
+<a href="https://plnkr.co/users/fxjollois" target="_blank" alt="profil Plnkr"><i class="fa fa-external-link fa-2x"></i></a>
+<a href="https://plot.ly/~fxjollois#/" target="_blank" alt="profil Plotly"><i class="fa fa-external-link fa-2x"></i></a>
 
 ## Présentation
 
@@ -110,7 +111,7 @@ Dans le cadre des 50 ans de l'IUT Paris Descartes, j'ai réalisé quelques datav
 </a>
 <a href="http://fxjollois.github.io/50ans-stid-paris" target="_blank">
     <button>
-        <i class="fa fa-chart-line"></i> Site web avec les dataviz
+        <i class="fa fa-external-link"></i> Site web avec les dataviz
     </button>
 </a>
 
