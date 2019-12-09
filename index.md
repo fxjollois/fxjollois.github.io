@@ -17,9 +17,14 @@ Enseignant-chercheur en informatique, mon domaine de compétence se situe à la 
         <i class="fa fa-user"></i> Contact
     </button>
 </a>
+<a href="CV_Jollois.docx">
+    <button>
+        <i class="fa fa-id-card"></i> Cours CV
+    </button>
+</a>
 <a href="http://fxjollois.github.io/talks" target="_blank">
     <button>
-        <i class="fa fa-desktop"></i> Slides
+        <i class="fa fa-desktop"></i> Talks
     </button>
 </a>
 
