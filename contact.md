@@ -4,7 +4,7 @@
 
 Vous pouvez me joindre sur cette adresse courriel (enlever les espaces et les crochets, et remplacer # par @) :
 
-    francois - xavier . jollois [#] parisdescartes . fr
+    francois - xavier . jollois [#] u - paris . fr
 
 Vous pourrez aussi me trouver physiquement :
 
