@@ -77,21 +77,33 @@ J'effectue ma recherche au [LIPADE](http://www.lipade.fr), dans l'équipe [MLDS]
 
 ## explore-data
 
-Interface web dédiée à l'enseignement de la **Statistique descriptive**, créée avec [`R`](http://www.r-project.org) et [`shiny`](http://shiny.rstudio.com).
+Interface web dédiée à l'enseignement de la **Statistique descriptive**
+
+### Avec R et Shiny
+
+Créée avec [`R`](http://www.r-project.org) et [`shiny`](http://shiny.rstudio.com).
+
+<a href="https://github.com/fxjollois/explore-data-shiny" target="_blank">
+    <button>
+        <i class="fa fa-github"></i> Voir sur Github
+    </button>
+</a>
+<a href="http://fxjollois.shinyapps.io/explore-data" target="_blank">
+    <button>
+        <i class="fa fa-desktop"></i> Application (sur serveur Shinyapps)
+    </button>
+</a>
+
+### En Javascript
 
 <a href="https://github.com/fxjollois/explore-data" target="_blank">
     <button>
         <i class="fa fa-github"></i> Voir sur Github
     </button>
 </a>
-<a href="http://up5.fr/explore-data" target="_blank">
+<a href="http://fxjollois.github.io/explore-data" target="_blank">
     <button>
-        <i class="fa fa-desktop"></i> Application (sur serveur UP5)
-    </button>
-</a>
-<a href="http://fxjollois.shinyapps.io/explore-data" target="_blank">
-    <button>
-        <i class="fa fa-desktop"></i> Application (sur serveur Shinyapps)
+        <i class="fa fa-desktop"></i> Application
     </button>
 </a>
 
