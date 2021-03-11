@@ -152,7 +152,7 @@ Comparaison de différents outils (`R`, `Python`, `JavaScript`, ...) pour la ré
 
 ## Quelques liens intéressants
 
-- [Données](accesdonnees) : données à télécharger
+- [Données](donnees) : données que j'utilise dans mes cours
 - [Données intégrées](donnees-integrees-r.html) : informations sur des données présentes dans R
 
 - [ECAIS](https://sites.google.com/site/groupeecais/) : groupe de travail de l'IUT Paris
