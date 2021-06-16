@@ -1,4 +1,5 @@
 <script src="https://use.fontawesome.com/32d8325004.js"></script>
+<script src="https://d3js.org/d3.v7.min.js"></script>
 
 <a href="https://github.com/fxjollois" target="_blank" alt="profil Github"><i class="fa fa-github fa-2x"></i></a>
 <a href="http://fr.linkedin.com/in/fxjollois" target="_blank" alt="profil LinkedIn"><i class="fa fa-linkedin fa-2x"></i></a>
@@ -32,6 +33,22 @@ Enseignant-chercheur en informatique, mon domaine de compétence se situe à la 
 
 J'enseigne dans le département [STID](http://www.stid-paris.fr/) de l'[IUT Paris Descartes](http://www.iut.parisdescartes.fr).
 
+<div id="liens_cours"></div>
+<script>
+    d3.select("#liens_cours").selectAll("button")
+        .data([2016, 2017, 2018, 2019, 2020, 2021])
+        .enter()
+        .append("a")
+            .attr("href", d => "http://fxjollois.github.io/cours-" + d + "-" + (d+1))
+            .attr("target", "_blank")
+            .html(d => "<button><i class='fa fa-graduation-cap'></i>Supports " + d + "-" + (d+1) + "</button>");
+</script>
+
+<a href="http://fxjollois.github.io/cours-2021-2022" target="_blank">
+    <button>
+        <i class="fa fa-graduation-cap"></i> Enseignement 2021-2022
+    </button>
+</a>
 <a href="http://fxjollois.github.io/cours-2020-2021" target="_blank">
     <button>
         <i class="fa fa-graduation-cap"></i> Enseignement 2020-2021
@@ -61,7 +78,7 @@ J'enseigne dans le département [STID](http://www.stid-paris.fr/) de l'[IUT Pari
 
 ### Recherche
 
-J'effectue ma recherche au [LIPADE](http://www.lipade.fr), dans l'équipe [MLDS](http://www.math-info.univ-paris5.fr/~nadifmoh/Accueil.html#). 
+J'effectue ma recherche au [LIPADE](http://www.lipade.fr), dans l'équipe [diNo](http://dino.mi.parisdescartes.fr/). 
 
 <a href="recherche.html">
     <button>
