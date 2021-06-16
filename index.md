@@ -46,7 +46,7 @@ d3.select("#liens_cours").html("")
   .enter() 
   .append(d => bouton("http://fxjollois.github.io/cours-" + d + "-" + (d+1), 
                       "Supports " + d + "-" + (d+1),
-                     "fa fa-camera", true));
+                     "fa fa-file", true));
 </script>
 
 ### Recherche
