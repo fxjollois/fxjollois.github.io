@@ -33,7 +33,7 @@ Enseignant-chercheur en informatique, mon domaine de compétence se situe à la 
 
 J'enseigne dans le département [STID](http://www.stid-paris.fr/) de l'[IUT Paris Descartes](http://www.iut.parisdescartes.fr).
 
-<div id="liens_cours"></div>
+<p id="liens_cours"></p>
 <script>
 d3.select("#liens_cours").html("")
   .selectAll("button") 
