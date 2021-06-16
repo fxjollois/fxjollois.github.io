@@ -35,14 +35,18 @@ J'enseigne dans le département [STID](http://www.stid-paris.fr/) de l'[IUT Pari
 
 <div id="liens_cours"></div>
 <script>
-    d3.select("#liens_cours").selectAll("button")
-        .data([2016, 2017, 2018, 2019, 2020, 2021].reverse())
-        .enter()
-        .append("li")
-        .append("a")
-            .attr("href", d => "http://fxjollois.github.io/cours-" + d + "-" + (d+1))
-            .attr("target", "_blank")
-            .html(d => "<button><i class='fa fa-graduation-cap'></i>Supports " + d + "-" + (d+1) + "</button>");
+d3.select("#liens_cours").html("")
+  .selectAll("button") 
+  .data([2016, 2017, 2018, 2019, 2020, 2021].reverse()) 
+  .enter() 
+  .append("li") 
+  .append("a") 
+    .attr("href", d => "http://fxjollois.github.io/cours-" + d + "-" + (d+1))
+    .attr("target", "_blank") 
+    .append("button")
+      .append("i")
+        .attr("class", "fa fa-file")
+      .html(d => "&nbsp;&nbsp;Supports " + d + "-" + (d+1) + "");
 </script>
 
 ### Recherche
