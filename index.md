@@ -1,5 +1,15 @@
 <script src="https://use.fontawesome.com/32d8325004.js"></script>
 <script src="https://d3js.org/d3.v7.min.js"></script>
+<script>
+bouton = function(lien, info, icon, nouv = false) {
+  var a = d3.create("a").attr("href", lien),
+      b = a.append("button");
+  if (nouv == true) a.attr("target", "_blank");
+  b.append("i").attr("class", icon),
+  b.append("span").html(info);
+  return a.node();
+}
+</script>
 
 <a href="https://github.com/fxjollois" target="_blank" alt="profil Github"><i class="fa fa-github fa-2x"></i></a>
 <a href="http://fr.linkedin.com/in/fxjollois" target="_blank" alt="profil LinkedIn"><i class="fa fa-linkedin fa-2x"></i></a>
@@ -12,6 +22,14 @@
 ## Présentation
 
 Enseignant-chercheur en informatique, mon domaine de compétence se situe à la frontière entre l'informatique et la statistique.
+
+<p id="liens_pres"></p>
+<script>
+    d3.select("#liens_pres")
+        .append(bouton("contact.html", "Contact", "fa fa-user", false)
+        .append(bouton("CV_Jollois.docx", "Cours CV", "fa fa-id-card", false)
+        .append(bouton("talks/", "Talks", "fa fa-desktop", true);
+</script>
 
 <a href="contact.html">
     <button>
@@ -39,14 +57,9 @@ d3.select("#liens_cours").html("")
   .selectAll("button") 
   .data([2016, 2017, 2018, 2019, 2020, 2021].reverse()) 
   .enter() 
-  .append("li") 
-  .append("a") 
-    .attr("href", d => "http://fxjollois.github.io/cours-" + d + "-" + (d+1))
-    .attr("target", "_blank") 
-    .append("button")
-      .append("i")
-        .attr("class", "fa fa-file")
-      .html(d => "&nbsp;&nbsp;Supports " + d + "-" + (d+1) + "");
+  .append(d => bouton("http://fxjollois.github.io/cours-" + d + "-" + (d+1), 
+                      "Supports " + d + "-" + (d+1),
+                     "fa fa-camera", true));
 </script>
 
 ### Recherche
