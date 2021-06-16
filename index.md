@@ -36,45 +36,14 @@ J'enseigne dans le département [STID](http://www.stid-paris.fr/) de l'[IUT Pari
 <div id="liens_cours"></div>
 <script>
     d3.select("#liens_cours").selectAll("button")
-        .data([2016, 2017, 2018, 2019, 2020, 2021])
+        .data([2016, 2017, 2018, 2019, 2020, 2021].reverse())
         .enter()
+        .append("li")
         .append("a")
             .attr("href", d => "http://fxjollois.github.io/cours-" + d + "-" + (d+1))
             .attr("target", "_blank")
             .html(d => "<button><i class='fa fa-graduation-cap'></i>Supports " + d + "-" + (d+1) + "</button>");
 </script>
-
-<a href="http://fxjollois.github.io/cours-2021-2022" target="_blank">
-    <button>
-        <i class="fa fa-graduation-cap"></i> Enseignement 2021-2022
-    </button>
-</a>
-<a href="http://fxjollois.github.io/cours-2020-2021" target="_blank">
-    <button>
-        <i class="fa fa-graduation-cap"></i> Enseignement 2020-2021
-    </button>
-</a>
-<br><br>
-<a href="http://fxjollois.github.io/cours-2019-2020" target="_blank">
-    <button>
-        <i class="fa fa-graduation-cap"></i> Enseignement 2019-2020
-    </button>
-</a>
-<a href="http://fxjollois.github.io/cours-2018-2019" target="_blank">
-    <button>
-        <i class="fa fa-graduation-cap"></i> Enseignement 2018-2019
-    </button>
-</a>
-<a href="http://fxjollois.github.io/cours-2017-2018" target="_blank">
-    <button>
-        <i class="fa fa-graduation-cap"></i> Enseignement 2017-2018
-    </button>
-</a>
-<a href="http://fxjollois.github.io/cours-2016-2017" target="_blank">
-    <button>
-        <i class="fa fa-graduation-cap"></i> Enseignement 2016-2017
-    </button>
-</a>
 
 ### Recherche
 
