@@ -27,9 +27,9 @@ Enseignant-chercheur en informatique, mon domaine de compétence se situe à la 
 <script>
 d3.select("#liens_pres").html("")
   .selectAll("bouton")
-  .data([{ lien: "contact.html", info: "Contact", icon: "fa fa-user", nouv: false },
-         { lien: "CV_Jollois.docx", info: "CV", icon: "fa fa-id-card", nouv: false },
-         { lien: "talks/", info: "Talks", icon: "fa fa-desktop", nouv: true }])
+  .data([{ lien: "contact.html", info: " Contact", icon: "fa fa-user", nouv: false },
+         { lien: "CV_Jollois.docx", info: " CV", icon: "fa fa-id-card", nouv: false },
+         { lien: "talks/", info: " Talks", icon: "fa fa-desktop", nouv: true }])
   .enter()
       .append(d => bouton(d.lien, d.info, d.icon, d.nouv));
 </script>
