@@ -25,27 +25,14 @@ Enseignant-chercheur en informatique, mon domaine de compétence se situe à la 
 
 <p id="liens_pres"></p>
 <script>
-    d3.select("#liens_pres")
-        .append(bouton("contact.html", "Contact", "fa fa-user", false)
-        .append(bouton("CV_Jollois.docx", "Cours CV", "fa fa-id-card", false)
-        .append(bouton("talks/", "Talks", "fa fa-desktop", true);
+d3.select("#liens_pres").html("")
+  .selectAll("bouton")
+  .data([{ lien: "contact.html", info: "Contact", icon: "fa fa-user", nouv: false },
+         { lien: "CV_Jollois.docx", info: "CV", icon: "fa fa-id-card", nouv: false },
+         { lien: "talks/", info: "Talks", icon: "fa fa-desktop", nouv: true }])
+  .enter()
+      .append(d => bouton(d.lien, d.info, d.icon, d.nouv));
 </script>
-
-<a href="contact.html">
-    <button>
-        <i class="fa fa-user"></i> Contact
-    </button>
-</a>
-<a href="CV_Jollois.docx">
-    <button>
-        <i class="fa fa-id-card"></i> Cours CV
-    </button>
-</a>
-<a href="http://fxjollois.github.io/talks" target="_blank">
-    <button>
-        <i class="fa fa-desktop"></i> Talks
-    </button>
-</a>
 
 ### Enseignement
 
