@@ -2,6 +2,9 @@
 
 [Liste de publications sous Google Scholar](https://scholar.google.fr/citations?hl=fr&user=aW4afqQAAAAJ&view_op=list_works)
 
+- **2021** :
+    - S. Makhlouf, A. Bar-Hen, F.-X. Jollois, Apprentissage par renforcement pour les enchères en temps réel. Journées de Statistique 2021, France.
+
 - **2018** :
     - C. Bouveyron, L. Bozzi, J. Jacques and F.-X. Jollois, The Functional Latent Block Model for the Co-Clustering of Electricity Consumption Curves, Journal of the Royal Statistical Society, Series C, in press, 2018. [pdf](http://hal.archives-ouvertes.fr/hal-01533438).
 
