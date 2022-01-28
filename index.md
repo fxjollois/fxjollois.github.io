@@ -1,3 +1,10 @@
+<style>
+  button {
+    font-size: 1.5em;
+    padding: 5px 10px;
+  }
+</style>
+
 <script src="https://use.fontawesome.com/32d8325004.js"></script>
 <script src="https://d3js.org/d3.v7.min.js"></script>
 <script>
