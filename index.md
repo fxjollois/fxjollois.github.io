@@ -1,6 +1,6 @@
 <style>
   button {
-    font-size: 1.5em;
+    font-size: 1.25em;
     padding: 5px 10px;
   }
 </style>
