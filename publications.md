@@ -6,7 +6,7 @@
     - S. Makhlouf, A. Bar-Hen, F.-X. Jollois, Apprentissage par renforcement pour les enchères en temps réel. Journées de Statistique 2021, France.
 
 - **2018** :
-    - C. Bouveyron, L. Bozzi, J. Jacques and F.-X. Jollois, The Functional Latent Block Model for the Co-Clustering of Electricity Consumption Curves, Journal of the Royal Statistical Society, Series C, in press, 2018. [pdf](http://hal.archives-ouvertes.fr/hal-01533438).
+    - C. Bouveyron, L. Bozzi, J. Jacques and F.-X. Jollois, The Functional Latent Block Model for the Co-Clustering of Electricity Consumption Curves, *Journal of the Royal Statistical Society: Series C (Applied Statistics)*, 67(4), 897-915, 2018. [pdf](http://hal.archives-ouvertes.fr/hal-01533438).
 
 - **2017** :
     - F.-X. Jollois. Outils de dataviz pour l'enseignement. Journées de Statistique 2017, Avignon, France. [pdf](http://jds2017.sfds.asso.fr/program/Soumissions/subm132.pdf)
