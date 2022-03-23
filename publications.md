@@ -28,7 +28,7 @@
 	- F.-X. Jollois,  M. Nadif, Classification de donn&eacute;es ordinales : mod&egrave;les et algorithmes, 41&egrave;me Journ&eacute;es de Statistique 2009, 25-29 mai 2009, Bordeaux.
 	- Francois-Xavier Jollois, Jean-Michel Poggi, Bruno Portier, Analyse Statistique de la Pollution par les PM10 en Haute-Normandie, 41&egrave;me Journ&eacute;es de Statistique 2009, 25-29 mai 2009, Bordeaux.
 	- J.M. Poggi, F.X. Jollois, B. Portier, 2009, Three non-linear statistical methods to analyze PM10 pollution in Rouen area, The International Environmetrics Society TIES 2009, 5-9 juillet 2009, Bologne, Italie.
-	- F.-X. Jollois, J.-M. Poggi and B. Portier, <A HREF="http://www.bentley.edu/csbigs/documents/poggi.pdf" TARGET='_blank'>Three Non-Linear Statistical Methods for Analyzing PM10 Pollution in the Rouen Area</A>, CSBIGS, 3(1), 1--17.
+	- F.-X. Jollois, J.-M. Poggi and B. Portier, Three Non-Linear Statistical Methods for Analyzing PM10 Pollution in the Rouen Area, CSBIGS, 3(1), 1--17. [pdf](http://publications-sfds.fr/index.php/csbigs/article/view/330/310)
 	- F.-X. Jollois, M. Nadif, Classification hi&eacute;rarchique de donn&eacute;es ordinales, SFC 2009, 2-4 septembre 2009, Grenoble.
 - **2008** :
 	- F.-X. Jollois,  M. Nadif, Agglomerative and divisive hierarchical two-way clustering, SFC 2008, 11-13 juin 2008, Caserta, Italie.
@@ -55,7 +55,7 @@
 	- F.-X. Jollois, M. Nadif, Identification de blocs homog&egrave;nes sur des donn&eacute;es continues, RNTI-E-2 : Extraction et Gestion des Connaissances, 241--246.
 	- M. Nadif, F.-X. Jollois, Acc&eacute;l&eacute;ration de EM pour donn&eacute;es qualitatives : &eacute;tude comparative de diff&eacute;rentes versions, RNTI-E-2 : Extraction et Gestion des Connaissances, 253--264.
 - **2003** :
-	- F.-X. Jollois, <a href="Jollois-These.pdf" target="_blank">Contribution de la Classification Automatique &agrave; le Fouille de Donn&eacute;es</a>, Th&egrave;se de doctorat, Universit&eacute; de Metz, 12 d&eacute;cembre 2003 (t&eacute;l&eacute;chargeable en cliquant sur le titre - 2,21 Mo).
+	- F.-X. Jollois, Contribution de la Classification Automatique &agrave; le Fouille de Donn&eacute;es, Th&egrave;se de doctorat, Universit&eacute; de Metz, 12 d&eacute;cembre 2003. [pdf](Jollois-These.pdf)
 	- F.-X. Jollois, M. Nadif, Mod&egrave;le de m&eacute;lange : acc&eacute;l&eacute;ration de EM sous SAS, Club SAS 2003, 13-15 octobre, Paris.
 	- F.-X. Jollois, F. Marchetti, M. Nadif, Initialization strategies and a methodology for getting the number of clusters in mixture model, JIM 2003, 3-6 septembre, Metz, France, 197--202.
 	- F.-X. Jollois, M. Nadif, L'algorithme IEM pour donn&eacute;es binaires, SFC 2003, 10-12 septembre, NeuchÃ¢tel, Suisse, 141--144.
