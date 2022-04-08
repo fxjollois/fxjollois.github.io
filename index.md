@@ -50,7 +50,7 @@ J'enseigne dans le département [STID](http://www.stid-paris.fr/) de l'[IUT Pari
 <script>
 d3.select("#liens_cours").html("")
   .selectAll("button") 
-  .data([2016, 2017, 2018, 2019, 2020, 2021].reverse()) 
+  .data([2015, 2016, 2017, 2018, 2019, 2020, 2021].reverse()) 
   .enter() 
   .append(d => bouton("http://fxjollois.github.io/cours-" + d + "-" + (d+1), 
                       " Supports " + d + "-" + (d+1),
