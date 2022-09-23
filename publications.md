@@ -2,6 +2,9 @@
 
 [Liste de publications sous Google Scholar](https://scholar.google.fr/citations?hl=fr&user=aW4afqQAAAAJ&view_op=list_works)
 
+- **2022** :
+    - S. Makhlouf, A. Bar-Hen, F.-X. Jollois, Clustering de modalités en régression logistique. Journées de Statistique 2022, France.
+
 - **2021** :
     - S. Makhlouf, A. Bar-Hen, F.-X. Jollois, Apprentissage par renforcement pour les enchères en temps réel. Journées de Statistique 2021, France.
 
