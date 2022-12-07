@@ -2,6 +2,9 @@
 
 [Liste de publications sous Google Scholar](https://scholar.google.fr/citations?hl=fr&user=aW4afqQAAAAJ&view_op=list_works)
 
+- **2023** :
+    - Slimane Makhlouf, Avner Bar-Hen and Francois-Xavier Jollois. Prédiction des événements rares : application à la prédiction du clic. EGC 2023, France.
+
 - **2022** :
     - S. Makhlouf, A. Bar-Hen, F.-X. Jollois, Clustering de modalités en régression logistique. Journées de Statistique 2022, France.
 
