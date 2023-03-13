@@ -73,6 +73,22 @@ J'effectue ma recherche au [LIPADE](http://www.lipade.fr), dans l'équipe [diNo]
 </a>
 
 
+## BUT Science des données
+
+Site web présentant le Programme National du **BUT Science des données** :
+
+<a href="https://github.com/fxjollois/but-sd" target="_blank">
+    <button>
+        <i class="fa fa-github"></i> Voir sur Github
+    </button>
+</a>
+<a href="http://fxjollois.github.io/but-sd" target="_blank">
+    <button>
+        <i class="fa fa-desktop"></i> Site web
+    </button>
+</a>
+
+
 ## explore-data
 
 Interface web dédiée à l'enseignement de la **Statistique descriptive**
