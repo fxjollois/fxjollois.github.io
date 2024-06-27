@@ -44,13 +44,13 @@ d3.select("#liens_pres").html("")
 
 ### Enseignement
 
-J'enseigne dans le département [STID](http://www.stid-paris.fr/) de l'[IUT Paris Descartes](http://www.iut.parisdescartes.fr).
+J'enseigne dans le département [Science des Données (SD, ex-STID)](https://iutparis-seine.u-paris.fr/metiers-de-la-data/) de l'[IUT Paris Descartes](https://iutparis-seine.u-paris.fr/).
 
 <p id="liens_cours"></p>
 <script>
 d3.select("#liens_cours").html("")
   .selectAll("button") 
-  .data([2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023].reverse()) 
+  .data([2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023, 2024].reverse()) 
   .enter() 
   .append(d => bouton("http://fxjollois.github.io/cours-" + d + "-" + (d+1), 
                       " Supports " + d + "-" + (d+1),
