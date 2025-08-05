@@ -50,7 +50,7 @@ J'enseigne dans le département [Science des Données (SD, ex-STID)](https://iut
 <script>
 d3.select("#liens_cours").html("")
   .selectAll("button") 
-  .data([2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023, 2024].reverse()) 
+  .data([2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023, 2024, 2025].reverse()) 
   .enter() 
   .append(d => bouton("http://fxjollois.github.io/cours-" + d + "-" + (d+1), 
                       " Supports " + d + "-" + (d+1),
